@@ -15,4 +15,8 @@
  * limitations under the License.
  */
 
-include ':app', ':entity'
+apply plugin: 'java'
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}

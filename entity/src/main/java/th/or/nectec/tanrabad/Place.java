@@ -15,4 +15,7 @@
  * limitations under the License.
  */
 
-include ':app', ':entity'
+package th.or.nectec.tanrabad;
+
+public class Place {
+}

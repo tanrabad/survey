@@ -26,4 +26,9 @@ ext{
     targetSdkVersion = 23
     compileSdkVersion = 23
     buildToolsVersion = "23.0.1"
+
+    supportLibVersion = "23.0.1"
+    runnerVersion = "0.4.1"
+    rulesVersion = "0.4.1"
+    espressoVersion = "2.2.1"
 }

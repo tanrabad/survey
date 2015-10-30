@@ -10,6 +10,8 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        testApplicationId "th.or.nectec.tanlabad.survey.test"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     compileOptions {
@@ -41,5 +43,9 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:23.1.0'
+    compile 'com.android.support:appcompat-v7:' + rootProject.ext.supportLibVersion
+
+    androidTestCompile 'com.android.support.test:runner:' + rootProject.ext.runnerVersion
+    androidTestCompile 'com.android.support.test:rules:' + rootProject.ext.rulesVersion
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:' + rootProject.ext.espressoVersion
 }

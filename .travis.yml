@@ -1,0 +1,17 @@
+language: android
+jdk: oraclejdk7
+cache: false
+env:
+  global:
+    - ADB_INSTALL_TIMEOUT=10
+android:
+  components:
+    - platform-tools
+    - build-tools-23.0.1
+    - android-23
+    - extra-android-support
+    - extra-android-m2repository
+    - sys-img-armeabi-v7a-android-16
+script:
+    - ./gradlew clean
+    - ./gradlew build --stacktrace

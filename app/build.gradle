@@ -1,4 +1,20 @@
+import java.text.SimpleDateFormat
+
 apply plugin: 'com.android.application'
+
+def versionMajor = 0
+def versionMinor = 0
+def versionPatch = 1
+
+def buildNumber = "$versionMajor.$versionMinor.$versionPatch"
+
+def buildTime() {
+    def df = new SimpleDateFormat("yyMMddhhmm")
+    return df.format(new Date())
+}
+
+def genVersionName = "$buildNumber";
+def genVersionCode = versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -8,10 +24,11 @@ android {
         applicationId "th.or.nectec.tanlabad.survey"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
         testApplicationId "th.or.nectec.tanlabad.survey.test"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        versionCode genVersionCode
+        versionName genVersionName
     }
 
     compileOptions {

@@ -1,4 +1,4 @@
-# Tanlabad Survey [![Build Status](https://travis-ci.org/NECTEC-WISRU/android-TanlabadSurvey.svg?branch=master)](https://travis-ci.org/NECTEC-WISRU/android-TanlabadSurvey)
+# Tanlabad Survey [![Build Status](https://travis-ci.org/nectec-wisru/android-TanlabadSurvey.svg?branch=master)](https://travis-ci.org/nectec-wisru/android-TanlabadSurvey)
 
 Survey application of Tanlabad System on android
 

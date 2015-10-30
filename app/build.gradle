@@ -14,23 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import java.text.SimpleDateFormat
 
 apply plugin: 'com.android.application'
-
-def versionMajor = 0
-def versionMinor = 0
-def versionPatch = 1
-
-def buildNumber = "$versionMajor.$versionMinor.$versionPatch"
-
-def buildTime() {
-    def df = new SimpleDateFormat("yyMMddhhmm")
-    return df.format(new Date())
-}
-
-def genVersionName = "$buildNumber";
-def genVersionCode = versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100
+apply from: '../gradle/versionGenerator.gradle'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -40,8 +26,8 @@ android {
         applicationId "th.or.nectec.tanlabad.survey"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode genVersionCode
-        versionName genVersionName
+        versionCode rootProject.ext.genVersionCode
+        versionName rootProject.ext.genVersionName
         testApplicationId "th.or.nectec.tanlabad.survey.test"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -53,7 +39,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

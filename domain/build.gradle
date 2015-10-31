@@ -9,4 +9,5 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':entity')
     testCompile 'junit:junit:' + rootProject.ext.junitVersion
+    testCompile 'org.jmock:jmock-junit4:' + rootProject.ext.jMockVersion
 }

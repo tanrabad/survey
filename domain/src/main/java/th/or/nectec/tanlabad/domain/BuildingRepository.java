@@ -6,5 +6,5 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public interface BuildingRepository {
-    ArrayList<Building> findBuildingInPlace(UUID with);
+    ArrayList<Building> findBuildingInPlace(UUID placeUuid);
 }

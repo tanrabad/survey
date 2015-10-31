@@ -23,6 +23,15 @@ public class Place {
     private int id;
     private String name;
 
+    public Place(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public static Place withIdAndName(int id, String name) {
+        return new Place(id, name);
+    }
+
     public String getName() {
         return name;
     }
@@ -37,5 +46,32 @@ public class Place {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Place{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Place)) return false;
+
+        Place place = (Place) o;
+
+        if (id != place.id) return false;
+        return !(name != null ? !name.equals(place.name) : place.name != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        return result;
     }
 }

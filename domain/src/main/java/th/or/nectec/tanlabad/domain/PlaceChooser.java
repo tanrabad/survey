@@ -4,11 +4,11 @@ import th.or.nectec.tanrabad.Place;
 
 import java.util.List;
 
-public class PlaceChoose {
+public class PlaceChooser {
 
     private PlaceRepository placeRepository;
 
-    public PlaceChoose(PlaceRepository placeRepository) {
+    public PlaceChooser(PlaceRepository placeRepository) {
         this.placeRepository = placeRepository;
     }
 

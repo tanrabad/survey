@@ -1,5 +1,8 @@
 package th.or.nectec.tanlabad.domain;
 
+import org.jmock.Expectations;
+import org.jmock.integration.junit4.JUnitRuleMockery;
+import org.junit.Rule;
 import org.junit.Test;
 import th.or.nectec.tanrabad.Place;
 
@@ -10,22 +13,26 @@ import static junit.framework.Assert.assertEquals;
 
 public class PlaceChooseTest {
 
+    @Rule
+    public JUnitRuleMockery context = new JUnitRuleMockery();
+
     @Test
     public void getPlaceList() {
-        PlaceChoose chooser = new PlaceChoose(new SinglePlaceRepository());
+        final PlaceRepository placeRepository = context.mock(PlaceRepository.class);
 
-        List<Place> places = chooser.getPlaceList();
+        final List<Place> places = new ArrayList<>();
+        places.add(Place.withIdAndName(1, "Vaillage A"));
+        places.add(Place.withIdAndName(3, "Vaillage C"));
 
-        assertEquals(1, places.size());
+        context.checking(new Expectations() {
+            {
+                oneOf(placeRepository).findPlaces();
+                will(returnValue(places));
+            }
+        });
+        PlaceChooser chooser = new PlaceChooser(placeRepository);
+        assertEquals(places, chooser.getPlaceList());
+
     }
 
-    private static class SinglePlaceRepository implements PlaceRepository {
-
-        @Override
-        public List<Place> findPlaces() {
-            List<Place> places = new ArrayList<>();
-            places.add(new Place());
-            return places;
-        }
-    }
 }

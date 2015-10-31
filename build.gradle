@@ -40,7 +40,7 @@ ext{
     buildToolsVersion = "23.0.1"
 
     junitVersion = "4.12"
-    jMockVersion = "2.6.0"
+    jMockVersion = "2.8.1"
     supportLibVersion = "23.0.1"
     runnerVersion = "0.4.1"
     rulesVersion = "0.4.1"

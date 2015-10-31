@@ -21,8 +21,8 @@ public class PlaceChooseTest {
         final PlaceRepository placeRepository = context.mock(PlaceRepository.class);
 
         final List<Place> places = new ArrayList<>();
-        places.add(Place.withIdAndName(1, "Vaillage A"));
-        places.add(Place.withIdAndName(3, "Vaillage C"));
+        places.add(Place.withName("Vaillage A"));
+        places.add(Place.withName("Vaillage C"));
 
         context.checking(new Expectations() {
             {

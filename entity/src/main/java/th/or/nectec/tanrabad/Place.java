@@ -18,18 +18,22 @@
 package th.or.nectec.tanrabad;
 
 
+import java.util.UUID;
+
 public class Place {
 
-    private int id;
+    private UUID id;
     private String name;
 
-    public Place(int id, String name) {
+    public Place(UUID id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public static Place withIdAndName(int id, String name) {
-        return new Place(id, name);
+
+    public static Place withName(String name) {
+        UUID uuid = UUID.randomUUID();
+        return new Place(uuid, name);
     }
 
     public String getName() {
@@ -40,13 +44,6 @@ public class Place {
         this.name = name;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     @Override
     public String toString() {
@@ -63,15 +60,14 @@ public class Place {
 
         Place place = (Place) o;
 
-        if (id != place.id) return false;
-        return !(name != null ? !name.equals(place.name) : place.name != null);
+        return id.equals(place.id) && name.equals(place.name);
 
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
+        int result = id.hashCode();
+        result = 31 * result + name.hashCode();
         return result;
     }
 }

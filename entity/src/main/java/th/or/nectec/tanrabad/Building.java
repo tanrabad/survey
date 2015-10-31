@@ -6,6 +6,7 @@ public class Building {
 
     private UUID id;
     private String name;
+    private Place place;
 
     public Building(UUID id, String name) {
         this.id = id;

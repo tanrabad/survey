@@ -9,10 +9,13 @@ import th.or.nectec.tanrabad.Building;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
-public class BuildingControllerTest {
+public class BuildingChooserTest {
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
+
+    private UUID placeUuid = UUID.randomUUID();
 
     @Test
     public void foundBuilding() {
@@ -24,15 +27,15 @@ public class BuildingControllerTest {
 
         context.checking(new Expectations() {
             {
-                allowing(buildingRepository).findBuildingInPlace(123456);
+                allowing(buildingRepository).findBuildingInPlace(placeUuid);
                 will(returnValue(buildings));
 
                 oneOf(presenter).showBuildingList(buildings);
             }
         });
 
-        BuildingController buildingController = new BuildingController(buildingRepository, presenter);
-        buildingController.viewBuildingOf(123456);
+        BuildingChooser buildingChooser = new BuildingChooser(buildingRepository, presenter);
+        buildingChooser.showBuildingOf(placeUuid);
     }
 
     @Test
@@ -43,35 +46,34 @@ public class BuildingControllerTest {
 
         context.checking(new Expectations() {
             {
-                allowing(buildingRepository).findBuildingInPlace(123456);
+                allowing(buildingRepository).findBuildingInPlace(placeUuid);
                 will(returnValue(null));
 
                 oneOf(presenter).showNotFoundBuilding();
             }
         });
 
-        BuildingController buildingController = new BuildingController(buildingRepository, presenter);
-        buildingController.viewBuildingOf(123456);
+        BuildingChooser buildingChooser = new BuildingChooser(buildingRepository, presenter);
+        buildingChooser.showBuildingOf(placeUuid);
     }
 
 
-    private class BuildingController {
+    private class BuildingChooser {
         private final BuildingRepository buildingRepository;
         private final BuildingPresenter presenter;
 
-        public BuildingController(BuildingRepository buildingRepository, BuildingPresenter presenter) {
+        public BuildingChooser(BuildingRepository buildingRepository, BuildingPresenter presenter) {
 
             this.buildingRepository = buildingRepository;
             this.presenter = presenter;
         }
 
-        public void viewBuildingOf(int placeId) {
-            ArrayList<Building> buildingInPlace = buildingRepository.findBuildingInPlace(placeId);
+        public void showBuildingOf(UUID placeUuid) {
+            ArrayList<Building> buildingInPlace = buildingRepository.findBuildingInPlace(placeUuid);
             if (buildingInPlace != null)
                 presenter.showBuildingList(buildingInPlace);
             else
                 presenter.showNotFoundBuilding();
-
         }
     }
 }

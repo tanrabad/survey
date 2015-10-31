@@ -1,0 +1,12 @@
+apply plugin: 'java'
+
+//noinspection GroovyUnusedAssignment
+sourceCompatibility = rootProject.ext.javaSourceCompatibility
+//noinspection GroovyUnusedAssignment
+targetCompatibility = rootProject.ext.javaTargetCompatibility
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':entity')
+    testCompile 'junit:junit:' + rootProject.ext.junitVersion
+}

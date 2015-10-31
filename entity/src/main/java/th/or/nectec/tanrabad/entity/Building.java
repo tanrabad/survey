@@ -1,4 +1,4 @@
-package th.or.nectec.tanrabad;
+package th.or.nectec.tanrabad.entity;
 
 import java.util.UUID;
 

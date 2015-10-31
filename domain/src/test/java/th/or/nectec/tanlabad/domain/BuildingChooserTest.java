@@ -5,7 +5,7 @@ import org.jmock.Expectations;
 import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Rule;
 import org.junit.Test;
-import th.or.nectec.tanrabad.Building;
+import th.or.nectec.tanrabad.entity.Building;
 
 import java.util.ArrayList;
 import java.util.List;

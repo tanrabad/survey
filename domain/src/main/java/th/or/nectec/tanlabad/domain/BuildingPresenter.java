@@ -8,4 +8,6 @@ public interface BuildingPresenter {
     void showBuildingList(List<Building> buildings);
 
     void showNotFoundBuilding();
+
+    void showPleaseSpecityPlace();
 }

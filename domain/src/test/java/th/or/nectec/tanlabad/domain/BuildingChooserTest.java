@@ -57,6 +57,24 @@ public class BuildingChooserTest {
         buildingChooser.showBuildingOf(placeUuid);
     }
 
+    @Test
+    public void emptyPlaceUuid() {
+        final BuildingRepository buildingRepository = context.mock(BuildingRepository.class);
+        final BuildingPresenter presenter = context.mock(BuildingPresenter.class);
+
+
+        context.checking(new Expectations() {
+            {
+                never(buildingRepository);
+
+                oneOf(presenter).showPleaseSpecityPlace();
+            }
+        });
+
+        BuildingChooser buildingChooser = new BuildingChooser(buildingRepository, presenter);
+        buildingChooser.showBuildingOf(null);
+    }
+
 
     private class BuildingChooser {
         private final BuildingRepository buildingRepository;
@@ -69,6 +87,11 @@ public class BuildingChooserTest {
         }
 
         public void showBuildingOf(UUID placeUuid) {
+            if (placeUuid == null) {
+                presenter.showPleaseSpecityPlace();
+                return;
+            }
+
             ArrayList<Building> buildingInPlace = buildingRepository.findBuildingInPlace(placeUuid);
             if (buildingInPlace != null)
                 presenter.showBuildingList(buildingInPlace);

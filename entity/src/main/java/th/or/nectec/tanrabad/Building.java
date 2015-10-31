@@ -1,21 +1,20 @@
 package th.or.nectec.tanrabad;
 
+import java.util.UUID;
+
 public class Building {
 
-    private int id;
+    private UUID id;
     private String name;
 
-    public Building(int id, String name) {
+    public Building(UUID id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public static Building withName(String name) {
+        UUID uuid = UUID.randomUUID();
+        return new Building(uuid, name);
     }
 
     public String getName() {
@@ -26,14 +25,12 @@ public class Building {
         this.name = name;
     }
 
-    public static Building withIdAndName(int id, String name){
-        return new Building(id, name);
-    }
-
     @Override
     public String toString() {
-        return "id"+ this.id;
-
+        return "Building{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 
     @Override
@@ -43,15 +40,14 @@ public class Building {
 
         Building building = (Building) o;
 
-        if (id != building.id) return false;
-        return !(name != null ? !name.equals(building.name) : building.name != null);
+        return id.equals(building.id) && name.equals(building.name);
 
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
+        int result = id.hashCode();
+        result = 31 * result + name.hashCode();
         return result;
     }
 }

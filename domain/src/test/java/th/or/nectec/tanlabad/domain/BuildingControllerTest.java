@@ -20,7 +20,7 @@ public class BuildingControllerTest {
         final BuildingPresenter presenter = context.mock(BuildingPresenter.class);
 
         final List<Building> buildings = new ArrayList<>();
-        buildings.add(Building.withIdAndName(1, "214/43"));
+        buildings.add(Building.withName("214/43"));
 
         context.checking(new Expectations() {
             {

@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface BuildingPresenter {
     void showBuildingList(List<Building> buildings);
+
+    void showNotFoundBuilding();
 }

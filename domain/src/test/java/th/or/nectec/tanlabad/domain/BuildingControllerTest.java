@@ -35,6 +35,25 @@ public class BuildingControllerTest {
         buildingController.viewBuildingOf(123456);
     }
 
+    @Test
+    public void notFoundBuilding() {
+        final BuildingRepository buildingRepository = context.mock(BuildingRepository.class);
+        final BuildingPresenter presenter = context.mock(BuildingPresenter.class);
+
+
+        context.checking(new Expectations() {
+            {
+                allowing(buildingRepository).findBuildingInPlace(123456);
+                will(returnValue(null));
+
+                oneOf(presenter).showNotFoundBuilding();
+            }
+        });
+
+        BuildingController buildingController = new BuildingController(buildingRepository, presenter);
+        buildingController.viewBuildingOf(123456);
+    }
+
 
     private class BuildingController {
         private final BuildingRepository buildingRepository;
@@ -47,7 +66,12 @@ public class BuildingControllerTest {
         }
 
         public void viewBuildingOf(int placeId) {
-            presenter.showBuildingList(buildingRepository.findBuildingInPlace(placeId));
+            ArrayList<Building> buildingInPlace = buildingRepository.findBuildingInPlace(placeId);
+            if (buildingInPlace != null)
+                presenter.showBuildingList(buildingInPlace);
+            else
+                presenter.showNotFoundBuilding();
+
         }
     }
 }

@@ -1,6 +1,11 @@
 language: android
 jdk: oraclejdk7
-cache: false
+before_cache:
+  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
 env:
   global:
     - ADB_INSTALL_TIMEOUT=10

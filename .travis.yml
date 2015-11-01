@@ -1,23 +1,30 @@
 language: android
 jdk: oraclejdk7
 before_cache:
-  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
 cache:
   directories:
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
+  - $HOME/.gradle/caches/
+  - $HOME/.gradle/wrapper/
 env:
   global:
-    - ADB_INSTALL_TIMEOUT=10
+  - ADB_INSTALL_TIMEOUT=10
 android:
   components:
-    - platform-tools
-    - build-tools-23.0.1
-    - android-23
-    - extra-android-support
-    - extra-android-m2repository
-    - sys-img-armeabi-v7a-android-16
+  - platform-tools
+  - build-tools-23.0.1
+  - android-23
+  - extra-android-support
+  - extra-android-m2repository
+  - sys-img-armeabi-v7a-android-16
 script:
-    - ./gradlew clean
-    - ./gradlew test --continue
-    - ./gradlew build --stacktrace
+- ./gradlew clean
+- ./gradlew test --continue
+- ./gradlew build --stacktrace
+notifications:
+  slack:
+    rooms:
+      secure: L7o9sqsACG9G7VUsVBbFB8bpxS/tvzY7QtfSHVxkNEGDXyClhuQ/w33i6C4yiRFHJeYlq4LWOXRpB2mSoCBUkvCO1HKFtjofkHrwa11Ub/xJ9HmapmZq+1WXncJ63G9pi3YVxIXVLw5tSa7ehxR5S1XyxV4wq/viIfACUg4VT/L3kdD8NUhQF9Zp5uzBIxI2QXQamvBT7MNO8/bTiaVaeeLa8nVitxr6iLMUozdZieV7t3aABEUxelRgQGyHIwMM8cAVbbX3TnkSqtdNZMmZiBEKCX7apaIopk+ixncxdxyZTcSOgPtHBER9JmXEmLupBLMaGTdxohkZ5kcwVm0sGh1nBcQk4deot5Pfi4pVbF/OC+RFoXcDSskFTll3/Bi0f9e7njLHZrQgmCOFt5M5RPFdNWYYwM7h5P7qMMrhGZlI43Xxz0W/YqAHSxhODvs01VauxKpz46mRQLZ/vOlWCEekPlAjNGZBMeR0XSgcpLOuyxDk5aS0cR6HGkpISuLiPBYRMckwflK+NslWDBwUB5MDPaW6OFpf1qkwEsB6xfBYH2SZ53OYdrDd51731wq2PXBmC8Kg11Ecm3NcWgkC6xKeCiMxNSPVIhrrKIoWwIIqWlM8jrZw2tmHwseBofy1RdV2BdSYb9Hzmc0rvPqJm/IRnoSVS80k6XIkLO3uHp4=
+    on_success: change
+    on_failure: always
+    on_start: never

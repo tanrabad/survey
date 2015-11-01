@@ -17,7 +17,7 @@
 
 package th.or.nectec.tanrabad.survey.repository;
 
-import th.or.nectec.tanlabad.domain.BuildingRepository;
+import th.or.nectec.tanrabad.domain.BuildingRepository;
 import th.or.nectec.tanrabad.entity.Building;
 
 import java.util.ArrayList;

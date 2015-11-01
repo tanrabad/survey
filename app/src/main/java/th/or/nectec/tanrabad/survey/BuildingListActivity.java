@@ -20,8 +20,8 @@ package th.or.nectec.tanrabad.survey;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
-import th.or.nectec.tanlabad.domain.BuildingChooser;
-import th.or.nectec.tanlabad.domain.BuildingPresenter;
+import th.or.nectec.tanrabad.domain.BuildingChooser;
+import th.or.nectec.tanrabad.domain.BuildingPresenter;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.survey.repository.StubBuildingRepository;
 

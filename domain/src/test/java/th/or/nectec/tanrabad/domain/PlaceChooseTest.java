@@ -1,4 +1,4 @@
-package th.or.nectec.tanlabad.domain;
+package th.or.nectec.tanrabad.domain;
 
 import org.jmock.Expectations;
 import org.jmock.integration.junit4.JUnitRuleMockery;

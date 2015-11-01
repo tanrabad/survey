@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanlabad.domain;
+package th.or.nectec.tanrabad.domain;
 
 import th.or.nectec.tanrabad.entity.Building;
 

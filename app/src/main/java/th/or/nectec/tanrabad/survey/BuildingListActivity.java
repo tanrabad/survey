@@ -31,7 +31,8 @@ import java.util.UUID;
 public class BuildingListActivity extends AppCompatActivity {
 
     private TextView buildingList;
-    BuildingChooser buildingChooser = new BuildingChooser(new StubBuildingRepository(), this.buildingPresenter);
+    private BuildingChooser buildingChooser;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,7 @@ public class BuildingListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_building_list);
         buildingList = (TextView) findViewById(R.id.buildingList);
 
+        buildingChooser = new BuildingChooser(new StubBuildingRepository(), this.buildingPresenter);
         buildingChooser.showBuildingOf(getUuidFromIntent());
     }
 

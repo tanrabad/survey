@@ -17,6 +17,6 @@
   -->
 
 <resources>
-    <item name="text" type="id"/>
+    <item name="buildingList" type="id"/>
 
 </resources>

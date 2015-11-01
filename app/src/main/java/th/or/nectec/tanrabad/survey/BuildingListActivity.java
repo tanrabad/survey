@@ -30,37 +30,14 @@ import java.util.UUID;
 
 public class BuildingListActivity extends AppCompatActivity {
 
-    private TextView text;
-    private BuildingPresenter buildingPresenter = new BuildingPresenter() {
-        @Override
-        public void showBuildingList(List<Building> buildings) {
-            StringBuilder stringBuilder = new StringBuilder();
-            for (Building building : buildings) {
-                stringBuilder.append(building.getName());
-                stringBuilder.append("\n");
-            }
-            text.setText(stringBuilder.toString());
-        }
-
-        @Override
-        public void showNotFoundBuilding() {
-            text.setText("not found any building");
-
-        }
-
-        @Override
-        public void showPleaseSpecityPlace() {
-            text.setText("please specify place");
-        }
-    };
+    private TextView buildingList;
     BuildingChooser buildingChooser = new BuildingChooser(new StubBuildingRepository(), this.buildingPresenter);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_building_list);
-
-        text = (TextView) findViewById(R.id.text);
+        buildingList = (TextView) findViewById(R.id.buildingList);
 
         buildingChooser.showBuildingOf(getUuidFromIntent());
     }
@@ -71,5 +48,26 @@ public class BuildingListActivity extends AppCompatActivity {
         return UUID.randomUUID();
     }
 
+    private BuildingPresenter buildingPresenter = new BuildingPresenter() {
+        @Override
+        public void showBuildingList(List<Building> buildings) {
+            StringBuilder stringBuilder = new StringBuilder();
+            for (Building building : buildings) {
+                stringBuilder.append(building.getName());
+                stringBuilder.append("\n");
+            }
+            buildingList.setText(stringBuilder.toString());
+        }
+
+        @Override
+        public void showNotFoundBuilding() {
+            buildingList.setText("not found any building");
+        }
+
+        @Override
+        public void showPleaseSpecityPlace() {
+            buildingList.setText("please specify place");
+        }
+    };
 
 }

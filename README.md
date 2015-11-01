@@ -1,6 +1,6 @@
 # Tanrabad Survey [![Build Status](https://travis-ci.org/nectec-wisru/android-TanlabadSurvey.svg?branch=master)](https://travis-ci.org/nectec-wisru/android-TanlabadSurvey)
 
-Survey application of Tanlabad System on android
+Survey application of Tanrabad System on android
 
 Entity
 -------

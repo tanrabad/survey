@@ -19,4 +19,5 @@ android:
     - sys-img-armeabi-v7a-android-16
 script:
     - ./gradlew clean
+    - ./gradlew test --continue
     - ./gradlew build --stacktrace

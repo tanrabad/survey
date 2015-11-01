@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-apply plugin: 'java'
+package th.or.nectec.tanrabad.survey;
 
-//noinspection GroovyUnusedAssignment
-sourceCompatibility = rootProject.ext.javaSourceCompatibility
-//noinspection GroovyUnusedAssignment
-targetCompatibility = rootProject.ext.javaTargetCompatibility
+import android.app.Application;
+import android.test.ApplicationTestCase;
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':entity')
-    testCompile 'junit:junit:' + rootProject.ext.junitVersion
-    testCompile 'org.jmock:jmock-junit4:' + rootProject.ext.jMockVersion
+/**
+ * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
+ */
+public class ApplicationTest extends ApplicationTestCase<Application> {
+    public ApplicationTest() {
+        super(Application.class);
+    }
 }

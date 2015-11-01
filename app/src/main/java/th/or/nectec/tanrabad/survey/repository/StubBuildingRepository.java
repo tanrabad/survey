@@ -15,16 +15,24 @@
  * limitations under the License.
  */
 
-apply plugin: 'java'
+package th.or.nectec.tanrabad.survey.repository;
 
-//noinspection GroovyUnusedAssignment
-sourceCompatibility = rootProject.ext.javaSourceCompatibility
-//noinspection GroovyUnusedAssignment
-targetCompatibility = rootProject.ext.javaTargetCompatibility
+import th.or.nectec.tanlabad.domain.BuildingRepository;
+import th.or.nectec.tanrabad.entity.Building;
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':entity')
-    testCompile 'junit:junit:' + rootProject.ext.junitVersion
-    testCompile 'org.jmock:jmock-junit4:' + rootProject.ext.jMockVersion
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+public class StubBuildingRepository implements BuildingRepository {
+
+
+    @Override
+    public List<Building> findBuildingInPlace(UUID placeUuid) {
+        List<Building> buildings = new ArrayList<>();
+        buildings.add(Building.withName("214/43"));
+        buildings.add(Building.withName("214/44"));
+        buildings.add(Building.withName("214/50"));
+        return buildings;
+    }
 }

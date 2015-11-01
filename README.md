@@ -1,6 +1,27 @@
-# Tanlabad Survey [![Build Status](https://travis-ci.org/nectec-wisru/android-TanlabadSurvey.svg?branch=master)](https://travis-ci.org/nectec-wisru/android-TanlabadSurvey)
+# Tanrabad Survey [![Build Status](https://travis-ci.org/nectec-wisru/android-TanlabadSurvey.svg?branch=master)](https://travis-ci.org/nectec-wisru/android-TanlabadSurvey)
 
 Survey application of Tanlabad System on android
+
+Entity
+-------
+* place
+* building
+* survey
+* container
+* user
+* organization
+
+Use Cases
+--------
+* view place list
+* create new place in allowing type
+* show building list in place
+* view new building in place
+* survey building or edit if on same day
+* view surveyed building in specify place in 7 day ago
+* view surveyed place in 7 day ago
+* view user's profile
+* login
 
 License
 --------

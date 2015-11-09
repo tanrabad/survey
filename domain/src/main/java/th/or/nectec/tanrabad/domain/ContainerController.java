@@ -2,7 +2,7 @@ package th.or.nectec.tanrabad.domain;
 
 import java.util.List;
 
-class ContainerController {
+public class ContainerController {
     private ContainerRepository containerRepository;
     private ContainerPresenter containerPresenter;
 

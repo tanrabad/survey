@@ -18,4 +18,5 @@
 
 <resources>
     <string name="app_name">Tanlabad-survey</string>
+  <string name="title_activity_survey">SurveyActivity</string>
 </resources>

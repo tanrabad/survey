@@ -17,9 +17,6 @@
 
 package th.or.nectec.tanrabad.domain;
 
-/**
- * Created by blaze on 11/9/2015 AD.
- */
 public class Container {
 
 
@@ -34,7 +31,15 @@ public class Container {
     }
 
     @Override
+    public String toString() {
+        return "Container{" +
+                "typeId=" + typeId +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object obj) {
-        return this.typeId == ((Container) obj).typeId;
+        return obj instanceof Container && this.typeId == ((Container) obj).typeId;
+
     }
 }

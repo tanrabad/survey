@@ -40,4 +40,11 @@ public class SurveySave {
             savePresenter.showSaveFail();
         }
     }
+
+    public void save(Survey survey) {
+        if (saveValidator.validate(survey)) {
+            if (resultRepository.save(survey))
+                savePresenter.showSaveSuccess();
+        }
+    }
 }

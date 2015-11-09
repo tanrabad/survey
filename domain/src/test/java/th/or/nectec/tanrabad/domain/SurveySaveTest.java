@@ -37,25 +37,30 @@ public class SurveySaveTest {
         final SurveySaveValidator saveValidator = context.mock(SurveySaveValidator.class);
         final ResultRepository repository = context.mock(ResultRepository.class);
 
-        final ArrayList<SurveyDetail> surveyDetails = new ArrayList<>();
-        surveyDetails.add(SurveyDetail.fromResult(Container.fromId(1), SurveyDetail.INDOOR, 10, 2));
-        surveyDetails.add(SurveyDetail.fromResult(Container.fromId(2), SurveyDetail.OUTDOOR, 5, 0));
+        ArrayList<SurveyDetail> indoorDetails = new ArrayList<>();
+        indoorDetails.add(SurveyDetail.fromResult(Container.fromId(1), SurveyDetail.INDOOR, 10, 2));
+        ArrayList<SurveyDetail> outdoorDetails = new ArrayList<>();
+        indoorDetails.add(SurveyDetail.fromResult(Container.fromId(2), SurveyDetail.OUTDOOR, 5, 0));
+        Building surveyBuilding = new Building(UUID.randomUUID(), "214/2");
 
-        final Building surveyBuilding = new Building(UUID.randomUUID(), "214/2");
+        final Survey survey = new Survey(TRBUser.fromUserName("blaze"), surveyBuilding);
+        survey.setResidentCount(4);
+        survey.setIndoorDetail(indoorDetails);
+        survey.setOutdoorDetail(outdoorDetails);
+
+
         context.checking(new Expectations() {
             {
-                allowing(saveValidator).validate();
+                allowing(saveValidator).validate(with(survey));
                 will(returnValue(true));
-                oneOf(repository).save(with(surveyBuilding),
-                        with(TRBUser.fromUserName("blaze")),
-                        with(surveyDetails));
+                oneOf(repository).save(with(survey));
                 will(returnValue(true));
                 oneOf(savePresenter).showSaveSuccess();
             }
         });
 
         SurveySave surveySave = new SurveySave(savePresenter, saveValidator, repository);
-        surveySave.save(surveyBuilding, TRBUser.fromUserName("blaze"), surveyDetails);
+        surveySave.save(survey);
 
     }
 

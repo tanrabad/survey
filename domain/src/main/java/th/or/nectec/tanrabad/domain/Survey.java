@@ -21,9 +21,27 @@ import th.or.nectec.tanrabad.entity.Building;
 
 import java.util.ArrayList;
 
-public interface ResultRepository {
+public class Survey {
+    private TRBUser user;
+    private Building surveyBuilding;
+    private int residentCount;
+    private ArrayList<SurveyDetail> indoorDetails;
+    private ArrayList<SurveyDetail> outdoorDetails;
 
-    boolean save(Building surveyBuilding, TRBUser surveyor, ArrayList<SurveyDetail> results);
+    public Survey(TRBUser user, Building surveyBuilding) {
+        this.user = user;
+        this.surveyBuilding = surveyBuilding;
+    }
 
-    boolean save(Survey survey);
+    public void setResidentCount(int residentCount) {
+        this.residentCount = residentCount;
+    }
+
+    public void setIndoorDetail(ArrayList<SurveyDetail> indoorDetails) {
+        this.indoorDetails = indoorDetails;
+    }
+
+    public void setOutdoorDetail(ArrayList<SurveyDetail> outdoorDetails) {
+        this.outdoorDetails = outdoorDetails;
+    }
 }

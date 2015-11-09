@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2015  NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,5 +19,7 @@ package th.or.nectec.tanrabad.domain;
 
 
 public interface SurveySaveValidator {
+    boolean validate(Survey with);
+
     boolean validate();
 }

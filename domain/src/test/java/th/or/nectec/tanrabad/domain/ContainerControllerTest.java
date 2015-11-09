@@ -6,9 +6,8 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class SurveyNewListTest {
+public class ContainerControllerTest {
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
 
@@ -55,37 +54,4 @@ public class SurveyNewListTest {
 
     }
 
-    public  interface ContainerRepository{
-
-        List<Container> find();
-    }
-
-    public interface ContainerPresenter{
-
-        void showContainerList(List<Container> containers);
-
-        void showContainerNotFound();
-    }
-
-    private class ContainerController {
-        private ContainerRepository containerRepository;
-        private ContainerPresenter containerPresenter;
-
-
-        public ContainerController(ContainerRepository containerRepository, ContainerPresenter containerPresenter) {
-
-            this.containerRepository = containerRepository;
-            this.containerPresenter = containerPresenter;
-        }
-
-        public void showList() {
-            List<Container> containers = containerRepository.find();
-
-            if (containers == null) {
-                containerPresenter.showContainerNotFound();
-            } else {
-                containerPresenter.showContainerList(containers);
-            }
-        }
-    }
 }

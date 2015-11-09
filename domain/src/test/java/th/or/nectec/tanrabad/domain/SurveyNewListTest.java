@@ -29,8 +29,29 @@ public class SurveyNewListTest {
         });
 
         ContainerController containerController = new ContainerController(containerRepository, containerPresenter);
-        containerController.showContainerList();
+        containerController.showList();
 
+    }
+
+    @Test
+    public void testNotFoundPath() throws Exception {
+        final ContainerRepository containerRepository = context.mock(ContainerRepository.class);
+        final ContainerPresenter containerPresenter = context.mock(ContainerPresenter.class);
+
+        final ArrayList<Container> containers = new ArrayList<>();
+        containers.add(new Container(1));
+        containers.add(Container.fromId(2));
+
+        context.checking(new Expectations() {
+            {
+                allowing(containerRepository).find();
+                will(returnValue(null));
+                oneOf(containerPresenter).showContainerNotFound();
+            }
+        });
+
+        ContainerController containerController = new ContainerController(containerRepository, containerPresenter);
+        containerController.showList();
 
     }
 
@@ -42,6 +63,8 @@ public class SurveyNewListTest {
     public interface ContainerPresenter{
 
         void showContainerList(List<Container> containers);
+
+        void showContainerNotFound();
     }
 
     private class ContainerController {
@@ -55,10 +78,14 @@ public class SurveyNewListTest {
             this.containerPresenter = containerPresenter;
         }
 
-        public void showContainerList() {
+        public void showList() {
             List<Container> containers = containerRepository.find();
-            containerPresenter.showContainerList(containers);
 
+            if (containers == null) {
+                containerPresenter.showContainerNotFound();
+            } else {
+                containerPresenter.showContainerList(containers);
+            }
         }
     }
 }

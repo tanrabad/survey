@@ -15,14 +15,19 @@
  * limitations under the License.
  */
 
-apply plugin: 'java'
+package th.or.nectec.tanrabad.entity;
 
-//noinspection GroovyUnusedAssignment
-sourceCompatibility = rootProject.ext.javaSourceCompatibility
-//noinspection GroovyUnusedAssignment
-targetCompatibility = rootProject.ext.javaTargetCompatibility
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:' + rootProject.ext.junitVersion
+@RunWith(JUnit4.class)
+public class SurveyDetailTest {
+
+    private ContainerType น้ำใช้ = new ContainerType(1, "น้ำใช้");
+
+    @Test(expected = SurveyDetail.ContainerFoundLarvaOverTotalException.class)
+    public void ContainerFoundLarvaMoreThanTotalMustThrowException() throws Exception {
+        new SurveyDetail(น้ำใช้, 2, 10);
+    }
 }

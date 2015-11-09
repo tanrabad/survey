@@ -20,7 +20,6 @@ package th.or.nectec.tanrabad.entity;
 
 public class User {
 
-
     private final String username;
 
     public User(String username) {

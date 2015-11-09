@@ -21,13 +21,19 @@ package th.or.nectec.tanrabad.entity;
 public class SurveyDetail {
 
     private final ContainerType containerType;
-    private final int total;
-    private final int found;
+    private int totalContainer;
+    private int foundLarvaContainer;
 
-    public SurveyDetail(ContainerType containerType, int total, int found) {
+    public SurveyDetail(ContainerType containerType, int totalContainer, int foundLarvaContainer) {
         this.containerType = containerType;
-        this.total = total;
-        this.found = found;
+        setContainerCount(totalContainer, foundLarvaContainer);
+    }
+
+    private void setContainerCount(int total, int found) {
+        if (found > total)
+            throw new ContainerFoundLarvaOverTotalException();
+        this.totalContainer = total;
+        this.foundLarvaContainer = found;
     }
 
     public static SurveyDetail fromResult(ContainerType containerType, int total, int found) {
@@ -35,19 +41,24 @@ public class SurveyDetail {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (other == null || getClass() != other.getClass()) return false;
 
-        SurveyDetail that = (SurveyDetail) o;
-        return total == that.total && found == that.found && containerType.equals(that.containerType);
+        SurveyDetail that = (SurveyDetail) other;
+        return totalContainer == that.totalContainer &&
+                foundLarvaContainer == that.foundLarvaContainer &&
+                containerType.equals(that.containerType);
     }
 
     @Override
     public int hashCode() {
         int result = containerType.hashCode();
-        result = 31 * result + total;
-        result = 31 * result + found;
+        result = 31 * result + totalContainer;
+        result = 31 * result + foundLarvaContainer;
         return result;
+    }
+
+    public class ContainerFoundLarvaOverTotalException extends RuntimeException {
     }
 }

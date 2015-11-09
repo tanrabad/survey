@@ -19,24 +19,19 @@ package th.or.nectec.tanrabad.domain;
 
 
 public class SurveyDetail {
-    public static final int INDOOR = 1;
-    public static final int OUTDOOR = 2;
 
     private final Container container;
-    private final int location;
     private final int total;
     private final int found;
 
-    public SurveyDetail(Container container, int location, int total, int found) {
-
+    public SurveyDetail(Container container, int total, int found) {
         this.container = container;
-        this.location = location;
         this.total = total;
         this.found = found;
     }
 
-    public static SurveyDetail fromResult(Container container, int location, int total, int found) {
-        return new SurveyDetail(container, location, total, found);
+    public static SurveyDetail fromResult(Container container, int total, int found) {
+        return new SurveyDetail(container, total, found);
     }
 
     @Override
@@ -45,15 +40,12 @@ public class SurveyDetail {
         if (o == null || getClass() != o.getClass()) return false;
 
         SurveyDetail that = (SurveyDetail) o;
-
-        return location == that.location && total == that.total && found == that.found && container.equals(that.container);
-
+        return total == that.total && found == that.found && container.equals(that.container);
     }
 
     @Override
     public int hashCode() {
         int result = container.hashCode();
-        result = 31 * result + location;
         result = 31 * result + total;
         result = 31 * result + found;
         return result;

@@ -38,9 +38,9 @@ public class SurveySaveTest {
         final ResultRepository repository = context.mock(ResultRepository.class);
 
         ArrayList<SurveyDetail> indoorDetails = new ArrayList<>();
-        indoorDetails.add(SurveyDetail.fromResult(Container.fromId(1), SurveyDetail.INDOOR, 10, 2));
+        indoorDetails.add(SurveyDetail.fromResult(Container.fromId(1), 10, 2));
         ArrayList<SurveyDetail> outdoorDetails = new ArrayList<>();
-        indoorDetails.add(SurveyDetail.fromResult(Container.fromId(2), SurveyDetail.OUTDOOR, 5, 0));
+        outdoorDetails.add(SurveyDetail.fromResult(Container.fromId(2), 5, 0));
         Building surveyBuilding = new Building(UUID.randomUUID(), "214/2");
 
         final Survey survey = new Survey(TRBUser.fromUserName("blaze"), surveyBuilding);
@@ -65,19 +65,25 @@ public class SurveySaveTest {
     }
 
     @Test
-    public void testBadPath() throws Exception {
+    public void testSadPath() throws Exception {
         final SavePresenter savePresenter = context.mock(SavePresenter.class);
         final SurveySaveValidator saveValidator = context.mock(SurveySaveValidator.class);
         final ResultRepository repository = context.mock(ResultRepository.class);
 
-        final ArrayList<SurveyDetail> surveyDetails = new ArrayList<>();
-        surveyDetails.add(SurveyDetail.fromResult(Container.fromId(1), SurveyDetail.INDOOR, 10, 2));
-        surveyDetails.add(SurveyDetail.fromResult(Container.fromId(2), SurveyDetail.OUTDOOR, 5, 0));
+        ArrayList<SurveyDetail> indoorDetails = new ArrayList<>();
+        indoorDetails.add(SurveyDetail.fromResult(Container.fromId(1), 10, 2));
+        ArrayList<SurveyDetail> outdoorDetails = new ArrayList<>();
+        outdoorDetails.add(SurveyDetail.fromResult(Container.fromId(2), 5, 0));
+        Building surveyBuilding = new Building(UUID.randomUUID(), "214/2");
 
-        final Building surveyBuilding = new Building(UUID.randomUUID(), "214/2");
+        final Survey survey = new Survey(TRBUser.fromUserName("blaze"), surveyBuilding);
+        survey.setResidentCount(4);
+        survey.setIndoorDetail(indoorDetails);
+        survey.setOutdoorDetail(outdoorDetails);
+
         context.checking(new Expectations() {
             {
-                allowing(saveValidator).validate();
+                allowing(saveValidator).validate(survey);
                 will(returnValue(false));
                 never(repository);
 
@@ -86,7 +92,7 @@ public class SurveySaveTest {
         });
 
         SurveySave surveySave = new SurveySave(savePresenter, saveValidator, repository);
-        surveySave.save(surveyBuilding, TRBUser.fromUserName("blaze"), surveyDetails);
+        surveySave.save(survey);
     }
 
 

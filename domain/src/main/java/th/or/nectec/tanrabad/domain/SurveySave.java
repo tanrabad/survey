@@ -45,6 +45,8 @@ public class SurveySave {
         if (saveValidator.validate(survey)) {
             if (resultRepository.save(survey))
                 savePresenter.showSaveSuccess();
+        } else {
+            savePresenter.showSaveFail();
         }
     }
 }

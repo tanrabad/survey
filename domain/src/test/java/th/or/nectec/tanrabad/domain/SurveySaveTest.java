@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2015  NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -37,9 +37,9 @@ public class SurveySaveTest {
         final SurveySaveValidator saveValidator = context.mock(SurveySaveValidator.class);
         final ResultRepository repository = context.mock(ResultRepository.class);
 
-        final ArrayList<SurveyResult> surveyResults = new ArrayList<SurveyResult>();
-        surveyResults.add(SurveyResult.fromResult(Container.fromId(1), SurveyResult.INDOOR, 10, 2));
-        surveyResults.add(SurveyResult.fromResult(Container.fromId(2), SurveyResult.OUTDOOR, 5, 0));
+        final ArrayList<SurveyDetail> surveyDetails = new ArrayList<>();
+        surveyDetails.add(SurveyDetail.fromResult(Container.fromId(1), SurveyDetail.INDOOR, 10, 2));
+        surveyDetails.add(SurveyDetail.fromResult(Container.fromId(2), SurveyDetail.OUTDOOR, 5, 0));
 
         final Building surveyBuilding = new Building(UUID.randomUUID(), "214/2");
         context.checking(new Expectations() {
@@ -48,14 +48,14 @@ public class SurveySaveTest {
                 will(returnValue(true));
                 oneOf(repository).save(with(surveyBuilding),
                         with(TRBUser.fromUserName("blaze")),
-                        with(surveyResults));
+                        with(surveyDetails));
                 will(returnValue(true));
                 oneOf(savePresenter).showSaveSuccess();
             }
         });
 
         SurveySave surveySave = new SurveySave(savePresenter, saveValidator, repository);
-        surveySave.save(surveyBuilding, TRBUser.fromUserName("blaze"), surveyResults);
+        surveySave.save(surveyBuilding, TRBUser.fromUserName("blaze"), surveyDetails);
 
     }
 
@@ -65,9 +65,9 @@ public class SurveySaveTest {
         final SurveySaveValidator saveValidator = context.mock(SurveySaveValidator.class);
         final ResultRepository repository = context.mock(ResultRepository.class);
 
-        final ArrayList<SurveyResult> surveyResults = new ArrayList<SurveyResult>();
-        surveyResults.add(SurveyResult.fromResult(Container.fromId(1), SurveyResult.INDOOR, 10, 2));
-        surveyResults.add(SurveyResult.fromResult(Container.fromId(2), SurveyResult.OUTDOOR, 5, 0));
+        final ArrayList<SurveyDetail> surveyDetails = new ArrayList<>();
+        surveyDetails.add(SurveyDetail.fromResult(Container.fromId(1), SurveyDetail.INDOOR, 10, 2));
+        surveyDetails.add(SurveyDetail.fromResult(Container.fromId(2), SurveyDetail.OUTDOOR, 5, 0));
 
         final Building surveyBuilding = new Building(UUID.randomUUID(), "214/2");
         context.checking(new Expectations() {
@@ -81,7 +81,7 @@ public class SurveySaveTest {
         });
 
         SurveySave surveySave = new SurveySave(savePresenter, saveValidator, repository);
-        surveySave.save(surveyBuilding, TRBUser.fromUserName("blaze"), surveyResults);
+        surveySave.save(surveyBuilding, TRBUser.fromUserName("blaze"), surveyDetails);
     }
 
 

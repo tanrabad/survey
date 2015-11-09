@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2015  NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,10 +17,8 @@
 
 package th.or.nectec.tanrabad.domain;
 
-/**
- * Created by blaze on 11/9/2015 AD.
- */
-public class SurveyResult {
+
+public class SurveyDetail {
     public static final int INDOOR = 1;
     public static final int OUTDOOR = 2;
 
@@ -29,7 +27,7 @@ public class SurveyResult {
     private final int total;
     private final int found;
 
-    public SurveyResult(Container container, int location, int total, int found) {
+    public SurveyDetail(Container container, int location, int total, int found) {
 
         this.container = container;
         this.location = location;
@@ -37,8 +35,8 @@ public class SurveyResult {
         this.found = found;
     }
 
-    public static SurveyResult fromResult(Container container, int location, int total, int found) {
-        return new SurveyResult(container, location, total, found);
+    public static SurveyDetail fromResult(Container container, int location, int total, int found) {
+        return new SurveyDetail(container, location, total, found);
     }
 
     @Override
@@ -46,12 +44,9 @@ public class SurveyResult {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        SurveyResult that = (SurveyResult) o;
+        SurveyDetail that = (SurveyDetail) o;
 
-        if (location != that.location) return false;
-        if (total != that.total) return false;
-        if (found != that.found) return false;
-        return container.equals(that.container);
+        return location == that.location && total == that.total && found == that.found && container.equals(that.container);
 
     }
 

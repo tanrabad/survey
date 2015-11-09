@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2015  NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,9 +21,6 @@ import th.or.nectec.tanrabad.entity.Building;
 
 import java.util.ArrayList;
 
-/**
- * Created by blaze on 11/9/2015 AD.
- */
 public class SurveySave {
     private final SurveySaveValidator saveValidator;
     private final ResultRepository resultRepository;
@@ -35,9 +32,9 @@ public class SurveySave {
         this.resultRepository = resultRepository;
     }
 
-    public void save(Building building, TRBUser blaze, ArrayList<SurveyResult> surveyResults) {
+    public void save(Building building, TRBUser blaze, ArrayList<SurveyDetail> surveyDetails) {
         if (saveValidator.validate()) {
-            if (resultRepository.save(building, blaze, surveyResults))
+            if (resultRepository.save(building, blaze, surveyDetails))
                 savePresenter.showSaveSuccess();
         } else {
             savePresenter.showSaveFail();

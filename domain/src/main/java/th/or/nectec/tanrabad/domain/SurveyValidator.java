@@ -22,6 +22,4 @@ import th.or.nectec.tanrabad.entity.Survey;
 
 public interface SurveyValidator {
     boolean validate(Survey with);
-
-    boolean validate();
 }

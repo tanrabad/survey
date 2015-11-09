@@ -17,16 +17,8 @@
 
 package th.or.nectec.tanrabad.domain;
 
-import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Survey;
-import th.or.nectec.tanrabad.entity.SurveyDetail;
-import th.or.nectec.tanrabad.entity.User;
-
-import java.util.ArrayList;
 
 public interface SurveyRepository {
-
-    boolean save(Building surveyBuilding, User surveyor, ArrayList<SurveyDetail> results);
-
     boolean save(Survey survey);
 }

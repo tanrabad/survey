@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2015  NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,18 +18,18 @@
 package th.or.nectec.tanrabad.domain;
 
 
-public class TRBUser {
+public class User {
 
 
     private final String username;
 
-    public TRBUser(String username) {
+    public User(String username) {
 
         this.username = username;
     }
 
-    public static TRBUser fromUserName(String username) {
-        return new TRBUser(username);
+    public static User fromUsername(String username) {
+        return new User(username);
     }
 
     @Override
@@ -37,9 +37,9 @@ public class TRBUser {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TRBUser trbUser = (TRBUser) o;
+        User user = (User) o;
 
-        return username.equals(trbUser.username);
+        return username.equals(user.username);
     }
 
     @Override

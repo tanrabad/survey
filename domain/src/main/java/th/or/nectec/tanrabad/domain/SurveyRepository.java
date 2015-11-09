@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2015  NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,8 +17,13 @@
 
 package th.or.nectec.tanrabad.domain;
 
-public interface SavePresenter {
-    void showSaveSuccess();
+import th.or.nectec.tanrabad.entity.Building;
 
-    void showSaveFail();
+import java.util.ArrayList;
+
+public interface SurveyRepository {
+
+    boolean save(Building surveyBuilding, User surveyor, ArrayList<SurveyDetail> results);
+
+    boolean save(Survey survey);
 }

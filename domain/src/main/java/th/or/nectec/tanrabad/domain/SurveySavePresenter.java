@@ -17,9 +17,8 @@
 
 package th.or.nectec.tanrabad.domain;
 
+public interface SurveySavePresenter {
+    void showSaveSuccess();
 
-public interface SurveySaveValidator {
-    boolean validate(Survey with);
-
-    boolean validate();
+    void showSaveFail();
 }

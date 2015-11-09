@@ -17,13 +17,9 @@
 
 package th.or.nectec.tanrabad.domain;
 
-import th.or.nectec.tanrabad.entity.Building;
 
-import java.util.ArrayList;
+public interface SurveyValidator {
+    boolean validate(Survey with);
 
-public interface ResultRepository {
-
-    boolean save(Building surveyBuilding, TRBUser surveyor, ArrayList<SurveyDetail> results);
-
-    boolean save(Survey survey);
+    boolean validate();
 }

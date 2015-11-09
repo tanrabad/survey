@@ -22,13 +22,13 @@ import th.or.nectec.tanrabad.entity.Building;
 import java.util.ArrayList;
 
 public class Survey {
-    private TRBUser user;
+    private User user;
     private Building surveyBuilding;
     private int residentCount;
     private ArrayList<SurveyDetail> indoorDetails;
     private ArrayList<SurveyDetail> outdoorDetails;
 
-    public Survey(TRBUser user, Building surveyBuilding) {
+    public Survey(User user, Building surveyBuilding) {
         this.user = user;
         this.surveyBuilding = surveyBuilding;
     }

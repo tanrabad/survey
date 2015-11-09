@@ -17,7 +17,7 @@
 
 package th.or.nectec.tanrabad.domain;
 
-import th.or.nectec.tanrabad.entity.Container;
+import th.or.nectec.tanrabad.entity.ContainerType;
 
 import java.util.List;
 
@@ -33,12 +33,12 @@ public class ContainerController {
     }
 
     public void showList() {
-        List<Container> containers = containerRepository.find();
+        List<ContainerType> containerTypes = containerRepository.find();
 
-        if (containers == null) {
+        if (containerTypes == null) {
             containerPresenter.showContainerNotFound();
         } else {
-            containerPresenter.showContainerList(containers);
+            containerPresenter.showContainerList(containerTypes);
         }
     }
 }

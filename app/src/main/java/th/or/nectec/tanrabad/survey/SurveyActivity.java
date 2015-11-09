@@ -23,7 +23,7 @@ import android.widget.TextView;
 import th.or.nectec.tanrabad.domain.ContainerController;
 import th.or.nectec.tanrabad.domain.ContainerPresenter;
 import th.or.nectec.tanrabad.domain.ContainerRepository;
-import th.or.nectec.tanrabad.entity.Container;
+import th.or.nectec.tanrabad.entity.ContainerType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,18 +39,18 @@ public class SurveyActivity extends Activity {
 
         ContainerController containerController = new ContainerController(new ContainerRepository() {
             @Override
-            public List<Container> find() {
-                ArrayList<Container> containers = new ArrayList<>();
-                containers.add(new Container(1));
-                containers.add(new Container(2));
-                containers.add(new Container(3));
-                return containers;
+            public List<ContainerType> find() {
+                ArrayList<ContainerType> containerTypes = new ArrayList<>();
+                containerTypes.add(new ContainerType(1, "น้ำดื่ม"));
+                containerTypes.add(new ContainerType(2, "น้ำใช้"));
+                containerTypes.add(new ContainerType(3, "แจกัน"));
+                return containerTypes;
             }
         }, new ContainerPresenter() {
             @Override
-            public void showContainerList(List<Container> containers) {
+            public void showContainerList(List<ContainerType> containers) {
                 String containerListStr = "";
-                for (Container eachContainer : containers) {
+                for (ContainerType eachContainer : containers) {
                     containerListStr += eachContainer.toString() + "\n";
                 }
 

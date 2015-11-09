@@ -20,18 +20,18 @@ package th.or.nectec.tanrabad.entity;
 
 public class SurveyDetail {
 
-    private final Container container;
+    private final ContainerType containerType;
     private final int total;
     private final int found;
 
-    public SurveyDetail(Container container, int total, int found) {
-        this.container = container;
+    public SurveyDetail(ContainerType containerType, int total, int found) {
+        this.containerType = containerType;
         this.total = total;
         this.found = found;
     }
 
-    public static SurveyDetail fromResult(Container container, int total, int found) {
-        return new SurveyDetail(container, total, found);
+    public static SurveyDetail fromResult(ContainerType containerType, int total, int found) {
+        return new SurveyDetail(containerType, total, found);
     }
 
     @Override
@@ -40,12 +40,12 @@ public class SurveyDetail {
         if (o == null || getClass() != o.getClass()) return false;
 
         SurveyDetail that = (SurveyDetail) o;
-        return total == that.total && found == that.found && container.equals(that.container);
+        return total == that.total && found == that.found && containerType.equals(that.containerType);
     }
 
     @Override
     public int hashCode() {
-        int result = container.hashCode();
+        int result = containerType.hashCode();
         result = 31 * result + total;
         result = 31 * result + found;
         return result;

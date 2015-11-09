@@ -17,13 +17,13 @@
 
 package th.or.nectec.tanrabad.domain;
 
-import th.or.nectec.tanrabad.entity.Container;
+import th.or.nectec.tanrabad.entity.ContainerType;
 
 import java.util.List;
 
 public interface ContainerPresenter {
 
-    void showContainerList(List<Container> containers);
+    void showContainerList(List<ContainerType> containerTypes);
 
     void showContainerNotFound();
 }

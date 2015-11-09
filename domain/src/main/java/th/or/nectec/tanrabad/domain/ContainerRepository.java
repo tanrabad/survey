@@ -17,11 +17,11 @@
 
 package th.or.nectec.tanrabad.domain;
 
-import th.or.nectec.tanrabad.entity.Container;
+import th.or.nectec.tanrabad.entity.ContainerType;
 
 import java.util.List;
 
 public interface ContainerRepository {
 
-    List<Container> find();
+    List<ContainerType> find();
 }

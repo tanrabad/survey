@@ -21,11 +21,11 @@ import org.jmock.Expectations;
 import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Rule;
 import org.junit.Test;
-import th.or.nectec.tanrabad.entity.Container;
+import th.or.nectec.tanrabad.entity.ContainerType;
 
 import java.util.ArrayList;
 
-public class ContainerControllerTest {
+public class ContainerTypeControllerTest {
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
 
@@ -34,14 +34,14 @@ public class ContainerControllerTest {
         final ContainerRepository containerRepository = context.mock(ContainerRepository.class);
         final ContainerPresenter containerPresenter = context.mock(ContainerPresenter.class);
 
-        final ArrayList<Container> containers = new ArrayList<>();
-        containers.add(new Container(1));
-        containers.add(Container.fromId(2));
+        final ArrayList<ContainerType> containerTypes = new ArrayList<>();
+        containerTypes.add(new ContainerType(1, "น้ำใช้"));
+        containerTypes.add(new ContainerType(2, "น้ำดื่ม"));
 
         context.checking(new Expectations(){{
             allowing(containerRepository).find();
-            will(returnValue(containers));
-        oneOf(containerPresenter).showContainerList(with(containers));
+            will(returnValue(containerTypes));
+            oneOf(containerPresenter).showContainerList(with(containerTypes));
         }
         });
 
@@ -55,9 +55,9 @@ public class ContainerControllerTest {
         final ContainerRepository containerRepository = context.mock(ContainerRepository.class);
         final ContainerPresenter containerPresenter = context.mock(ContainerPresenter.class);
 
-        final ArrayList<Container> containers = new ArrayList<>();
-        containers.add(new Container(1));
-        containers.add(Container.fromId(2));
+        final ArrayList<ContainerType> containerTypes = new ArrayList<>();
+        containerTypes.add(new ContainerType(1, "น้ำใช้"));
+        containerTypes.add(new ContainerType(2, "น้ำดื่ม"));
 
         context.checking(new Expectations() {
             {

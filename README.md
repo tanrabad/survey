@@ -7,7 +7,7 @@ Entity
 * place
 * building
 * survey
-* container
+* containerType
 * user
 * organization
 

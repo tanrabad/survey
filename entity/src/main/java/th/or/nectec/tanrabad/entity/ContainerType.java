@@ -17,29 +17,44 @@
 
 package th.or.nectec.tanrabad.entity;
 
-public class Container {
+public class ContainerType {
 
+    private final int id;
+    private String name;
 
-    private final int typeId;
-
-    public Container(int typeId) {
-        this.typeId = typeId;
+    public ContainerType(int id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
-    public static Container fromId(int typeId) {
-        return new Container(typeId);
+    public String getName() {
+        return name;
+    }
+
+    public int getId() {
+        return id;
     }
 
     @Override
     public String toString() {
-        return "Container{" +
-                "typeId=" + typeId +
+        return "ContainerType{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 '}';
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return obj instanceof Container && this.typeId == ((Container) obj).typeId;
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (!(other instanceof ContainerType)) return false;
+        ContainerType that = (ContainerType) other;
+        return id == that.id && name.equals(that.name);
+    }
 
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + name.hashCode();
+        return result;
     }
 }

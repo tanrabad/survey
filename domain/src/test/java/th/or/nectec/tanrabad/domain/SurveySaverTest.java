@@ -49,9 +49,9 @@ public class SurveySaverTest {
 
     private void setupSurveyObject() {
         ArrayList<SurveyDetail> indoorDetails = new ArrayList<>();
-        indoorDetails.add(SurveyDetail.fromResult(Container.fromId(1), 10, 2));
+        indoorDetails.add(SurveyDetail.fromResult(new ContainerType(1, "น้ำใช้"), 10, 2));
         ArrayList<SurveyDetail> outdoorDetails = new ArrayList<>();
-        outdoorDetails.add(SurveyDetail.fromResult(Container.fromId(2), 5, 0));
+        outdoorDetails.add(SurveyDetail.fromResult(new ContainerType(2, "น้ำดื่ม"), 5, 0));
 
         survey = new Survey(User.fromUsername("blaze"), Building.withName("214/2"));
         survey.setResidentCount(4);

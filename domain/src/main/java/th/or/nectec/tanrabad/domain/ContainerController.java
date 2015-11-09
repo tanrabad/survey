@@ -22,18 +22,18 @@ import th.or.nectec.tanrabad.entity.ContainerType;
 import java.util.List;
 
 public class ContainerController {
-    private ContainerRepository containerRepository;
+    private ContainerTypeRepository containerTypeRepository;
     private ContainerPresenter containerPresenter;
 
 
-    public ContainerController(ContainerRepository containerRepository, ContainerPresenter containerPresenter) {
+    public ContainerController(ContainerTypeRepository containerTypeRepository, ContainerPresenter containerPresenter) {
 
-        this.containerRepository = containerRepository;
+        this.containerTypeRepository = containerTypeRepository;
         this.containerPresenter = containerPresenter;
     }
 
     public void showList() {
-        List<ContainerType> containerTypes = containerRepository.find();
+        List<ContainerType> containerTypes = containerTypeRepository.find();
 
         if (containerTypes == null) {
             containerPresenter.showContainerNotFound();

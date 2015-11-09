@@ -31,7 +31,7 @@ public class ContainerTypeControllerTest {
 
     @Test
     public void testHappyPath() throws Exception {
-        final ContainerRepository containerRepository = context.mock(ContainerRepository.class);
+        final ContainerTypeRepository containerTypeRepository = context.mock(ContainerTypeRepository.class);
         final ContainerPresenter containerPresenter = context.mock(ContainerPresenter.class);
 
         final ArrayList<ContainerType> containerTypes = new ArrayList<>();
@@ -39,20 +39,20 @@ public class ContainerTypeControllerTest {
         containerTypes.add(new ContainerType(2, "น้ำดื่ม"));
 
         context.checking(new Expectations(){{
-            allowing(containerRepository).find();
+            allowing(containerTypeRepository).find();
             will(returnValue(containerTypes));
             oneOf(containerPresenter).showContainerList(with(containerTypes));
         }
         });
 
-        ContainerController containerController = new ContainerController(containerRepository, containerPresenter);
+        ContainerController containerController = new ContainerController(containerTypeRepository, containerPresenter);
         containerController.showList();
 
     }
 
     @Test
     public void testNotFoundPath() throws Exception {
-        final ContainerRepository containerRepository = context.mock(ContainerRepository.class);
+        final ContainerTypeRepository containerTypeRepository = context.mock(ContainerTypeRepository.class);
         final ContainerPresenter containerPresenter = context.mock(ContainerPresenter.class);
 
         final ArrayList<ContainerType> containerTypes = new ArrayList<>();
@@ -61,13 +61,13 @@ public class ContainerTypeControllerTest {
 
         context.checking(new Expectations() {
             {
-                allowing(containerRepository).find();
+                allowing(containerTypeRepository).find();
                 will(returnValue(null));
                 oneOf(containerPresenter).showContainerNotFound();
             }
         });
 
-        ContainerController containerController = new ContainerController(containerRepository, containerPresenter);
+        ContainerController containerController = new ContainerController(containerTypeRepository, containerPresenter);
         containerController.showList();
 
     }

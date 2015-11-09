@@ -21,7 +21,7 @@ import th.or.nectec.tanrabad.entity.ContainerType;
 
 import java.util.List;
 
-public interface ContainerRepository {
+public interface ContainerTypeRepository {
 
     List<ContainerType> find();
 }

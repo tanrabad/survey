@@ -15,9 +15,7 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.domain;
-
-import th.or.nectec.tanrabad.entity.Building;
+package th.or.nectec.tanrabad.entity;
 
 import java.util.ArrayList;
 

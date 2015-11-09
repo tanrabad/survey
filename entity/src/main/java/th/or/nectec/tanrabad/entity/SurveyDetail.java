@@ -15,21 +15,23 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.domain;
+package th.or.nectec.tanrabad.entity;
 
 
-public class User {
+public class SurveyDetail {
 
+    private final Container container;
+    private final int total;
+    private final int found;
 
-    private final String username;
-
-    public User(String username) {
-
-        this.username = username;
+    public SurveyDetail(Container container, int total, int found) {
+        this.container = container;
+        this.total = total;
+        this.found = found;
     }
 
-    public static User fromUsername(String username) {
-        return new User(username);
+    public static SurveyDetail fromResult(Container container, int total, int found) {
+        return new SurveyDetail(container, total, found);
     }
 
     @Override
@@ -37,13 +39,15 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        User user = (User) o;
-
-        return username.equals(user.username);
+        SurveyDetail that = (SurveyDetail) o;
+        return total == that.total && found == that.found && container.equals(that.container);
     }
 
     @Override
     public int hashCode() {
-        return username.hashCode();
+        int result = container.hashCode();
+        result = 31 * result + total;
+        result = 31 * result + found;
+        return result;
     }
 }

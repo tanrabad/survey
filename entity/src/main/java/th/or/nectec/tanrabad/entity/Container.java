@@ -15,18 +15,31 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.domain;
+package th.or.nectec.tanrabad.entity;
 
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.Survey;
-import th.or.nectec.tanrabad.entity.SurveyDetail;
-import th.or.nectec.tanrabad.entity.User;
+public class Container {
 
-import java.util.ArrayList;
 
-public interface SurveyRepository {
+    private final int typeId;
 
-    boolean save(Building surveyBuilding, User surveyor, ArrayList<SurveyDetail> results);
+    public Container(int typeId) {
+        this.typeId = typeId;
+    }
 
-    boolean save(Survey survey);
+    public static Container fromId(int typeId) {
+        return new Container(typeId);
+    }
+
+    @Override
+    public String toString() {
+        return "Container{" +
+                "typeId=" + typeId +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof Container && this.typeId == ((Container) obj).typeId;
+
+    }
 }

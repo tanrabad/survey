@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2015  NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,31 +15,35 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.domain;
-
-public class Container {
+package th.or.nectec.tanrabad.entity;
 
 
-    private final int typeId;
+public class User {
 
-    public Container(int typeId) {
-        this.typeId = typeId;
+
+    private final String username;
+
+    public User(String username) {
+
+        this.username = username;
     }
 
-    public static Container fromId(int typeId) {
-        return new Container(typeId);
-    }
-
-    @Override
-    public String toString() {
-        return "Container{" +
-                "typeId=" + typeId +
-                '}';
+    public static User fromUsername(String username) {
+        return new User(username);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return obj instanceof Container && this.typeId == ((Container) obj).typeId;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        User user = (User) o;
+
+        return username.equals(user.username);
+    }
+
+    @Override
+    public int hashCode() {
+        return username.hashCode();
     }
 }

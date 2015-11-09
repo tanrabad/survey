@@ -22,7 +22,7 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import th.or.nectec.tanrabad.entity.Building;
+import th.or.nectec.tanrabad.entity.*;
 
 import java.util.ArrayList;
 

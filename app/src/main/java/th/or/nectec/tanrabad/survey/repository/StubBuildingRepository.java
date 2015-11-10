@@ -30,8 +30,6 @@ public class StubBuildingRepository implements BuildingRepository {
     List<Building> buildings = new ArrayList<>();
 
     public StubBuildingRepository() {
-        List<Building> buildings = new ArrayList<>();
-
         Building building1 = (new Building(UUID.nameUUIDFromBytes("1xyz".getBytes()), "214/43"));
         building1.setPlace(new Place(UUID.nameUUIDFromBytes("1abc".getBytes()), "บางไผ่"));
         buildings.add(building1);
@@ -79,6 +77,16 @@ public class StubBuildingRepository implements BuildingRepository {
     public Building findBuildingByName(String buildingName) {
         for (Building eachBuilding : buildings) {
             if (eachBuilding.getName().equals(buildingName)) {
+                return eachBuilding;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Building findBuildingByUUID(UUID buildingUUID) {
+        for (Building eachBuilding : buildings) {
+            if (eachBuilding.getId().equals(buildingUUID)) {
                 return eachBuilding;
             }
         }

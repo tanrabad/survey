@@ -20,36 +20,19 @@ package th.or.nectec.tanrabad.survey;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
+
+import java.util.List;
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.domain.BuildingChooser;
 import th.or.nectec.tanrabad.domain.BuildingPresenter;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.survey.repository.StubBuildingRepository;
 
-import java.util.List;
-import java.util.UUID;
-
 public class BuildingListActivity extends AppCompatActivity {
 
     private TextView buildingList;
     private BuildingChooser buildingChooser;
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_building_list);
-        buildingList = (TextView) findViewById(R.id.buildingList);
-
-        buildingChooser = new BuildingChooser(new StubBuildingRepository(), this.buildingPresenter);
-        buildingChooser.showBuildingOf(getUuidFromIntent());
-    }
-
-    private UUID getUuidFromIntent() {
-//        String uuid = getIntent().getStringExtra("place_uuid");
-//        return UUID.fromString(uuid);
-        return UUID.randomUUID();
-    }
-
     private BuildingPresenter buildingPresenter = new BuildingPresenter() {
         @Override
         public void showBuildingList(List<Building> buildings) {
@@ -75,6 +58,27 @@ public class BuildingListActivity extends AppCompatActivity {
         public void showBuildingName(Building buildings) {
 
         }
+
+        @Override
+        public void displayBuilding(Building building) {
+
+        }
     };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_building_list);
+        buildingList = (TextView) findViewById(R.id.buildingList);
+
+        buildingChooser = new BuildingChooser(new StubBuildingRepository(), this.buildingPresenter);
+        buildingChooser.showBuildingOf(getUuidFromIntent());
+    }
+
+    private UUID getUuidFromIntent() {
+//        String uuid = getIntent().getStringExtra("place_uuid");
+//        return UUID.fromString(uuid);
+        return UUID.randomUUID();
+    }
 
 }

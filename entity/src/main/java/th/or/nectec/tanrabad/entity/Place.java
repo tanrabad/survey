@@ -22,7 +22,11 @@ import java.util.UUID;
 
 public class Place {
 
-    public static final int TYPE_VILLAGE = 1;
+    public static final int TYPE_VILLAGE_COMMUNITY = 1;
+    public static final int TYPE_WORSHIP = 2;
+    public static final int TYPE_SCHOOL = 3;
+    public static final int TYPE_HOSPITAL = 4;
+    public static final int TYPE_FACTORY = 5;
 
     private UUID id;
     private String name;

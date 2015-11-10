@@ -16,7 +16,7 @@ class SurveyController {
     public void findSurveyByBuildingAndUser(Building building, User user) {
         Survey survey = surveyRepository.findByBuildingAndUser(building, user);
         if (survey == null) {
-            surveyPresenter.loadSurveyFail();
+            surveyPresenter.startNewSurvey(building, user);
         } else {
             surveyPresenter.loadSurveySuccess(survey);
         }

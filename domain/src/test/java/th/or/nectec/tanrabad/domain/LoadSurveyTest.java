@@ -50,7 +50,7 @@ public class LoadSurveyTest {
             {
                 allowing(surveyRepository).findByBuildingAndUser(building, user);
                 will(returnValue(null));
-                oneOf(surveyPresenter).loadSurveyFail();
+                oneOf(surveyPresenter).startNewSurvey(building, user);
             }
         });
 

@@ -2,9 +2,6 @@ package th.or.nectec.tanrabad.domain;
 
 import th.or.nectec.tanrabad.entity.User;
 
-/**
- * Created by User on 10/11/2558.
- */
 class UserController {
     private UserRepository userRepository;
     private UserPresenter userPresenter;
@@ -17,9 +14,9 @@ class UserController {
     public void showUserOf(String userName) {
         User user = userRepository.findUserByName(userName);
         if (user == null) {
-            userPresenter.showNotFoundUser();
+            userPresenter.displayNotFoundUser();
         } else {
-            userPresenter.showUserName(user);
+            userPresenter.displayUserName(user);
         }
     }
 }

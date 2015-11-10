@@ -34,51 +34,53 @@ public class LoadSurveyTest {
 
         context.checking(new Expectations() {
             {
-                allowing(surveyRepository).findByBuildingAndUserIn7Day(building, user);
+                allowing(surveyRepository).findByBuildingAndUserIn7Day(with(building), with(user));
                 will(returnValue(surveys));
                 oneOf(surveyPresenter).onEditSurvey(with(surveys));
             }
         });
 
         SurveyController surveyController = new SurveyController(surveyRepository, surveyPresenter);
-        surveyController.findSurveyByBuildingAndUser(building, user);
+        surveyController.checkThisBuildingAndUserCanSurvey(building, user);
     }
 
     @Test
     public void testStartNewSurvey() throws Exception {
         context.checking(new Expectations() {
             {
-                allowing(surveyRepository).findByBuildingAndUserIn7Day(building, user);
+                allowing(surveyRepository).findByBuildingAndUserIn7Day(with(building), with(user));
                 will(returnValue(null));
-                oneOf(surveyPresenter).onNewSurvey(building, user);
+                oneOf(surveyPresenter).onNewSurvey(with(building), with(user));
             }
         });
 
         SurveyController surveyController = new SurveyController(surveyRepository, surveyPresenter);
-        surveyController.findSurveyByBuildingAndUser(building, user);
+        surveyController.checkThisBuildingAndUserCanSurvey(building, user);
     }
 
     @Test
     public void testNotFoundUser() throws Exception {
         context.checking(new Expectations() {
             {
+                never(surveyRepository);
                 oneOf(surveyPresenter).alertUserNotFound();
             }
         });
 
         SurveyController surveyController = new SurveyController(surveyRepository, surveyPresenter);
-        surveyController.findSurveyByBuildingAndUser(building, null);
+        surveyController.checkThisBuildingAndUserCanSurvey(building, null);
     }
 
     @Test
     public void testNotFoundBuilding() throws Exception {
         context.checking(new Expectations() {
             {
+                never(surveyRepository);
                 oneOf(surveyPresenter).alertBuildingNotFound();
             }
         });
 
         SurveyController surveyController = new SurveyController(surveyRepository, surveyPresenter);
-        surveyController.findSurveyByBuildingAndUser(null, user);
+        surveyController.checkThisBuildingAndUserCanSurvey(null, user);
     }
 }

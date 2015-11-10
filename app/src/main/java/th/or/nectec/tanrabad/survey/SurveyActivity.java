@@ -17,17 +17,18 @@
 
 package th.or.nectec.tanrabad.survey;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
+
+import java.util.List;
+
 import th.or.nectec.tanrabad.domain.ContainerController;
 import th.or.nectec.tanrabad.domain.ContainerPresenter;
 import th.or.nectec.tanrabad.entity.ContainerType;
 import th.or.nectec.tanrabad.survey.repository.InMemoryContainerTypeRepository;
 
-import java.util.List;
-
-public class SurveyActivity extends Activity {
+public class SurveyActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

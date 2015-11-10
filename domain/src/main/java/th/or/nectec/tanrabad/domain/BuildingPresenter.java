@@ -10,4 +10,6 @@ public interface BuildingPresenter {
     void showNotFoundBuilding();
 
     void showPleaseSpecityPlace();
+
+    void showBuildingName(Building buildings);
 }

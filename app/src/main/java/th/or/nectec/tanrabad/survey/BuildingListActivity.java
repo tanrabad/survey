@@ -55,7 +55,7 @@ public class BuildingListActivity extends AppCompatActivity {
         public void showBuildingList(List<Building> buildings) {
             StringBuilder stringBuilder = new StringBuilder();
             for (Building building : buildings) {
-                stringBuilder.append(building.getName());
+                stringBuilder.append(building.toString());
                 stringBuilder.append("\n");
             }
             buildingList.setText(stringBuilder.toString());

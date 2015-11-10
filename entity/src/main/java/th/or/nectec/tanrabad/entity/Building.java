@@ -23,15 +23,6 @@ public class Building {
 
     private UUID id;
     private String name;
-
-    public Place getPlace() {
-        return place;
-    }
-
-    public void setPlace(Place place) {
-        this.place = place;
-    }
-
     private Place place;
 
     public Building(UUID id, String name) {
@@ -44,12 +35,28 @@ public class Building {
         return new Building(uuid, name);
     }
 
+    public Place getPlace() {
+        return place;
+    }
+
+    public void setPlace(Place place) {
+        this.place = place;
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     @Override

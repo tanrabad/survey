@@ -17,14 +17,15 @@
 
 package th.or.nectec.tanrabad.domain;
 
-import th.or.nectec.tanrabad.entity.Building;
-
 import java.util.List;
 import java.util.UUID;
+
+import th.or.nectec.tanrabad.entity.Building;
 
 public interface BuildingRepository {
     List<Building> findBuildingInPlace(UUID placeUuid);
 
     Building findBuildingByName(String buildingName);
 
+    Building findBuildingByUUID(UUID uuid);
 }

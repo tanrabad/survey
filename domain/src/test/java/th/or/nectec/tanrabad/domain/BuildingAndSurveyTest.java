@@ -6,23 +6,29 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.User;
 
 public class BuildingAndSurveyTest {
+
     public final String buildingName = "123";
     public final String userName = "ice";
-    User user = User.fromUsername(userName);
-    Building building = Building.withName(buildingName);
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
+    User user = User.fromUsername(userName);
+    Building building = Building.withName(buildingName);
     private BuildingRepository buildingRepository;
     private BuildingPresenter buildingPresenter;
     private UserRepository userRepository;
     private UserPresenter userPresenter;
+    private UUID buildingUUID;
 
     @Before
     public void setUp() throws Exception {
+        buildingUUID = UUID.nameUUIDFromBytes("3xyz".getBytes());
+
         buildingRepository = context.mock(BuildingRepository.class);
         buildingPresenter = context.mock(BuildingPresenter.class);
 
@@ -35,13 +41,13 @@ public class BuildingAndSurveyTest {
 
         context.checking(new Expectations() {
             {
-                allowing(buildingRepository).findBuildingByName(buildingName);
+                allowing(buildingRepository).findBuildingByUUID(buildingUUID);
                 will(returnValue(building));
-                oneOf(buildingPresenter).showBuildingName(building);
+                oneOf(buildingPresenter).displayBuilding(building);
             }
         });
         BuildingController buildingController = new BuildingController(buildingRepository, buildingPresenter);
-        buildingController.showBuildingOf(buildingName);
+        buildingController.showBuilding(buildingUUID);
     }
 
     @Test

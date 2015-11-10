@@ -1,8 +1,8 @@
 package th.or.nectec.tanrabad.domain;
 
-import th.or.nectec.tanrabad.entity.Building;
-
 import java.util.List;
+
+import th.or.nectec.tanrabad.entity.Building;
 
 public interface BuildingPresenter {
     void showBuildingList(List<Building> buildings);
@@ -12,4 +12,6 @@ public interface BuildingPresenter {
     void showPleaseSpecityPlace();
 
     void showBuildingName(Building buildings);
+
+    void displayBuilding(Building building);
 }

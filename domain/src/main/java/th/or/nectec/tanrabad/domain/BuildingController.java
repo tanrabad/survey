@@ -1,5 +1,7 @@
 package th.or.nectec.tanrabad.domain;
 
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.entity.Building;
 
 public class BuildingController {
@@ -20,7 +22,12 @@ public class BuildingController {
         }
     }
 
-    /*public void showBuildingOf(Building buildingName) {
-
-    }*/
+    public void showBuilding(UUID buildingUUID) {
+        Building buildingByUUID = buildingRepository.findBuildingByUUID(buildingUUID);
+        if (buildingByUUID == null) {
+            buildingPresenter.showNotFoundBuilding();
+        } else {
+            buildingPresenter.displayBuilding(buildingByUUID);
+        }
+    }
 }

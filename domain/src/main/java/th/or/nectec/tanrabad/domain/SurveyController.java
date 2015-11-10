@@ -13,7 +13,7 @@ class SurveyController {
         this.surveyPresenter = surveyPresenter;
     }
 
-    public void findSurveyByBuildingAndUser(Building building, User user) {
+    public void checkThisBuildingAndUserCanSurvey(Building building, User user) {
 
         if (building == null) {
             surveyPresenter.alertBuildingNotFound();

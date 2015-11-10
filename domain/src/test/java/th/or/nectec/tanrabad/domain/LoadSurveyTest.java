@@ -45,7 +45,7 @@ public class LoadSurveyTest {
     }
 
     @Test
-    public void testLoadSurveyFail() throws Exception {
+    public void testStartNewSurvey() throws Exception {
         context.checking(new Expectations() {
             {
                 allowing(surveyRepository).findByBuildingAndUser(building, user);

@@ -23,6 +23,15 @@ public class Building {
 
     private UUID id;
     private String name;
+
+    public Place getPlace() {
+        return place;
+    }
+
+    public void setPlace(Place place) {
+        this.place = place;
+    }
+
     private Place place;
 
     public Building(UUID id, String name) {
@@ -48,6 +57,7 @@ public class Building {
         return "Building{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", place=" + place +
                 '}';
     }
 

@@ -25,18 +25,38 @@ import java.util.List;
 import java.util.UUID;
 
 public class StubPlaceRepository implements PlaceRepository {
+
+    public Place getPalazzettoVillage() {
+        return palazzettoVillage;
+    }
+
+    public Place getBangkokHospital() {
+        return bangkokHospital;
+    }
+
+    public Place getWatpaphukon() {
+        return watpaphukon;
+    }
+
+    private final Place palazzettoVillage;
+    private final Place bangkokHospital;
+    private final Place watpaphukon;
+
+    public StubPlaceRepository() {
+        palazzettoVillage = new Place(UUID.nameUUIDFromBytes("1abc".getBytes()), "บ้านพาลาซเซตโต้");
+        bangkokHospital = new Place(UUID.nameUUIDFromBytes("2bcd".getBytes()), "โรงพยาบาลกรุงเทพ");
+        watpaphukon = new Place(UUID.nameUUIDFromBytes("3def".getBytes()), "วัดป่าภูก้อน");
+        palazzettoVillage.setType(Place.TYPE_VILLAGE_COMMUNITY);
+        bangkokHospital.setType(Place.TYPE_HOSPITAL);
+        watpaphukon.setType(Place.TYPE_WORSHIP);
+    }
+
     @Override
     public List<Place> findPlaces() {
         List<Place> places = new ArrayList<>();
-
-        Place place1 = new Place(UUID.nameUUIDFromBytes("1abc".getBytes()), "บางไผ่");
-        place1.setType(Place.TYPE_VILLAGE);
-
-        places.add(place1);
-
-        places.add(new Place(UUID.nameUUIDFromBytes("1abc".getBytes()), "บางไผ่"));
-        places.add(new Place(UUID.nameUUIDFromBytes("2bcd".getBytes()), "บางโพธิ์"));
-        places.add(new Place(UUID.nameUUIDFromBytes("3def".getBytes()), "บางไทร"));
+        places.add(palazzettoVillage);
+        places.add(bangkokHospital);
+        places.add(watpaphukon);
         return places;
     }
 }

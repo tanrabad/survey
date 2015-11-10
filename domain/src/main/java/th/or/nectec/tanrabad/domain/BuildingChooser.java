@@ -42,6 +42,6 @@ public class BuildingChooser {
         if (buildingInPlace != null)
             presenter.showBuildingList(buildingInPlace);
         else
-            presenter.showNotFoundBuilding();
+            presenter.displayNotFoundBuilding();
     }
 }

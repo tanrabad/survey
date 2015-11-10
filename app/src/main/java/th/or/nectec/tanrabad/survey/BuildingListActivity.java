@@ -45,7 +45,7 @@ public class BuildingListActivity extends AppCompatActivity {
         }
 
         @Override
-        public void showNotFoundBuilding() {
+        public void displayNotFoundBuilding() {
             buildingList.setText("not found any building");
         }
 
@@ -55,7 +55,7 @@ public class BuildingListActivity extends AppCompatActivity {
         }
 
         @Override
-        public void showBuildingName(Building buildings) {
+        public void diaplayBuildingName(Building buildings) {
 
         }
 

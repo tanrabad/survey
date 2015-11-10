@@ -50,7 +50,7 @@ public class BuildingChooserTest {
                 allowing(buildingRepository).findBuildingInPlace(placeUuid);
                 will(returnValue(null));
 
-                oneOf(presenter).showNotFoundBuilding();
+                oneOf(presenter).displayNotFoundBuilding();
             }
         });
         BuildingChooser buildingChooser = new BuildingChooser(buildingRepository, presenter);

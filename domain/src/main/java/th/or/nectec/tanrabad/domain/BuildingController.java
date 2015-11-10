@@ -13,21 +13,23 @@ public class BuildingController {
         this.buildingPresenter = buildingPresenter;
     }
 
-    public void showBuildingOf(String buildingName) {
+/*    public void showBuildingOf(String buildingName) {
         Building building = buildingRepository.findBuildingByName(buildingName);
         if (building == null) {
-            buildingPresenter.showNotFoundBuilding();
+            buildingPresenter.displayNotFoundBuilding();
         } else {
-            buildingPresenter.showBuildingName(building);
+            buildingPresenter.diaplayBuildingName(building);
         }
-    }
+    }*/
 
     public void showBuilding(UUID buildingUUID) {
         Building buildingByUUID = buildingRepository.findBuildingByUUID(buildingUUID);
         if (buildingByUUID == null) {
-            buildingPresenter.showNotFoundBuilding();
+            buildingPresenter.displayNotFoundBuilding();
         } else {
             buildingPresenter.displayBuilding(buildingByUUID);
         }
     }
+
+
 }

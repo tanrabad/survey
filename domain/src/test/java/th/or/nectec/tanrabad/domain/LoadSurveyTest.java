@@ -34,9 +34,9 @@ public class LoadSurveyTest {
 
         context.checking(new Expectations() {
             {
-                allowing(surveyRepository).findByBuildingAndUser(building, user);
+                allowing(surveyRepository).findByBuildingAndUserIn7Day(building, user);
                 will(returnValue(surveys));
-                oneOf(surveyPresenter).loadSurveySuccess(with(surveys));
+                oneOf(surveyPresenter).onEditSurvey(with(surveys));
             }
         });
 
@@ -48,13 +48,25 @@ public class LoadSurveyTest {
     public void testStartNewSurvey() throws Exception {
         context.checking(new Expectations() {
             {
-                allowing(surveyRepository).findByBuildingAndUser(building, user);
+                allowing(surveyRepository).findByBuildingAndUserIn7Day(building, user);
                 will(returnValue(null));
-                oneOf(surveyPresenter).startNewSurvey(building, user);
+                oneOf(surveyPresenter).onNewSurvey(building, user);
             }
         });
 
         SurveyController surveyController = new SurveyController(surveyRepository, surveyPresenter);
         surveyController.findSurveyByBuildingAndUser(building, user);
+    }
+
+    @Test
+    public void testNotFoundUser() throws Exception {
+        context.checking(new Expectations() {
+            {
+                oneOf(surveyPresenter).alertUserNotFound();
+            }
+        });
+
+        SurveyController surveyController = new SurveyController(surveyRepository, surveyPresenter);
+        surveyController.findSurveyByBuildingAndUser(building, null);
     }
 }

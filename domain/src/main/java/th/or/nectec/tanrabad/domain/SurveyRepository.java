@@ -24,5 +24,5 @@ import th.or.nectec.tanrabad.entity.User;
 public interface SurveyRepository {
     boolean save(Survey survey);
 
-    Survey findByBuildingAndUser(Building building, User user);
+    Survey findByBuildingAndUserIn7Day(Building building, User user);
 }

@@ -5,7 +5,9 @@ import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.User;
 
 public interface SurveyPresenter {
-    void loadSurveySuccess(Survey survey);
+    void onEditSurvey(Survey survey);
 
-    void startNewSurvey(Building building, User user);
+    void onNewSurvey(Building building, User user);
+
+    void alertUserNotFound();
 }

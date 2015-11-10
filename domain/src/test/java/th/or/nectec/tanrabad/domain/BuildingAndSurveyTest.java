@@ -80,22 +80,4 @@ public class BuildingAndSurveyTest {
         buildingController.showBuildingOf(buildingName);
     }
 
-    private class UserController {
-        private UserRepository userRepository;
-        private UserPresenter userPresenter;
-
-        public UserController(UserRepository userRepository, UserPresenter userPresenter) {
-            this.userRepository = userRepository;
-            this.userPresenter = userPresenter;
-        }
-
-        public void showUserOf(String userName) {
-            User user = userRepository.findUserByName(userName);
-            if (user == null) {
-                userPresenter.showNotFoundUser();
-            } else {
-                userPresenter.showUserName(user);
-            }
-        }
-    }
 }

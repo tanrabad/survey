@@ -35,4 +35,9 @@ public class StubBuildingRepository implements BuildingRepository {
         buildings.add(Building.withName("214/50"));
         return buildings;
     }
+
+    @Override
+    public Building findBuildingByName(String buildingName) {
+        return null;
+    }
 }

@@ -2,6 +2,7 @@ package th.or.nectec.tanrabad.domain;
 
 import org.jmock.Expectations;
 import org.jmock.integration.junit4.JUnitRuleMockery;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -15,11 +16,22 @@ public class BuildingAndSurveyTest {
     Building building = Building.withName(buildingName);
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
+    private BuildingRepository buildingRepository;
+    private BuildingPresenter buildingPresenter;
+    private UserRepository userRepository;
+    private UserPresenter userPresenter;
+
+    @Before
+    public void setUp() throws Exception {
+        buildingRepository = context.mock(BuildingRepository.class);
+        buildingPresenter = context.mock(BuildingPresenter.class);
+
+        userRepository = context.mock(UserRepository.class);
+        userPresenter = context.mock(UserPresenter.class);
+    }
 
     @Test
     public void testFoundBuilding() throws Exception {
-        final BuildingRepository buildingRepository = context.mock(BuildingRepository.class);
-        final BuildingPresenter buildingPresenter = context.mock(BuildingPresenter.class);
 
         context.checking(new Expectations() {
             {
@@ -34,8 +46,6 @@ public class BuildingAndSurveyTest {
 
     @Test
     public void testFoundUser() throws Exception {
-        final UserRepository userRepository = context.mock(UserRepository.class);
-        final UserPresenter userPresenter = context.mock(UserPresenter.class);
 
         context.checking(new Expectations() {
             {
@@ -50,8 +60,6 @@ public class BuildingAndSurveyTest {
 
     @Test
     public void testNotFoundUser() throws Exception {
-        final UserRepository userRepository = context.mock(UserRepository.class);
-        final UserPresenter userPresenter = context.mock(UserPresenter.class);
 
         context.checking(new Expectations() {
             {
@@ -66,8 +74,6 @@ public class BuildingAndSurveyTest {
 
     @Test
     public void testNotFoundBuilding() throws Exception {
-        final BuildingRepository buildingRepository = context.mock(BuildingRepository.class);
-        final BuildingPresenter buildingPresenter = context.mock(BuildingPresenter.class);
 
         context.checking(new Expectations() {
             {

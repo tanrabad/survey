@@ -70,6 +70,11 @@ public class BuildingListActivity extends AppCompatActivity {
         public void showPleaseSpecityPlace() {
             buildingList.setText("please specify place");
         }
+
+        @Override
+        public void showBuildingName(Building buildings) {
+
+        }
     };
 
 }

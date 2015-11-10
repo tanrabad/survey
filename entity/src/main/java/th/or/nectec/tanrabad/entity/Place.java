@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  2015  NECTEC
+ * Copyright (c) 2015 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,18 +22,24 @@ import java.util.UUID;
 
 public class Place {
 
+    public static final int TYPE_VILLAGE = 1;
+
     private UUID id;
     private String name;
+    private int type;
 
     public Place(UUID id, String name) {
         this.id = id;
         this.name = name;
     }
 
-
     public static Place withName(String name) {
         UUID uuid = UUID.randomUUID();
         return new Place(uuid, name);
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public String getName() {

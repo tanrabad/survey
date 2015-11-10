@@ -10,4 +10,6 @@ public interface SurveyPresenter {
     void onNewSurvey(Building building, User user);
 
     void alertUserNotFound();
+
+    void alertBuildingNotFound();
 }

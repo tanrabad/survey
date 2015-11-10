@@ -15,6 +15,11 @@ class SurveyController {
 
     public void findSurveyByBuildingAndUser(Building building, User user) {
 
+        if (building == null) {
+            surveyPresenter.alertBuildingNotFound();
+            return;
+        }
+
         if (user == null) {
             surveyPresenter.alertUserNotFound();
             return;

@@ -69,4 +69,16 @@ public class LoadSurveyTest {
         SurveyController surveyController = new SurveyController(surveyRepository, surveyPresenter);
         surveyController.findSurveyByBuildingAndUser(building, null);
     }
+
+    @Test
+    public void testNotFoundBuilding() throws Exception {
+        context.checking(new Expectations() {
+            {
+                oneOf(surveyPresenter).alertBuildingNotFound();
+            }
+        });
+
+        SurveyController surveyController = new SurveyController(surveyRepository, surveyPresenter);
+        surveyController.findSurveyByBuildingAndUser(null, user);
+    }
 }

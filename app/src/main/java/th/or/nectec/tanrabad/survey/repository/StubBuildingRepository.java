@@ -17,19 +17,19 @@
 
 package th.or.nectec.tanrabad.survey.repository;
 
-import th.or.nectec.tanrabad.domain.BuildingRepository;
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.Place;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import th.or.nectec.tanrabad.domain.BuildingRepository;
+import th.or.nectec.tanrabad.entity.Building;
+import th.or.nectec.tanrabad.entity.Place;
+
 public class StubBuildingRepository implements BuildingRepository {
 
+    List<Building> buildings = new ArrayList<>();
 
-    @Override
-    public List<Building> findBuildingInPlace(UUID placeUuid) {
+    public StubBuildingRepository() {
         List<Building> buildings = new ArrayList<>();
 
         Building building1 = (new Building(UUID.nameUUIDFromBytes("1xyz".getBytes()), "214/43"));
@@ -61,18 +61,27 @@ public class StubBuildingRepository implements BuildingRepository {
         buildings.add(building7);
 
         Building building8 = (new Building(UUID.nameUUIDFromBytes("2hij".getBytes()), "4/2"));
-        building8.setPlace(new Place(UUID.nameUUIDFromBytes("3def".getBytes()),"บางไทร" ));
+        building8.setPlace(new Place(UUID.nameUUIDFromBytes("3def".getBytes()), "บางไทร"));
         buildings.add(building8);
 
         Building building9 = (new Building(UUID.nameUUIDFromBytes("3hij".getBytes()), "4/3"));
         building9.setPlace(new Place(UUID.nameUUIDFromBytes("3def".getBytes()), "บางไทร"));
         buildings.add(building9);
+    }
 
+
+    @Override
+    public List<Building> findBuildingInPlace(UUID placeUuid) {
         return buildings;
     }
 
     @Override
     public Building findBuildingByName(String buildingName) {
+        for (Building eachBuilding : buildings) {
+            if (eachBuilding.getName().equals(buildingName)) {
+                return eachBuilding;
+            }
+        }
         return null;
     }
 }

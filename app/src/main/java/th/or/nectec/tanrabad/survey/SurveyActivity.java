@@ -19,9 +19,11 @@ package th.or.nectec.tanrabad.survey;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,6 +40,7 @@ import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.repository.InMemoryContainerTypeRepository;
 import th.or.nectec.tanrabad.survey.repository.StubBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
+import th.or.nectec.tanrabad.survey.view.SurveyContainerView;
 
 public class SurveyActivity extends AppCompatActivity {
 
@@ -46,22 +49,27 @@ public class SurveyActivity extends AppCompatActivity {
 
     SurveyController surveyController;
     ContainerController containerController;
-    private TextView buildingNameView;
+    HashMap<Integer, SurveyContainerView> indoorContainerViews;
+    HashMap<Integer, SurveyContainerView> outdoorContainerViews;
+    private LinearLayout outdoorContainerLayout;
+    private LinearLayout indoorContainerLayout;
     ContainerPresenter containerPresenter = new ContainerPresenter() {
         @Override
         public void showContainerList(List<ContainerType> containers) {
-            String containerListStr = "";
+
+            initContainerView();
             for (ContainerType eachContainer : containers) {
-                containerListStr += eachContainer.toString() + "\n";
+                buildIndoorContainerView(eachContainer);
+                buildOutdoorContainerView(eachContainer);
             }
-            buildingNameView.setText(containerListStr);
         }
 
         @Override
         public void showContainerNotFound() {
-            buildingNameView.setText("ไม่เจอรายการภาชนะ");
+            Toast.makeText(SurveyActivity.this, "ไม่เจอรายการภาชนะ", Toast.LENGTH_LONG).show();
         }
     };
+    private TextView buildingNameView;
     private TextView placeNameView;
     SurveyPresenter surveyPresenter = new SurveyPresenter() {
         @Override
@@ -89,6 +97,27 @@ public class SurveyActivity extends AppCompatActivity {
         }
     };
 
+    private void initContainerView() {
+        indoorContainerLayout.removeAllViews();
+        outdoorContainerLayout.removeAllViews();
+        indoorContainerViews = new HashMap<>();
+        outdoorContainerViews = new HashMap<>();
+    }
+
+    private void buildIndoorContainerView(ContainerType eachContainer) {
+        SurveyContainerView surveyContainerView = new SurveyContainerView(SurveyActivity.this);
+        surveyContainerView.setContainerType(eachContainer);
+        indoorContainerViews.put(eachContainer.getId(), surveyContainerView);
+        indoorContainerLayout.addView(surveyContainerView);
+    }
+
+    private void buildOutdoorContainerView(ContainerType eachContainer) {
+        SurveyContainerView surveyContainerView = new SurveyContainerView(SurveyActivity.this);
+        surveyContainerView.setContainerType(eachContainer);
+        outdoorContainerViews.put(eachContainer.getId(), surveyContainerView);
+        outdoorContainerLayout.addView(surveyContainerView);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +125,8 @@ public class SurveyActivity extends AppCompatActivity {
 
         buildingNameView = (TextView) findViewById(R.id.building_name);
         placeNameView = (TextView) findViewById(R.id.place_name);
-
+        indoorContainerLayout = (LinearLayout) findViewById(R.id.indoor_container);
+        outdoorContainerLayout = (LinearLayout) findViewById(R.id.outdoor_container);
         initSurvey();
     }
 

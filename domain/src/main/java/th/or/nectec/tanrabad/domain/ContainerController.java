@@ -36,9 +36,9 @@ public class ContainerController {
         List<ContainerType> containerTypes = containerTypeRepository.find();
 
         if (containerTypes == null) {
-            containerPresenter.showContainerNotFound();
+            containerPresenter.displayContainerNotFound();
         } else {
-            containerPresenter.showContainerList(containerTypes);
+            containerPresenter.displayContainerList(containerTypes);
         }
     }
 }

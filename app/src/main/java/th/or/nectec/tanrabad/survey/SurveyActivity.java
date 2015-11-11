@@ -23,17 +23,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
-
-import th.or.nectec.tanrabad.domain.ContainerController;
-import th.or.nectec.tanrabad.domain.ContainerPresenter;
-import th.or.nectec.tanrabad.domain.SurveyController;
-import th.or.nectec.tanrabad.domain.SurveyPresenter;
-import th.or.nectec.tanrabad.domain.SurveyRepository;
-import th.or.nectec.tanrabad.domain.UserRepository;
+import th.or.nectec.tanrabad.domain.*;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.ContainerType;
 import th.or.nectec.tanrabad.entity.Survey;
@@ -41,63 +31,111 @@ import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.repository.InMemoryContainerTypeRepository;
 import th.or.nectec.tanrabad.survey.repository.StubBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
+import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.view.SurveyContainerView;
 
-public class SurveyActivity extends AppCompatActivity {
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
-    Building surveyBuilding;
-    User surveyUser;
+public class SurveyActivity extends AppCompatActivity implements ContainerPresenter, SurveyPresenter {
 
-    SurveyController surveyController;
-    ContainerController containerController;
-    HashMap<Integer, SurveyContainerView> indoorContainerViews;
-    HashMap<Integer, SurveyContainerView> outdoorContainerViews;
+    private Building surveyBuilding;
+    private User surveyUser;
+
+    private SurveyController surveyController;
+    private ContainerController containerController;
+    private HashMap<Integer, SurveyContainerView> indoorContainerViews;
+    private HashMap<Integer, SurveyContainerView> outdoorContainerViews;
     private LinearLayout outdoorContainerLayout;
     private LinearLayout indoorContainerLayout;
-    ContainerPresenter containerPresenter = new ContainerPresenter() {
-        @Override
-        public void showContainerList(List<ContainerType> containers) {
-
-            initContainerView();
-            for (ContainerType eachContainer : containers) {
-                buildIndoorContainerView(eachContainer);
-                buildOutdoorContainerView(eachContainer);
-            }
-        }
-
-        @Override
-        public void showContainerNotFound() {
-            Toast.makeText(SurveyActivity.this, "ไม่เจอรายการภาชนะ", Toast.LENGTH_LONG).show();
-        }
-    };
     private TextView buildingNameView;
     private TextView placeNameView;
-    SurveyPresenter surveyPresenter = new SurveyPresenter() {
-        @Override
-        public void onEditSurvey(Survey survey) {
-            Toast.makeText(SurveyActivity.this, "แก้ไขสำรวจ", Toast.LENGTH_LONG).show();
-        }
-
-        @Override
-        public void onNewSurvey(Building building, User user) {
-            surveyBuilding = building;
-            surveyUser = user;
-
-            buildingNameView.setText(surveyBuilding.getName());
-            placeNameView.setText(surveyBuilding.getPlace().getName());
-        }
-
-        @Override
-        public void alertUserNotFound() {
-            Toast.makeText(SurveyActivity.this, "ไม่พบข้อมูลผู้ใช้งาน", Toast.LENGTH_LONG).show();
-        }
-
-        @Override
-        public void alertBuildingNotFound() {
-            Toast.makeText(SurveyActivity.this, "ไม่พบข้อมูลอาคาร", Toast.LENGTH_LONG).show();
-        }
-    };
     private EditText residentCountView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_survey);
+        findViewsFromLayout();
+
+        showContainerList();
+        initSurvey();
+    }
+
+    private void showContainerList() {
+        containerController = new ContainerController(InMemoryContainerTypeRepository.getInstance(), this);
+        containerController.showList();
+    }
+
+    private void findViewsFromLayout() {
+        buildingNameView = (TextView) findViewById(R.id.building_name);
+        placeNameView = (TextView) findViewById(R.id.place_name);
+        indoorContainerLayout = (LinearLayout) findViewById(R.id.indoor_container);
+        outdoorContainerLayout = (LinearLayout) findViewById(R.id.outdoor_container);
+        residentCountView = (EditText) findViewById(R.id.resident_count);
+    }
+
+    private void initSurvey() {
+        surveyController = new SurveyController(surveyRepository, new StubBuildingRepository(), new StubUserRepository(), this);
+        surveyController.checkThisBuildingAndUserCanSurvey(UUID.nameUUIDFromBytes("2xyz".getBytes()).toString(), "sara");
+    }
+
+
+    private SurveyRepository surveyRepository = new SurveyRepository() {
+        @Override
+        public boolean save(Survey survey) {
+            return false;
+        }
+
+        @Override
+        public Survey findByBuildingAndUserIn7Day(Building building, User user) {
+            StubPlaceRepository stubPlaceRepository = new StubPlaceRepository();
+            Building building2 = (new Building(UUID.nameUUIDFromBytes("2xyz".getBytes()), "214/44"));
+            building2.setPlace(stubPlaceRepository.getPalazzettoVillage());
+            return null;
+        }
+
+    };
+
+    @Override
+    public void onNewSurvey(Building building, User user) {
+        surveyBuilding = building;
+        surveyUser = user;
+
+        buildingNameView.setText(surveyBuilding.getName());
+        placeNameView.setText(surveyBuilding.getPlace().getName());
+    }
+
+
+    @Override
+    public void onEditSurvey(Survey survey) {
+        Toast.makeText(SurveyActivity.this, "แก้ไขสำรวจ", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void alertUserNotFound() {
+        Toast.makeText(SurveyActivity.this, "ไม่พบข้อมูลผู้ใช้งาน", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void alertBuildingNotFound() {
+        Toast.makeText(SurveyActivity.this, "ไม่พบข้อมูลอาคาร", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void displayContainerList(List<ContainerType> containers) {
+        initContainerView();
+        for (ContainerType eachContainerType : containers) {
+            buildIndoorContainerView(eachContainerType);
+            buildOutdoorContainerView(eachContainerType);
+        }
+    }
+
+    @Override
+    public void displayContainerNotFound() {
+        Toast.makeText(SurveyActivity.this, "ไม่เจอรายการภาชนะ", Toast.LENGTH_LONG).show();
+    }
 
     private void initContainerView() {
         indoorContainerLayout.removeAllViews();
@@ -106,70 +144,21 @@ public class SurveyActivity extends AppCompatActivity {
         outdoorContainerViews = new HashMap<>();
     }
 
-    private void buildIndoorContainerView(ContainerType eachContainer) {
-        SurveyContainerView surveyContainerView = new SurveyContainerView(SurveyActivity.this);
-        surveyContainerView.setContainerType(eachContainer);
-        indoorContainerViews.put(eachContainer.getId(), surveyContainerView);
+    private void buildIndoorContainerView(ContainerType containerType) {
+        SurveyContainerView surveyContainerView = buildContainerView(containerType);
+        indoorContainerViews.put(containerType.getId(), surveyContainerView);
         indoorContainerLayout.addView(surveyContainerView);
     }
 
-    private void buildOutdoorContainerView(ContainerType eachContainer) {
-        SurveyContainerView surveyContainerView = new SurveyContainerView(SurveyActivity.this);
-        surveyContainerView.setContainerType(eachContainer);
-        outdoorContainerViews.put(eachContainer.getId(), surveyContainerView);
+    private void buildOutdoorContainerView(ContainerType containerType) {
+        SurveyContainerView surveyContainerView = buildContainerView(containerType);
+        outdoorContainerViews.put(containerType.getId(), surveyContainerView);
         outdoorContainerLayout.addView(surveyContainerView);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_survey);
-
-        buildingNameView = (TextView) findViewById(R.id.building_name);
-        placeNameView = (TextView) findViewById(R.id.place_name);
-        indoorContainerLayout = (LinearLayout) findViewById(R.id.indoor_container);
-        outdoorContainerLayout = (LinearLayout) findViewById(R.id.outdoor_container);
-        residentCountView = (EditText) findViewById(R.id.resident_count);
-        initSurvey();
+    private SurveyContainerView buildContainerView(ContainerType containerType) {
+        SurveyContainerView surveyContainerView = new SurveyContainerView(SurveyActivity.this);
+        surveyContainerView.setContainerType(containerType);
+        return surveyContainerView;
     }
-
-    private void initSurvey() {
-        initController();
-        containerController.showList();
-        surveyController.checkThisBuildingAndUserCanSurvey(UUID.nameUUIDFromBytes("2xyz".getBytes()).toString(), "sara");
-    }
-
-    private void initController() {
-
-        UserRepository userRepository = new UserRepository() {
-            @Override
-            public User findUserByName(String userName) {
-                User user = User.fromUsername("sara");
-                if (user.getUsername().equals(userName)) {
-                    return user;
-                }
-                return null;
-            }
-        };
-
-        SurveyRepository surveyRepository = new SurveyRepository() {
-            @Override
-            public boolean save(Survey survey) {
-                return false;
-            }
-
-            @Override
-            public Survey findByBuildingAndUserIn7Day(Building building, User user) {
-                StubPlaceRepository stubPlaceRepository = new StubPlaceRepository();
-                Building building2 = (new Building(UUID.nameUUIDFromBytes("2xyz".getBytes()), "214/44"));
-                building2.setPlace(stubPlaceRepository.getPalazzettoVillage());
-                return null;
-            }
-
-        };
-
-        containerController = new ContainerController(InMemoryContainerTypeRepository.getInstance(), containerPresenter);
-        surveyController = new SurveyController(surveyRepository, new StubBuildingRepository(), userRepository, surveyPresenter);
-    }
-
 }

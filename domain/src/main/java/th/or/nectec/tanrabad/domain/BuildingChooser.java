@@ -34,13 +34,13 @@ public class BuildingChooser {
 
     public void showBuildingOf(UUID placeUuid) {
         if (placeUuid == null) {
-            presenter.showPleaseSpecityPlace();
+            presenter.displayPleaseSpecityPlace();
             return;
         }
 
         List<Building> buildingInPlace = buildingRepository.findBuildingInPlace(placeUuid);
         if (buildingInPlace != null)
-            presenter.showBuildingList(buildingInPlace);
+            presenter.displayBuildingList(buildingInPlace);
         else
             presenter.displayNotFoundBuilding();
     }

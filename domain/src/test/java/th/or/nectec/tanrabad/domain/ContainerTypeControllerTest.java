@@ -41,7 +41,7 @@ public class ContainerTypeControllerTest {
         context.checking(new Expectations(){{
             allowing(containerTypeRepository).find();
             will(returnValue(containerTypes));
-            oneOf(containerPresenter).showContainerList(with(containerTypes));
+            oneOf(containerPresenter).displayContainerList(with(containerTypes));
         }
         });
 
@@ -63,7 +63,7 @@ public class ContainerTypeControllerTest {
             {
                 allowing(containerTypeRepository).find();
                 will(returnValue(null));
-                oneOf(containerPresenter).showContainerNotFound();
+                oneOf(containerPresenter).displayContainerNotFound();
             }
         });
 

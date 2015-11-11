@@ -23,7 +23,7 @@ import java.util.List;
 
 public interface ContainerPresenter {
 
-    void showContainerList(List<ContainerType> containerTypes);
+    void displayContainerList(List<ContainerType> containerTypes);
 
-    void showContainerNotFound();
+    void displayContainerNotFound();
 }

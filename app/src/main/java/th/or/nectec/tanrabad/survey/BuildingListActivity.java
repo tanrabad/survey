@@ -20,14 +20,13 @@ package th.or.nectec.tanrabad.survey;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
-
-import java.util.List;
-import java.util.UUID;
-
 import th.or.nectec.tanrabad.domain.BuildingChooser;
 import th.or.nectec.tanrabad.domain.BuildingPresenter;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.survey.repository.StubBuildingRepository;
+
+import java.util.List;
+import java.util.UUID;
 
 public class BuildingListActivity extends AppCompatActivity {
 
@@ -35,7 +34,7 @@ public class BuildingListActivity extends AppCompatActivity {
     private BuildingChooser buildingChooser;
     private BuildingPresenter buildingPresenter = new BuildingPresenter() {
         @Override
-        public void showBuildingList(List<Building> buildings) {
+        public void displayBuildingList(List<Building> buildings) {
             StringBuilder stringBuilder = new StringBuilder();
             for (Building building : buildings) {
                 stringBuilder.append(building.toString());
@@ -50,7 +49,7 @@ public class BuildingListActivity extends AppCompatActivity {
         }
 
         @Override
-        public void showPleaseSpecityPlace() {
+        public void displayPleaseSpecityPlace() {
             buildingList.setText("please specify place");
         }
 

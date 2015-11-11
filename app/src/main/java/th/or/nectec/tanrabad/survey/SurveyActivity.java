@@ -46,8 +46,7 @@ public class SurveyActivity extends AppCompatActivity {
 
     SurveyController surveyController;
     ContainerController containerController;
-
-    TextView containerList;
+    private TextView buildingNameView;
     ContainerPresenter containerPresenter = new ContainerPresenter() {
         @Override
         public void showContainerList(List<ContainerType> containers) {
@@ -55,14 +54,15 @@ public class SurveyActivity extends AppCompatActivity {
             for (ContainerType eachContainer : containers) {
                 containerListStr += eachContainer.toString() + "\n";
             }
-            containerList.setText(containerListStr);
+            buildingNameView.setText(containerListStr);
         }
 
         @Override
         public void showContainerNotFound() {
-            containerList.setText("ไม่เจอรายการภาชนะ");
+            buildingNameView.setText("ไม่เจอรายการภาชนะ");
         }
     };
+    private TextView placeNameView;
     SurveyPresenter surveyPresenter = new SurveyPresenter() {
         @Override
         public void onEditSurvey(Survey survey) {
@@ -73,7 +73,9 @@ public class SurveyActivity extends AppCompatActivity {
         public void onNewSurvey(Building building, User user) {
             surveyBuilding = building;
             surveyUser = user;
-            Toast.makeText(SurveyActivity.this, "สำรวจใหม่", Toast.LENGTH_LONG).show();
+
+            buildingNameView.setText(surveyBuilding.getName());
+            placeNameView.setText(surveyBuilding.getPlace().getName());
         }
 
         @Override
@@ -92,7 +94,8 @@ public class SurveyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_survey);
 
-        containerList = (TextView) findViewById(R.id.container_list);
+        buildingNameView = (TextView) findViewById(R.id.building_name);
+        placeNameView = (TextView) findViewById(R.id.place_name);
 
         initSurvey();
     }

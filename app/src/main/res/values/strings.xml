@@ -19,4 +19,9 @@
 <resources>
     <string name="app_name">Tanlabad-survey</string>
   <string name="title_activity_survey">SurveyActivity</string>
+
+  <string name="number_of_resident">จำนวนผู้อยู่อาศัย</string>
+  <string name="person">คน</string>
+  <string name="indoor">ภายในอาคาร</string>
+  <string name="outdoor">ภายนอกอาคาร</string>
 </resources>

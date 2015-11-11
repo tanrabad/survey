@@ -45,14 +45,20 @@ public class User {
         return username;
     }
 
-    public User(String username) {
 
+    public User(String username) {
         this.username = username;
+
     }
 
     public static User fromUsername(String username) {
         return new User(username);
     }
+
+    public String getUsername() {
+        return username;
+    }
+
 
     @Override
     public boolean equals(Object o) {

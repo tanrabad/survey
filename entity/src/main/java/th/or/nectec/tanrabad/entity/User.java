@@ -19,7 +19,6 @@ package th.or.nectec.tanrabad.entity;
 
 
 public class User {
-
     private final String username;
     private String firstname;
     private String lastname;
@@ -40,6 +39,10 @@ public class User {
 
     public void setOrganizationId(int organizationId) {
         this.organizationId = organizationId;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public User(String username) {

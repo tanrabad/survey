@@ -9,7 +9,6 @@ public class StubUserRepository implements UserRepository {
     private final User sara;
 
     public StubUserRepository() {
-        StubUserRepository stubUserRepository = new StubUserRepository();
         sara = new User("sara");
         sara.setFirstname("ซาร่า");
         sara.setLastname("คิดส์");
@@ -19,7 +18,7 @@ public class StubUserRepository implements UserRepository {
 
     @Override
     public User findUserByName(String userName) {
-        if (userName.equals(userName)) {
+        if (sara.getUsername().equals(userName)) {
             return sara ;
         } else {
             return null;

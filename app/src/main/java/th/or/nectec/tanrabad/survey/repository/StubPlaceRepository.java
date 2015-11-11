@@ -46,10 +46,10 @@ public class StubPlaceRepository implements PlaceRepository {
 
     public StubPlaceRepository() {
         palazzettoVillage = new Place(generateUUID("1abc"), "บ้านพาลาซเซตโต้");
-        bangkokHospital = new Place(generateUUID("2bcd"), "โรงพยาบาลกรุงเทพ");
-        watpaphukon = new Place(generateUUID("3def"), "วัดป่าภูก้อน");
         palazzettoVillage.setType(Place.TYPE_VILLAGE_COMMUNITY);
+        bangkokHospital = new Place(generateUUID("2bcd"), "โรงพยาบาลกรุงเทพ");
         bangkokHospital.setType(Place.TYPE_HOSPITAL);
+        watpaphukon = new Place(generateUUID("3def"), "วัดป่าภูก้อน");
         watpaphukon.setType(Place.TYPE_WORSHIP);
     }
 

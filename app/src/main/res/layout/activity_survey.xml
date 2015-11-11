@@ -63,8 +63,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/between_view_margin_right"
-                    android:layout_marginRight="@dimen/between_view_margin_right"
+                    android:layout_marginEnd="@dimen/between_view"
+                    android:layout_marginRight="@dimen/between_view"
                     android:text="@string/number_of_resident"
                     android:textColor="@color/white"
                     android:textSize="@dimen/header_text_size" />
@@ -87,8 +87,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/between_view_margin_left"
-                    android:layout_marginStart="@dimen/between_view_margin_left"
+                    android:layout_marginLeft="@dimen/between_view"
+                    android:layout_marginStart="@dimen/between_view"
                     android:text="@string/person"
                     android:textColor="@color/white"
                     android:textSize="@dimen/header_text_size" />

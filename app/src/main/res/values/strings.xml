@@ -24,4 +24,6 @@
   <string name="person">คน</string>
   <string name="indoor">ภายในอาคาร</string>
   <string name="outdoor">ภายนอกอาคาร</string>
+  <string name="total">ทั้งหมด</string>
+  <string name="found">พบ</string>
 </resources>

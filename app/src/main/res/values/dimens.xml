@@ -15,8 +15,7 @@
     <dimen name="padding_left">20dp</dimen>
     <dimen name="padding_top">15dp</dimen>
 
-    <dimen name="between_view_margin_left">8dp</dimen>
-    <dimen name="between_view_margin_right">8dp</dimen>
+    <dimen name="between_view">6dp</dimen>
 
     <dimen name="between_text_margin_top">2dp</dimen>
     <dimen name="between_text_margin_bottom">2dp</dimen>

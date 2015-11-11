@@ -9,8 +9,6 @@ public interface BuildingPresenter {
 
     void showPleaseSpecityPlace();
 
-    void diaplayBuildingName(Building buildings);
-
     void displayBuilding(Building building);
 
     void displayNotFoundBuilding();

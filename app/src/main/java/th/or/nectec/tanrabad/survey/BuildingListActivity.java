@@ -55,11 +55,6 @@ public class BuildingListActivity extends AppCompatActivity {
         }
 
         @Override
-        public void diaplayBuildingName(Building buildings) {
-
-        }
-
-        @Override
         public void displayBuilding(Building building) {
 
         }

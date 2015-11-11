@@ -2,7 +2,7 @@ package th.or.nectec.tanrabad.domain;
 
 import th.or.nectec.tanrabad.entity.User;
 
-class UserController {
+public class UserController {
     private UserRepository userRepository;
     private UserPresenter userPresenter;
 

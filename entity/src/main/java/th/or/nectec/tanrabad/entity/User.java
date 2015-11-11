@@ -21,6 +21,26 @@ package th.or.nectec.tanrabad.entity;
 public class User {
 
     private final String username;
+    private String firstname;
+    private String lastname;
+    private String email;
+    private int organizationId;
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setOrganizationId(int organizationId) {
+        this.organizationId = organizationId;
+    }
 
     public User(String username) {
 

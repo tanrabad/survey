@@ -17,6 +17,8 @@
 
 package th.or.nectec.tanrabad.survey.repository;
 
+import android.support.annotation.NonNull;
+
 import th.or.nectec.tanrabad.domain.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Place;
 
@@ -43,12 +45,17 @@ public class StubPlaceRepository implements PlaceRepository {
     private final Place watpaphukon;
 
     public StubPlaceRepository() {
-        palazzettoVillage = new Place(UUID.nameUUIDFromBytes("1abc".getBytes()), "บ้านพาลาซเซตโต้");
-        bangkokHospital = new Place(UUID.nameUUIDFromBytes("2bcd".getBytes()), "โรงพยาบาลกรุงเทพ");
-        watpaphukon = new Place(UUID.nameUUIDFromBytes("3def".getBytes()), "วัดป่าภูก้อน");
+        palazzettoVillage = new Place(generateUUID("1abc"), "บ้านพาลาซเซตโต้");
+        bangkokHospital = new Place(generateUUID("2bcd"), "โรงพยาบาลกรุงเทพ");
+        watpaphukon = new Place(generateUUID("3def"), "วัดป่าภูก้อน");
         palazzettoVillage.setType(Place.TYPE_VILLAGE_COMMUNITY);
         bangkokHospital.setType(Place.TYPE_HOSPITAL);
         watpaphukon.setType(Place.TYPE_WORSHIP);
+    }
+
+    @NonNull
+    private UUID generateUUID(String input) {
+        return UUID.nameUUIDFromBytes(input.getBytes());
     }
 
     @Override

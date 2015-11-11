@@ -12,6 +12,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/survey_container_bg_description"
             android:scaleType="centerCrop"
             android:src="@drawable/survey_header" />
 

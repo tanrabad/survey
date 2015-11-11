@@ -26,4 +26,6 @@
   <string name="outdoor">ภายนอกอาคาร</string>
   <string name="total">ทั้งหมด</string>
   <string name="found">พบ</string>
+  <string name="survey_container_description">ภาชนะที่สำรวจ</string>
+  <string name="survey_container_bg_description">ภาพพื้นหลังการสำรวจภาชนะ</string>
 </resources>

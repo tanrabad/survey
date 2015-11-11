@@ -19,6 +19,7 @@ package th.or.nectec.tanrabad.survey;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -96,6 +97,7 @@ public class SurveyActivity extends AppCompatActivity {
             Toast.makeText(SurveyActivity.this, "ไม่พบข้อมูลอาคาร", Toast.LENGTH_LONG).show();
         }
     };
+    private EditText residentCountView;
 
     private void initContainerView() {
         indoorContainerLayout.removeAllViews();
@@ -127,6 +129,7 @@ public class SurveyActivity extends AppCompatActivity {
         placeNameView = (TextView) findViewById(R.id.place_name);
         indoorContainerLayout = (LinearLayout) findViewById(R.id.indoor_container);
         outdoorContainerLayout = (LinearLayout) findViewById(R.id.outdoor_container);
+        residentCountView = (EditText) findViewById(R.id.resident_count);
         initSurvey();
     }
 

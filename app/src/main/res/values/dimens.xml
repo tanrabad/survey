@@ -19,4 +19,6 @@
 
     <dimen name="between_text_margin_top">2dp</dimen>
     <dimen name="between_text_margin_bottom">2dp</dimen>
+
+    <dimen name="header_height">160dp</dimen>
 </resources>

@@ -65,7 +65,6 @@ public class SurveyActivity extends AppCompatActivity implements ContainerPresen
     private TextView buildingNameView;
     private TextView placeNameView;
     private EditText residentCountView;
-    private Survey lastSurveyData;
     private SurveyRepository surveyRepository;
 
     @Override
@@ -107,13 +106,36 @@ public class SurveyActivity extends AppCompatActivity implements ContainerPresen
         surveyBuilding = building;
         surveyUser = user;
 
-        buildingNameView.setText(surveyBuilding.getName());
-        placeNameView.setText(surveyBuilding.getPlace().getName());
+        setBuildingInfo();
     }
 
     @Override
     public void onEditSurvey(Survey survey) {
         Toast.makeText(SurveyActivity.this, "แก้ไขสำรวจ", Toast.LENGTH_LONG).show();
+
+        surveyBuilding = survey.getSurveyBuilding();
+        surveyUser = survey.getUser();
+
+        setBuildingInfo();
+        loadSurveyData(survey);
+    }
+
+    private void setBuildingInfo() {
+        buildingNameView.setText(surveyBuilding.getName());
+        placeNameView.setText(surveyBuilding.getPlace().getName());
+    }
+
+    private void loadSurveyData(Survey survey) {
+        residentCountView.setText(String.valueOf(survey.getResidentCount()));
+        loadSurveyDetail(survey.getIndoorDetail(), indoorContainerViews);
+        loadSurveyDetail(survey.getOutdoorDetail(), outdoorContainerViews);
+    }
+
+    private void loadSurveyDetail(ArrayList<SurveyDetail> indoorDetails, HashMap<Integer, SurveyContainerView> surveyContainerViews) {
+        for (SurveyDetail eachDetail : indoorDetails) {
+            SurveyContainerView surveyContainerView = surveyContainerViews.get(eachDetail.getContainerType().getId());
+            surveyContainerView.setSurveyDetail(eachDetail);
+        }
     }
 
     @Override
@@ -143,6 +165,7 @@ public class SurveyActivity extends AppCompatActivity implements ContainerPresen
     @Override
     public void showSaveSuccess() {
         Toast.makeText(SurveyActivity.this, "บันทึกสำเร็จ", Toast.LENGTH_LONG).show();
+        finish();
     }
 
     @Override
@@ -152,9 +175,6 @@ public class SurveyActivity extends AppCompatActivity implements ContainerPresen
 
     private void doSaveData() {
         Survey surveyData = new Survey(surveyUser, surveyBuilding);
-        if (lastSurveyData != null) {
-            surveyData = lastSurveyData;
-        }
 
         if (!validateSurveyContainerViews(indoorContainerViews) || !validateSurveyContainerViews(outdoorContainerViews)) {
             Toast.makeText(SurveyActivity.this, "จำนวนภาชนะที่พบต้องน้อยกว่าหรือเท่ากับกว่าภาชนะทั้งหมด", Toast.LENGTH_LONG).show();

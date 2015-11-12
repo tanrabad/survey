@@ -20,7 +20,9 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/pink</item>
+        <item name="colorPrimaryDark">@color/shock_pink</item>
+        <item name="colorAccent">@color/shock_pink</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

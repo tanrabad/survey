@@ -80,4 +80,29 @@ public class Survey {
     public void setOutdoorDetail(ArrayList<SurveyDetail> outdoorDetails) {
         this.outdoorDetails = outdoorDetails;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Survey survey = (Survey) o;
+
+        if (residentCount != survey.residentCount) return false;
+        if (!user.equals(survey.user)) return false;
+        if (!surveyBuilding.equals(survey.surveyBuilding)) return false;
+        if (!indoorDetails.equals(survey.indoorDetails)) return false;
+        return outdoorDetails.equals(survey.outdoorDetails);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = user.hashCode();
+        result = 31 * result + surveyBuilding.hashCode();
+        result = 31 * result + residentCount;
+        result = 31 * result + indoorDetails.hashCode();
+        result = 31 * result + outdoorDetails.hashCode();
+        return result;
+    }
 }

@@ -25,10 +25,20 @@ public class Survey {
     private int residentCount;
     private ArrayList<SurveyDetail> indoorDetails;
     private ArrayList<SurveyDetail> outdoorDetails;
-
     public Survey(User user, Building surveyBuilding) {
         this.user = user;
         this.surveyBuilding = surveyBuilding;
+    }
+
+    @Override
+    public String toString() {
+        return "Survey{" +
+                "user=" + user +
+                ", surveyBuilding=" + surveyBuilding +
+                ", residentCount=" + residentCount +
+                ", indoorDetails=" + indoorDetails +
+                ", outdoorDetails=" + outdoorDetails +
+                '}';
     }
 
     public int getResidentCount() {

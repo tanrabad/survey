@@ -19,14 +19,25 @@ package th.or.nectec.tanrabad.entity;
 
 
 public class SurveyDetail {
-
     private final ContainerType containerType;
     private int totalContainer;
     private int foundLarvaContainer;
-
     public SurveyDetail(ContainerType containerType, int totalContainer, int foundLarvaContainer) {
         this.containerType = containerType;
         setContainerCount(totalContainer, foundLarvaContainer);
+    }
+
+    public static SurveyDetail fromResult(ContainerType containerType, int total, int found) {
+        return new SurveyDetail(containerType, total, found);
+    }
+
+    @Override
+    public String toString() {
+        return "SurveyDetail{" +
+                "containerType=" + containerType +
+                ", totalContainer=" + totalContainer +
+                ", foundLarvaContainer=" + foundLarvaContainer +
+                '}';
     }
 
     private void setContainerCount(int total, int found) {
@@ -34,10 +45,6 @@ public class SurveyDetail {
             throw new ContainerFoundLarvaOverTotalException();
         this.totalContainer = total;
         this.foundLarvaContainer = found;
-    }
-
-    public static SurveyDetail fromResult(ContainerType containerType, int total, int found) {
-        return new SurveyDetail(containerType, total, found);
     }
 
     @Override

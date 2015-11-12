@@ -20,6 +20,7 @@ package th.or.nectec.tanrabad.survey;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -44,8 +45,8 @@ import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.SurveyDetail;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.repository.InMemoryContainerTypeRepository;
+import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubBuildingRepository;
-import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.view.SurveyContainerView;
 
@@ -64,20 +65,7 @@ public class SurveyActivity extends AppCompatActivity implements ContainerPresen
     private TextView placeNameView;
     private EditText residentCountView;
     private Survey surveyData;
-    private SurveyRepository surveyRepository = new SurveyRepository() {
-        @Override
-        public boolean save(Survey survey) {
-            return false;
-        }
-
-        @Override
-        public Survey findByBuildingAndUserIn7Day(Building building, User user) {
-            StubPlaceRepository stubPlaceRepository = new StubPlaceRepository();
-            Building building2 = (new Building(UUID.nameUUIDFromBytes("2xyz".getBytes()), "214/44"));
-            building2.setPlace(stubPlaceRepository.getPalazzettoVillage());
-            return null;
-        }
-    };
+    private SurveyRepository surveyRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +91,7 @@ public class SurveyActivity extends AppCompatActivity implements ContainerPresen
     }
 
     private void initSurvey() {
+        surveyRepository = InMemorySurveyRepository.getInstance();
         surveyController = new SurveyController(surveyRepository, new StubBuildingRepository(), new StubUserRepository(), this);
         surveyController.checkThisBuildingAndUserCanSurvey(UUID.nameUUIDFromBytes("2xyz".getBytes()).toString(), "sara");
     }
@@ -191,6 +180,7 @@ public class SurveyActivity extends AppCompatActivity implements ContainerPresen
                 surveyData.setOutdoorDetail(buildSurveyDetail(outdoorContainerViews));
                 surveyRepository.save(surveyData);
 
+                Log.v("surveydata", surveyRepository.findByBuildingAndUserIn7Day(surveyBuilding, surveyUser).toString());
                 break;
         }
         return super.onOptionsItemSelected(item);

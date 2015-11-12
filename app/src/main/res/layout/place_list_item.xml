@@ -1,31 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="horizontal"
     android:padding="@dimen/activity_horizontal_margin">
 
     <ImageView
-        android:contentDescription="@string/place_icon"
+        android:id="@+id/place_icon"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:id="@+id/place_icon"
+        android:contentDescription="@string/place_icon"
         android:src="@drawable/container_bg" />
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:layout_marginLeft="@dimen/between_view"
         android:layout_marginStart="@dimen/between_view"
-        android:layout_gravity="center_vertical">
+        android:orientation="vertical">
 
         <TextView
+            android:id="@+id/place_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/place_name"
-            tools:text="หม่ที่ 1"
-            android:textSize="@dimen/body_text_size_big" />
+            android:textIsSelectable="false"
+            android:textSize="@dimen/body_text_size_big"
+            tools:text="หม่ที่ 1" />
     </LinearLayout>
 </LinearLayout>

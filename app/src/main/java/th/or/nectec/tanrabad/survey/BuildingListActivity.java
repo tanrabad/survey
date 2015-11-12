@@ -95,9 +95,8 @@ public class BuildingListActivity extends AppCompatActivity {
     }
 
     private UUID getUuidFromIntent() {
-//        String uuid = getIntent().getStringExtra("place_uuid");
-//        return UUID.fromString(uuid);
-        return UUID.randomUUID();
+        String uuid = getIntent().getStringExtra(PLACE_UUID_ARG);
+        return UUID.fromString(uuid);
     }
 
 }

@@ -70,7 +70,13 @@ public class StubBuildingRepository implements BuildingRepository {
 
     @Override
     public List<Building> findBuildingInPlace(UUID placeUuid) {
-        return buildings;
+        ArrayList<Building> newBuildingList = new ArrayList<>();
+        for (Building eachBuilding : buildings) {
+            if (eachBuilding.getPlace().getId().equals(placeUuid)) {
+                newBuildingList.add(eachBuilding);
+            }
+        }
+        return newBuildingList.isEmpty() ? null : newBuildingList;
     }
 
     @Override

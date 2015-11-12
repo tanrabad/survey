@@ -23,6 +23,7 @@ public class SurveyContainerView extends LinearLayout {
 
     private int total;
     private int found;
+    private SurveyDetail surveyDetail;
 
     public SurveyContainerView(Context context) {
         super(context);
@@ -56,6 +57,18 @@ public class SurveyContainerView extends LinearLayout {
     public SurveyDetail getSurveyDetail() {
         getValue();
         return new SurveyDetail(containerType, total, found);
+    }
+
+    public void setSurveyDetail(SurveyDetail surveyDetail) {
+        this.surveyDetail = surveyDetail;
+
+        int totalContainer = surveyDetail.getTotalContainer();
+        if (totalContainer > 0)
+            totalContainerView.setText(String.valueOf(totalContainer));
+
+        int foundLarvaContainer = surveyDetail.getFoundLarvaContainer();
+        if (foundLarvaContainer > 0)
+            foundContainerView.setText(String.valueOf(surveyDetail.getFoundLarvaContainer()));
     }
 
     private void getValue() {

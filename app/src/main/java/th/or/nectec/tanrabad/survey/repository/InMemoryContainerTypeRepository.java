@@ -17,11 +17,11 @@
 
 package th.or.nectec.tanrabad.survey.repository;
 
-import th.or.nectec.tanrabad.domain.ContainerTypeRepository;
-import th.or.nectec.tanrabad.entity.ContainerType;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import th.or.nectec.tanrabad.domain.ContainerTypeRepository;
+import th.or.nectec.tanrabad.entity.ContainerType;
 
 public class InMemoryContainerTypeRepository implements ContainerTypeRepository {
 
@@ -36,7 +36,7 @@ public class InMemoryContainerTypeRepository implements ContainerTypeRepository 
         containerTypes.add(new ContainerType(3, "แจกัน"));
         containerTypes.add(new ContainerType(4, "ที่รองกันมด"));
         containerTypes.add(new ContainerType(5, "จานรองกระถาง"));
-        containerTypes.add(new ContainerType(6, "อ่างบัว/ไม่น้ำ"));
+        containerTypes.add(new ContainerType(6, "อ่างบัว/ไม้น้ำ"));
         containerTypes.add(new ContainerType(7, "ยางรถยนต์เก่า"));
         containerTypes.add(new ContainerType(8, "กากใบพืช"));
         containerTypes.add(new ContainerType(9, "ภาชนะที่ไม่ใช้"));

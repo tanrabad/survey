@@ -19,6 +19,7 @@ package th.or.nectec.tanrabad.survey;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -183,9 +184,11 @@ public class SurveyActivity extends AppCompatActivity implements ContainerPresen
                     surveyData = new Survey(surveyUser, surveyBuilding);
                 }
 
+                String residentCountStr = residentCountView.getText().toString();
+                int residentCount = TextUtils.isEmpty(residentCountStr) ? 0 : Integer.valueOf(residentCountStr);
+                surveyData.setResidentCount(residentCount);
                 surveyData.setIndoorDetail(buildSurveyDetail(indoorContainerViews));
                 surveyData.setOutdoorDetail(buildSurveyDetail(outdoorContainerViews));
-
                 surveyRepository.save(surveyData);
 
                 break;

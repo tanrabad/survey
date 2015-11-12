@@ -7,6 +7,7 @@
     android:padding="@dimen/activity_horizontal_margin">
 
     <ImageView
+        android:contentDescription="@string/building_icon"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:id="@+id/building_icon"

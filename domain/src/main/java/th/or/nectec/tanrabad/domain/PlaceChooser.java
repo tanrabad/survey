@@ -1,18 +1,25 @@
 package th.or.nectec.tanrabad.domain;
 
-import th.or.nectec.tanrabad.entity.Place;
-
 import java.util.List;
+
+import th.or.nectec.tanrabad.entity.Place;
 
 public class PlaceChooser {
 
     private PlaceRepository placeRepository;
+    private PlaceListPresenter placeListPresenter;
 
-    public PlaceChooser(PlaceRepository placeRepository) {
+    public PlaceChooser(PlaceRepository placeRepository, PlaceListPresenter placeListPresenter) {
         this.placeRepository = placeRepository;
+        this.placeListPresenter = placeListPresenter;
     }
 
-    public List<Place> getPlaceList() {
-        return this.placeRepository.findPlaces();
+    public void getPlaceList() {
+        List<Place> places = this.placeRepository.findPlaces();
+        if (places == null) {
+            placeListPresenter.displayPlaceNotFound();
+        } else {
+            placeListPresenter.displayPlaceList(places);
+        }
     }
 }

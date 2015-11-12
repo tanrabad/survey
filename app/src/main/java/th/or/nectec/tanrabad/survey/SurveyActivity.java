@@ -20,7 +20,6 @@ package th.or.nectec.tanrabad.survey;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -39,6 +38,9 @@ import th.or.nectec.tanrabad.domain.ContainerPresenter;
 import th.or.nectec.tanrabad.domain.SurveyController;
 import th.or.nectec.tanrabad.domain.SurveyPresenter;
 import th.or.nectec.tanrabad.domain.SurveyRepository;
+import th.or.nectec.tanrabad.domain.SurveySavePresenter;
+import th.or.nectec.tanrabad.domain.SurveySaver;
+import th.or.nectec.tanrabad.domain.SurveyValidator;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.ContainerType;
 import th.or.nectec.tanrabad.entity.Survey;
@@ -46,17 +48,16 @@ import th.or.nectec.tanrabad.entity.SurveyDetail;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.repository.InMemoryContainerTypeRepository;
 import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
+import th.or.nectec.tanrabad.survey.repository.SaveSurveyValidator;
 import th.or.nectec.tanrabad.survey.repository.StubBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.view.SurveyContainerView;
 
-public class SurveyActivity extends AppCompatActivity implements ContainerPresenter, SurveyPresenter {
+public class SurveyActivity extends AppCompatActivity implements ContainerPresenter, SurveyPresenter, SurveySavePresenter {
 
     private Building surveyBuilding;
     private User surveyUser;
 
-    private SurveyController surveyController;
-    private ContainerController containerController;
     private HashMap<Integer, SurveyContainerView> indoorContainerViews;
     private HashMap<Integer, SurveyContainerView> outdoorContainerViews;
     private LinearLayout outdoorContainerLayout;
@@ -64,7 +65,7 @@ public class SurveyActivity extends AppCompatActivity implements ContainerPresen
     private TextView buildingNameView;
     private TextView placeNameView;
     private EditText residentCountView;
-    private Survey surveyData;
+    private Survey lastSurveyData;
     private SurveyRepository surveyRepository;
 
     @Override
@@ -78,7 +79,7 @@ public class SurveyActivity extends AppCompatActivity implements ContainerPresen
     }
 
     private void showContainerList() {
-        containerController = new ContainerController(InMemoryContainerTypeRepository.getInstance(), this);
+        ContainerController containerController = new ContainerController(InMemoryContainerTypeRepository.getInstance(), this);
         containerController.showList();
     }
 
@@ -92,7 +93,7 @@ public class SurveyActivity extends AppCompatActivity implements ContainerPresen
 
     private void initSurvey() {
         surveyRepository = InMemorySurveyRepository.getInstance();
-        surveyController = new SurveyController(surveyRepository, new StubBuildingRepository(), new StubUserRepository(), this);
+        SurveyController surveyController = new SurveyController(surveyRepository, new StubBuildingRepository(), new StubUserRepository(), this);
         surveyController.checkThisBuildingAndUserCanSurvey(UUID.nameUUIDFromBytes("2xyz".getBytes()).toString(), "sara");
     }
 
@@ -134,6 +135,54 @@ public class SurveyActivity extends AppCompatActivity implements ContainerPresen
         Toast.makeText(SurveyActivity.this, "ไม่เจอรายการภาชนะ", Toast.LENGTH_LONG).show();
     }
 
+    @Override
+    public void showSaveSuccess() {
+        Toast.makeText(SurveyActivity.this, "บันทึกสำเร็จ", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showSaveFail() {
+        Toast.makeText(SurveyActivity.this, "บันทึกล้มเหลว", Toast.LENGTH_LONG).show();
+    }
+
+    private void doSaveData() {
+        Survey surveyData = new Survey(surveyUser, surveyBuilding);
+        if (lastSurveyData != null) {
+            surveyData = lastSurveyData;
+        }
+
+        if (!validateSurveyContainerViews(indoorContainerViews) || !validateSurveyContainerViews(outdoorContainerViews)) {
+            Toast.makeText(SurveyActivity.this, "จำนวนภาชนะที่พบต้องน้อยกว่าหรือเท่ากับกว่าภาชนะทั้งหมด", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        String residentCountStr = residentCountView.getText().toString();
+        int residentCount = TextUtils.isEmpty(residentCountStr) ? 0 : Integer.valueOf(residentCountStr);
+        surveyData.setResidentCount(residentCount);
+        surveyData.setIndoorDetail(getSurveyDetail(indoorContainerViews));
+        surveyData.setOutdoorDetail(getSurveyDetail(outdoorContainerViews));
+
+        SurveyValidator surveyValidator = new SaveSurveyValidator(SurveyActivity.this);
+        SurveySaver surveySaver = new SurveySaver(this, surveyValidator, surveyRepository);
+        surveySaver.save(surveyData);
+    }
+
+    private ArrayList<SurveyDetail> getSurveyDetail(HashMap<Integer, SurveyContainerView> containerViews) {
+        ArrayList<SurveyDetail> surveyDetails = new ArrayList<>();
+        for (Map.Entry<Integer, SurveyContainerView> eachView : containerViews.entrySet()) {
+            surveyDetails.add(eachView.getValue().getSurveyDetail());
+        }
+        return surveyDetails;
+    }
+
+    private boolean validateSurveyContainerViews(HashMap<Integer, SurveyContainerView> containerViews) {
+        ArrayList<Boolean> surveyValidList = new ArrayList<>();
+        for (Map.Entry<Integer, SurveyContainerView> eachView : containerViews.entrySet()) {
+            surveyValidList.add(eachView.getValue().isValid());
+        }
+        return !surveyValidList.contains(false);
+    }
+
     private void initContainerView() {
         indoorContainerLayout.removeAllViews();
         outdoorContainerLayout.removeAllViews();
@@ -169,28 +218,9 @@ public class SurveyActivity extends AppCompatActivity implements ContainerPresen
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save:
-                if (surveyData == null) {
-                    surveyData = new Survey(surveyUser, surveyBuilding);
-                }
-
-                String residentCountStr = residentCountView.getText().toString();
-                int residentCount = TextUtils.isEmpty(residentCountStr) ? 0 : Integer.valueOf(residentCountStr);
-                surveyData.setResidentCount(residentCount);
-                surveyData.setIndoorDetail(buildSurveyDetail(indoorContainerViews));
-                surveyData.setOutdoorDetail(buildSurveyDetail(outdoorContainerViews));
-                surveyRepository.save(surveyData);
-
-                Log.v("surveydata", surveyRepository.findByBuildingAndUserIn7Day(surveyBuilding, surveyUser).toString());
+                doSaveData();
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private ArrayList<SurveyDetail> buildSurveyDetail(HashMap<Integer, SurveyContainerView> containerViews) {
-        ArrayList<SurveyDetail> surveyDetails = new ArrayList<>();
-        for (Map.Entry<Integer, SurveyContainerView> eachView : containerViews.entrySet()) {
-            surveyDetails.add(eachView.getValue().getSurveyDetail());
-        }
-        return surveyDetails;
     }
 }

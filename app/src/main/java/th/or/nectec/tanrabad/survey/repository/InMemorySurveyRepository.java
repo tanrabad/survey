@@ -7,9 +7,6 @@ import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.User;
 
-/**
- * Created by N. Choatravee on 12/11/2558.
- */
 public class InMemorySurveyRepository implements SurveyRepository {
 
     private static InMemorySurveyRepository instance;
@@ -28,7 +25,7 @@ public class InMemorySurveyRepository implements SurveyRepository {
     @Override
     public boolean save(Survey survey) {
         surveys.add(survey);
-        return false;
+        return true;
     }
 
     @Override

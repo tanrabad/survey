@@ -33,4 +33,8 @@
   <string name="building_unit">หลัง</string>
   <string name="building_image_bg">ภาพพื้นหลังหน้าเลือกอาคาร</string>
   <string name="building_icon">ไอคอนอาคาร</string>
+  <string name="survey_place">ระบุสถานที่สำรวจ</string>
+  <string name="place_unit">ที่</string>
+  <string name="place_icon">ไอคอนหน้าสถานที่สำรวจ</string>
+  <string name="place_bg">พื้นหลังหน้าสถานที่สำรวจ</string>
 </resources>

@@ -65,8 +65,16 @@ public class Survey {
         this.user = user;
     }
 
+    public ArrayList<SurveyDetail> getIndoorDetail() {
+        return indoorDetails;
+    }
+
     public void setIndoorDetail(ArrayList<SurveyDetail> indoorDetails) {
         this.indoorDetails = indoorDetails;
+    }
+
+    public ArrayList<SurveyDetail> getOutdoorDetail() {
+        return outdoorDetails;
     }
 
     public void setOutdoorDetail(ArrayList<SurveyDetail> outdoorDetails) {

@@ -31,8 +31,28 @@ public class Survey {
         this.surveyBuilding = surveyBuilding;
     }
 
+    public int getResidentCount() {
+        return residentCount;
+    }
+
     public void setResidentCount(int residentCount) {
         this.residentCount = residentCount;
+    }
+
+    public Building getSurveyBuilding() {
+        return surveyBuilding;
+    }
+
+    public void setSurveyBuilding(Building surveyBuilding) {
+        this.surveyBuilding = surveyBuilding;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public void setIndoorDetail(ArrayList<SurveyDetail> indoorDetails) {

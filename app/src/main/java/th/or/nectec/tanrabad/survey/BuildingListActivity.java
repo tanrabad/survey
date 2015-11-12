@@ -19,38 +19,46 @@ package th.or.nectec.tanrabad.survey;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import th.or.nectec.tanrabad.domain.BuildingChooser;
 import th.or.nectec.tanrabad.domain.BuildingPresenter;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.survey.repository.StubBuildingRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public class BuildingListActivity extends AppCompatActivity {
 
-    private TextView buildingList;
+    private TextView placeName;
+    private ListView buildingList;
+    private TextView buildingCountView;
+
+
+    private BuildingAdapter buildingAdapter;
     private BuildingChooser buildingChooser;
     private BuildingPresenter buildingPresenter = new BuildingPresenter() {
         @Override
         public void displayBuildingList(List<Building> buildings) {
-            StringBuilder stringBuilder = new StringBuilder();
-            for (Building building : buildings) {
-                stringBuilder.append(building.toString());
-                stringBuilder.append("\n");
-            }
-            buildingList.setText(stringBuilder.toString());
+            buildingAdapter = new BuildingAdapter(BuildingListActivity.this, buildings);
+            buildingList.setAdapter(buildingAdapter);
+            buildingCountView.setText(String.valueOf(buildings.size()));
         }
 
         @Override
         public void displayNotFoundBuilding() {
-            buildingList.setText("not found any building");
+            Toast.makeText(BuildingListActivity.this, "ไม่พบข้อมูลอาคาร", Toast.LENGTH_LONG).show();
         }
 
         @Override
         public void displayPleaseSpecityPlace() {
-            buildingList.setText("please specify place");
+            Toast.makeText(BuildingListActivity.this, "โปรดระบุสถานที่", Toast.LENGTH_LONG).show();
         }
 
         @Override
@@ -63,7 +71,18 @@ public class BuildingListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_building_list);
-        buildingList = (TextView) findViewById(R.id.buildingList);
+
+        placeName = (TextView) findViewById(R.id.place_name);
+        buildingList = (ListView) findViewById(R.id.building_list);
+        buildingCountView = (TextView) findViewById(R.id.building_count);
+
+        buildingList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Building building = (Building) buildingAdapter.getItem(position);
+                Toast.makeText(BuildingListActivity.this, building.getName(), Toast.LENGTH_LONG).show();
+            }
+        });
 
         buildingChooser = new BuildingChooser(new StubBuildingRepository(), this.buildingPresenter);
         buildingChooser.showBuildingOf(getUuidFromIntent());

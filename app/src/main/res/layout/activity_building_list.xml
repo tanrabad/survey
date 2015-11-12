@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2015  NECTEC
   ~   National Electronics and Computer Technology Center, Thailand
   ~
@@ -17,13 +16,109 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-    <TextView
-            android:textIsSelectable="true"
-            android:layout_width="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/header_height"
+            android:scaleType="fitXY" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:paddingEnd="@dimen/padding_right"
+            android:paddingLeft="@dimen/padding_left"
+            android:paddingRight="@dimen/padding_right"
+            android:paddingStart="@dimen/padding_right"
+            android:paddingTop="@dimen/padding_top">
+
+            <TextView
+                android:id="@+id/place_name"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:gravity="end"
+                android:textColor="@color/white"
+                android:textSize="@dimen/header_text_size"
+                tools:text="หมู่ 1 บ้านบางไผ่" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@id/buildingList"/>
+            android:paddingBottom="@dimen/indoor_outdoor_padding_bottom"
+            android:paddingTop="@dimen/indoor_outdoor_padding_top"
+            android:text="@string/survey_building"
+            android:textColor="@color/black"
+            android:textSize="@dimen/header_text_size"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/between_view"
+                android:layout_marginStart="@dimen/between_view"
+                android:paddingBottom="@dimen/indoor_outdoor_padding_bottom"
+                android:paddingTop="@dimen/indoor_outdoor_padding_top"
+                android:text="@string/found"
+                android:textColor="@color/black"
+                android:textSize="@dimen/header_text_size"
+                />
+
+            <TextView
+                android:id="@+id/building_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/between_view"
+                android:layout_marginStart="@dimen/between_view"
+                android:paddingBottom="@dimen/indoor_outdoor_padding_bottom"
+                android:paddingTop="@dimen/indoor_outdoor_padding_top"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/header_text_size"
+                tools:text="200" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/between_view"
+                android:layout_marginStart="@dimen/between_view"
+                android:paddingBottom="@dimen/indoor_outdoor_padding_bottom"
+                android:paddingTop="@dimen/indoor_outdoor_padding_top"
+                android:text="@string/building_unit"
+                android:textColor="@color/black"
+                android:textSize="@dimen/header_text_size" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/building_list" />
 
 </LinearLayout>

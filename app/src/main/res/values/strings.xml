@@ -28,4 +28,7 @@
   <string name="found">พบ</string>
   <string name="survey_container_description">ภาชนะที่สำรวจ</string>
   <string name="survey_container_bg_description">ภาพพื้นหลังการสำรวจภาชนะ</string>
+
+  <string name="survey_building">ระบุอาคารสำรวจ</string>
+  <string name="building_unit">หลัง</string>
 </resources>

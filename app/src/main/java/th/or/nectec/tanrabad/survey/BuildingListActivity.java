@@ -17,6 +17,7 @@
 
 package th.or.nectec.tanrabad.survey;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -25,14 +26,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.domain.BuildingChooser;
 import th.or.nectec.tanrabad.domain.BuildingPresenter;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.survey.repository.StubBuildingRepository;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 public class BuildingListActivity extends AppCompatActivity {
 
@@ -80,12 +80,19 @@ public class BuildingListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Building building = (Building) buildingAdapter.getItem(position);
-                Toast.makeText(BuildingListActivity.this, building.getName(), Toast.LENGTH_LONG).show();
+                bringToSurveyActivity(building);
             }
         });
 
         buildingChooser = new BuildingChooser(new StubBuildingRepository(), this.buildingPresenter);
         buildingChooser.showBuildingOf(getUuidFromIntent());
+    }
+
+    private void bringToSurveyActivity(Building building) {
+        Intent intent = new Intent(BuildingListActivity.this, SurveyActivity.class);
+        intent.putExtra(SurveyActivity.BUILDING_UUID_ARG, building.getId().toString());
+        intent.putExtra(SurveyActivity.USERNAME_ARG, "sara");
+        startActivity(intent);
     }
 
     private UUID getUuidFromIntent() {

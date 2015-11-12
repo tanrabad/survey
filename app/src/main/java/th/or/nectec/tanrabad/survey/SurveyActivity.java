@@ -31,7 +31,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import th.or.nectec.tanrabad.domain.ContainerController;
 import th.or.nectec.tanrabad.domain.ContainerPresenter;
@@ -55,9 +54,10 @@ import th.or.nectec.tanrabad.survey.view.SurveyContainerView;
 
 public class SurveyActivity extends AppCompatActivity implements ContainerPresenter, SurveyPresenter, SurveySavePresenter {
 
+    public static final String BUILDING_UUID_ARG = "building_uuid";
+    public static final String USERNAME_ARG = "username_arg";
     private Building surveyBuilding;
     private User surveyUser;
-
     private HashMap<Integer, SurveyContainerView> indoorContainerViews;
     private HashMap<Integer, SurveyContainerView> outdoorContainerViews;
     private LinearLayout outdoorContainerLayout;
@@ -92,9 +92,14 @@ public class SurveyActivity extends AppCompatActivity implements ContainerPresen
     }
 
     private void initSurvey() {
+
         surveyRepository = InMemorySurveyRepository.getInstance();
         SurveyController surveyController = new SurveyController(surveyRepository, new StubBuildingRepository(), new StubUserRepository(), this);
-        surveyController.checkThisBuildingAndUserCanSurvey(UUID.nameUUIDFromBytes("2xyz".getBytes()).toString(), "sara");
+
+        String buildingUUID = getIntent().getStringExtra(BUILDING_UUID_ARG);
+        String username = getIntent().getStringExtra(USERNAME_ARG);
+
+        surveyController.checkThisBuildingAndUserCanSurvey(buildingUUID, username);
     }
 
     @Override

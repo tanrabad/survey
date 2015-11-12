@@ -27,13 +27,24 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme"
         tools:ignore="UnusedAttribute">
+
+        <activity
+            android:name=".PlaceListActivity"
+            android:label="รายชื่อสถานที่">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".BuildingListActivity"
             android:label="รายชื่ออาคาร">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity

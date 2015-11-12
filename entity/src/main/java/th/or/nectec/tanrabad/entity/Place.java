@@ -32,6 +32,7 @@ public class Place {
     private String name;
     private int type;
 
+
     public Place(UUID id, String name) {
         this.id = id;
         this.name = name;
@@ -40,6 +41,14 @@ public class Place {
     public static Place withName(String name) {
         UUID uuid = UUID.randomUUID();
         return new Place(uuid, name);
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public void setType(int type) {

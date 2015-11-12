@@ -36,11 +36,10 @@ import th.or.nectec.tanrabad.survey.repository.StubBuildingRepository;
 
 public class BuildingListActivity extends AppCompatActivity {
 
+    public static final String PLACE_UUID_ARG = "place_uuid_arg";
     private TextView placeName;
     private ListView buildingList;
     private TextView buildingCountView;
-
-
     private BuildingAdapter buildingAdapter;
     private BuildingChooser buildingChooser;
     private BuildingPresenter buildingPresenter = new BuildingPresenter() {

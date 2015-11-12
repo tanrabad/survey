@@ -31,7 +31,7 @@ public class PlaceAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int i) {
+    public Place getItem(int i) {
         return places.get(i);
 
     }

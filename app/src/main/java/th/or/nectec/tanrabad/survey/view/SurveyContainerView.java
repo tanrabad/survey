@@ -1,6 +1,7 @@
 package th.or.nectec.tanrabad.survey.view;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -19,6 +20,9 @@ public class SurveyContainerView extends LinearLayout {
     private TextView containerTypeView;
     private EditText totalContainerView;
     private EditText foundContainerView;
+
+    private int total;
+    private int found;
 
     public SurveyContainerView(Context context) {
         super(context);
@@ -50,11 +54,26 @@ public class SurveyContainerView extends LinearLayout {
     }
 
     public SurveyDetail getSurveyDetail() {
+        getValue();
+        return new SurveyDetail(containerType, total, found);
+    }
+
+    private void getValue() {
         String totalStr = totalContainerView.getText().toString();
-        int total = TextUtils.isEmpty(totalStr) ? 0 : Integer.valueOf(totalStr);
+        total = TextUtils.isEmpty(totalStr) ? 0 : Integer.valueOf(totalStr);
         String foundStr = foundContainerView.getText().toString();
-        int found = TextUtils.isEmpty(foundStr) ? 0 : Integer.valueOf(totalStr);
-        SurveyDetail surveyDetail = new SurveyDetail(containerType, total, found);
-        return surveyDetail;
+        found = TextUtils.isEmpty(foundStr) ? 0 : Integer.valueOf(foundStr);
+    }
+
+    public boolean isValid() {
+        getValue();
+        if (found > total) {
+            setBackgroundColor(getResources().getColor(R.color.pink_transparent_30));
+            return false;
+        } else {
+            setBackgroundColor(Color.TRANSPARENT);
+            return true;
+        }
+
     }
 }

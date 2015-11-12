@@ -88,11 +88,8 @@ public class Survey {
 
         Survey survey = (Survey) o;
 
-        if (residentCount != survey.residentCount) return false;
         if (!user.equals(survey.user)) return false;
-        if (!surveyBuilding.equals(survey.surveyBuilding)) return false;
-        if (!indoorDetails.equals(survey.indoorDetails)) return false;
-        return outdoorDetails.equals(survey.outdoorDetails);
+        return surveyBuilding.equals(survey.surveyBuilding);
 
     }
 
@@ -100,9 +97,6 @@ public class Survey {
     public int hashCode() {
         int result = user.hashCode();
         result = 31 * result + surveyBuilding.hashCode();
-        result = 31 * result + residentCount;
-        result = 31 * result + indoorDetails.hashCode();
-        result = 31 * result + outdoorDetails.hashCode();
         return result;
     }
 }

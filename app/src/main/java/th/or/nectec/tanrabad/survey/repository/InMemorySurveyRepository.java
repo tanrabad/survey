@@ -24,7 +24,12 @@ public class InMemorySurveyRepository implements SurveyRepository {
 
     @Override
     public boolean save(Survey survey) {
-        surveys.add(survey);
+        if (surveys.contains(survey)) {
+            surveys.set(surveys.indexOf(survey), survey);
+        } else {
+            surveys.add(survey);
+        }
+
         return true;
     }
 

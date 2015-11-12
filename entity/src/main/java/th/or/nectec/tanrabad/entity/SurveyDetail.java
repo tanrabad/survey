@@ -47,6 +47,10 @@ public class SurveyDetail {
         this.foundLarvaContainer = found;
     }
 
+    public ContainerType getContainerType() {
+        return containerType;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -64,6 +68,14 @@ public class SurveyDetail {
         result = 31 * result + totalContainer;
         result = 31 * result + foundLarvaContainer;
         return result;
+    }
+
+    public int getTotalContainer() {
+        return totalContainer;
+    }
+
+    public int getFoundLarvaContainer() {
+        return foundLarvaContainer;
     }
 
     public class ContainerFoundLarvaOverTotalException extends RuntimeException {

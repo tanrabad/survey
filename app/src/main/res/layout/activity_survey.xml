@@ -13,8 +13,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/header_height"
                 android:contentDescription="@string/survey_container_bg_description"
-                android:scaleType="fitXY"
-                android:src="@drawable/survey_header"/>
+                android:scaleType="fitXY"/>
 
         <LinearLayout
                 android:layout_width="wrap_content"
@@ -37,7 +36,7 @@
                     android:gravity="end"
                     android:textColor="@color/white"
                     android:textIsSelectable="true"
-                    android:textSize="@dimen/body_text_size_big"
+                    android:textSize="@dimen/header_text_size"
                     tools:text="บ้านเลขที่ 123/321"/>
 
             <TextView
@@ -50,7 +49,7 @@
                     android:gravity="end"
                     android:textColor="@color/white"
                     android:textIsSelectable="false"
-                    android:textSize="@dimen/body_text_size_small"
+                    android:textSize="@dimen/body_text_size"
                     tools:text="หมู่ที่ 1 บ้านบางไผ่"/>
 
             <LinearLayout
@@ -68,7 +67,7 @@
                         android:layout_marginRight="@dimen/between_view"
                         android:text="@string/number_of_resident"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/header_text_size"/>
+                        android:textSize="@dimen/body_text_size_big"/>
 
                 <EditText
                         android:id="@+id/resident_count"
@@ -92,7 +91,7 @@
                         android:layout_marginStart="@dimen/between_view"
                         android:text="@string/person"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/header_text_size"/>
+                        android:textSize="@dimen/body_text_size_big"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -110,7 +109,7 @@
                 android:id="@+id/indoor_container"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:background="@color/light_gray"
+                android:background="@color/light_gray_body"
                 android:layout_weight="1"
                 android:orientation="vertical">
 

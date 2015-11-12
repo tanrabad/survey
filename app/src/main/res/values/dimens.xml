@@ -3,10 +3,10 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <!--<dimen name="activity_vertical_margin">16dp</dimen>-->
 
-    <dimen name="header_text_size">22sp</dimen>
-    <dimen name="body_text_size">20sp</dimen>
-    <dimen name="body_text_size_big">22sp</dimen>
-    <dimen name="body_text_size_small">18sp</dimen>
+    <dimen name="header_text_size">30sp</dimen>
+    <dimen name="body_text_size">26sp</dimen>
+    <dimen name="body_text_size_big">28sp</dimen>
+    <dimen name="body_text_size_small">24sp</dimen>
 
     <dimen name="indoor_outdoor_padding_top">15dp</dimen>
     <dimen name="indoor_outdoor_padding_bottom">15dp</dimen>

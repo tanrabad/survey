@@ -65,7 +65,7 @@ dependencies {
     compile project(':domain')
     compile project(':entity')
     compile 'com.android.support:appcompat-v7:' + rootProject.ext.supportLibVersion
-
+    compile 'uk.co.chrisjenx:calligraphy:' + rootProject.ext.calligraphyVersion
     androidTestCompile 'com.android.support.test:runner:' + rootProject.ext.runnerVersion
     androidTestCompile 'com.android.support.test:rules:' + rootProject.ext.rulesVersion
     androidTestCompile 'com.android.support.test.espresso:espresso-core:' + rootProject.ext.espressoVersion

@@ -58,6 +58,10 @@ android {
         exclude 'META-INF/NOTICE'
         exclude 'META-INF/LICENSE'
     }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
@@ -66,6 +70,8 @@ dependencies {
     compile project(':entity')
     compile 'com.android.support:appcompat-v7:' + rootProject.ext.supportLibVersion
     compile 'uk.co.chrisjenx:calligraphy:' + rootProject.ext.calligraphyVersion
+    testCompile 'junit:junit:' + rootProject.ext.junitVersion
+    testCompile 'org.mockito:mockito-core:' + rootProject.ext.mockitoVersion
     androidTestCompile 'com.android.support.test:runner:' + rootProject.ext.runnerVersion
     androidTestCompile 'com.android.support.test:rules:' + rootProject.ext.rulesVersion
     androidTestCompile 'com.android.support.test.espresso:espresso-core:' + rootProject.ext.espressoVersion

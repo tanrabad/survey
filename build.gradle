@@ -41,6 +41,7 @@ ext {
 
     junitVersion = "4.12"
     jMockVersion = "2.8.1"
+    mockitoVersion = "1.10.19"
     supportLibVersion = "23.0.1"
     calligraphyVersion = "2.1.0"
     runnerVersion = "0.4.1"

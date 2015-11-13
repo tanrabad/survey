@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text.display4">120sp</dimen>
+    <dimen name="text.display3">64sp</dimen>
+    <dimen name="text.display2">53sp</dimen>
+    <dimen name="text.display1">42sp</dimen>
+    <dimen name="text.headline">32sp</dimen>
+    <dimen name="text.title">28sp</dimen>
+    <dimen name="text.subhead">24sp</dimen>
+    <dimen name="text.body">22sp</dimen>
+    <dimen name="text.caption">20sp</dimen>
+    <dimen name="text.menu">22sp</dimen>
+    <dimen name="text.button">22sp</dimen>
+</resources>

@@ -49,4 +49,6 @@
     <string name="place_bg">พื้นหลังหน้าสถานที่สำรวจ</string>
     <string name="place_not_found">ไม่พบข้อมูลรายการสถานที่</string>
 
+
+    <string name="survey_building_history">ประวัติการสำรวจ</string>
 </resources>

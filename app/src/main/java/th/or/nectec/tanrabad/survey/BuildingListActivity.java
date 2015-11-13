@@ -19,7 +19,6 @@ package th.or.nectec.tanrabad.survey;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -34,7 +33,7 @@ import th.or.nectec.tanrabad.domain.BuildingPresenter;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.survey.repository.StubBuildingRepository;
 
-public class BuildingListActivity extends AppCompatActivity {
+public class BuildingListActivity extends TanrabadActivity {
 
     public static final String PLACE_UUID_ARG = "place_uuid_arg";
     private TextView placeName;

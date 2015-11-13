@@ -2,7 +2,6 @@ package th.or.nectec.tanrabad.survey;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -16,7 +15,7 @@ import th.or.nectec.tanrabad.domain.PlaceListPresenter;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
 
-public class PlaceListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, PlaceListPresenter {
+public class PlaceListActivity extends TanrabadActivity implements AdapterView.OnItemClickListener, PlaceListPresenter {
 
     PlaceAdapter placeAdapter;
     PlaceChooser placeChooser;

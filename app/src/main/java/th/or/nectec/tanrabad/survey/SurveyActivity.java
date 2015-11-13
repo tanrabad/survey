@@ -18,7 +18,6 @@
 package th.or.nectec.tanrabad.survey;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -52,7 +51,7 @@ import th.or.nectec.tanrabad.survey.repository.StubBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.view.SurveyContainerView;
 
-public class SurveyActivity extends AppCompatActivity implements ContainerPresenter, SurveyPresenter, SurveySavePresenter {
+public class SurveyActivity extends TanrabadActivity implements ContainerPresenter, SurveyPresenter, SurveySavePresenter {
 
     public static final String BUILDING_UUID_ARG = "building_uuid";
     public static final String USERNAME_ARG = "username_arg";

@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <dimen name="text.title">26sp</dimen>
-    <dimen name="text.subhead">22sp</dimen>
-    <dimen name="text.body">20sp</dimen>
-</resources>

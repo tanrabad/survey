@@ -17,7 +17,7 @@
 
 <resources>
     <string name="app_name">Tanlabad-survey</string>
-    <string name="title_activity_survey">SurveyActivity</string>
+    <string name="title_activity_survey">สำรวจ</string>
     <string name="save">บันทึก</string>
     
     <string name="number_of_resident">จำนวนผู้อยู่อาศัย</string>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ActionBar" parent="@style/Widget.AppCompat.Light.ActionBar">
+        <item name="background">?attr/colorPrimary</item>
+        <item name="titleTextStyle">@style/ActionBar.TitleTextStyle</item>
+        <item name="android:titleTextStyle">@style/ActionBar.TitleTextStyle</item>
+    </style>
+
+    <style name="ActionBar.TitleTextStyle" parent="@style/Base.TextAppearance.AppCompat.Title">
+        <item name="android:textSize">@dimen/body_text_size_small</item>
+    </style>
+
+</resources>

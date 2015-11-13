@@ -45,7 +45,7 @@ public class PlaceListActivity extends AppCompatActivity implements AdapterView.
 
     @Override
     public void displayPlaceNotFound() {
-        Toast.makeText(PlaceListActivity.this, "ไม่พบข้อมูลรายการสถานที่", Toast.LENGTH_LONG).show();
+        Toast.makeText(PlaceListActivity.this, R.string.place_not_found, Toast.LENGTH_LONG).show();
     }
 
     @Override

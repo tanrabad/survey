@@ -52,12 +52,12 @@ public class BuildingListActivity extends AppCompatActivity {
 
         @Override
         public void displayNotFoundBuilding() {
-            Toast.makeText(BuildingListActivity.this, "ไม่พบข้อมูลอาคาร", Toast.LENGTH_LONG).show();
+            Toast.makeText(BuildingListActivity.this, R.string.building_not_found, Toast.LENGTH_LONG).show();
         }
 
         @Override
         public void displayPleaseSpecityPlace() {
-            Toast.makeText(BuildingListActivity.this, "โปรดระบุสถานที่", Toast.LENGTH_LONG).show();
+            Toast.makeText(BuildingListActivity.this, R.string.please_enter_place, Toast.LENGTH_LONG).show();
         }
 
         @Override

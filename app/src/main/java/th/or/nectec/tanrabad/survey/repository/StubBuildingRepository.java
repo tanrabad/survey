@@ -17,6 +17,8 @@
 
 package th.or.nectec.tanrabad.survey.repository;
 
+import android.support.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -30,41 +32,46 @@ public class StubBuildingRepository implements BuildingRepository {
 
     public StubBuildingRepository() {
         StubPlaceRepository stubPlaceRepository = new StubPlaceRepository();
-        Building building1 = (new Building(UUID.nameUUIDFromBytes("1xyz".getBytes()), "214/43"));
+        Building building1 = new Building(generateUUID("1xyz"), "214/43");
         building1.setPlace(stubPlaceRepository.getPalazzettoVillage());
         buildings.add(building1);
 
-        Building building2 = (new Building(UUID.nameUUIDFromBytes("2xyz".getBytes()), "214/44"));
+        Building building2 = new Building(generateUUID("2xyz"), "214/44");
         building2.setPlace(stubPlaceRepository.getPalazzettoVillage());
         buildings.add(building2);
 
-        Building building3 = (new Building(UUID.nameUUIDFromBytes("3xyz".getBytes()), "214/45"));
+        Building building3 = new Building(generateUUID("3xyz"), "214/45");
         building3.setPlace(stubPlaceRepository.getPalazzettoVillage());
         buildings.add(building3);
 
-        Building building4 = (new Building(UUID.nameUUIDFromBytes("1opj".getBytes()), "ตึก1"));
+        Building building4 = new Building(generateUUID("1opj"), "ตึก1");
         building4.setPlace(stubPlaceRepository.getBangkokHospital());
         buildings.add(building4);
 
-        Building building5 = (new Building(UUID.nameUUIDFromBytes("2opj".getBytes()), "ตึกพักญาติ"));
+        Building building5 = new Building(generateUUID("2opj"), "ตึกพักญาติ");
         building5.setPlace(stubPlaceRepository.getBangkokHospital());
         buildings.add(building5);
 
-        Building building6 = (new Building(UUID.nameUUIDFromBytes("3opj".getBytes()), "โรงอาหาร"));
+        Building building6 = new Building(generateUUID("3opj"), "โรงอาหาร");
         building6.setPlace(stubPlaceRepository.getBangkokHospital());
         buildings.add(building6);
 
-        Building building7 = (new Building(UUID.nameUUIDFromBytes("1hij".getBytes()), "ศาลาใหญ่"));
+        Building building7 = new Building(generateUUID("1hij"), "ศาลาใหญ่");
         building7.setPlace(stubPlaceRepository.getWatpaphukon());
         buildings.add(building7);
 
-        Building building8 = (new Building(UUID.nameUUIDFromBytes("2hij".getBytes()), "เมรุ"));
+        Building building8 = new Building(generateUUID("2hij"), "เมรุ");
         building8.setPlace(stubPlaceRepository.getWatpaphukon());
         buildings.add(building8);
 
-        Building building9 = (new Building(UUID.nameUUIDFromBytes("3hij".getBytes()), "ลานหน้าศาลากลาง"));
+        Building building9 = new Building(generateUUID("3hij"), "ลานหน้าศาลากลาง");
         building9.setPlace(stubPlaceRepository.getWatpaphukon());
         buildings.add(building9);
+    }
+
+    @NonNull
+    private UUID generateUUID(String input) {
+        return UUID.nameUUIDFromBytes(input.getBytes());
     }
 
 

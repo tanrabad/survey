@@ -140,12 +140,12 @@ public class SurveyActivity extends AppCompatActivity implements ContainerPresen
 
     @Override
     public void alertUserNotFound() {
-        Toast.makeText(SurveyActivity.this, "ไม่พบข้อมูลผู้ใช้งาน", Toast.LENGTH_LONG).show();
+        Toast.makeText(SurveyActivity.this, R.string.user_not_found, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void alertBuildingNotFound() {
-        Toast.makeText(SurveyActivity.this, "ไม่พบข้อมูลอาคาร", Toast.LENGTH_LONG).show();
+        Toast.makeText(SurveyActivity.this, R.string.building_not_found, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -159,25 +159,25 @@ public class SurveyActivity extends AppCompatActivity implements ContainerPresen
 
     @Override
     public void displayContainerNotFound() {
-        Toast.makeText(SurveyActivity.this, "ไม่เจอรายการภาชนะ", Toast.LENGTH_LONG).show();
+        Toast.makeText(SurveyActivity.this, R.string.container_not_found, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void showSaveSuccess() {
-        Toast.makeText(SurveyActivity.this, "บันทึกสำเร็จ", Toast.LENGTH_LONG).show();
+        Toast.makeText(SurveyActivity.this, R.string.save_success, Toast.LENGTH_LONG).show();
         finish();
     }
 
     @Override
     public void showSaveFail() {
-        Toast.makeText(SurveyActivity.this, "บันทึกล้มเหลว", Toast.LENGTH_LONG).show();
+        Toast.makeText(SurveyActivity.this, R.string.save_fail, Toast.LENGTH_LONG).show();
     }
 
     private void doSaveData() {
         Survey surveyData = new Survey(surveyUser, surveyBuilding);
 
         if (!validateSurveyContainerViews(indoorContainerViews) || !validateSurveyContainerViews(outdoorContainerViews)) {
-            Toast.makeText(SurveyActivity.this, "จำนวนภาชนะที่พบต้องน้อยกว่าหรือเท่ากับกว่าภาชนะทั้งหมด", Toast.LENGTH_LONG).show();
+            Toast.makeText(SurveyActivity.this, R.string.over_total_container, Toast.LENGTH_LONG).show();
             return;
         }
 

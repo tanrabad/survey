@@ -74,7 +74,6 @@ public class StubBuildingRepository implements BuildingRepository {
         return UUID.nameUUIDFromBytes(input.getBytes());
     }
 
-
     @Override
     public List<Building> findBuildingInPlace(UUID placeUuid) {
         ArrayList<Building> newBuildingList = new ArrayList<>();

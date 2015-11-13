@@ -62,7 +62,7 @@ public class StubBuildingRepository implements BuildingRepository {
         building8.setPlace(stubPlaceRepository.getWatpaphukon());
         buildings.add(building8);
 
-        Building building9 = (new Building(UUID.nameUUIDFromBytes("3hij".getBytes()), "ลาดหน้าศาลากลาง"));
+        Building building9 = (new Building(UUID.nameUUIDFromBytes("3hij".getBytes()), "ลานหน้าศาลากลาง"));
         building9.setPlace(stubPlaceRepository.getWatpaphukon());
         buildings.add(building9);
     }

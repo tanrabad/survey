@@ -25,16 +25,40 @@ public class User {
     private String email;
     private int organizationId;
 
+    public User(String username) {
+        this.username = username;
+    }
+
+    public static User fromUsername(String username) {
+        return new User(username);
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
     public void setFirstname(String firstname) {
         this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
     }
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public int getOrganizationId() {
+        return organizationId;
     }
 
     public void setOrganizationId(int organizationId) {
@@ -45,16 +69,6 @@ public class User {
         return username;
     }
 
-
-    public User(String username) {
-        this.username = username;
-
-    }
-
-    public static User fromUsername(String username) {
-        return new User(username);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -62,11 +76,20 @@ public class User {
 
         User user = (User) o;
 
-        return username.equals(user.username);
+        if (organizationId != user.organizationId) return false;
+        if (!username.equals(user.username)) return false;
+        if (firstname != null ? !firstname.equals(user.firstname) : user.firstname != null)
+            return false;
+        return !(lastname != null ? !lastname.equals(user.lastname) : user.lastname != null);
+
     }
 
     @Override
     public int hashCode() {
-        return username.hashCode();
+        int result = username.hashCode();
+        result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
+        result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
+        result = 31 * result + organizationId;
+        return result;
     }
 }

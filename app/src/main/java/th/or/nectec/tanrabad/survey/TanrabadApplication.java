@@ -29,10 +29,16 @@ public class TanrabadApplication extends Application {
     }
 
     private void setupDefaultFont() {
+        // must call follow snippet on each activity to make it work!
+        //  @Override
+        //  protected void attachBaseContext(Context newBase) {
+        //      super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+        //  }
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                        .setDefaultFontPath("fonts/ThaiSansNeue-Regular.otf")
-                        .setFontAttrId(R.attr.fontPath)
-                        .build()
+                .setDefaultFontPath("fonts/ThaiSansNeue-Regular.otf")
+                .setFontAttrId(R.attr.fontPath)
+                .build()
         );
+
     }
 }

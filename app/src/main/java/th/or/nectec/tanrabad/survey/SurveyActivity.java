@@ -156,20 +156,20 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     }
 
     private void SaveSurveyData() {
-        Survey surveyData = new Survey(surveyUser, surveyBuilding);
+        try {
+            Survey surveyData = new Survey(surveyUser, surveyBuilding);
+            surveyData.setResidentCount(getResidentCount());
+            surveyData.setIndoorDetail(getSurveyDetail(indoorContainerViews));
+            surveyData.setOutdoorDetail(getSurveyDetail(outdoorContainerViews));
 
-        if (!validateSurveyContainerViews(indoorContainerViews) || !validateSurveyContainerViews(outdoorContainerViews)) {
+            SurveyValidator surveyValidator = new SaveSurveyValidator(SurveyActivity.this);
+            SurveySaver surveySaver = new SurveySaver(this, surveyValidator, surveyRepository);
+            surveySaver.save(surveyData);
+        } catch (SurveyDetail.ContainerFoundLarvaOverTotalException e) {
             Toast.makeText(SurveyActivity.this, R.string.over_total_container, Toast.LENGTH_LONG).show();
-            return;
+            validateSurveyContainerViews(indoorContainerViews);
+            validateSurveyContainerViews(outdoorContainerViews);
         }
-
-        surveyData.setResidentCount(getResidentCount());
-        surveyData.setIndoorDetail(getSurveyDetail(indoorContainerViews));
-        surveyData.setOutdoorDetail(getSurveyDetail(outdoorContainerViews));
-
-        SurveyValidator surveyValidator = new SaveSurveyValidator(SurveyActivity.this);
-        SurveySaver surveySaver = new SurveySaver(this, surveyValidator, surveyRepository);
-        surveySaver.save(surveyData);
     }
 
     private int getResidentCount() {

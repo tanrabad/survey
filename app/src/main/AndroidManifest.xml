@@ -14,21 +14,20 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="th.or.nectec.tanrabad.survey">
+          package="th.or.nectec.tanrabad.survey">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:name=".TanrabadApplication"
-        android:allowBackup="false"
-        android:fullBackupContent="false"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:supportsRtl="false"
-        android:theme="@style/AppTheme"
-        tools:ignore="UnusedAttribute">
+            android:name=".TanrabadApp"
+            android:allowBackup="false"
+            android:fullBackupContent="false"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:supportsRtl="false"
+            android:theme="@style/AppTheme">
 
         <activity
             android:name=".PlaceListActivity"

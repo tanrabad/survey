@@ -55,6 +55,9 @@ android {
     }
 
     buildTypes {
+        debug {
+            ext.enableCrashlytics = false
+        }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -87,15 +90,13 @@ dependencies {
     compile project(':entity')
     compile 'com.android.support:appcompat-v7:' + rootProject.ext.supportLibVersion
     compile 'uk.co.chrisjenx:calligraphy:' + rootProject.ext.calligraphyVersion
+    compile('com.crashlytics.sdk.android:crashlytics:2.5.2@aar') { transitive = true; }
+    compile('com.crashlytics.sdk.android:answers:1.3.3@aar') { transitive = true; }
     testCompile 'junit:junit:' + rootProject.ext.junitVersion
     testCompile 'org.mockito:mockito-core:' + rootProject.ext.mockitoVersion
     androidTestCompile 'com.android.support.test:runner:' + rootProject.ext.runnerVersion
     androidTestCompile 'com.android.support.test:rules:' + rootProject.ext.rulesVersion
     androidTestCompile 'com.android.support.test.espresso:espresso-core:' + rootProject.ext.espressoVersion
-    compile('com.crashlytics.sdk.android:crashlytics:2.5.2@aar') {
-        transitive = true;
-    }
-    compile('com.crashlytics.sdk.android:answers:1.3.3@aar') {
-        transitive = true;
-    }
+
+
 }

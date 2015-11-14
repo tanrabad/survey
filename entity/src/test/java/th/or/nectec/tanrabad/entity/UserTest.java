@@ -1,10 +1,13 @@
 package th.or.nectec.tanrabad.entity;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
+@RunWith(JUnit4.class)
 public class UserTest {
 
     public static final String AUSTIN_USERNAME = "austin1023";

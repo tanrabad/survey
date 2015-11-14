@@ -49,6 +49,10 @@ public class Place {
         return name;
     }
 
+    public int getType() {
+        return type;
+    }
+
     public void setName(String name) {
         this.name = name;
     }

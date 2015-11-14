@@ -103,8 +103,17 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     }
 
     private void setBuildingInfo() {
-        buildingNameView.setText(surveyBuilding.getName());
+        buildingNameView.setText(buildingNamePrefix() + surveyBuilding.getName());
         placeNameView.setText(surveyBuilding.getPlace().getName());
+    }
+
+    private String buildingNamePrefix() {
+        String buildNamePrefix = "";
+        Place place = surveyBuilding.getPlace();
+        if (place.getType() == Place.TYPE_VILLAGE_COMMUNITY) {
+            buildNamePrefix = "บ้านเลขที่ ";
+        }
+        return buildNamePrefix;
     }
 
     private void loadSurveyData(Survey survey) {

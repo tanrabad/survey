@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015  NECTEC
+ * Copyright (c) 2015 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -67,7 +67,7 @@ public class SurveySaverTest {
                 will(returnValue(true));
                 oneOf(surveyRepository).save(with(survey));
                 will(returnValue(true));
-                oneOf(surveySavePresenter).showSaveSuccess();
+                oneOf(surveySavePresenter).displaySaveSuccess();
             }
         });
         SurveySaver surveySaver = new SurveySaver(surveySavePresenter, surveyValidator, surveyRepository);
@@ -83,7 +83,7 @@ public class SurveySaverTest {
                 will(returnValue(false));
                 never(surveyRepository);
 
-                oneOf(surveySavePresenter).showSaveFail();
+                oneOf(surveySavePresenter).displaySaveFail();
             }
         });
         SurveySaver surveySaver = new SurveySaver(surveySavePresenter, surveyValidator, surveyRepository);

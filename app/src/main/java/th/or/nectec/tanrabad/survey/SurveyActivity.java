@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015  NECTEC
+ * Copyright (c) 2015 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,31 +25,15 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import th.or.nectec.tanrabad.domain.*;
+import th.or.nectec.tanrabad.entity.*;
+import th.or.nectec.tanrabad.survey.repository.*;
+import th.or.nectec.tanrabad.survey.view.SurveyContainerView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import th.or.nectec.tanrabad.domain.ContainerController;
-import th.or.nectec.tanrabad.domain.ContainerPresenter;
-import th.or.nectec.tanrabad.domain.SurveyController;
-import th.or.nectec.tanrabad.domain.SurveyPresenter;
-import th.or.nectec.tanrabad.domain.SurveyRepository;
-import th.or.nectec.tanrabad.domain.SurveySavePresenter;
-import th.or.nectec.tanrabad.domain.SurveySaver;
-import th.or.nectec.tanrabad.domain.SurveyValidator;
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.ContainerType;
-import th.or.nectec.tanrabad.entity.Survey;
-import th.or.nectec.tanrabad.entity.SurveyDetail;
-import th.or.nectec.tanrabad.entity.User;
-import th.or.nectec.tanrabad.survey.repository.InMemoryContainerTypeRepository;
-import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
-import th.or.nectec.tanrabad.survey.repository.SaveSurveyValidator;
-import th.or.nectec.tanrabad.survey.repository.StubBuildingRepository;
-import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
-import th.or.nectec.tanrabad.survey.view.SurveyContainerView;
 
 public class SurveyActivity extends TanrabadActivity implements ContainerPresenter, SurveyPresenter, SurveySavePresenter {
 
@@ -90,7 +74,6 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     }
 
     private void initSurvey() {
-
         surveyRepository = InMemorySurveyRepository.getInstance();
         SurveyController surveyController = new SurveyController(surveyRepository, new StubBuildingRepository(), new StubUserRepository(), this);
 
@@ -162,17 +145,17 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     }
 
     @Override
-    public void showSaveSuccess() {
+    public void displaySaveSuccess() {
         Toast.makeText(SurveyActivity.this, R.string.save_success, Toast.LENGTH_LONG).show();
         finish();
     }
 
     @Override
-    public void showSaveFail() {
+    public void displaySaveFail() {
         Toast.makeText(SurveyActivity.this, R.string.save_fail, Toast.LENGTH_LONG).show();
     }
 
-    private void doSaveData() {
+    private void SaveSurveyData() {
         Survey surveyData = new Survey(surveyUser, surveyBuilding);
 
         if (!validateSurveyContainerViews(indoorContainerViews) || !validateSurveyContainerViews(outdoorContainerViews)) {
@@ -180,15 +163,18 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
             return;
         }
 
-        String residentCountStr = residentCountView.getText().toString();
-        int residentCount = TextUtils.isEmpty(residentCountStr) ? 0 : Integer.valueOf(residentCountStr);
-        surveyData.setResidentCount(residentCount);
+        surveyData.setResidentCount(getResidentCount());
         surveyData.setIndoorDetail(getSurveyDetail(indoorContainerViews));
         surveyData.setOutdoorDetail(getSurveyDetail(outdoorContainerViews));
 
         SurveyValidator surveyValidator = new SaveSurveyValidator(SurveyActivity.this);
         SurveySaver surveySaver = new SurveySaver(this, surveyValidator, surveyRepository);
         surveySaver.save(surveyData);
+    }
+
+    private int getResidentCount() {
+        String residentCountStr = residentCountView.getText().toString();
+        return TextUtils.isEmpty(residentCountStr) ? 0 : Integer.valueOf(residentCountStr);
     }
 
     private ArrayList<SurveyDetail> getSurveyDetail(HashMap<Integer, SurveyContainerView> containerViews) {
@@ -200,11 +186,11 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     }
 
     private boolean validateSurveyContainerViews(HashMap<Integer, SurveyContainerView> containerViews) {
-        ArrayList<Boolean> surveyValidList = new ArrayList<>();
+        boolean isValid = true;
         for (Map.Entry<Integer, SurveyContainerView> eachView : containerViews.entrySet()) {
-            surveyValidList.add(eachView.getValue().isValid());
+            if (!eachView.getValue().isValid()) isValid = false;
         }
-        return !surveyValidList.contains(false);
+        return isValid;
     }
 
     private void initContainerView() {
@@ -242,7 +228,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save:
-                doSaveData();
+                SaveSurveyData();
                 break;
         }
         return super.onOptionsItemSelected(item);

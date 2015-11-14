@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015  NECTEC
+ * Copyright (c) 2015 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -33,9 +33,9 @@ public class SurveySaver {
     public void save(Survey survey) {
         if (saveValidator.validate(survey)) {
             if (surveyRepository.save(survey))
-                surveySavePresenter.showSaveSuccess();
+                surveySavePresenter.displaySaveSuccess();
         } else {
-            surveySavePresenter.showSaveFail();
+            surveySavePresenter.displaySaveFail();
         }
     }
 }

@@ -140,7 +140,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     }
 
     @Override
-    public void displayContainerNotFound() {
+    public void alertContainerNotFound() {
         Toast.makeText(SurveyActivity.this, R.string.container_not_found, Toast.LENGTH_LONG).show();
     }
 

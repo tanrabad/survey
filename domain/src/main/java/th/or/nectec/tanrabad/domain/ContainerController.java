@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015  NECTEC
+ * Copyright (c) 2015 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -36,7 +36,7 @@ public class ContainerController {
         List<ContainerType> containerTypes = containerTypeRepository.find();
 
         if (containerTypes == null) {
-            containerPresenter.displayContainerNotFound();
+            containerPresenter.alertContainerNotFound();
         } else {
             containerPresenter.displayContainerList(containerTypes);
         }

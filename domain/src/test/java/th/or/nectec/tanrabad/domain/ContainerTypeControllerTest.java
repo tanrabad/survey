@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015  NECTEC
+ * Copyright (c) 2015 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -63,7 +63,7 @@ public class ContainerTypeControllerTest {
             {
                 allowing(containerTypeRepository).find();
                 will(returnValue(null));
-                oneOf(containerPresenter).displayContainerNotFound();
+                oneOf(containerPresenter).alertContainerNotFound();
             }
         });
 

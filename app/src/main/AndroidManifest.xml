@@ -18,6 +18,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="th.or.nectec.tanrabad.survey">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name=".TanrabadApplication"
         android:allowBackup="false"
@@ -62,5 +64,4 @@
                 android:value="985b93fe45ed65dc37e25e81a8c5ce5ba9c217fa"/>
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>

@@ -18,6 +18,8 @@
 package th.or.nectec.tanrabad.survey;
 
 import android.app.Application;
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class TanrabadApplication extends Application {
@@ -25,6 +27,7 @@ public class TanrabadApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
         setupDefaultFont();
     }
 

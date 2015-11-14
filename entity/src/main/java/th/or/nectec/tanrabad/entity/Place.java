@@ -17,7 +17,6 @@
 
 package th.or.nectec.tanrabad.entity;
 
-
 import java.util.UUID;
 
 public class Place {
@@ -31,7 +30,6 @@ public class Place {
     private UUID id;
     private String name;
     private int type;
-
 
     public Place(UUID id, String name) {
         this.id = id;
@@ -47,14 +45,6 @@ public class Place {
         return id;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
     public String getName() {
         return name;
     }
@@ -63,6 +53,13 @@ public class Place {
         this.name = name;
     }
 
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 
     @Override
     public String toString() {
@@ -75,18 +72,21 @@ public class Place {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Place)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
 
         Place place = (Place) o;
 
-        return id.equals(place.id) && name.equals(place.name);
+        if (type != place.type) return false;
+        if (!id.equals(place.id)) return false;
+        return !(name != null ? !name.equals(place.name) : place.name != null);
 
     }
 
     @Override
     public int hashCode() {
         int result = id.hashCode();
-        result = 31 * result + name.hashCode();
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + type;
         return result;
     }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2015  NECTEC
+  ~ Copyright (c) 2015 NECTEC
   ~   National Electronics and Computer Technology Center, Thailand
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,7 +21,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/shock_pink</item>
-        <item name="colorPrimaryDark">@color/pink</item>
+        <item name="colorPrimaryDark">@color/dark_pink</item>
         <item name="colorAccent">@color/shock_pink</item>
         <item name="actionBarStyle">@style/ActionBar</item>
         <item name="android:textSize">@dimen/text_body</item>

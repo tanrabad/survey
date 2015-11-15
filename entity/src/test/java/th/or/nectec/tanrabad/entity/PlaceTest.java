@@ -1,12 +1,15 @@
 package th.or.nectec.tanrabad.entity;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
+@RunWith(JUnit4.class)
 public class PlaceTest {
 
     public static final UUID BANGPHAI_UUID = UUID.randomUUID();

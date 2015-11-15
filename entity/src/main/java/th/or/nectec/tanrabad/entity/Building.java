@@ -55,10 +55,6 @@ public class Building {
         return id;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
     @Override
     public String toString() {
         return "Building{" +
@@ -71,17 +67,21 @@ public class Building {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Building)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
 
         Building building = (Building) o;
 
-        return id.equals(building.id) && name.equals(building.name);
+        if (!id.equals(building.id)) return false;
+        if (name != null ? !name.equals(building.name) : building.name != null) return false;
+        return !(place != null ? !place.equals(building.place) : building.place != null);
+
     }
 
     @Override
     public int hashCode() {
         int result = id.hashCode();
-        result = 31 * result + name.hashCode();
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (place != null ? place.hashCode() : 0);
         return result;
     }
 }

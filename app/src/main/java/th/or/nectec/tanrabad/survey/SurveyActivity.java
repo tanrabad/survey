@@ -178,6 +178,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
             Toast.makeText(SurveyActivity.this, R.string.over_total_container, Toast.LENGTH_LONG).show();
             validateSurveyContainerViews(indoorContainerViews);
             validateSurveyContainerViews(outdoorContainerViews);
+            TanrabadApp.error().logException(e);
         }
     }
 

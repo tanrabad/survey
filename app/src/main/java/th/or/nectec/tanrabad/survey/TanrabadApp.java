@@ -18,26 +18,27 @@
 package th.or.nectec.tanrabad.survey;
 
 import android.app.Application;
-import com.crashlytics.android.Crashlytics;
-import com.crashlytics.android.core.CrashlyticsCore;
-import io.fabric.sdk.android.Fabric;
+import th.or.nectec.tanrabad.survey.tool.ActionLogger;
+import th.or.nectec.tanrabad.survey.tool.CrashLogger;
+import th.or.nectec.tanrabad.survey.tool.FabricTools;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class TanrabadApp extends Application {
 
+    private static CrashLogger crashLogger;
+    private static ActionLogger actionLogger;
+
     @Override
     public void onCreate() {
         super.onCreate();
-        setupCrashlytics();
+        setupAnalysisTools();
         setupDefaultFont();
     }
 
-    private void setupCrashlytics() {
-        Crashlytics crashlyticsKit = new Crashlytics.Builder()
-                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
-                .build();
-
-        Fabric.with(this, crashlyticsKit);
+    private void setupAnalysisTools() {
+        FabricTools fabricTools = FabricTools.getInstance(this);
+        crashLogger = fabricTools;
+        actionLogger = fabricTools;
     }
 
     private void setupDefaultFont() {
@@ -52,5 +53,13 @@ public class TanrabadApp extends Application {
                 .build()
         );
 
+    }
+
+    public static ActionLogger action() {
+        return actionLogger;
+    }
+
+    public static CrashLogger error() {
+        return crashLogger;
     }
 }

@@ -30,6 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/header_height"
             android:contentDescription="@string/place_bg"
+            android:src="@drawable/header_place_in_database"
             android:scaleType="fitXY" />
     </FrameLayout>
 

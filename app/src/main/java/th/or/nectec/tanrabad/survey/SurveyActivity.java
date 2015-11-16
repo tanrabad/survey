@@ -26,6 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import th.or.nectec.tanrabad.domain.*;
+
 import th.or.nectec.tanrabad.entity.*;
 import th.or.nectec.tanrabad.survey.repository.*;
 import th.or.nectec.tanrabad.survey.view.SurveyContainerView;
@@ -83,6 +84,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         surveyController.checkThisBuildingAndUserCanSurvey(buildingUUID, username);
     }
 
+
     @Override
     public void onNewSurvey(Building building, User user) {
         surveyBuilding = building;
@@ -137,6 +139,11 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     @Override
     public void alertBuildingNotFound() {
         Toast.makeText(SurveyActivity.this, R.string.building_not_found, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void alertPlaceNotFound() {
+        Toast.makeText(SurveyActivity.this, "ไม่พบข้อมูลสถานที่", Toast.LENGTH_LONG).show();
     }
 
     @Override

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import th.or.nectec.tanrabad.domain.SurveyRepository;
 import th.or.nectec.tanrabad.entity.Building;
+import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.User;
 
@@ -40,6 +41,11 @@ public class InMemorySurveyRepository implements SurveyRepository {
                 return eachSurvey;
             }
         }
+        return null;
+    }
+
+    @Override
+    public ArrayList<Building> findByPlaceAndUserIn7Days(Place place, User user) {
         return null;
     }
 }

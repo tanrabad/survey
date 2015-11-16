@@ -19,14 +19,31 @@ package th.or.nectec.tanrabad.survey.repository;
 
 import android.support.annotation.NonNull;
 
-import th.or.nectec.tanrabad.domain.PlaceRepository;
-import th.or.nectec.tanrabad.entity.Place;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import th.or.nectec.tanrabad.domain.PlaceRepository;
+import th.or.nectec.tanrabad.entity.Place;
+
 public class StubPlaceRepository implements PlaceRepository {
+
+    private final Place palazzettoVillage;
+    private final Place bangkokHospital;
+    private final Place watpaphukon;
+    ArrayList<Place> places = new ArrayList<>();
+    public StubPlaceRepository() {
+        palazzettoVillage = new Place(generateUUID("1abc"), "บ้านพาลาซเซตโต้");
+        palazzettoVillage.setType(Place.TYPE_VILLAGE_COMMUNITY);
+        bangkokHospital = new Place(generateUUID("2bcd"), "โรงพยาบาลกรุงเทพ");
+        bangkokHospital.setType(Place.TYPE_HOSPITAL);
+        watpaphukon = new Place(generateUUID("3def"), "วัดป่าภูก้อน");
+        watpaphukon.setType(Place.TYPE_WORSHIP);
+
+        places.add(palazzettoVillage);
+        places.add(bangkokHospital);
+        places.add(watpaphukon);
+    }
 
     public Place getPalazzettoVillage() {
         return palazzettoVillage;
@@ -40,19 +57,6 @@ public class StubPlaceRepository implements PlaceRepository {
         return watpaphukon;
     }
 
-    private final Place palazzettoVillage;
-    private final Place bangkokHospital;
-    private final Place watpaphukon;
-
-    public StubPlaceRepository() {
-        palazzettoVillage = new Place(generateUUID("1abc"), "บ้านพาลาซเซตโต้");
-        palazzettoVillage.setType(Place.TYPE_VILLAGE_COMMUNITY);
-        bangkokHospital = new Place(generateUUID("2bcd"), "โรงพยาบาลกรุงเทพ");
-        bangkokHospital.setType(Place.TYPE_HOSPITAL);
-        watpaphukon = new Place(generateUUID("3def"), "วัดป่าภูก้อน");
-        watpaphukon.setType(Place.TYPE_WORSHIP);
-    }
-
     @NonNull
     private UUID generateUUID(String input) {
         return UUID.nameUUIDFromBytes(input.getBytes());
@@ -60,10 +64,6 @@ public class StubPlaceRepository implements PlaceRepository {
 
     @Override
     public List<Place> findPlaces() {
-        List<Place> places = new ArrayList<>();
-        places.add(palazzettoVillage);
-        places.add(bangkokHospital);
-        places.add(watpaphukon);
         return places;
     }
 
@@ -74,6 +74,11 @@ public class StubPlaceRepository implements PlaceRepository {
 
     @Override
     public Place findPlaceByPlaceUUID(UUID placeUUID) {
+        for (Place eachPlace : places) {
+            if (eachPlace.getId().equals(placeUUID)) {
+                return eachPlace;
+            }
+        }
         return null;
     }
 }

@@ -15,6 +15,7 @@ public class BuildingTest {
     public static final UUID BUILDING_UUID = UUID.randomUUID();
     public static final String BUILDING_NAME = "โบสถ์ใหญ่";
     private final Place place = Place.withName("วิหารเซนต์เมรี่");
+    private final Building building1 = new Building(BUILDING_UUID, BUILDING_NAME);
 
     @Test
     public void testWithName() throws Exception {
@@ -24,33 +25,28 @@ public class BuildingTest {
 
     @Test
     public void testSetThenGetPlace() throws Exception {
-        Building building = new Building(BUILDING_UUID, BUILDING_NAME);
-        building.setPlace(place);
-        assertEquals(place, building.getPlace());
+        building1.setPlace(place);
+        assertEquals(place, building1.getPlace());
     }
 
     @Test
     public void testGetName() throws Exception {
-        Building building = new Building(BUILDING_UUID, BUILDING_NAME);
-        assertEquals(BUILDING_NAME, building.getName());
+        assertEquals(BUILDING_NAME, building1.getName());
     }
 
     @Test
     public void testSetThenGetName() throws Exception {
-        Building building = new Building(BUILDING_UUID, BUILDING_NAME);
-        building.setName("โบสถ์เล็ก");
-        assertEquals("โบสถ์เล็ก", building.getName());
+        building1.setName("โบสถ์เล็ก");
+        assertEquals("โบสถ์เล็ก", building1.getName());
     }
 
     @Test
     public void testGetId() throws Exception {
-        Building building = new Building(BUILDING_UUID, BUILDING_NAME);
-        assertEquals(BUILDING_UUID, building.getId());
+        assertEquals(BUILDING_UUID, building1.getId());
     }
 
     @Test
     public void buildingWithDifferentIdMustNotEqual() throws Exception {
-        Building building1 = new Building(BUILDING_UUID, BUILDING_NAME);
         building1.setPlace(place);
         Building building2 = new Building(UUID.randomUUID(), BUILDING_NAME);
         building2.setPlace(place);
@@ -59,7 +55,6 @@ public class BuildingTest {
 
     @Test
     public void buildingWithDifferentNameMustNotEqual() throws Exception {
-        Building building1 = new Building(BUILDING_UUID, BUILDING_NAME);
         building1.setPlace(place);
         Building building2 = new Building(BUILDING_UUID, "โบสถ์เล็ก");
         building2.setPlace(place);
@@ -68,7 +63,6 @@ public class BuildingTest {
 
     @Test
     public void buildingWithDifferentPlaceMustNotEqual() throws Exception {
-        Building building1 = new Building(BUILDING_UUID, BUILDING_NAME);
         building1.setPlace(place);
         Building building2 = new Building(BUILDING_UUID, BUILDING_NAME);
         building2.setPlace(Place.withName("โรงเรียนเซนต์เมรี่"));
@@ -77,7 +71,6 @@ public class BuildingTest {
 
     @Test
     public void buildingWithTheSameNameAndIdAndPlaceMustEqual() throws Exception {
-        Building building1 = new Building(BUILDING_UUID, BUILDING_NAME);
         building1.setPlace(place);
         Building building2 = new Building(BUILDING_UUID, BUILDING_NAME);
         building2.setPlace(place);

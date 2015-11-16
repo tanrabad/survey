@@ -3,8 +3,6 @@ package th.or.nectec.tanrabad.domain;
 import java.util.List;
 
 import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.User;
 
 public interface SurveyBuildingPresenter {
     void alertUserNotFound();
@@ -14,4 +12,6 @@ public interface SurveyBuildingPresenter {
     void alertSurveyBuildingsNotFound();
 
     void displaySurveyBuildingList(List<Building> buildings);
+
+    void displayAllSurveyBuildingList(List<SurveyBuilding> surveyBuildingsWithStatus);
 }

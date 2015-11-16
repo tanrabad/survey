@@ -1,27 +1,26 @@
 package th.or.nectec.tanrabad.survey;
 
-import android.app.ListActivity;
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import th.or.nectec.tanrabad.entity.Building;
+import th.or.nectec.tanrabad.domain.SurveyBuilding;
 
-public class BuildingAdapter extends BaseAdapter {
+public class BuildingWithSurveyStatusAdapter extends BaseAdapter {
 
     Context context;
 
 
-    ArrayList<Building> buildings = new ArrayList<>();
+    ArrayList<SurveyBuilding> buildings = new ArrayList<>();
 
-    public BuildingAdapter(Context context, List<Building> buildings) {
+    public BuildingWithSurveyStatusAdapter(Context context, List<SurveyBuilding> buildings) {
         this.context = context;
         this.buildings.addAll(buildings);
     }
@@ -56,7 +55,16 @@ public class BuildingAdapter extends BaseAdapter {
         }else{
             holder = (ViewHolder) view.getTag();
         }
-        holder.buildingTextView.setText(buildings.get(i).getName());
+
+        SurveyBuilding surveyBuilding = buildings.get(i);
+        holder.buildingTextView.setText(surveyBuilding.getBuilding().getName());
+
+        if (surveyBuilding.isSurvey()) {
+            holder.buildingIcon.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.container_bg_pink));
+        } else {
+            holder.buildingIcon.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.container_bg));
+        }
+
         view.setTag(holder);
 
         return view;

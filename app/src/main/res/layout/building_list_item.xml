@@ -10,8 +10,8 @@
         android:id="@+id/building_icon"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:contentDescription="@string/building_icon"
-        android:src="@drawable/container_bg" />
+        android:background="@drawable/container_bg"
+        android:contentDescription="@string/building_icon" />
 
     <LinearLayout
         android:layout_width="wrap_content"

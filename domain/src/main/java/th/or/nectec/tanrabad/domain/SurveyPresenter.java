@@ -12,4 +12,6 @@ public interface SurveyPresenter {
     void alertUserNotFound();
 
     void alertBuildingNotFound();
+
+    void alertPlaceNotFound();
 }

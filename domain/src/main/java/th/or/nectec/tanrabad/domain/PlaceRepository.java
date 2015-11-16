@@ -12,4 +12,6 @@ public interface PlaceRepository {
     void findPlaceByPlaceName(String placeName);
 
     Place findPlaceByPlaceUUID(UUID placeUUID);
+
+
 }

@@ -76,6 +76,6 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/history_building_list" />
+        android:id="@+id/survey_building_history_list" />
 
 </LinearLayout>

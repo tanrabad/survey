@@ -51,4 +51,5 @@
 
 
     <string name="survey_building_history">ประวัติการสำรวจ</string>
+    <string name="survey_building_history_not_found">ไม่พบประวัติการสำรวจ</string>
 </resources>

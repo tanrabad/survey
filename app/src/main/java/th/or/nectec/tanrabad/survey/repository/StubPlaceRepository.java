@@ -66,4 +66,14 @@ public class StubPlaceRepository implements PlaceRepository {
         places.add(watpaphukon);
         return places;
     }
+
+    @Override
+    public void findPlaceByPlaceName(String placeName) {
+
+    }
+
+    @Override
+    public Place findPlaceByPlaceUUID(UUID placeUUID) {
+        return null;
+    }
 }

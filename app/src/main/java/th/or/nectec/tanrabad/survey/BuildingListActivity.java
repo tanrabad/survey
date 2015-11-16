@@ -28,42 +28,23 @@ import android.widget.Toast;
 import java.util.List;
 import java.util.UUID;
 
-import th.or.nectec.tanrabad.domain.BuildingChooser;
-import th.or.nectec.tanrabad.domain.BuildingPresenter;
+import th.or.nectec.tanrabad.domain.SurveyBuilding;
+import th.or.nectec.tanrabad.domain.SurveyBuildingChooser;
+import th.or.nectec.tanrabad.domain.SurveyBuildingListPresenter;
 import th.or.nectec.tanrabad.entity.Building;
+import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubBuildingRepository;
+import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
+import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 
-public class BuildingListActivity extends TanrabadActivity {
+public class BuildingListActivity extends TanrabadActivity implements SurveyBuildingListPresenter {
 
     public static final String PLACE_UUID_ARG = "place_uuid_arg";
     private TextView placeName;
     private ListView buildingList;
     private TextView buildingCountView;
-    private BuildingAdapter buildingAdapter;
-    private BuildingChooser buildingChooser;
-    private BuildingPresenter buildingPresenter = new BuildingPresenter() {
-        @Override
-        public void displayBuildingList(List<Building> buildings) {
-            buildingAdapter = new BuildingAdapter(BuildingListActivity.this, buildings);
-            buildingList.setAdapter(buildingAdapter);
-            buildingCountView.setText(String.valueOf(buildings.size()));
-        }
-
-        @Override
-        public void displayNotFoundBuilding() {
-            Toast.makeText(BuildingListActivity.this, R.string.building_not_found, Toast.LENGTH_LONG).show();
-        }
-
-        @Override
-        public void displayPleaseSpecityPlace() {
-            Toast.makeText(BuildingListActivity.this, R.string.please_enter_place, Toast.LENGTH_LONG).show();
-        }
-
-        @Override
-        public void displayBuilding(Building building) {
-
-        }
-    };
+    private BuildingWithSurveyStatusAdapter buildingAdapter;
+    private SurveyBuildingChooser surveyBuildingChooser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,13 +58,17 @@ public class BuildingListActivity extends TanrabadActivity {
         buildingList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Building building = (Building) buildingAdapter.getItem(position);
-                bringToSurveyActivity(building);
+                SurveyBuilding building = (SurveyBuilding) buildingAdapter.getItem(position);
+                bringToSurveyActivity(building.getBuilding());
             }
         });
 
-        buildingChooser = new BuildingChooser(new StubBuildingRepository(), this.buildingPresenter);
-        buildingChooser.showBuildingOf(getUuidFromIntent());
+        loadSurveyBuildingList();
+    }
+
+    private void loadSurveyBuildingList() {
+        surveyBuildingChooser = new SurveyBuildingChooser(new StubUserRepository(), new StubPlaceRepository(), new StubBuildingRepository(), InMemorySurveyRepository.getInstance(), this);
+        surveyBuildingChooser.displaySurveyBuildingOf(getUuidFromIntent().toString(), "sara");
     }
 
     private void bringToSurveyActivity(Building building) {
@@ -98,4 +83,25 @@ public class BuildingListActivity extends TanrabadActivity {
         return UUID.fromString(uuid);
     }
 
+    @Override
+    public void alertUserNotFound() {
+
+    }
+
+    @Override
+    public void alertPlaceNotFound() {
+        Toast.makeText(BuildingListActivity.this, R.string.please_enter_place, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void alertBuildingsNotFound() {
+        Toast.makeText(BuildingListActivity.this, R.string.building_not_found, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void displayAllSurveyBuildingList(List<SurveyBuilding> surveyBuildingsWithStatus) {
+        buildingAdapter = new BuildingWithSurveyStatusAdapter(BuildingListActivity.this, surveyBuildingsWithStatus);
+        buildingList.setAdapter(buildingAdapter);
+        buildingCountView.setText(String.valueOf(surveyBuildingsWithStatus.size()));
+    }
 }

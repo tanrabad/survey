@@ -30,28 +30,30 @@ import java.util.UUID;
 
 import th.or.nectec.tanrabad.domain.BuildingListPresenter;
 import th.or.nectec.tanrabad.domain.BuildingWithSurveyStatus;
+import th.or.nectec.tanrabad.domain.PlaceController;
+import th.or.nectec.tanrabad.domain.PlacePresenter;
 import th.or.nectec.tanrabad.domain.SurveyBuildingChooser;
 import th.or.nectec.tanrabad.entity.Building;
+import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 
-public class BuildingListActivity extends TanrabadActivity implements BuildingListPresenter {
+public class BuildingListActivity extends TanrabadActivity implements BuildingListPresenter, PlacePresenter {
 
     public static final String PLACE_UUID_ARG = "place_uuid_arg";
-    private TextView placeName;
     private ListView buildingList;
     private TextView buildingCountView;
     private BuildingWithSurveyStatusAdapter buildingAdapter;
     private SurveyBuildingChooser surveyBuildingChooser;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_building_list);
 
-        placeName = (TextView) findViewById(R.id.place_name);
         buildingList = (ListView) findViewById(R.id.building_list);
         buildingCountView = (TextView) findViewById(R.id.building_count);
 
@@ -62,13 +64,29 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingLi
                 bringToSurveyActivity(building.getBuilding());
             }
         });
-
+        showPlaceName();
         loadSurveyBuildingList();
+    }
+
+    private void showPlaceName() {
+        PlaceController placeController = new PlaceController(new StubPlaceRepository(), this);
+        placeController.showPlace(getPlaceUuidFromIntent());
+    }
+
+    @Override
+    public void displayPlace(Place place) {
+        TextView placeName = (TextView) findViewById(R.id.place_name);
+        placeName.setText(place.getName());
+    }
+
+    @Override
+    public void displayNotFoundPlace() {
+        Toast.makeText(getBaseContext(), R.string.place_not_found, Toast.LENGTH_LONG).show();
     }
 
     private void loadSurveyBuildingList() {
         surveyBuildingChooser = new SurveyBuildingChooser(new StubUserRepository(), new StubPlaceRepository(), new StubBuildingRepository(), InMemorySurveyRepository.getInstance(), this);
-        surveyBuildingChooser.displaySurveyBuildingOf(getUuidFromIntent().toString(), "sara");
+        surveyBuildingChooser.displaySurveyBuildingOf(getPlaceUuidFromIntent().toString(), "sara");
     }
 
     private void bringToSurveyActivity(Building building) {
@@ -78,7 +96,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingLi
         startActivity(intent);
     }
 
-    private UUID getUuidFromIntent() {
+    private UUID getPlaceUuidFromIntent() {
         String uuid = getIntent().getStringExtra(PLACE_UUID_ARG);
         return UUID.fromString(uuid);
     }

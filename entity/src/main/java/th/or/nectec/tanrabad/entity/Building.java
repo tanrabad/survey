@@ -56,6 +56,10 @@ public class Building {
         return location;
     }
 
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
     public UUID getId() {
         return id;
     }

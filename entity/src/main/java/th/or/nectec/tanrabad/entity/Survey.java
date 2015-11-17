@@ -88,6 +88,10 @@ public class Survey {
         return location;
     }
 
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
     public ArrayList<SurveyDetail> getIndoorDetail() {
         return indoorDetails;
     }

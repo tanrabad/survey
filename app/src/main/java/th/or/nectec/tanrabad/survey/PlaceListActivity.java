@@ -19,24 +19,28 @@ package th.or.nectec.tanrabad.survey;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatSpinner;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.List;
+
 import th.or.nectec.tanrabad.domain.PlaceChooser;
 import th.or.nectec.tanrabad.domain.PlaceListPresenter;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
 
-import java.util.List;
+public class PlaceListActivity extends TanrabadActivity implements AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener, PlaceListPresenter {
 
-public class PlaceListActivity extends TanrabadActivity implements AdapterView.OnItemClickListener, PlaceListPresenter {
-
-    PlaceAdapter placeAdapter;
-    PlaceChooser placeChooser;
+    private PlaceAdapter placeAdapter;
+    private PlaceTypeAdapter placeTypeAdapter;
+    private PlaceChooser placeChooser = new PlaceChooser(new StubPlaceRepository(), this);
     private TextView placeCountView;
     private ListView placeListView;
+    private AppCompatSpinner placeFilterView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,29 +49,55 @@ public class PlaceListActivity extends TanrabadActivity implements AdapterView.O
 
         this.placeListView = (ListView) findViewById(R.id.place_list);
         this.placeCountView = (TextView) findViewById(R.id.place_count);
+        this.placeFilterView = (AppCompatSpinner) findViewById(R.id.place_filter);
+
+        setupPlaceFilterSpinner();
+        setupPlaceList();
+    }
+
+    private void setupPlaceFilterSpinner() {
+        placeFilterView.setOnItemSelectedListener(this);
+        placeTypeAdapter = new PlaceTypeAdapter(getBaseContext());
+        placeFilterView.setAdapter(placeTypeAdapter);
+    }
+
+    private void setupPlaceList() {
         placeListView.setOnItemClickListener(this);
-
-        placeChooser = new PlaceChooser(new StubPlaceRepository(), this);
-        placeChooser.getPlaceList();
-
+        placeAdapter = new PlaceAdapter(PlaceListActivity.this);
+        placeListView.setAdapter(placeAdapter);
     }
 
     @Override
     public void displayPlaceList(List<Place> places) {
-        placeAdapter = new PlaceAdapter(PlaceListActivity.this, places);
-        placeListView.setAdapter(placeAdapter);
+        placeAdapter.updateData(places);
         placeCountView.setText(String.valueOf(places.size()));
     }
 
     @Override
     public void displayPlaceNotFound() {
+        placeAdapter.clearData();
         Toast.makeText(PlaceListActivity.this, R.string.place_not_found, Toast.LENGTH_LONG).show();
     }
 
     @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
         Intent intent = new Intent(PlaceListActivity.this, BuildingListActivity.class);
-        intent.putExtra(BuildingListActivity.PLACE_UUID_ARG, placeAdapter.getItem(i).getId().toString());
+        intent.putExtra(BuildingListActivity.PLACE_UUID_ARG, placeAdapter.getItem(position).getId().toString());
         startActivity(intent);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+        int selectedID = (int) placeTypeAdapter.getItemId(position);
+        if (selectedID > 0) {
+            placeChooser.getPlaceListWithPlaceFilter(selectedID);
+        } else {
+            placeChooser.getPlaceList();
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }

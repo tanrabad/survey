@@ -119,9 +119,26 @@
 
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/building_list"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/building_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_more_building_button_text"
+            android:id="@+id/add_building_button"
+            android:layout_gravity="bottom|center"
+            android:layout_marginBottom="@dimen/between_text_margin_bottom"
+            android:layout_marginTop="@dimen/between_text_margin_top"
+            android:layout_marginEnd="@dimen/between_view"
+            android:textSize="@dimen/text_title"
+            android:textColor="@color/pink" />
+    </FrameLayout>
 
 </LinearLayout>

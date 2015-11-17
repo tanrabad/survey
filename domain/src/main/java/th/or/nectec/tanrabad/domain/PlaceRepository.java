@@ -1,9 +1,9 @@
 package th.or.nectec.tanrabad.domain;
 
-import th.or.nectec.tanrabad.entity.Place;
-
 import java.util.List;
 import java.util.UUID;
+
+import th.or.nectec.tanrabad.entity.Place;
 
 public interface PlaceRepository {
 
@@ -13,5 +13,5 @@ public interface PlaceRepository {
 
     Place findPlaceByPlaceUUID(UUID placeUUID);
 
-
+    List<Place> findPlacesWithPlaceFilter(int typeVillageCommunity);
 }

@@ -42,6 +42,30 @@ public class PlaceChooseTest {
     }
 
     @Test
+    public void getPlaceListWithFilterBuildingType() throws Exception {
+        Place villageA = Place.withName("Village A");
+        villageA.setType(Place.TYPE_VILLAGE_COMMUNITY);
+
+        Place villageB = Place.withName("Village B");
+        villageB.setType(Place.TYPE_VILLAGE_COMMUNITY);
+
+        final List<Place> filterPlace = new ArrayList<>();
+        filterPlace.add(villageA);
+        filterPlace.add(villageB);
+
+        context.checking(new Expectations() {
+            {
+                oneOf(placeRepository).findPlacesWithPlaceFilter(Place.TYPE_VILLAGE_COMMUNITY);
+                will(returnValue(filterPlace));
+                oneOf(placeListPresenter).displayPlaceList(filterPlace);
+            }
+        });
+
+        PlaceChooser chooser = new PlaceChooser(placeRepository, placeListPresenter);
+        chooser.getPlaceListWithPlaceFilter(Place.TYPE_VILLAGE_COMMUNITY);
+    }
+
+    @Test
     public void testPlaceListNotFound() throws Exception {
         context.checking(new Expectations() {
             {

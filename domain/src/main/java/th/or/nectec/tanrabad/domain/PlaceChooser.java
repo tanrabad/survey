@@ -22,4 +22,13 @@ public class PlaceChooser {
             placeListPresenter.displayPlaceList(places);
         }
     }
+
+    public void getPlaceListWithPlaceFilter(int typeVillageCommunity) {
+        List<Place> places = this.placeRepository.findPlacesWithPlaceFilter(typeVillageCommunity);
+        if (places == null) {
+            placeListPresenter.displayPlaceNotFound();
+        } else {
+            placeListPresenter.displayPlaceList(places);
+        }
+    }
 }

@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,6 +37,7 @@ import th.or.nectec.tanrabad.survey.repository.InMemoryContainerTypeRepository;
 import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
+import th.or.nectec.tanrabad.survey.utils.EditTextStepper;
 import th.or.nectec.tanrabad.survey.validator.SaveSurveyValidator;
 import th.or.nectec.tanrabad.survey.view.SurveyContainerView;
 
@@ -74,7 +76,6 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     }
 
     private void findViewsFromLayout() {
-
         indoorContainerLayout = (LinearLayout) findViewById(R.id.indoor_container);
         outdoorContainerLayout = (LinearLayout) findViewById(R.id.outdoor_container);
         residentCountView = (EditText) findViewById(R.id.resident_count);
@@ -271,6 +272,20 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         if (currentFocus != null) {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_VOLUME_UP:
+                EditTextStepper.stepUp(this.getCurrentFocus());
+                return true;
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+                EditTextStepper.stepDown(this.getCurrentFocus());
+                return true;
+            default:
+                return super.onKeyDown(keyCode, event);
         }
     }
 }

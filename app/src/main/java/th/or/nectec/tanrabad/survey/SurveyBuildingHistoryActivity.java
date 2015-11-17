@@ -9,7 +9,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
-import java.util.UUID;
 
 import th.or.nectec.tanrabad.domain.SurveyBuildingHistoryController;
 import th.or.nectec.tanrabad.domain.SurveyBuildingPresenter;
@@ -44,7 +43,6 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity {
 
         @Override
         public void displaySurveyBuildingList(List<Building> buildings) {
-            Toast.makeText(SurveyBuildingHistoryActivity.this, buildings.size()+"", Toast.LENGTH_LONG).show();
             surveyBuildingHistoryAdapter = new SurveyBuildingHistoryAdapter(SurveyBuildingHistoryActivity.this, buildings);
             surveyBuildingHistoryList.setAdapter(surveyBuildingHistoryAdapter);
         }
@@ -61,16 +59,20 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity {
         surveyBuildingHistoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Building building = (Building) surveyBuildingHistoryAdapter.getItem(position);
+                Building building = surveyBuildingHistoryAdapter.getItem(position);
                 bringToSurveyActivity(building);
             }
         });
+
+        showSurveyBuildingHistoryList();
+    }
+
+    private void showSurveyBuildingHistoryList() {
         surveyBuildingHistoryController = new SurveyBuildingHistoryController(new StubUserRepository(),
                 new StubPlaceRepository(),
                 InMemorySurveyRepository.getInstance(),
                 this.surveyBuildingPresenter);
         surveyBuildingHistoryController.showSurveyBuildingOf(getUuidFromIntent(), getUserNameFromIntent());
-
     }
 
     private void bringToSurveyActivity(Building building) {
@@ -81,12 +83,11 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity {
     }
 
     private String getUuidFromIntent() {
-        String uuid = getIntent().getStringExtra("placeUUID");
-        return uuid;
+        return getIntent().getStringExtra("placeUUID");
     }
-    private String getUserNameFromIntent(){
-        String username = getIntent().getStringExtra("username");
-        return  username;
+
+    private String getUserNameFromIntent() {
+        return getIntent().getStringExtra("username");
     }
 
 }

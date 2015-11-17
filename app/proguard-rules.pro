@@ -18,3 +18,8 @@
 -keep class com.crashlytics.** { *; }
 -dontwarn com.crashlytics.**
 -keep class com.crashlytics.android.**
+
+-dontwarn org.joda.convert.**
+-dontwarn org.joda.time.**
+-keep class org.joda.time.** { *; }
+-keep interface org.joda.time.** { *; }

@@ -53,4 +53,7 @@
 
     <string name="survey_building_history">ประวัติการสำรวจ</string>
     <string name="survey_building_history_not_found">ไม่พบประวัติการสำรวจ</string>
+
+    <string name="survey_more_building_button_text">กดเพื่อสำรวจอาคารเพิ่ม</string>
+    <string name="finish">สิ้นสุด</string>
 </resources>

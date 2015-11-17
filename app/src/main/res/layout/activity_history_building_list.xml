@@ -92,7 +92,7 @@
             android:layout_marginBottom="@dimen/between_text_margin_bottom"
             android:layout_marginTop="@dimen/between_text_margin_top"
             android:layout_marginEnd="@dimen/between_view"
-            android:textSize="@dimen/text_body"
+            android:textSize="@dimen/text_title"
             android:textColor="@color/pink" />
     </FrameLayout>
 

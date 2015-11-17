@@ -24,7 +24,6 @@ public class User {
     private String lastname;
     private String email;
     private int organizationId;
-    private Location location;
 
     public User(String username) {
         this.username = username;
@@ -68,10 +67,6 @@ public class User {
 
     public String getUsername() {
         return username;
-    }
-
-    public Location getLocation() {
-        return location;
     }
 
     @Override

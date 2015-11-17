@@ -14,10 +14,14 @@ import java.util.UUID;
 import th.or.nectec.tanrabad.domain.SurveyBuildingHistoryController;
 import th.or.nectec.tanrabad.domain.SurveyBuildingPresenter;
 import th.or.nectec.tanrabad.entity.Building;
+import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
+import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
+import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 
 public class SurveyBuildingHistoryActivity extends TanrabadActivity {
 
     public static final String SURVEY_ARG = "survey_arg";
+
     private TextView placeName;
     private ListView surveyBuildingHistoryList;
     private SurveyBuildingHistoryAdapter surveyBuildingHistoryAdapter;
@@ -40,6 +44,7 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity {
 
         @Override
         public void displaySurveyBuildingList(List<Building> buildings) {
+            Toast.makeText(SurveyBuildingHistoryActivity.this, buildings.size()+"", Toast.LENGTH_LONG).show();
             surveyBuildingHistoryAdapter = new SurveyBuildingHistoryAdapter(SurveyBuildingHistoryActivity.this, buildings);
             surveyBuildingHistoryList.setAdapter(surveyBuildingHistoryAdapter);
         }
@@ -48,6 +53,7 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_history_building_list);
 
         placeName = (TextView) findViewById(R.id.place_name);
         surveyBuildingHistoryList = (ListView) findViewById(R.id.survey_building_history_list);
@@ -59,7 +65,12 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity {
                 bringToSurveyActivity(building);
             }
         });
-        surveyBuildingHistoryController = new SurveyBuildingHistoryController(new );
+        surveyBuildingHistoryController = new SurveyBuildingHistoryController(new StubUserRepository(),
+                new StubPlaceRepository(),
+                InMemorySurveyRepository.getInstance(),
+                this.surveyBuildingPresenter);
+        surveyBuildingHistoryController.showSurveyBuildingOf(getUuidFromIntent(), getUserNameFromIntent());
+
     }
 
     private void bringToSurveyActivity(Building building) {
@@ -69,10 +80,15 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity {
         startActivity(intent);
     }
 
-    private UUID getUuidFromIntent() {
-        String uuid = getIntent().getStringExtra(SURVEY_ARG);
-        return UUID.fromString(uuid);
+    private String getUuidFromIntent() {
+        String uuid = getIntent().getStringExtra("placeUUID");
+        return uuid;
     }
+    private String getUserNameFromIntent(){
+        String username = getIntent().getStringExtra("username");
+        return  username;
+    }
+
 }
 
 

@@ -56,4 +56,6 @@
 
     <string name="survey_more_building_button_text">กดเพื่อสำรวจอาคารเพิ่ม</string>
     <string name="finish">สิ้นสุด</string>
+
+    <string name="add_more_building_button_text">เพิ่มอาคาร</string>
 </resources>

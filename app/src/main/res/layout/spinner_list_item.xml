@@ -8,5 +8,6 @@
     android:orientation="horizontal"
     android:padding="@dimen/activity_horizontal_margin"
     android:textColor="@color/black"
+    android:textIsSelectable="false"
     android:textSize="@dimen/text_body"
-    tools:text="test" />
+    tools:text="item 1" />

@@ -86,7 +86,7 @@ public class StubPlaceRepository implements PlaceRepository {
     @Override
     public List<Place> findPlacesWithPlaceFilter(int placeType) {
         ArrayList<Place> filterPlaces = new ArrayList<>();
-        for (Place eachPlace : filterPlaces) {
+        for (Place eachPlace : places) {
             if (eachPlace.getType() == placeType)
                 filterPlaces.add(eachPlace);
         }

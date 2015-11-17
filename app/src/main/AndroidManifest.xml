@@ -59,6 +59,11 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".SurveyBuildingHistoryActivity"
+            android:label="สำรวจ">
+
+        </activity>
 
         <meta-data
                 android:name="io.fabric.ApiKey"

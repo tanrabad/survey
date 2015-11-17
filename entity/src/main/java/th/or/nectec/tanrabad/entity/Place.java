@@ -30,6 +30,7 @@ public class Place {
     private UUID id;
     private String name;
     private int type;
+    private Location location;
 
     public Place(UUID id, String name) {
         this.id = id;
@@ -59,6 +60,10 @@ public class Place {
     
     public void setType(int type) {
         this.type = type;
+    }
+
+    public Location getLocation() {
+        return location;
     }
 
     @Override

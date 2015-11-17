@@ -24,6 +24,7 @@ public class Building {
     private UUID id;
     private String name;
     private Place place;
+    private Location location;
 
     public Building(UUID id, String name) {
         this.id = id;
@@ -49,6 +50,10 @@ public class Building {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Location getLocation() {
+        return location;
     }
 
     public UUID getId() {

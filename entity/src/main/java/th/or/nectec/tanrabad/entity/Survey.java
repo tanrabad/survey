@@ -29,6 +29,7 @@ public class Survey {
     private ArrayList<SurveyDetail> outdoorDetails;
     private DateTime startTimestamp;
     private DateTime finishTimestamp;
+    private Location location;
 
     public Survey(User user, Building surveyBuilding) {
         this.user = user;
@@ -81,6 +82,10 @@ public class Survey {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Location getLocation() {
+        return location;
     }
 
     public ArrayList<SurveyDetail> getIndoorDetail() {

@@ -36,63 +36,63 @@ public class UserTest {
     private final User austin2 = new User(AUSTIN_USERNAME);
 
     @Test
-    public void testSetThenGetFirstname() throws Exception {
+    public void testSetThenGetFirstname() {
         austin1.setFirstname(AUSTIN_FIRSTNAME);
         assertEquals(AUSTIN_FIRSTNAME, austin1.getFirstname());
     }
 
     @Test
-    public void testSetThenGetLastname() throws Exception {
+    public void testSetThenGetLastname() {
         austin1.setLastname(AUSTIN_LASTNAME);
         assertEquals(AUSTIN_LASTNAME, austin1.getLastname());
     }
 
     @Test
-    public void setThenGetEmail() throws Exception {
+    public void setThenGetEmail() {
         austin1.setEmail(AUSTIN_EMAIL);
         assertEquals(AUSTIN_EMAIL, austin1.getEmail());
     }
 
     @Test
-    public void testSetThenGetOrganizationId() throws Exception {
+    public void testSetThenGetOrganizationId() {
         austin1.setOrganizationId(AUSTIN_ORGANIZATION_ID);
         assertEquals(AUSTIN_ORGANIZATION_ID, austin1.getOrganizationId());
     }
 
     @Test
-    public void getUsername() throws Exception {
+    public void getUsername() {
         assertEquals(AUSTIN_USERNAME, austin1.getUsername());
     }
 
     @Test
-    public void testFromUsername() throws Exception {
+    public void testFromUsername() {
         User austin = User.fromUsername(AUSTIN_USERNAME);
         assertEquals(AUSTIN_USERNAME, austin.getUsername());
     }
 
     @Test
-    public void userWithDifferentFirstnameMustNotEqual() throws Exception {
+    public void userWithDifferentFirstnameMustNotEqual() {
         austin1.setFirstname(AUSTIN_FIRSTNAME);
         austin2.setFirstname("Austinno");
         assertNotEquals(austin1, austin2);
     }
 
     @Test
-    public void userWithDifferentLastnameMustNotEqual() throws Exception {
+    public void userWithDifferentLastnameMustNotEqual() {
         austin1.setLastname(AUSTIN_LASTNAME);
         austin2.setLastname("Butler");
         assertNotEquals(austin1, austin2);
     }
 
     @Test
-    public void userWithDifferentOrganizationMustNotEqual() throws Exception {
+    public void userWithDifferentOrganizationMustNotEqual() {
         austin1.setOrganizationId(AUSTIN_ORGANIZATION_ID);
         austin2.setOrganizationId(408);
         assertNotEquals(austin1, austin2);
     }
 
     @Test
-    public void userWithTheSameUsernameFirstnameLastnameOrganizationIdMustEqual() throws Exception {
+    public void userWithTheSameUsernameFirstnameLastnameOrganizationIdMustEqual() {
         austin1.setFirstname(AUSTIN_FIRSTNAME);
         austin1.setLastname(AUSTIN_LASTNAME);
         austin1.setOrganizationId(AUSTIN_ORGANIZATION_ID);

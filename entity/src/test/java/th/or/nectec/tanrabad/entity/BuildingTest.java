@@ -35,35 +35,35 @@ public class BuildingTest {
     private final Building building1 = new Building(BUILDING_UUID, BUILDING_NAME);
 
     @Test
-    public void testWithName() throws Exception {
+    public void testWithName()  {
         Building building = Building.withName(BUILDING_NAME);
         assertEquals(BUILDING_NAME, building.getName());
     }
 
     @Test
-    public void testSetThenGetPlace() throws Exception {
+    public void testSetThenGetPlace()  {
         building1.setPlace(place);
         assertEquals(place, building1.getPlace());
     }
 
     @Test
-    public void testGetName() throws Exception {
+    public void testGetName()  {
         assertEquals(BUILDING_NAME, building1.getName());
     }
 
     @Test
-    public void testSetThenGetName() throws Exception {
+    public void testSetThenGetName()  {
         building1.setName("โบสถ์เล็ก");
         assertEquals("โบสถ์เล็ก", building1.getName());
     }
 
     @Test
-    public void testGetId() throws Exception {
+    public void testGetId()  {
         assertEquals(BUILDING_UUID, building1.getId());
     }
 
     @Test
-    public void buildingWithDifferentIdMustNotEqual() throws Exception {
+    public void buildingWithDifferentIdMustNotEqual()  {
         building1.setPlace(place);
         Building building2 = new Building(UUID.randomUUID(), BUILDING_NAME);
         building2.setPlace(place);
@@ -71,7 +71,7 @@ public class BuildingTest {
     }
 
     @Test
-    public void buildingWithDifferentNameMustNotEqual() throws Exception {
+    public void buildingWithDifferentNameMustNotEqual()  {
         building1.setPlace(place);
         Building building2 = new Building(BUILDING_UUID, "โบสถ์เล็ก");
         building2.setPlace(place);
@@ -79,7 +79,7 @@ public class BuildingTest {
     }
 
     @Test
-    public void buildingWithDifferentPlaceMustNotEqual() throws Exception {
+    public void buildingWithDifferentPlaceMustNotEqual()  {
         building1.setPlace(place);
         Building building2 = new Building(BUILDING_UUID, BUILDING_NAME);
         building2.setPlace(Place.withName("โรงเรียนเซนต์เมรี่"));
@@ -87,7 +87,7 @@ public class BuildingTest {
     }
 
     @Test
-    public void buildingWithTheSameNameAndIdAndPlaceMustEqual() throws Exception {
+    public void buildingWithTheSameNameAndIdAndPlaceMustEqual()  {
         building1.setPlace(place);
         Building building2 = new Building(BUILDING_UUID, BUILDING_NAME);
         building2.setPlace(place);

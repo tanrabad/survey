@@ -43,35 +43,35 @@ public class SurveyTest {
     private final SurveyDetail detail3 = new SurveyDetail(containerType3, 4, 2);
 
     @Test
-    public void testSetThenGetResidentCount() throws Exception {
+    public void testSetThenGetResidentCount() {
         survey1.setResidentCount(resident);
         assertEquals(resident, survey1.getResidentCount());
     }
 
     @Test
-    public void testGetSurveyBuilding() throws Exception {
+    public void testGetSurveyBuilding() {
         assertEquals(building1, survey1.getSurveyBuilding());
     }
 
     @Test
-    public void testSetThenGetSurveyBuilding() throws Exception {
+    public void testSetThenGetSurveyBuilding() {
         survey1.setSurveyBuilding(building2);
         assertEquals(building2, survey1.getSurveyBuilding());
     }
 
     @Test
-    public void testGetUser() throws Exception {
+    public void testGetUser() {
         assertEquals(user1, survey1.getUser());
     }
 
     @Test
-    public void testSetThenGetUser() throws Exception {
+    public void testSetThenGetUser() {
         survey1.setUser(user2);
         assertEquals(user2, survey1.getUser());
     }
 
     @Test
-    public void testSetThenGetIndoorDetail() throws Exception {
+    public void testSetThenGetIndoorDetail() {
         ArrayList<SurveyDetail> detailArrayList = new ArrayList<>();
         detailArrayList.add(detail1);
         detailArrayList.add(detail2);
@@ -81,7 +81,7 @@ public class SurveyTest {
     }
 
     @Test
-    public void testSetThenGetOutdoorDetail() throws Exception {
+    public void testSetThenGetOutdoorDetail() {
         ArrayList<SurveyDetail> detailArrayList = new ArrayList<>();
         detailArrayList.add(detail1);
         detailArrayList.add(detail2);
@@ -91,19 +91,19 @@ public class SurveyTest {
     }
 
     @Test
-    public void surveyWithDifferentUserMustNotEquals() throws Exception {
+    public void surveyWithDifferentUserMustNotEquals() {
         Survey survey2 = new Survey(user2, building1);
         assertNotEquals(survey1, survey2);
     }
 
     @Test
-    public void surveyWithDifferentBuildingMustNotEquals() throws Exception {
+    public void surveyWithDifferentBuildingMustNotEquals() {
         Survey survey = new Survey(user1, building2);
         assertNotEquals(survey1, survey);
     }
 
     @Test
-    public void surveyWithTheSameSurveyAndBuildingMustEquals() throws Exception {
+    public void surveyWithTheSameSurveyAndBuildingMustEquals() {
         Survey survey = new Survey(user1, building1);
         assertEquals(survey1, survey);
     }

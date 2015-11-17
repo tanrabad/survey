@@ -78,14 +78,14 @@ public class UserTest {
     }
 
     @Test
-    public void userWithDiffrentLastnameMustNotEqual() throws Exception {
+    public void userWithDifferentLastnameMustNotEqual() throws Exception {
         austin1.setLastname(AUSTIN_LASTNAME);
         austin2.setLastname("Butler");
         assertNotEquals(austin1, austin2);
     }
 
     @Test
-    public void userWithDiffrentOrganizationMustNotEqual() throws Exception {
+    public void userWithDifferentOrganizationMustNotEqual() throws Exception {
         austin1.setOrganizationId(AUSTIN_ORGANIZATION_ID);
         austin2.setOrganizationId(408);
         assertNotEquals(austin1, austin2);

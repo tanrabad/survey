@@ -17,11 +17,15 @@
 
 package th.or.nectec.tanrabad.survey;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -97,12 +101,11 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     @Override
     public void onEditSurvey(Survey survey) {
-        Toast.makeText(SurveyActivity.this, R.string.title_activity_edit_survey, Toast.LENGTH_LONG).show();
-
-        getSupportActionBar().setTitle(R.string.title_activity_edit_survey);
+        ActionBar supportActionBar = getSupportActionBar();
+        if (supportActionBar != null)
+            supportActionBar.setTitle(R.string.title_activity_edit_survey);
 
         this.survey = survey;
-
         setBuildingInfo();
         loadSurveyData(survey);
     }
@@ -261,5 +264,13 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void hideSoftKeyboard(View view) {
+        View currentFocus = this.getCurrentFocus();
+        if (currentFocus != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);
+        }
     }
 }

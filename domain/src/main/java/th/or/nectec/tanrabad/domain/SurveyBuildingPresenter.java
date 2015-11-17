@@ -12,6 +12,4 @@ public interface SurveyBuildingPresenter {
     void alertSurveyBuildingsNotFound();
 
     void displaySurveyBuildingList(List<Building> buildings);
-
-    void displayAllSurveyBuildingList(List<SurveyBuilding> surveyBuildingsWithStatus);
 }

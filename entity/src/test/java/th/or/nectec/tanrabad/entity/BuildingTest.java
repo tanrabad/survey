@@ -33,37 +33,44 @@ public class BuildingTest {
     public static final String BUILDING_NAME = "โบสถ์ใหญ่";
     private final Place place = Place.withName("วิหารเซนต์เมรี่");
     private final Building building1 = new Building(BUILDING_UUID, BUILDING_NAME);
+    private Location location = new Location(14.078606, 100.603120);
 
     @Test
-    public void testWithName()  {
+    public void testWithName() {
         Building building = Building.withName(BUILDING_NAME);
         assertEquals(BUILDING_NAME, building.getName());
     }
 
     @Test
-    public void testSetThenGetPlace()  {
+    public void testSetThenGetPlace() {
         building1.setPlace(place);
         assertEquals(place, building1.getPlace());
     }
 
     @Test
-    public void testGetName()  {
+    public void testGetName() {
         assertEquals(BUILDING_NAME, building1.getName());
     }
 
     @Test
-    public void testSetThenGetName()  {
+    public void testSetThenGetName() {
         building1.setName("โบสถ์เล็ก");
         assertEquals("โบสถ์เล็ก", building1.getName());
     }
 
     @Test
-    public void testGetId()  {
+    public void testGetId() {
         assertEquals(BUILDING_UUID, building1.getId());
     }
 
     @Test
-    public void buildingWithDifferentIdMustNotEqual()  {
+    public void testSetThenGetBuildingLocation() {
+        building1.setLocation(location);
+        assertEquals(location, building1.getLocation());
+    }
+
+    @Test
+    public void buildingWithDifferentIdMustNotEqual() {
         building1.setPlace(place);
         Building building2 = new Building(UUID.randomUUID(), BUILDING_NAME);
         building2.setPlace(place);
@@ -71,7 +78,7 @@ public class BuildingTest {
     }
 
     @Test
-    public void buildingWithDifferentNameMustNotEqual()  {
+    public void buildingWithDifferentNameMustNotEqual() {
         building1.setPlace(place);
         Building building2 = new Building(BUILDING_UUID, "โบสถ์เล็ก");
         building2.setPlace(place);
@@ -79,7 +86,7 @@ public class BuildingTest {
     }
 
     @Test
-    public void buildingWithDifferentPlaceMustNotEqual()  {
+    public void buildingWithDifferentPlaceMustNotEqual() {
         building1.setPlace(place);
         Building building2 = new Building(BUILDING_UUID, BUILDING_NAME);
         building2.setPlace(Place.withName("โรงเรียนเซนต์เมรี่"));
@@ -87,7 +94,7 @@ public class BuildingTest {
     }
 
     @Test
-    public void buildingWithTheSameNameAndIdAndPlaceMustEqual()  {
+    public void buildingWithTheSameNameAndIdAndPlaceMustEqual() {
         building1.setPlace(place);
         Building building2 = new Building(BUILDING_UUID, BUILDING_NAME);
         building2.setPlace(place);

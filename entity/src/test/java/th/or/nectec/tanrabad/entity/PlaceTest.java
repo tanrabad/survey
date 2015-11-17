@@ -34,37 +34,39 @@ public class PlaceTest {
     public static final int BANGPHAI_TYPE = Place.TYPE_VILLAGE_COMMUNITY;
     private final Place place1 = new Place(BANGPHAI_UUID, BANGPHAI_NAME);
     private final Place place2 = new Place(BANGPHAI_UUID, BANGPHAI_NAME);
+    private Location location = new Location(14.078606, 100.603120);
 
     @Test
-    public void testWithName()  {
+    public void testWithName() {
         Place place = Place.withName(BANGPHAI_NAME);
         assertEquals(BANGPHAI_NAME, place.getName());
     }
 
     @Test
-    public void testGetId()  {
+    public void testGetId() {
         assertEquals(BANGPHAI_UUID, place1.getId());
     }
 
     @Test
-    public void testGetName()  {
-        assertEquals(BANGPHAI_NAME, place1.getName());
-    }
-
-    @Test
-    public void testSetThenGetPlaceName()  {
+    public void testSetThenGetPlaceName() {
         place1.setName("บางโพธิ์");
         assertEquals("บางโพธิ์", place1.getName());
     }
 
     @Test
-    public void testSetThenGetPlaceType()  {
+    public void testSetThenGetPlaceType() {
         place1.setType(Place.TYPE_SCHOOL);
         assertEquals(Place.TYPE_SCHOOL, place1.getType());
     }
 
     @Test
-    public void placeWithDifferentNameMustNotEqual()  {
+    public void testSetThenGetPlaceLocation() {
+        place1.setLocation(location);
+        assertEquals(location, place1.getLocation());
+    }
+
+    @Test
+    public void placeWithDifferentNameMustNotEqual() {
         place1.setType(BANGPHAI_TYPE);
         place2.setType(place1.getType());
         place2.setName("บางโพธิ์");
@@ -72,14 +74,14 @@ public class PlaceTest {
     }
 
     @Test
-    public void placeWithDifferentTypeMustNotEqual()  {
+    public void placeWithDifferentTypeMustNotEqual() {
         place1.setType(Place.TYPE_FACTORY);
         place2.setType(Place.TYPE_SCHOOL);
         assertNotEquals(place1, place2);
     }
 
     @Test
-    public void placeWithTheSameNameAndTypeMustEqual()  {
+    public void placeWithTheSameNameAndTypeMustEqual() {
         place1.setType(BANGPHAI_TYPE);
         place2.setType(BANGPHAI_TYPE);
         assertEquals(place1, place2);

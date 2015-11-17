@@ -30,16 +30,17 @@ public class SurveyTest {
     private final Building building1 = Building.withName("โรงเรียนเซนต์เมรี่");
     private final int resident = 2250;
     private final Survey survey1 = new Survey(user1, building1);
+    private Location location = new Location(14.078606, 100.603120);
+
+    @Test
+    public void testGetUser() {
+        assertEquals(user1, survey1.getUser());
+    }
 
     @Test
     public void testSetThenGetResidentCount() {
         survey1.setResidentCount(resident);
         assertEquals(resident, survey1.getResidentCount());
-    }
-
-    @Test
-    public void testGetSurveyBuilding() {
-        assertEquals(building1, survey1.getSurveyBuilding());
     }
 
     @Test
@@ -50,14 +51,8 @@ public class SurveyTest {
     }
 
     @Test
-    public void testGetUser() {
-        assertEquals(user1, survey1.getUser());
-    }
-
-    @Test
-    public void testSetThenGetUser() {
-        User user2 = User.fromUsername("Sara2");
-        survey1.setUser(user2);
-        assertEquals(user2, survey1.getUser());
+    public void testSetThenGetSurveyLocation() {
+        survey1.setLocation(location);
+        assertEquals(location, survey1.getLocation());
     }
 }

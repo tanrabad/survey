@@ -21,6 +21,7 @@ public class PlaceTypeAdapter extends BaseAdapter {
         this.context = context;
 
         ArrayList<PlaceType> placeTypes = new ArrayList<>();
+        placeTypes.add(new PlaceType(-1, "ทั้งหมด"));
         placeTypes.add(new PlaceType(Place.TYPE_VILLAGE_COMMUNITY, "ชุมชน"));
         placeTypes.add(new PlaceType(Place.TYPE_WORSHIP, "ศาสนสถาน"));
         placeTypes.add(new PlaceType(Place.TYPE_SCHOOL, "โรงเรียน"));

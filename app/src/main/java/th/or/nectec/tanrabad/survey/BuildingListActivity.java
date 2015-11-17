@@ -23,7 +23,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 import java.util.UUID;
@@ -39,6 +38,7 @@ import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
+import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 
 public class BuildingListActivity extends TanrabadActivity implements BuildingListPresenter, PlacePresenter {
 
@@ -81,7 +81,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingLi
 
     @Override
     public void displayNotFoundPlace() {
-        Toast.makeText(getBaseContext(), R.string.place_not_found, Toast.LENGTH_LONG).show();
+        Alert.highLevel().show(R.string.place_not_found);
     }
 
     private void loadSurveyBuildingList() {
@@ -108,12 +108,12 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingLi
 
     @Override
     public void alertPlaceNotFound() {
-        Toast.makeText(BuildingListActivity.this, R.string.please_enter_place, Toast.LENGTH_LONG).show();
+        Alert.highLevel().show(R.string.please_enter_place);
     }
 
     @Override
     public void alertBuildingsNotFound() {
-        Toast.makeText(BuildingListActivity.this, R.string.building_not_found, Toast.LENGTH_LONG).show();
+        Alert.lowLevel().show(R.string.building_not_found);
     }
 
     @Override

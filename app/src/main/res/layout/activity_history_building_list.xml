@@ -74,9 +74,26 @@
 
     </LinearLayout>
 
-    <ListView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/survey_building_history_list" />
+        android:layout_height="match_parent">
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/survey_building_history_list" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/survey_more_building_button_text"
+            android:id="@+id/survey_more_building_button"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="@dimen/between_text_margin_bottom"
+            android:layout_marginTop="@dimen/between_text_margin_top"
+            android:layout_marginEnd="@dimen/between_view"
+            android:textSize="@dimen/text_body"
+            android:textColor="@color/pink" />
+    </FrameLayout>
 
 </LinearLayout>

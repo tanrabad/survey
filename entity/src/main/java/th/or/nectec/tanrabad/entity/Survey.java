@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015  NECTEC
+ * Copyright (c) 2015 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,6 +17,8 @@
 
 package th.or.nectec.tanrabad.entity;
 
+import org.joda.time.DateTime;
+
 import java.util.ArrayList;
 
 public class Survey {
@@ -25,20 +27,36 @@ public class Survey {
     private int residentCount;
     private ArrayList<SurveyDetail> indoorDetails;
     private ArrayList<SurveyDetail> outdoorDetails;
+    private DateTime startTimestamp;
+    private DateTime finishTimestamp;
+
     public Survey(User user, Building surveyBuilding) {
         this.user = user;
         this.surveyBuilding = surveyBuilding;
     }
 
-    @Override
-    public String toString() {
-        return "Survey{" +
-                "user=" + user +
-                ", surveyBuilding=" + surveyBuilding +
-                ", residentCount=" + residentCount +
-                ", indoorDetails=" + indoorDetails +
-                ", outdoorDetails=" + outdoorDetails +
-                '}';
+    public void startSurvey() {
+        setStartTimestamp(DateTime.now());
+    }
+
+    public void finishSurvey() {
+        setFinishTimestamp(DateTime.now());
+    }
+
+    public DateTime getStartTimestamp() {
+        return startTimestamp;
+    }
+
+    public void setStartTimestamp(DateTime startTimestamp) {
+        this.startTimestamp = startTimestamp;
+    }
+
+    public DateTime getFinishTimestamp() {
+        return finishTimestamp;
+    }
+
+    public void setFinishTimestamp(DateTime finishTimestamp) {
+        this.finishTimestamp = finishTimestamp;
     }
 
     public int getResidentCount() {
@@ -79,6 +97,17 @@ public class Survey {
 
     public void setOutdoorDetail(ArrayList<SurveyDetail> outdoorDetails) {
         this.outdoorDetails = outdoorDetails;
+    }
+
+    @Override
+    public String toString() {
+        return "Survey{" +
+                "user=" + user +
+                ", surveyBuilding=" + surveyBuilding +
+                ", residentCount=" + residentCount +
+                ", indoorDetails=" + indoorDetails +
+                ", outdoorDetails=" + outdoorDetails +
+                '}';
     }
 
     @Override

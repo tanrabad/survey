@@ -19,7 +19,6 @@ package th.or.nectec.tanrabad.survey;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -42,21 +41,18 @@ import java.util.List;
 import java.util.Map;
 
 
-public class SurveyActivity extends AppCompatActivity implements ContainerPresenter, SurveyPresenter, SurveySavePresenter {
-
+public class SurveyActivity extends TanrabadActivity implements ContainerPresenter, SurveyPresenter, SurveySavePresenter {
 
     public static final String BUILDING_UUID_ARG = "building_uuid";
     public static final String USERNAME_ARG = "username_arg";
-    private Building surveyBuilding;
-    private User surveyUser;
+
     private HashMap<Integer, SurveyContainerView> indoorContainerViews;
     private HashMap<Integer, SurveyContainerView> outdoorContainerViews;
     private LinearLayout outdoorContainerLayout;
     private LinearLayout indoorContainerLayout;
-    private TextView buildingNameView;
-    private TextView placeNameView;
     private EditText residentCountView;
     private SurveyRepository surveyRepository;
+    private Survey survey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,8 +70,7 @@ public class SurveyActivity extends AppCompatActivity implements ContainerPresen
     }
 
     private void findViewsFromLayout() {
-        buildingNameView = (TextView) findViewById(R.id.building_name);
-        placeNameView = (TextView) findViewById(R.id.place_name);
+
         indoorContainerLayout = (LinearLayout) findViewById(R.id.indoor_container);
         outdoorContainerLayout = (LinearLayout) findViewById(R.id.outdoor_container);
         residentCountView = (EditText) findViewById(R.id.resident_count);
@@ -94,8 +89,8 @@ public class SurveyActivity extends AppCompatActivity implements ContainerPresen
 
     @Override
     public void onNewSurvey(Building building, User user) {
-        surveyBuilding = building;
-        surveyUser = user;
+        survey = new Survey(user, building);
+        survey.startSurvey();
 
         setBuildingInfo();
     }
@@ -106,25 +101,26 @@ public class SurveyActivity extends AppCompatActivity implements ContainerPresen
 
         getSupportActionBar().setTitle(R.string.title_activity_edit_survey);
 
-        surveyBuilding = survey.getSurveyBuilding();
-        surveyUser = survey.getUser();
+        this.survey = survey;
 
         setBuildingInfo();
         loadSurveyData(survey);
     }
 
     private void setBuildingInfo() {
-        buildingNameView.setText(buildingNamePrefix() + surveyBuilding.getName());
-        placeNameView.setText(surveyBuilding.getPlace().getName());
+        Building building = survey.getSurveyBuilding();
+        ((TextView) findViewById(R.id.building_name)).setText(getBuildingNameWithPrefix(building));
+        ((TextView) findViewById(R.id.place_name)).setText(building.getPlace().getName());
     }
 
-    private String buildingNamePrefix() {
-        String buildNamePrefix = "";
-        Place place = surveyBuilding.getPlace();
+    private String getBuildingNameWithPrefix(Building building) {
+        String houseNoPrefix = "บ้านเลขที่ ";
+        String buildName = building.getName();
+        Place place = survey.getSurveyBuilding().getPlace();
         if (place.getType() == Place.TYPE_VILLAGE_COMMUNITY) {
-            buildNamePrefix = "บ้านเลขที่ ";
+            buildName = houseNoPrefix + buildName;
         }
-        return buildNamePrefix;
+        return buildName;
     }
 
     private void loadSurveyData(Survey survey) {
@@ -173,9 +169,13 @@ public class SurveyActivity extends AppCompatActivity implements ContainerPresen
     public void displaySaveSuccess() {
         Toast.makeText(SurveyActivity.this, R.string.save_success, Toast.LENGTH_LONG).show();
         finish();
+        openSurveyBuildingHistory();
+    }
+
+    private void openSurveyBuildingHistory() {
         Intent intent = new Intent(SurveyActivity.this, SurveyBuildingHistoryActivity.class);
-        intent.putExtra("placeUUID", surveyBuilding.getPlace().getId().toString());
-        intent.putExtra("username", surveyUser.getUsername());
+        intent.putExtra("placeUUID", survey.getSurveyBuilding().getPlace().getId().toString());
+        intent.putExtra("username", survey.getUser().getUsername());
         startActivity(intent);
     }
 
@@ -186,14 +186,13 @@ public class SurveyActivity extends AppCompatActivity implements ContainerPresen
 
     private void SaveSurveyData() {
         try {
-            Survey surveyData = new Survey(surveyUser, surveyBuilding);
-            surveyData.setResidentCount(getResidentCount());
-            surveyData.setIndoorDetail(getSurveyDetail(indoorContainerViews));
-            surveyData.setOutdoorDetail(getSurveyDetail(outdoorContainerViews));
+            survey.setResidentCount(getResidentCount());
+            survey.setIndoorDetail(getSurveyDetail(indoorContainerViews));
+            survey.setOutdoorDetail(getSurveyDetail(outdoorContainerViews));
+            survey.finishSurvey();
 
-            SurveyValidator surveyValidator = new SaveSurveyValidator(SurveyActivity.this);
-            SurveySaver surveySaver = new SurveySaver(this, surveyValidator, surveyRepository);
-            surveySaver.save(surveyData);
+            SurveySaver surveySaver = new SurveySaver(this, new SaveSurveyValidator(this), surveyRepository);
+            surveySaver.save(survey);
         } catch (SurveyDetail.ContainerFoundLarvaOverTotalException e) {
             Toast.makeText(SurveyActivity.this, R.string.over_total_container, Toast.LENGTH_LONG).show();
             validateSurveyContainerViews(indoorContainerViews);

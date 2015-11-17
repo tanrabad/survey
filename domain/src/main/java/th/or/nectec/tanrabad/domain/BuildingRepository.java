@@ -28,4 +28,6 @@ public interface BuildingRepository {
     Building findBuildingByName(String buildingName);
 
     Building findBuildingByUUID(UUID uuid);
+
+    boolean save(Building with);
 }

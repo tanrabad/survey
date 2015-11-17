@@ -117,8 +117,14 @@ public class Survey {
 
         Survey survey = (Survey) o;
 
+        if (residentCount != survey.residentCount) return false;
         if (!user.equals(survey.user)) return false;
-        return surveyBuilding.equals(survey.surveyBuilding);
+        if (!surveyBuilding.equals(survey.surveyBuilding)) return false;
+        if (indoorDetails != null ? !indoorDetails.equals(survey.indoorDetails) : survey.indoorDetails != null)
+            return false;
+        if (outdoorDetails != null ? !outdoorDetails.equals(survey.outdoorDetails) : survey.outdoorDetails != null)
+            return false;
+        return !(startTimestamp != null ? !startTimestamp.equals(survey.startTimestamp) : survey.startTimestamp != null);
 
     }
 
@@ -126,6 +132,10 @@ public class Survey {
     public int hashCode() {
         int result = user.hashCode();
         result = 31 * result + surveyBuilding.hashCode();
+        result = 31 * result + residentCount;
+        result = 31 * result + (indoorDetails != null ? indoorDetails.hashCode() : 0);
+        result = 31 * result + (outdoorDetails != null ? outdoorDetails.hashCode() : 0);
+        result = 31 * result + (startTimestamp != null ? startTimestamp.hashCode() : 0);
         return result;
     }
 }

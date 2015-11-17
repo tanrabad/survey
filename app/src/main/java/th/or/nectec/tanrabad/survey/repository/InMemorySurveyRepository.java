@@ -13,7 +13,7 @@ public class InMemorySurveyRepository implements SurveyRepository {
     private static InMemorySurveyRepository instance;
     ArrayList<Survey> surveys;
 
-    public InMemorySurveyRepository() {
+    private InMemorySurveyRepository() {
         this.surveys = new ArrayList<>();
     }
 

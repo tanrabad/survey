@@ -23,8 +23,8 @@ public class PlaceChooser {
         }
     }
 
-    public void getPlaceListWithPlaceFilter(int typeVillageCommunity) {
-        List<Place> places = this.placeRepository.findPlacesWithPlaceFilter(typeVillageCommunity);
+    public void getPlaceListWithPlaceFilter(int buildingType) {
+        List<Place> places = this.placeRepository.findPlacesWithPlaceFilter(buildingType);
         if (places == null) {
             placeListPresenter.displayPlaceNotFound();
         } else {

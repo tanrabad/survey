@@ -31,19 +31,38 @@ public class StubPlaceRepository implements PlaceRepository {
     private final Place palazzettoVillage;
     private final Place bangkokHospital;
     private final Place watpaphukon;
+    private final Place saintMarySchool;
+    private final Place donboscoSchool;
+    private final Place anubarnNursery;
+    private final Place thammasatHospital;
+    private final Place golfView;
     ArrayList<Place> places = new ArrayList<>();
 
     public StubPlaceRepository() {
-        palazzettoVillage = new Place(generateUUID("1abc"), "บ้านพาลาซเซตโต้");
+        palazzettoVillage = new Place(generateUUID("1abc"), "หมู่บ้านพาลาซเซตโต้");
         palazzettoVillage.setType(Place.TYPE_VILLAGE_COMMUNITY);
+        golfView = new Place(generateUUID("67UIP"), "ชุมชนกอล์ฟวิว");
+        golfView.setType(Place.TYPE_VILLAGE_COMMUNITY);
         bangkokHospital = new Place(generateUUID("2bcd"), "โรงพยาบาลกรุงเทพ");
         bangkokHospital.setType(Place.TYPE_HOSPITAL);
+        thammasatHospital = new Place(generateUUID("32UAW"), "โรงพยาบาลธรรมศาสตร์");
+        thammasatHospital.setType(Place.TYPE_HOSPITAL);
         watpaphukon = new Place(generateUUID("3def"), "วัดป่าภูก้อน");
         watpaphukon.setType(Place.TYPE_WORSHIP);
+        saintMarySchool = new Place(generateUUID("042ST"), "โรงเรียนเซนต์เมรี่");
+        saintMarySchool.setType(Place.TYPE_SCHOOL);
+        donboscoSchool = new Place(generateUUID("12AJK"), "โรงเรียนดอนบอสโก");
+        donboscoSchool.setType(Place.TYPE_SCHOOL);
+        anubarnNursery = new Place(generateUUID("45JKO"), "โรงเรียนอนุบาล");
+        anubarnNursery.setType(Place.TYPE_SCHOOL);
 
         places.add(palazzettoVillage);
+        places.add(golfView);
         places.add(bangkokHospital);
         places.add(watpaphukon);
+        places.add(saintMarySchool);
+        places.add(donboscoSchool);
+        places.add(anubarnNursery);
     }
 
     public Place getPalazzettoVillage() {

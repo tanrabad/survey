@@ -28,16 +28,16 @@ import android.widget.Toast;
 import java.util.List;
 import java.util.UUID;
 
-import th.or.nectec.tanrabad.domain.SurveyBuilding;
+import th.or.nectec.tanrabad.domain.BuildingListPresenter;
+import th.or.nectec.tanrabad.domain.BuildingWithSurveyStatus;
 import th.or.nectec.tanrabad.domain.SurveyBuildingChooser;
-import th.or.nectec.tanrabad.domain.SurveyBuildingListPresenter;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 
-public class BuildingListActivity extends TanrabadActivity implements SurveyBuildingListPresenter {
+public class BuildingListActivity extends TanrabadActivity implements BuildingListPresenter {
 
     public static final String PLACE_UUID_ARG = "place_uuid_arg";
     private TextView placeName;
@@ -58,7 +58,7 @@ public class BuildingListActivity extends TanrabadActivity implements SurveyBuil
         buildingList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                SurveyBuilding building = (SurveyBuilding) buildingAdapter.getItem(position);
+                BuildingWithSurveyStatus building = (BuildingWithSurveyStatus) buildingAdapter.getItem(position);
                 bringToSurveyActivity(building.getBuilding());
             }
         });
@@ -99,9 +99,9 @@ public class BuildingListActivity extends TanrabadActivity implements SurveyBuil
     }
 
     @Override
-    public void displayAllSurveyBuildingList(List<SurveyBuilding> surveyBuildingsWithStatus) {
-        buildingAdapter = new BuildingWithSurveyStatusAdapter(BuildingListActivity.this, surveyBuildingsWithStatus);
+    public void displayAllSurveyBuildingList(List<BuildingWithSurveyStatus> buildingsWithSurveyStatuses) {
+        buildingAdapter = new BuildingWithSurveyStatusAdapter(BuildingListActivity.this, buildingsWithSurveyStatuses);
         buildingList.setAdapter(buildingAdapter);
-        buildingCountView.setText(String.valueOf(surveyBuildingsWithStatus.size()));
+        buildingCountView.setText(String.valueOf(buildingsWithSurveyStatuses.size()));
     }
 }

@@ -3,11 +3,11 @@ package th.or.nectec.tanrabad.domain;
 import th.or.nectec.tanrabad.entity.Building;
 
 
-public class SurveyBuilding {
+public class BuildingWithSurveyStatus {
     Building building;
     boolean isSurvey;
 
-    public SurveyBuilding(Building building, boolean isSurvey) {
+    public BuildingWithSurveyStatus(Building building, boolean isSurvey) {
         this.building = building;
         this.isSurvey = isSurvey;
     }
@@ -41,7 +41,7 @@ public class SurveyBuilding {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        SurveyBuilding that = (SurveyBuilding) o;
+        BuildingWithSurveyStatus that = (BuildingWithSurveyStatus) o;
 
         if (isSurvey != that.isSurvey) return false;
         return !(building != null ? !building.equals(that.building) : that.building != null);

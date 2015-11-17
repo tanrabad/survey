@@ -11,16 +11,16 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import th.or.nectec.tanrabad.domain.SurveyBuilding;
+import th.or.nectec.tanrabad.domain.BuildingWithSurveyStatus;
 
 public class BuildingWithSurveyStatusAdapter extends BaseAdapter {
 
     Context context;
 
 
-    ArrayList<SurveyBuilding> buildings = new ArrayList<>();
+    ArrayList<BuildingWithSurveyStatus> buildings = new ArrayList<>();
 
-    public BuildingWithSurveyStatusAdapter(Context context, List<SurveyBuilding> buildings) {
+    public BuildingWithSurveyStatusAdapter(Context context, List<BuildingWithSurveyStatus> buildings) {
         this.context = context;
         this.buildings.addAll(buildings);
     }
@@ -56,10 +56,10 @@ public class BuildingWithSurveyStatusAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
 
-        SurveyBuilding surveyBuilding = buildings.get(i);
-        holder.buildingTextView.setText(surveyBuilding.getBuilding().getName());
+        BuildingWithSurveyStatus buildingWithSurveyStatus = buildings.get(i);
+        holder.buildingTextView.setText(buildingWithSurveyStatus.getBuilding().getName());
 
-        if (surveyBuilding.isSurvey()) {
+        if (buildingWithSurveyStatus.isSurvey()) {
             holder.buildingIcon.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.container_bg_pink));
         } else {
             holder.buildingIcon.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.container_bg));

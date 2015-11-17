@@ -22,7 +22,7 @@ public class SurveyBuildingChooserTest {
     private SurveyRepository surveyRepository;
     private PlaceRepository placeRepository;
     private UserRepository userRepository;
-    private SurveyBuildingListPresenter surveyBuildingListPresenter;
+    private BuildingListPresenter buildingListPresenter;
     private Place place;
     private User user;
     private String placeUUID;
@@ -38,7 +38,7 @@ public class SurveyBuildingChooserTest {
         placeRepository = context.mock(PlaceRepository.class);
         buildingRepository = context.mock(BuildingRepository.class);
         userRepository = context.mock(UserRepository.class);
-        surveyBuildingListPresenter = context.mock(SurveyBuildingListPresenter.class);
+        buildingListPresenter = context.mock(BuildingListPresenter.class);
 
         placeUUID = UUID.nameUUIDFromBytes("1abc".getBytes()).toString();
         username = "ice";
@@ -67,10 +67,10 @@ public class SurveyBuildingChooserTest {
         final List<Building> surveyBuildings = new ArrayList<>();
         surveyBuildings.add(building2);
 
-        final List<SurveyBuilding> surveyBuildingsWithStatus = new ArrayList<>();
-        surveyBuildingsWithStatus.add(new SurveyBuilding(building1, false));
-        surveyBuildingsWithStatus.add(new SurveyBuilding(building2, true));
-        surveyBuildingsWithStatus.add(new SurveyBuilding(building3, false));
+        final List<BuildingWithSurveyStatus> buildingsWithSurveyStatuses = new ArrayList<>();
+        buildingsWithSurveyStatuses.add(new BuildingWithSurveyStatus(building1, false));
+        buildingsWithSurveyStatuses.add(new BuildingWithSurveyStatus(building2, true));
+        buildingsWithSurveyStatuses.add(new BuildingWithSurveyStatus(building3, false));
 
         context.checking(new Expectations() {
             {
@@ -86,11 +86,11 @@ public class SurveyBuildingChooserTest {
                 allowing(surveyRepository).findByPlaceAndUserIn7Days(with(place), with(user));
                 will(returnValue(surveyBuildings));
 
-                allowing(surveyBuildingListPresenter).displayAllSurveyBuildingList(with(surveyBuildingsWithStatus));
+                allowing(buildingListPresenter).displayAllSurveyBuildingList(with(buildingsWithSurveyStatuses));
 
             }
         });
-        SurveyBuildingChooser surveyBuildingHistoryController = new SurveyBuildingChooser(userRepository, placeRepository, buildingRepository, surveyRepository, surveyBuildingListPresenter);
+        SurveyBuildingChooser surveyBuildingHistoryController = new SurveyBuildingChooser(userRepository, placeRepository, buildingRepository, surveyRepository, buildingListPresenter);
         surveyBuildingHistoryController.displaySurveyBuildingOf(placeUUID, username);
     }
 
@@ -104,10 +104,10 @@ public class SurveyBuildingChooserTest {
         buildings.add(building3);
 
 
-        final List<SurveyBuilding> surveyBuildingsWithStatus = new ArrayList<>();
-        surveyBuildingsWithStatus.add(new SurveyBuilding(building1, false));
-        surveyBuildingsWithStatus.add(new SurveyBuilding(building2, false));
-        surveyBuildingsWithStatus.add(new SurveyBuilding(building3, false));
+        final List<BuildingWithSurveyStatus> buildingsWithSurveyStatuses = new ArrayList<>();
+        buildingsWithSurveyStatuses.add(new BuildingWithSurveyStatus(building1, false));
+        buildingsWithSurveyStatuses.add(new BuildingWithSurveyStatus(building2, false));
+        buildingsWithSurveyStatuses.add(new BuildingWithSurveyStatus(building3, false));
 
         context.checking(new Expectations() {
             {
@@ -123,11 +123,11 @@ public class SurveyBuildingChooserTest {
                 allowing(surveyRepository).findByPlaceAndUserIn7Days(with(place), with(user));
                 will(returnValue(null));
 
-                allowing(surveyBuildingListPresenter).displayAllSurveyBuildingList(with(surveyBuildingsWithStatus));
+                allowing(buildingListPresenter).displayAllSurveyBuildingList(with(buildingsWithSurveyStatuses));
 
             }
         });
-        SurveyBuildingChooser surveyBuildingHistoryController = new SurveyBuildingChooser(userRepository, placeRepository, buildingRepository, surveyRepository, surveyBuildingListPresenter);
+        SurveyBuildingChooser surveyBuildingHistoryController = new SurveyBuildingChooser(userRepository, placeRepository, buildingRepository, surveyRepository, buildingListPresenter);
         surveyBuildingHistoryController.displaySurveyBuildingOf(placeUUID, username);
     }
 
@@ -146,11 +146,11 @@ public class SurveyBuildingChooserTest {
 
                 never(surveyRepository);
 
-                allowing(surveyBuildingListPresenter).alertBuildingsNotFound();
+                allowing(buildingListPresenter).alertBuildingsNotFound();
 
             }
         });
-        SurveyBuildingChooser surveyBuildingHistoryController = new SurveyBuildingChooser(userRepository, placeRepository, buildingRepository, surveyRepository, surveyBuildingListPresenter);
+        SurveyBuildingChooser surveyBuildingHistoryController = new SurveyBuildingChooser(userRepository, placeRepository, buildingRepository, surveyRepository, buildingListPresenter);
         surveyBuildingHistoryController.displaySurveyBuildingOf(placeUUID, username);
 
     }
@@ -162,10 +162,10 @@ public class SurveyBuildingChooserTest {
             {
                 allowing(userRepository).findUserByName(with(username));
                 will(returnValue(null));
-                oneOf(surveyBuildingListPresenter).alertUserNotFound();
+                oneOf(buildingListPresenter).alertUserNotFound();
             }
         });
-        SurveyBuildingChooser surveyBuildingChooser = new SurveyBuildingChooser(userRepository, placeRepository, buildingRepository, surveyRepository, surveyBuildingListPresenter);
+        SurveyBuildingChooser surveyBuildingChooser = new SurveyBuildingChooser(userRepository, placeRepository, buildingRepository, surveyRepository, buildingListPresenter);
         surveyBuildingChooser.displaySurveyBuildingOf(placeUUID, username);
     }
 
@@ -179,10 +179,10 @@ public class SurveyBuildingChooserTest {
 
                 allowing(placeRepository).findPlaceByPlaceUUID(with(UUID.fromString(placeUUID)));
                 will(returnValue(null));
-                oneOf(surveyBuildingListPresenter).alertPlaceNotFound();
+                oneOf(buildingListPresenter).alertPlaceNotFound();
             }
         });
-        SurveyBuildingChooser surveyBuildingChooser = new SurveyBuildingChooser(userRepository, placeRepository, buildingRepository, surveyRepository, surveyBuildingListPresenter);
+        SurveyBuildingChooser surveyBuildingChooser = new SurveyBuildingChooser(userRepository, placeRepository, buildingRepository, surveyRepository, buildingListPresenter);
         surveyBuildingChooser.displaySurveyBuildingOf(placeUUID, username);
     }
 }

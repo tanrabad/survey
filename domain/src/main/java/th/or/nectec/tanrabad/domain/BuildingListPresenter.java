@@ -2,10 +2,10 @@ package th.or.nectec.tanrabad.domain;
 
 import java.util.List;
 
-public interface SurveyBuildingListPresenter {
+public interface BuildingListPresenter {
     void alertBuildingsNotFound();
 
-    void displayAllSurveyBuildingList(List<SurveyBuilding> surveyBuildingsWithStatus);
+    void displayAllSurveyBuildingList(List<BuildingWithSurveyStatus> buildingsWithSurveyStatuses);
 
     void alertUserNotFound();
 

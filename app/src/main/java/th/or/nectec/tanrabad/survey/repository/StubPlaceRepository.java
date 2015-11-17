@@ -32,6 +32,7 @@ public class StubPlaceRepository implements PlaceRepository {
     private final Place bangkokHospital;
     private final Place watpaphukon;
     ArrayList<Place> places = new ArrayList<>();
+
     public StubPlaceRepository() {
         palazzettoVillage = new Place(generateUUID("1abc"), "บ้านพาลาซเซตโต้");
         palazzettoVillage.setType(Place.TYPE_VILLAGE_COMMUNITY);
@@ -80,5 +81,15 @@ public class StubPlaceRepository implements PlaceRepository {
             }
         }
         return null;
+    }
+
+    @Override
+    public List<Place> findPlacesWithPlaceFilter(int placeType) {
+        ArrayList<Place> filterPlaces = new ArrayList<>();
+        for (Place eachPlace : filterPlaces) {
+            if (eachPlace.getType() == placeType)
+                filterPlaces.add(eachPlace);
+        }
+        return filterPlaces.isEmpty() ? null : filterPlaces;
     }
 }

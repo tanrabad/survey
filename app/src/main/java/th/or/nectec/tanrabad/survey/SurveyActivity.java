@@ -26,16 +26,32 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import th.or.nectec.tanrabad.domain.*;
-
-import th.or.nectec.tanrabad.entity.*;
-import th.or.nectec.tanrabad.survey.repository.*;
-import th.or.nectec.tanrabad.survey.view.SurveyContainerView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import th.or.nectec.tanrabad.domain.ContainerController;
+import th.or.nectec.tanrabad.domain.ContainerPresenter;
+import th.or.nectec.tanrabad.domain.SurveyController;
+import th.or.nectec.tanrabad.domain.SurveyPresenter;
+import th.or.nectec.tanrabad.domain.SurveyRepository;
+import th.or.nectec.tanrabad.domain.SurveySavePresenter;
+import th.or.nectec.tanrabad.domain.SurveySaver;
+import th.or.nectec.tanrabad.domain.SurveyValidator;
+import th.or.nectec.tanrabad.entity.Building;
+import th.or.nectec.tanrabad.entity.ContainerType;
+import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.Survey;
+import th.or.nectec.tanrabad.entity.SurveyDetail;
+import th.or.nectec.tanrabad.entity.User;
+import th.or.nectec.tanrabad.survey.repository.InMemoryContainerTypeRepository;
+import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
+import th.or.nectec.tanrabad.survey.repository.SaveSurveyValidator;
+import th.or.nectec.tanrabad.survey.repository.StubBuildingRepository;
+import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
+import th.or.nectec.tanrabad.survey.view.SurveyContainerView;
 
 public class SurveyActivity extends TanrabadActivity implements ContainerPresenter, SurveyPresenter, SurveySavePresenter {
 
@@ -96,7 +112,9 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     @Override
     public void onEditSurvey(Survey survey) {
-        Toast.makeText(SurveyActivity.this, "แก้ไขสำรวจ", Toast.LENGTH_LONG).show();
+        Toast.makeText(SurveyActivity.this, R.string.title_activity_edit_survey, Toast.LENGTH_LONG).show();
+
+        getSupportActionBar().setTitle(R.string.title_activity_edit_survey);
 
         surveyBuilding = survey.getSurveyBuilding();
         surveyUser = survey.getUser();

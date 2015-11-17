@@ -18,6 +18,7 @@
 <resources>
     <string name="app_name">Tanlabad-survey</string>
     <string name="title_activity_survey">สำรวจ</string>
+    <string name="title_activity_edit_survey">แก้ไขสำรวจ</string>
     <string name="save">บันทึก</string>
     <string name="save_success">บันทึกสำเร็จ</string>
     <string name="save_fail">บันทึกล้มเหลว</string>

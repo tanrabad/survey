@@ -104,4 +104,9 @@ public class StubBuildingRepository implements BuildingRepository {
         }
         return null;
     }
+
+    @Override
+    public boolean save(Building with) {
+        return false;
+    }
 }

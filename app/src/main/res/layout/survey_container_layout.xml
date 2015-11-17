@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/total"
                 android:textColor="@color/dark_gray"
-                android:textSize="@dimen/text_body" />
+                android:textSize="@dimen/text_body_large" />
 
             <EditText
                 android:id="@+id/total_container"
@@ -59,7 +59,7 @@
                 android:maxLength="2"
                 android:padding="@dimen/between_view"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text_body" />
+                android:textSize="@dimen/text_body_large" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -68,7 +68,7 @@
                 android:layout_marginStart="@dimen/between_view"
                 android:text="@string/found"
                 android:textColor="@color/dark_gray"
-                android:textSize="@dimen/text_body" />
+                android:textSize="@dimen/text_body_large" />
 
             <EditText
                 android:id="@+id/found_container"
@@ -84,7 +84,7 @@
                 android:maxLength="2"
                 android:padding="@dimen/between_view"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text_body" />
+                android:textSize="@dimen/text_body_large" />
         </LinearLayout>
     </LinearLayout>
 

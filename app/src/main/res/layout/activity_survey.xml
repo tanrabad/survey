@@ -68,7 +68,7 @@
                     android:layout_marginRight="@dimen/between_view"
                     android:text="@string/number_of_resident"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_body" />
+                    android:textSize="@dimen/text_body_large" />
 
                 <EditText
                     android:id="@+id/resident_count"
@@ -82,7 +82,7 @@
                     android:maxLength="3"
                     android:padding="10dp"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_body"
+                    android:textSize="@dimen/text_body_large"
                     tools:text="10" />
 
                 <TextView
@@ -92,7 +92,7 @@
                     android:layout_marginStart="@dimen/between_view"
                     android:text="@string/person"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_body" />
+                    android:textSize="@dimen/text_body_large" />
             </LinearLayout>
 
         </LinearLayout>

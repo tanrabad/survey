@@ -2,17 +2,22 @@ package th.or.nectec.tanrabad.survey;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
 
+import th.or.nectec.tanrabad.domain.PlaceChooser;
 import th.or.nectec.tanrabad.domain.SurveyBuildingHistoryController;
 import th.or.nectec.tanrabad.domain.SurveyBuildingPresenter;
 import th.or.nectec.tanrabad.entity.Building;
+import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
@@ -23,6 +28,8 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity {
 
     private TextView placeName;
     private ListView surveyBuildingHistoryList;
+    private Button surveyMoreBuildingButton;
+    private PlaceAdapter placeAdapter;
     private SurveyBuildingHistoryAdapter surveyBuildingHistoryAdapter;
     private SurveyBuildingHistoryController surveyBuildingHistoryController;
     private SurveyBuildingPresenter surveyBuildingPresenter = new SurveyBuildingPresenter() {
@@ -55,6 +62,7 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity {
 
         placeName = (TextView) findViewById(R.id.place_name);
         surveyBuildingHistoryList = (ListView) findViewById(R.id.survey_building_history_list);
+        surveyMoreBuildingButton = (Button) findViewById(R.id.survey_more_building_button);
 
         surveyBuildingHistoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -73,6 +81,21 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity {
                 InMemorySurveyRepository.getInstance(),
                 this.surveyBuildingPresenter);
         surveyBuildingHistoryController.showSurveyBuildingOf(getUuidFromIntent(), getUserNameFromIntent());
+        surveyMoreBuildingButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                bringToBuildingListActivity();
+            }
+        });
+    }
+
+    private void bringToBuildingListActivity() {
+        Intent intent = new Intent(SurveyBuildingHistoryActivity.this, BuildingListActivity.class);
+        intent.putExtra(BuildingListActivity.PLACE_UUID_ARG, getUuidFromIntent());
+        intent.putExtra(SurveyActivity.USERNAME_ARG, "sara");
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     private void bringToSurveyActivity(Building building) {
@@ -90,6 +113,27 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity {
         return getIntent().getStringExtra("username");
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.action_finish_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public  boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.finish:
+                bringToPlaceListActivity();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void bringToPlaceListActivity() {
+        Intent intent = new Intent(SurveyBuildingHistoryActivity.this, PlaceListActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
 }
 
 

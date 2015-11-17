@@ -9,7 +9,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import th.or.nectec.tanrabad.entity.ContainerType;
 import th.or.nectec.tanrabad.entity.SurveyDetail;
 import th.or.nectec.tanrabad.survey.R;
@@ -45,7 +44,7 @@ public class SurveyContainerView extends LinearLayout {
     private void initInstances() {
         this.containerTypeView = (TextView) findViewById(R.id.container_type);
         this.containerIconView = (ImageView) findViewById(R.id.container_icon);
-        this.foundContainerView = (EditText) findViewById(R.id.found_container);
+        this.foundContainerView = (EditText) findViewById(R.id.found_larvae_container);
         this.totalContainerView = (EditText) findViewById(R.id.total_container);
     }
 

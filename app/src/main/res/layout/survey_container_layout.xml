@@ -26,18 +26,18 @@
               android:padding="@dimen/activity_horizontal_margin">
 
     <ImageView
-        android:id="@+id/container_icon"
-        android:layout_width="72dp"
-        android:layout_height="72dp"
-        android:background="@drawable/container_bg"
-        android:contentDescription="@string/survey_container_description" />
+            android:id="@+id/container_icon"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:background="@drawable/container_bg"
+            android:contentDescription="@string/survey_container_description"/>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/between_view"
-        android:layout_marginStart="@dimen/between_view"
-        android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/between_view"
+            android:layout_marginStart="@dimen/between_view"
+            android:orientation="vertical">
 
         <TextView
                 android:id="@+id/container_type"
@@ -52,57 +52,59 @@
                 tools:text="ประเภทภาชนะ"/>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/total"
-                android:textColor="@color/dark_gray"
-                android:textSize="@dimen/text_body_large" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="@dimen/text_body_large"/>
 
             <EditText
-                android:id="@+id/total_container"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/between_view"
-                android:layout_marginStart="@dimen/between_view"
-                android:layout_weight="1"
-                android:background="@drawable/textfield_background"
-                android:ems="1"
-                android:gravity="center"
-                android:inputType="number"
-                android:maxLength="2"
-                android:padding="@dimen/between_view"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_body_large" />
+                    android:id="@+id/total_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/between_view"
+                    android:layout_marginStart="@dimen/between_view"
+                    android:layout_weight="1"
+                    android:background="@drawable/textfield_background"
+                    android:ems="1"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:gravity="center"
+                    android:maxLength="2"
+                    android:padding="@dimen/between_view"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_body_large"/>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/between_view"
-                android:layout_marginStart="@dimen/between_view"
-                android:text="@string/found"
-                android:textColor="@color/dark_gray"
-                android:textSize="@dimen/text_body_large" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/between_view"
+                    android:layout_marginStart="@dimen/between_view"
+                    android:text="@string/found"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="@dimen/text_body_large"/>
 
             <EditText
-                android:id="@+id/found_container"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/between_view"
-                android:layout_marginStart="@dimen/between_view"
-                android:layout_weight="1"
-                android:background="@drawable/textfield_background"
-                android:ems="1"
-                android:gravity="center"
-                android:inputType="number"
-                android:maxLength="2"
-                android:padding="@dimen/between_view"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_body_large" />
+                    android:id="@+id/found_larvae_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/between_view"
+                    android:layout_marginStart="@dimen/between_view"
+                    android:layout_weight="1"
+                    android:background="@drawable/textfield_background"
+                    android:ems="1"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:imeOptions="actionNext"
+                    android:maxLength="2"
+                    android:padding="@dimen/between_view"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_body_large"/>
         </LinearLayout>
     </LinearLayout>
 

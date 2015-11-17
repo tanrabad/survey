@@ -2,13 +2,22 @@
 <resources>
 
     <style name="ActionBar" parent="@style/Widget.AppCompat.Light.ActionBar">
-        <item name="background">?attr/colorPrimary</item>
-        <item name="titleTextStyle">@style/ActionBar.TitleTextStyle</item>
-        <item name="android:titleTextStyle">@style/ActionBar.TitleTextStyle</item>
+        <item name="background">@color/shock_pink</item>
+        <item name="titleTextStyle">@style/ActionBar.TitleTextAppearance</item>
     </style>
 
-    <style name="ActionBar.TitleTextStyle" parent="@style/Base.TextAppearance.AppCompat.Title">
+    <style name="ActionBar.TitleTextAppearance" parent="@style/Base.TextAppearance.AppCompat.Title">
         <item name="android:textSize">@dimen/text_body_large</item>
     </style>
+
+    <style name="Toolbar" parent="@style/Widget.AppCompat.Toolbar">
+        <item name="background">@color/shock_pink</item>
+        <item name="titleTextAppearance">@style/Toolbar.TitleTextAppearance</item>
+    </style>
+
+    <style name="Toolbar.TitleTextAppearance" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">@dimen/text_body_large</item>
+    </style>
+
 
 </resources>

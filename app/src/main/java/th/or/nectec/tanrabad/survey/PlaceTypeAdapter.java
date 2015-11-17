@@ -55,7 +55,7 @@ public class PlaceTypeAdapter extends BaseAdapter {
         if (view == null || view.getTag() == null) {
             view = inflater.inflate(R.layout.spinner_list_item, parent, false);
             holder = new ViewHolder();
-            holder.nameView = (TextView) view.findViewById(R.id.text);
+            holder.nameView = (TextView) view.findViewById(R.id.text_item);
 
             view.setTag(holder);
         } else {

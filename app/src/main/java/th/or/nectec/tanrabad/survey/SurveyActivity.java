@@ -17,6 +17,7 @@
 
 package th.or.nectec.tanrabad.survey;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -164,6 +165,10 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     public void displaySaveSuccess() {
         Toast.makeText(SurveyActivity.this, R.string.save_success, Toast.LENGTH_LONG).show();
         finish();
+        Intent intent = new Intent(SurveyActivity.this, SurveyBuildingHistoryActivity.class);
+        intent.putExtra("placeUUID", surveyBuilding.getPlace().getId().toString());
+        intent.putExtra("username", surveyUser.getUsername());
+        startActivity(intent);
     }
 
     @Override

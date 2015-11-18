@@ -32,32 +32,22 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import th.or.nectec.tanrabad.domain.ContainerController;
-import th.or.nectec.tanrabad.domain.ContainerPresenter;
-import th.or.nectec.tanrabad.domain.SurveyController;
-import th.or.nectec.tanrabad.domain.SurveyPresenter;
-import th.or.nectec.tanrabad.domain.SurveyRepository;
-import th.or.nectec.tanrabad.domain.SurveySavePresenter;
-import th.or.nectec.tanrabad.domain.SurveySaver;
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.ContainerType;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.Survey;
-import th.or.nectec.tanrabad.entity.SurveyDetail;
-import th.or.nectec.tanrabad.entity.User;
+import th.or.nectec.tanrabad.domain.*;
+import th.or.nectec.tanrabad.entity.*;
 import th.or.nectec.tanrabad.survey.repository.InMemoryContainerTypeRepository;
 import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.EditTextStepper;
+import th.or.nectec.tanrabad.survey.utils.NotSupportEditTextInputTypeException;
+import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.validator.SaveSurveyValidator;
 import th.or.nectec.tanrabad.survey.view.SurveyContainerView;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class SurveyActivity extends TanrabadActivity implements ContainerPresenter, SurveyPresenter, SurveySavePresenter {
@@ -295,15 +285,23 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_VOLUME_UP:
-                EditTextStepper.stepUp(this.getCurrentFocus());
-                return true;
-            case KeyEvent.KEYCODE_VOLUME_DOWN:
-                EditTextStepper.stepDown(this.getCurrentFocus());
-                return true;
-            default:
-                return super.onKeyDown(keyCode, event);
+        try {
+            switch (keyCode) {
+                case KeyEvent.KEYCODE_VOLUME_UP:
+                    EditTextStepper.stepUp((EditText) this.getCurrentFocus());
+                    return true;
+                case KeyEvent.KEYCODE_VOLUME_DOWN:
+                    EditTextStepper.stepDown((EditText) this.getCurrentFocus());
+                    return true;
+                default:
+                    return super.onKeyDown(keyCode, event);
+            }
+        } catch (NullPointerException | ClassCastException e) {
+            Alert.lowLevel().show("กดที่ช่องสำหรับกรอกตัวเลข แล้วลองกด เพิ่ม+/ลด- เสียงดูจิ ");
+        } catch (NotSupportEditTextInputTypeException nse) {
+            //Do Nothing
         }
+        return true;
+
     }
 }

@@ -17,16 +17,14 @@
 
 package th.or.nectec.tanrabad.survey.collection;
 
-import static org.mockito.Mockito.*;
-
 import android.database.Cursor;
-import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.mockito.Mockito.*;
 
 public class CursorListTest {
 

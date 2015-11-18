@@ -18,43 +18,57 @@
 package th.or.nectec.tanrabad.survey.utils;
 
 import android.text.InputType;
-import android.view.View;
 import android.widget.EditText;
 
 public class EditTextStepper {
 
-    public static void stepUp(View view) {
-        new EditTextStepper().step(view, 1, true);
+    private EditText editText;
+    private boolean unsignedValue = true;
+
+    public static void stepUp(EditText view) {
+        new EditTextStepper(view).step(1);
     }
 
-    public static void stepDown(View view) {
-        new EditTextStepper().step(view, -1, true);
+    public static void stepDown(EditText view) {
+        new EditTextStepper(view).step(-1);
     }
 
-    public void step(View view, int valueToStep, boolean unsigned) {
-        if (view == null || !(view instanceof EditText))
-            return;
-        EditText editText = (EditText) view;
+    public EditTextStepper(EditText editText) {
+        validate(editText);
+        this.editText = editText;
+    }
+
+    private void validate(EditText editText) {
+        if (editText == null)
+            throw new NullPointerException("EditText must not be null");
         if (!isNumberType(editText))
-            return;
-        int value = currentValueOf(editText) + valueToStep;
-        if (unsigned && value < 0) {
-            value = 0;
-        }
-        editText.setText(String.valueOf(value));
-        editText.setSelection(editText.getText().length());
+            throw new NotSupportEditTextInputTypeException("EditText's inputType must be CLASS NUMBER ");
+    }
+
+    public EditTextStepper setUnsignedValue(boolean unsignedValue) {
+        this.unsignedValue = unsignedValue;
+        return this;
+    }
+
+    private boolean isNumberType(EditText view) {
+        return view.getInputType() == InputType.TYPE_CLASS_NUMBER;
     }
 
     private int currentValueOf(EditText editText) {
-        String currentString = editText.getText().toString().trim();
         try {
+            String currentString = editText.getText().toString().trim();
             return Integer.parseInt(currentString);
         } catch (NumberFormatException nfe) {
             return 0;
         }
     }
 
-    private boolean isNumberType(EditText view) {
-        return view.getInputType() == InputType.TYPE_CLASS_NUMBER;
+    public void step(int valueToStep) {
+        int value = currentValueOf(editText) + valueToStep;
+        if (unsignedValue && value < 0) {
+            value = 0;
+        }
+        editText.setText(String.valueOf(value));
+        editText.setSelection(editText.getText().length());
     }
 }

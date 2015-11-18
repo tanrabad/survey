@@ -51,6 +51,8 @@ public class StepPopupEditText extends EditText implements View.OnClickListener 
 
     private void initPopup() {
         popUp = new PopupWindow(this);
+        popUp.setOutsideTouchable(true);
+        popUp.setBackgroundDrawable(getResources().getDrawable(R.drawable.container_bg));
         LinearLayout layout = new LinearLayout(getContext());
         Button plus = new Button(getContext());
         plus.setId(R.id.plus);
@@ -86,6 +88,7 @@ public class StepPopupEditText extends EditText implements View.OnClickListener 
     private void showPopup() {
         popUp.showAsDropDown(this, getXoffsetToCenter(), 0);
         popUp.update(50 * 2 * 2, 50 * 2);
+
         //popUp.showAtLocation(getRootView(), Gravity.BOTTOM, 10,10);
         //popUp.update(50, 50, 300, 80);
     }
@@ -112,5 +115,12 @@ public class StepPopupEditText extends EditText implements View.OnClickListener 
                 editTextStepper.step(-1);
                 break;
         }
+    }
+
+    @Override
+    protected void onScrollChanged(int horiz, int vert, int oldHoriz, int oldVert) {
+        super.onScrollChanged(horiz, vert, oldHoriz, oldVert);
+        if (popUp.isShowing())
+            popUp.dismiss();
     }
 }

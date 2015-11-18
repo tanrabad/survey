@@ -51,3 +51,6 @@ ext {
     espressoVersion = "2.2.1"
 }
 
+task testBeforePush(dependsOn: [':entity:test', ':domain:test', ':app:test', ':app:build']) {
+    description 'Run all process like on CI-Server'
+}

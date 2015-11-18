@@ -17,21 +17,27 @@
 
 package th.or.nectec.tanrabad.survey.view;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.IdRes;
 import android.text.InputType;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.utils.EditTextStepper;
 
 public class StepPopupEditText extends EditText implements View.OnClickListener {
-    private PopupWindow popUp;
+    public static final int BUTTON_SIZE_DP = 52;
+    private EditTextPopup popUp;
     private EditTextStepper editTextStepper;
 
     public StepPopupEditText(Context context) {
@@ -44,31 +50,19 @@ public class StepPopupEditText extends EditText implements View.OnClickListener 
 
     public StepPopupEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        setInputType(InputType.TYPE_CLASS_NUMBER);
-        initPopup();
+        setupEditText();
         editTextStepper = new EditTextStepper(this);
+        popUp = new EditTextPopup(context);
     }
 
-    private void initPopup() {
-        popUp = new PopupWindow(this);
-        popUp.setOutsideTouchable(true);
-        popUp.setBackgroundDrawable(getResources().getDrawable(R.drawable.container_bg));
-        LinearLayout layout = new LinearLayout(getContext());
-        Button plus = new Button(getContext());
-        plus.setId(R.id.plus);
-        plus.setText("+");
-        plus.setOnClickListener(this);
-        Button minus = new Button(getContext());
-        minus.setId(R.id.minus);
-        minus.setText("-");
-        minus.setOnClickListener(this);
-        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(48 * 2,
-                48 * 2);
-        layout.setOrientation(LinearLayout.HORIZONTAL);
-        layout.addView(plus, params);
-        layout.addView(minus, params);
-        popUp.setContentView(layout);
-
+    private void setupEditText() {
+        setInputType(InputType.TYPE_CLASS_NUMBER);
+        setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismissPopup();
+            }
+        });
     }
 
     @Override
@@ -82,27 +76,25 @@ public class StepPopupEditText extends EditText implements View.OnClickListener 
     }
 
     private void dismissPopup() {
-        popUp.dismiss();
+        if (popUp.isShowing())
+            popUp.dismiss();
     }
 
     private void showPopup() {
-        popUp.showAsDropDown(this, getXoffsetToCenter(), 0);
-        popUp.update(50 * 2 * 2, 50 * 2);
-
-        //popUp.showAtLocation(getRootView(), Gravity.BOTTOM, 10,10);
-        //popUp.update(50, 50, 300, 80);
+        popUp.showAsDropDown(this, getXoffset(), getYoffset());
+        popUp.update(popUp.getPopupWidth(), popUp.getButtonSize());
     }
 
-    private int getXoffsetToCenter() {
-        return 0 - getHalfPopupWidth() + getHalfWidth();
+    private int getXoffset() {
+        return 0 - popUp.getPopupWidth() / 2 + this.getWidth() / 2;
     }
 
-    private int getHalfPopupWidth() {
-        return 48 * 2 * 2 / 2;
+    private int getYoffset() {
+        return convertToPX(6);
     }
 
-    private int getHalfWidth() {
-        return this.getWidth() / 2;
+    private int convertToPX(int dp) {
+        return (int) (dp * getResources().getDisplayMetrics().density + 0.5f);
     }
 
     @Override
@@ -117,10 +109,72 @@ public class StepPopupEditText extends EditText implements View.OnClickListener 
         }
     }
 
-    @Override
-    protected void onScrollChanged(int horiz, int vert, int oldHoriz, int oldVert) {
-        super.onScrollChanged(horiz, vert, oldHoriz, oldVert);
-        if (popUp.isShowing())
-            popUp.dismiss();
+    class EditTextPopup extends PopupWindow {
+
+        public EditTextPopup(Context context) {
+            super(context);
+            init();
+        }
+
+        private void init() {
+            setOutsideTouchable(true);
+            setBackgroundDrawable(getDrawable(R.drawable.popup_bg));
+
+            ImageButton minus = getButton(R.id.minus, R.mipmap.ic_minus_1);
+            ImageButton plus = getButton(R.id.plus, R.mipmap.ic_plus_1);
+            setContentView(getLayout(minus, plus));
+        }
+
+        private LinearLayout getLayout(ImageButton... plus) {
+            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(getButtonSize(),
+                    getButtonSize());
+            LinearLayout layout = new LinearLayout(getContext());
+            layout.setOrientation(LinearLayout.HORIZONTAL);
+            for (ImageButton imageButton : plus) {
+                layout.addView(imageButton, params);
+            }
+            return layout;
+        }
+
+
+        private int getPopupWidth() {
+            return popUp.getButtonSize() * 2;
+        }
+
+        private int getButtonSize() {
+            return convertToPX(BUTTON_SIZE_DP);
+        }
+
+        private int getButtonPadding() {
+            return convertToPX(4);
+        }
+
+        private ImageButton getButton(@IdRes int id, @DrawableRes int drawable) {
+            ImageButton button = new ImageButton(getContext());
+            setButtonBackground(button);
+            button.setImageDrawable(getDrawable(drawable));
+            button.setId(id);
+            button.setPadding(getButtonPadding(), getButtonPadding(), getButtonPadding(), getButtonPadding());
+            button.setOnClickListener(StepPopupEditText.this);
+            return button;
+        }
+
+
+        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+        private Drawable getDrawable(@DrawableRes int drawable) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                return getResources().getDrawable(drawable, null);
+            else
+                //noinspection deprecation
+                return getResources().getDrawable(drawable);
+        }
+
+
+        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+        private void setButtonBackground(ImageButton button) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+                button.setBackground(null);
+        }
+
     }
 }

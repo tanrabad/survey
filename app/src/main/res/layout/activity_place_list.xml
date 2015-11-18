@@ -32,20 +32,6 @@
             android:contentDescription="@string/place_bg"
             android:scaleType="fitXY"
             android:src="@drawable/header_place_in_database" />
-
-        <th.or.nectec.tanrabad.survey.view.StepPopupEditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/view"
-                android:text="10"
-                android:layout_gravity="left|top"/>
-
-        <th.or.nectec.tanrabad.survey.view.StepPopupEditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/view2"
-                android:text="0"
-                android:layout_gravity="center_horizontal|top"/>
     </FrameLayout>
 
     <LinearLayout

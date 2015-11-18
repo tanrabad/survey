@@ -71,4 +71,10 @@ public class EditTextStepper {
         editText.setText(String.valueOf(value));
         editText.setSelection(editText.getText().length());
     }
+
+    public static class NotSupportEditTextInputTypeException extends RuntimeException {
+        public NotSupportEditTextInputTypeException(String message) {
+            super(message);
+        }
+    }
 }

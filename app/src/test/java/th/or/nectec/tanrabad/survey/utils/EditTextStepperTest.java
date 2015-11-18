@@ -76,7 +76,7 @@ public class EditTextStepperTest {
         assertEquals("-17", editText.getText().toString());
     }
 
-    @Test(expected = NotSupportEditTextInputTypeException.class)
+    @Test(expected = EditTextStepper.NotSupportEditTextInputTypeException.class)
     public void testSupportOnlyNumberClassInputType() {
         new EditTextStepper(new EditText(activity));
     }

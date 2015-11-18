@@ -39,7 +39,6 @@ import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.EditTextStepper;
-import th.or.nectec.tanrabad.survey.utils.NotSupportEditTextInputTypeException;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.validator.SaveSurveyValidator;
 import th.or.nectec.tanrabad.survey.view.SurveyContainerView;
@@ -298,7 +297,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
             }
         } catch (NullPointerException | ClassCastException e) {
             Alert.lowLevel().show("กดที่ช่องสำหรับกรอกตัวเลข แล้วลองกด เพิ่ม+/ลด- เสียงดูจิ ");
-        } catch (NotSupportEditTextInputTypeException nse) {
+        } catch (EditTextStepper.NotSupportEditTextInputTypeException nse) {
             //Do Nothing
         }
         return true;

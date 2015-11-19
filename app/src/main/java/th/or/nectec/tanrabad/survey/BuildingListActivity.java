@@ -19,6 +19,8 @@ package th.or.nectec.tanrabad.survey;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -122,5 +124,20 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingLi
         buildingAdapter = new BuildingWithSurveyStatusAdapter(BuildingListActivity.this, buildingsWithSurveyStatuses);
         buildingList.setAdapter(buildingAdapter);
         buildingCountView.setText(String.valueOf(buildingsWithSurveyStatuses.size()));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.action_add_building_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.add_building_menu:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

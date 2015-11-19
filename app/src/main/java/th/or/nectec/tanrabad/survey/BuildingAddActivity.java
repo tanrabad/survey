@@ -59,6 +59,11 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
     @Override
     public void displayPlace(Place place) {
         placeName.setText(place.getName());
+        if(place.getType()==Place.TYPE_VILLAGE_COMMUNITY){
+            buildingNameTitle.setText(R.string.house_no);
+        }else{
+            buildingNameTitle.setText(R.string.building_name);
+        }
     }
 
     @Override

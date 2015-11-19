@@ -39,11 +39,14 @@
     <string name="survey_place">รายชื่อสถานที่</string>
     <string name="survey_building">รายชื่ออาคาร</string>
 
+    <!--building category-->
     <string name="building_unit">หลัง</string>
     <string name="building_image_bg">ภาพพื้นหลังหน้าเลือกอาคาร</string>
     <string name="building_icon">ไอคอนอาคาร</string>
     <string name="building_not_found">ไม่พบข้อมูลอาคาร</string>
     <string name="building_add">เพิ่มอาคาร</string>
+    <string name="house_no">บ้านเลขที่</string>
+    <string name="building_name">ชื่ออาคาร</string>
 
     <string name="place_unit">ที่</string>
     <string name="place_icon">ไอคอนหน้าสถานที่สำรวจ</string>
@@ -66,6 +69,5 @@
     <string name="hospital">โรงพยาบาล</string>
     <string name="factory">โรงงาน</string>
     <string name="not_define_place_type">ทั้งหมด</string>
-
     <!--<string name="add_more_building_button_text">เพิ่มอาคาร</string>-->
 </resources>

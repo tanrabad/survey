@@ -40,7 +40,6 @@ public class ChoosePlaceFromPlaceListTest extends TANRABADInstrumentationBaseTes
     @Before
     public void setUp() {
         Intent intent = new Intent();
-        intent.addCategory(".PlaceListActivity");
         mAtivity = mActivityTestRule.launchActivity(intent);
     }
 

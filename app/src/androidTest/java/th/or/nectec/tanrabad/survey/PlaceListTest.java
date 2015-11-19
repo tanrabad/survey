@@ -40,7 +40,6 @@ public class PlaceListTest extends TANRABADInstrumentationBaseTest {
     @Before
     public void setUp() {
         Intent intent = new Intent();
-        intent.addCategory(".PlaceListActivity");
         mAtivity = mActivityTestRule.launchActivity(intent);
     }
 

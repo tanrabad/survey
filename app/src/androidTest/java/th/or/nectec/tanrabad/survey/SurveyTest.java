@@ -43,7 +43,6 @@ public class SurveyTest extends TANRABADInstrumentationBaseTest {
     @Before
     public void setUp(){
         Intent intent = new Intent();
-        intent.addCategory(".SurveyActivity");
         mActivity = mActivityTestRule.launchActivity(intent);
     }
 

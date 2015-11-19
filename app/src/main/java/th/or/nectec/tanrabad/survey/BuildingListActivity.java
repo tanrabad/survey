@@ -113,6 +113,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingLi
 
     @Override
     public void alertBuildingsNotFound() {
+        buildingCountView.setText(String.valueOf(0));
         Alert.lowLevel().show(R.string.building_not_found);
     }
 

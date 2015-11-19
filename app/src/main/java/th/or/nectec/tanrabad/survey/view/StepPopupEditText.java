@@ -32,6 +32,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.utils.EditTextStepper;
 
@@ -60,7 +61,7 @@ public class StepPopupEditText extends EditText implements View.OnClickListener 
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                dismissPopup();
+                showPopup();
             }
         });
     }

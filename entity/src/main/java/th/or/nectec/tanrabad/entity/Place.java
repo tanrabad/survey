@@ -58,8 +58,9 @@ public class Place {
         return type;
     }
 
-    public void setType(int type) {
+    public Place setType(int type) {
         this.type = type;
+        return null;
     }
 
     public Location getLocation() {

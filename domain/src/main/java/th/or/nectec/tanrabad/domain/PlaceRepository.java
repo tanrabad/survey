@@ -14,4 +14,6 @@ public interface PlaceRepository {
     Place findPlaceByPlaceUUID(UUID placeUUID);
 
     List<Place> findPlacesWithPlaceFilter(int typeVillageCommunity);
+
+    boolean save(Place with);
 }

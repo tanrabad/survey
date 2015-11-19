@@ -37,8 +37,8 @@
 
     <string name="survey_container_description">ภาชนะที่สำรวจ</string>
     <string name="survey_container_bg_description">ภาพพื้นหลังการสำรวจภาชนะ</string>
-    <string name="survey_place">ระบุสถานที่สำรวจ</string>
-    <string name="survey_building">ระบุอาคารสำรวจ</string>
+    <string name="survey_place">รายชื่อสถานที่</string>
+    <string name="survey_building">รายชื่ออาคาร</string>
 
     <string name="building_unit">หลัง</string>
     <string name="building_image_bg">ภาพพื้นหลังหน้าเลือกอาคาร</string>

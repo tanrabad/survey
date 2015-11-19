@@ -38,14 +38,14 @@ public class PlaceListTest extends TANRABADInstrumentationBaseTest {
     PlaceListActivity mAtivity;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         Intent intent = new Intent();
         intent.addCategory(".PlaceListActivity");
         mAtivity = mActivityTestRule.launchActivity(intent);
     }
 
     @Test
-    public void testDefaultPageDefineSurveyPlace() throws Exception {
+    public void testDefaultPageDefineSurveyPlace() {
         onView(withText(R.string.survey_place))
                 .check(matches(isDisplayed()));
         onView(withId(R.id.text_show_title_place_list))
@@ -54,23 +54,79 @@ public class PlaceListTest extends TANRABADInstrumentationBaseTest {
                 .check(matches(withText("7")));
         onView(withText(R.string.not_define_place_type))
                 .check(matches(isDisplayed()));
-        waitingFor(2000);
     }
 
     @Test
-    public void testChooseTypeVillageCommunity() throws Exception {
+    public void testChooseTypeVillageCommunity() {
         onView(withText(R.string.not_define_place_type))
                 .perform(click());
         onView(withText(R.string.village_community))
                 .perform(click());
         onView(withText(R.string.village_community))
                 .check(matches(isDisplayed()));
-        onView(withText("2"))
-                .check(matches(isDisplayed()));
+        onView(withId(R.id.place_count))
+                .check(matches(withText("2")));
         onView(withText("หมู่บ้านพาลาซเซตโต้"))
                 .check(matches(isDisplayed()));
         onView(withText("ชุมชนกอล์ฟวิว"))
                 .check(matches(isDisplayed()));
-        waitingFor(2000);
+    }
+
+    @Test
+    public void testChooseTypeWorship() {
+        onView(withText(R.string.not_define_place_type))
+                .perform(click());
+        onView(withText(R.string.worship))
+                .perform(click());
+        onView(withText(R.string.worship))
+                .check(matches(isDisplayed()));
+        onView(withId(R.id.place_count))
+                .check(matches(withText("1")));
+        onView(withText("วัดป่าภูก้อน"))
+                .check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void testChooseTypeSchool() {
+        onView(withText(R.string.not_define_place_type))
+                .perform(click());
+        onView(withText(R.string.school))
+                .perform(click());
+        onView(withText(R.string.school))
+                .check(matches(isDisplayed()));
+        onView(withId(R.id.place_count))
+                .check(matches(withText("3")));
+        onView(withText("โรงเรียนเซนต์เมรี่"))
+                .check(matches(isDisplayed()));
+        onView(withText("โรงเรียนดอนบอสโก"))
+                .check(matches(isDisplayed()));
+        onView(withText("โรงเรียนอนุบาล"))
+                .check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void testChooseTypeHospital() {
+        onView(withText(R.string.not_define_place_type))
+                .perform(click());
+        onView(withText(R.string.hospital))
+                .perform(click());
+        onView(withText(R.string.hospital))
+                .check(matches(isDisplayed()));
+        onView(withId(R.id.place_count))
+                .check(matches(withText("1")));
+        onView(withText("โรงพยาบาลกรุงเทพ"))
+                .check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void testChooseTypeFactory() {
+        onView(withText(R.string.not_define_place_type))
+                .perform(click());
+        onView(withText(R.string.factory))
+                .perform(click());
+        onView(withText(R.string.factory))
+                .check(matches(isDisplayed()));
+        onView(withId(R.id.place_count))
+                .check(matches(withText("0")));
     }
 }

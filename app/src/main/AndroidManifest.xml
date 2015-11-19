@@ -13,24 +13,22 @@
   ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
-  -->
-
+-->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="th.or.nectec.tanrabad.survey">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="th.or.nectec.tanrabad.survey">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-            android:name=".TanrabadApp"
-            android:allowBackup="false"
-            android:fullBackupContent="false"
-            android:icon="@mipmap/ic_launcher"
-            android:label="@string/app_name"
-            android:supportsRtl="false"
-            android:theme="@style/AppTheme"
-            tools:ignore="UnusedAttribute">
-
+        android:name=".TanrabadApp"
+        android:allowBackup="false"
+        android:fullBackupContent="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="false"
+        android:theme="@style/AppTheme"
+        tools:ignore="UnusedAttribute">
         <activity
             android:name=".PlaceListActivity"
             android:label="ระบุสถานที่สำรวจ">
@@ -40,7 +38,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".BuildingListActivity"
             android:label="ระบุอาคารสำรวจ">
@@ -54,21 +51,24 @@
             android:name=".SurveyActivity"
             android:label="@string/title_activity_survey"
             android:theme="@style/AppTheme.NoActionBar">
-
             <intent-filter>
                 <action android:name="android.intent.action.EDIT" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:name=".SurveyBuildingHistoryActivity"
-            android:label="สำรวจ">
-
-        </activity>
+            android:label="สำรวจ" />
 
         <meta-data
-                android:name="io.fabric.ApiKey"
-                android:value="985b93fe45ed65dc37e25e81a8c5ce5ba9c217fa"/>
+            android:name="io.fabric.ApiKey"
+            android:value="985b93fe45ed65dc37e25e81a8c5ce5ba9c217fa" />
+
+        <activity
+            android:name=".BuildingAddActivity"
+            android:label="@string/building_add"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

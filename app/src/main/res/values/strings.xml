@@ -57,6 +57,8 @@
 
     <string name="survey_more_building_button_text">กดเพื่อสำรวจอาคารเพิ่ม</string>
     <string name="finish">สิ้นสุด</string>
+    <string name="define_buildling_location">ระบุพิกัดอาคาร</string>
+    <string name="building_location">พิกัดอาคาร</string>
 
     <!--place type-->
     <string name="village_community">หมู่บ้าน/ชุมชน</string>

@@ -136,8 +136,15 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingLi
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add_building_menu:
+                bringToBuildingAddActivity();
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void bringToBuildingAddActivity() {
+        Intent intent = new Intent(BuildingListActivity.this, BuildingAddActivity.class);
+        intent.putExtra(PLACE_UUID_ARG, getIntent().getStringExtra(PLACE_UUID_ARG));
+        startActivity(intent);
     }
 }

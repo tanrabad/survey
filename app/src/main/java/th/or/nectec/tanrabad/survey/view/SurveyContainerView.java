@@ -1,7 +1,10 @@
 package th.or.nectec.tanrabad.survey.view;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
+import android.support.annotation.ColorRes;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -122,12 +125,20 @@ public class SurveyContainerView extends LinearLayout {
 
     public boolean isValid() {
         if (getFoundValue() > getTotalValue()) {
-            setBackgroundColor(getResources().getColor(R.color.pink_transparent_30));
+            setBackgroundColor(getColor(R.color.pink_transparent_30));
             return false;
         } else {
             setBackgroundColor(Color.TRANSPARENT);
             return true;
         }
+    }
 
+    @TargetApi(Build.VERSION_CODES.M)
+    private int getColor(@ColorRes int color) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            return getResources().getColor(color, getContext().getTheme());
+        else
+            //noinspection deprecation
+            return getResources().getColor(color);
     }
 }

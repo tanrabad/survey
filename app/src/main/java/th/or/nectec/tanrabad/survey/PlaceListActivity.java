@@ -76,6 +76,7 @@ public class PlaceListActivity extends TanrabadActivity implements AdapterView.O
     @Override
     public void displayPlaceNotFound() {
         placeAdapter.clearData();
+        placeCountView.setText(String.valueOf(0));
         Toast.makeText(PlaceListActivity.this, R.string.place_not_found, Toast.LENGTH_LONG).show();
     }
 

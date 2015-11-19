@@ -33,7 +33,7 @@
 
         <activity
             android:name=".PlaceListActivity"
-            android:label="รายชื่อสถานที่">
+            android:label="ระบุสถานที่สำรวจ">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -43,7 +43,7 @@
 
         <activity
             android:name=".BuildingListActivity"
-            android:label="รายชื่ออาคาร">
+            android:label="ระบุอาคารสำรวจ">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

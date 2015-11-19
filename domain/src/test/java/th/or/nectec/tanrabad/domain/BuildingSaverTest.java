@@ -20,7 +20,7 @@ public class BuildingSaverTest {
     private UUID buildingUUID;
     private String buildingName;
     private Place place;
-    private Location location;
+    private Location buildingLocation;
 
     private BuildingValidator buildingValidator;
     private BuildingSavePresenter buildingSavePresenter;
@@ -36,7 +36,10 @@ public class BuildingSaverTest {
         buildingUUID = UUID.nameUUIDFromBytes("3xyz".getBytes());
         buildingName = "123";
         place = Place.withName("Village A");
-        location = new Location(51.500152, -0.126236);
+        buildingLocation = new Location(51.500152, -0.126236);
+
+        building = new Building(buildingUUID, buildingName);
+        building.setLocation(buildingLocation);
     }
 
     @Test

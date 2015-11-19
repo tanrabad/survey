@@ -21,12 +21,12 @@ public class PlaceTypeAdapter extends BaseAdapter {
         this.context = context;
 
         ArrayList<PlaceType> placeTypes = new ArrayList<>();
-        placeTypes.add(new PlaceType(-1, "ทั้งหมด"));
-        placeTypes.add(new PlaceType(Place.TYPE_VILLAGE_COMMUNITY, "หมู่บ้าน/ชุมชน"));
-        placeTypes.add(new PlaceType(Place.TYPE_WORSHIP, "ศาสนสถาน"));
-        placeTypes.add(new PlaceType(Place.TYPE_SCHOOL, "โรงเรียน"));
-        placeTypes.add(new PlaceType(Place.TYPE_HOSPITAL, "โรงพยาบาล"));
-        placeTypes.add(new PlaceType(Place.TYPE_FACTORY, "โรงงาน"));
+        placeTypes.add(new PlaceType(-1, context.getString(R.string.not_define_place_type)));
+        placeTypes.add(new PlaceType(Place.TYPE_VILLAGE_COMMUNITY, context.getString(R.string.village_community)));
+        placeTypes.add(new PlaceType(Place.TYPE_WORSHIP, context.getString(R.string.worship)));
+        placeTypes.add(new PlaceType(Place.TYPE_SCHOOL, context.getString(R.string.school)));
+        placeTypes.add(new PlaceType(Place.TYPE_HOSPITAL, context.getString(R.string.hospital)));
+        placeTypes.add(new PlaceType(Place.TYPE_FACTORY, context.getString(R.string.factory)));
 
         this.placeTypes.addAll(placeTypes);
     }

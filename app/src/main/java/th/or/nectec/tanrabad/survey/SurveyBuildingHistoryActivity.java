@@ -13,11 +13,9 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import th.or.nectec.tanrabad.domain.PlaceChooser;
 import th.or.nectec.tanrabad.domain.SurveyBuildingHistoryController;
 import th.or.nectec.tanrabad.domain.SurveyBuildingPresenter;
 import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
@@ -68,7 +66,7 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Building building = surveyBuildingHistoryAdapter.getItem(position);
-                bringToSurveyActivity(building);
+                openSurveyActivity(building);
             }
         });
 
@@ -85,12 +83,12 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity {
 
             @Override
             public void onClick(View view) {
-                bringToBuildingListActivity();
+                openBuildingListActivity();
             }
         });
     }
 
-    private void bringToBuildingListActivity() {
+    private void openBuildingListActivity() {
         Intent intent = new Intent(SurveyBuildingHistoryActivity.this, BuildingListActivity.class);
         intent.putExtra(BuildingListActivity.PLACE_UUID_ARG, getUuidFromIntent());
         intent.putExtra(SurveyActivity.USERNAME_ARG, "sara");
@@ -98,7 +96,7 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity {
         startActivity(intent);
     }
 
-    private void bringToSurveyActivity(Building building) {
+    private void openSurveyActivity(Building building) {
         Intent intent = new Intent(SurveyBuildingHistoryActivity.this, SurveyActivity.class);
         intent.putExtra(SurveyActivity.BUILDING_UUID_ARG, building.getId().toString());
         intent.putExtra(SurveyActivity.USERNAME_ARG, "sara");
@@ -123,13 +121,13 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity {
     public  boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.finish:
-                bringToPlaceListActivity();
+                openPlaceListActivity();
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void bringToPlaceListActivity() {
+    private void openPlaceListActivity() {
         Intent intent = new Intent(SurveyBuildingHistoryActivity.this, PlaceListActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);

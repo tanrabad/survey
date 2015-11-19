@@ -63,7 +63,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingLi
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 BuildingWithSurveyStatus building = (BuildingWithSurveyStatus) buildingAdapter.getItem(position);
-                bringToSurveyActivity(building.getBuilding());
+                openSurveyActivity(building.getBuilding());
             }
         });
         showPlaceName();
@@ -91,7 +91,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingLi
         surveyBuildingChooser.displaySurveyBuildingOf(getPlaceUuidFromIntent().toString(), "sara");
     }
 
-    private void bringToSurveyActivity(Building building) {
+    private void openSurveyActivity(Building building) {
         Intent intent = new Intent(BuildingListActivity.this, SurveyActivity.class);
         intent.putExtra(SurveyActivity.BUILDING_UUID_ARG, building.getId().toString());
         intent.putExtra(SurveyActivity.USERNAME_ARG, "sara");
@@ -136,13 +136,13 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingLi
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add_building_menu:
-                bringToBuildingAddActivity();
+                openBuildingAddActivity();
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void bringToBuildingAddActivity() {
+    private void openBuildingAddActivity() {
         Intent intent = new Intent(BuildingListActivity.this, BuildingAddActivity.class);
         intent.putExtra(PLACE_UUID_ARG, getIntent().getStringExtra(PLACE_UUID_ARG));
         startActivity(intent);

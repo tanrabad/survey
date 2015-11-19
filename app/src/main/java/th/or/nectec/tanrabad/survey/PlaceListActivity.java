@@ -82,6 +82,10 @@ public class PlaceListActivity extends TanrabadActivity implements AdapterView.O
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+        openBuildingListActivity(position);
+    }
+
+    private void openBuildingListActivity(int position) {
         Intent intent = new Intent(PlaceListActivity.this, BuildingListActivity.class);
         intent.putExtra(BuildingListActivity.PLACE_UUID_ARG, placeAdapter.getItem(position).getId().toString());
         startActivity(intent);

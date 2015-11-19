@@ -44,43 +44,43 @@ public class SurveyTest {
                 .perform(replaceText("5"));
         onView(allOf(withId(R.id.total_container), withContentDescription("น้ำใช้ภายในอาคาร")))
                 .perform(replaceText("4"));
-        onView(allOf(withId(R.id.found_container), withContentDescription("น้ำใช้ภายในอาคาร")))
+        onView(allOf(withId(R.id.found_larvae_container), withContentDescription("น้ำใช้ภายในอาคาร")))
                 .perform(replaceText("1"));
         onView(allOf(withId(R.id.total_container), withContentDescription("น้ำดื่มภายในอาคาร")))
                 .perform(replaceText("10"));
-        onView(allOf(withId(R.id.found_container), withContentDescription("น้ำดื่มภายในอาคาร")))
+        onView(allOf(withId(R.id.found_larvae_container), withContentDescription("น้ำดื่มภายในอาคาร")))
                 .perform(replaceText("1"));
         onView(allOf(withId(R.id.total_container), withContentDescription("แจกันภายในอาคาร")))
                 .perform(replaceText("4"));
-        onView(allOf(withId(R.id.found_container), withContentDescription("แจกันภายในอาคาร")))
+        onView(allOf(withId(R.id.found_larvae_container), withContentDescription("แจกันภายในอาคาร")))
                 .perform(replaceText("4"));
         onView(allOf(withId(R.id.total_container), withContentDescription("ที่รองกันมดภายในอาคาร")))
                 .perform(replaceText("8"));
-        onView(allOf(withId(R.id.found_container), withContentDescription("ที่รองกันมดภายในอาคาร")))
+        onView(allOf(withId(R.id.found_larvae_container), withContentDescription("ที่รองกันมดภายในอาคาร")))
                 .perform(replaceText("0"));
         onView(allOf(withId(R.id.total_container), withContentDescription("จานรองกระถางภายในอาคาร")))
                 .perform(replaceText("4"));
-        onView(allOf(withId(R.id.found_container), withContentDescription("จานรองกระถางภายในอาคาร")))
+        onView(allOf(withId(R.id.found_larvae_container), withContentDescription("จานรองกระถางภายในอาคาร")))
                 .perform(replaceText("1"));
         onView(allOf(withId(R.id.total_container), withContentDescription("อ่างบัว/ไม้น้ำภายในอาคาร")))
                 .perform(replaceText("3"));
-        onView(allOf(withId(R.id.found_container), withContentDescription("อ่างบัว/ไม้น้ำภายในอาคาร")))
+        onView(allOf(withId(R.id.found_larvae_container), withContentDescription("อ่างบัว/ไม้น้ำภายในอาคาร")))
                 .perform(replaceText("1"));
         onView(allOf(withId(R.id.total_container), withContentDescription("ภาชนะที่ไม่ใช้ภายในอาคาร")))
                 .perform(replaceText("2"));
-        onView(allOf(withId(R.id.found_container), withContentDescription("ภาชนะที่ไม่ใช้ภายในอาคาร")))
+        onView(allOf(withId(R.id.found_larvae_container), withContentDescription("ภาชนะที่ไม่ใช้ภายในอาคาร")))
                 .perform(replaceText("1"));
         onView(allOf(withId(R.id.total_container), withContentDescription("ยางรถยนต์เก่าภายในอาคาร")))
                 .perform(replaceText("5"));
-        onView(allOf(withId(R.id.found_container), withContentDescription("ยางรถยนต์เก่าภายในอาคาร")))
+        onView(allOf(withId(R.id.found_larvae_container), withContentDescription("ยางรถยนต์เก่าภายในอาคาร")))
                 .perform(replaceText("2"));
         onView(allOf(withId(R.id.total_container), withContentDescription("กากใบพืชภายในอาคาร")))
                 .perform(replaceText("1"));
-        onView(allOf(withId(R.id.found_container), withContentDescription("ยางรถยนต์เก่าภายในอาคาร")))
+        onView(allOf(withId(R.id.found_larvae_container), withContentDescription("ยางรถยนต์เก่าภายในอาคาร")))
                 .perform(replaceText("1"));
         onView(allOf(withId(R.id.total_container), withContentDescription("อื่นๆ (ที่ใช้ประโยชน์)ภายในอาคาร")))
                 .perform(replaceText("3"));
-        onView(allOf(withId(R.id.found_container), withContentDescription("อื่นๆ (ที่ใช้ประโยชน์)ภายในอาคาร")))
+        onView(allOf(withId(R.id.found_larvae_container), withContentDescription("อื่นๆ (ที่ใช้ประโยชน์)ภายในอาคาร")))
                 .perform(replaceText("1"));
 
         waitingFor(50000);

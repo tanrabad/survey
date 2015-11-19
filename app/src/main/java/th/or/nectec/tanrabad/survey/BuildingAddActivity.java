@@ -7,7 +7,14 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-public class BuildingAddActivity extends TanrabadActivity {
+import java.util.UUID;
+
+import th.or.nectec.tanrabad.domain.PlaceController;
+import th.or.nectec.tanrabad.domain.PlacePresenter;
+import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
+
+public class BuildingAddActivity extends TanrabadActivity implements PlacePresenter {
 
     public static final String PLACE_UUID_ARG = "place_uuid_arg";
     private TextView placeName;
@@ -18,6 +25,8 @@ public class BuildingAddActivity extends TanrabadActivity {
     private FrameLayout addLocationBackground;
     private Button button;
 
+    private PlaceController placeController = new PlaceController(new StubPlaceRepository(), this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,7 +34,13 @@ public class BuildingAddActivity extends TanrabadActivity {
         assignViews();
 
         setSupportActionBar(toolbar);
+        placeController.showPlace(UUID.fromString(getPlaceUUID()));
 
+
+    }
+
+    private String getPlaceUUID() {
+        return getIntent().getStringExtra(PLACE_UUID_ARG);
     }
 
     private void assignViews() {
@@ -37,4 +52,15 @@ public class BuildingAddActivity extends TanrabadActivity {
         addLocationBackground = (FrameLayout) findViewById(R.id.add_location_background);
         button = (Button) findViewById(R.id.button);
     }
+
+    @Override
+    public void displayPlace(Place place) {
+        placeName.setText(place.getName());
+    }
+
+    @Override
+    public void alertPlaceNotFound() {
+
+    }
+
 }

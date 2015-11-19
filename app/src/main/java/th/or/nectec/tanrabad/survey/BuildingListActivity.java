@@ -82,7 +82,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingLi
     }
 
     @Override
-    public void displayNotFoundPlace() {
+    public void alertPlaceNotFound() {
         Alert.highLevel().show(R.string.place_not_found);
     }
 
@@ -106,11 +106,6 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingLi
     @Override
     public void alertUserNotFound() {
 
-    }
-
-    @Override
-    public void alertPlaceNotFound() {
-        Alert.highLevel().show(R.string.please_enter_place);
     }
 
     @Override

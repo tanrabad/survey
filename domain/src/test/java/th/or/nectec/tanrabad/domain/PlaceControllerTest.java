@@ -49,7 +49,7 @@ public class PlaceControllerTest {
             {
             allowing(placeRepository).findPlaceByPlaceUUID(placeUUID);
                 will(returnValue(null));
-                oneOf(placePresenter).displayNotFoundPlace();
+                oneOf(placePresenter).alertPlaceNotFound();
             }
         });
         PlaceController placeController = new PlaceController(placeRepository, placePresenter);

@@ -17,7 +17,7 @@ public class PlaceController {
     public void showPlace(UUID placeUUID) {
         Place placeByUUID = placeRepository.findPlaceByPlaceUUID(placeUUID);
         if (placeByUUID == null) {
-            placePresenter.displayNotFoundPlace();
+            placePresenter.alertPlaceNotFound();
         } else {
             placePresenter.displayPlace(placeByUUID);
         }

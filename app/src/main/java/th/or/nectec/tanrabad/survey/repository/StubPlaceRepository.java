@@ -111,4 +111,9 @@ public class StubPlaceRepository implements PlaceRepository {
         }
         return filterPlaces.isEmpty() ? null : filterPlaces;
     }
+
+    @Override
+    public boolean save(Place with) {
+        return false;
+    }
 }

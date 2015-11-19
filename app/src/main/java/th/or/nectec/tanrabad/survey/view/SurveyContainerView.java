@@ -2,27 +2,25 @@ package th.or.nectec.tanrabad.survey.view;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import th.or.nectec.tanrabad.entity.ContainerType;
 import th.or.nectec.tanrabad.entity.SurveyDetail;
 import th.or.nectec.tanrabad.survey.R;
 
 public class SurveyContainerView extends LinearLayout {
-    ContainerType containerType;
-    private android.widget.ImageView containerIconView;
+    private ContainerType containerType;
+
     private TextView containerTypeView;
     private EditText totalContainerView;
     private EditText foundContainerView;
-
-    private int total;
-    private int found;
-    private SurveyDetail surveyDetail;
 
     public SurveyContainerView(Context context) {
         super(context);
@@ -42,25 +40,67 @@ public class SurveyContainerView extends LinearLayout {
     }
 
     private void initInstances() {
-        this.containerTypeView = (TextView) findViewById(R.id.container_type);
-        this.containerIconView = (ImageView) findViewById(R.id.container_icon);
-        this.foundContainerView = (EditText) findViewById(R.id.found_larvae_container);
-        this.totalContainerView = (EditText) findViewById(R.id.total_container);
+        containerTypeView = (TextView) findViewById(R.id.container_type);
+        foundContainerView = (EditText) findViewById(R.id.found_larvae_container);
+        foundContainerView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                increaseTotalWhenFoundMoreThanTotal();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        totalContainerView = (EditText) findViewById(R.id.total_container);
+        totalContainerView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                decreaseFoundWhenTotalLessThanFound();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
+    private void increaseTotalWhenFoundMoreThanTotal() {
+        if (getFoundValue() > getTotalValue()) {
+            totalContainerView.setText(String.valueOf(getFoundValue()));
+        }
+    }
+
+    private void decreaseFoundWhenTotalLessThanFound() {
+        if (getTotalValue() < getFoundValue()) {
+            foundContainerView.setText(String.valueOf(getTotalValue()));
+        }
     }
 
     public void setContainerType(ContainerType container) {
         containerType = container;
         containerTypeView.setText(container.getName());
+        //ImageView containerIconView = (ImageView) findViewById(R.id.container_icon);
     }
 
     public SurveyDetail getSurveyDetail() {
-        getValue();
-        return new SurveyDetail(containerType, total, found);
+        return new SurveyDetail(containerType, getTotalValue(), getFoundValue());
     }
 
     public void setSurveyDetail(SurveyDetail surveyDetail) {
-        this.surveyDetail = surveyDetail;
-
         int totalContainer = surveyDetail.getTotalContainer();
         if (totalContainer > 0)
             totalContainerView.setText(String.valueOf(totalContainer));
@@ -70,16 +110,18 @@ public class SurveyContainerView extends LinearLayout {
             foundContainerView.setText(String.valueOf(surveyDetail.getFoundLarvaContainer()));
     }
 
-    private void getValue() {
-        String totalStr = totalContainerView.getText().toString();
-        total = TextUtils.isEmpty(totalStr) ? 0 : Integer.valueOf(totalStr);
+    private int getFoundValue() {
         String foundStr = foundContainerView.getText().toString();
-        found = TextUtils.isEmpty(foundStr) ? 0 : Integer.valueOf(foundStr);
+        return TextUtils.isEmpty(foundStr) ? 0 : Integer.valueOf(foundStr);
+    }
+
+    private int getTotalValue() {
+        String totalStr = totalContainerView.getText().toString();
+        return TextUtils.isEmpty(totalStr) ? 0 : Integer.valueOf(totalStr);
     }
 
     public boolean isValid() {
-        getValue();
-        if (found > total) {
+        if (getFoundValue() > getTotalValue()) {
             setBackgroundColor(getResources().getColor(R.color.pink_transparent_30));
             return false;
         } else {

@@ -9,6 +9,7 @@ cache:
 env:
   global:
   - ADB_INSTALL_TIMEOUT=10
+  - TANRABAD_GOOGLE_DEBUG_KEY=XXXXX
 android:
   components:
   - platform-tools

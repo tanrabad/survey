@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="TanrabadTextAppearance" parent="@android:style/TextAppearance" />
+
+    <style name="TanrabadTextAppearance.Body">
+        <item name="android:textSize">@dimen/text_body</item>
+    </style>
+
+    <style name="TanrabadTextAppearance.Body.2">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TanrabadTextAppearance.Label">
+        <item name="android:textSize">@dimen/text_body_large</item>
+    </style>
+
+    <style name="TanrabadTextAppearance.Subhead">
+        <item name="android:textSize">@dimen/text_subhead</item>
+    </style>
+
+    <style name="TanrabadTextAppearance.Title">
+        <item name="android:textSize">@dimen/text_title</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TanrabadTextAppearance.Caption">
+        <item name="android:textSize">@dimen/text_caption</item>
+    </style>
+
+
+</resources>

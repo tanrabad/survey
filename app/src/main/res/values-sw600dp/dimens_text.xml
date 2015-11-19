@@ -4,4 +4,5 @@
     <dimen name="text_subhead">30sp</dimen>
     <dimen name="text_body_large">28sp</dimen>
     <dimen name="text_body">24sp</dimen>
+    <dimen name="text_caption">22sp</dimen>
 </resources>

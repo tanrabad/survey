@@ -36,7 +36,7 @@ import static org.hamcrest.Matchers.allOf;
 
 
 @RunWith(AndroidJUnit4.class)
-public class SurveyTest {
+public class SurveyTest extends TANRABADInstrumentationBaseTest {
     public ActivityTestRule<SurveyActivity> mActivityTestRule = new ActivityTestRule<>(SurveyActivity.class);
     SurveyActivity mActivity;
 
@@ -48,7 +48,7 @@ public class SurveyTest {
     }
 
     @Test
-    public void newSurvey(){
+    public void newSurvey() {
         onView(withText("บ้านพาลาซเซตโต้"))
                 .check(matches(isDisplayed()));
         onView(withId(R.id.building_name))
@@ -100,13 +100,5 @@ public class SurveyTest {
 
         waitingFor(50000);
 
-    }
-
-    protected void waitingFor(int time) {
-        try {
-            Thread.sleep(time);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 }

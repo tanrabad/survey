@@ -53,7 +53,7 @@ public class BuildingControllerTest {
             {
                 allowing(buildingRepository).findBuildingByUUID(buildingUUID);
                 will(returnValue(null));
-                oneOf(buildingPresenter).displayNotFoundBuilding();
+                oneOf(buildingPresenter).alertBuildingNotFound();
             }
         });
         BuildingController buildingController = new BuildingController(buildingRepository, buildingPresenter);

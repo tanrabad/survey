@@ -23,11 +23,12 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import th.or.nectec.tanrabad.entity.Building;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import th.or.nectec.tanrabad.entity.Building;
 
 public class BuildingChooserTest {
     @Rule
@@ -67,7 +68,7 @@ public class BuildingChooserTest {
                 allowing(buildingRepository).findBuildingInPlace(placeUuid);
                 will(returnValue(null));
 
-                oneOf(presenter).displayNotFoundBuilding();
+                oneOf(presenter).alertBuildingNotFound();
             }
         });
         BuildingChooser buildingChooser = new BuildingChooser(buildingRepository, presenter);
@@ -80,7 +81,7 @@ public class BuildingChooserTest {
             {
                 never(buildingRepository);
 
-                oneOf(presenter).displayPleaseSpecityPlace();
+                oneOf(presenter).displayPleaseSpecifyPlace();
             }
         });
         BuildingChooser buildingChooser = new BuildingChooser(buildingRepository, presenter);

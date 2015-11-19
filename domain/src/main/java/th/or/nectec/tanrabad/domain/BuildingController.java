@@ -16,7 +16,7 @@ public class BuildingController {
     public void showBuilding(UUID buildingUUID) {
         Building buildingByUUID = buildingRepository.findBuildingByUUID(buildingUUID);
         if (buildingByUUID == null) {
-            buildingPresenter.displayNotFoundBuilding();
+            buildingPresenter.alertBuildingNotFound();
         } else {
             buildingPresenter.displayBuilding(buildingByUUID);
         }

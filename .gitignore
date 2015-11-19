@@ -39,8 +39,9 @@ build
 *.ipr
 *~
 *.swp
-*.keystore
+release.keystore
 
 # Fabric.io
 fabric.properties
+
 

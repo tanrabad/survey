@@ -11,6 +11,7 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -96,7 +97,7 @@ public class SurveyContainerView extends LinearLayout {
     public void setContainerType(ContainerType container) {
         containerType = container;
         containerTypeView.setText(container.getName());
-        //ImageView containerIconView = (ImageView) findViewById(R.id.container_icon);
+        ImageView containerIconView = (ImageView) findViewById(R.id.container_icon);
     }
 
     public SurveyDetail getSurveyDetail() {

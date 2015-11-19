@@ -95,12 +95,14 @@
                 <TextView
                     android:id="@+id/building_name_title"
                     style="@style/text_label"
+                    android:textIsSelectable="false"
                     tools:text="บ้านเลขที่" />
 
                 <EditText
                     android:id="@+id/building_name"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
             </LinearLayout>
 
             <LinearLayout
@@ -110,7 +112,8 @@
 
                 <TextView
                     style="@style/text_label"
-                    android:text="@string/building_location" />
+                    android:text="@string/building_location"
+                    android:textIsSelectable="false" />
 
                 <FrameLayout
                     android:layout_width="match_parent"

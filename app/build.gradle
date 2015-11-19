@@ -54,14 +54,28 @@ android {
         targetCompatibility rootProject.ext.javaTargetCompatibility
     }
 
+    signingConfigs {
+        debug {
+            storeFile file('debug.keystore')
+        }
+        release {
+            storeFile file('release.keystore')
+            keyAlias System.getenv('TANRABAD_KEY_ALIAS')
+            keyPassword System.getenv('TANRABAD_KEY_PASSWORD')
+            storePassword System.getenv('TANRABAD_STORE_PASSWORD')
+        }
+    }
+
     buildTypes {
         debug {
             ext.enableCrashlytics = false
+            manifestPlaceholders = [google_map_key: System.getenv('TANRABAD_GOOGLE_DEBUG_KEY')]
         }
         release {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [google_map_key: System.getenv('TANRABAD_GOOGLE_RELEASE_KEY')]
         }
     }
 
@@ -90,6 +104,8 @@ dependencies {
     compile project(':domain')
     compile project(':entity')
     compile 'com.android.support:design:' + rootProject.ext.supportLibVersion
+    compile 'com.google.android.gms:play-services-location:' + rootProject.ext.playServicesVersion
+    compile 'com.google.android.gms:play-services-maps:' + rootProject.ext.playServicesVersion
     compile('com.crashlytics.sdk.android:crashlytics:2.5.2@aar') { transitive = true; }
     compile('com.crashlytics.sdk.android:answers:1.3.3@aar') { transitive = true; }
     compile 'joda-time:joda-time:' + rootProject.ext.jodaTimeVersion

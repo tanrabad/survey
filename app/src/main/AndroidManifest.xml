@@ -19,6 +19,8 @@
     package="th.or.nectec.tanrabad.survey">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:name=".TanrabadApp"
@@ -29,6 +31,12 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme"
         tools:ignore="UnusedAttribute">
+
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${google_map_key}" />
+
         <activity
             android:name=".PlaceListActivity"
             android:label="ระบุสถานที่สำรวจ">

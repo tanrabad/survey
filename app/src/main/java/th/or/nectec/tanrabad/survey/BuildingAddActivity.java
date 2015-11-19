@@ -7,6 +7,8 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.SupportMapFragment;
+
 import java.util.UUID;
 
 import th.or.nectec.tanrabad.domain.PlaceController;
@@ -36,7 +38,8 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
         setSupportActionBar(toolbar);
         placeController.showPlace(UUID.fromString(getPlaceUUID()));
 
-
+        SupportMapFragment supportMapFragment = SupportMapFragment.newInstance();
+        getSupportFragmentManager().beginTransaction().replace(R.id.map_container, supportMapFragment).commit();
     }
 
     private String getPlaceUUID() {

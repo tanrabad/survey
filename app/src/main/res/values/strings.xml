@@ -24,7 +24,6 @@
     <string name="save_fail">บันทึกล้มเหลว</string>
     <string name="user_not_found">ไม่พบข้อมูลผู้ใช้งาน</string>
     <string name="container_not_found">ไม่พบรายการภาชนะ</string>
-    <string name="please_enter_place">โปรดระบุสถานที่</string>
     <string name="please_enter_resident">โปรดระบุจำนวนผู้อาศัย</string>
     <string name="over_total_container">จำนวนภาชนะที่พบไม่ควรมากกว่าภาชนะทั้งหมด</string>
 

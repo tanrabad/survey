@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
+import android.util.DisplayMetrics;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -26,7 +27,10 @@ public class LiteMapFragment {
 
     public static SupportMapFragment setupLiteMapFragmentWithPosition(final LatLng position) {
         GoogleMapOptions googleMapOptions = new GoogleMapOptions();
-        googleMapOptions.liteMode(true);
+        googleMapOptions.tiltGesturesEnabled(false);
+        googleMapOptions.scrollGesturesEnabled(false);
+        googleMapOptions.zoomGesturesEnabled(false);
+        googleMapOptions.rotateGesturesEnabled(false);
         googleMapOptions.mapType(GoogleMap.MAP_TYPE_SATELLITE);
         googleMapOptions.mapToolbarEnabled(false);
 
@@ -35,16 +39,29 @@ public class LiteMapFragment {
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 if (position == null) {
-                    LatLngBounds thailand = new LatLngBounds(new LatLng(5, 97), new LatLng(21, 105));
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(thailand, 40));
+                    moveMapToThailand(googleMap, supportMapFragment);
                 } else {
-                    MarkerOptions marker = buildMarker(googleMap, supportMapFragment, position);
-                    googleMap.addMarker(marker);
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 16));
+                    moveMapByLocation(googleMap, supportMapFragment, position);
                 }
             }
         });
         return supportMapFragment;
+    }
+
+    private static void moveMapByLocation(GoogleMap googleMap, SupportMapFragment supportMapFragment, LatLng position) {
+        MarkerOptions marker = buildMarker(googleMap, supportMapFragment, position);
+        googleMap.addMarker(marker);
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 16));
+    }
+
+    private static void moveMapToThailand(GoogleMap googleMap, SupportMapFragment supportMapFragment) {
+        DisplayMetrics metrics = new DisplayMetrics();
+        supportMapFragment.getActivity().getWindowManager().getDefaultDisplay()
+                .getMetrics(metrics);
+        int height = metrics.heightPixels;
+        int width = metrics.widthPixels;
+        LatLngBounds thailand = new LatLngBounds(new LatLng(5, 97), new LatLng(21, 105));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(thailand, width, height, 40));
     }
 
     @NonNull

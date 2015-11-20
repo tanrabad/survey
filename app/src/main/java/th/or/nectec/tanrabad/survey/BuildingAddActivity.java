@@ -37,7 +37,8 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
     public static final String PLACE_UUID_ARG = "place_uuid_arg";
     public static final String BUILDING_UUID_ARG = "building_uuid_arg";
     public static final int MARK_LOCATION_REQUEST_CODE = 50000;
-    BuildingController buildingController = new BuildingController(InMemoryBuildingRepository.getInstance(), this);
+
+
     private TextView placeName;
     private Toolbar toolbar;
     private TextView buildingNameTitle;
@@ -45,10 +46,12 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
     private FrameLayout addLocationBackground;
     private LatLng buildingLocation;
     private PlaceController placeController = new PlaceController(new StubPlaceRepository(), this);
+    private BuildingController buildingController = new BuildingController(InMemoryBuildingRepository.getInstance(), this);
     private BuildingSaver buildingSaver = new BuildingSaver(InMemoryBuildingRepository.getInstance(), new SaveBuildingValidator(), this);
 
     private Place place;
     private Building building;
+    private Button editLocationButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +79,9 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
         buildingNameTitle = (TextView) findViewById(R.id.building_name_title);
         buildingNameView = (EditText) findViewById(R.id.building_name);
         addLocationBackground = (FrameLayout) findViewById(R.id.add_location_background);
-        Button addMarkerButton = (Button) findViewById(R.id.button);
+        editLocationButton = (Button) findViewById(R.id.edit_location);
+        editLocationButton.setVisibility(View.GONE);
+        Button addMarkerButton = (Button) findViewById(R.id.add_marker);
         addMarkerButton.setOnClickListener(this);
     }
 
@@ -134,11 +139,25 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
 
     @Override
     public void onClick(View view) {
-        openMapMarkerActivity();
+        switch (view.getId()) {
+            case R.id.add_marker:
+                openMapMarkerActivity();
+                break;
+            case R.id.edit_location:
+                openEditMapMarkerActivity(buildingLocation);
+                break;
+        }
+
     }
 
     private void openMapMarkerActivity() {
         Intent intent = new Intent(BuildingAddActivity.this, MapMarkerActivity.class);
+        startActivityForResult(intent, MARK_LOCATION_REQUEST_CODE);
+    }
+
+    private void openEditMapMarkerActivity(LatLng location) {
+        Intent intent = new Intent(BuildingAddActivity.this, MapMarkerActivity.class);
+        intent.putExtra(MapMarkerActivity.MAP_LOCATION, location);
         startActivityForResult(intent, MARK_LOCATION_REQUEST_CODE);
     }
 
@@ -155,6 +174,8 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
 
     private void setupPreviewMapWithPosition(LatLng latLng) {
         addLocationBackground.setVisibility(View.GONE);
+        editLocationButton.setVisibility(View.VISIBLE);
+        editLocationButton.setOnClickListener(this);
         buildingLocation = latLng;
         SupportMapFragment supportMapFragment = LiteMapFragment.setupLiteMapFragmentWithPosition(latLng);
         getSupportFragmentManager().beginTransaction().replace(R.id.map_container, supportMapFragment).commit();

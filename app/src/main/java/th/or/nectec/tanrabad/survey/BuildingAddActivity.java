@@ -37,8 +37,11 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
 
         setSupportActionBar(toolbar);
         placeController.showPlace(UUID.fromString(getPlaceUUID()));
+        setupPreviewMap();
+    }
 
-        SupportMapFragment supportMapFragment = SupportMapFragment.newInstance();
+    private void setupPreviewMap() {
+        SupportMapFragment supportMapFragment = TanrabadLiteMapFragment.setupLiteMapFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.map_container, supportMapFragment).commit();
     }
 

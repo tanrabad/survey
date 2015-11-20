@@ -72,5 +72,8 @@
     <string name="not_define_place_type">ทั้งหมด</string>
     <string name="remove_location">ลบพิกัด</string>
     <string name="please_define_location">กรุณาระบุพิกัด</string>
+    <string name="please_define_building_name">กรุณาระบุชื่ออาคาร</string>
+    <string name="please_define_house_no">กรุณาระบุบ้านเลขที่</string>
+    <string name="please_define_building_location">กรุณาระบุพิกัดของอาคาร</string>
     <!--<string name="add_more_building_button_text">เพิ่มอาคาร</string>-->
 </resources>

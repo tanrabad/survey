@@ -209,7 +209,10 @@ public class SupportMapFragment extends com.google.android.gms.maps.SupportMapFr
             onMoveToLocation(mCurrentLocation);
         } else {
             if (isMoveToMyLocation) {
-                showGpsSettingsDialog();
+                if (!isGPSDialogShowed) {
+                    showGpsSettingsDialog();
+                    isGPSDialogShowed = true;
+                }
                 moveCameraToThailand(getActivity(), googleMap);
             }
         }

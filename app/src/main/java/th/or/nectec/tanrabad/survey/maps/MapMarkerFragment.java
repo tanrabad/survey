@@ -3,9 +3,10 @@ package th.or.nectec.tanrabad.survey.maps;
 import android.os.Bundle;
 
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 
-public class MapMarkerFragment extends SupportMapFragment implements GoogleMap.OnMapLongClickListener {
+public class MapMarkerFragment extends SupportMapFragment implements GoogleMap.OnMapLongClickListener, OnMapReadyCallback {
 
     public static final String FRAGMENT_TAG = "map_marker_fragment";
     public static final String ARGS_LOCATION = "args_location";
@@ -31,21 +32,25 @@ public class MapMarkerFragment extends SupportMapFragment implements GoogleMap.O
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         Bundle args = getArguments();
         location = args.getParcelable(ARGS_LOCATION);
-
-        if (location != null)
-            addMarker(location);
-
+        getMapAsync(this);
         getMap().setOnMapLongClickListener(this);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        if (location != null) {
+            addMarker(location);
+            moveToLocation(location);
+        }
     }
 
     @Override
     public void onMapLongClick(LatLng latLng) {
         removeMarkedLocation();
         location = latLng;
-        addMarker(latLng);
+        addMarker(location);
     }
 
     public LatLng getMarkedLocation() {

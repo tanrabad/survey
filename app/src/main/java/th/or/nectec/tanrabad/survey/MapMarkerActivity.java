@@ -26,7 +26,15 @@ public class MapMarkerActivity extends TanrabadActivity implements View.OnClickL
     }
 
     private void setupMap() {
-        mapMarkerFragment = MapMarkerFragment.newInstance();
+        LatLng location = getIntent().getParcelableExtra(MAP_LOCATION);
+        if (location == null) {
+            mapMarkerFragment = MapMarkerFragment.newInstance();
+        } else {
+            if (getSupportActionBar() != null)
+                getSupportActionBar().setTitle(R.string.edit_location);
+            mapMarkerFragment = MapMarkerFragment.newInstanceWithLocation(location);
+        }
+
         getSupportFragmentManager().beginTransaction().replace(R.id.map_container, mapMarkerFragment, MapMarkerFragment.FRAGMENT_TAG).commit();
     }
 

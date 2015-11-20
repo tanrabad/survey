@@ -208,12 +208,10 @@ public class SupportMapFragment extends com.google.android.gms.maps.SupportMapFr
         if (mCurrentLocation != null && isMoveToMyLocation) {
             onMoveToLocation(mCurrentLocation);
         } else {
-            if (isMoveToMyLocation && !isGPSDialogShowed) {
+            if (isMoveToMyLocation) {
                 showGpsSettingsDialog();
-                isGPSDialogShowed = true;
+                moveCameraToThailand(getActivity(), googleMap);
             }
-
-            moveCameraToThailand(getActivity(), googleMap);
         }
     }
 

@@ -147,7 +147,6 @@ public class SupportMapFragment extends com.google.android.gms.maps.SupportMapFr
         marker.icon(BitmapDescriptorFactory.defaultMarker(hsv[0]));
         marker.position(position);
         googleMap.addMarker(marker);
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 18));
     }
 
     public void clearMap() {

@@ -25,6 +25,7 @@
     <color name="light_gray_body">#f5f5f5</color>
     <color name="white">#fcfbfb</color>
     <color name="black_transparent_20">#33000000</color>
+    <color name="black_transparent_50">#80000000</color>
 
     <!--<color name="brown">#a90101</color>
     <color name="red1">#fc0202</color>

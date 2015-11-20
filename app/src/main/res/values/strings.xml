@@ -47,13 +47,13 @@
     <string name="building_add">เพิ่มอาคาร</string>
     <string name="house_no">บ้านเลขที่</string>
     <string name="building_name">ชื่ออาคาร</string>
-    <string name="save_location">บันทึกพิกัด</string>
-    <string name="add_location">เพิ่มพิกัด</string>
     <string name="place_unit">ที่</string>
     <string name="place_icon">ไอคอนหน้าสถานที่สำรวจ</string>
     <string name="place_bg">พื้นหลังหน้าสถานที่สำรวจ</string>
     <string name="place_not_found">ไม่พบข้อมูลสถานที่</string>
-
+    <string name="save_location">บันทึกพิกัด</string>
+    <string name="add_location">เพิ่มพิกัด</string>
+    <string name="edit_location">แก้ไขพิกัด</string>
 
     <string name="survey_building_history">ประวัติการสำรวจ</string>
     <string name="survey_building_history_not_found">ไม่พบประวัติการสำรวจ</string>

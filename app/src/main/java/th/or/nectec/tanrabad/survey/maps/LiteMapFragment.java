@@ -1,4 +1,4 @@
-package th.or.nectec.tanrabad.survey;
+package th.or.nectec.tanrabad.survey.maps;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -8,7 +8,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 
-public class TanrabadLiteMapFragment {
+public class LiteMapFragment {
 
     public static SupportMapFragment setupLiteMapFragment() {
         return setupLiteMapFragmentWithPosition(null);

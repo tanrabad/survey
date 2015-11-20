@@ -16,6 +16,7 @@ import java.util.UUID;
 import th.or.nectec.tanrabad.domain.PlaceController;
 import th.or.nectec.tanrabad.domain.PlacePresenter;
 import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.survey.maps.LiteMapFragment;
 import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 
@@ -43,7 +44,7 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
     }
 
     private void setupPreviewMap() {
-        SupportMapFragment supportMapFragment = TanrabadLiteMapFragment.setupLiteMapFragment();
+        SupportMapFragment supportMapFragment = LiteMapFragment.setupLiteMapFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.map_container, supportMapFragment).commit();
     }
 

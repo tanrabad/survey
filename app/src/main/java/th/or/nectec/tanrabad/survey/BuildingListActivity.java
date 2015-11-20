@@ -29,8 +29,8 @@ import android.widget.TextView;
 import java.util.List;
 import java.util.UUID;
 
-import th.or.nectec.tanrabad.domain.BuildingListPresenter;
 import th.or.nectec.tanrabad.domain.BuildingWithSurveyStatus;
+import th.or.nectec.tanrabad.domain.BuildingWithSurveyStatusListPresenter;
 import th.or.nectec.tanrabad.domain.PlaceController;
 import th.or.nectec.tanrabad.domain.PlacePresenter;
 import th.or.nectec.tanrabad.domain.SurveyBuildingChooser;
@@ -42,7 +42,7 @@ import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 
-public class BuildingListActivity extends TanrabadActivity implements BuildingListPresenter, PlacePresenter {
+public class BuildingListActivity extends TanrabadActivity implements BuildingWithSurveyStatusListPresenter, PlacePresenter {
 
     public static final String PLACE_UUID_ARG = "place_uuid_arg";
     public static final int ADD_BUILDING_REQ_CODE = 40000;

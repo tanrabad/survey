@@ -14,9 +14,9 @@ public class SurveyBuildingChooser {
     private PlaceRepository placeRepository;
     private BuildingRepository buildingRepository;
     private SurveyRepository surveyRepository;
-    private BuildingListPresenter surveyBuildingPresenter;
+    private BuildingWithSurveyStatusListPresenter surveyBuildingPresenter;
 
-    public SurveyBuildingChooser(UserRepository userRepository, PlaceRepository placeRepository, BuildingRepository buildingRepository, SurveyRepository surveyRepository, BuildingListPresenter surveyBuildingPresenter) {
+    public SurveyBuildingChooser(UserRepository userRepository, PlaceRepository placeRepository, BuildingRepository buildingRepository, SurveyRepository surveyRepository, BuildingWithSurveyStatusListPresenter surveyBuildingPresenter) {
 
         this.userRepository = userRepository;
         this.placeRepository = placeRepository;

@@ -10,6 +10,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.UUID;
 
@@ -23,14 +24,15 @@ import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 public class BuildingAddActivity extends TanrabadActivity implements PlacePresenter, View.OnClickListener {
 
     public static final String PLACE_UUID_ARG = "place_uuid_arg";
+    public static final int MARK_LOCATION_REQUEST_CODE = 50000;
     private TextView placeName;
     private Toolbar toolbar;
     private TextView buildingNameTitle;
     private EditText buildingName;
     private FrameLayout addLocationBackground;
     private Button addMarkerButton;
-
     private PlaceController placeController = new PlaceController(new StubPlaceRepository(), this);
+    LatLng buildingLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +86,25 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
 
     private void openMapMarkerActivity() {
         Intent intent = new Intent(BuildingAddActivity.this, MapMarkerActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, MARK_LOCATION_REQUEST_CODE);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case MARK_LOCATION_REQUEST_CODE:
+                if (resultCode == RESULT_OK) {
+                    setupPreviewMapWithPosition(data.<LatLng>getParcelableExtra(MapMarkerActivity.MAP_LOCATION));
+                }
+        }
+    }
+
+    private void setupPreviewMapWithPosition(LatLng latLng) {
+        addLocationBackground.setVisibility(View.GONE);
+        buildingLocation = latLng;
+        SupportMapFragment supportMapFragment = LiteMapFragment.setupLiteMapFragmentWithPosition(latLng);
+        getSupportFragmentManager().beginTransaction().replace(R.id.map_container, supportMapFragment).commit();
+    }
+
 }

@@ -21,6 +21,9 @@ package th.or.nectec.tanrabad.survey;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -34,5 +37,13 @@ public class TanrabadActivity extends AppCompatActivity {
 
     private void setupAlertFactory() {
         Alert.init(this);
+    }
+
+    public void hideSoftKeyboard(View view) {
+        View currentFocus = this.getCurrentFocus();
+        if (currentFocus != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);
+        }
     }
 }

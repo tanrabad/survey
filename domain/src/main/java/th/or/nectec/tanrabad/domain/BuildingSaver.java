@@ -2,14 +2,14 @@ package th.or.nectec.tanrabad.domain;
 
 import th.or.nectec.tanrabad.entity.Building;
 
-class BuildingSaver {
+public class BuildingSaver {
     private final BuildingSavePresenter buildingSavePresenter;
     private final BuildingRepository buildingRepository;
     private final BuildingValidator saveValidator;
 
-    public BuildingSaver(BuildingSavePresenter buildingSavePresenter,
+    public BuildingSaver(BuildingRepository buildingRepository,
                          BuildingValidator buildingValidator,
-                         BuildingRepository buildingRepository) {
+                         BuildingSavePresenter buildingSavePresenter) {
         this.buildingSavePresenter = buildingSavePresenter;
         saveValidator = buildingValidator;
         this.buildingRepository = buildingRepository;

@@ -54,7 +54,7 @@ public class BuildingSaverTest {
                 oneOf(BuildingSaverTest.this.buildingSavePresenter).displaySaveSuccess();
             }
         });
-        BuildingSaver buildingSaver = new BuildingSaver(buildingSavePresenter, buildingValidator, buildingRepository);
+        BuildingSaver buildingSaver = new BuildingSaver(buildingRepository, buildingValidator, buildingSavePresenter);
         buildingSaver.save(building);
     }
 
@@ -69,7 +69,7 @@ public class BuildingSaverTest {
                 oneOf(buildingSavePresenter).displaySaveFail();
             }
         });
-        BuildingSaver buildingSaver = new BuildingSaver(buildingSavePresenter, buildingValidator, buildingRepository);
+        BuildingSaver buildingSaver = new BuildingSaver(buildingRepository, buildingValidator, buildingSavePresenter);
         buildingSaver.save(building);
     }
 

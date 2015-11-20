@@ -70,5 +70,7 @@
     <string name="hospital">โรงพยาบาล</string>
     <string name="factory">โรงงาน</string>
     <string name="not_define_place_type">ทั้งหมด</string>
+    <string name="remove_location">ลบพิกัด</string>
+    <string name="please_define_location">กรุณาระบุพิกัด</string>
     <!--<string name="add_more_building_button_text">เพิ่มอาคาร</string>-->
 </resources>

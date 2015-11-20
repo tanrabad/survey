@@ -1,7 +1,9 @@
 package th.or.nectec.tanrabad.survey;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -15,17 +17,17 @@ import th.or.nectec.tanrabad.domain.PlaceController;
 import th.or.nectec.tanrabad.domain.PlacePresenter;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
+import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 
-public class BuildingAddActivity extends TanrabadActivity implements PlacePresenter {
+public class BuildingAddActivity extends TanrabadActivity implements PlacePresenter, View.OnClickListener {
 
     public static final String PLACE_UUID_ARG = "place_uuid_arg";
     private TextView placeName;
     private Toolbar toolbar;
     private TextView buildingNameTitle;
     private EditText buildingName;
-    private FrameLayout mapContainer;
     private FrameLayout addLocationBackground;
-    private Button button;
+    private Button addMarkerButton;
 
     private PlaceController placeController = new PlaceController(new StubPlaceRepository(), this);
 
@@ -54,9 +56,9 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         buildingNameTitle = (TextView) findViewById(R.id.building_name_title);
         buildingName = (EditText) findViewById(R.id.building_name);
-        mapContainer = (FrameLayout) findViewById(R.id.map_container);
         addLocationBackground = (FrameLayout) findViewById(R.id.add_location_background);
-        button = (Button) findViewById(R.id.button);
+        addMarkerButton = (Button) findViewById(R.id.button);
+        addMarkerButton.setOnClickListener(this);
     }
 
     @Override
@@ -71,7 +73,16 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
 
     @Override
     public void alertPlaceNotFound() {
-
+        Alert.highLevel().show(R.string.place_not_found);
     }
 
+    @Override
+    public void onClick(View view) {
+        openMapMarkerActivity();
+    }
+
+    private void openMapMarkerActivity() {
+        Intent intent = new Intent(BuildingAddActivity.this, MapMarkerActivity.class);
+        startActivity(intent);
+    }
 }

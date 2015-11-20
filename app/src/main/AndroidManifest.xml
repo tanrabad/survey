@@ -31,8 +31,6 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme"
         tools:ignore="UnusedAttribute">
-
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${google_map_key}" />
@@ -77,6 +75,9 @@
             android:name=".BuildingAddActivity"
             android:label="@string/building_add"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity android:name=".MapMarkerActivity"
+            android:label="@string/add_location"/>
     </application>
 
 </manifest>

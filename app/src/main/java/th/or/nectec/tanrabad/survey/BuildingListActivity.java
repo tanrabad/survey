@@ -66,6 +66,15 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
                 openSurveyActivity(building.getBuilding());
             }
         });
+
+        buildingList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+                BuildingWithSurveyStatus building = (BuildingWithSurveyStatus) buildingAdapter.getItem(position);
+                openEditBuildingActivity(building.getBuilding().getId().toString());
+                return true;
+            }
+        });
         showPlaceName();
         loadSurveyBuildingList();
     }
@@ -131,15 +140,22 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add_building_menu:
-                openBuildingAddActivity();
+                openAddBuildingActivity();
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void openBuildingAddActivity() {
+    private void openAddBuildingActivity() {
         Intent intent = new Intent(BuildingListActivity.this, BuildingAddActivity.class);
         intent.putExtra(PLACE_UUID_ARG, getIntent().getStringExtra(PLACE_UUID_ARG));
+        startActivityForResult(intent, ADD_BUILDING_REQ_CODE);
+    }
+
+    private void openEditBuildingActivity(String buildingUUID) {
+        Intent intent = new Intent(BuildingListActivity.this, BuildingAddActivity.class);
+        intent.putExtra(PLACE_UUID_ARG, getIntent().getStringExtra(PLACE_UUID_ARG));
+        intent.putExtra(BuildingAddActivity.BUILDING_UUID_ARG, buildingUUID);
         startActivityForResult(intent, ADD_BUILDING_REQ_CODE);
     }
 

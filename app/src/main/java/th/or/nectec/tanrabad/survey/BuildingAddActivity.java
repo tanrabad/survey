@@ -3,6 +3,7 @@ package th.or.nectec.tanrabad.survey;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +17,8 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.UUID;
 
+import th.or.nectec.tanrabad.domain.BuildingController;
+import th.or.nectec.tanrabad.domain.BuildingPresenter;
 import th.or.nectec.tanrabad.domain.BuildingSavePresenter;
 import th.or.nectec.tanrabad.domain.BuildingSaver;
 import th.or.nectec.tanrabad.domain.PlaceController;
@@ -29,22 +32,23 @@ import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.validator.SaveBuildingValidator;
 
-public class BuildingAddActivity extends TanrabadActivity implements PlacePresenter, BuildingSavePresenter, View.OnClickListener {
+public class BuildingAddActivity extends TanrabadActivity implements PlacePresenter, BuildingPresenter, BuildingSavePresenter, View.OnClickListener {
 
     public static final String PLACE_UUID_ARG = "place_uuid_arg";
+    public static final String BUILDING_UUID_ARG = "building_uuid_arg";
     public static final int MARK_LOCATION_REQUEST_CODE = 50000;
+    BuildingController buildingController = new BuildingController(InMemoryBuildingRepository.getInstance(), this);
     private TextView placeName;
     private Toolbar toolbar;
     private TextView buildingNameTitle;
     private EditText buildingNameView;
     private FrameLayout addLocationBackground;
-    private Button addMarkerButton;
     private LatLng buildingLocation;
-
     private PlaceController placeController = new PlaceController(new StubPlaceRepository(), this);
     private BuildingSaver buildingSaver = new BuildingSaver(InMemoryBuildingRepository.getInstance(), new SaveBuildingValidator(), this);
 
     private Place place;
+    private Building building;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,16 +58,16 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
 
         setSupportActionBar(toolbar);
         placeController.showPlace(UUID.fromString(getPlaceUUID()));
-        setupPreviewMap();
+        loadBuildingData();
     }
 
-    private void setupPreviewMap() {
-        SupportMapFragment supportMapFragment = LiteMapFragment.setupLiteMapFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.map_container, supportMapFragment).commit();
-    }
-
-    private String getPlaceUUID() {
-        return getIntent().getStringExtra(PLACE_UUID_ARG);
+    private void loadBuildingData() {
+        if (TextUtils.isEmpty(getBuildingUUID())) {
+            setupPreviewMap();
+            this.building = Building.withName(null);
+        } else {
+            buildingController.showBuilding(UUID.fromString(getBuildingUUID()));
+        }
     }
 
     private void assignViews() {
@@ -72,17 +76,25 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
         buildingNameTitle = (TextView) findViewById(R.id.building_name_title);
         buildingNameView = (EditText) findViewById(R.id.building_name);
         addLocationBackground = (FrameLayout) findViewById(R.id.add_location_background);
-        addMarkerButton = (Button) findViewById(R.id.button);
+        Button addMarkerButton = (Button) findViewById(R.id.button);
         addMarkerButton.setOnClickListener(this);
+    }
+
+    private String getPlaceUUID() {
+        return getIntent().getStringExtra(PLACE_UUID_ARG);
+    }
+
+    private String getBuildingUUID() {
+        return getIntent().getStringExtra(BUILDING_UUID_ARG);
     }
 
     @Override
     public void displayPlace(Place place) {
         this.place = place;
         placeName.setText(place.getName());
-        if(place.getType()==Place.TYPE_VILLAGE_COMMUNITY){
+        if (place.getType() == Place.TYPE_VILLAGE_COMMUNITY) {
             buildingNameTitle.setText(R.string.house_no);
-        }else{
+        } else {
             buildingNameTitle.setText(R.string.building_name);
         }
     }
@@ -90,6 +102,34 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
     @Override
     public void alertPlaceNotFound() {
         Alert.highLevel().show(R.string.place_not_found);
+    }
+
+    @Override
+    public void displayBuilding(Building building) {
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setTitle(R.string.building_edit);
+        this.building = building;
+        buildingNameView.setText(this.building.getName());
+
+        if (this.building.getLocation() == null) {
+            setupPreviewMap();
+        } else {
+            double latitiude = this.building.getLocation().getLatitude();
+            double longitude = this.building.getLocation().getLongitude();
+            setupPreviewMapWithPosition(new LatLng(latitiude, longitude));
+        }
+    }
+
+    @Override
+    public void alertBuildingNotFound() {
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setTitle(R.string.building_add);
+        Alert.mediumLevel().show(R.string.building_not_found);
+    }
+
+    private void setupPreviewMap() {
+        SupportMapFragment supportMapFragment = LiteMapFragment.setupLiteMapFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.map_container, supportMapFragment).commit();
     }
 
     @Override
@@ -137,8 +177,7 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
     }
 
     private void saveBuildingData() {
-        String buildingName = buildingNameView.getText().toString();
-        Building building = Building.withName(buildingName);
+        building.setName(buildingNameView.getText().toString());
         building.setPlace(place);
         Location location = buildingLocation == null
                 ? null : new Location(buildingLocation.latitude, buildingLocation.longitude);

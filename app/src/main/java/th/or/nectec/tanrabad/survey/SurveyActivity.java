@@ -32,21 +32,33 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import th.or.nectec.tanrabad.domain.*;
-import th.or.nectec.tanrabad.entity.*;
-import th.or.nectec.tanrabad.survey.repository.InMemoryContainerTypeRepository;
-import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
-import th.or.nectec.tanrabad.survey.repository.StubBuildingRepository;
-import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
-import th.or.nectec.tanrabad.survey.utils.EditTextStepper;
-import th.or.nectec.tanrabad.survey.utils.alert.Alert;
-import th.or.nectec.tanrabad.survey.validator.SaveSurveyValidator;
-import th.or.nectec.tanrabad.survey.view.SurveyContainerView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import th.or.nectec.tanrabad.domain.ContainerController;
+import th.or.nectec.tanrabad.domain.ContainerPresenter;
+import th.or.nectec.tanrabad.domain.SurveyController;
+import th.or.nectec.tanrabad.domain.SurveyPresenter;
+import th.or.nectec.tanrabad.domain.SurveyRepository;
+import th.or.nectec.tanrabad.domain.SurveySavePresenter;
+import th.or.nectec.tanrabad.domain.SurveySaver;
+import th.or.nectec.tanrabad.entity.Building;
+import th.or.nectec.tanrabad.entity.ContainerType;
+import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.Survey;
+import th.or.nectec.tanrabad.entity.SurveyDetail;
+import th.or.nectec.tanrabad.entity.User;
+import th.or.nectec.tanrabad.survey.repository.InMemoryBuildingRepository;
+import th.or.nectec.tanrabad.survey.repository.InMemoryContainerTypeRepository;
+import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
+import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
+import th.or.nectec.tanrabad.survey.utils.EditTextStepper;
+import th.or.nectec.tanrabad.survey.utils.alert.Alert;
+import th.or.nectec.tanrabad.survey.validator.SaveSurveyValidator;
+import th.or.nectec.tanrabad.survey.view.SurveyContainerView;
 
 
 public class SurveyActivity extends TanrabadActivity implements ContainerPresenter, SurveyPresenter, SurveySavePresenter {
@@ -90,7 +102,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     private void initSurvey() {
         surveyRepository = InMemorySurveyRepository.getInstance();
-        SurveyController surveyController = new SurveyController(surveyRepository, new StubBuildingRepository(), new StubUserRepository(), this);
+        SurveyController surveyController = new SurveyController(surveyRepository, new InMemoryBuildingRepository(), new StubUserRepository(), this);
 
         String buildingUUID = getIntent().getStringExtra(BUILDING_UUID_ARG);
         String username = getIntent().getStringExtra(USERNAME_ARG);

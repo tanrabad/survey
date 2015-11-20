@@ -36,8 +36,8 @@ import th.or.nectec.tanrabad.domain.PlacePresenter;
 import th.or.nectec.tanrabad.domain.SurveyBuildingChooser;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.survey.repository.InMemoryBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
-import th.or.nectec.tanrabad.survey.repository.StubBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
@@ -87,7 +87,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingLi
     }
 
     private void loadSurveyBuildingList() {
-        surveyBuildingChooser = new SurveyBuildingChooser(new StubUserRepository(), new StubPlaceRepository(), new StubBuildingRepository(), InMemorySurveyRepository.getInstance(), this);
+        surveyBuildingChooser = new SurveyBuildingChooser(new StubUserRepository(), new StubPlaceRepository(), new InMemoryBuildingRepository(), InMemorySurveyRepository.getInstance(), this);
         surveyBuildingChooser.displaySurveyBuildingOf(getPlaceUuidFromIntent().toString(), "sara");
     }
 

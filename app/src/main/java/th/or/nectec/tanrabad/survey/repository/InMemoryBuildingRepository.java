@@ -26,11 +26,12 @@ import java.util.UUID;
 import th.or.nectec.tanrabad.domain.BuildingRepository;
 import th.or.nectec.tanrabad.entity.Building;
 
-public class StubBuildingRepository implements BuildingRepository {
+public class InMemoryBuildingRepository implements BuildingRepository {
 
+    private static InMemoryBuildingRepository instance;
     List<Building> buildings = new ArrayList<>();
 
-    public StubBuildingRepository() {
+    public InMemoryBuildingRepository() {
         StubPlaceRepository stubPlaceRepository = new StubPlaceRepository();
         Building building1 = new Building(generateUUID("1xyz"), "214/43");
         building1.setPlace(stubPlaceRepository.getPalazzettoVillage());
@@ -67,6 +68,12 @@ public class StubBuildingRepository implements BuildingRepository {
         Building building9 = new Building(generateUUID("3hij"), "ลานหน้าศาลากลาง");
         building9.setPlace(stubPlaceRepository.getWatpaphukon());
         buildings.add(building9);
+    }
+
+    public static InMemoryBuildingRepository getInstance() {
+        if (instance == null)
+            instance = new InMemoryBuildingRepository();
+        return instance;
     }
 
     @NonNull

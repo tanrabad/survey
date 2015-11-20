@@ -14,14 +14,18 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.UUID;
 
+import th.or.nectec.tanrabad.domain.BuildingSavePresenter;
+import th.or.nectec.tanrabad.domain.BuildingSaver;
 import th.or.nectec.tanrabad.domain.PlaceController;
 import th.or.nectec.tanrabad.domain.PlacePresenter;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.maps.LiteMapFragment;
+import th.or.nectec.tanrabad.survey.repository.InMemoryBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
+import th.or.nectec.tanrabad.survey.validator.SaveBuildingValidator;
 
-public class BuildingAddActivity extends TanrabadActivity implements PlacePresenter, View.OnClickListener {
+public class BuildingAddActivity extends TanrabadActivity implements PlacePresenter, BuildingSavePresenter, View.OnClickListener {
 
     public static final String PLACE_UUID_ARG = "place_uuid_arg";
     public static final int MARK_LOCATION_REQUEST_CODE = 50000;
@@ -31,8 +35,10 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
     private EditText buildingName;
     private FrameLayout addLocationBackground;
     private Button addMarkerButton;
+    private LatLng buildingLocation;
+
     private PlaceController placeController = new PlaceController(new StubPlaceRepository(), this);
-    LatLng buildingLocation;
+    private BuildingSaver buildingController = new BuildingSaver(new InMemoryBuildingRepository(), new SaveBuildingValidator(), this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,4 +113,13 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
         getSupportFragmentManager().beginTransaction().replace(R.id.map_container, supportMapFragment).commit();
     }
 
+    @Override
+    public void displaySaveSuccess() {
+
+    }
+
+    @Override
+    public void displaySaveFail() {
+
+    }
 }

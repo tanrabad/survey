@@ -36,12 +36,12 @@ public class BuildingChooserTest {
 
     private UUID placeUuid = UUID.randomUUID();
     private BuildingRepository buildingRepository;
-    private BuildingPresenter presenter;
+    private BuildingListPresenter presenter;
 
     @Before
     public void setup() {
         buildingRepository = context.mock(BuildingRepository.class);
-        presenter = context.mock(BuildingPresenter.class);
+        presenter = context.mock(BuildingListPresenter.class);
     }
 
     @Test
@@ -54,7 +54,7 @@ public class BuildingChooserTest {
                 allowing(buildingRepository).findBuildingInPlace(placeUuid);
                 will(returnValue(buildings));
 
-                oneOf(presenter).displayBuildingList(buildings);
+                oneOf(presenter).displayBuildingsList(buildings);
             }
         });
         BuildingChooser buildingChooser = new BuildingChooser(buildingRepository, presenter);
@@ -68,7 +68,7 @@ public class BuildingChooserTest {
                 allowing(buildingRepository).findBuildingInPlace(placeUuid);
                 will(returnValue(null));
 
-                oneOf(presenter).alertBuildingNotFound();
+                oneOf(presenter).alertBuildingsNotFound();
             }
         });
         BuildingChooser buildingChooser = new BuildingChooser(buildingRepository, presenter);
@@ -81,7 +81,7 @@ public class BuildingChooserTest {
             {
                 never(buildingRepository);
 
-                oneOf(presenter).displayPleaseSpecifyPlace();
+                oneOf(presenter).alertPlaceNotFound();
             }
         });
         BuildingChooser buildingChooser = new BuildingChooser(buildingRepository, presenter);

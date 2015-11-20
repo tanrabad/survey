@@ -24,9 +24,9 @@ import th.or.nectec.tanrabad.entity.Building;
 
 public class BuildingChooser {
     private final BuildingRepository buildingRepository;
-    private final BuildingPresenter presenter;
+    private final BuildingListPresenter presenter;
 
-    public BuildingChooser(BuildingRepository buildingRepository, BuildingPresenter presenter) {
+    public BuildingChooser(BuildingRepository buildingRepository, BuildingListPresenter presenter) {
 
         this.buildingRepository = buildingRepository;
         this.presenter = presenter;
@@ -34,14 +34,14 @@ public class BuildingChooser {
 
     public void showBuildingOf(UUID placeUuid) {
         if (placeUuid == null) {
-            presenter.displayPleaseSpecifyPlace();
+            presenter.alertPlaceNotFound();
             return;
         }
 
         List<Building> buildingInPlace = buildingRepository.findBuildingInPlace(placeUuid);
         if (buildingInPlace != null)
-            presenter.displayBuildingList(buildingInPlace);
+            presenter.displayBuildingsList(buildingInPlace);
         else
-            presenter.alertBuildingNotFound();
+            presenter.alertBuildingsNotFound();
     }
 }

@@ -31,7 +31,7 @@ public class InMemoryBuildingRepository implements BuildingRepository {
     private static InMemoryBuildingRepository instance;
     List<Building> buildings = new ArrayList<>();
 
-    public InMemoryBuildingRepository() {
+    private InMemoryBuildingRepository() {
         StubPlaceRepository stubPlaceRepository = new StubPlaceRepository();
         Building building1 = new Building(generateUUID("1xyz"), "214/43");
         building1.setPlace(stubPlaceRepository.getPalazzettoVillage());
@@ -113,7 +113,12 @@ public class InMemoryBuildingRepository implements BuildingRepository {
     }
 
     @Override
-    public boolean save(Building with) {
-        return false;
+    public boolean save(Building building) {
+        if (buildings.contains(building)) {
+            buildings.set(buildings.indexOf(building), building);
+        } else {
+            buildings.add(building);
+        }
+        return true;
     }
 }

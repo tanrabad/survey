@@ -3,6 +3,8 @@ package th.or.nectec.tanrabad.survey;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +20,8 @@ import th.or.nectec.tanrabad.domain.BuildingSavePresenter;
 import th.or.nectec.tanrabad.domain.BuildingSaver;
 import th.or.nectec.tanrabad.domain.PlaceController;
 import th.or.nectec.tanrabad.domain.PlacePresenter;
+import th.or.nectec.tanrabad.entity.Building;
+import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.maps.LiteMapFragment;
 import th.or.nectec.tanrabad.survey.repository.InMemoryBuildingRepository;
@@ -32,13 +36,15 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
     private TextView placeName;
     private Toolbar toolbar;
     private TextView buildingNameTitle;
-    private EditText buildingName;
+    private EditText buildingNameView;
     private FrameLayout addLocationBackground;
     private Button addMarkerButton;
     private LatLng buildingLocation;
 
     private PlaceController placeController = new PlaceController(new StubPlaceRepository(), this);
-    private BuildingSaver buildingController = new BuildingSaver(new InMemoryBuildingRepository(), new SaveBuildingValidator(), this);
+    private BuildingSaver buildingSaver = new BuildingSaver(InMemoryBuildingRepository.getInstance(), new SaveBuildingValidator(), this);
+
+    private Place place;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +70,7 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
         placeName = (TextView) findViewById(R.id.place_name);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         buildingNameTitle = (TextView) findViewById(R.id.building_name_title);
-        buildingName = (EditText) findViewById(R.id.building_name);
+        buildingNameView = (EditText) findViewById(R.id.building_name);
         addLocationBackground = (FrameLayout) findViewById(R.id.add_location_background);
         addMarkerButton = (Button) findViewById(R.id.button);
         addMarkerButton.setOnClickListener(this);
@@ -72,6 +78,7 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
 
     @Override
     public void displayPlace(Place place) {
+        this.place = place;
         placeName.setText(place.getName());
         if(place.getType()==Place.TYPE_VILLAGE_COMMUNITY){
             buildingNameTitle.setText(R.string.house_no);
@@ -114,12 +121,40 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
     }
 
     @Override
-    public void displaySaveSuccess() {
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.action_save_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.save:
+                saveBuildingData();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void saveBuildingData() {
+        String buildingName = buildingNameView.getText().toString();
+        Building building = Building.withName(buildingName);
+        building.setPlace(place);
+        Location location = buildingLocation == null
+                ? null : new Location(buildingLocation.latitude, buildingLocation.longitude);
+        building.setLocation(location);
+        buildingSaver.save(building);
+    }
+
+    @Override
+    public void displaySaveSuccess() {
+        Alert.lowLevel().show(R.string.save_success);
+        setResult(RESULT_OK);
+        finish();
     }
 
     @Override
     public void displaySaveFail() {
-
+        Alert.highLevel().show(R.string.save_fail);
     }
 }

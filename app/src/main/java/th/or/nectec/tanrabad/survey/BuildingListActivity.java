@@ -45,11 +45,11 @@ import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 public class BuildingListActivity extends TanrabadActivity implements BuildingListPresenter, PlacePresenter {
 
     public static final String PLACE_UUID_ARG = "place_uuid_arg";
+    public static final int ADD_BUILDING_REQ_CODE = 40000;
     private ListView buildingList;
     private TextView buildingCountView;
     private BuildingWithSurveyStatusAdapter buildingAdapter;
     private SurveyBuildingChooser surveyBuildingChooser;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,6 +140,17 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingLi
     private void openBuildingAddActivity() {
         Intent intent = new Intent(BuildingListActivity.this, BuildingAddActivity.class);
         intent.putExtra(PLACE_UUID_ARG, getIntent().getStringExtra(PLACE_UUID_ARG));
-        startActivity(intent);
+        startActivityForResult(intent, ADD_BUILDING_REQ_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case ADD_BUILDING_REQ_CODE:
+                if (resultCode == RESULT_OK) {
+                    loadSurveyBuildingList();
+                }
+        }
     }
 }

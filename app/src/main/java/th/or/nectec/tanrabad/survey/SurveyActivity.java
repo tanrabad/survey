@@ -102,7 +102,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     private void initSurvey() {
         surveyRepository = InMemorySurveyRepository.getInstance();
-        SurveyController surveyController = new SurveyController(surveyRepository, new InMemoryBuildingRepository(), new StubUserRepository(), this);
+        SurveyController surveyController = new SurveyController(surveyRepository, InMemoryBuildingRepository.getInstance(), new StubUserRepository(), this);
 
         String buildingUUID = getIntent().getStringExtra(BUILDING_UUID_ARG);
         String username = getIntent().getStringExtra(USERNAME_ARG);

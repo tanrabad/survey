@@ -87,7 +87,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingLi
     }
 
     private void loadSurveyBuildingList() {
-        surveyBuildingChooser = new SurveyBuildingChooser(new StubUserRepository(), new StubPlaceRepository(), new InMemoryBuildingRepository(), InMemorySurveyRepository.getInstance(), this);
+        surveyBuildingChooser = new SurveyBuildingChooser(new StubUserRepository(), new StubPlaceRepository(), InMemoryBuildingRepository.getInstance(), InMemorySurveyRepository.getInstance(), this);
         surveyBuildingChooser.displaySurveyBuildingOf(getPlaceUuidFromIntent().toString(), "sara");
     }
 

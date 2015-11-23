@@ -19,5 +19,7 @@
     <dimen name="between_text_margin_bottom">2dp</dimen>
 
     <dimen name="header_height">271dp</dimen>
+
     <dimen name="actionbar_size">64dp</dimen>
+    <dimen name="toolbar_size">@dimen/actionbar_size</dimen>
 </resources>

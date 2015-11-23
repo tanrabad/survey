@@ -18,6 +18,10 @@
   -->
 
 <resources>
+    <color name="color_primary">@color/shock_pink</color>
+    <color name="color_primary_dark">@color/dark_pink</color>
+    <color name="color_accent">@color/pink</color>
+
     <color name="black">#000000</color>
     <color name="dark_gray">#464646</color>
     <color name="gray">#999999</color>-->

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="ActionBar" parent="@style/Widget.AppCompat.Light.ActionBar">
         <item name="background">@color/shock_pink</item>
+        <item name="android:height">@dimen/actionbar_size</item>
         <item name="titleTextStyle">@style/ActionBar.TitleTextAppearance</item>
     </style>
 
@@ -21,7 +22,7 @@
 
     <style name="AppTabLayout" parent="Widget.Design.TabLayout">
         <item name="tabIndicatorColor">@color/white</item>
-        <item name="tabBackground">?attr/selectableItemBackground</item>
+        <item name="tabBackground" tools:ignore="PrivateResource">?attr/selectableItemBackground </item>
         <item name="tabTextAppearance">@style/AppTabTextAppearance</item>
         <item name="tabMaxWidth">0dp</item>
         <item name="tabGravity">fill</item>

@@ -20,9 +20,9 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/shock_pink</item>
-        <item name="colorPrimaryDark">@color/dark_pink</item>
-        <item name="colorAccent">@color/shock_pink</item>
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="colorAccent">@color/color_accent</item>
         <item name="actionBarStyle">@style/ActionBar</item>
         <item name="toolbarStyle">@style/Toolbar</item>
         <item name="android:textSize">@dimen/text_body_large</item>

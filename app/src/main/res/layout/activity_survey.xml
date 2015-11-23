@@ -39,7 +39,7 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/actionbar_size"
+                android:layout_marginTop="@dimen/toolbar_size"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                 <ImageView
@@ -134,7 +134,7 @@
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/actionbar_size"
+                android:layout_height="@dimen/toolbar_size"
                 android:background="@color/shock_pink"
                 android:fitsSystemWindows="true"
                 app:layout_collapseMode="pin"

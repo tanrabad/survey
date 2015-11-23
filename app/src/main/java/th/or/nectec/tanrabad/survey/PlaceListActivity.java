@@ -18,15 +18,38 @@
 package th.or.nectec.tanrabad.survey;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 
-public class PlaceListActivity extends TanrabadActivity{
+public class PlaceListActivity extends TanrabadActivity {
+
+    private Toolbar toolbar;
+    private TabLayout tabLayout;
+    private ViewPager placePager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_list);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, PlaceListInDatabaseFragment.newInstance()).commit();
+        setupViews();
+        setupTabPager();
     }
+
+    private void setupViews() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        placePager = (ViewPager) findViewById(R.id.place_pager);
+        setSupportActionBar(toolbar);
+    }
+
+    private void setupTabPager() {
+        PagerAdapter placePagerAdapter = new PlacePagerAdapter(getSupportFragmentManager(), PlaceListActivity.this, "sara");
+        placePager.setAdapter(placePagerAdapter);
+        tabLayout.setupWithViewPager(placePager);
+    }
+
 
 }

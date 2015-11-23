@@ -37,7 +37,8 @@
 
         <activity
             android:name=".PlaceListActivity"
-            android:label="ระบุสถานที่สำรวจ">
+            android:label="ระบุสถานที่สำรวจ"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

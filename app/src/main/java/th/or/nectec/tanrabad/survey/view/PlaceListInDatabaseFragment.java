@@ -43,9 +43,6 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setupPlaceFilterSpinner();
-        setupPlaceList();
     }
 
     @Override
@@ -54,6 +51,8 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
 
         View view = inflater.inflate(R.layout.fragment_place_list_in_database, container, false);
         setupViews(view);
+        setupPlaceFilterSpinner();
+        setupPlaceList();
         return view;
     }
 

@@ -50,6 +50,7 @@ ext {
     runnerVersion = "0.4.1"
     rulesVersion = "0.4.1"
     espressoVersion = "2.2.1"
+    robolectricVersion = "3.0"
 }
 
 task testBeforePush(dependsOn: [':entity:test', ':domain:test', ':app:test', ':app:build']) {

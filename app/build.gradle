@@ -28,12 +28,12 @@ buildscript {
 
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
+apply from: '../gradle/versionGenerator.gradle'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
 
-apply from: '../gradle/versionGenerator.gradle'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -69,7 +69,7 @@ android {
     buildTypes {
         debug {
             ext.enableCrashlytics = false
-            manifestPlaceholders = [google_map_key: System.getenv('TANRABAD_GOOGLE_DEBUG_KEY')]
+            manifestPlaceholders = [google_map_key: System.env.'TANRABAD_GOOGLE_DEBUG_KEY']
         }
         release {
             signingConfig signingConfigs.release
@@ -113,7 +113,7 @@ dependencies {
     compile 'uk.co.chrisjenx:calligraphy:' + rootProject.ext.calligraphyVersion
     testCompile 'junit:junit:' + rootProject.ext.junitVersion
     testCompile 'org.mockito:mockito-core:' + rootProject.ext.mockitoVersion
-    testCompile "org.robolectric:robolectric:3.0"
+    testCompile "org.robolectric:robolectric:" + rootProject.ext.robolectricVersion
     androidTestCompile 'com.android.support:support-annotations:' + rootProject.ext.supportLibVersion
     androidTestCompile 'com.android.support.test:runner:' + rootProject.ext.runnerVersion
     androidTestCompile 'com.android.support.test:rules:' + rootProject.ext.rulesVersion

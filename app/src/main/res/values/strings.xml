@@ -75,5 +75,6 @@
     <string name="please_define_building_location">กรุณาระบุพิกัดของอาคาร</string>
     <string name="building_edit">แก้ไขอาคาร</string>
     <string name="list_unit">รายการ</string>
+    <string name="survey_place_not_found">ไม่พบรายการสถานที่ที่สำรวจ</string>
     <!--<string name="add_more_building_button_text">เพิ่มอาคาร</string>-->
 </resources>

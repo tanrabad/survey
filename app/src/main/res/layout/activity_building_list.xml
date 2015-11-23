@@ -112,7 +112,7 @@
                 android:layout_marginStart="@dimen/between_view"
                 android:paddingBottom="@dimen/indoor_outdoor_padding_bottom"
                 android:paddingTop="@dimen/indoor_outdoor_padding_top"
-                android:text="@string/unit"
+                android:text="@string/list_unit"
                 android:textColor="@color/black"
                 android:textSize="@dimen/header_text_size" />
         </LinearLayout>

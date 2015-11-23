@@ -29,7 +29,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 
-public class SupportMapFragment extends com.google.android.gms.maps.SupportMapFragment implements
+public class TanrabadSupportMapFragment extends com.google.android.gms.maps.SupportMapFragment implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener, GoogleMap.OnCameraChangeListener {
 
@@ -56,16 +56,16 @@ public class SupportMapFragment extends com.google.android.gms.maps.SupportMapFr
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
 
-    public SupportMapFragment() {
+    public TanrabadSupportMapFragment() {
         super();
     }
 
-    public static SupportMapFragment newInstance() {
+    public static TanrabadSupportMapFragment newInstance() {
         return newInstance(false, true, true, false);
     }
 
-    public static SupportMapFragment newInstance(boolean isLocked, boolean isZoomable, boolean isLocationEnabled, boolean isMovetoMyLocation) {
-        SupportMapFragment mapFrag = new SupportMapFragment();
+    public static TanrabadSupportMapFragment newInstance(boolean isLocked, boolean isZoomable, boolean isLocationEnabled, boolean isMovetoMyLocation) {
+        TanrabadSupportMapFragment mapFrag = new TanrabadSupportMapFragment();
         Bundle args = new Bundle();
         args.putBoolean(ARGS_LOCKED_MAP, isLocked);
         args.putBoolean(ARGS_MYLOCATION_ENABLE, isLocationEnabled);

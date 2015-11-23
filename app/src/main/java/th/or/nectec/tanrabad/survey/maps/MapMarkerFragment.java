@@ -6,7 +6,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 
-public class MapMarkerFragment extends SupportMapFragment implements GoogleMap.OnMapLongClickListener, OnMapReadyCallback {
+public class MapMarkerFragment extends TanrabadSupportMapFragment implements GoogleMap.OnMapLongClickListener, OnMapReadyCallback {
 
     public static final String FRAGMENT_TAG = "map_marker_fragment";
     public static final String ARGS_LOCATION = "args_location";

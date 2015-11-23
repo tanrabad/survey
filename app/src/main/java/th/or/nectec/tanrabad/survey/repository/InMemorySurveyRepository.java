@@ -54,4 +54,18 @@ public class InMemorySurveyRepository implements SurveyRepository {
         }
         return surveyBuilding.isEmpty() ? null : surveyBuilding;
     }
+
+    @Override
+    public ArrayList<Place> findByUserIn7Days(User user) {
+        ArrayList<Place> surveyPlaces = new ArrayList<>();
+        for (Survey eachSurvey : surveys) {
+            if (eachSurvey.getUser().equals(user)) {
+                Building surveyBuilding = eachSurvey.getSurveyBuilding();
+                if(!surveyPlaces.contains(surveyBuilding.getPlace())){
+                    surveyPlaces.add(surveyBuilding.getPlace());
+                }
+            }
+        }
+        return surveyPlaces.isEmpty() ? null : surveyPlaces;
+    }
 }

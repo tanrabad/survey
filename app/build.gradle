@@ -72,6 +72,7 @@ android {
             manifestPlaceholders = [google_map_key: System.getenv('TANRABAD_GOOGLE_DEBUG_KEY')]
         }
         release {
+            signingConfig signingConfigs.release
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'

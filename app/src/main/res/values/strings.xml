@@ -76,5 +76,6 @@
     <string name="please_define_house_no">กรุณาระบุบ้านเลขที่</string>
     <string name="please_define_building_location">กรุณาระบุพิกัดของอาคาร</string>
     <string name="building_edit">แก้ไขอาคาร</string>
+    <string name="unit">รายการ</string>
     <!--<string name="add_more_building_button_text">เพิ่มอาคาร</string>-->
 </resources>

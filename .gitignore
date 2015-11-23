@@ -39,7 +39,6 @@ build
 *.ipr
 *~
 *.swp
-release.keystore
 
 # Fabric.io
 fabric.properties

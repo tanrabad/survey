@@ -31,7 +31,7 @@ public class PlaceWithSurveyStatusChooser {
         if(surveyPlaces!=null){
             placeWithSurveyStatusChooserPresenter.displaySurveyPlaceList(surveyPlaces);
         }else{
-            placeWithSurveyStatusChooserPresenter.displaySurveyPlacesNotfound();
+            placeWithSurveyStatusChooserPresenter.displaySurveyPlacesNotFound();
         }
     }
 }

@@ -60,7 +60,7 @@ public class PlaceWithSurveyStatusChooserTest {
                 will(returnValue(user));
                 oneOf(surveyRepository).findByUserIn7Days(with(user));
                 will(returnValue(null));
-                oneOf(placeWithSurveyStatusChooserPresenter).displaySurveyPlacesNotfound();
+                oneOf(placeWithSurveyStatusChooserPresenter).displaySurveyPlacesNotFound();
             }
         });
 

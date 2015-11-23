@@ -9,5 +9,5 @@ public interface PlaceWithSurveyStatusChooserPresenter {
 
     void alertUserNotFound();
 
-    void displaySurveyPlacesNotfound();
+    void displaySurveyPlacesNotFound();
 }

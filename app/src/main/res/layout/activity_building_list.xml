@@ -88,7 +88,6 @@
                 android:layout_marginStart="@dimen/between_view"
                 android:paddingBottom="@dimen/indoor_outdoor_padding_bottom"
                 android:paddingTop="@dimen/indoor_outdoor_padding_top"
-                android:text="@string/found"
                 android:textColor="@color/black"
                 android:textSize="@dimen/header_text_size"
                 />
@@ -113,7 +112,7 @@
                 android:layout_marginStart="@dimen/between_view"
                 android:paddingBottom="@dimen/indoor_outdoor_padding_bottom"
                 android:paddingTop="@dimen/indoor_outdoor_padding_top"
-                android:text="@string/building_unit"
+                android:text="@string/unit"
                 android:textColor="@color/black"
                 android:textSize="@dimen/header_text_size" />
         </LinearLayout>

@@ -112,19 +112,25 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.action_finish_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
-    public  boolean onOptionsItemSelected(MenuItem item){
-        switch (item.getItemId()){
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case R.id.finish:
                 openPlaceListActivity();
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        openBuildingListActivity();
     }
 
     private void openPlaceListActivity() {

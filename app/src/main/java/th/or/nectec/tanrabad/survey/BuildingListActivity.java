@@ -169,4 +169,16 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
                 }
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        openPlaceListActivity();
+    }
+
+    private void openPlaceListActivity() {
+        Intent intent = new Intent(BuildingListActivity.this, PlaceListActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
 }

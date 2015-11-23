@@ -19,8 +19,6 @@ package th.or.nectec.tanrabad.survey;
 
 import android.os.Bundle;
 
-import th.or.nectec.tanrabad.survey.view.PlaceListInDatabaseFragment;
-
 public class PlaceListActivity extends TanrabadActivity{
 
     @Override

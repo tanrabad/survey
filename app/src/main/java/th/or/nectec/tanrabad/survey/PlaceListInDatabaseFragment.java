@@ -1,4 +1,4 @@
-package th.or.nectec.tanrabad.survey.view;
+package th.or.nectec.tanrabad.survey;
 
 
 import android.content.Intent;
@@ -18,10 +18,6 @@ import java.util.List;
 import th.or.nectec.tanrabad.domain.PlaceChooser;
 import th.or.nectec.tanrabad.domain.PlaceListPresenter;
 import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.survey.BuildingListActivity;
-import th.or.nectec.tanrabad.survey.PlaceAdapter;
-import th.or.nectec.tanrabad.survey.PlaceTypeAdapter;
-import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
 
 public class PlaceListInDatabaseFragment extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener, PlaceListPresenter {

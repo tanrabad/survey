@@ -73,7 +73,7 @@ public class LocationBoundaryControllerTest {
 
         context.checking(new Expectations() {
             {
-                oneOf(placeRepository).findPlaceByLocationFilter(minimumLocation, maximumLocation);
+                oneOf(placeRepository).findInBoundaryLocation(minimumLocation, maximumLocation);
                 will(returnValue(placesFilter));
                 oneOf(placeListPresenter).displayPlaceList(placesFilter);
             }
@@ -104,7 +104,7 @@ public class LocationBoundaryControllerTest {
         }
 
         public void getPlaceListWithLocationFilter(Location minimumLocation, Location maximumLocation) {
-            List<Place> placeFilter = placeRepository.findPlaceByLocationFilter(minimumLocation, maximumLocation);
+            List<Place> placeFilter = placeRepository.findInBoundaryLocation(minimumLocation, maximumLocation);
             if (placeFilter == null) {
                 placeListPresenter.displayPlaceNotFound();
             } else {

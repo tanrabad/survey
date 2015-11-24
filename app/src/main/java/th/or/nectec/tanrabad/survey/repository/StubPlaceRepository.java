@@ -26,6 +26,7 @@ import java.util.UUID;
 
 import th.or.nectec.tanrabad.domain.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Location;
+import th.or.nectec.tanrabad.entity.Locationing;
 import th.or.nectec.tanrabad.entity.Place;
 
 
@@ -121,7 +122,7 @@ public class StubPlaceRepository implements PlaceRepository {
     }
 
     @Override
-    public List<Place> findInBoundaryLocation(Location minimumLocation, Location maximumLocation) {
+    public List<Locationing> findInBoundaryLocation(Location minimumLocation, Location maximumLocation) {
         return null;
     }
 }

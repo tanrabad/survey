@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import th.or.nectec.tanrabad.entity.Location;
+import th.or.nectec.tanrabad.entity.Locationing;
 import th.or.nectec.tanrabad.entity.Place;
 
 public interface PlaceRepository {
@@ -18,5 +19,5 @@ public interface PlaceRepository {
 
     boolean save(Place with);
 
-    List<Place> findInBoundaryLocation(Location minimumLocation, Location maximumLocation);
+    List<Locationing> findInBoundaryLocation(Location minimumLocation, Location maximumLocation);
 }

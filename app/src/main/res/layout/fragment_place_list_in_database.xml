@@ -49,7 +49,7 @@
                 android:paddingTop="@dimen/indoor_outdoor_padding_top"
                 android:text="@string/survey_place"
                 android:textColor="@color/black"
-                android:textSize="@dimen/header_text_size"/>
+                android:textSize="@dimen/text_body"/>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -59,40 +59,29 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/between_view"
-                android:layout_marginStart="@dimen/between_view"
-                android:paddingBottom="@dimen/indoor_outdoor_padding_bottom"
-                android:paddingTop="@dimen/indoor_outdoor_padding_top"
-                android:textColor="@color/black"
-                android:textSize="@dimen/header_text_size" />
+                    android:id="@+id/place_count"
+                    android:contentDescription="@string/number_place_list_in_database"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/between_view"
+                    android:layout_marginStart="@dimen/between_view"
+                    android:paddingBottom="@dimen/indoor_outdoor_padding_bottom"
+                    android:paddingTop="@dimen/indoor_outdoor_padding_top"
+                    android:textColor="@color/gray"
+                    android:textIsSelectable="false"
+                    android:textSize="@dimen/text_body"
+                    tools:text="200" />
 
             <TextView
-                android:id="@+id/place_count"
-                android:contentDescription="@string/number_place_list_in_database"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/between_view"
-                android:layout_marginStart="@dimen/between_view"
-                android:paddingBottom="@dimen/indoor_outdoor_padding_bottom"
-                android:paddingTop="@dimen/indoor_outdoor_padding_top"
-                android:textColor="@color/gray"
-                android:textIsSelectable="false"
-                android:textSize="@dimen/header_text_size"
-                tools:text="200" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/between_view"
-                android:layout_marginStart="@dimen/between_view"
-                android:paddingBottom="@dimen/indoor_outdoor_padding_bottom"
-                android:paddingTop="@dimen/indoor_outdoor_padding_top"
-                android:text="@string/list_unit"
-                android:textColor="@color/black"
-                android:textSize="@dimen/header_text_size" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/between_view"
+                    android:layout_marginStart="@dimen/between_view"
+                    android:paddingBottom="@dimen/indoor_outdoor_padding_bottom"
+                    android:paddingTop="@dimen/indoor_outdoor_padding_top"
+                    android:text="@string/list_unit"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_body"/>
         </LinearLayout>
 
     </LinearLayout>

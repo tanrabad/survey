@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (c) 2015  NECTEC
+  ~ Copyright (c) 2015 NECTEC
   ~   National Electronics and Computer Technology Center, Thailand
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -50,7 +50,7 @@
                 android:gravity="end"
                 android:textColor="@color/white"
                 android:textIsSelectable="false"
-                android:textSize="@dimen/header_text_size"
+                android:textSize="@dimen/text_headline"
                 tools:text="หมู่ 1 บ้านบางไผ่" />
         </LinearLayout>
     </FrameLayout>
@@ -70,7 +70,7 @@
             android:paddingTop="@dimen/indoor_outdoor_padding_top"
             android:text="@string/survey_building"
             android:textColor="@color/black"
-            android:textSize="@dimen/header_text_size"
+            android:textSize="@dimen/text_body"
             android:id="@+id/text_show_title_building_list" />
 
         <LinearLayout
@@ -79,18 +79,6 @@
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/between_view"
-                android:layout_marginStart="@dimen/between_view"
-                android:paddingBottom="@dimen/indoor_outdoor_padding_bottom"
-                android:paddingTop="@dimen/indoor_outdoor_padding_top"
-                android:textColor="@color/black"
-                android:textSize="@dimen/header_text_size"
-                />
 
             <TextView
                 android:id="@+id/building_count"
@@ -103,7 +91,7 @@
                 android:paddingTop="@dimen/indoor_outdoor_padding_top"
                 android:textColor="@color/gray"
                 android:textIsSelectable="false"
-                android:textSize="@dimen/header_text_size"
+                android:textSize="@dimen/text_body"
                 tools:text="200" />
 
             <TextView
@@ -115,7 +103,7 @@
                 android:paddingTop="@dimen/indoor_outdoor_padding_top"
                 android:text="@string/list_unit"
                 android:textColor="@color/black"
-                android:textSize="@dimen/header_text_size" />
+                android:textSize="@dimen/text_body" />
         </LinearLayout>
 
     </LinearLayout>
@@ -129,17 +117,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-<!--        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/add_more_building_button_text"
-            android:id="@+id/add_building_button"
-            android:layout_gravity="bottom|center"
-            android:layout_marginBottom="@dimen/between_text_margin_bottom"
-            android:layout_marginTop="@dimen/between_text_margin_top"
-            android:layout_marginEnd="@dimen/between_view"
-            android:textSize="@dimen/text_title"
-            android:textColor="@color/pink" />-->
     </FrameLayout>
 
 </LinearLayout>

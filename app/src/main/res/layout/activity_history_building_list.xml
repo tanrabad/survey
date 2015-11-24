@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (c) 2015  NECTEC
+  ~ Copyright (c) 2015 NECTEC
   ~   National Electronics and Computer Technology Center, Thailand
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -43,15 +43,15 @@
             android:paddingTop="@dimen/padding_top">
 
             <TextView
-                android:id="@+id/place_name"
-                android:textIsSelectable="false"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:gravity="end"
-                android:textColor="@color/white"
-                android:textSize="@dimen/header_text_size"
-                tools:text="หมู่ 1 บ้านบางไผ่" />
+                    android:id="@+id/place_name"
+                    android:textIsSelectable="false"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:gravity="end"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_headline"
+                    tools:text="หมู่ 1 บ้านบางไผ่" />
         </LinearLayout>
     </FrameLayout>
 
@@ -61,16 +61,16 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/indoor_outdoor_padding_bottom"
-            android:paddingTop="@dimen/indoor_outdoor_padding_top"
-            android:text="@string/survey_building_history"
-            android:textColor="@color/black"
-            android:textSize="@dimen/header_text_size"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center" />
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/indoor_outdoor_padding_bottom"
+                android:paddingTop="@dimen/indoor_outdoor_padding_top"
+                android:text="@string/survey_building_history"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_body"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center" />
 
     </LinearLayout>
 
@@ -91,7 +91,6 @@
             android:layout_gravity="bottom|right"
             android:layout_marginBottom="@dimen/between_text_margin_bottom"
             android:layout_marginTop="@dimen/between_text_margin_top"
-            android:layout_marginEnd="@dimen/between_view"
             android:textSize="@dimen/text_title"
             android:textColor="@color/pink" />
     </FrameLayout>

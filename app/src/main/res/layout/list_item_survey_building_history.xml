@@ -40,12 +40,12 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/survey_building_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textIsSelectable="false"
-            android:textSize="@dimen/body_text_size_big"
-            tools:text="บ้านเลขที่ 1" />
+                android:id="@+id/survey_building_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textIsSelectable="false"
+                android:textSize="@dimen/text_title"
+                tools:text="บ้านเลขที่ 1" />
     </LinearLayout>
 
     <th.or.nectec.tanrabad.survey.view.RelativeTimeAgoTextView

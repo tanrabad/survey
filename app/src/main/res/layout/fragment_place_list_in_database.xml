@@ -72,6 +72,7 @@
 
             <TextView
                 android:id="@+id/place_count"
+                android:contentDescription="@string/number_place_list_in_database"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/between_view"

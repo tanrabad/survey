@@ -52,6 +52,7 @@
     <string name="save_location">บันทึกพิกัด</string>
     <string name="add_location">เพิ่มพิกัด</string>
     <string name="edit_location">แก้ไขพิกัด</string>
+    <string name="cant_save_same_building_name">ไม่สามารถบันทึกอาคารนี้ได้เนื่องจากชื่ออาคารนี้มีอยู่แล้ว</string>
 
     <string name="survey_building_history">ประวัติการสำรวจ</string>
     <string name="survey_building_history_not_found">ไม่พบประวัติการสำรวจ</string>
@@ -78,6 +79,6 @@
     <string name="survey_place_not_found">ไม่พบรายการสถานที่ที่สำรวจ</string>
     <string name="find_place_by_database">ค้นหาจากคลังข้อมูล</string>
     <string name="find_place_by_recent_survey">สถานที่ที่สำรวจล่าสุด</string>
-    <string name="cant_save_same_building_name">ไม่สามารถบันทึกอาคารนี้ได้เนื่องจากชื่ออาคารนี้มีอยู่แล้ว</string>
-    <!--<string name="add_more_building_button_text">เพิ่มอาคาร</string>-->
+    <string name="number_place_list_in_database">จำนวนรายการของรายชื่อสถานที่ที่แถบคลังข้อมูลตามประเภทที่เลือก</string>
+
 </resources>

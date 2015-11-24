@@ -29,7 +29,7 @@ public interface SurveyRepository {
 
     Survey findByBuildingAndUserIn7Day(Building building, User user);
 
-    ArrayList<Building> findByPlaceAndUserIn7Days(Place place, User user);
+    ArrayList<Survey> findByPlaceAndUserIn7Days(Place place, User user);
 
     ArrayList<Place> findByUserIn7Days(User user);
 }

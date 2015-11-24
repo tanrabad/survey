@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.User;
 
 public class SurveyBuildingChooser {
@@ -45,13 +46,21 @@ public class SurveyBuildingChooser {
             return;
         }
 
-        List<Building> surveyBuildings = surveyRepository.findByPlaceAndUserIn7Days(place, user);
+        List<Survey> surveys = surveyRepository.findByPlaceAndUserIn7Days(place, user);
         List<BuildingWithSurveyStatus> buildingsWithSurveyStatuses = new ArrayList<>();
         for (Building eachBuilding : buildings) {
-            BuildingWithSurveyStatus buildingWithSurveyStatus = new BuildingWithSurveyStatus(eachBuilding, surveyBuildings != null && surveyBuildings.remove(eachBuilding));
+            BuildingWithSurveyStatus buildingWithSurveyStatus = new BuildingWithSurveyStatus(eachBuilding, surveys != null && isBuildingSurveyed(surveys, eachBuilding));
             buildingsWithSurveyStatuses.add(buildingWithSurveyStatus);
         }
-
         surveyBuildingPresenter.displayAllSurveyBuildingList(buildingsWithSurveyStatuses);
+    }
+
+    private boolean isBuildingSurveyed(List<Survey> surveys, Building eachBuilding) {
+        for (Survey eachSurvey : surveys) {
+            if (eachSurvey.getSurveyBuilding().equals(eachBuilding)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

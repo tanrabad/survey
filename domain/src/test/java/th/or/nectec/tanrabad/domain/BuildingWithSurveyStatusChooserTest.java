@@ -12,6 +12,7 @@ import java.util.UUID;
 
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.User;
 
 public class BuildingWithSurveyStatusChooserTest {
@@ -64,8 +65,8 @@ public class BuildingWithSurveyStatusChooserTest {
         buildings.add(building2);
         buildings.add(building3);
 
-        final List<Building> surveyBuildings = new ArrayList<>();
-        surveyBuildings.add(building2);
+        final List<Survey> surveyBuildings = new ArrayList<>();
+        surveyBuildings.add(new Survey(user, building2));
 
         final List<BuildingWithSurveyStatus> buildingsWithSurveyStatuses = new ArrayList<>();
         buildingsWithSurveyStatuses.add(new BuildingWithSurveyStatus(building1, false));

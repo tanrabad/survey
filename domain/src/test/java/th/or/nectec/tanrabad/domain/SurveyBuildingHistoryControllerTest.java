@@ -12,6 +12,7 @@ import java.util.UUID;
 
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.User;
 
 public class SurveyBuildingHistoryControllerTest {
@@ -40,18 +41,17 @@ public class SurveyBuildingHistoryControllerTest {
 
         place = new Place(UUID.fromString(placeUUID), "1/1");
         user = User.fromUsername(username);
-
-        Building building1 = Building.withName("123");
-        building1.setPlace(place);
-
-        final List<Building> surveyBuildings = new ArrayList<Building>();
-        surveyBuildings.add(building1);
     }
 
     @Test
     public void testShowSurveyBuildingList() throws Exception {
 
-        final List<Building> surveyBuildings = new ArrayList<Building>();
+        Building building1 = Building.withName("123");
+        building1.setPlace(place);
+
+        final List<Survey> surveys = new ArrayList<>();
+        Survey survey1 = new Survey(user, building1);
+        surveys.add(survey1);
 
         context.checking(new Expectations() {
             {
@@ -62,13 +62,12 @@ public class SurveyBuildingHistoryControllerTest {
                 will(returnValue(user));
 
                 allowing(SurveyBuildingHistoryControllerTest.this.surveyRepository).findByPlaceAndUserIn7Days(with(place), with(user));
-
-                will(returnValue(surveyBuildings));
-                oneOf(surveyBuildingPresenter).displaySurveyBuildingList(surveyBuildings);
+                will(returnValue(surveys));
+                oneOf(surveyBuildingPresenter).displaySurveyBuildingList(surveys);
             }
         });
         SurveyBuildingHistoryController surveyBuildingHistoryController = new SurveyBuildingHistoryController(userRepository, placeRepository, this.surveyRepository, surveyBuildingPresenter);
-        surveyBuildingHistoryController.showSurveyBuildingOf(placeUUID.toString(), username);
+        surveyBuildingHistoryController.showSurveyBuildingOf(placeUUID, username);
     }
 
     @Test
@@ -85,7 +84,7 @@ public class SurveyBuildingHistoryControllerTest {
             }
         });
         SurveyBuildingHistoryController surveyBuildingHistoryController = new SurveyBuildingHistoryController(userRepository, placeRepository, this.surveyRepository, surveyBuildingPresenter);
-        surveyBuildingHistoryController.showSurveyBuildingOf(placeUUID.toString(), username);
+        surveyBuildingHistoryController.showSurveyBuildingOf(placeUUID, username);
     }
 
     @Test
@@ -99,7 +98,7 @@ public class SurveyBuildingHistoryControllerTest {
             }
         });
         SurveyBuildingHistoryController surveyBuildingHistoryController = new SurveyBuildingHistoryController(userRepository, placeRepository, this.surveyRepository, surveyBuildingPresenter);
-        surveyBuildingHistoryController.showSurveyBuildingOf(placeUUID.toString(), username);
+        surveyBuildingHistoryController.showSurveyBuildingOf(placeUUID, username);
     }
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015  NECTEC
+ * Copyright (c) 2015 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,22 +22,10 @@ public class SurveyDetail {
     private final ContainerType containerType;
     private int totalContainer;
     private int foundLarvaContainer;
+
     public SurveyDetail(ContainerType containerType, int totalContainer, int foundLarvaContainer) {
         this.containerType = containerType;
         setContainerCount(totalContainer, foundLarvaContainer);
-    }
-
-    public static SurveyDetail fromResult(ContainerType containerType, int total, int found) {
-        return new SurveyDetail(containerType, total, found);
-    }
-
-    @Override
-    public String toString() {
-        return "SurveyDetail{" +
-                "containerType=" + containerType +
-                ", totalContainer=" + totalContainer +
-                ", foundLarvaContainer=" + foundLarvaContainer +
-                '}';
     }
 
     private void setContainerCount(int total, int found) {
@@ -47,8 +35,20 @@ public class SurveyDetail {
         this.foundLarvaContainer = found;
     }
 
+    public static SurveyDetail fromResult(ContainerType containerType, int total, int found) {
+        return new SurveyDetail(containerType, total, found);
+    }
+
     public ContainerType getContainerType() {
         return containerType;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = containerType.hashCode();
+        result = 31 * result + totalContainer;
+        result = 31 * result + foundLarvaContainer;
+        return result;
     }
 
     @Override
@@ -63,11 +63,12 @@ public class SurveyDetail {
     }
 
     @Override
-    public int hashCode() {
-        int result = containerType.hashCode();
-        result = 31 * result + totalContainer;
-        result = 31 * result + foundLarvaContainer;
-        return result;
+    public String toString() {
+        return "SurveyDetail{" +
+                "containerType=" + containerType +
+                ", totalContainer=" + totalContainer +
+                ", foundLarvaContainer=" + foundLarvaContainer +
+                '}';
     }
 
     public int getTotalContainer() {

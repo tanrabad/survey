@@ -78,5 +78,6 @@
     <string name="survey_place_not_found">ไม่พบรายการสถานที่ที่สำรวจ</string>
     <string name="find_place_by_database">ค้นหาจากคลังข้อมูล</string>
     <string name="find_place_by_recent_survey">สถานที่ที่สำรวจล่าสุด</string>
+    <string name="cant_save_same_building_name">ไม่สามารถบันทึกอาคารนี้ได้เนื่องจากชื่ออาคารนี้มีอยู่แล้ว</string>
     <!--<string name="add_more_building_button_text">เพิ่มอาคาร</string>-->
 </resources>

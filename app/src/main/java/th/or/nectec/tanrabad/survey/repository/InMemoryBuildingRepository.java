@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015  NECTEC
+ * Copyright (c) 2015 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,14 +18,13 @@
 package th.or.nectec.tanrabad.survey.repository;
 
 import android.support.annotation.NonNull;
+import th.or.nectec.tanrabad.domain.building.BuildingDuplicateException;
+import th.or.nectec.tanrabad.domain.building.BuildingRepository;
+import th.or.nectec.tanrabad.entity.Building;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import th.or.nectec.tanrabad.domain.BuildingDuplicateException;
-import th.or.nectec.tanrabad.domain.BuildingRepository;
-import th.or.nectec.tanrabad.entity.Building;
 
 public class InMemoryBuildingRepository implements BuildingRepository {
 
@@ -71,15 +70,15 @@ public class InMemoryBuildingRepository implements BuildingRepository {
         buildings.add(building9);
     }
 
+    @NonNull
+    private UUID generateUUID(String input) {
+        return UUID.nameUUIDFromBytes(input.getBytes());
+    }
+
     public static InMemoryBuildingRepository getInstance() {
         if (instance == null)
             instance = new InMemoryBuildingRepository();
         return instance;
-    }
-
-    @NonNull
-    private UUID generateUUID(String input) {
-        return UUID.nameUUIDFromBytes(input.getBytes());
     }
 
     @Override

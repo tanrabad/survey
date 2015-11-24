@@ -29,25 +29,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import th.or.nectec.tanrabad.domain.ContainerController;
-import th.or.nectec.tanrabad.domain.ContainerPresenter;
-import th.or.nectec.tanrabad.domain.SurveyController;
-import th.or.nectec.tanrabad.domain.SurveyPresenter;
-import th.or.nectec.tanrabad.domain.SurveyRepository;
-import th.or.nectec.tanrabad.domain.SurveySavePresenter;
-import th.or.nectec.tanrabad.domain.SurveySaver;
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.ContainerType;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.Survey;
-import th.or.nectec.tanrabad.entity.SurveyDetail;
-import th.or.nectec.tanrabad.entity.User;
+import th.or.nectec.tanrabad.domain.survey.*;
+import th.or.nectec.tanrabad.entity.*;
 import th.or.nectec.tanrabad.survey.repository.InMemoryBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.InMemoryContainerTypeRepository;
 import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
@@ -56,6 +39,11 @@ import th.or.nectec.tanrabad.survey.utils.EditTextStepper;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.validator.SaveSurveyValidator;
 import th.or.nectec.tanrabad.survey.view.SurveyContainerView;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class SurveyActivity extends TanrabadActivity implements ContainerPresenter, SurveyPresenter, SurveySavePresenter {
@@ -86,15 +74,15 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         setSupportActionBar(toolbar);
     }
 
-    private void showContainerList() {
-        ContainerController containerController = new ContainerController(InMemoryContainerTypeRepository.getInstance(), this);
-        containerController.showList();
-    }
-
     private void findViewsFromLayout() {
         indoorContainerLayout = (LinearLayout) findViewById(R.id.indoor_container);
         outdoorContainerLayout = (LinearLayout) findViewById(R.id.outdoor_container);
         residentCountView = (EditText) findViewById(R.id.resident_count);
+    }
+
+    private void showContainerList() {
+        ContainerController containerController = new ContainerController(InMemoryContainerTypeRepository.getInstance(), this);
+        containerController.showList();
     }
 
     private void initSurvey() {
@@ -105,15 +93,6 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         String username = getIntent().getStringExtra(USERNAME_ARG);
 
         surveyController.checkThisBuildingAndUserCanSurvey(buildingUUID, username);
-    }
-
-
-    @Override
-    public void onNewSurvey(Building building, User user) {
-        survey = new Survey(user, building);
-        survey.startSurvey();
-
-        setBuildingInfo();
     }
 
     @Override
@@ -127,33 +106,12 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         loadSurveyData(survey);
     }
 
-    private void setBuildingInfo() {
-        Building building = survey.getSurveyBuilding();
-        ((TextView) findViewById(R.id.building_name)).setText(getBuildingNameWithPrefix(building));
-        ((TextView) findViewById(R.id.place_name)).setText(building.getPlace().getName());
-    }
+    @Override
+    public void onNewSurvey(Building building, User user) {
+        survey = new Survey(user, building);
+        survey.startSurvey();
 
-    private String getBuildingNameWithPrefix(Building building) {
-        String houseNoPrefix = "บ้านเลขที่ ";
-        String buildName = building.getName();
-        Place place = survey.getSurveyBuilding().getPlace();
-        if (place.getType() == Place.TYPE_VILLAGE_COMMUNITY) {
-            buildName = houseNoPrefix + buildName;
-        }
-        return buildName;
-    }
-
-    private void loadSurveyData(Survey survey) {
-        residentCountView.setText(String.valueOf(survey.getResidentCount()));
-        loadSurveyDetail(survey.getIndoorDetail(), indoorContainerViews);
-        loadSurveyDetail(survey.getOutdoorDetail(), outdoorContainerViews);
-    }
-
-    private void loadSurveyDetail(ArrayList<SurveyDetail> indoorDetails, HashMap<Integer, SurveyContainerView> surveyContainerViews) {
-        for (SurveyDetail eachDetail : indoorDetails) {
-            SurveyContainerView surveyContainerView = surveyContainerViews.get(eachDetail.getContainerType().getId());
-            surveyContainerView.setSurveyDetail(eachDetail);
-        }
+        setBuildingInfo();
     }
 
     @Override
@@ -171,6 +129,35 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         Toast.makeText(SurveyActivity.this, "ไม่พบข้อมูลสถานที่", Toast.LENGTH_LONG).show();
     }
 
+    private void setBuildingInfo() {
+        Building building = survey.getSurveyBuilding();
+        ((TextView) findViewById(R.id.building_name)).setText(getBuildingNameWithPrefix(building));
+        ((TextView) findViewById(R.id.place_name)).setText(building.getPlace().getName());
+    }
+
+    private void loadSurveyData(Survey survey) {
+        residentCountView.setText(String.valueOf(survey.getResidentCount()));
+        loadSurveyDetail(survey.getIndoorDetail(), indoorContainerViews);
+        loadSurveyDetail(survey.getOutdoorDetail(), outdoorContainerViews);
+    }
+
+    private String getBuildingNameWithPrefix(Building building) {
+        String houseNoPrefix = "บ้านเลขที่ ";
+        String buildName = building.getName();
+        Place place = survey.getSurveyBuilding().getPlace();
+        if (place.getType() == Place.TYPE_VILLAGE_COMMUNITY) {
+            buildName = houseNoPrefix + buildName;
+        }
+        return buildName;
+    }
+
+    private void loadSurveyDetail(ArrayList<SurveyDetail> indoorDetails, HashMap<Integer,SurveyContainerView> surveyContainerViews) {
+        for (SurveyDetail eachDetail : indoorDetails) {
+            SurveyContainerView surveyContainerView = surveyContainerViews.get(eachDetail.getContainerType().getId());
+            surveyContainerView.setSurveyDetail(eachDetail);
+        }
+    }
+
     @Override
     public void displayContainerList(List<ContainerType> containers) {
         initContainerView();
@@ -183,6 +170,31 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     @Override
     public void alertContainerNotFound() {
         Toast.makeText(SurveyActivity.this, R.string.container_not_found, Toast.LENGTH_LONG).show();
+    }
+
+    private void initContainerView() {
+        indoorContainerLayout.removeAllViews();
+        outdoorContainerLayout.removeAllViews();
+        indoorContainerViews = new HashMap<>();
+        outdoorContainerViews = new HashMap<>();
+    }
+
+    private void buildIndoorContainerView(ContainerType containerType) {
+        SurveyContainerView surveyContainerView = buildContainerView(containerType);
+        indoorContainerViews.put(containerType.getId(), surveyContainerView);
+        indoorContainerLayout.addView(surveyContainerView);
+    }
+
+    private void buildOutdoorContainerView(ContainerType containerType) {
+        SurveyContainerView surveyContainerView = buildContainerView(containerType);
+        outdoorContainerViews.put(containerType.getId(), surveyContainerView);
+        outdoorContainerLayout.addView(surveyContainerView);
+    }
+
+    private SurveyContainerView buildContainerView(ContainerType containerType) {
+        SurveyContainerView surveyContainerView = new SurveyContainerView(SurveyActivity.this);
+        surveyContainerView.setContainerType(containerType);
+        return surveyContainerView;
     }
 
     @Override
@@ -202,6 +214,22 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     @Override
     public void displaySaveFail() {
         Toast.makeText(SurveyActivity.this, R.string.save_fail, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.action_save_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.save:
+                SaveSurveyData();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void SaveSurveyData() {
@@ -240,47 +268,6 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
             if (!eachView.getValue().isValid()) isValid = false;
         }
         return isValid;
-    }
-
-    private void initContainerView() {
-        indoorContainerLayout.removeAllViews();
-        outdoorContainerLayout.removeAllViews();
-        indoorContainerViews = new HashMap<>();
-        outdoorContainerViews = new HashMap<>();
-    }
-
-    private void buildIndoorContainerView(ContainerType containerType) {
-        SurveyContainerView surveyContainerView = buildContainerView(containerType);
-        indoorContainerViews.put(containerType.getId(), surveyContainerView);
-        indoorContainerLayout.addView(surveyContainerView);
-    }
-
-    private void buildOutdoorContainerView(ContainerType containerType) {
-        SurveyContainerView surveyContainerView = buildContainerView(containerType);
-        outdoorContainerViews.put(containerType.getId(), surveyContainerView);
-        outdoorContainerLayout.addView(surveyContainerView);
-    }
-
-    private SurveyContainerView buildContainerView(ContainerType containerType) {
-        SurveyContainerView surveyContainerView = new SurveyContainerView(SurveyActivity.this);
-        surveyContainerView.setContainerType(containerType);
-        return surveyContainerView;
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.action_save_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.save:
-                SaveSurveyData();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

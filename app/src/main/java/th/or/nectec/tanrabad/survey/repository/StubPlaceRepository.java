@@ -18,13 +18,12 @@
 package th.or.nectec.tanrabad.survey.repository;
 
 import android.support.annotation.NonNull;
+import th.or.nectec.tanrabad.domain.place.PlaceRepository;
+import th.or.nectec.tanrabad.entity.Place;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import th.or.nectec.tanrabad.domain.PlaceRepository;
-import th.or.nectec.tanrabad.entity.Place;
 
 public class StubPlaceRepository implements PlaceRepository {
 
@@ -65,6 +64,11 @@ public class StubPlaceRepository implements PlaceRepository {
         places.add(anubarnNursery);
     }
 
+    @NonNull
+    private UUID generateUUID(String input) {
+        return UUID.nameUUIDFromBytes(input.getBytes());
+    }
+
     public Place getPalazzettoVillage() {
         return palazzettoVillage;
     }
@@ -75,11 +79,6 @@ public class StubPlaceRepository implements PlaceRepository {
 
     public Place getWatpaphukon() {
         return watpaphukon;
-    }
-
-    @NonNull
-    private UUID generateUUID(String input) {
-        return UUID.nameUUIDFromBytes(input.getBytes());
     }
 
     @Override

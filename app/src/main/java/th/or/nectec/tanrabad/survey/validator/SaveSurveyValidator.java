@@ -19,7 +19,7 @@ package th.or.nectec.tanrabad.survey.validator;
 
 import android.content.Context;
 import android.widget.Toast;
-import th.or.nectec.tanrabad.domain.SurveyValidator;
+import th.or.nectec.tanrabad.domain.survey.SurveyValidator;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.survey.R;
 

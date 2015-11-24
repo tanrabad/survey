@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015  NECTEC
+ * Copyright (c) 2015 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,15 +25,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import java.util.List;
-import java.util.UUID;
-
-import th.or.nectec.tanrabad.domain.BuildingWithSurveyStatus;
-import th.or.nectec.tanrabad.domain.BuildingWithSurveyStatusListPresenter;
-import th.or.nectec.tanrabad.domain.PlaceController;
-import th.or.nectec.tanrabad.domain.PlacePresenter;
-import th.or.nectec.tanrabad.domain.SurveyBuildingChooser;
+import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
+import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatusListPresenter;
+import th.or.nectec.tanrabad.domain.place.PlaceController;
+import th.or.nectec.tanrabad.domain.place.PlacePresenter;
+import th.or.nectec.tanrabad.domain.survey.SurveyBuildingChooser;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.repository.InMemoryBuildingRepository;
@@ -41,6 +37,9 @@ import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
+
+import java.util.List;
+import java.util.UUID;
 
 public class BuildingListActivity extends TanrabadActivity implements BuildingWithSurveyStatusListPresenter, PlacePresenter {
 
@@ -79,32 +78,28 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         loadSurveyBuildingList();
     }
 
-    private void showPlaceName() {
-        PlaceController placeController = new PlaceController(new StubPlaceRepository(), this);
-        placeController.showPlace(getPlaceUuidFromIntent());
-    }
-
-    @Override
-    public void displayPlace(Place place) {
-        TextView placeName = (TextView) findViewById(R.id.place_name);
-        placeName.setText(place.getName());
-    }
-
-    @Override
-    public void alertPlaceNotFound() {
-        Alert.highLevel().show(R.string.place_not_found);
-    }
-
-    private void loadSurveyBuildingList() {
-        surveyBuildingChooser = new SurveyBuildingChooser(new StubUserRepository(), new StubPlaceRepository(), InMemoryBuildingRepository.getInstance(), InMemorySurveyRepository.getInstance(), this);
-        surveyBuildingChooser.displaySurveyBuildingOf(getPlaceUuidFromIntent().toString(), "sara");
-    }
-
     private void openSurveyActivity(Building building) {
         Intent intent = new Intent(BuildingListActivity.this, SurveyActivity.class);
         intent.putExtra(SurveyActivity.BUILDING_UUID_ARG, building.getId().toString());
         intent.putExtra(SurveyActivity.USERNAME_ARG, "sara");
         startActivity(intent);
+    }
+
+    private void openEditBuildingActivity(String buildingUUID) {
+        Intent intent = new Intent(BuildingListActivity.this, BuildingAddActivity.class);
+        intent.putExtra(PLACE_UUID_ARG, getIntent().getStringExtra(PLACE_UUID_ARG));
+        intent.putExtra(BuildingAddActivity.BUILDING_UUID_ARG, buildingUUID);
+        startActivityForResult(intent, ADD_BUILDING_REQ_CODE);
+    }
+
+    private void showPlaceName() {
+        PlaceController placeController = new PlaceController(new StubPlaceRepository(), this);
+        placeController.showPlace(getPlaceUuidFromIntent());
+    }
+
+    private void loadSurveyBuildingList() {
+        surveyBuildingChooser = new SurveyBuildingChooser(new StubUserRepository(), new StubPlaceRepository(), InMemoryBuildingRepository.getInstance(), InMemorySurveyRepository.getInstance(), this);
+        surveyBuildingChooser.displaySurveyBuildingOf(getPlaceUuidFromIntent().toString(), "sara");
     }
 
     private UUID getPlaceUuidFromIntent() {
@@ -113,8 +108,9 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     }
 
     @Override
-    public void alertUserNotFound() {
-
+    public void displayPlace(Place place) {
+        TextView placeName = (TextView) findViewById(R.id.place_name);
+        placeName.setText(place.getName());
     }
 
     @Override
@@ -128,6 +124,16 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         buildingAdapter = new BuildingWithSurveyStatusAdapter(BuildingListActivity.this, buildingsWithSurveyStatuses);
         buildingList.setAdapter(buildingAdapter);
         buildingCountView.setText(String.valueOf(buildingsWithSurveyStatuses.size()));
+    }
+
+    @Override
+    public void alertUserNotFound() {
+
+    }
+
+    @Override
+    public void alertPlaceNotFound() {
+        Alert.highLevel().show(R.string.place_not_found);
     }
 
     @Override
@@ -149,13 +155,6 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     private void openAddBuildingActivity() {
         Intent intent = new Intent(BuildingListActivity.this, BuildingAddActivity.class);
         intent.putExtra(PLACE_UUID_ARG, getIntent().getStringExtra(PLACE_UUID_ARG));
-        startActivityForResult(intent, ADD_BUILDING_REQ_CODE);
-    }
-
-    private void openEditBuildingActivity(String buildingUUID) {
-        Intent intent = new Intent(BuildingListActivity.this, BuildingAddActivity.class);
-        intent.putExtra(PLACE_UUID_ARG, getIntent().getStringExtra(PLACE_UUID_ARG));
-        intent.putExtra(BuildingAddActivity.BUILDING_UUID_ARG, buildingUUID);
         startActivityForResult(intent, ADD_BUILDING_REQ_CODE);
     }
 

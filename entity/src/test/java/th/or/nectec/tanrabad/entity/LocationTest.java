@@ -24,34 +24,39 @@ import static org.junit.Assert.assertNotEquals;
 
 
 public class LocationTest {
+    public static final double DELTA = 0.0001;
+
     private final double latitude1 = 14.078606;
     private final double longitude1 = 100.603120;
-    private final Location location1 = new Location(latitude1, longitude1);
+    private final Location location = new Location(latitude1, longitude1);
 
     @Test
     public void testGetLatitude()  {
-        assertEquals(14.078606, location1.getLatitude(), 0.0001);
+        assertEquals(latitude1, location.getLatitude(), DELTA);
     }
 
     @Test
     public void testGetLongitude()  {
-        assertEquals(100.603120, location1.getLongitude(), 0.0001);
+        assertEquals(longitude1, location.getLongitude(), DELTA);
     }
 
     @Test
     public void locationWithDifferentLatitudeMustNotEquals()  {
-        Location location2 = new Location(15.078606, longitude1);
-        assertNotEquals(location1, location2);
+        Location anotherLocation = new Location(15.078606, longitude1);
+
+        assertNotEquals(location, anotherLocation);
     }
 
     @Test
     public void locationWithDifferentLongitudeMustNotEquals()  {
-        Location location2 = new Location(latitude1, 200.603120);
-        assertNotEquals(location1, location2);
+        Location anotherLocation = new Location(latitude1, 200.603120);
+
+        assertNotEquals(location, anotherLocation);
     }
 
     @Test
     public void locationTheSameLatitudeLongitudeMustEquals()  {
-        Location location2 = new Location(latitude1, longitude1);
-        assertEquals(location1, location2);
+        Location sameLocation = new Location(latitude1, longitude1);
+
+        assertEquals(location, sameLocation);
     }}

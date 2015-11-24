@@ -36,7 +36,7 @@ import static org.hamcrest.Matchers.allOf;
 
 
 @RunWith(AndroidJUnit4.class)
-public class SurveyTest extends TANRABADInstrumentationBaseTest {
+public class SurveyTest extends TanrabadEspressoTestBase {
     public ActivityTestRule<SurveyActivity> mActivityTestRule = new ActivityTestRule<>(SurveyActivity.class);
     SurveyActivity mActivity;
 

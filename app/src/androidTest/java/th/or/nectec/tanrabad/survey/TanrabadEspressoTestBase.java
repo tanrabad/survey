@@ -22,7 +22,7 @@ import org.hamcrest.Matcher;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.containsString;
 
-public class TANRABADInstrumentationBaseTest {
+public class TanrabadEspressoTestBase {
 
     protected void waitingFor(int time) {
         try {

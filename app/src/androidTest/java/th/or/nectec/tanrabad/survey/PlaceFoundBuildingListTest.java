@@ -31,7 +31,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.*;
 import static org.hamcrest.Matchers.allOf;
 
-public class PlaceFoundBuildingListTest extends TANRABADInstrumentationBaseTest {
+public class PlaceFoundBuildingListTest extends TanrabadEspressoTestBase {
     public ActivityTestRule<BuildingListActivity> mActivityTestRule = new ActivityTestRule<>(BuildingListActivity.class);
     BuildingListActivity mAtivity;
 

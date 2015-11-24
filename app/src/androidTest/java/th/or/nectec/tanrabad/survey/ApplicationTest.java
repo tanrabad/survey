@@ -20,7 +20,7 @@ package th.or.nectec.tanrabad.survey;
 import android.app.Application;
 import android.test.ApplicationTestCase;
 
-class ApplicationTest extends ApplicationTestCase<Application> {
+public class ApplicationTest extends ApplicationTestCase<Application> {
     public ApplicationTest() {
         super(Application.class);
     }

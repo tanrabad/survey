@@ -32,7 +32,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
-public class ChoosePlaceFromPlaceListTest extends TANRABADInstrumentationBaseTest {
+public class ChoosePlaceFromPlaceListTest extends TanrabadEspressoTestBase {
     public ActivityTestRule<PlaceListActivity> mActivityTestRule =
             new ActivityTestRule<>(PlaceListActivity.class);
     PlaceListActivity mAtivity;

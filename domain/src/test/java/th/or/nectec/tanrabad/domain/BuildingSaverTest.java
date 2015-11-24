@@ -28,7 +28,7 @@ public class BuildingSaverTest {
     private Building building;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         buildingSavePresenter = context.mock(BuildingSavePresenter.class);
         buildingValidator = context.mock(BuildingValidator.class);
         buildingRepository = context.mock(BuildingRepository.class);
@@ -47,6 +47,7 @@ public class BuildingSaverTest {
 
         context.checking(new Expectations() {
             {
+                oneOf(buildingValidator).setBuildingRepository(with(buildingRepository));
                 allowing(BuildingSaverTest.this.buildingValidator).validate(with(building));
                 will(returnValue(true));
                 oneOf(BuildingSaverTest.this.buildingRepository).save(with(building));
@@ -61,8 +62,10 @@ public class BuildingSaverTest {
     @Test
     public void testSadPath() throws Exception {
 
+        building.setName(null);
         context.checking(new Expectations() {
             {
+                oneOf(buildingValidator).setBuildingRepository(with(buildingRepository));
                 allowing(buildingValidator).validate(building);
                 will(returnValue(false));
                 never(buildingRepository);
@@ -71,6 +74,24 @@ public class BuildingSaverTest {
         });
         BuildingSaver buildingSaver = new BuildingSaver(buildingRepository, buildingValidator, buildingSavePresenter);
         buildingSaver.save(building);
+    }
+
+    @Test
+    public void testSaveDuplicateBuilding() throws Exception {
+        final Building secondBuilding = Building.withName("123");
+        secondBuilding.setPlace(place);
+        context.checking(new Expectations() {
+            {
+                oneOf(buildingValidator).setBuildingRepository(with(buildingRepository));
+                allowing(buildingValidator).validate(secondBuilding);
+                will(returnValue(false));
+                never(buildingRepository);
+                oneOf(buildingSavePresenter).displaySaveFail();
+            }
+        });
+
+        BuildingSaver buildingSaverAfter = new BuildingSaver(buildingRepository, buildingValidator, buildingSavePresenter);
+        buildingSaverAfter.save(secondBuilding);
     }
 
 }

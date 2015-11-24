@@ -9,6 +9,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 import th.or.nectec.tanrabad.entity.Location;
+import th.or.nectec.tanrabad.entity.Locationing;
 import th.or.nectec.tanrabad.entity.Place;
 
 public class FindNearByPlaceControllerTest {
@@ -17,8 +18,9 @@ public class FindNearByPlaceControllerTest {
     public JUnitRuleMockery context = new JUnitRuleMockery();
 
     private PlaceRepository placeRepository;
-    private PlaceListPresenter placeListPresenter;
+    private NearByPlacePresenter nearByPlacePresenter;
     private FilterBoundaryCalculator filterBoundaryCalculate;
+    private DistanceSorter distanceSorter;
 
     double currentLatitude = 40.6892;
     double currentLongitude = -74.0444;
@@ -29,8 +31,9 @@ public class FindNearByPlaceControllerTest {
     @Before
     public void setUp() {
         placeRepository = context.mock(PlaceRepository.class);
-        placeListPresenter = context.mock(PlaceListPresenter.class);
+        nearByPlacePresenter = context.mock(NearByPlacePresenter.class);
         filterBoundaryCalculate = context.mock(FilterBoundaryCalculator.class);
+        distanceSorter = context.mock(DistanceSorter.class);
 
         ArrayList<Place> places = new ArrayList<>();
         Place place1 = Place.withName("a");
@@ -56,7 +59,7 @@ public class FindNearByPlaceControllerTest {
 
     @Test
     public void testGetPlaceListWithLocationFilter() throws Exception {
-        final ArrayList<Place> placesFilter = new ArrayList<>();
+        final ArrayList<Locationing> placesFilter = new ArrayList<>();
 
         Place place2 = Place.withName("b");
         place2.setLocation(new Location(39.800, -74.000));
@@ -86,10 +89,14 @@ public class FindNearByPlaceControllerTest {
                 will(returnValue(maximumLocation));
                 oneOf(placeRepository).findInBoundaryLocation(minimumLocation, maximumLocation);
                 will(returnValue(placesFilter));
-                oneOf(placeListPresenter).displayPlaceList(placesFilter);
+                oneOf(distanceSorter).sort(placesFilter);
+                oneOf(nearByPlacePresenter).displayNearByPlaces(placesFilter);
             }
         });
-        FindNearByPlaceController locationBoundaryController = new FindNearByPlaceController(filterBoundaryCalculate, placeRepository, placeListPresenter);
+        FindNearByPlaceController locationBoundaryController = new FindNearByPlaceController(filterBoundaryCalculate,
+                placeRepository,
+                distanceSorter,
+                nearByPlacePresenter);
         locationBoundaryController.findNearByPlace(currentLocation, distanceInKm);
     }
 
@@ -112,10 +119,13 @@ public class FindNearByPlaceControllerTest {
                 will(returnValue(maximumLocation));
                 oneOf(placeRepository).findInBoundaryLocation(minimumLocation, maximumLocation);
                 will(returnValue(null));
-                oneOf(placeListPresenter).displayPlaceNotFound();
+                oneOf(nearByPlacePresenter).displayPlaceNotFound();
             }
         });
-        FindNearByPlaceController locationBoundaryController = new FindNearByPlaceController(filterBoundaryCalculate, placeRepository, placeListPresenter);
+        FindNearByPlaceController locationBoundaryController = new FindNearByPlaceController(filterBoundaryCalculate,
+                placeRepository,
+                distanceSorter,
+                nearByPlacePresenter);
         locationBoundaryController.findNearByPlace(currentLocation, distanceInKm);
     }
 

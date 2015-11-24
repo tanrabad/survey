@@ -17,6 +17,7 @@
 
 package th.or.nectec.tanrabad.entity;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -27,52 +28,62 @@ import static org.junit.Assert.assertNotEquals;
 @RunWith(JUnit4.class)
 public class OrganizationTest {
 
-    private final int organizationId1 = 1;
-    private final String name1 = "สำนักป้องกันควบคุมโรคที่ 4";
-    private final Organization organization1 = new Organization(organizationId1, name1);
-    private final Organization organization2 = new Organization(organizationId1, name1);
+    private static final int ID = 1;
+    private static final String สำนักป้องกันควบคุมโรคที่_4 = "สำนักป้องกันควบคุมโรคที่ 4";
+
+    private Organization organization;
+
+    @Before
+    public void setUp() throws Exception {
+        organization = new Organization(ID, สำนักป้องกันควบคุมโรคที่_4);
+        organization.setAreaLevelId(Organization.AREA_LEVEL_ID_PROVINCE);
+    }
 
     @Test
-    public void testSetThenGetOrganizationId() {
-        organization1.setOrganizationId(2);
-        assertEquals(2, organization1.getOrganizationId());
+    public void testGetOrganizationId() {
+        assertEquals(ID, organization.getOrganizationId());
     }
 
     @Test
     public void testSetThenGetName() {
-        organization1.setName("รพ.สต.บางแม่นาง");
-        assertEquals("รพ.สต.บางแม่นาง", organization1.getName());
+        String hospitalName = "รพ.สต.บางแม่นาง";
+        organization.setName(hospitalName);
+
+        assertEquals(hospitalName, organization.getName());
     }
 
     @Test
-    public void testSetThenAreaLevelId() {
-        organization1.setAreaLevelId(Organization.AREA_LEVEL_ID_PROVINCE);
-        assertEquals(Organization.AREA_LEVEL_ID_PROVINCE, organization1.getAreaLevelId());
+    public void testSetThenGetAreaLevelId() {
+        assertEquals(Organization.AREA_LEVEL_ID_PROVINCE, organization.getAreaLevelId());
     }
 
     @Test
     public void organizationWithDifferentIdMustNotEquals() {
-        Organization organization2 = new Organization(3, name1);
-        assertNotEquals(organization1, organization2);
+        Organization anotherOrg = new Organization(3, สำนักป้องกันควบคุมโรคที่_4);
+
+        assertNotEquals(organization, anotherOrg);
     }
 
     @Test
     public void organizationWithDifferentNameMustNotEquals() {
-        Organization organization2 = new Organization(organizationId1, "รพ.สต.บางแม่นาง");
-        assertNotEquals(organization1, organization2);
+        Organization anotherOrg = new Organization(ID, "รพ.สต.บางแม่นาง");
+
+        assertNotEquals(organization, anotherOrg);
     }
 
     @Test
     public void organizationWithDifferentAreaLevelIdMustNotEquals() {
-        organization1.setAreaLevelId(Organization.AREA_LEVEL_ID_AMPHUR);
-        organization2.setAreaLevelId(Organization.AREA_LEVEL_ID_TUMBON);
-        assertNotEquals(organization1, organization2);
+        Organization anotherOrg = new Organization(ID, สำนักป้องกันควบคุมโรคที่_4);
+        anotherOrg.setAreaLevelId(Organization.AREA_LEVEL_ID_TUMBON);
+
+        assertNotEquals(organization, anotherOrg);
     }
 
     @Test
     public void organizationWithTheSameIdAndNameAndAreaLevelIdMustEquals() {
-        organization1.setAreaLevelId(Organization.AREA_LEVEL_ID_PROVINCE);
-        organization2.setAreaLevelId(Organization.AREA_LEVEL_ID_PROVINCE);
-        assertEquals(organization1, organization2);
+        Organization sameOrg = new Organization(ID, สำนักป้องกันควบคุมโรคที่_4);
+        sameOrg.setAreaLevelId(Organization.AREA_LEVEL_ID_PROVINCE);
+
+        assertEquals(organization, sameOrg);
     }
 }

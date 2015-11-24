@@ -36,10 +36,6 @@ public class Organization {
         return organizationId;
     }
 
-    public void setOrganizationId(int organizationId) {
-        this.organizationId = organizationId;
-    }
-
     public String getName() {
         return name;
     }
@@ -57,6 +53,14 @@ public class Organization {
     }
 
     @Override
+    public int hashCode() {
+        int result = organizationId;
+        result = 31 * result + name.hashCode();
+        result = 31 * result + areaLevelId;
+        return result;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -67,13 +71,5 @@ public class Organization {
         if (areaLevelId != that.areaLevelId) return false;
         return name.equals(that.name);
 
-    }
-
-    @Override
-    public int hashCode() {
-        int result = organizationId;
-        result = 31 * result + name.hashCode();
-        result = 31 * result + areaLevelId;
-        return result;
     }
 }

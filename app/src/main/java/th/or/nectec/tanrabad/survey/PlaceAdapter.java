@@ -77,7 +77,7 @@ public class PlaceAdapter extends BaseAdapter {
 
         final ViewHolder holder;
         if (view == null || view.getTag() == null) {
-            view = inflater.inflate(R.layout.place_list_item, parent, false);
+            view = inflater.inflate(R.layout.list_item_place, parent, false);
             holder = new ViewHolder();
             holder.placeTextView = (TextView) view.findViewById(R.id.place_name);
             holder.placeIcon = (ImageView) view.findViewById(R.id.place_icon);

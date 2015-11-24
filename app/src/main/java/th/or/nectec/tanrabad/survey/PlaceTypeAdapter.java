@@ -53,7 +53,7 @@ public class PlaceTypeAdapter extends BaseAdapter {
 
         final ViewHolder holder;
         if (view == null || view.getTag() == null) {
-            view = inflater.inflate(R.layout.spinner_list_item, parent, false);
+            view = inflater.inflate(R.layout.list_item_spinner, parent, false);
             holder = new ViewHolder();
             holder.nameView = (TextView) view.findViewById(R.id.text_item);
 

@@ -46,7 +46,7 @@ public class BuildingWithSurveyStatusAdapter extends BaseAdapter {
 
         final ViewHolder holder;
         if(view == null || view.getTag() == null){
-            view = inflater.inflate(R.layout.building_list_item, parent, false);
+            view = inflater.inflate(R.layout.list_item_building, parent, false);
             holder = new ViewHolder();
             holder.buildingTextView = (TextView)view.findViewById(R.id.building_name);
             holder.buildingIcon = (ImageView)view.findViewById(R.id.building_icon);

@@ -40,7 +40,7 @@ public class SurveyContainerView extends LinearLayout {
 
     private void initInflate() {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.survey_container_layout, this);
+        inflater.inflate(R.layout.view_survey_container_layout, this);
     }
 
     private void initInstances() {

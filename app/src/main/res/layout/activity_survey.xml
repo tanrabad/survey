@@ -79,7 +79,6 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:layout_marginBottom="@dimen/between_text_margin_bottom"
-                        android:layout_marginTop="@dimen/between_text_margin_top"
                         android:gravity="end"
                         android:textColor="@color/white"
                         android:textIsSelectable="false"

@@ -21,7 +21,7 @@ import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 
-public class Survey {
+public class Survey implements LocationEntity {
     private User user;
     private Building surveyBuilding;
     private int residentCount;
@@ -80,6 +80,7 @@ public class Survey {
         return user;
     }
 
+    @Override
     public Location getLocation() {
         return location;
     }
@@ -105,14 +106,14 @@ public class Survey {
     }
 
     @Override
-    public String toString() {
-        return "Survey{" +
-                "user=" + user +
-                ", surveyBuilding=" + surveyBuilding +
-                ", residentCount=" + residentCount +
-                ", indoorDetails=" + indoorDetails +
-                ", outdoorDetails=" + outdoorDetails +
-                '}';
+    public int hashCode() {
+        int result = user.hashCode();
+        result = 31 * result + surveyBuilding.hashCode();
+        result = 31 * result + residentCount;
+        result = 31 * result + (indoorDetails != null ? indoorDetails.hashCode() : 0);
+        result = 31 * result + (outdoorDetails != null ? outdoorDetails.hashCode() : 0);
+        result = 31 * result + (startTimestamp != null ? startTimestamp.hashCode() : 0);
+        return result;
     }
 
     @Override
@@ -134,13 +135,13 @@ public class Survey {
     }
 
     @Override
-    public int hashCode() {
-        int result = user.hashCode();
-        result = 31 * result + surveyBuilding.hashCode();
-        result = 31 * result + residentCount;
-        result = 31 * result + (indoorDetails != null ? indoorDetails.hashCode() : 0);
-        result = 31 * result + (outdoorDetails != null ? outdoorDetails.hashCode() : 0);
-        result = 31 * result + (startTimestamp != null ? startTimestamp.hashCode() : 0);
-        return result;
+    public String toString() {
+        return "Survey{" +
+                "user=" + user +
+                ", surveyBuilding=" + surveyBuilding +
+                ", residentCount=" + residentCount +
+                ", indoorDetails=" + indoorDetails +
+                ", outdoorDetails=" + outdoorDetails +
+                '}';
     }
 }

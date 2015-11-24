@@ -19,7 +19,7 @@ package th.or.nectec.tanrabad.entity;
 
 import java.util.UUID;
 
-public class Building {
+public class Building implements LocationEntity {
 
     private UUID id;
     private String name;
@@ -52,6 +52,7 @@ public class Building {
         this.name = name;
     }
 
+    @Override
     public Location getLocation() {
         return location;
     }
@@ -65,12 +66,11 @@ public class Building {
     }
 
     @Override
-    public String toString() {
-        return "Building{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", place=" + place +
-                '}';
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (place != null ? place.hashCode() : 0);
+        return result;
     }
 
     @Override
@@ -87,10 +87,11 @@ public class Building {
     }
 
     @Override
-    public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (place != null ? place.hashCode() : 0);
-        return result;
+    public String toString() {
+        return "Building{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", place=" + place +
+                '}';
     }
 }

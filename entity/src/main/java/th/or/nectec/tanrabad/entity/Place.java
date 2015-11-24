@@ -19,7 +19,7 @@ package th.or.nectec.tanrabad.entity;
 
 import java.util.UUID;
 
-public class Place {
+public class Place implements LocationEntity {
 
     public static final int TYPE_VILLAGE_COMMUNITY = 1;
     public static final int TYPE_WORSHIP = 2;
@@ -63,6 +63,7 @@ public class Place {
         return null;
     }
 
+    @Override
     public Location getLocation() {
         return location;
     }
@@ -72,11 +73,11 @@ public class Place {
     }
 
     @Override
-    public String toString() {
-        return "Place{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + type;
+        return result;
     }
 
     @Override
@@ -93,10 +94,10 @@ public class Place {
     }
 
     @Override
-    public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + type;
-        return result;
+    public String toString() {
+        return "Place{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

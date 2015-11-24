@@ -22,9 +22,6 @@ import org.joda.time.DateTime;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by blaze on 11/24/2015 AD.
- */
 class DateTimePrinter implements TimePrettyPrinter {
     private static final Map<Integer,String> monthNameMap = new HashMap<>();
 
@@ -50,9 +47,9 @@ class DateTimePrinter implements TimePrettyPrinter {
     }
 
     @Override
-    public String print(long timeAgoInMills) {
+    public String print(long referenceTime) {
         DateTime currentTimeInMills = new DateTime(currentTimer.getInMills());
-        DateTime agoDateTime = new DateTime(timeAgoInMills);
+        DateTime agoDateTime = new DateTime(referenceTime);
 
         if (currentTimeInMills.getYear() == agoDateTime.getYear())
             return String.format("%d %s %02d:%02d",

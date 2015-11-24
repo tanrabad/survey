@@ -17,17 +17,24 @@
 
 package th.or.nectec.tanrabad.survey.utils.time;
 
-class SecondsAgoPrinter implements TimePrettyPrinter {
+import org.joda.time.DateTime;
+
+class DaysAgoPrinter implements TimePrettyPrinter {
     private final CurrentTimer currentTimer;
 
-    public SecondsAgoPrinter(CurrentTimer currentTimer) {
+    public DaysAgoPrinter(CurrentTimer currentTimer) {
         this.currentTimer = currentTimer;
     }
 
     @Override
-    public String print(long timeAgoInMills) {
-        long currentTimeInMills = currentTimer.getInMills();
-        long diff = currentTimeInMills - timeAgoInMills;
-        return diff / SECOND_IN_MILLS + " วิ";
+    public String print(long referenceTime) {
+        DateTime currentTimeInMills = new DateTime(currentTimer.getInMills());
+        DateTime agoDateTime = new DateTime(referenceTime);
+
+        if (currentTimeInMills.getDayOfYear() - agoDateTime.getDayOfYear() == 1) {
+            DateTime dateTime = new DateTime(referenceTime);
+            return String.format("เมื่อวาน %02d:%02d", dateTime.getHourOfDay(), dateTime.getMinuteOfHour());
+        }
+        return null;
     }
 }

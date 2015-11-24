@@ -17,27 +17,17 @@
 
 package th.or.nectec.tanrabad.survey.utils.time;
 
-import org.joda.time.DateTime;
-
-/**
- * Created by blaze on 11/24/2015 AD.
- */
-class DaysAgoPrinter implements TimePrettyPrinter {
+class MinuteAgoPrinter implements TimePrettyPrinter {
     private final CurrentTimer currentTimer;
 
-    public DaysAgoPrinter(CurrentTimer currentTimer) {
+    public MinuteAgoPrinter(CurrentTimer currentTimer) {
         this.currentTimer = currentTimer;
     }
 
     @Override
-    public String print(long timeAgoInMills) {
-        DateTime currentTimeInMills = new DateTime(currentTimer.getInMills());
-        DateTime agoDateTime = new DateTime(timeAgoInMills);
-
-        if (currentTimeInMills.getDayOfYear() - agoDateTime.getDayOfYear() == 1) {
-            DateTime dateTime = new DateTime(timeAgoInMills);
-            return String.format("เมื่อวาน %02d:%02d", dateTime.getHourOfDay(), dateTime.getMinuteOfHour());
-        }
-        return null;
+    public String print(long referenceTime) {
+        long currentTimeInMills = currentTimer.getInMills();
+        long diff = currentTimeInMills - referenceTime;
+        return diff / MINITE_IN_MILLS + " นาที";
     }
 }

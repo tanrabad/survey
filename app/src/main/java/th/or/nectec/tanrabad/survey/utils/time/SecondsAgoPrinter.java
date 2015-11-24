@@ -17,17 +17,17 @@
 
 package th.or.nectec.tanrabad.survey.utils.time;
 
-class MinuteAgoPrinter implements TimePrettyPrinter {
+class SecondsAgoPrinter implements TimePrettyPrinter {
     private final CurrentTimer currentTimer;
 
-    public MinuteAgoPrinter(CurrentTimer currentTimer) {
+    public SecondsAgoPrinter(CurrentTimer currentTimer) {
         this.currentTimer = currentTimer;
     }
 
     @Override
-    public String print(long timeAgoInMills) {
+    public String print(long referenceTime) {
         long currentTimeInMills = currentTimer.getInMills();
-        long diff = currentTimeInMills - timeAgoInMills;
-        return diff / MINITE_IN_MILLS + " นาที";
+        long diff = currentTimeInMills - referenceTime;
+        return diff / SECOND_IN_MILLS + " วิ";
     }
 }

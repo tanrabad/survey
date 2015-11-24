@@ -45,7 +45,7 @@ public class PrettyTimeAgoPrinterTest {
     public void testShowInSecondAgo() {
         TimePrettyPrinter inSecondAgoPretty = new SecondsAgoPrinter(currentTimer);
 
-        assertEquals("1 วิ", inSecondAgoPretty.print(CURRENT_TIME_MILLS - (TimePrettyPrinter.SECOND_IN_MILLS * 1)));
+        assertEquals("1 วิ", inSecondAgoPretty.print(CURRENT_TIME_MILLS - (TimePrettyPrinter.SECOND_IN_MILLS)));
         assertEquals("59 วิ", inSecondAgoPretty.print(CURRENT_TIME_MILLS - (TimePrettyPrinter.SECOND_IN_MILLS * 59)));
     }
 
@@ -53,7 +53,7 @@ public class PrettyTimeAgoPrinterTest {
     public void testShowInMinuteAgo() {
         TimePrettyPrinter inMiniteAgoPretty = new MinuteAgoPrinter(currentTimer);
 
-        assertEquals("1 นาที", inMiniteAgoPretty.print(CURRENT_TIME_MILLS - (TimePrettyPrinter.MINITE_IN_MILLS * 1)));
+        assertEquals("1 นาที", inMiniteAgoPretty.print(CURRENT_TIME_MILLS - (TimePrettyPrinter.MINITE_IN_MILLS)));
         assertEquals("59 นาที", inMiniteAgoPretty.print(CURRENT_TIME_MILLS - (TimePrettyPrinter.MINITE_IN_MILLS * 59)));
     }
 
@@ -61,8 +61,8 @@ public class PrettyTimeAgoPrinterTest {
     public void testShowInHouseAgo() throws Exception {
         TimePrettyPrinter inHoursAgoPrinter = new HoursAgoPrinter(currentTimer);
 
-        assertEquals("0 ชั่วโมง", inHoursAgoPrinter.print(CURRENT_TIME_MILLS - (TimePrettyPrinter.HOUR_IN_MILLS * 1 - TimePrettyPrinter.MINITE_IN_MILLS)));
-        assertEquals("1 ชั่วโมง", inHoursAgoPrinter.print(CURRENT_TIME_MILLS - (TimePrettyPrinter.HOUR_IN_MILLS * 1)));
+        assertEquals("0 ชั่วโมง", inHoursAgoPrinter.print(CURRENT_TIME_MILLS - (TimePrettyPrinter.HOUR_IN_MILLS - TimePrettyPrinter.MINITE_IN_MILLS)));
+        assertEquals("1 ชั่วโมง", inHoursAgoPrinter.print(CURRENT_TIME_MILLS - (TimePrettyPrinter.HOUR_IN_MILLS)));
         assertEquals("23 ชั่วโมง", inHoursAgoPrinter.print(CURRENT_TIME_MILLS - (TimePrettyPrinter.HOUR_IN_MILLS * 23)));
     }
 
@@ -83,4 +83,16 @@ public class PrettyTimeAgoPrinterTest {
         assertEquals("10 ก.ค. 2554 15:04", fulldatetimePrinter.print(CURRENT_DATETIME.minusYears(1).minusMonths(2).minusDays(2).getMillis()));
     }
 
+    @Test
+    public void testFactory() throws Exception {
+        TimePrettyPrinter factory = new TimePrettyPrinterFactory(currentTimer);
+
+        assertEquals("35 วิ", factory.print(CURRENT_DATETIME.minusSeconds(35).getMillis()));
+        assertEquals("1 นาที", factory.print(CURRENT_DATETIME.minusMinutes(1).getMillis()));
+        assertEquals("1 ชั่วโมง", factory.print(CURRENT_DATETIME.minusHours(1).getMillis()));
+        assertEquals("เมื่อวาน 23:04", factory.print(CURRENT_DATETIME.minusHours(16).getMillis()));
+        assertEquals("10 ก.ย. 15:04", factory.print(CURRENT_DATETIME.minusDays(2).getMillis()));
+        assertEquals("12 ธ.ค. 2554 15:04", factory.print(CURRENT_DATETIME.minusMonths(9).getMillis()));
+        assertEquals("12 ก.ย. 2554 15:04", factory.print(CURRENT_DATETIME.minusYears(1).getMillis()));
+    }
 }

@@ -17,21 +17,10 @@
 
 package th.or.nectec.tanrabad.survey.utils.time;
 
-/**
- * Created by blaze on 11/24/2015 AD.
- */
-class HoursAgoPrinter implements TimePrettyPrinter {
-    private final CurrentTimer currentTimer;
+interface TimePrettyPrinter {
+    int SECOND_IN_MILLS = 1000;
+    int MINITE_IN_MILLS = SECOND_IN_MILLS * 60;
+    int HOUR_IN_MILLS = MINITE_IN_MILLS * 60;
 
-    public HoursAgoPrinter(CurrentTimer currentTimer) {
-        this.currentTimer = currentTimer;
-    }
-
-    @Override
-    public String print(long timeAgoInMills) {
-        long currentTimeInMills = currentTimer.getInMills();
-        long diff = currentTimeInMills - timeAgoInMills;
-
-        return diff / HOUR_IN_MILLS + " ชั่วโมง";
-    }
+    String print(long referenceTime);
 }

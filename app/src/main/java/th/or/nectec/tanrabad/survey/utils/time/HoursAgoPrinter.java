@@ -17,10 +17,18 @@
 
 package th.or.nectec.tanrabad.survey.utils.time;
 
-interface TimePrettyPrinter {
-    int SECOND_IN_MILLS = 1000;
-    int MINITE_IN_MILLS = SECOND_IN_MILLS * 60;
-    int HOUR_IN_MILLS = MINITE_IN_MILLS * 60;
+class HoursAgoPrinter implements TimePrettyPrinter {
+    private final CurrentTimer currentTimer;
 
-    String print(long timeAgoInMills);
+    public HoursAgoPrinter(CurrentTimer currentTimer) {
+        this.currentTimer = currentTimer;
+    }
+
+    @Override
+    public String print(long referenceTime) {
+        long currentTimeInMills = currentTimer.getInMills();
+        long diff = currentTimeInMills - referenceTime;
+
+        return diff / HOUR_IN_MILLS + " ชั่วโมง";
+    }
 }

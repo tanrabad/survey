@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import org.joda.time.DateTime;
 import th.or.nectec.tanrabad.entity.Building;
+import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.survey.view.TimeAgoView;
 
 import java.util.ArrayList;
@@ -35,9 +36,9 @@ public class SurveyBuildingHistoryAdapter extends BaseAdapter {
 
     Context context;
 
-    ArrayList<Building> surveyBuildings = new ArrayList<>();
+    ArrayList<Survey> surveyBuildings = new ArrayList<>();
 
-    public SurveyBuildingHistoryAdapter(Context context, List<Building> surveyBuildings){
+    public SurveyBuildingHistoryAdapter(Context context, List<Survey> surveyBuildings){
         this.context = context;
         this.surveyBuildings.addAll(surveyBuildings);
     }
@@ -48,8 +49,7 @@ public class SurveyBuildingHistoryAdapter extends BaseAdapter {
     }
 
     @Override
-    public Building getItem(int i) {
-
+    public Survey getItem(int i) {
         return surveyBuildings.get(i);
     }
 
@@ -74,7 +74,7 @@ public class SurveyBuildingHistoryAdapter extends BaseAdapter {
         }else{
             holder = (ViewHolder) view.getTag();
         }
-        holder.surveyBuildingTextView.setText(surveyBuildings.get(i).getName());
+        holder.surveyBuildingTextView.setText(surveyBuildings.get(i).getSurveyBuilding().getName());
         holder.timeAgoView.setTime(DateTime.now().minusSeconds(30));
         view.setTag(holder);
 

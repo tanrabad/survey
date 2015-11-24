@@ -45,11 +45,11 @@ public class InMemorySurveyRepository implements SurveyRepository {
     }
 
     @Override
-    public ArrayList<Building> findByPlaceAndUserIn7Days(Place place, User user) {
-        ArrayList<Building> surveyBuilding = new ArrayList<>();
+    public ArrayList<Survey> findByPlaceAndUserIn7Days(Place place, User user) {
+        ArrayList<Survey> surveyBuilding = new ArrayList<>();
         for (Survey eachSurvey : surveys) {
             if (eachSurvey.getSurveyBuilding().getPlace().equals(place) && eachSurvey.getUser().equals(user)) {
-                surveyBuilding.add(eachSurvey.getSurveyBuilding());
+                surveyBuilding.add(eachSurvey);
             }
         }
         return surveyBuilding.isEmpty() ? null : surveyBuilding;

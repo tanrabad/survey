@@ -16,6 +16,7 @@ import java.util.List;
 import th.or.nectec.tanrabad.domain.SurveyBuildingHistoryController;
 import th.or.nectec.tanrabad.domain.SurveyBuildingPresenter;
 import th.or.nectec.tanrabad.entity.Building;
+import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
@@ -47,7 +48,7 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity {
         }
 
         @Override
-        public void displaySurveyBuildingList(List<Building> buildings) {
+        public void displaySurveyBuildingList(List<Survey> buildings) {
             surveyBuildingHistoryAdapter = new SurveyBuildingHistoryAdapter(SurveyBuildingHistoryActivity.this, buildings);
             surveyBuildingHistoryList.setAdapter(surveyBuildingHistoryAdapter);
         }
@@ -65,8 +66,8 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity {
         surveyBuildingHistoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Building building = surveyBuildingHistoryAdapter.getItem(position);
-                openSurveyActivity(building);
+                Survey survey = surveyBuildingHistoryAdapter.getItem(position);
+                openSurveyActivity(survey.getSurveyBuilding());
             }
         });
 

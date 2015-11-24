@@ -18,11 +18,8 @@
 package th.or.nectec.tanrabad.survey.view;
 
 import org.joda.time.DateTime;
-import org.joda.time.format.PeriodFormatter;
 
 public interface TimeAgoView {
-
-    void setPeriodFormatter(PeriodFormatter periodFormatter);
 
     void setTime(DateTime dateTime);
 }

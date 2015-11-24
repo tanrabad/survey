@@ -20,6 +20,7 @@ package th.or.nectec.tanrabad.survey.utils.time;
 import org.joda.time.DateTime;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 class DateTimePrinter implements TimePrettyPrinter {
@@ -52,13 +53,13 @@ class DateTimePrinter implements TimePrettyPrinter {
         DateTime agoDateTime = new DateTime(referenceTime);
 
         if (currentTimeInMills.getYear() == agoDateTime.getYear())
-            return String.format("%d %s %02d:%02d",
+            return String.format(Locale.US, "%d %s %02d:%02d",
                     agoDateTime.getDayOfMonth(),
                     monthNameMap.get(agoDateTime.getMonthOfYear()),
                     agoDateTime.getHourOfDay(),
                     agoDateTime.getMinuteOfHour());
         else {
-            return String.format("%d %s %04d %02d:%02d",
+            return String.format(Locale.US, "%d %s %04d %02d:%02d",
                     agoDateTime.getDayOfMonth(),
                     monthNameMap.get(agoDateTime.getMonthOfYear()),
                     agoDateTime.getYear() + 543,

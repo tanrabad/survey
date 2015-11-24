@@ -17,6 +17,6 @@
 
 package th.or.nectec.tanrabad.survey.utils.time;
 
-interface CurrentTimer {
+public interface CurrentTimer {
     long getInMills();
 }

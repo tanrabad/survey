@@ -19,24 +19,9 @@ package th.or.nectec.tanrabad.survey.utils.time;
 
 import org.joda.time.DateTime;
 
-import java.util.Locale;
-
-class DaysAgoPrinter implements TimePrettyPrinter {
-    private final CurrentTimer currentTimer;
-
-    public DaysAgoPrinter(CurrentTimer currentTimer) {
-        this.currentTimer = currentTimer;
-    }
-
+public class JodaCurrentTime implements CurrentTimer {
     @Override
-    public String print(long referenceTime) {
-        DateTime currentTimeInMills = new DateTime(currentTimer.getInMills());
-        DateTime agoDateTime = new DateTime(referenceTime);
-
-        if (currentTimeInMills.getDayOfYear() - agoDateTime.getDayOfYear() == 1) {
-            DateTime dateTime = new DateTime(referenceTime);
-            return String.format(Locale.US, "เมื่อวาน %02d:%02d", dateTime.getHourOfDay(), dateTime.getMinuteOfHour());
-        }
-        return null;
+    public long getInMills() {
+        return DateTime.now().getMillis();
     }
 }

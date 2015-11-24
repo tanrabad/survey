@@ -24,8 +24,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import org.joda.time.DateTime;
-
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.survey.view.TimeAgoView;
 
@@ -74,8 +72,9 @@ public class SurveyBuildingHistoryAdapter extends BaseAdapter {
         }else{
             holder = (ViewHolder) view.getTag();
         }
-        holder.surveyBuildingTextView.setText(surveyBuildings.get(i).getSurveyBuilding().getName());
-        holder.timeAgoView.setTime(DateTime.now().minusSeconds(30));
+        Survey currentSurvey = surveyBuildings.get(i);
+        holder.surveyBuildingTextView.setText(currentSurvey.getSurveyBuilding().getName());
+        holder.timeAgoView.setTime(currentSurvey.getFinishTimestamp());
         view.setTag(holder);
 
         return view;

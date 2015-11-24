@@ -40,17 +40,16 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:paddingBottom="@dimen/indoor_outdoor_padding_bottom"
-            android:paddingTop="@dimen/indoor_outdoor_padding_top"
-            android:text="@string/survey_place"
-            android:textColor="@color/black"
-            android:textSize="@dimen/header_text_size"
-            android:id="@+id/text_show_title_place_list" />
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingBottom="@dimen/indoor_outdoor_padding_bottom"
+                android:paddingTop="@dimen/indoor_outdoor_padding_top"
+                android:text="@string/survey_place"
+                android:textColor="@color/black"
+                android:textSize="@dimen/header_text_size"/>
 
         <LinearLayout
             android:layout_width="0dp"

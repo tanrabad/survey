@@ -17,10 +17,8 @@
 
 package th.or.nectec.tanrabad.survey.view;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Rect;
-import android.os.Build;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
 import android.text.InputType;
@@ -83,10 +81,10 @@ public class StepPopupEditText extends EditText {
 
     private class EditTextPopup extends PopupWindow implements StepperPopup, View.OnClickListener {
 
-        private static final int BUTTON_HEIGHT = 48;
-        private static final int BUTTON_WIDTH = 72;
-        private static final int BUTTON_PADDING = 6;
-        private static final int POPUP_PADDING = 6;
+        private static final int BUTTON_HEIGHT = 64;
+        private static final int BUTTON_WIDTH = 80;
+        private static final int BUTTON_PADDING = 4;
+        private static final int POPUP_PADDING = 4;
         private final Context context;
 
         public EditTextPopup(Context context) {
@@ -106,7 +104,6 @@ public class StepPopupEditText extends EditText {
 
         private ImageButton getButton(@IdRes int id, @DrawableRes int drawable) {
             ImageButton button = new ImageButton(context);
-            setButtonBackground(button);
             button.setImageDrawable(DrawableResource.get(drawable));
             button.setId(id);
             button.setPadding(getButtonPadding(), getButtonPadding(), getButtonPadding(), getButtonPadding());
@@ -125,12 +122,6 @@ public class StepPopupEditText extends EditText {
             return layout;
         }
 
-        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-        private void setButtonBackground(ImageButton button) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
-                button.setBackground(null);
-        }
-
         private int getButtonPadding() {
             return DP.toPX(BUTTON_PADDING);
         }
@@ -147,14 +138,10 @@ public class StepPopupEditText extends EditText {
             return DP.toPX(POPUP_PADDING);
         }
 
-        private int getPopupWidth() {
-            return getButtonWidth() * 2;
-        }
-
         @Override
         public void display() {
             showAsDropDown(StepPopupEditText.this, getXoffset(), getYoffset());
-            update(getPopupWidth(), getButtonHeight());
+            update(getPopupWidth(), getPopupHeight());
         }
 
         @Override
@@ -164,11 +151,19 @@ public class StepPopupEditText extends EditText {
         }
 
         private int getXoffset() {
-            return 0 - getPopupWidth() / 2 + this.getWidth() / 2;
+            return 0 - getPopupWidth() / 2 + StepPopupEditText.this.getWidth() / 2;
         }
 
         private int getYoffset() {
-            return DP.toPX(BUTTON_PADDING);
+            return DP.toPX(8);
+        }
+
+        private int getPopupWidth() {
+            return getButtonWidth() * 2 + getPopupPadding() * 2;
+        }
+
+        private int getPopupHeight() {
+            return getButtonHeight() + getPopupPadding() * 2;
         }
 
         @Override

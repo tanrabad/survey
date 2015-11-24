@@ -7,23 +7,30 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.Place;
 
-public class LocationBoundaryControllerTest {
+public class FindNearByPlaceControllerTest {
 
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
 
     private PlaceRepository placeRepository;
     private PlaceListPresenter placeListPresenter;
+    private FilterBoundaryCalculator filterBoundaryCalculate;
+
+    double currentLatitude = 40.6892;
+    double currentLongitude = -74.0444;
+    final Location currentLocation = new Location(currentLatitude, currentLongitude);
+
+    int distanceInKm = 100;
 
     @Before
     public void setUp() {
         placeRepository = context.mock(PlaceRepository.class);
         placeListPresenter = context.mock(PlaceListPresenter.class);
+        filterBoundaryCalculate = context.mock(FilterBoundaryCalculator.class);
 
         ArrayList<Place> places = new ArrayList<>();
         Place place1 = Place.withName("a");
@@ -73,52 +80,43 @@ public class LocationBoundaryControllerTest {
 
         context.checking(new Expectations() {
             {
+                oneOf(filterBoundaryCalculate).getMinLocation(with(currentLocation), with(distanceInKm));
+                will(returnValue(minimumLocation));
+                oneOf(filterBoundaryCalculate).getMaxLocation(with(currentLocation), with(distanceInKm));
+                will(returnValue(maximumLocation));
                 oneOf(placeRepository).findInBoundaryLocation(minimumLocation, maximumLocation);
                 will(returnValue(placesFilter));
                 oneOf(placeListPresenter).displayPlaceList(placesFilter);
             }
         });
-        PlaceFilterByLocationController locationBoundaryController = new PlaceFilterByLocationController(placeRepository, placeListPresenter);
-        locationBoundaryController.getPlaceListWithLocationFilter(minimumLocation, maximumLocation);
+        FindNearByPlaceController locationBoundaryController = new FindNearByPlaceController(filterBoundaryCalculate, placeRepository, placeListPresenter);
+        locationBoundaryController.findNearByPlace(currentLocation, distanceInKm);
     }
 
     @Test
     public void testLocationListNotFound() throws Exception {
+
+        double minimumLatitude = 39.7802;
+        double minimumLongitude = -74.9453;
+        final Location minimumLocation = new Location(minimumLatitude, minimumLongitude);
+
+        double maximumLatitude = 41.5982;
+        double maximumLongitude = -73.1434;
+        final Location maximumLocation = new Location(maximumLatitude, maximumLongitude);
+
         context.checking(new Expectations() {
             {
-                oneOf(placeRepository).findPlaces();
+                oneOf(filterBoundaryCalculate).getMinLocation(with(currentLocation), with(distanceInKm));
+                will(returnValue(minimumLocation));
+                oneOf(filterBoundaryCalculate).getMaxLocation(with(currentLocation), with(distanceInKm));
+                will(returnValue(maximumLocation));
+                oneOf(placeRepository).findInBoundaryLocation(minimumLocation, maximumLocation);
                 will(returnValue(null));
                 oneOf(placeListPresenter).displayPlaceNotFound();
             }
         });
-        PlaceFilterByLocationController locationBoundaryController = new PlaceFilterByLocationController(placeRepository, placeListPresenter);
-        locationBoundaryController.getPlaceList();
+        FindNearByPlaceController locationBoundaryController = new FindNearByPlaceController(filterBoundaryCalculate, placeRepository, placeListPresenter);
+        locationBoundaryController.findNearByPlace(currentLocation, distanceInKm);
     }
 
-    private class PlaceFilterByLocationController {
-        private PlaceRepository placeRepository;
-        private PlaceListPresenter placeListPresenter;
-        public PlaceFilterByLocationController(PlaceRepository placeRepository, PlaceListPresenter placeListPresenter) {
-            this.placeRepository = placeRepository;
-            this.placeListPresenter = placeListPresenter;
-        }
-
-        public void getPlaceListWithLocationFilter(Location minimumLocation, Location maximumLocation) {
-            List<Place> placeFilter = placeRepository.findInBoundaryLocation(minimumLocation, maximumLocation);
-            if (placeFilter == null) {
-                placeListPresenter.displayPlaceNotFound();
-            } else {
-                placeListPresenter.displayPlaceList(placeFilter);
-            }
-        }
-
-        public void getPlaceList() {
-            List<Place> places = placeRepository.findPlaces();
-            if (places == null) {
-                placeListPresenter.displayPlaceNotFound();
-            } else {
-                placeListPresenter.displayPlaceList(places);
-            }
-        }
-    }
 }

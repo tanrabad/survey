@@ -32,7 +32,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.*;
 import static org.hamcrest.Matchers.allOf;
 
 @RunWith(AndroidJUnit4.class)
-public class PlaceListTest extends TANRABADInstrumentationBaseTest {
+public class PlaceListInDatabaseTest extends TANRABADInstrumentationBaseTest {
     public ActivityTestRule<PlaceListActivity> mActivityTestRule = new ActivityTestRule<>(PlaceListActivity.class);
     PlaceListActivity mAtivity;
 

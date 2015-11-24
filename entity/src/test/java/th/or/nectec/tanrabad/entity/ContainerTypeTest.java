@@ -24,36 +24,41 @@ import static org.junit.Assert.assertNotEquals;
 
 public class ContainerTypeTest {
 
-    private final int containerTypeId1 = 1;
-    private final String containerTypeName1 = "น้ำใช้";
-    private final ContainerType containerType1 = new ContainerType(containerTypeId1, containerTypeName1);
+    private static final String แจกัน = "แจกัน";
+    private static final String น้ำใข้ = "น้ำใช้";
+    private static final int ID_น้ำใช้ = 1;
+
+    private final ContainerType containerType = new ContainerType(ID_น้ำใช้, น้ำใข้);
 
     @Test
     public void testGetName() {
-        assertEquals(containerTypeName1, containerType1.getName());
+        assertEquals(น้ำใข้, containerType.getName());
     }
 
     @Test
     public void testGetId() {
-        assertEquals(containerTypeId1, containerType1.getId());
+        assertEquals(ID_น้ำใช้, containerType.getId());
     }
 
     @Test
     public void containerWithDifferentNameMustNotEquals() {
-        ContainerType containerType2 = new ContainerType(containerTypeId1, "แจกัน");
-        assertNotEquals(containerType1, containerType2);
+        ContainerType otherContainer = new ContainerType(ID_น้ำใช้, แจกัน);
+
+        assertNotEquals(containerType, otherContainer);
     }
 
     @Test
     public void containerWithDifferentIdMustNotEquals() {
-        ContainerType containerType2 = new ContainerType(3, containerTypeName1);
-        assertNotEquals(containerType1, containerType2);
+        ContainerType otherContainer = new ContainerType(3, น้ำใข้);
+
+        assertNotEquals(containerType, otherContainer);
     }
 
     @Test
     public void containerWithTheSameNameAndIdMustEquals() {
-        ContainerType containerType2 = new ContainerType(containerTypeId1, containerTypeName1);
-        assertEquals(containerType1, containerType2);
+        ContainerType otherContainer = new ContainerType(ID_น้ำใช้, น้ำใข้);
+
+        assertEquals(containerType, otherContainer);
 
     }
 }

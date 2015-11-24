@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015  NECTEC
+ * Copyright (c) 2015 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,6 +17,7 @@
 
 package th.or.nectec.tanrabad.entity;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -31,9 +32,16 @@ public class BuildingTest {
 
     public static final UUID BUILDING_UUID = UUID.randomUUID();
     public static final String BUILDING_NAME = "โบสถ์ใหญ่";
-    private final Place place = Place.withName("วิหารเซนต์เมรี่");
-    private final Building building1 = new Building(BUILDING_UUID, BUILDING_NAME);
-    private Location location = new Location(14.078606, 100.603120);
+
+    private Place saintMarry;
+    private Building mainChurch;
+
+    @Before
+    public void setUp() throws Exception {
+        saintMarry = Place.withName("วิหารเซนต์เมรี่");
+        mainChurch = new Building(BUILDING_UUID, BUILDING_NAME);
+        mainChurch.setPlace(saintMarry);
+    }
 
     @Test
     public void testWithName() {
@@ -43,61 +51,65 @@ public class BuildingTest {
 
     @Test
     public void testSetThenGetPlace() {
-        building1.setPlace(place);
-        assertEquals(place, building1.getPlace());
+        mainChurch.setPlace(saintMarry);
+        assertEquals(saintMarry, mainChurch.getPlace());
     }
 
     @Test
     public void testGetName() {
-        assertEquals(BUILDING_NAME, building1.getName());
+        assertEquals(BUILDING_NAME, mainChurch.getName());
     }
 
     @Test
     public void testSetThenGetName() {
-        building1.setName("โบสถ์เล็ก");
-        assertEquals("โบสถ์เล็ก", building1.getName());
+        String newChurchName = "โบสถ์เล็ก";
+        mainChurch.setName(newChurchName);
+
+        assertEquals(newChurchName, mainChurch.getName());
     }
 
     @Test
     public void testGetId() {
-        assertEquals(BUILDING_UUID, building1.getId());
+        assertEquals(BUILDING_UUID, mainChurch.getId());
     }
 
     @Test
     public void testSetThenGetBuildingLocation() {
-        building1.setLocation(location);
-        assertEquals(location, building1.getLocation());
+        Location mainChurchLocation = new Location(14.078606, 100.603120);
+        mainChurch.setLocation(mainChurchLocation);
+
+        assertEquals(mainChurchLocation, mainChurch.getLocation());
     }
 
     @Test
     public void buildingWithDifferentIdMustNotEqual() {
-        building1.setPlace(place);
-        Building building2 = new Building(UUID.randomUUID(), BUILDING_NAME);
-        building2.setPlace(place);
-        assertNotEquals(building1, building2);
+        Building another = new Building(UUID.randomUUID(), BUILDING_NAME);
+        another.setPlace(saintMarry);
+
+        assertNotEquals(mainChurch, another);
     }
 
     @Test
     public void buildingWithDifferentNameMustNotEqual() {
-        building1.setPlace(place);
-        Building building2 = new Building(BUILDING_UUID, "โบสถ์เล็ก");
-        building2.setPlace(place);
-        assertNotEquals(building1, building2);
+        Building minorChurch = new Building(BUILDING_UUID, "โบสถ์เล็ก");
+        minorChurch.setPlace(saintMarry);
+
+        assertNotEquals(mainChurch, minorChurch);
     }
 
     @Test
     public void buildingWithDifferentPlaceMustNotEqual() {
-        building1.setPlace(place);
-        Building building2 = new Building(BUILDING_UUID, BUILDING_NAME);
-        building2.setPlace(Place.withName("โรงเรียนเซนต์เมรี่"));
-        assertNotEquals(building1, building2);
+        Building anotherChurch = new Building(BUILDING_UUID, BUILDING_NAME);
+        anotherChurch.setPlace(Place.withName("โรงเรียนเซนต์เมรี่"));
+
+        assertNotEquals(mainChurch, anotherChurch);
     }
 
     @Test
     public void buildingWithTheSameNameAndIdAndPlaceMustEqual() {
-        building1.setPlace(place);
-        Building building2 = new Building(BUILDING_UUID, BUILDING_NAME);
-        building2.setPlace(place);
-        assertEquals(building1, building2);
+        Building sameChurch = new Building(BUILDING_UUID, BUILDING_NAME);
+        sameChurch.setPlace(saintMarry);
+
+        assertEquals(mainChurch, sameChurch);
     }
 }

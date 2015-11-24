@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import th.or.nectec.tanrabad.domain.BuildingDuplicateException;
 import th.or.nectec.tanrabad.domain.BuildingRepository;
 import th.or.nectec.tanrabad.entity.Building;
 
@@ -115,10 +116,11 @@ public class InMemoryBuildingRepository implements BuildingRepository {
     @Override
     public boolean save(Building building) {
         if (buildings.contains(building)) {
-            buildings.set(buildings.indexOf(building), building);
+            throw new BuildingDuplicateException();
         } else {
             buildings.add(building);
         }
         return true;
     }
+
 }

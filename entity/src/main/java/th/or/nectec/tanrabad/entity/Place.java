@@ -20,7 +20,6 @@ package th.or.nectec.tanrabad.entity;
 import java.util.UUID;
 
 public class Place implements LocationEntity {
-
     public static final int TYPE_VILLAGE_COMMUNITY = 1;
     public static final int TYPE_WORSHIP = 2;
     public static final int TYPE_SCHOOL = 3;

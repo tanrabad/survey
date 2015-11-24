@@ -28,9 +28,8 @@ import org.junit.runner.RunWith;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static android.support.test.espresso.matcher.ViewMatchers.*;
+import static org.hamcrest.Matchers.allOf;
 
 @RunWith(AndroidJUnit4.class)
 public class PlaceListTest extends TANRABADInstrumentationBaseTest {
@@ -45,11 +44,7 @@ public class PlaceListTest extends TANRABADInstrumentationBaseTest {
 
     @Test
     public void testDefaultPageDefineSurveyPlace() {
-        onView(withText(R.string.survey_place))
-                .check(matches(isDisplayed()));
-        onView(withId(R.id.text_show_title_place_list))
-                .check(matches(withText("รายชื่อสถานที่")));
-        onView(withId(R.id.place_count))
+        onView(allOf(withId(R.id.place_count), withContentDescription(R.string.number_place_list_in_database)))
                 .check(matches(withText("7")));
         onView(withText(R.string.not_define_place_type))
                 .check(matches(isDisplayed()));
@@ -63,7 +58,7 @@ public class PlaceListTest extends TANRABADInstrumentationBaseTest {
                 .perform(click());
         onView(withText(R.string.village_community))
                 .check(matches(isDisplayed()));
-        onView(withId(R.id.place_count))
+        onView(allOf(withId(R.id.place_count), withContentDescription(R.string.number_place_list_in_database)))
                 .check(matches(withText("2")));
         onView(withText("หมู่บ้านพาลาซเซตโต้"))
                 .check(matches(isDisplayed()));
@@ -79,7 +74,7 @@ public class PlaceListTest extends TANRABADInstrumentationBaseTest {
                 .perform(click());
         onView(withText(R.string.worship))
                 .check(matches(isDisplayed()));
-        onView(withId(R.id.place_count))
+        onView(allOf(withId(R.id.place_count), withContentDescription(R.string.number_place_list_in_database)))
                 .check(matches(withText("1")));
         onView(withText("วัดป่าภูก้อน"))
                 .check(matches(isDisplayed()));
@@ -93,7 +88,7 @@ public class PlaceListTest extends TANRABADInstrumentationBaseTest {
                 .perform(click());
         onView(withText(R.string.school))
                 .check(matches(isDisplayed()));
-        onView(withId(R.id.place_count))
+        onView(allOf(withId(R.id.place_count), withContentDescription(R.string.number_place_list_in_database)))
                 .check(matches(withText("3")));
         onView(withText("โรงเรียนเซนต์เมรี่"))
                 .check(matches(isDisplayed()));
@@ -111,7 +106,7 @@ public class PlaceListTest extends TANRABADInstrumentationBaseTest {
                 .perform(click());
         onView(withText(R.string.hospital))
                 .check(matches(isDisplayed()));
-        onView(withId(R.id.place_count))
+        onView(allOf(withId(R.id.place_count), withContentDescription(R.string.number_place_list_in_database)))
                 .check(matches(withText("1")));
         onView(withText("โรงพยาบาลกรุงเทพ"))
                 .check(matches(isDisplayed()));
@@ -125,7 +120,7 @@ public class PlaceListTest extends TANRABADInstrumentationBaseTest {
                 .perform(click());
         onView(withText(R.string.factory))
                 .check(matches(isDisplayed()));
-        onView(withId(R.id.place_count))
+        onView(allOf(withId(R.id.place_count), withContentDescription(R.string.number_place_list_in_database)))
                 .check(matches(withText("0")));
     }
 }

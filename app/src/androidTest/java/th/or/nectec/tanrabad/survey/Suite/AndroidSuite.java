@@ -22,12 +22,14 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 import th.or.nectec.tanrabad.survey.ChoosePlaceFromPlaceListTest;
+import th.or.nectec.tanrabad.survey.PlaceFoundBuildingListTest;
 import th.or.nectec.tanrabad.survey.PlaceListInDatabaseTest;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         PlaceListInDatabaseTest.class,
         ChoosePlaceFromPlaceListTest.class,
+        PlaceFoundBuildingListTest.class
 })
 
 public class AndroidSuite {

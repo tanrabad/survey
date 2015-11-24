@@ -28,31 +28,30 @@ import java.util.UUID;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static android.support.test.espresso.matcher.ViewMatchers.*;
+import static org.hamcrest.Matchers.allOf;
 
-public class BuildingListTest {
+public class PlaceFoundBuildingListTest extends TANRABADInstrumentationBaseTest {
     public ActivityTestRule<BuildingListActivity> mActivityTestRule = new ActivityTestRule<>(BuildingListActivity.class);
     BuildingListActivity mAtivity;
 
     @Before
     public void setUp() {
         Intent intent = new Intent();
-        intent.putExtra("place_uuid_arg", UUID.nameUUIDFromBytes("1abc".getBytes()));
+        intent.putExtra("place_uuid_arg", UUID.nameUUIDFromBytes("67UIP".getBytes()).toString());
         intent.putExtra("username_arg", "sara");
         mAtivity = mActivityTestRule.launchActivity(intent);
     }
 
     @Test
-    public void testDefaultPageDefineSurveyPlace() {
-        onView(withText(R.string.survey_place))
+    public void testPlaceFoundBuilding() {
+        onView(withText("เพิ่มอาคาร"))
                 .check(matches(isDisplayed()));
-        onView(withId(R.id.text_show_title_place_list))
-                .check(matches(withText("รายชื่อสถานที่")));
-        onView(withId(R.id.place_count))
-                .check(matches(withText("7")));
-        onView(withText(R.string.not_define_place_type))
+        onView(withText("ชุมชนกอล์ฟวิว"))
                 .check(matches(isDisplayed()));
+        onView(withId(R.id.text_show_title_building_list))
+                .check(matches(withText(R.string.survey_building)));
+        onView(allOf(withId(R.id.building_count), withContentDescription(R.string.number_building_list)))
+                .check(matches(withText("0")));
     }
 }

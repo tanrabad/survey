@@ -15,22 +15,10 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey.Suite;
+package th.or.nectec.tanrabad.survey.utils.tool;
 
+public interface CrashLogger {
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+    void logException(Exception e);
 
-import th.or.nectec.tanrabad.survey.presenter.ChoosePlaceFromPlaceListTest;
-import th.or.nectec.tanrabad.survey.presenter.PlaceFoundBuildingListTest;
-import th.or.nectec.tanrabad.survey.presenter.PlaceListInDatabaseTest;
-
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        PlaceListInDatabaseTest.class,
-        ChoosePlaceFromPlaceListTest.class,
-        PlaceFoundBuildingListTest.class
-})
-
-public class AndroidSuite {
 }

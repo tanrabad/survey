@@ -18,9 +18,9 @@
 package th.or.nectec.tanrabad.survey;
 
 import android.app.Application;
-import th.or.nectec.tanrabad.survey.tool.ActionLogger;
-import th.or.nectec.tanrabad.survey.tool.CrashLogger;
-import th.or.nectec.tanrabad.survey.tool.FabricTools;
+import th.or.nectec.tanrabad.survey.utils.tool.ActionLogger;
+import th.or.nectec.tanrabad.survey.utils.tool.CrashLogger;
+import th.or.nectec.tanrabad.survey.utils.tool.FabricTools;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class TanrabadApp extends Application {

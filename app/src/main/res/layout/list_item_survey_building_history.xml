@@ -48,7 +48,7 @@
                 tools:text="บ้านเลขที่ 1" />
     </LinearLayout>
 
-    <th.or.nectec.tanrabad.survey.view.RelativeTimeAgoTextView
+    <th.or.nectec.tanrabad.survey.presenter.view.RelativeTimeAgoTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right|center_vertical"

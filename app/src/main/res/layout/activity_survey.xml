@@ -103,7 +103,7 @@
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/text_subhead"/>
 
-                        <th.or.nectec.tanrabad.survey.view.StepPopupEditText
+                        <th.or.nectec.tanrabad.survey.presenter.view.StepPopupEditText
                             android:id="@+id/resident_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

@@ -15,22 +15,11 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey.Suite;
+package th.or.nectec.tanrabad.survey.presenter.view;
 
+import org.joda.time.DateTime;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+public interface TimeAgoView {
 
-import th.or.nectec.tanrabad.survey.presenter.ChoosePlaceFromPlaceListTest;
-import th.or.nectec.tanrabad.survey.presenter.PlaceFoundBuildingListTest;
-import th.or.nectec.tanrabad.survey.presenter.PlaceListInDatabaseTest;
-
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        PlaceListInDatabaseTest.class,
-        ChoosePlaceFromPlaceListTest.class,
-        PlaceFoundBuildingListTest.class
-})
-
-public class AndroidSuite {
+    void setTime(DateTime dateTime);
 }

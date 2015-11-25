@@ -36,7 +36,7 @@
             android:value="${google_map_key}" />
 
         <activity
-            android:name=".PlaceListActivity"
+            android:name=".presenter.PlaceListActivity"
             android:label="ระบุสถานที่สำรวจ"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -46,7 +46,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".BuildingListActivity"
+            android:name=".presenter.BuildingListActivity"
             android:label="ระบุอาคารสำรวจ">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -55,7 +55,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SurveyActivity"
+            android:name=".presenter.SurveyActivity"
             android:label="@string/title_activity_survey"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -65,7 +65,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SurveyBuildingHistoryActivity"
+            android:name=".presenter.SurveyBuildingHistoryActivity"
             android:label="สำรวจ" />
 
         <meta-data
@@ -73,13 +73,13 @@
             android:value="985b93fe45ed65dc37e25e81a8c5ce5ba9c217fa" />
 
         <activity
-            android:name=".BuildingAddActivity"
+            android:name=".presenter.BuildingAddActivity"
             android:label="@string/building_add"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
 
         <activity
-            android:name=".MapMarkerActivity"
+            android:name=".presenter.MapMarkerActivity"
             android:label="@string/add_location" />
     </application>
 

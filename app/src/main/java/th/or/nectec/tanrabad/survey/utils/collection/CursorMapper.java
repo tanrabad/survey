@@ -15,22 +15,10 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey.Suite;
+package th.or.nectec.tanrabad.survey.utils.collection;
 
+import android.database.Cursor;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-
-import th.or.nectec.tanrabad.survey.presenter.ChoosePlaceFromPlaceListTest;
-import th.or.nectec.tanrabad.survey.presenter.PlaceFoundBuildingListTest;
-import th.or.nectec.tanrabad.survey.presenter.PlaceListInDatabaseTest;
-
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        PlaceListInDatabaseTest.class,
-        ChoosePlaceFromPlaceListTest.class,
-        PlaceFoundBuildingListTest.class
-})
-
-public class AndroidSuite {
+public interface CursorMapper<T> {
+    T map(Cursor cursor);
 }

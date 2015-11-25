@@ -15,22 +15,25 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey.Suite;
+package th.or.nectec.tanrabad.survey.presenter;
 
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
+import th.or.nectec.tanrabad.survey.utils.alert.Alert;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-import th.or.nectec.tanrabad.survey.presenter.ChoosePlaceFromPlaceListTest;
-import th.or.nectec.tanrabad.survey.presenter.PlaceFoundBuildingListTest;
-import th.or.nectec.tanrabad.survey.presenter.PlaceListInDatabaseTest;
+@SuppressLint("Registered")
+public class TanrabadActivity extends AppCompatActivity {
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+        setupAlertFactory();
+    }
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        PlaceListInDatabaseTest.class,
-        ChoosePlaceFromPlaceListTest.class,
-        PlaceFoundBuildingListTest.class
-})
+    private void setupAlertFactory() {
+        Alert.init(this);
+    }
 
-public class AndroidSuite {
 }

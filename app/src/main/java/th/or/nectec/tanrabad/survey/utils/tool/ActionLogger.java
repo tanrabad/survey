@@ -15,22 +15,16 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey.Suite;
+package th.or.nectec.tanrabad.survey.utils.tool;
 
+import th.or.nectec.tanrabad.entity.Survey;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+public interface ActionLogger {
 
-import th.or.nectec.tanrabad.survey.presenter.ChoosePlaceFromPlaceListTest;
-import th.or.nectec.tanrabad.survey.presenter.PlaceFoundBuildingListTest;
-import th.or.nectec.tanrabad.survey.presenter.PlaceListInDatabaseTest;
+    void cancelSurvey(Survey survey);
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        PlaceListInDatabaseTest.class,
-        ChoosePlaceFromPlaceListTest.class,
-        PlaceFoundBuildingListTest.class
-})
+    void updateSurvey(Survey lastSurvey, Survey survey);
 
-public class AndroidSuite {
+    void finishSurvey(Survey survey);
+
 }

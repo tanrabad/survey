@@ -48,10 +48,12 @@ public class SaveBuildingValidator implements BuildingValidator {
         }
 
         List<Building> buildingInPlace = buildingRepository.findBuildingInPlace(building.getPlace().getId());
-        for(Building eachBuilding : buildingInPlace){
-            if(eachBuilding.getName().equals(building.getName())){
-                Alert.highLevel().show(R.string.cant_save_same_building_name);
-                return false;
+        if(buildingInPlace!=null){
+            for(Building eachBuilding : buildingInPlace){
+                if(eachBuilding.getName().equals(building.getName())){
+                    Alert.highLevel().show(R.string.cant_save_same_building_name);
+                    return false;
+                }
             }
         }
 

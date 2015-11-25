@@ -19,11 +19,10 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <dimen name="text_headline">40sp</dimen>
-    <dimen name="text_title">28sp</dimen>
-    <dimen name="text_subhead">24sp</dimen>
-    <dimen name="text_body_large">22sp</dimen>
-    <dimen name="text_body">20sp</dimen>
-    <dimen name="text_caption">18sp</dimen>
+    <dimen name="text_title">30sp</dimen>
+    <dimen name="text_subhead">26sp</dimen>
+    <dimen name="text_body">24sp</dimen>
+    <dimen name="text_caption">22sp</dimen>
 
     <style name="TanrabadTextAppearance" parent="@android:style/TextAppearance" />
 
@@ -36,7 +35,7 @@
     </style>
 
     <style name="TanrabadTextAppearance.Label">
-        <item name="android:textSize">@dimen/text_body_large</item>
+        <item name="android:textSize">@dimen/text_body</item>
     </style>
 
     <style name="TanrabadTextAppearance.Subhead">

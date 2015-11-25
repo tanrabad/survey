@@ -61,7 +61,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/total"
                     android:textColor="@color/dark_gray"
-                    android:textSize="@dimen/text_body_large"/>
+                    android:textSize="@dimen/text_body"/>
 
             <th.or.nectec.tanrabad.survey.presenter.view.StepPopupEditText
                     android:id="@+id/total_container"
@@ -78,7 +78,7 @@
                     android:maxLength="2"
                     android:padding="@dimen/between_view"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_body_large"/>
+                    android:textSize="@dimen/text_body"/>
 
             <TextView
                     android:layout_width="wrap_content"
@@ -87,7 +87,7 @@
                     android:layout_marginStart="@dimen/between_view"
                     android:text="@string/found"
                     android:textColor="@color/dark_gray"
-                    android:textSize="@dimen/text_body_large"/>
+                    android:textSize="@dimen/text_body"/>
 
             <th.or.nectec.tanrabad.survey.presenter.view.StepPopupEditText
                     android:id="@+id/found_larvae_container"
@@ -104,7 +104,7 @@
                     android:maxLength="2"
                     android:padding="@dimen/between_view"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_body_large"/>
+                    android:textSize="@dimen/text_body"/>
         </LinearLayout>
     </LinearLayout>
 

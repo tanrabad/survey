@@ -105,19 +105,19 @@
                                 android:textSize="@dimen/text_subhead"/>
 
                         <th.or.nectec.tanrabad.survey.presenter.view.StepPopupEditText
-                            android:id="@+id/resident_count"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
-                            android:background="@drawable/textfield_background"
-                            android:ems="2"
-                            android:gravity="center"
-                            android:inputType="number"
-                            android:maxLength="3"
-                            android:padding="10dp"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/text_body_large"
-                            tools:text="10" />
+                                android:id="@+id/resident_count"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom"
+                                android:background="@drawable/textfield_background"
+                                android:ems="2"
+                                android:gravity="center"
+                                android:inputType="number"
+                                android:maxLength="3"
+                                android:padding="10dp"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/text_body"
+                                tools:text="10" />
 
                         <TextView
                                 android:layout_width="wrap_content"

@@ -15,25 +15,21 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey;
+package th.or.nectec.tanrabad.survey.utils.android;
 
-
-import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
-import th.or.nectec.tanrabad.survey.utils.alert.Alert;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
-@SuppressLint("Registered")
-public class TanrabadActivity extends AppCompatActivity {
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-        setupAlertFactory();
-    }
+public class SoftKeyboard {
 
-    private void setupAlertFactory() {
-        Alert.init(this);
+    public static void hideOn(Activity activity) {
+        View currentFocus = activity.getCurrentFocus();
+        if (currentFocus != null) {
+            InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);
+        }
     }
 
 }

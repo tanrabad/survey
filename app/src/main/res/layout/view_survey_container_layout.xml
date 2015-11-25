@@ -22,7 +22,7 @@
               android:layout_height="wrap_content"
               android:gravity="center_vertical"
               android:orientation="horizontal"
-              android:onClick="hideSoftKeyboard"
+              android:onClick="onRootViewClick"
               android:padding="@dimen/activity_horizontal_margin">
 
     <ImageView

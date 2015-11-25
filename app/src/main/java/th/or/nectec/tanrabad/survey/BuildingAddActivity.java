@@ -43,6 +43,7 @@ import th.or.nectec.tanrabad.survey.maps.LiteMapFragment;
 import th.or.nectec.tanrabad.survey.repository.InMemoryBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
+import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
 import th.or.nectec.tanrabad.survey.validator.SaveBuildingValidator;
 
 import java.util.UUID;
@@ -231,5 +232,9 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
     @Override
     public void displaySaveFail() {
         Alert.highLevel().show(R.string.save_fail);
+    }
+
+    public void onRootViewClick(View view){
+        SoftKeyboard.hideOn(this);
     }
 }

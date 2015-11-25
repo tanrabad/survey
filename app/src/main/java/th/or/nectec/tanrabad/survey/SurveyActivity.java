@@ -25,6 +25,7 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -37,6 +38,7 @@ import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.EditTextStepper;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
+import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
 import th.or.nectec.tanrabad.survey.validator.SaveSurveyValidator;
 import th.or.nectec.tanrabad.survey.view.SurveyContainerView;
 
@@ -289,6 +291,9 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
             //Do Nothing
         }
         return true;
+    }
 
+    public void onRootViewClick(View view) {
+        SoftKeyboard.hideOn(this);
     }
 }

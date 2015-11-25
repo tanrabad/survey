@@ -18,10 +18,11 @@
 package th.or.nectec.tanrabad.survey.presenter;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,19 +32,15 @@ import java.util.List;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
 
-public class PlaceAdapter extends BaseAdapter {
+public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> {
 
     Context context;
 
     ArrayList<Place> places = new ArrayList<>();
+    private AdapterView.OnItemClickListener onItemClickListener;
 
     public PlaceAdapter(Context context) {
         this.context = context;
-    }
-
-    public PlaceAdapter(Context context, List<Place> places) {
-        this.context = context;
-        this.places.addAll(places);
     }
 
     public void updateData(List<Place> places) {
@@ -58,13 +55,14 @@ public class PlaceAdapter extends BaseAdapter {
     }
 
     @Override
-    public int getCount() {
-        return places.size();
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_place, parent, false);
+        return new ViewHolder(v, this);
     }
 
     @Override
-    public Place getItem(int i) {
-        return places.get(i);
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.placeTextView.setText(places.get(position).getName());
     }
 
     @Override
@@ -73,29 +71,41 @@ public class PlaceAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        final ViewHolder holder;
-        if (view == null || view.getTag() == null) {
-            view = inflater.inflate(R.layout.list_item_place, parent, false);
-            holder = new ViewHolder();
-            holder.placeTextView = (TextView) view.findViewById(R.id.place_name);
-            holder.placeIcon = (ImageView) view.findViewById(R.id.place_icon);
-
-            view.setTag(holder);
-        } else {
-            holder = (ViewHolder) view.getTag();
-        }
-        holder.placeTextView.setText(places.get(i).getName());
-        view.setTag(holder);
-
-        return view;
+    public int getItemCount() {
+        return places.size();
     }
 
-    public class ViewHolder {
+    public void setOnItemClickListener(AdapterView.OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    private void onItemHolderClick(ViewHolder itemHolder) {
+        if (onItemClickListener != null) {
+            onItemClickListener.onItemClick(null, itemHolder.itemView,
+                    itemHolder.getAdapterPosition(), itemHolder.getItemId());
+        }
+    }
+
+    public Place getItem(int position) {
+        return places.get(position);
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView placeTextView;
         ImageView placeIcon;
-    }
+        private PlaceAdapter adapter;
 
+        public ViewHolder(View itemView, PlaceAdapter adapter) {
+            super(itemView);
+            this.adapter = adapter;
+            itemView.setOnClickListener(this);
+            placeTextView = (TextView) itemView.findViewById(R.id.place_name);
+            placeIcon = (ImageView) itemView.findViewById(R.id.place_icon);
+        }
+
+        @Override
+        public void onClick(View view) {
+            adapter.onItemHolderClick(this);
+        }
+    }
 }

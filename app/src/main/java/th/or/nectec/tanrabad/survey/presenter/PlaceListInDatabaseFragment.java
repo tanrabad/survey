@@ -22,20 +22,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatSpinner;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.List;
+
 import th.or.nectec.tanrabad.domain.place.PlaceChooser;
 import th.or.nectec.tanrabad.domain.place.PlaceListPresenter;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
-
-import java.util.List;
 
 public class PlaceListInDatabaseFragment extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener, PlaceListPresenter {
 
@@ -43,7 +45,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
     private PlaceTypeAdapter placeTypeAdapter;
     private PlaceChooser placeChooser = new PlaceChooser(new StubPlaceRepository(), this);
     private TextView placeCountView;
-    private ListView placeListView;
+    private RecyclerView placeListView;
     private AppCompatSpinner placeFilterView;
 
     public static PlaceListInDatabaseFragment newInstance() {
@@ -70,7 +72,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
     }
 
     private void setupViews(View view) {
-        this.placeListView = (ListView) view.findViewById(R.id.place_list);
+        this.placeListView = (RecyclerView) view.findViewById(R.id.place_list);
         this.placeCountView = (TextView) view.findViewById(R.id.place_count);
         this.placeFilterView = (AppCompatSpinner) view.findViewById(R.id.place_filter);
     }
@@ -82,9 +84,12 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
     }
 
     private void setupPlaceList() {
-        placeListView.setOnItemClickListener(this);
         placeAdapter = new PlaceAdapter(getActivity());
+        placeAdapter.setOnItemClickListener(this);
         placeListView.setAdapter(placeAdapter);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        placeListView.setLayoutManager(linearLayoutManager);
+        placeListView.setNestedScrollingEnabled(true);
     }
 
     @Override

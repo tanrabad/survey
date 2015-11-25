@@ -20,9 +20,7 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/color_primary</item>
-        <item name="colorPrimaryDark">@color/color_primary_dark</item>
-        <item name="colorAccent">@color/color_accent</item>
+        <!-- Define Actionbar Style-->
         <item name="actionBarStyle">@style/ActionBar</item>
         <item name="toolbarStyle">@style/Toolbar</item>
         <item name="android:textSize">@dimen/text_body_large</item>
@@ -37,6 +35,12 @@
         <item name="android:textAppearanceListItemSmall">@style/TanrabadTextAppearance.Caption
         </item>
         <item name="android:itemTextAppearance">@style/TanrabadTextAppearance.Body</item>
+
+        <!-- Define Color Theme-->
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="colorAccent">@color/color_accent</item>
+        <item name="android:windowBackground">@color/light_gray</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

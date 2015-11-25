@@ -18,7 +18,10 @@
 package th.or.nectec.tanrabad.survey.presenter;
 
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -86,7 +89,6 @@ public class PlaceSurveyListFragment extends Fragment implements PlaceWithSurvey
         placeListView.setAdapter(placeAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         placeListView.setLayoutManager(linearLayoutManager);
-        placeListView.setNestedScrollingEnabled(true);
     }
 
     @Override
@@ -117,5 +119,4 @@ public class PlaceSurveyListFragment extends Fragment implements PlaceWithSurvey
         intent.putExtra(BuildingListActivity.PLACE_UUID_ARG, placeAdapter.getItem(position).getId().toString());
         startActivity(intent);
     }
-
 }

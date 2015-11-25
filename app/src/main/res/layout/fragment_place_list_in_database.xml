@@ -19,12 +19,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/light_gray">
+    android:layout_height="match_parent">
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="320dp"
+        android:layout_height="@dimen/header_height_with_padding"
         android:background="@color/header_place_in_db">
 
         <ImageView
@@ -53,9 +52,9 @@
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:titleEnabled="false">
 
-                <LinearLayout
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="254dp" />
+                    android:layout_height="@dimen/header_height_padding" />
 
             </android.support.design.widget.CollapsingToolbarLayout>
         </android.support.design.widget.AppBarLayout>

@@ -89,7 +89,6 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
         placeListView.setAdapter(placeAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         placeListView.setLayoutManager(linearLayoutManager);
-        placeListView.setNestedScrollingEnabled(true);
     }
 
     @Override

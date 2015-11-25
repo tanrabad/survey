@@ -37,4 +37,6 @@
 
     <dimen name="actionbar_size">64dp</dimen>
     <dimen name="toolbar_size">@dimen/actionbar_size</dimen>
+    <dimen name="header_height_with_padding">320dp</dimen>
+    <dimen name="header_height_padding">254dp</dimen>
 </resources>

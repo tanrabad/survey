@@ -18,16 +18,17 @@
 package th.or.nectec.tanrabad.survey.repository;
 
 import android.support.annotation.NonNull;
+
+import th.or.nectec.tanrabad.domain.place.PlaceRepository;
+import th.or.nectec.tanrabad.entity.LocationEntity;
 import th.or.nectec.tanrabad.entity.Place;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import th.or.nectec.tanrabad.domain.PlaceRepository;
+
 import th.or.nectec.tanrabad.entity.Location;
-import th.or.nectec.tanrabad.entity.Locationing;
-import th.or.nectec.tanrabad.entity.Place;
 
 
 public class StubPlaceRepository implements PlaceRepository {
@@ -122,7 +123,7 @@ public class StubPlaceRepository implements PlaceRepository {
     }
 
     @Override
-    public List<Locationing> findInBoundaryLocation(Location minimumLocation, Location maximumLocation) {
+    public List<LocationEntity> findInBoundaryLocation(Location minimumLocation, Location maximumLocation) {
         return null;
     }
 }

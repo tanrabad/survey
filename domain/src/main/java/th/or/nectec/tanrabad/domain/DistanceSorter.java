@@ -2,9 +2,9 @@ package th.or.nectec.tanrabad.domain;
 
 import java.util.List;
 
-import th.or.nectec.tanrabad.entity.Locationing;
+import th.or.nectec.tanrabad.entity.LocationEntity;
 
 public interface DistanceSorter {
 
-    List<Locationing> sort(List<Locationing> locationings);
+    List<LocationEntity> sort(List<LocationEntity> locationings);
 }

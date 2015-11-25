@@ -2,8 +2,9 @@ package th.or.nectec.tanrabad.domain;
 
 import java.util.List;
 
+import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Location;
-import th.or.nectec.tanrabad.entity.Locationing;
+import th.or.nectec.tanrabad.entity.LocationEntity;
 
 class FindNearByPlaceController {
     private FilterBoundaryCalculator filterBoundaryCalculator;
@@ -25,7 +26,7 @@ class FindNearByPlaceController {
         Location minimumLocation = filterBoundaryCalculator.getMinLocation(currentLocation, distanceInKm);
         Location maximumLocation = filterBoundaryCalculator.getMaxLocation(currentLocation, distanceInKm);
 
-        List<Locationing> placeFilter = placeRepository.findInBoundaryLocation(minimumLocation, maximumLocation);
+        List<LocationEntity> placeFilter = placeRepository.findInBoundaryLocation(minimumLocation, maximumLocation);
 
         if (placeFilter == null) {
             nearByPlacePresenter.displayPlaceNotFound();

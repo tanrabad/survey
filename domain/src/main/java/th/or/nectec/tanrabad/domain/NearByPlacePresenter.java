@@ -2,10 +2,10 @@ package th.or.nectec.tanrabad.domain;
 
 import java.util.List;
 
-import th.or.nectec.tanrabad.entity.Locationing;
+import th.or.nectec.tanrabad.entity.LocationEntity;
 
 public interface NearByPlacePresenter {
     void displayPlaceNotFound();
 
-    void displayNearByPlaces(List<Locationing> placeFilter);
+    void displayNearByPlaces(List<LocationEntity> placeFilter);
 }

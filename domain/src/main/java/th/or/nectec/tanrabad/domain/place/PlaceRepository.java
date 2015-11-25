@@ -17,6 +17,8 @@
 
 package th.or.nectec.tanrabad.domain.place;
 
+import th.or.nectec.tanrabad.entity.Location;
+import th.or.nectec.tanrabad.entity.LocationEntity;
 import th.or.nectec.tanrabad.entity.Place;
 
 import java.util.List;
@@ -33,4 +35,7 @@ public interface PlaceRepository {
     List<Place> findPlacesWithPlaceFilter(int typeVillageCommunity);
 
     boolean save(Place with);
+
+    List<LocationEntity> findInBoundaryLocation(Location minimumLocation, Location maximumLocation);
+
 }

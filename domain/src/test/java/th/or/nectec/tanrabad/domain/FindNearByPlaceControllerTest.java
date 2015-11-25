@@ -8,8 +8,9 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Location;
-import th.or.nectec.tanrabad.entity.Locationing;
+import th.or.nectec.tanrabad.entity.LocationEntity;
 import th.or.nectec.tanrabad.entity.Place;
 
 public class FindNearByPlaceControllerTest {
@@ -59,7 +60,7 @@ public class FindNearByPlaceControllerTest {
 
     @Test
     public void testGetPlaceListWithLocationFilter() throws Exception {
-        final ArrayList<Locationing> placesFilter = new ArrayList<>();
+        final ArrayList<LocationEntity> placesFilter = new ArrayList<>();
 
         Place place2 = Place.withName("b");
         place2.setLocation(new Location(39.800, -74.000));

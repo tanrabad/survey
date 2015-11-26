@@ -29,23 +29,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
-import th.or.nectec.tanrabad.domain.place.PlaceChooser;
-import th.or.nectec.tanrabad.domain.place.PlaceListPresenter;
-import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyStatus;
+import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyStatusListPresenter;
+import th.or.nectec.tanrabad.domain.survey.SurveyPlaceChooser;
 import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
+import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
+import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 
-public class PlaceListInDatabaseFragment extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener, PlaceListPresenter {
+public class PlaceListInDatabaseFragment extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener, PlaceWithSurveyStatusListPresenter {
 
-    private PlaceAdapter placeAdapter;
+    private PlaceWithSurveyStatusAdapter placeAdapter;
     private PlaceTypeAdapter placeTypeAdapter;
-    private PlaceChooser placeChooser = new PlaceChooser(new StubPlaceRepository(), this);
+    private SurveyPlaceChooser placeChooser = new SurveyPlaceChooser(new StubUserRepository(), new StubPlaceRepository(), InMemorySurveyRepository.getInstance(), this);
     private TextView placeCountView;
     private RecyclerView placeListView;
     private AppCompatSpinner placeFilterView;
@@ -86,7 +88,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
     }
 
     private void setupPlaceList() {
-        placeAdapter = new PlaceAdapter(getActivity());
+        placeAdapter = new PlaceWithSurveyStatusAdapter(getActivity());
         placeAdapter.setOnItemClickListener(this);
         placeListView.setAdapter(placeAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -94,35 +96,52 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
     }
 
     @Override
-    public void displayPlaceList(List<Place> places) {
-        placeAdapter.updateData(places);
-        placeCountView.setText(String.valueOf(places.size()));
+    public void alertUserNotFound() {
+
     }
 
     @Override
-    public void displayPlaceNotFound() {
+    public void displayPlacesNotfound() {
         placeAdapter.clearData();
         placeCountView.setText(String.valueOf(0));
-        Toast.makeText(getActivity(), R.string.place_not_found, Toast.LENGTH_LONG).show();
+        Alert.highLevel().show(R.string.place_not_found);
+    }
+
+    @Override
+    public void displayAllSurveyPlaceList(List<PlaceWithSurveyStatus> buildingsWithSurveyStatuses) {
+        placeAdapter.updateData(buildingsWithSurveyStatuses);
+        placeCountView.setText(String.valueOf(buildingsWithSurveyStatuses.size()));
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, final int position, long l) {
+        final PlaceWithSurveyStatus placeWithSurveyStatus = placeAdapter.getItem(position);
         PromptMessage promptMessage = new AlertDialogPromptMessage(getActivity());
         promptMessage.setOnConfirm(getString(R.string.survey), new PromptMessage.OnConfirmListener() {
             @Override
             public void onConfirm() {
-                openBuildingListActivity(position);
+                if (placeWithSurveyStatus.isSurvey()) {
+                    openBuildingSurveyHistoryActivity(placeWithSurveyStatus);
+                } else {
+                    openBuildingListActivity(placeWithSurveyStatus);
+                }
             }
         });
         promptMessage.setOnCancel(getString(R.string.cancel), null);
-        promptMessage.show(getString(R.string.start_survey), placeAdapter.getItem(position).getName());
+        promptMessage.show(getString(R.string.start_survey), placeAdapter.getItem(position).getPlace().getName());
 
     }
 
-    private void openBuildingListActivity(int position) {
+    private void openBuildingListActivity(PlaceWithSurveyStatus placeWithSurveyStatus) {
         Intent intent = new Intent(getActivity(), BuildingListActivity.class);
-        intent.putExtra(BuildingListActivity.PLACE_UUID_ARG, placeAdapter.getItem(position).getId().toString());
+        intent.putExtra(BuildingListActivity.PLACE_UUID_ARG, placeWithSurveyStatus.getPlace().getId().toString());
+        startActivity(intent);
+    }
+
+    private void openBuildingSurveyHistoryActivity(PlaceWithSurveyStatus placeWithSurveyStatus) {
+        Intent intent = new Intent(getActivity(), SurveyBuildingHistoryActivity.class);
+        intent.putExtra(SurveyBuildingHistoryActivity.PLACE_UUID_ARG, placeWithSurveyStatus.getPlace().getId().toString());
+        intent.putExtra(SurveyBuildingHistoryActivity.USERNAME_ARG, getUsername());
         startActivity(intent);
     }
 
@@ -130,10 +149,14 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
         int selectedID = (int) placeTypeAdapter.getItemId(position);
         if (selectedID > 0) {
-            placeChooser.getPlaceListWithPlaceFilter(selectedID);
+            placeChooser.getPlaceListWithPlaceFilter(selectedID, getUsername());
         } else {
-            placeChooser.getPlaceList();
+            placeChooser.displaySurveyBuildingOf(getUsername());
         }
+    }
+
+    private String getUsername() {
+        return "sara";
     }
 
     @Override

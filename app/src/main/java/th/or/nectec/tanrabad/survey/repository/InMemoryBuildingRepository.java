@@ -33,6 +33,7 @@ public class InMemoryBuildingRepository implements BuildingRepository {
 
     private InMemoryBuildingRepository() {
         StubPlaceRepository stubPlaceRepository = new StubPlaceRepository();
+
         Building building1 = new Building(generateUUID("1xyz"), "214/43");
         building1.setPlace(stubPlaceRepository.getPalazzettoVillage());
         buildings.add(building1);
@@ -44,6 +45,46 @@ public class InMemoryBuildingRepository implements BuildingRepository {
         Building building3 = new Building(generateUUID("3xyz"), "214/45");
         building3.setPlace(stubPlaceRepository.getPalazzettoVillage());
         buildings.add(building3);
+
+        Building buildingPR01 = new Building(generateUUID("PR01xyz"), "214/46");
+        buildingPR01.setPlace(stubPlaceRepository.getPalazzettoVillage());
+        buildings.add(buildingPR01);
+
+        Building buildingPR02 = new Building(generateUUID("PR02xyz"), "214/47");
+        buildingPR02.setPlace(stubPlaceRepository.getPalazzettoVillage());
+        buildings.add(buildingPR02);
+
+        Building buildingPR03 = new Building(generateUUID("PR03xyz"), "214/48");
+        buildingPR03.setPlace(stubPlaceRepository.getPalazzettoVillage());
+        buildings.add(buildingPR03);
+
+        Building buildingPR04 = new Building(generateUUID("PR04xyz"), "214/49");
+        buildingPR04.setPlace(stubPlaceRepository.getPalazzettoVillage());
+        buildings.add(buildingPR04);
+
+        Building buildingPR05 = new Building(generateUUID("PR05xyz"), "214/50");
+        buildingPR05.setPlace(stubPlaceRepository.getPalazzettoVillage());
+        buildings.add(buildingPR05);
+
+        Building buildingPR06 = new Building(generateUUID("PR06xyz"), "214/51");
+        buildingPR06.setPlace(stubPlaceRepository.getPalazzettoVillage());
+        buildings.add(buildingPR06);
+
+        Building buildingPR07 = new Building(generateUUID("PR07xyz"), "214/52");
+        buildingPR07.setPlace(stubPlaceRepository.getPalazzettoVillage());
+        buildings.add(buildingPR07);
+
+        Building buildingPR08 = new Building(generateUUID("PR08xyz"), "214/53");
+        buildingPR08.setPlace(stubPlaceRepository.getPalazzettoVillage());
+        buildings.add(buildingPR08);
+
+        Building buildingPR09 = new Building(generateUUID("PR09xyz"), "214/54");
+        buildingPR09.setPlace(stubPlaceRepository.getPalazzettoVillage());
+        buildings.add(buildingPR09);
+
+        Building buildingPR10 = new Building(generateUUID("PR10xyz"), "214/55");
+        buildingPR10.setPlace(stubPlaceRepository.getPalazzettoVillage());
+        buildings.add(buildingPR10);
 
         Building building4 = new Building(generateUUID("1opj"), "ตึก1");
         building4.setPlace(stubPlaceRepository.getBangkokHospital());

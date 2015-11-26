@@ -46,14 +46,13 @@ import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 
 public class SurveyBuildingHistoryActivity extends TanrabadActivity implements SurveyBuildingPresenter, PlacePresenter {
 
-    public static final String SURVEY_ARG = "survey_arg";
+    public static final String PLACE_UUID_ARG = "place_uuid_arg";
+    public static final String USERNAME_ARG = "username_arg";
 
     private TextView placeName;
-    private RecyclerView surveyBuildingHistoryList;
     private Button surveyMoreBuildingButton;
 
     private SurveyBuildingHistoryAdapter surveyBuildingHistoryAdapter;
-    private SurveyBuildingHistoryController surveyBuildingHistoryController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +75,7 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
 
     private void setupBuildingHistoryList() {
         surveyBuildingHistoryAdapter = new SurveyBuildingHistoryAdapter(this);
-        surveyBuildingHistoryList = (RecyclerView) findViewById(R.id.survey_building_history_list);
+        RecyclerView surveyBuildingHistoryList = (RecyclerView) findViewById(R.id.survey_building_history_list);
         surveyBuildingHistoryList.setAdapter(surveyBuildingHistoryAdapter);
         surveyBuildingHistoryList.setLayoutManager(new LinearLayoutManager(this));
         surveyBuildingHistoryAdapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -91,7 +90,7 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
     private void openSurveyActivity(Building building) {
         Intent intent = new Intent(SurveyBuildingHistoryActivity.this, SurveyActivity.class);
         intent.putExtra(SurveyActivity.BUILDING_UUID_ARG, building.getId().toString());
-        intent.putExtra(SurveyActivity.USERNAME_ARG, "sara");
+        intent.putExtra(SurveyActivity.USERNAME_ARG, getUsernameFromIntent());
         startActivity(intent);
     }
 
@@ -101,11 +100,11 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
     }
 
     private void showSurveyBuildingHistoryList() {
-        surveyBuildingHistoryController = new SurveyBuildingHistoryController(new StubUserRepository(),
+        SurveyBuildingHistoryController surveyBuildingHistoryController = new SurveyBuildingHistoryController(new StubUserRepository(),
                 new StubPlaceRepository(),
                 InMemorySurveyRepository.getInstance(),
                 this);
-        surveyBuildingHistoryController.showSurveyBuildingOf(getPlaceUuidFromIntent(), getUserNameFromIntent());
+        surveyBuildingHistoryController.showSurveyBuildingOf(getPlaceUuidFromIntent(), getUsernameFromIntent());
         surveyMoreBuildingButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -136,17 +135,17 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
     }
 
     private String getPlaceUuidFromIntent() {
-        return getIntent().getStringExtra("placeUUID");
+        return getIntent().getStringExtra(PLACE_UUID_ARG);
     }
 
-    private String getUserNameFromIntent() {
-        return getIntent().getStringExtra("username");
+    private String getUsernameFromIntent() {
+        return getIntent().getStringExtra(USERNAME_ARG);
     }
 
     private void openBuildingListActivity() {
         Intent intent = new Intent(SurveyBuildingHistoryActivity.this, BuildingListActivity.class);
         intent.putExtra(BuildingListActivity.PLACE_UUID_ARG, getPlaceUuidFromIntent());
-        intent.putExtra(SurveyActivity.USERNAME_ARG, "sara");
+        intent.putExtra(SurveyActivity.USERNAME_ARG, getUsernameFromIntent());
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }

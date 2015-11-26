@@ -72,7 +72,7 @@ public class DistanceCalculateEllipsoid implements DistanceCalculator {
                         * (-3 + 4 * sinSigma * sinSigma)
                         * (-3 + 4 * cos2SigmaM * cos2SigmaM)));
 
-        double s = b * A * ((sigma - deltaSigma)/1.25);
+        double s = b * A * (sigma - deltaSigma);
 
         return s;
     }

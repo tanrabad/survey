@@ -32,23 +32,26 @@ import java.util.List;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
 
-public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> {
+public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> implements ListViewAdapter<Place> {
 
     Context context;
 
     ArrayList<Place> places = new ArrayList<>();
     private AdapterView.OnItemClickListener onItemClickListener;
+    private AdapterView.OnItemLongClickListener onItemLongClickListener;
 
     public PlaceAdapter(Context context) {
         this.context = context;
     }
 
+    @Override
     public void updateData(List<Place> places) {
         this.places.clear();
         this.places.addAll(places);
         notifyDataSetChanged();
     }
 
+    @Override
     public void clearData() {
         this.places.clear();
         notifyDataSetChanged();
@@ -75,6 +78,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> 
         return places.size();
     }
 
+    @Override
     public void setOnItemClickListener(AdapterView.OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
@@ -86,6 +90,12 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> 
         }
     }
 
+    @Override
+    public void setOnItemLongClickListener(AdapterView.OnItemLongClickListener onItemLongClickListener) {
+        this.onItemLongClickListener = onItemLongClickListener;
+    }
+
+    @Override
     public Place getItem(int position) {
         return places.get(position);
     }

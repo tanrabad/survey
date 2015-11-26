@@ -33,10 +33,9 @@ import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.utils.android.DrawableResource;
 
-public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<BuildingWithSurveyStatusAdapter.ViewHolder> {
+public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<BuildingWithSurveyStatusAdapter.ViewHolder> implements ListViewAdapter<BuildingWithSurveyStatus> {
 
     Context context;
-
 
     ArrayList<BuildingWithSurveyStatus> buildings = new ArrayList<>();
     private AdapterView.OnItemClickListener onItemClickListener;
@@ -46,18 +45,21 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
         this.context = context;
     }
 
+    @Override
     public void updateData(List<BuildingWithSurveyStatus> buildings) {
         this.buildings.clear();
         this.buildings.addAll(buildings);
         notifyDataSetChanged();
     }
 
+    @Override
     public void clearData() {
         this.buildings.clear();
         notifyDataSetChanged();
     }
 
-    public Object getItem(int i) {
+    @Override
+    public BuildingWithSurveyStatus getItem(int i) {
         return buildings.get(i);
     }
 
@@ -89,6 +91,7 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
         return buildings.size();
     }
 
+    @Override
     public void setOnItemClickListener(AdapterView.OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
@@ -100,6 +103,7 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
         }
     }
 
+    @Override
     public void setOnItemLongClickListener(AdapterView.OnItemLongClickListener onItemLongClickListener) {
         this.onItemLongClickListener = onItemLongClickListener;
     }
@@ -110,7 +114,6 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
                     itemHolder.getAdapterPosition(), itemHolder.getItemId());
         }
     }
-
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         TextView buildingTextView;
@@ -138,7 +141,3 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
         }
     }
 }
-
-
-
-

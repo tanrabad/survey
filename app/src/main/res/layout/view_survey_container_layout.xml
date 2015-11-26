@@ -37,6 +37,7 @@
             android:layout_marginTop="20dp"
             android:textSize="@dimen/text_title"
             android:id="@+id/container_type"
+            android:textIsSelectable="false"
             tools:text="ประเภทภาชนะ"/>
 
     <TextView
@@ -45,6 +46,7 @@
             android:layout_marginTop="70dp"
             android:text="@string/total"
             android:id="@+id/text_total"
+            android:textIsSelectable="false"
             android:textColor="@color/dark_gray"
             android:layout_alignLeft="@id/container_type"
             android:textSize="@dimen/text_body"/>
@@ -53,7 +55,7 @@
             android:id="@+id/total_container"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/text_total"
+            android:layout_toRightOf="@id/text_total"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="60dp"
             android:background="@drawable/textfield_background"
@@ -74,13 +76,14 @@
             android:text="@string/found"
             android:id="@+id/text_found"
             android:textColor="@color/dark_gray"
-            android:textSize="@dimen/text_body"/>
+            android:textSize="@dimen/text_body"
+            android:textIsSelectable="false"/>
 
     <th.or.nectec.tanrabad.survey.presenter.view.StepPopupEditText
             android:id="@+id/found_larvae_container"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/text_found"
+            android:layout_toRightOf="@id/text_found"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="60dp"
             android:background="@drawable/textfield_background"

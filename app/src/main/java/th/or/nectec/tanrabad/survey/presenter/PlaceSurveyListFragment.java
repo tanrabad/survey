@@ -18,10 +18,7 @@
 package th.or.nectec.tanrabad.survey.presenter;
 
 
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,21 +31,21 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyStatusChooser;
-import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyStatusChooserPresenter;
+import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyHistoryChooser;
+import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyHistoryListPresenter;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 
-public class PlaceSurveyListFragment extends Fragment implements PlaceWithSurveyStatusChooserPresenter, AdapterView.OnItemClickListener {
+public class PlaceSurveyListFragment extends Fragment implements PlaceWithSurveyHistoryListPresenter, AdapterView.OnItemClickListener {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String USERNAME_ARG = "username_arg";
     private String username;
 
     private PlaceAdapter placeAdapter;
-    private PlaceWithSurveyStatusChooser placeChooser = new PlaceWithSurveyStatusChooser(new StubUserRepository(), InMemorySurveyRepository.getInstance(), this);
+    private PlaceWithSurveyHistoryChooser placeChooser = new PlaceWithSurveyHistoryChooser(new StubUserRepository(), InMemorySurveyRepository.getInstance(), this);
     private TextView placeCountView;
     private RecyclerView placeListView;
 

@@ -17,21 +17,21 @@
 
 package th.or.nectec.tanrabad.domain.place;
 
+import java.util.ArrayList;
+
 import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.domain.survey.SurveyRepository;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
 
-import java.util.ArrayList;
-
-public class PlaceWithSurveyStatusChooser {
+public class PlaceWithSurveyHistoryChooser {
     private UserRepository userRepository;
     private SurveyRepository surveyRepository;
-    private PlaceWithSurveyStatusChooserPresenter placeWithSurveyStatusChooserPresenter;
+    private PlaceWithSurveyHistoryListPresenter placeWithSurveyStatusChooserPresenter;
 
-    public PlaceWithSurveyStatusChooser(UserRepository userRepository,
-                                        SurveyRepository surveyRepository,
-                                        PlaceWithSurveyStatusChooserPresenter placeWithSurveyStatusChooserPresenter) {
+    public PlaceWithSurveyHistoryChooser(UserRepository userRepository,
+                                         SurveyRepository surveyRepository,
+                                         PlaceWithSurveyHistoryListPresenter placeWithSurveyStatusChooserPresenter) {
 
         this.userRepository = userRepository;
         this.surveyRepository = surveyRepository;

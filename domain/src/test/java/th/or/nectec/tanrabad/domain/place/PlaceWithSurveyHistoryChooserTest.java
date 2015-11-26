@@ -22,18 +22,19 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
+import java.util.ArrayList;
+
 import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.domain.survey.SurveyRepository;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
 
-import java.util.ArrayList;
-
-public class PlaceWithSurveyStatusChooserTest {
+public class PlaceWithSurveyHistoryChooserTest {
 
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
-    private PlaceWithSurveyStatusChooserPresenter placeWithSurveyStatusChooserPresenter;
+    private PlaceWithSurveyHistoryListPresenter placeWithSurveyHistoryListPresenter;
     private SurveyRepository surveyRepository;
     private UserRepository userRepository;
     private String username;
@@ -43,7 +44,7 @@ public class PlaceWithSurveyStatusChooserTest {
     public void setup() {
         surveyRepository = context.mock(SurveyRepository.class);
         userRepository = context.mock(UserRepository.class);
-        placeWithSurveyStatusChooserPresenter = context.mock(PlaceWithSurveyStatusChooserPresenter.class);
+        placeWithSurveyHistoryListPresenter = context.mock(PlaceWithSurveyHistoryListPresenter.class);
         username = "chn";
         user = User.fromUsername(username);
     }
@@ -62,12 +63,12 @@ public class PlaceWithSurveyStatusChooserTest {
                 will(returnValue(with(user)));
                 oneOf(surveyRepository).findByUserIn7Days(with(user));
                 will(returnValue(surveyPlace));
-                oneOf(placeWithSurveyStatusChooserPresenter).displaySurveyPlaceList(surveyPlace);
+                oneOf(placeWithSurveyHistoryListPresenter).displaySurveyPlaceList(surveyPlace);
             }
         });
 
-        PlaceWithSurveyStatusChooser placeWithSurveyStatusChooser = new PlaceWithSurveyStatusChooser(userRepository, surveyRepository, placeWithSurveyStatusChooserPresenter);
-        placeWithSurveyStatusChooser.showSurveyPlaceList(username);
+        PlaceWithSurveyHistoryChooser placeWithSurveyHistoryChooser = new PlaceWithSurveyHistoryChooser(userRepository, surveyRepository, placeWithSurveyHistoryListPresenter);
+        placeWithSurveyHistoryChooser.showSurveyPlaceList(username);
     }
 
     @Test
@@ -78,12 +79,12 @@ public class PlaceWithSurveyStatusChooserTest {
                 will(returnValue(user));
                 oneOf(surveyRepository).findByUserIn7Days(with(user));
                 will(returnValue(null));
-                oneOf(placeWithSurveyStatusChooserPresenter).displaySurveyPlacesNotFound();
+                oneOf(placeWithSurveyHistoryListPresenter).displaySurveyPlacesNotFound();
             }
         });
 
-        PlaceWithSurveyStatusChooser placeWithSurveyStatusChooser = new PlaceWithSurveyStatusChooser(userRepository, surveyRepository, placeWithSurveyStatusChooserPresenter);
-        placeWithSurveyStatusChooser.showSurveyPlaceList(username);
+        PlaceWithSurveyHistoryChooser placeWithSurveyHistoryChooser = new PlaceWithSurveyHistoryChooser(userRepository, surveyRepository, placeWithSurveyHistoryListPresenter);
+        placeWithSurveyHistoryChooser.showSurveyPlaceList(username);
     }
 
     @Test
@@ -92,11 +93,11 @@ public class PlaceWithSurveyStatusChooserTest {
             {
                 oneOf(userRepository).findUserByName(with(username));
                 will(returnValue(null));
-                oneOf(placeWithSurveyStatusChooserPresenter).alertUserNotFound();
+                oneOf(placeWithSurveyHistoryListPresenter).alertUserNotFound();
             }
         });
 
-        PlaceWithSurveyStatusChooser placeWithSurveyStatusChooser = new PlaceWithSurveyStatusChooser(userRepository, surveyRepository, placeWithSurveyStatusChooserPresenter);
-        placeWithSurveyStatusChooser.showSurveyPlaceList(username);
+        PlaceWithSurveyHistoryChooser placeWithSurveyHistoryChooser = new PlaceWithSurveyHistoryChooser(userRepository, surveyRepository, placeWithSurveyHistoryListPresenter);
+        placeWithSurveyHistoryChooser.showSurveyPlaceList(username);
     }
 }

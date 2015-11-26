@@ -17,11 +17,11 @@
 
 package th.or.nectec.tanrabad.domain.place;
 
-import th.or.nectec.tanrabad.entity.Place;
-
 import java.util.ArrayList;
 
-public interface PlaceWithSurveyStatusChooserPresenter {
+import th.or.nectec.tanrabad.entity.Place;
+
+public interface PlaceWithSurveyHistoryListPresenter {
     void displaySurveyPlaceList(ArrayList<Place> surveyPlace);
 
     void alertUserNotFound();

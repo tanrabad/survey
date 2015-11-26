@@ -23,9 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-
 import com.google.android.gms.maps.model.LatLng;
-
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.maps.MapMarkerFragment;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
@@ -43,6 +41,11 @@ public class MapMarkerActivity extends TanrabadActivity implements View.OnClickL
         setupMap();
     }
 
+    private void assignViews() {
+        Button removeLocation = (Button) findViewById(R.id.remove_location);
+        removeLocation.setOnClickListener(this);
+    }
+
     private void setupMap() {
         LatLng location = getIntent().getParcelableExtra(MAP_LOCATION);
         if (location == null) {
@@ -56,15 +59,9 @@ public class MapMarkerActivity extends TanrabadActivity implements View.OnClickL
         getSupportFragmentManager().beginTransaction().replace(R.id.map_container, mapMarkerFragment, MapMarkerFragment.FRAGMENT_TAG).commit();
     }
 
-    private void assignViews() {
-        Button removeLocation = (Button) findViewById(R.id.remove_location);
-        removeLocation.setOnClickListener(this);
-    }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.action_save_map_marker_menu, menu);
+        getMenuInflater().inflate(R.menu.action_activity_map_marker, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

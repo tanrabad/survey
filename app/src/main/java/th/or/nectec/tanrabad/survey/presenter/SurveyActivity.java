@@ -223,7 +223,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.action_save_menu, menu);
+        getMenuInflater().inflate(R.menu.action_activity_survey, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

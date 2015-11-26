@@ -26,10 +26,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
-
-import java.util.List;
-import java.util.UUID;
-
 import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
 import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatusListPresenter;
 import th.or.nectec.tanrabad.domain.place.PlaceController;
@@ -43,6 +39,9 @@ import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
+
+import java.util.List;
+import java.util.UUID;
 
 public class BuildingListActivity extends TanrabadActivity implements BuildingWithSurveyStatusListPresenter, PlacePresenter {
 
@@ -73,7 +72,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         buildingAdapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                BuildingWithSurveyStatus building = (BuildingWithSurveyStatus) buildingAdapter.getItem(position);
+                BuildingWithSurveyStatus building = buildingAdapter.getItem(position);
                 openSurveyActivity(building.getBuilding());
             }
         });
@@ -81,11 +80,21 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         buildingAdapter.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-                BuildingWithSurveyStatus building = (BuildingWithSurveyStatus) buildingAdapter.getItem(position);
+                BuildingWithSurveyStatus building = buildingAdapter.getItem(position);
                 openEditBuildingActivity(building.getBuilding().getId().toString());
                 return true;
             }
         });
+    }
+
+    private void showPlaceName() {
+        PlaceController placeController = new PlaceController(new StubPlaceRepository(), this);
+        placeController.showPlace(getPlaceUuidFromIntent());
+    }
+
+    private void loadSurveyBuildingList() {
+        surveyBuildingChooser = new SurveyBuildingChooser(new StubUserRepository(), new StubPlaceRepository(), InMemoryBuildingRepository.getInstance(), InMemorySurveyRepository.getInstance(), this);
+        surveyBuildingChooser.displaySurveyBuildingOf(getPlaceUuidFromIntent().toString(), "sara");
     }
 
     private void openSurveyActivity(Building building) {
@@ -100,16 +109,6 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         intent.putExtra(PLACE_UUID_ARG, getIntent().getStringExtra(PLACE_UUID_ARG));
         intent.putExtra(BuildingAddActivity.BUILDING_UUID_ARG, buildingUUID);
         startActivityForResult(intent, ADD_BUILDING_REQ_CODE);
-    }
-
-    private void showPlaceName() {
-        PlaceController placeController = new PlaceController(new StubPlaceRepository(), this);
-        placeController.showPlace(getPlaceUuidFromIntent());
-    }
-
-    private void loadSurveyBuildingList() {
-        surveyBuildingChooser = new SurveyBuildingChooser(new StubUserRepository(), new StubPlaceRepository(), InMemoryBuildingRepository.getInstance(), InMemorySurveyRepository.getInstance(), this);
-        surveyBuildingChooser.displaySurveyBuildingOf(getPlaceUuidFromIntent().toString(), "sara");
     }
 
     private UUID getPlaceUuidFromIntent() {
@@ -149,7 +148,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.action_add_building_menu, menu);
+        getMenuInflater().inflate(R.menu.action_activity_building_list, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

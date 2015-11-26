@@ -17,14 +17,10 @@
   -->
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-            android:id="@+id/torch"
-            android:title="@string/torch"
-            app:showAsAction="always"/>
-    <item
-            android:id="@+id/save"
-            android:title="@string/save"
-            android:icon="@drawable/ic_action_circle_check"
-            app:showAsAction="always|withText"/>
+        android:id="@+id/finish"
+        android:title="@string/finish"
+        android:icon="@drawable/ic_action_circle_check"
+        app:showAsAction="always|withText" />
 </menu>

@@ -200,7 +200,7 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.action_save_menu, menu);
+        getMenuInflater().inflate(R.menu.action_activity_building_add, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

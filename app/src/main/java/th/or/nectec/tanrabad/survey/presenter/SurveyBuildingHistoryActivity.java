@@ -28,10 +28,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.List;
-import java.util.UUID;
-
 import th.or.nectec.tanrabad.domain.place.PlaceController;
 import th.or.nectec.tanrabad.domain.place.PlacePresenter;
 import th.or.nectec.tanrabad.domain.survey.SurveyBuildingHistoryController;
@@ -45,6 +41,9 @@ import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
+
+import java.util.List;
+import java.util.UUID;
 
 public class SurveyBuildingHistoryActivity extends TanrabadActivity implements SurveyBuildingPresenter, PlacePresenter {
 
@@ -90,19 +89,6 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
         });
     }
 
-    private void openSurveyActivity(Building building) {
-        Intent intent = new Intent(SurveyBuildingHistoryActivity.this, SurveyActivity.class);
-        intent.putExtra(SurveyActivity.BUILDING_UUID_ARG, building.getId().toString());
-        intent.putExtra(SurveyActivity.USERNAME_ARG, getUsernameFromIntent());
-        startActivity(intent);
-    }
-
-    @Override
-    public void displayPlace(Place place) {
-        this.place = place;
-        placeName.setText(place.getName());
-    }
-
     private void showSurveyBuildingHistoryList() {
         SurveyBuildingHistoryController surveyBuildingHistoryController = new SurveyBuildingHistoryController(new StubUserRepository(),
                 new StubPlaceRepository(),
@@ -116,6 +102,35 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
                 openBuildingListActivity();
             }
         });
+    }
+
+    private String getPlaceUuidFromIntent() {
+        return getIntent().getStringExtra(PLACE_UUID_ARG);
+    }
+
+    private void openSurveyActivity(Building building) {
+        Intent intent = new Intent(SurveyBuildingHistoryActivity.this, SurveyActivity.class);
+        intent.putExtra(SurveyActivity.BUILDING_UUID_ARG, building.getId().toString());
+        intent.putExtra(SurveyActivity.USERNAME_ARG, getUsernameFromIntent());
+        startActivity(intent);
+    }
+
+    private String getUsernameFromIntent() {
+        return getIntent().getStringExtra(USERNAME_ARG);
+    }
+
+    private void openBuildingListActivity() {
+        Intent intent = new Intent(SurveyBuildingHistoryActivity.this, BuildingListActivity.class);
+        intent.putExtra(BuildingListActivity.PLACE_UUID_ARG, getPlaceUuidFromIntent());
+        intent.putExtra(SurveyActivity.USERNAME_ARG, getUsernameFromIntent());
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
+
+    @Override
+    public void displayPlace(Place place) {
+        this.place = place;
+        placeName.setText(place.getName());
     }
 
     @Override
@@ -138,25 +153,9 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
         surveyBuildingHistoryAdapter.updateData(surveys);
     }
 
-    private String getPlaceUuidFromIntent() {
-        return getIntent().getStringExtra(PLACE_UUID_ARG);
-    }
-
-    private String getUsernameFromIntent() {
-        return getIntent().getStringExtra(USERNAME_ARG);
-    }
-
-    private void openBuildingListActivity() {
-        Intent intent = new Intent(SurveyBuildingHistoryActivity.this, BuildingListActivity.class);
-        intent.putExtra(BuildingListActivity.PLACE_UUID_ARG, getPlaceUuidFromIntent());
-        intent.putExtra(SurveyActivity.USERNAME_ARG, getUsernameFromIntent());
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.action_finish_menu, menu);
+        getMenuInflater().inflate(R.menu.action_activity_survey_building_history, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

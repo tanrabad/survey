@@ -49,7 +49,7 @@ public class SurveyEqualOrNotEqualTest {
 
     @Test
     public void surveyWithDifferentStartTimestampMustNotEquals() {
-        survey1.setStartTimestamp(DateTime.now());
+        survey1.setStartTimestamp(DateTime.parse("2014-09-16"));
         Survey survey2 = new Survey(user1, building1);
         survey2.setStartTimestamp(DateTime.parse("2015-09-28"));
         assertNotEquals(survey1, survey2);
@@ -69,28 +69,6 @@ public class SurveyEqualOrNotEqualTest {
         Survey survey2 = new Survey(user1, building1);
         survey2.setIndoorDetail(surveyDetails2());
         assertNotEquals(survey1, survey2);
-    }
-
-    @Test
-    public void surveyWithDifferentOutdoorDetailMustNotEquals() {
-        survey1.setOutdoorDetail(surveyDetails1());
-        Survey survey2 = new Survey(user1, building1);
-        survey2.setOutdoorDetail(surveyDetails2());
-        assertNotEquals(survey1, survey2);
-    }
-
-    @Test
-    public void surveyWithTheSameAllFieldMustEquals() {
-        survey1.setStartTimestamp(DateTime.now());
-        survey1.setResidentCount(resident);
-        survey1.setIndoorDetail(surveyDetails1());
-        survey1.setOutdoorDetail(surveyDetails2());
-        Survey survey2 = new Survey(user1, building1);
-        survey2.setStartTimestamp(survey1.getStartTimestamp());
-        survey2.setResidentCount(survey1.getResidentCount());
-        survey2.setIndoorDetail(survey1.getIndoorDetail());
-        survey2.setOutdoorDetail(survey1.getOutdoorDetail());
-        assertEquals(survey1, survey2);
     }
 
     private ArrayList<SurveyDetail> surveyDetails1() {
@@ -123,5 +101,27 @@ public class SurveyEqualOrNotEqualTest {
         detailArrayList.add(detail2);
         detailArrayList.add(detail3);
         return detailArrayList;
+    }
+
+    @Test
+    public void surveyWithDifferentOutdoorDetailMustNotEquals() {
+        survey1.setOutdoorDetail(surveyDetails1());
+        Survey survey2 = new Survey(user1, building1);
+        survey2.setOutdoorDetail(surveyDetails2());
+        assertNotEquals(survey1, survey2);
+    }
+
+    @Test
+    public void surveyWithTheSameAllFieldMustEquals() {
+        survey1.setStartTimestamp(DateTime.now());
+        survey1.setResidentCount(resident);
+        survey1.setIndoorDetail(surveyDetails1());
+        survey1.setOutdoorDetail(surveyDetails2());
+        Survey survey2 = new Survey(user1, building1);
+        survey2.setStartTimestamp(survey1.getStartTimestamp());
+        survey2.setResidentCount(survey1.getResidentCount());
+        survey2.setIndoorDetail(survey1.getIndoorDetail());
+        survey2.setOutdoorDetail(survey1.getOutdoorDetail());
+        assertEquals(survey1, survey2);
     }
 }

@@ -28,12 +28,12 @@ public class SurveyStub {
     public static final User SURVEYOR = User.fromUsername("surveyor");
 
     public static Survey withoutLarvae(Building building) {
-        return new SurveyBuilder(SURVEYOR).setBuilding(building).addIndoorDetail(ContainerTypeStub.น้ำใช้, 20, 0).build();
+        return new Survey.Builder(SURVEYOR).setBuilding(building).addIndoorDetail(ContainerTypeStub.น้ำใช้, 20, 0).build();
 
     }
 
     public static Survey withLarvae(Building building) {
-        return new SurveyBuilder(SURVEYOR)
+        return new Survey.Builder(SURVEYOR)
                 .setBuilding(building)
                 .addIndoorDetail(ContainerTypeStub.แจกัน, 5, 2)
                 .addOutdoorDetail(ContainerTypeStub.กากใบพืช, 10, 2)
@@ -45,14 +45,14 @@ public class SurveyStub {
     }
 
     public static Survey withResult(ContainerType containerType, int total, int foundLarvae) {
-        return new SurveyBuilder(SURVEYOR)
+        return new Survey.Builder(SURVEYOR)
                 .setBuilding(Building.withName("1"))
                 .addIndoorDetail(containerType, total, foundLarvae)
                 .build();
     }
 
     public static Survey withIndoorOutdoorResult(int indoorTotal, int indoorFound, int outdoorTotal, int outdoorFound) {
-        return new SurveyBuilder(SURVEYOR)
+        return new Survey.Builder(SURVEYOR)
                 .setBuilding(Building.withName("1"))
                 .addIndoorDetail(ContainerTypeStub.น้ำใช้, indoorTotal, indoorFound)
                 .addOutdoorDetail(ContainerTypeStub.อ่างบัว_ไม้น้ำ, outdoorTotal, outdoorFound)

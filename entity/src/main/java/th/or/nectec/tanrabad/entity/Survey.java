@@ -19,6 +19,7 @@ package th.or.nectec.tanrabad.entity;
 
 import org.joda.time.DateTime;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Survey implements LocationEntity {
@@ -156,5 +157,53 @@ public class Survey implements LocationEntity {
             }
         }
         return false;
+    }
+
+    public static class Builder {
+
+        public static final Building DEFAULT_BUILDING = Building.withName("default");
+        public static final User TESTER = User.fromUsername("tester");
+        private List<SurveyDetail> indoor = new ArrayList<>();
+        private List<SurveyDetail> outdoor = new ArrayList<>();
+        private int resident = 0;
+        private User surveyor = TESTER;
+        private Building building = DEFAULT_BUILDING;
+
+        public Builder() {
+            this(TESTER);
+        }
+
+        public Builder(User surveyor) {
+            this.surveyor = surveyor;
+        }
+
+        public Builder setBuilding(Building building) {
+            this.building = building;
+            return this;
+        }
+
+        public Builder setResident(int residentCount) {
+            resident = residentCount;
+            return this;
+        }
+
+        public Builder addIndoorDetail(ContainerType containerType, int total, int foundLarvae) {
+            indoor.add(SurveyDetail.fromResult(containerType, total, foundLarvae));
+            return this;
+        }
+
+        public Builder addOutdoorDetail(ContainerType containerType, int total, int foundLarvae) {
+            outdoor.add(SurveyDetail.fromResult(containerType, total, foundLarvae));
+            return this;
+        }
+
+        public Survey build() {
+            Survey survey = new Survey(surveyor, building);
+            survey.setResidentCount(resident);
+            survey.setIndoorDetail(indoor);
+            survey.setOutdoorDetail(outdoor);
+            return survey;
+        }
+
     }
 }

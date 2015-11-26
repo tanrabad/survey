@@ -28,7 +28,7 @@ public class KeyContainerTest {
 
     @Test
     public void testFindOfOneSurvey() throws Exception {
-        Survey survey = new SurveyBuilder().setBuilding(Building.withName("1"))
+        Survey survey = new Survey.Builder().setBuilding(Building.withName("1"))
                 .setResident(4)
                 .addIndoorDetail(ContainerTypeStub.น้ำดื่ม, 4, 2)
                 .addIndoorDetail(ContainerTypeStub.ที่รองกันมด, 4, 4)

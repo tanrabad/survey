@@ -43,6 +43,8 @@ import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
+import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
+import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 
 public class SurveyBuildingHistoryActivity extends TanrabadActivity implements SurveyBuildingPresenter, PlacePresenter {
 
@@ -53,6 +55,7 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
     private Button surveyMoreBuildingButton;
 
     private SurveyBuildingHistoryAdapter surveyBuildingHistoryAdapter;
+    private Place place;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +99,7 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
 
     @Override
     public void displayPlace(Place place) {
+        this.place = place;
         placeName.setText(place.getName());
     }
 
@@ -160,10 +164,22 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.finish:
-                openPlaceListActivity();
+                showFinishSurveyPrompt();
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void showFinishSurveyPrompt() {
+        PromptMessage promptMessage = new AlertDialogPromptMessage(this);
+        promptMessage.setOnConfirm(getString(R.string.confirm), new PromptMessage.OnConfirmListener() {
+            @Override
+            public void onConfirm() {
+                openPlaceListActivity();
+            }
+        });
+        promptMessage.setOnCancel(getString(R.string.cancel), null);
+        promptMessage.show(getString(R.string.finish_place_survey), place.getName());
     }
 
     private void openPlaceListActivity() {
@@ -174,8 +190,7 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        openBuildingListActivity();
+        showFinishSurveyPrompt();
     }
 }
 

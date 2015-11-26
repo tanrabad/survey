@@ -41,14 +41,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/toolbar_size"
+                android:background="@color/header_survey"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                 <ImageView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/header_larvae_survey"
+                    android:layout_gravity="center_horizontal"
                     android:contentDescription="@string/survey_container_bg_description"
-                    android:scaleType="fitCenter" />
+                    android:src="@drawable/header_larvae_survey" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -209,6 +210,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:background="@color/white"
                     android:orientation="vertical">
 
                 </LinearLayout>

@@ -32,8 +32,8 @@ public class HouseIndexTest {
     @Test
     public void test50PercentHI() throws Exception {
         HouseIndex hi = new HouseIndex();
-        hi.addSurvey(SurveyStubber.getSurveyWithLarvae(Building.withName("5")));
-        hi.addSurvey(SurveyStubber.getSurveyWithoutLarvae(Building.withName("1")));
+        hi.addSurvey(SurveyStub.withLarvae(Building.withName("5")));
+        hi.addSurvey(SurveyStub.withoutLarvae(Building.withName("1")));
 
         assertEquals(50.0f, hi.calculate(), DELTA);
     }
@@ -41,10 +41,10 @@ public class HouseIndexTest {
     @Test
     public void test25PercentHI() throws Exception {
         HouseIndex hi = new HouseIndex();
-        hi.addSurvey(SurveyStubber.getSurveyWithoutLarvae(Building.withName("1")));
-        hi.addSurvey(SurveyStubber.getSurveyWithoutLarvae(Building.withName("12")));
-        hi.addSurvey(SurveyStubber.getSurveyWithoutLarvae(Building.withName("123")));
-        hi.addSurvey(SurveyStubber.getSurveyWithLarvae(Building.withName("5")));
+        hi.addSurvey(SurveyStub.withoutLarvae(Building.withName("1")));
+        hi.addSurvey(SurveyStub.withoutLarvae(Building.withName("12")));
+        hi.addSurvey(SurveyStub.withoutLarvae(Building.withName("123")));
+        hi.addSurvey(SurveyStub.withLarvae(Building.withName("5")));
 
         assertEquals(25.0f, hi.calculate(), DELTA);
     }
@@ -52,9 +52,9 @@ public class HouseIndexTest {
     @Test
     public void test0PercentHI() throws Exception {
         HouseIndex hi = new HouseIndex();
-        hi.addSurvey(SurveyStubber.getSurveyWithoutLarvae(Building.withName("1")));
-        hi.addSurvey(SurveyStubber.getSurveyWithoutLarvae(Building.withName("12")));
-        hi.addSurvey(SurveyStubber.getSurveyWithoutLarvae(Building.withName("123")));
+        hi.addSurvey(SurveyStub.withoutLarvae(Building.withName("1")));
+        hi.addSurvey(SurveyStub.withoutLarvae(Building.withName("12")));
+        hi.addSurvey(SurveyStub.withoutLarvae(Building.withName("123")));
 
         assertEquals(0f, hi.calculate(), DELTA);
     }
@@ -63,9 +63,9 @@ public class HouseIndexTest {
     public void test33PercentHI() throws Exception {
 
         HouseIndex hi = new HouseIndex();
-        hi.addSurvey(SurveyStubber.getSurveyWithoutLarvae(Building.withName("1")));
-        hi.addSurvey(SurveyStubber.getSurveyWithoutLarvae(Building.withName("12")));
-        hi.addSurvey(SurveyStubber.getSurveyWithLarvae(Building.withName("5")));
+        hi.addSurvey(SurveyStub.withoutLarvae(Building.withName("1")));
+        hi.addSurvey(SurveyStub.withoutLarvae(Building.withName("12")));
+        hi.addSurvey(SurveyStub.withLarvae(Building.withName("5")));
 
         assertEquals(33.33f, hi.calculate(), DELTA);
     }

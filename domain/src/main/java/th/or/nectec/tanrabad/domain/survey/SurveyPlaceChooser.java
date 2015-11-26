@@ -64,8 +64,31 @@ public class SurveyPlaceChooser {
             buildingsWithSurveyStatuses.add(buildingWithSurveyStatus);
         }
 
-
         surveyPlacePresenter.displayAllSurveyPlaceList(buildingsWithSurveyStatuses);
     }
 
+    public void getPlaceListWithPlaceFilter(int selectedID, String username) {
+        User user = userRepository.findUserByName(username);
+        if (user == null) {
+            surveyPlacePresenter.alertUserNotFound();
+            return;
+        }
+
+        List<Place> places = placeRepository.findPlacesWithPlaceFilter(selectedID);
+        if (places == null) {
+            surveyPlacePresenter.displayPlacesNotfound();
+            return;
+        }
+
+        List<Place> surveyPlaces = surveyRepository.findByUserIn7Days(user);
+
+        List<PlaceWithSurveyStatus> buildingsWithSurveyStatuses = new ArrayList<>();
+
+        for (Place eachPlace : places) {
+            PlaceWithSurveyStatus buildingWithSurveyStatus = new PlaceWithSurveyStatus(eachPlace, surveyPlaces != null && surveyPlaces.remove(eachPlace));
+            buildingsWithSurveyStatuses.add(buildingWithSurveyStatus);
+        }
+
+        surveyPlacePresenter.displayAllSurveyPlaceList(buildingsWithSurveyStatuses);
+    }
 }

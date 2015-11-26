@@ -18,39 +18,65 @@
 package th.or.nectec.tanrabad.survey.presenter;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
-import th.or.nectec.tanrabad.survey.R;
-import th.or.nectec.tanrabad.survey.utils.android.DrawableResource;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BuildingWithSurveyStatusAdapter extends BaseAdapter {
+import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
+import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.utils.android.DrawableResource;
+
+public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<BuildingWithSurveyStatusAdapter.ViewHolder> {
 
     Context context;
 
 
     ArrayList<BuildingWithSurveyStatus> buildings = new ArrayList<>();
+    private AdapterView.OnItemClickListener onItemClickListener;
+    private AdapterView.OnItemLongClickListener onItemLongClickListener;
 
-    public BuildingWithSurveyStatusAdapter(Context context, List<BuildingWithSurveyStatus> buildings) {
+    public BuildingWithSurveyStatusAdapter(Context context) {
         this.context = context;
+    }
+
+    public void updateData(List<BuildingWithSurveyStatus> buildings) {
+        this.buildings.clear();
         this.buildings.addAll(buildings);
+        notifyDataSetChanged();
     }
 
-    @Override
-    public int getCount() {
-        return buildings.size();
+    public void clearData() {
+        this.buildings.clear();
+        notifyDataSetChanged();
     }
 
-    @Override
     public Object getItem(int i) {
         return buildings.get(i);
+    }
+
+    @Override
+    public BuildingWithSurveyStatusAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_building, parent, false);
+        return new ViewHolder(view, this);
+    }
+
+    @Override
+    public void onBindViewHolder(BuildingWithSurveyStatusAdapter.ViewHolder holder, int position) {
+        BuildingWithSurveyStatus buildingWithSurveyStatus = buildings.get(position);
+        holder.buildingTextView.setText(buildingWithSurveyStatus.getBuilding().getName());
+
+        if (buildingWithSurveyStatus.isSurvey()) {
+            holder.buildingIcon.setBackgroundDrawable(DrawableResource.get(R.drawable.container_bg_pink));
+        } else {
+            holder.buildingIcon.setBackgroundDrawable(DrawableResource.get(R.drawable.container_bg));
+        }
     }
 
     @Override
@@ -59,38 +85,57 @@ public class BuildingWithSurveyStatusAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater)this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        final ViewHolder holder;
-        if(view == null || view.getTag() == null){
-            view = inflater.inflate(R.layout.list_item_building, parent, false);
-            holder = new ViewHolder();
-            holder.buildingTextView = (TextView)view.findViewById(R.id.building_name);
-            holder.buildingIcon = (ImageView)view.findViewById(R.id.building_icon);
-
-            view.setTag(holder);
-        }else{
-            holder = (ViewHolder) view.getTag();
-        }
-
-        BuildingWithSurveyStatus buildingWithSurveyStatus = buildings.get(i);
-        holder.buildingTextView.setText(buildingWithSurveyStatus.getBuilding().getName());
-
-        if (buildingWithSurveyStatus.isSurvey()) {
-            holder.buildingIcon.setBackgroundDrawable(DrawableResource.get(R.drawable.container_bg_pink));
-        } else {
-            holder.buildingIcon.setBackgroundDrawable(DrawableResource.get(R.drawable.container_bg));
-        }
-
-        view.setTag(holder);
-
-        return view;
+    public int getItemCount() {
+        return buildings.size();
     }
 
-    public  class ViewHolder {
+    public void setOnItemClickListener(AdapterView.OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    private void onItemHolderClick(ViewHolder itemHolder) {
+        if (onItemClickListener != null) {
+            onItemClickListener.onItemClick(null, itemHolder.itemView,
+                    itemHolder.getAdapterPosition(), itemHolder.getItemId());
+        }
+    }
+
+    public void setOnItemLongClickListener(AdapterView.OnItemLongClickListener onItemLongClickListener) {
+        this.onItemLongClickListener = onItemLongClickListener;
+    }
+
+    private void onItemHolderLongClick(ViewHolder itemHolder) {
+        if (onItemLongClickListener != null) {
+            onItemLongClickListener.onItemLongClick(null, itemHolder.itemView,
+                    itemHolder.getAdapterPosition(), itemHolder.getItemId());
+        }
+    }
+
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         TextView buildingTextView;
         ImageView buildingIcon;
+        private BuildingWithSurveyStatusAdapter adapter;
+
+        public ViewHolder(View itemView, BuildingWithSurveyStatusAdapter adapter) {
+            super(itemView);
+            this.adapter = adapter;
+            buildingTextView = (TextView) itemView.findViewById(R.id.building_name);
+            buildingIcon = (ImageView) itemView.findViewById(R.id.building_icon);
+            itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            adapter.onItemHolderClick(this);
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            adapter.onItemHolderLongClick(this);
+            return true;
+        }
     }
 }
 

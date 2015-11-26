@@ -30,25 +30,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import th.or.nectec.tanrabad.domain.survey.ContainerController;
-import th.or.nectec.tanrabad.domain.survey.ContainerPresenter;
-import th.or.nectec.tanrabad.domain.survey.SurveyController;
-import th.or.nectec.tanrabad.domain.survey.SurveyPresenter;
-import th.or.nectec.tanrabad.domain.survey.SurveyRepository;
-import th.or.nectec.tanrabad.domain.survey.SurveySavePresenter;
-import th.or.nectec.tanrabad.domain.survey.SurveySaver;
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.ContainerType;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.Survey;
-import th.or.nectec.tanrabad.entity.SurveyDetail;
-import th.or.nectec.tanrabad.entity.User;
+import th.or.nectec.tanrabad.domain.survey.*;
+import th.or.nectec.tanrabad.entity.*;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.presenter.view.SurveyContainerView;
@@ -56,10 +39,17 @@ import th.or.nectec.tanrabad.survey.repository.InMemoryBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.InMemoryContainerTypeRepository;
 import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
+import th.or.nectec.tanrabad.survey.utils.CameraFlashLight;
 import th.or.nectec.tanrabad.survey.utils.EditTextStepper;
+import th.or.nectec.tanrabad.survey.utils.Torch;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
 import th.or.nectec.tanrabad.survey.validator.SaveSurveyValidator;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class SurveyActivity extends TanrabadActivity implements ContainerPresenter, SurveyPresenter, SurveySavePresenter {
 
@@ -243,9 +233,12 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
             case R.id.save:
                 SaveSurveyData();
                 break;
+            case R.id.torch:
+                toggleTorchLight();
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     private void SaveSurveyData() {
         try {
@@ -262,6 +255,17 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
             validateSurveyContainerViews(outdoorContainerViews);
             TanrabadApp.error().logException(e);
         }
+    }
+
+    private void toggleTorchLight() {
+        Torch torch = CameraFlashLight.getInstance(this);
+        if (!torch.isAvailable())
+            return;
+
+        if (torch.isTurningOn())
+            torch.turnOff();
+        else
+            torch.turnOn();
     }
 
     private int getResidentCount() {
@@ -304,6 +308,14 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
             //Do Nothing
         }
         return true;
+    }
+
+    @Override
+    protected void onPause() {
+        Torch torch = CameraFlashLight.getInstance(this);
+        if (torch.isAvailable() && torch.isTurningOn())
+            torch.turnOff();
+        super.onPause();
     }
 
     public void onRootViewClick(View view) {

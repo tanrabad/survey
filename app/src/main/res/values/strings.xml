@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (c) 2015  NECTEC
+  ~ Copyright (c) 2015 NECTEC
   ~   National Electronics and Computer Technology Center, Thailand
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -59,7 +59,7 @@
 
     <string name="survey_more_building_button_text">กดเพื่อสำรวจอาคารเพิ่ม</string>
     <string name="finish">สิ้นสุด</string>
-    <string name="define_buildling_location">ระบุพิกัดอาคาร</string>
+    <string name="define_building_location">ระบุพิกัดอาคาร</string>
     <string name="building_location">พิกัดอาคาร</string>
 
     <!--place type-->
@@ -85,5 +85,6 @@
     <string name="start_survey">เริ่มสำรวจ</string>
     <string name="confirm">ยืนยัน</string>
     <string name="finish_place_survey">สิ้นสุดการสำรวจ</string>
+    <string name="torch">ไฟฉาย</string>
 
 </resources>

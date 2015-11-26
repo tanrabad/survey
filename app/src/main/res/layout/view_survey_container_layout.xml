@@ -16,96 +16,80 @@
   ~ limitations under the License.
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:gravity="center_vertical"
-              android:orientation="horizontal"
-              android:onClick="onRootViewClick"
-              android:padding="@dimen/activity_horizontal_margin">
-
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
     <ImageView
             android:id="@+id/container_icon"
             android:layout_width="72dp"
             android:layout_height="72dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/container_bg"
             android:contentDescription="@string/survey_container_description"/>
 
-    <LinearLayout
-            android:layout_width="match_parent"
+    <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/between_view"
-            android:layout_marginStart="@dimen/between_view"
-            android:orientation="vertical">
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="20dp"
+            android:textSize="@dimen/text_title"
+            android:id="@+id/container_type"
+            tools:text="ประเภทภาชนะ"/>
 
-        <TextView
-                android:id="@+id/container_type"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/between_view"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                android:textIsSelectable="false"
-                android:textSize="@dimen/text_title"
-                tools:text="ประเภทภาชนะ"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
+            android:text="@string/total"
+            android:id="@+id/text_total"
+            android:textColor="@color/dark_gray"
+            android:layout_alignLeft="@id/container_type"
+            android:textSize="@dimen/text_body"/>
 
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+    <th.or.nectec.tanrabad.survey.presenter.view.StepPopupEditText
+            android:id="@+id/total_container"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/text_total"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/textfield_background"
+            android:gravity="center"
+            android:imeOptions="actionNext"
+            android:inputType="number"
+            android:maxLength="2"
+            android:padding="@dimen/between_view"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_body"/>
 
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/total"
-                    android:textColor="@color/dark_gray"
-                    android:textSize="@dimen/text_body"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/total_container"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="70dp"
+            android:text="@string/found"
+            android:id="@+id/text_found"
+            android:textColor="@color/dark_gray"
+            android:textSize="@dimen/text_body"/>
 
-            <th.or.nectec.tanrabad.survey.presenter.view.StepPopupEditText
-                    android:id="@+id/total_container"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/between_view"
-                    android:layout_marginStart="@dimen/between_view"
-                    android:layout_weight="1"
-                    android:background="@drawable/textfield_background"
-                    android:ems="1"
-                    android:imeOptions="actionNext"
-                    android:inputType="number"
-                    android:gravity="center"
-                    android:maxLength="2"
-                    android:padding="@dimen/between_view"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_body"/>
+    <th.or.nectec.tanrabad.survey.presenter.view.StepPopupEditText
+            android:id="@+id/found_larvae_container"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/text_found"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/textfield_background"
+            android:gravity="center"
+            android:inputType="number"
+            android:imeOptions="actionNext"
+            android:maxLength="2"
+            android:padding="@dimen/between_view"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_body"/>
 
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/between_view"
-                    android:layout_marginStart="@dimen/between_view"
-                    android:text="@string/found"
-                    android:textColor="@color/dark_gray"
-                    android:textSize="@dimen/text_body"/>
-
-            <th.or.nectec.tanrabad.survey.presenter.view.StepPopupEditText
-                    android:id="@+id/found_larvae_container"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/between_view"
-                    android:layout_marginStart="@dimen/between_view"
-                    android:layout_weight="1"
-                    android:background="@drawable/textfield_background"
-                    android:ems="1"
-                    android:gravity="center"
-                    android:inputType="number"
-                    android:imeOptions="actionNext"
-                    android:maxLength="2"
-                    android:padding="@dimen/between_view"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_body"/>
-        </LinearLayout>
-    </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

@@ -38,6 +38,8 @@ import th.or.nectec.tanrabad.domain.place.PlaceListPresenter;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
+import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
+import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 
 public class PlaceListInDatabaseFragment extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener, PlaceListPresenter {
 
@@ -105,8 +107,17 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
     }
 
     @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-        openBuildingListActivity(position);
+    public void onItemClick(AdapterView<?> adapterView, View view, final int position, long l) {
+        PromptMessage promptMessage = new AlertDialogPromptMessage(getActivity());
+        promptMessage.setOnConfirm(getString(R.string.survey), new PromptMessage.OnConfirmListener() {
+            @Override
+            public void onConfirm() {
+                openBuildingListActivity(position);
+            }
+        });
+        promptMessage.setOnCancel(getString(R.string.cancel), null);
+        promptMessage.show(getString(R.string.start_survey), placeAdapter.getItem(position).getName());
+
     }
 
     private void openBuildingListActivity(int position) {

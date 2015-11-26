@@ -38,10 +38,8 @@ public class KeyContainerTest {
         KeyContainer keyContainer = new KeyContainer(survey);
         keyContainer.calculate();
 
-        assertEquals(ContainerTypeStub.จานรองกระถาง, keyContainer.numberOne());
-        assertEquals(ContainerTypeStub.ที่รองกันมด, keyContainer.numberTwo());
-        assertEquals(ContainerTypeStub.น้ำดื่ม, keyContainer.numberTwo());
-        assertEquals(null, keyContainer.numberTwo());
-
+        assertEquals(ContainerTypeStub.จานรองกระถาง, keyContainer.indoorNumberOne());
+        assertEquals(ContainerTypeStub.ที่รองกันมด, keyContainer.indoorNumberTwo());
+        assertEquals(ContainerTypeStub.น้ำดื่ม, keyContainer.indoorNumberThree());
     }
 }

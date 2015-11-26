@@ -19,40 +19,62 @@ package th.or.nectec.tanrabad.entity.utils;
 
 import th.or.nectec.tanrabad.entity.ContainerType;
 import th.or.nectec.tanrabad.entity.Survey;
+import th.or.nectec.tanrabad.entity.SurveyDetail;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class KeyContainer {
 
     private final List<Survey> surveys;
+    Map<ContainerType,Integer> IndoorMap = new HashMap<>();
+    Map<ContainerType,Integer> outdoorMap = new HashMap<>();
+    private List<SurveyDetail> indoorKey;
 
     public KeyContainer(Survey survey) {
-        this();
+        surveys = new ArrayList<>();
         surveys.add(survey);
     }
 
-    public KeyContainer() {
-        surveys = new ArrayList<>();
+    public ContainerType indoorNumberOne() {
+        return indoorKey.get(indoorKey.size() - 1).getContainerType();
     }
 
-    public KeyContainer(List<Survey> surveys) {
-        this.surveys = surveys;
+    public ContainerType indoorNumberTwo() {
+        return indoorKey.get(indoorKey.size() - 2).getContainerType();
     }
 
-    public ContainerType numberOne() {
-        return null;
-    }
-
-    public ContainerType numberTwo() {
-        return null;
-    }
-
-    public ContainerType numberThree() {
-        return null;
+    public ContainerType indoorNumberThree() {
+        return indoorKey.get(indoorKey.size() - 3).getContainerType();
     }
 
     public void calculate() {
+        for (Survey survey : surveys) {
+            for (SurveyDetail surveyDetail : survey.getIndoorDetail()) {
+                ContainerType containerType = surveyDetail.getContainerType();
+                if (!IndoorMap.containsKey(containerType))
+                    IndoorMap.put(containerType, 0);
+                Integer count = IndoorMap.get(containerType);
+                IndoorMap.put(containerType, count + surveyDetail.getFoundLarvaContainer());
+            }
+            for (SurveyDetail surveyDetail : survey.getOutdoorDetail()) {
+                ContainerType containerType = surveyDetail.getContainerType();
+                if (!outdoorMap.containsKey(containerType))
+                    outdoorMap.put(containerType, 0);
+                Integer count = outdoorMap.get(containerType);
+                outdoorMap.put(containerType, count + surveyDetail.getFoundLarvaContainer());
+            }
+        }
 
+        Iterator<Map.Entry<ContainerType,Integer>> iterator = IndoorMap.entrySet().iterator();
+        indoorKey = new ArrayList<>();
+        while (iterator.hasNext()) {
+            Map.Entry<ContainerType,Integer> containerTypeIntegerEntry = iterator.next();
+            indoorKey.add(new SurveyDetail(containerTypeIntegerEntry.getKey(), containerTypeIntegerEntry.getValue(), containerTypeIntegerEntry.getValue()));
+        }
+        Collections.sort(indoorKey);
+    }
+
+    public ContainerType outdoorNumberTwo() {
+        return null;
     }
 }

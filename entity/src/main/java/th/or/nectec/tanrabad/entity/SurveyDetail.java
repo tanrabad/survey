@@ -18,7 +18,7 @@
 package th.or.nectec.tanrabad.entity;
 
 
-public class SurveyDetail {
+public class SurveyDetail implements Comparable {
     private final ContainerType containerType;
     private int totalContainer;
     private int foundLarvaContainer;
@@ -81,6 +81,19 @@ public class SurveyDetail {
 
     public boolean isFoundLarva() {
         return foundLarvaContainer > 0;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        SurveyDetail other = (SurveyDetail) o;
+
+        if (foundLarvaContainer > other.foundLarvaContainer)
+            return 1;
+        else if (foundLarvaContainer < other.foundLarvaContainer)
+            return -1;
+        else
+            return 0;
+
     }
 
     public class ContainerFoundLarvaOverTotalException extends RuntimeException {

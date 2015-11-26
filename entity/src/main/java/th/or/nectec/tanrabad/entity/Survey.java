@@ -19,14 +19,14 @@ package th.or.nectec.tanrabad.entity;
 
 import org.joda.time.DateTime;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Survey implements LocationEntity {
     private User user;
     private Building surveyBuilding;
     private int residentCount;
-    private ArrayList<SurveyDetail> indoorDetails;
-    private ArrayList<SurveyDetail> outdoorDetails;
+    private List<SurveyDetail> indoorDetails;
+    private List<SurveyDetail> outdoorDetails;
     private DateTime startTimestamp;
     private DateTime finishTimestamp;
     private Location location;
@@ -89,19 +89,19 @@ public class Survey implements LocationEntity {
         this.location = location;
     }
 
-    public ArrayList<SurveyDetail> getIndoorDetail() {
+    public List<SurveyDetail> getIndoorDetail() {
         return indoorDetails;
     }
 
-    public void setIndoorDetail(ArrayList<SurveyDetail> indoorDetails) {
+    public void setIndoorDetail(List<SurveyDetail> indoorDetails) {
         this.indoorDetails = indoorDetails;
     }
 
-    public ArrayList<SurveyDetail> getOutdoorDetail() {
+    public List<SurveyDetail> getOutdoorDetail() {
         return outdoorDetails;
     }
 
-    public void setOutdoorDetail(ArrayList<SurveyDetail> outdoorDetails) {
+    public void setOutdoorDetail(List<SurveyDetail> outdoorDetails) {
         this.outdoorDetails = outdoorDetails;
     }
 
@@ -143,5 +143,18 @@ public class Survey implements LocationEntity {
                 ", indoorDetails=" + indoorDetails +
                 ", outdoorDetails=" + outdoorDetails +
                 '}';
+    }
+
+    public boolean isFoundLarvae() {
+        return isFoundLarvaeInDetails(indoorDetails) || isFoundLarvaeInDetails(outdoorDetails);
+    }
+
+    private boolean isFoundLarvaeInDetails(List<SurveyDetail> details) {
+        if (details != null) {
+            for (SurveyDetail detail : details) {
+                if (detail.isFoundLarva()) return true;
+            }
+        }
+        return false;
     }
 }

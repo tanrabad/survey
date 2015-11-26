@@ -79,6 +79,10 @@ public class SurveyDetail {
         return foundLarvaContainer;
     }
 
+    public boolean isFoundLarva() {
+        return foundLarvaContainer > 0;
+    }
+
     public class ContainerFoundLarvaOverTotalException extends RuntimeException {
     }
 }

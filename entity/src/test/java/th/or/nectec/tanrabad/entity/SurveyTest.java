@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015  NECTEC
+ * Copyright (c) 2015 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,6 +21,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 
 @RunWith(JUnit4.class)
@@ -30,6 +33,8 @@ public class SurveyTest {
     private final Building building1 = Building.withName("โรงเรียนเซนต์เมรี่");
     private final int resident = 2250;
     private final Survey survey1 = new Survey(user1, building1);
+    private final ContainerType น้ำใช้ = new ContainerType(1, "น้ำใช้");
+    private final ContainerType น้ำดื่ม = new ContainerType(2, "น้ำดื่ม");
     private Location location = new Location(14.078606, 100.603120);
 
     @Test
@@ -54,5 +59,43 @@ public class SurveyTest {
     public void testSetThenGetSurveyLocation() {
         survey1.setLocation(location);
         assertEquals(location, survey1.getLocation());
+    }
+
+    @Test
+    public void testIsFoundLarvaeMustFalse() throws Exception {
+        List<SurveyDetail> indoor2 = new ArrayList<>();
+        indoor2.add(SurveyDetail.fromResult(น้ำใช้, 2, 0));
+
+        List<SurveyDetail> outdoor2 = new ArrayList<>();
+        outdoor2.add(SurveyDetail.fromResult(น้ำใช้, 5, 0));
+        survey1.setIndoorDetail(indoor2);
+        survey1.setOutdoorDetail(outdoor2);
+
+        assertEquals(false, survey1.isFoundLarvae());
+    }
+
+    @Test
+    public void testIsFoundLarvaeMustTrue() throws Exception {
+        List<SurveyDetail> indoor2 = new ArrayList<>();
+        indoor2.add(SurveyDetail.fromResult(น้ำใช้, 2, 2));
+
+        survey1.setIndoorDetail(indoor2);
+
+        assertEquals(true, survey1.isFoundLarvae());
+    }
+
+    @Test
+    public void testIsFoundLarvaeMustTrue2() throws Exception {
+        List<SurveyDetail> indoor2 = new ArrayList<>();
+        indoor2.add(SurveyDetail.fromResult(น้ำใช้, 2, 2));
+
+        List<SurveyDetail> outdoor2 = new ArrayList<>();
+        outdoor2.add(SurveyDetail.fromResult(น้ำใช้, 5, 0));
+        outdoor2.add(SurveyDetail.fromResult(น้ำดื่ม, 5, 2));
+
+        survey1.setIndoorDetail(indoor2);
+        survey1.setOutdoorDetail(outdoor2);
+
+        assertEquals(true, survey1.isFoundLarvae());
     }
 }

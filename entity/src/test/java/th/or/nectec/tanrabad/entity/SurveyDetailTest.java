@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015  NECTEC
+ * Copyright (c) 2015 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,6 +17,7 @@
 
 package th.or.nectec.tanrabad.entity;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -29,5 +30,12 @@ public class SurveyDetailTest {
     @Test(expected = SurveyDetail.ContainerFoundLarvaOverTotalException.class)
     public void ContainerFoundLarvaMoreThanTotalMustThrowException() throws Exception {
         new SurveyDetail(น้ำใช้, 2, 10);
+    }
+
+    @Test
+    public void testIsFoundLarvae() throws Exception {
+        Assert.assertEquals(false, SurveyDetail.fromResult(น้ำใช้, 10, 0).isFoundLarva());
+        Assert.assertEquals(true, SurveyDetail.fromResult(น้ำใช้, 10, 3).isFoundLarva());
+        Assert.assertEquals(true, SurveyDetail.fromResult(น้ำใช้, 10, 10).isFoundLarva());
     }
 }

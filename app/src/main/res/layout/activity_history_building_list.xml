@@ -34,15 +34,7 @@
 
         <TextView
             android:id="@+id/place_name"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:gravity="end"
-            android:textColor="@color/white"
-            android:textIsSelectable="false"
-            android:textSize="@dimen/text_headline"
+            style="@style/top_right_header_text_style"
             tools:text="หมู่ 1 บ้านบางไผ่" />
     </FrameLayout>
 

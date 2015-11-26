@@ -35,6 +35,7 @@
         <TextView
             android:id="@+id/place_name"
             style="@style/top_right_header_text_style"
+            android:textIsSelectable="false"
             tools:text="หมู่ 1 บ้านบางไผ่" />
     </FrameLayout>
 

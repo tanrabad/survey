@@ -34,6 +34,7 @@ import th.or.nectec.tanrabad.domain.survey.*;
 import th.or.nectec.tanrabad.entity.*;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
+import th.or.nectec.tanrabad.survey.presenter.view.SurveyContainerView;
 import th.or.nectec.tanrabad.survey.repository.InMemoryBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.InMemoryContainerTypeRepository;
 import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
@@ -42,7 +43,6 @@ import th.or.nectec.tanrabad.survey.utils.EditTextStepper;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
 import th.or.nectec.tanrabad.survey.validator.SaveSurveyValidator;
-import th.or.nectec.tanrabad.survey.presenter.view.SurveyContainerView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -155,7 +155,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         return buildName;
     }
 
-    private void loadSurveyDetail(ArrayList<SurveyDetail> indoorDetails, HashMap<Integer,SurveyContainerView> surveyContainerViews) {
+    private void loadSurveyDetail(List<SurveyDetail> indoorDetails, HashMap<Integer,SurveyContainerView> surveyContainerViews) {
         for (SurveyDetail eachDetail : indoorDetails) {
             SurveyContainerView surveyContainerView = surveyContainerViews.get(eachDetail.getContainerType().getId());
             surveyContainerView.setSurveyDetail(eachDetail);

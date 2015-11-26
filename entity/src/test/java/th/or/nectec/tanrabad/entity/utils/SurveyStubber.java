@@ -51,4 +51,29 @@ public class SurveyStubber {
         survey.setOutdoorDetail(outdoor);
         return survey;
     }
+
+    public static Survey getSurveyWithResult(int total, int foundLarvae) {
+        return getSurveyWithResult(น้ำใช้, total, foundLarvae);
+    }
+
+    public static Survey getSurveyWithResult(ContainerType containerType, int total, int foundLarvae) {
+        List<SurveyDetail> indoor = new ArrayList<>();
+        indoor.add(SurveyDetail.fromResult(containerType, total, foundLarvae));
+
+        Survey survey = new Survey(surveyor, Building.withName("1"));
+        survey.setIndoorDetail(indoor);
+        return survey;
+    }
+
+    public static Survey getWithIndoorOutdoorResult(int indoorTotal, int indoorFound, int outdoorTotal, int outdoorFound) {
+        List<SurveyDetail> indoor = new ArrayList<>();
+        indoor.add(SurveyDetail.fromResult(น้ำใช้, indoorTotal, indoorFound));
+        List<SurveyDetail> outdoor = new ArrayList<>();
+        outdoor.add(SurveyDetail.fromResult(น้ำดื่ม, outdoorTotal, outdoorFound));
+
+        Survey survey = new Survey(surveyor, Building.withName("1"));
+        survey.setIndoorDetail(indoor);
+        survey.setOutdoorDetail(outdoor);
+        return survey;
+    }
 }

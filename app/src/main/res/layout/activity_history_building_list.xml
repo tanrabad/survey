@@ -15,7 +15,7 @@
   ~ limitations under the License.
   -->
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -115,4 +115,4 @@
         android:text="@string/survey_more_building_button_text"
         android:textColor="@color/pink"
         android:textSize="@dimen/text_title" />
-</FrameLayout>
+</merge>

@@ -15,7 +15,7 @@
   ~ limitations under the License.
   -->
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -144,4 +144,4 @@
         </android.support.v7.widget.CardView>
 
     </android.support.design.widget.CoordinatorLayout>
-</FrameLayout>
+</merge>

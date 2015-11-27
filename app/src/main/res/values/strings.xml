@@ -86,5 +86,10 @@
     <string name="confirm">ยืนยัน</string>
     <string name="finish_place_survey">สิ้นสุดการสำรวจ</string>
     <string name="torch">ไฟฉาย</string>
+    <string name="yes">ใช่</string>
+    <string name="no">ไม่</string>
+    <string name="define_building_survey">ระบุอาคารสำรวจ</string>
+    <string name="define_place_survey">ระบุสถานที่สำรวจ</string>
+    <string name="abort_survey">ยกเลิกการสำรวจ</string>
 
 </resources>

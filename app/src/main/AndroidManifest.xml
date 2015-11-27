@@ -45,7 +45,7 @@
 
         <activity
             android:name=".presenter.PlaceListActivity"
-            android:label="ระบุสถานที่สำรวจ"
+            android:label="@string/define_place_survey"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -55,12 +55,7 @@
         </activity>
         <activity
             android:name=".presenter.BuildingListActivity"
-            android:label="ระบุอาคารสำรวจ">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
+            android:label="@string/define_building_survey">
         </activity>
         <activity
             android:name=".presenter.SurveyActivity"

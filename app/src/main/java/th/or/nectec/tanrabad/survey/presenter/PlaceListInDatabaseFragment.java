@@ -141,6 +141,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
     private void openBuildingListActivity(PlaceWithSurveyStatus placeWithSurveyStatus) {
         Intent intent = new Intent(getActivity(), BuildingListActivity.class);
         intent.putExtra(BuildingListActivity.PLACE_UUID_ARG, placeWithSurveyStatus.getPlace().getId().toString());
+        intent.putExtra(BuildingListActivity.IS_NEW_SURVEY_ARG, true);
         startActivity(intent);
     }
 

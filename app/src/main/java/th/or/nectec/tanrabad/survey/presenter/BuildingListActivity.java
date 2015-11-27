@@ -45,23 +45,27 @@ import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
+import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
+import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 
 public class BuildingListActivity extends TanrabadActivity implements BuildingWithSurveyStatusListPresenter, PlacePresenter {
 
     public static final String PLACE_UUID_ARG = "place_uuid_arg";
     public static final int ADD_BUILDING_REQ_CODE = 40000;
+    public static final String IS_NEW_SURVEY_ARG = "is_new_survey_arg";
     private RecyclerView buildingList;
     private TextView buildingCountView;
     private BuildingWithSurveyStatusAdapter buildingAdapter;
-    private SurveyBuildingChooser surveyBuildingChooser;
+    private Place place;
+    private boolean isNewSurvey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_building_list);
+        isNewSurvey = getIntent().getBooleanExtra(IS_NEW_SURVEY_ARG, false);
 
         buildingCountView = (TextView) findViewById(R.id.building_count);
-
         setupBuildingList();
         showPlaceName();
         loadSurveyBuildingList();
@@ -97,7 +101,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     }
 
     private void loadSurveyBuildingList() {
-        surveyBuildingChooser = new SurveyBuildingChooser(new StubUserRepository(), new StubPlaceRepository(), InMemoryBuildingRepository.getInstance(), InMemorySurveyRepository.getInstance(), this);
+        SurveyBuildingChooser surveyBuildingChooser = new SurveyBuildingChooser(new StubUserRepository(), new StubPlaceRepository(), InMemoryBuildingRepository.getInstance(), InMemorySurveyRepository.getInstance(), this);
         surveyBuildingChooser.displaySurveyBuildingOf(getPlaceUuidFromIntent().toString(), "sara");
     }
 
@@ -122,6 +126,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
 
     @Override
     public void displayPlace(Place place) {
+        this.place = place;
         TextView placeName = (TextView) findViewById(R.id.place_name);
         placeName.setText(place.getName());
     }
@@ -185,8 +190,24 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        openPlaceListActivity();
+        if (isNewSurvey) {
+            showFinishSurveyPrompt();
+        } else {
+            finish();
+        }
+    }
+
+    private void showFinishSurveyPrompt() {
+        PromptMessage promptMessage = new AlertDialogPromptMessage(this);
+        promptMessage.setOnConfirm(getString(R.string.yes), new PromptMessage.OnConfirmListener() {
+            @Override
+            public void onConfirm() {
+                openPlaceListActivity();
+                finish();
+            }
+        });
+        promptMessage.setOnCancel(getString(R.string.no), null);
+        promptMessage.show(getString(R.string.abort_survey), place.getName());
     }
 
     private void openPlaceListActivity() {

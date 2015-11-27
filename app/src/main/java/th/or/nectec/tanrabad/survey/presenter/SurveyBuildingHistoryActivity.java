@@ -128,7 +128,6 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
         Intent intent = new Intent(SurveyBuildingHistoryActivity.this, BuildingListActivity.class);
         intent.putExtra(BuildingListActivity.PLACE_UUID_ARG, getPlaceUuidFromIntent());
         intent.putExtra(SurveyActivity.USERNAME_ARG, getUsernameFromIntent());
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 

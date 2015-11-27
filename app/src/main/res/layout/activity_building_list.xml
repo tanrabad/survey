@@ -108,7 +108,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/between_view"
                             android:layout_marginStart="@dimen/between_view"
-                            android:contentDescription="@string/number_place_list_in_database"
+                            android:contentDescription="@string/number_building_list"
                             android:paddingBottom="@dimen/indoor_outdoor_padding_bottom"
                             android:paddingTop="@dimen/indoor_outdoor_padding_top"
                             android:textColor="@color/gray"

@@ -16,13 +16,12 @@
   -->
 
 
-<android.support.design.widget.CoordinatorLayout
-     xmlns:android="http://schemas.android.com/apk/res/android"
-     xmlns:app="http://schemas.android.com/apk/res-auto"
-     xmlns:tools="http://schemas.android.com/tools"
-     android:layout_width="match_parent"
-     android:layout_height="match_parent"
-     android:onClick="onRootViewClick">
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:onClick="onRootViewClick">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -63,17 +62,17 @@
                     android:paddingTop="@dimen/padding_top">
 
                     <TextView
-                            android:id="@+id/building_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="end"
-                            android:layout_marginBottom="@dimen/between_text_margin_bottom"
-                            android:layout_marginTop="@dimen/between_text_margin_top"
-                            android:gravity="end"
-                            android:textColor="@color/white"
-                            android:textIsSelectable="true"
-                            android:textSize="@dimen/text_headline"
-                            tools:text="บ้านเลขที่ 123/321" />
+                        android:id="@+id/building_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginBottom="@dimen/between_text_margin_bottom"
+                        android:layout_marginTop="@dimen/between_text_margin_top"
+                        android:gravity="end"
+                        android:textColor="@color/white"
+                        android:textIsSelectable="true"
+                        android:textSize="@dimen/text_headline"
+                        tools:text="บ้านเลขที่ 123/321" />
 
                     <TextView
                         android:id="@+id/place_name"
@@ -90,43 +89,44 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_gravity="end"
                         android:layout_marginBottom="@dimen/between_text_margin_bottom"
                         android:layout_marginTop="@dimen/between_text_margin_top"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
                         <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="@dimen/between_view"
-                                android:layout_marginRight="@dimen/between_view"
-                                android:text="@string/number_of_resident"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/text_subhead"/>
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/between_view"
+                            android:layout_marginRight="@dimen/between_view"
+                            android:text="@string/number_of_resident"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_subhead" />
 
                         <th.or.nectec.tanrabad.survey.presenter.view.StepPopupEditText
-                                android:id="@+id/resident_count"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="bottom"
-                                android:background="@drawable/textfield_background"
-                                android:ems="2"
-                                android:gravity="center"
-                                android:inputType="number"
-                                android:maxLength="3"
-                                android:padding="10dp"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/text_body"
-                                tools:text="10" />
+                            android:id="@+id/resident_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:background="@drawable/textfield_background"
+                            android:ems="2"
+                            android:gravity="center"
+                            android:inputType="number"
+                            android:maxLength="3"
+                            android:padding="10dp"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_body"
+                            tools:text="10" />
 
                         <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/between_view"
-                                android:layout_marginStart="@dimen/between_view"
-                                android:text="@string/person"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/text_subhead"/>
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/between_view"
+                            android:layout_marginStart="@dimen/between_view"
+                            android:text="@string/person"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_subhead" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -200,7 +200,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@color/light_gray"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/activity_horizontal_margin">
 
                 </LinearLayout>
 
@@ -211,7 +212,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@color/white"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/activity_horizontal_margin">
 
                 </LinearLayout>
             </LinearLayout>

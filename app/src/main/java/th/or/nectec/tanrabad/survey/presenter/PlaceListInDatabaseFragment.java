@@ -30,6 +30,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
+import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
+
 import java.util.List;
 
 import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyStatus;
@@ -51,6 +53,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
     private TextView placeCountView;
     private RecyclerView placeListView;
     private AppCompatSpinner placeFilterView;
+    private RecyclerViewHeader recyclerViewHeader;
 
     public static PlaceListInDatabaseFragment newInstance() {
         PlaceListInDatabaseFragment fragment = new PlaceListInDatabaseFragment();
@@ -79,6 +82,8 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
         this.placeListView = (RecyclerView) view.findViewById(R.id.place_list);
         this.placeCountView = (TextView) view.findViewById(R.id.place_count);
         this.placeFilterView = (AppCompatSpinner) view.findViewById(R.id.place_filter);
+        recyclerViewHeader = (RecyclerViewHeader) view.findViewById(R.id.card_header);
+
     }
 
     private void setupPlaceFilterSpinner() {
@@ -93,6 +98,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
         placeListView.setAdapter(placeAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         placeListView.setLayoutManager(linearLayoutManager);
+        recyclerViewHeader.attachTo(placeListView, true);
     }
 
     @Override

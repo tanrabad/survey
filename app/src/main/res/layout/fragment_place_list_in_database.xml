@@ -29,9 +29,9 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="@dimen/header_height"
+            android:layout_gravity="center_horizontal"
             android:contentDescription="@string/place_bg"
-            android:src="@drawable/header_place_in_database"
-            android:layout_gravity="center_horizontal"/>
+            android:src="@drawable/header_place_in_database" />
     </FrameLayout>
 
 
@@ -54,7 +54,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/header_height_padding" />
+                    android:layout_height="@dimen/header_height" />
 
             </android.support.design.widget.CollapsingToolbarLayout>
         </android.support.design.widget.AppBarLayout>
@@ -64,76 +64,83 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/activity_horizontal_margin"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/place_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader
+                android:id="@+id/card_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:paddingBottom="@dimen/indoor_outdoor_padding_bottom"
-                        android:paddingTop="@dimen/indoor_outdoor_padding_top"
-                        android:text="@string/survey_place"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_body" />
+                    android:orientation="vertical">
 
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="horizontal">
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
                         <TextView
-                            android:id="@+id/place_count"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/between_view"
-                            android:layout_marginStart="@dimen/between_view"
-                            android:contentDescription="@string/number_place_list_in_database"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
                             android:paddingBottom="@dimen/indoor_outdoor_padding_bottom"
                             android:paddingTop="@dimen/indoor_outdoor_padding_top"
-                            android:textColor="@color/gray"
-                            android:textIsSelectable="false"
-                            android:textSize="@dimen/text_body"
-                            tools:text="200" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/between_view"
-                            android:layout_marginStart="@dimen/between_view"
-                            android:paddingBottom="@dimen/indoor_outdoor_padding_bottom"
-                            android:paddingTop="@dimen/indoor_outdoor_padding_top"
-                            android:text="@string/list_unit"
+                            android:text="@string/survey_place"
                             android:textColor="@color/black"
                             android:textSize="@dimen/text_body" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/place_count"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/between_view"
+                                android:layout_marginStart="@dimen/between_view"
+                                android:contentDescription="@string/number_place_list_in_database"
+                                android:paddingBottom="@dimen/indoor_outdoor_padding_bottom"
+                                android:paddingTop="@dimen/indoor_outdoor_padding_top"
+                                android:textColor="@color/gray"
+                                android:textIsSelectable="false"
+                                android:textSize="@dimen/text_body"
+                                tools:text="200" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/between_view"
+                                android:layout_marginStart="@dimen/between_view"
+                                android:paddingBottom="@dimen/indoor_outdoor_padding_bottom"
+                                android:paddingTop="@dimen/indoor_outdoor_padding_top"
+                                android:text="@string/list_unit"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/text_body" />
+                        </LinearLayout>
+
                     </LinearLayout>
 
+                    <android.support.v7.widget.AppCompatSpinner
+                        android:id="@+id/place_filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
                 </LinearLayout>
-
-                <android.support.v7.widget.AppCompatSpinner
-                    android:id="@+id/place_filter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/place_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
+            </com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader>
         </android.support.v7.widget.CardView>
 
     </android.support.design.widget.CoordinatorLayout>

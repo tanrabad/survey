@@ -64,4 +64,16 @@ public class ContainerIndexTest {
         assertEquals(4.0f, ci.calculate(), DELTA);
 
     }
+
+    @Test
+    public void testGetTotalContainerAnd() throws Exception {
+        ContainerIndex ci = new ContainerIndex();
+        ci.add(SurveyStub.withIndoorOutdoorResult(30, 0, 20, 4));
+        ci.add(SurveyStub.withResult(ContainerTypeStub.จานรองกระถาง, 50, 0));
+        ci.calculate();
+
+        assertEquals(4, ci.getFoundLarvaeContainer());
+        assertEquals(100, ci.getTotalContainer());
+
+    }
 }

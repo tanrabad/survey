@@ -26,6 +26,8 @@ import java.util.List;
 public class ContainerIndex {
 
     List<Survey> surveys;
+    private float totalContainer = 0;
+    private float foundLarvaeContainer = 0;
 
     public ContainerIndex() {
         surveys = new ArrayList<>();
@@ -48,8 +50,8 @@ public class ContainerIndex {
         if (surveys.isEmpty())
             throw new IllegalStateException("must have some survey");
 
-        float totalContainer = 0;
-        float foundLarvaeContainer = 0;
+        totalContainer = 0;
+        foundLarvaeContainer = 0;
         for (Survey eachSurvey : surveys) {
             List<SurveyDetail> indoorDetails = eachSurvey.getIndoorDetail();
             if (indoorDetails != null) {
@@ -67,6 +69,13 @@ public class ContainerIndex {
             }
         }
         return foundLarvaeContainer / totalContainer * 100;
+    }
 
+    public int getTotalContainer() {
+        return (int) totalContainer;
+    }
+
+    public int getFoundLarvaeContainer() {
+        return (int) foundLarvaeContainer;
     }
 }

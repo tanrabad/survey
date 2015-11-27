@@ -26,4 +26,8 @@
         <item name="android:textSize">@dimen/text_headline</item>
     </style>
 
+    <style name="ButtonTanrabad" parent="Widget.AppCompat.Button">
+        <item name="android:textSize">@dimen/text_body</item>
+    </style>
+
 </resources>

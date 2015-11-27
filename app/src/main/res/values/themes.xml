@@ -27,6 +27,7 @@
 
         <!-- Defind Widget Theme -->
         <item name="android:textViewStyle">@style/TextViewTanrabad</item>
+        <item name="buttonStyle">@style/ButtonTanrabad</item>
 
         <!-- Define AlertDialog theme-->
         <item name="alertDialogTheme">@style/Dialog</item>

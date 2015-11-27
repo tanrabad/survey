@@ -26,35 +26,48 @@ import java.util.*;
 public class KeyContainer {
 
     private final List<Survey> surveys;
-    Map<ContainerType,Integer> IndoorMap = new HashMap<>();
+    protected List<SurveyDetail> indoorKey;
+    protected List<SurveyDetail> outdoorKey;
+    Map<ContainerType,Integer> indoorMap = new HashMap<>();
     Map<ContainerType,Integer> outdoorMap = new HashMap<>();
-    private List<SurveyDetail> indoorKey;
 
     public KeyContainer(Survey survey) {
         surveys = new ArrayList<>();
         surveys.add(survey);
     }
 
+    public KeyContainer(ArrayList<Survey> surveys) {
+        this.surveys = surveys;
+    }
+
     public ContainerType indoorNumberOne() {
-        return indoorKey.get(indoorKey.size() - 1).getContainerType();
+        return getAtNumber(indoorKey, 1);
+    }
+
+    private ContainerType getAtNumber(List<SurveyDetail> sortedKeyContainer, int number) {
+        try {
+            return sortedKeyContainer.get(sortedKeyContainer.size() - number).getContainerType();
+        } catch (ArrayIndexOutOfBoundsException aob) {
+            return null;
+        }
     }
 
     public ContainerType indoorNumberTwo() {
-        return indoorKey.get(indoorKey.size() - 2).getContainerType();
+        return getAtNumber(indoorKey, 2);
     }
 
     public ContainerType indoorNumberThree() {
-        return indoorKey.get(indoorKey.size() - 3).getContainerType();
+        return getAtNumber(indoorKey, 3);
     }
 
     public void calculate() {
         for (Survey survey : surveys) {
             for (SurveyDetail surveyDetail : survey.getIndoorDetail()) {
                 ContainerType containerType = surveyDetail.getContainerType();
-                if (!IndoorMap.containsKey(containerType))
-                    IndoorMap.put(containerType, 0);
-                Integer count = IndoorMap.get(containerType);
-                IndoorMap.put(containerType, count + surveyDetail.getFoundLarvaContainer());
+                if (!indoorMap.containsKey(containerType))
+                    indoorMap.put(containerType, 0);
+                Integer count = indoorMap.get(containerType);
+                indoorMap.put(containerType, count + surveyDetail.getFoundLarvaContainer());
             }
             for (SurveyDetail surveyDetail : survey.getOutdoorDetail()) {
                 ContainerType containerType = surveyDetail.getContainerType();
@@ -65,16 +78,34 @@ public class KeyContainer {
             }
         }
 
-        Iterator<Map.Entry<ContainerType,Integer>> iterator = IndoorMap.entrySet().iterator();
+        Iterator<Map.Entry<ContainerType,Integer>> indoorItr = indoorMap.entrySet().iterator();
         indoorKey = new ArrayList<>();
-        while (iterator.hasNext()) {
-            Map.Entry<ContainerType,Integer> containerTypeIntegerEntry = iterator.next();
+        while (indoorItr.hasNext()) {
+            Map.Entry<ContainerType,Integer> containerTypeIntegerEntry = indoorItr.next();
             indoorKey.add(new SurveyDetail(containerTypeIntegerEntry.getKey(), containerTypeIntegerEntry.getValue(), containerTypeIntegerEntry.getValue()));
         }
         Collections.sort(indoorKey);
+
+        Iterator<Map.Entry<ContainerType,Integer>> outdoorItr = outdoorMap.entrySet().iterator();
+        outdoorKey = new ArrayList<>();
+        while (outdoorItr.hasNext()) {
+
+            Map.Entry<ContainerType,Integer> containerTypeIntegerEntry = outdoorItr.next();
+            outdoorKey.add(new SurveyDetail(containerTypeIntegerEntry.getKey(), containerTypeIntegerEntry.getValue(), containerTypeIntegerEntry.getValue()));
+        }
+        Collections.sort(outdoorKey);
+    }
+
+    public ContainerType outdoorNumberOne() {
+        return getAtNumber(outdoorKey, 1);
     }
 
     public ContainerType outdoorNumberTwo() {
-        return null;
+        return getAtNumber(outdoorKey, 2);
     }
+
+    public ContainerType outdoorNumberThree() {
+        return getAtNumber(outdoorKey, 3);
+    }
+
 }

@@ -21,6 +21,8 @@ import org.junit.Test;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Survey;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.assertEquals;
 
 public class KeyContainerTest {
@@ -38,8 +40,56 @@ public class KeyContainerTest {
         KeyContainer keyContainer = new KeyContainer(survey);
         keyContainer.calculate();
 
+        assertEquals(1, keyContainer.outdoorKey.size());
         assertEquals(ContainerTypeStub.จานรองกระถาง, keyContainer.indoorNumberOne());
         assertEquals(ContainerTypeStub.ที่รองกันมด, keyContainer.indoorNumberTwo());
         assertEquals(ContainerTypeStub.น้ำดื่ม, keyContainer.indoorNumberThree());
+        assertEquals(ContainerTypeStub.ภาชนะที่ไม่ใช้, keyContainer.outdoorNumberOne());
+        assertEquals(null, keyContainer.outdoorNumberTwo());
+        assertEquals(null, keyContainer.outdoorNumberThree());
+    }
+
+    @Test
+    public void testFindOfThreeSurvey() throws Exception {
+        Survey survey = new Survey.Builder().setBuilding(Building.withName("1"))
+                .setResident(4)
+                .addIndoorDetail(ContainerTypeStub.น้ำดื่ม, 4, 4)
+                .addIndoorDetail(ContainerTypeStub.ที่รองกันมด, 4, 4)
+                .addIndoorDetail(ContainerTypeStub.แจกัน, 5, 5)
+
+                .addOutdoorDetail(ContainerTypeStub.อ่างบัว_ไม้น้ำ, 6, 6)
+                .addOutdoorDetail(ContainerTypeStub.น้ำใช้, 3, 3)
+                .build();
+        Survey survey2 = new Survey.Builder().setBuilding(Building.withName("1"))
+                .setResident(1)
+                .addIndoorDetail(ContainerTypeStub.น้ำดื่ม, 10, 10)
+                .addIndoorDetail(ContainerTypeStub.ที่รองกันมด, 4, 4)
+                .addIndoorDetail(ContainerTypeStub.แจกัน, 10, 10)
+
+                .addOutdoorDetail(ContainerTypeStub.ยางรถยนต์เก่า, 8, 8)
+                .addOutdoorDetail(ContainerTypeStub.ภาชนะที่ไม่ใช้, 3, 3)
+                .build();
+        Survey survey3 = new Survey.Builder().setBuilding(Building.withName("1"))
+                .setResident(5)
+                .addIndoorDetail(ContainerTypeStub.น้ำดื่ม, 2, 2)
+                .addIndoorDetail(ContainerTypeStub.น้ำใช้, 13, 13)
+
+                .addOutdoorDetail(ContainerTypeStub.จานรองกระถาง, 8, 8)
+                .addOutdoorDetail(ContainerTypeStub.กากใบพืช, 2, 2)
+                .build();
+
+        ArrayList<Survey> surveys = new ArrayList<>();
+        surveys.add(survey);
+        surveys.add(survey2);
+        surveys.add(survey3);
+        KeyContainer keyContainer = new KeyContainer(surveys);
+        keyContainer.calculate();
+
+        assertEquals(ContainerTypeStub.น้ำดื่ม, keyContainer.indoorNumberOne());
+        assertEquals(ContainerTypeStub.แจกัน, keyContainer.indoorNumberTwo());
+        assertEquals(ContainerTypeStub.น้ำใช้, keyContainer.indoorNumberThree());
+        assertEquals(ContainerTypeStub.ยางรถยนต์เก่า, keyContainer.outdoorNumberOne());
+        assertEquals(ContainerTypeStub.จานรองกระถาง, keyContainer.outdoorNumberTwo());
+        assertEquals(ContainerTypeStub.อ่างบัว_ไม้น้ำ, keyContainer.outdoorNumberThree());
     }
 }

@@ -4,14 +4,19 @@
     <style name="Dialog" parent="Base.Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:windowTitleStyle">@style/Dialog.Title</item>
         <item name="android:textAppearance">@style/TanrabadTextAppearance.Body</item>
-        <item name="buttonBarPositiveButtonStyle">@style/Dialog.Button</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Dialog.Button.Positive</item>
         <item name="buttonBarNegativeButtonStyle">@style/Dialog.Button</item>
         <item name="buttonBarNeutralButtonStyle">@style/Dialog.Button</item>
-        <item name="colorAccent">@color/shock_pink</item>
+        <item name="colorAccent">@color/color_accent</item>
     </style>
 
     <style name="Dialog.Button" parent="Base.Widget.AppCompat.Button.Borderless.Colored">
         <item name="android:textSize">@dimen/text_body</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="Dialog.Button.Positive">
+        <item name="android:textColor">@color/color_accent</item>
     </style>
 
     <style name="Dialog.Title">

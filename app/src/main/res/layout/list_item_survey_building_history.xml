@@ -40,12 +40,20 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/survey_building_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textIsSelectable="false"
-            android:textSize="@dimen/text_title"
-            tools:text="บ้านเลขที่ 1" />
+                android:id="@+id/survey_building_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textIsSelectable="true"
+                android:textSize="@dimen/text_title"
+                tools:text="บ้านเลขที่ 1" />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textIsSelectable="false"
+                tools:text="01:20"
+                android:id="@+id/survey_duration"/>
     </LinearLayout>
 
     <th.or.nectec.tanrabad.survey.presenter.view.RelativeTimeAgoTextView

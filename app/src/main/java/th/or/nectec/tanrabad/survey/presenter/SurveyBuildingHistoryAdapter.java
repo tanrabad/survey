@@ -25,13 +25,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.view.TimeAgoView;
+import th.or.nectec.tanrabad.survey.utils.time.DurationTimePrinter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBuildingHistoryAdapter.ViewHolder> implements ListViewAdapter<Survey> {
 
@@ -66,15 +66,15 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
         this.onItemClickListener = onItemClickListener;
     }
 
+    @Override
+    public void setOnItemLongClickListener(AdapterView.OnItemLongClickListener onItemLongClickListener) {
+    }
+
     private void onItemHolderClick(ViewHolder itemHolder) {
         if (onItemClickListener != null) {
             onItemClickListener.onItemClick(null, itemHolder.itemView,
                     itemHolder.getAdapterPosition(), itemHolder.getItemId());
         }
-    }
-
-    @Override
-    public void setOnItemLongClickListener(AdapterView.OnItemLongClickListener onItemLongClickListener) {
     }
 
     @Override
@@ -86,6 +86,7 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Survey currentSurvey = surveyBuildings.get(position);
+        holder.duration.setText(DurationTimePrinter.print(currentSurvey.getStartTimestamp(), currentSurvey.getFinishTimestamp()));
         holder.surveyBuildingTextView.setText(currentSurvey.getSurveyBuilding().getName());
         holder.timeAgoView.setTime(currentSurvey.getFinishTimestamp());
     }
@@ -101,6 +102,7 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private final TextView duration;
         TextView surveyBuildingTextView;
         ImageView surveyBuildingIcon;
         TimeAgoView timeAgoView;
@@ -113,6 +115,7 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
             surveyBuildingTextView = (TextView) itemView.findViewById(R.id.survey_building_name);
             surveyBuildingIcon = (ImageView) itemView.findViewById(R.id.survey_building_icon);
             timeAgoView = (TimeAgoView) itemView.findViewById(R.id.time_ago);
+            duration = (TextView) itemView.findViewById(R.id.survey_duration);
         }
 
         @Override

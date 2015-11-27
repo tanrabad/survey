@@ -29,6 +29,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
+import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
+
 import java.util.ArrayList;
 
 import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyHistoryChooser;
@@ -48,6 +50,7 @@ public class PlaceSurveyListFragment extends Fragment implements PlaceWithSurvey
     private PlaceWithSurveyHistoryChooser placeChooser = new PlaceWithSurveyHistoryChooser(new StubUserRepository(), InMemorySurveyRepository.getInstance(), this);
     private TextView placeCountView;
     private RecyclerView placeListView;
+    private RecyclerViewHeader recyclerViewHeader;
 
     public static PlaceSurveyListFragment newInstance(String username) {
         PlaceSurveyListFragment fragment = new PlaceSurveyListFragment();
@@ -76,8 +79,9 @@ public class PlaceSurveyListFragment extends Fragment implements PlaceWithSurvey
     }
 
     private void setupViews(View view) {
-        this.placeListView = (RecyclerView) view.findViewById(R.id.place_list);
-        this.placeCountView = (TextView) view.findViewById(R.id.place_count);
+        placeListView = (RecyclerView) view.findViewById(R.id.place_list);
+        placeCountView = (TextView) view.findViewById(R.id.place_count);
+        recyclerViewHeader = (RecyclerViewHeader) view.findViewById(R.id.card_header);
     }
 
     private void setupPlaceList() {
@@ -86,6 +90,7 @@ public class PlaceSurveyListFragment extends Fragment implements PlaceWithSurvey
         placeListView.setAdapter(placeAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         placeListView.setLayoutManager(linearLayoutManager);
+        recyclerViewHeader.attachTo(placeListView, true);
     }
 
     @Override

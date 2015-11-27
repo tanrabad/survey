@@ -21,7 +21,7 @@ package th.or.nectec.tanrabad.survey.Suite;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-import th.or.nectec.tanrabad.survey.presenter.BuildingAddButtonByBuild0UnitTest;
+import th.or.nectec.tanrabad.survey.presenter.BuildingAddButtonByBuilding0UnitTest;
 import th.or.nectec.tanrabad.survey.presenter.ChoosePlaceFromPlaceListTest;
 import th.or.nectec.tanrabad.survey.presenter.PlaceFoundBuildingListTest;
 import th.or.nectec.tanrabad.survey.presenter.PlaceListInDatabaseTest;
@@ -31,7 +31,7 @@ import th.or.nectec.tanrabad.survey.presenter.PlaceListInDatabaseTest;
         PlaceListInDatabaseTest.class,
         ChoosePlaceFromPlaceListTest.class,
         PlaceFoundBuildingListTest.class,
-        BuildingAddButtonByBuild0UnitTest.class
+        BuildingAddButtonByBuilding0UnitTest.class
 })
 
 public class AndroidSuite {

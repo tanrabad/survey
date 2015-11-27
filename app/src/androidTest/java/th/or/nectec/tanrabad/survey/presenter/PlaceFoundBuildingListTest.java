@@ -19,14 +19,12 @@ package th.or.nectec.tanrabad.survey.presenter;
 
 
 import android.content.Intent;
-import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 
 import org.junit.Before;
 import org.junit.Test;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
-import th.or.nectec.tanrabad.survey.presenter.BuildingListActivity;
 
 import java.util.UUID;
 
@@ -51,7 +49,7 @@ public class PlaceFoundBuildingListTest extends TanrabadEspressoTestBase {
     public void testPlaceFoundBuilding() {
         textDisplayed("เพิ่มอาคาร");
         textDisplayed("ชุมชนกอล์ฟวิว");
-        onView(ViewMatchers.withId(R.id.text_show_title_building_list))
+        onView(withId(R.id.text_show_title_building_list))
                 .check(matches(withText(R.string.survey_building)));
         onView(allOf(withId(R.id.building_count), withContentDescription(R.string.number_building_list)))
                 .check(matches(withText("0")));

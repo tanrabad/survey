@@ -19,7 +19,7 @@ package th.or.nectec.tanrabad.domain.geographic;
 
 import th.or.nectec.tanrabad.entity.Location;
 
-public class NewLocationCalculate implements NewLocationCalculator {
+public class CoordinateLocationCalculate implements CoordinateLocationCalculator {
 
     private static final double RADIUS = 6371;
 

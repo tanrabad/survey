@@ -19,6 +19,8 @@ package th.or.nectec.tanrabad.survey;
 
 import org.hamcrest.Matcher;
 
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.containsString;
 
@@ -34,5 +36,10 @@ public class TanrabadEspressoTestBase {
 
     protected Matcher containText(String text) {
         return withText(containsString(text));
+    }
+
+    protected void clickSurveyButton() {
+        onView(withText((R.string.survey)))
+                .perform(click());
     }
 }

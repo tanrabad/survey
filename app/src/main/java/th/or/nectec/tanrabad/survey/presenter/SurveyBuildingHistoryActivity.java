@@ -28,6 +28,12 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
+
+import java.util.List;
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.domain.place.PlaceController;
 import th.or.nectec.tanrabad.domain.place.PlacePresenter;
 import th.or.nectec.tanrabad.domain.survey.SurveyBuildingHistoryController;
@@ -41,9 +47,6 @@ import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
-
-import java.util.List;
-import java.util.UUID;
 
 public class SurveyBuildingHistoryActivity extends TanrabadActivity implements SurveyBuildingPresenter, PlacePresenter {
 
@@ -87,6 +90,8 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
                 openSurveyActivity(survey.getSurveyBuilding());
             }
         });
+        RecyclerViewHeader recyclerViewHeader = (RecyclerViewHeader) findViewById(R.id.card_header);
+        recyclerViewHeader.attachTo(surveyBuildingHistoryList, true);
     }
 
     private void showSurveyBuildingHistoryList() {

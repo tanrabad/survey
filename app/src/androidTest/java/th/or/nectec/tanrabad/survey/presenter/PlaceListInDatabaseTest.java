@@ -55,6 +55,42 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
     }
 
     @Test
+    public void testClickCancelButtonAtPromptMustStayOn() {
+        textDisplayed("หมู่บ้านพาลาซเซตโต้");
+        textDisplayed("โรงพยาบาลกรุงเทพ");
+        textDisplayed("วัดป่าภูก้อน");
+        textDisplayed(R.string.total);
+
+        onView(withText("หมู่บ้านพาลาซเซตโต้"))
+                .perform(click());
+        textDisplayed(R.string.start_survey);
+        textDisplayed(R.string.survey);
+        textDisplayed("หมู่บ้านพาลาซเซตโต้");
+        clickCancelButton();
+
+        textDisplayed(R.string.total);
+        onView(withText("โรงพยาบาลกรุงเทพ"))
+                .perform(click());
+        textDisplayed(R.string.start_survey);
+        textDisplayed(R.string.survey);
+        textDisplayed("โรงพยาบาลกรุงเทพ");
+        clickCancelButton();
+
+        textDisplayed(R.string.total);
+        onView(withText("วัดป่าภูก้อน"))
+                .perform(click());
+        textDisplayed(R.string.start_survey);
+        textDisplayed(R.string.survey);
+        textDisplayed("วัดป่าภูก้อน");
+        clickCancelButton();
+
+        textDisplayed("หมู่บ้านพาลาซเซตโต้");
+        textDisplayed("โรงพยาบาลกรุงเทพ");
+        textDisplayed("วัดป่าภูก้อน");
+        textDisplayed(R.string.total);
+    }
+
+    @Test
     public void testChooseTypeVillageCommunity() {
         onView(withText(R.string.not_define_place_type))
                 .perform(click());

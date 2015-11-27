@@ -51,11 +51,8 @@ public class ChoosePlaceFromPlaceListTest extends TanrabadEspressoTestBase {
     public void testChoosePlaceThenBuildingNotFound() {
         onView(withText("ชุมชนกอล์ฟวิว"))
                 .perform(click());
-
         clickSurveyButton();
-
-        onView(withText("ชุมชนกอล์ฟวิว"))
-                .check(matches(isDisplayed()));
+        textDisplayed("ชุมชนกอล์ฟวิว");
         onView(ViewMatchers.withId(R.id.text_show_title_building_list))
                 .check(matches(withText("รายชื่ออาคาร")));
         onView(withId(R.id.building_count))
@@ -67,21 +64,15 @@ public class ChoosePlaceFromPlaceListTest extends TanrabadEspressoTestBase {
     public void testChoosePlaceThenFound3Building() {
         onView(withText("หมู่บ้านพาลาซเซตโต้"))
                 .perform(click());
-
         clickSurveyButton();
-
-        onView(withText("หมู่บ้านพาลาซเซตโต้"))
-                .check(matches(isDisplayed()));
+        textDisplayed("หมู่บ้านพาลาซเซตโต้");
         onView(withId(R.id.text_show_title_building_list))
                 .check(matches(withText("รายชื่ออาคาร")));
         onView(withId(R.id.building_count))
                 .check(matches(withText("13")));
-        onView(withText("214/43"))
-                .check(matches(isDisplayed()));
-        onView(withText("214/44"))
-                .check(matches(isDisplayed()));
-        onView(withText("214/45"))
-                .check(matches(isDisplayed()));
+        textDisplayed("214/43");
+        textDisplayed("214/44");
+        textDisplayed("214/45");
         pressBack();
     }
 }

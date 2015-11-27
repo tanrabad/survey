@@ -60,14 +60,11 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
                 .perform(click());
         onView(withText(R.string.village_community))
                 .perform(click());
-        onView(withText(R.string.village_community))
-                .check(matches(isDisplayed()));
+        textDisplayed(R.string.village_community);
         onView(allOf(withId(R.id.place_count), withContentDescription(R.string.number_place_list_in_database)))
                 .check(matches(withText("2")));
-        onView(withText("หมู่บ้านพาลาซเซตโต้"))
-                .check(matches(isDisplayed()));
-        onView(withText("ชุมชนกอล์ฟวิว"))
-                .check(matches(isDisplayed()));
+        textDisplayed("หมู่บ้านพาลาซเซตโต้");
+        textDisplayed("ชุมชนกอล์ฟวิว");
     }
 
     @Test
@@ -76,12 +73,10 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
                 .perform(click());
         onView(withText(R.string.worship))
                 .perform(click());
-        onView(withText(R.string.worship))
-                .check(matches(isDisplayed()));
+        textDisplayed(R.string.worship);
         onView(allOf(withId(R.id.place_count), withContentDescription(R.string.number_place_list_in_database)))
                 .check(matches(withText("1")));
-        onView(withText("วัดป่าภูก้อน"))
-                .check(matches(isDisplayed()));
+        textDisplayed("วัดป่าภูก้อน");
     }
 
     @Test
@@ -90,16 +85,12 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
                 .perform(click());
         onView(withText(R.string.school))
                 .perform(click());
-        onView(withText(R.string.school))
-                .check(matches(isDisplayed()));
+        textDisplayed(R.string.school);
         onView(allOf(withId(R.id.place_count), withContentDescription(R.string.number_place_list_in_database)))
                 .check(matches(withText("3")));
-        onView(withText("โรงเรียนเซนต์เมรี่"))
-                .check(matches(isDisplayed()));
-        onView(withText("โรงเรียนดอนบอสโก"))
-                .check(matches(isDisplayed()));
-        onView(withText("โรงเรียนอนุบาล"))
-                .check(matches(isDisplayed()));
+        textDisplayed("โรงเรียนเซนต์เมรี่");
+        textDisplayed("โรงเรียนดอนบอสโก");
+        textDisplayed("โรงเรียนอนุบาล");
     }
 
     @Test
@@ -108,12 +99,10 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
                 .perform(click());
         onView(withText(R.string.hospital))
                 .perform(click());
-        onView(withText(R.string.hospital))
-                .check(matches(isDisplayed()));
+        textDisplayed(R.string.hospital);
         onView(allOf(withId(R.id.place_count), withContentDescription(R.string.number_place_list_in_database)))
                 .check(matches(withText("1")));
-        onView(withText("โรงพยาบาลกรุงเทพ"))
-                .check(matches(isDisplayed()));
+        textDisplayed("โรงพยาบาลกรุงเทพ");
     }
 
     @Test
@@ -122,8 +111,7 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
                 .perform(click());
         onView(withText(R.string.factory))
                 .perform(click());
-        onView(withText(R.string.factory))
-                .check(matches(isDisplayed()));
+        textDisplayed(R.string.factory);
         onView(allOf(withId(R.id.place_count), withContentDescription(R.string.number_place_list_in_database)))
                 .check(matches(withText("0")));
     }

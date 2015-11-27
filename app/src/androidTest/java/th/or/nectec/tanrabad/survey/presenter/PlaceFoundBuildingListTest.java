@@ -49,10 +49,8 @@ public class PlaceFoundBuildingListTest extends TanrabadEspressoTestBase {
 
     @Test
     public void testPlaceFoundBuilding() {
-        onView(withText("เพิ่มอาคาร"))
-                .check(matches(isDisplayed()));
-        onView(withText("ชุมชนกอล์ฟวิว"))
-                .check(matches(isDisplayed()));
+        textDisplayed("เพิ่มอาคาร");
+        textDisplayed("ชุมชนกอล์ฟวิว");
         onView(ViewMatchers.withId(R.id.text_show_title_building_list))
                 .check(matches(withText(R.string.survey_building)));
         onView(allOf(withId(R.id.building_count), withContentDescription(R.string.number_building_list)))

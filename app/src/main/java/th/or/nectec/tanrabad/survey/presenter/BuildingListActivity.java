@@ -26,6 +26,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
+
+import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
+
+import java.util.List;
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
 import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatusListPresenter;
 import th.or.nectec.tanrabad.domain.place.PlaceController;
@@ -39,9 +45,6 @@ import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
-
-import java.util.List;
-import java.util.UUID;
 
 public class BuildingListActivity extends TanrabadActivity implements BuildingWithSurveyStatusListPresenter, PlacePresenter {
 
@@ -76,7 +79,6 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
                 openSurveyActivity(building.getBuilding());
             }
         });
-
         buildingAdapter.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
@@ -85,6 +87,8 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
                 return true;
             }
         });
+        RecyclerViewHeader recyclerViewHeader = (RecyclerViewHeader) findViewById(R.id.card_header);
+        recyclerViewHeader.attachTo(buildingList, true);
     }
 
     private void showPlaceName() {

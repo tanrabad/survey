@@ -48,19 +48,22 @@
     <string name="place_icon">ไอคอนหน้าสถานที่สำรวจ</string>
     <string name="place_bg">พื้นหลังหน้าสถานที่สำรวจ</string>
     <string name="place_not_found">ไม่พบข้อมูลสถานที่</string>
+    <string name="cant_save_same_building_name">ไม่สามารถบันทึกอาคารนี้ได้เนื่องจากชื่ออาคารนี้มีอยู่แล้ว</string>
+    <string name="number_building_list">จำนวนรายการของรายชื่ออาคารหน้าระบุอาคารสำรวจ</string>
+    <string name="survey_building_history">ประวัติการสำรวจ</string>
+    <string name="survey_building_history_not_found">ไม่พบประวัติการสำรวจ</string>
+    <string name="survey_more_building_button_text">กดเพื่อสำรวจอาคารเพิ่ม</string>
+    <string name="finish">สิ้นสุด</string>
+
+    <!--location-->
     <string name="save_location">บันทึกพิกัด</string>
     <string name="add_location">เพิ่มพิกัด</string>
     <string name="edit_location">แก้ไขพิกัด</string>
-    <string name="cant_save_same_building_name">ไม่สามารถบันทึกอาคารนี้ได้เนื่องจากชื่ออาคารนี้มีอยู่แล้ว</string>
-    <string name="number_building_list">จำนวนรายการของรายชื่ออาคารหน้าระบุอาคารสำรวจ</string>
-
-    <string name="survey_building_history">ประวัติการสำรวจ</string>
-    <string name="survey_building_history_not_found">ไม่พบประวัติการสำรวจ</string>
-
-    <string name="survey_more_building_button_text">กดเพื่อสำรวจอาคารเพิ่ม</string>
-    <string name="finish">สิ้นสุด</string>
     <string name="define_building_location">ระบุพิกัดอาคาร</string>
     <string name="building_location">พิกัดอาคาร</string>
+    <string name="remove_location">ลบพิกัด</string>
+    <string name="please_define_location">กรุณาระบุพิกัด</string>
+    <string name="please_define_building_location">กรุณาระบุพิกัดของอาคาร</string>
 
     <!--place type-->
     <string name="village_community">หมู่บ้าน/ชุมชน</string>
@@ -69,11 +72,8 @@
     <string name="hospital">โรงพยาบาล</string>
     <string name="factory">โรงงาน</string>
     <string name="not_define_place_type">ทั้งหมด</string>
-    <string name="remove_location">ลบพิกัด</string>
-    <string name="please_define_location">กรุณาระบุพิกัด</string>
     <string name="please_define_building_name">กรุณาระบุชื่ออาคาร</string>
     <string name="please_define_house_no">กรุณาระบุบ้านเลขที่</string>
-    <string name="please_define_building_location">กรุณาระบุพิกัดของอาคาร</string>
     <string name="building_edit">แก้ไขอาคาร</string>
     <string name="list_unit">รายการ</string>
     <string name="survey_place_not_found">ไม่พบรายการสถานที่ที่สำรวจ</string>

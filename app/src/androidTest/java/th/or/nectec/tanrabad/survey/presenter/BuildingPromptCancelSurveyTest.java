@@ -17,10 +17,9 @@
 
 package th.or.nectec.tanrabad.survey.presenter;
 
-
 import android.content.Intent;
+import android.support.test.espresso.Espresso;
 import android.support.test.rule.ActivityTestRule;
-
 import org.junit.Before;
 import org.junit.Test;
 import th.or.nectec.tanrabad.survey.R;
@@ -28,12 +27,11 @@ import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.pressBack;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
-public class ChoosePlaceFromPlaceListTest extends TanrabadEspressoTestBase {
+public class BuildingPromptCancelSurveyTest extends TanrabadEspressoTestBase {
     public ActivityTestRule<PlaceListActivity> mActivityTestRule =
             new ActivityTestRule<>(PlaceListActivity.class);
     PlaceListActivity mAtivity;
@@ -45,7 +43,7 @@ public class ChoosePlaceFromPlaceListTest extends TanrabadEspressoTestBase {
     }
 
     @Test
-    public void testChoosePlaceThenBuildingNotFound() {
+    public void testChoosePlaceThenClickPressBack() {
         onView(withText("ชุมชนกอล์ฟวิว"))
                 .perform(click());
         clickSurveyButton();
@@ -54,22 +52,18 @@ public class ChoosePlaceFromPlaceListTest extends TanrabadEspressoTestBase {
                 .check(matches(withText("รายชื่ออาคาร")));
         onView(withId(R.id.building_count))
                 .check(matches(withText("0")));
-        pressBack();
-    }
-
-    @Test
-    public void testChoosePlaceThenFound3Building() {
-        onView(withText("หมู่บ้านพาลาซเซตโต้"))
+        Espresso.pressBack();
+        textDisplayed(R.string.abort_survey);
+        textDisplayed("ชุมชนกอล์ฟวิว");
+        textDisplayed(R.string.yes);
+        onView(withText(R.string.no))
                 .perform(click());
-        clickSurveyButton();
-        textDisplayed("หมู่บ้านพาลาซเซตโต้");
-        onView(withId(R.id.text_show_title_building_list))
-                .check(matches(withText("รายชื่ออาคาร")));
-        onView(withId(R.id.building_count))
-                .check(matches(withText("13")));
-        textDisplayed("214/43");
-        textDisplayed("214/44");
-        textDisplayed("214/45");
-        pressBack();
+
+        Espresso.pressBack();
+        textDisplayed(R.string.abort_survey);
+        textDisplayed("ชุมชนกอล์ฟวิว");
+        textDisplayed(R.string.yes);
+        onView(withText(R.string.yes))
+                .perform(click());
     }
 }

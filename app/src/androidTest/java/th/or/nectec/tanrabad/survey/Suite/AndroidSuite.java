@@ -29,7 +29,8 @@ import th.or.nectec.tanrabad.survey.presenter.*;
         ChoosePlaceFromPlaceListTest.class,
         PlaceFoundBuildingListTest.class,
         BuildingAddButtonByBuilding0UnitTest.class,
-        BuildingAddButtonByBuilding13UnitTest.class
+        BuildingAddButtonByBuilding13UnitTest.class,
+        BuildingPromptCancelSurveyTest.class
 })
 
 public class AndroidSuite {

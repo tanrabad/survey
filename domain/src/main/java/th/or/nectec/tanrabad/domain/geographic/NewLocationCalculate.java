@@ -1,0 +1,66 @@
+/*
+ * Copyright (c) 2015 NECTEC
+ *   National Electronics and Computer Technology Center, Thailand
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package th.or.nectec.tanrabad.domain.geographic;
+
+import th.or.nectec.tanrabad.entity.Location;
+
+public class NewLocationCalculate implements NewLocationCalculator {
+
+    private static final double RADIUS = 6371;
+
+    @Override
+    public Location getNewMaxLocation(Location currentLocation, double distanceInKm) {
+        double lat1 = currentLocation.getLatitude();
+        double lon1 = currentLocation.getLongitude();
+
+        double lat1Radian = Math.toRadians(lat1);
+        double lon1Radian = Math.toRadians(lon1);
+
+        double brng = 0.7853981; //Bearing is 45 degrees converted to radians. brng = (degree*pi)/180
+
+        //d/Redius called angular distance in radians.
+
+        double newMaximumLatitude = lat1 + Math.asin(Math.sin(lat1Radian) * Math.cos(distanceInKm / RADIUS) +
+                Math.cos(lat1Radian) * Math.sin(distanceInKm / RADIUS) * Math.cos(brng));
+
+        double newMaximumLongitude = lon1 + Math.atan2(Math.sin(brng) * Math.sin(distanceInKm / RADIUS) * Math.cos(lon1Radian),
+                Math.cos(distanceInKm / RADIUS) - Math.sin(lon1Radian) * Math.sin(Math.toRadians(newMaximumLatitude)));
+
+        return new Location(newMaximumLatitude, newMaximumLongitude);
+
+    }
+
+    @Override
+    public Location getNewMinLocation(Location currentLocation, double distanceInKm) {
+        double lat1 = currentLocation.getLatitude();
+        double lon1 = currentLocation.getLongitude();
+
+        double lat1Radian = Math.toRadians(lat1);
+        double lon1Radian = Math.toRadians(lon1);
+
+        double brng = 3.92699081; //Bearing is 225 degrees converted to radians. brng = (degree*pi)/180
+
+        double newMinimumLatitude = lat1 - Math.asin(Math.sin(Math.toRadians(lat1)) * Math.cos(distanceInKm / RADIUS) +
+                Math.cos(Math.toRadians(lat1)) * Math.sin(distanceInKm / RADIUS) * Math.cos(brng));
+
+        double newMinimumLongitude = lon1 - Math.atan2(Math.sin(brng) * Math.sin(distanceInKm / RADIUS) * Math.cos(lon1Radian),
+                Math.cos(distanceInKm / RADIUS) - Math.sin(lon1Radian) * Math.sin(Math.toRadians(newMinimumLatitude)));
+
+        return new Location(newMinimumLatitude, newMinimumLongitude);
+    }
+}

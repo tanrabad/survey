@@ -25,6 +25,9 @@
         <item name="toolbarStyle">@style/Toolbar</item>
         <item name="actionMenuTextAppearance">@style/ActionBar.TitleTextAppearance</item>
 
+        <!-- Defind Widget Theme -->
+        <item name="android:textViewStyle">@style/TextViewTanrabad</item>
+
         <!-- Define AlertDialog theme-->
         <item name="alertDialogTheme">@style/Dialog</item>
 

@@ -95,7 +95,7 @@
 
             <TextView
                 android:id="@+id/building_name_title"
-                style="@style/text_label"
+                style="@style/TextViewTanrabad.Label"
                 android:textIsSelectable="false"
                 tools:text="บ้านเลขที่" />
 
@@ -117,7 +117,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    style="@style/text_label"
+                    style="@style/TextViewTanrabad.Label"
                     android:layout_marginRight="@dimen/between_view"
                     android:text="@string/building_location"
                     android:textIsSelectable="false" />

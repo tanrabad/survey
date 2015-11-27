@@ -26,12 +26,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
-
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
-
-import java.util.List;
-import java.util.UUID;
-
 import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
 import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatusListPresenter;
 import th.or.nectec.tanrabad.domain.place.PlaceController;
@@ -48,23 +43,23 @@ import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 
+import java.util.List;
+import java.util.UUID;
+
 public class BuildingListActivity extends TanrabadActivity implements BuildingWithSurveyStatusListPresenter, PlacePresenter {
 
     public static final String PLACE_UUID_ARG = "place_uuid_arg";
-    public static final int ADD_BUILDING_REQ_CODE = 40000;
     public static final String IS_NEW_SURVEY_ARG = "is_new_survey_arg";
+    private static final int ADD_BUILDING_REQ_CODE = 40000;
     private RecyclerView buildingList;
     private TextView buildingCountView;
     private BuildingWithSurveyStatusAdapter buildingAdapter;
     private Place place;
-    private boolean isNewSurvey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_building_list);
-        isNewSurvey = getIntent().getBooleanExtra(IS_NEW_SURVEY_ARG, false);
-
         buildingCountView = (TextView) findViewById(R.id.building_count);
         setupBuildingList();
         showPlaceName();
@@ -190,11 +185,15 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
 
     @Override
     public void onBackPressed() {
-        if (isNewSurvey) {
+        if (isNewSurvey()) {
             showFinishSurveyPrompt();
         } else {
             finish();
         }
+    }
+
+    private boolean isNewSurvey() {
+        return getIntent().getBooleanExtra(IS_NEW_SURVEY_ARG, false);
     }
 
     private void showFinishSurveyPrompt() {

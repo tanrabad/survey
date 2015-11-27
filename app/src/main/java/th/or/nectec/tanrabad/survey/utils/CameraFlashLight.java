@@ -21,6 +21,8 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 
+import java.util.List;
+
 @SuppressWarnings("deprecation")
 public class CameraFlashLight implements Torch {
 
@@ -32,8 +34,6 @@ public class CameraFlashLight implements Torch {
 
     private CameraFlashLight(Context context) {
         this.context = context;
-
-
     }
 
     public static CameraFlashLight getInstance(Context context) {
@@ -44,7 +44,31 @@ public class CameraFlashLight implements Torch {
 
     @Override
     public boolean isAvailable() {
+        return isSystemSupport() && hasFlash();
+    }
+
+    private boolean isSystemSupport() {
         return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+    }
+
+    private boolean hasFlash() {
+        Camera camera = getCamera();
+        Camera.Parameters parameters = camera.getParameters();
+        if (parameters.getFlashMode() == null) {
+            return false;
+        }
+        List<String> supportedFlashModes = parameters.getSupportedFlashModes();
+        return !(supportedFlashModes == null || supportedFlashModes.isEmpty() || hasOnlyFlashOffMode(supportedFlashModes));
+    }
+
+    private Camera getCamera() {
+        if (camera == null)
+            camera = Camera.open();
+        return camera;
+    }
+
+    private boolean hasOnlyFlashOffMode(List<String> supportedFlashModes) {
+        return supportedFlashModes.size() == 1 && supportedFlashModes.get(0).equals(Camera.Parameters.FLASH_MODE_OFF);
     }
 
     public boolean isTurningOn() {
@@ -53,7 +77,7 @@ public class CameraFlashLight implements Torch {
 
     @Override
     public void turnOn() {
-        camera = Camera.open();
+        Camera camera = getCamera();
         Camera.Parameters p = camera.getParameters();
         p.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
         camera.setParameters(p);
@@ -63,8 +87,10 @@ public class CameraFlashLight implements Torch {
 
     @Override
     public void turnOff() {
+        Camera camera = getCamera();
         camera.stopPreview();
         camera.release();
+        this.camera = null;
         turningOn = false;
     }
 }

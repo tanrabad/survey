@@ -30,8 +30,25 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import th.or.nectec.tanrabad.domain.survey.*;
-import th.or.nectec.tanrabad.entity.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import th.or.nectec.tanrabad.domain.survey.ContainerController;
+import th.or.nectec.tanrabad.domain.survey.ContainerPresenter;
+import th.or.nectec.tanrabad.domain.survey.SurveyController;
+import th.or.nectec.tanrabad.domain.survey.SurveyPresenter;
+import th.or.nectec.tanrabad.domain.survey.SurveyRepository;
+import th.or.nectec.tanrabad.domain.survey.SurveySavePresenter;
+import th.or.nectec.tanrabad.domain.survey.SurveySaver;
+import th.or.nectec.tanrabad.entity.Building;
+import th.or.nectec.tanrabad.entity.ContainerType;
+import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.Survey;
+import th.or.nectec.tanrabad.entity.SurveyDetail;
+import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.presenter.view.SurveyContainerView;
@@ -45,11 +62,6 @@ import th.or.nectec.tanrabad.survey.utils.Torch;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
 import th.or.nectec.tanrabad.survey.validator.SaveSurveyValidator;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class SurveyActivity extends TanrabadActivity implements ContainerPresenter, SurveyPresenter, SurveySavePresenter {
 
@@ -212,7 +224,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     private void openSurveyBuildingHistory() {
         Intent intent = new Intent(SurveyActivity.this, SurveyBuildingHistoryActivity.class);
         intent.putExtra(SurveyBuildingHistoryActivity.PLACE_UUID_ARG, survey.getSurveyBuilding().getPlace().getId().toString());
-        intent.putExtra(SurveyBuildingHistoryActivity.USERNAME_ARG, survey.getUser().getUsername());
+        intent.putExtra(SurveyBuildingHistoryActivity.USER_NAME_ARG, survey.getUser().getUsername());
         startActivity(intent);
     }
 

@@ -51,7 +51,7 @@ import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 public class SurveyBuildingHistoryActivity extends TanrabadActivity implements SurveyBuildingPresenter, PlacePresenter {
 
     public static final String PLACE_UUID_ARG = "place_uuid_arg";
-    public static final String USERNAME_ARG = "username_arg";
+    public static final String USER_NAME_ARG = "username_arg";
 
     private TextView placeName;
     private Button surveyMoreBuildingButton;
@@ -121,7 +121,7 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
     }
 
     private String getUsernameFromIntent() {
-        return getIntent().getStringExtra(USERNAME_ARG);
+        return getIntent().getStringExtra(USER_NAME_ARG);
     }
 
     private void openBuildingListActivity() {
@@ -178,15 +178,15 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
         promptMessage.setOnConfirm(getString(R.string.confirm), new PromptMessage.OnConfirmListener() {
             @Override
             public void onConfirm() {
-                openPlaceListActivity();
+                openMainActivity();
             }
         });
         promptMessage.setOnCancel(getString(R.string.cancel), null);
         promptMessage.show(getString(R.string.finish_place_survey), place.getName());
     }
 
-    private void openPlaceListActivity() {
-        Intent intent = new Intent(SurveyBuildingHistoryActivity.this, PlaceListActivity.class);
+    private void openMainActivity() {
+        Intent intent = new Intent(SurveyBuildingHistoryActivity.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }

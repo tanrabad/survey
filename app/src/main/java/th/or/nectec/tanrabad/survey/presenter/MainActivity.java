@@ -2,10 +2,14 @@ package th.or.nectec.tanrabad.survey.presenter;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+
+import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
 
 import java.util.ArrayList;
 
@@ -17,7 +21,7 @@ import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 
-public class MainActivity extends TanrabadActivity implements View.OnClickListener, PlaceWithSurveyHistoryListPresenter {
+public class MainActivity extends TanrabadActivity implements View.OnClickListener, PlaceWithSurveyHistoryListPresenter, AdapterView.OnItemClickListener {
 
     private PlaceAdapter placeAdapter;
 
@@ -32,7 +36,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
                 new StubUserRepository(),
                 InMemorySurveyRepository.getInstance(),
                 this);
-        placeWithSurveyHistoryChooser.showSurveyPlaceList("sara");
+        placeWithSurveyHistoryChooser.showSurveyPlaceList(getUsername());
     }
 
     private void setupList() {
@@ -40,6 +44,9 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
         placeAdapter = new PlaceAdapter(this);
         placeHistoryList.setAdapter(placeAdapter);
         placeHistoryList.setLayoutManager(new LinearLayoutManager(this));
+        placeAdapter.setOnItemClickListener(this);
+        RecyclerViewHeader recyclerViewHeader = (RecyclerViewHeader) findViewById(R.id.card_header);
+        recyclerViewHeader.attachTo(placeHistoryList, true);
     }
 
     @Override
@@ -49,7 +56,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
 
     private void openPlaceActivity() {
         Intent intent = new Intent(MainActivity.this, PlaceListActivity.class);
-        intent.putExtra(PlaceListActivity.USER_NAME_ARG, "sara");
+        intent.putExtra(PlaceListActivity.USER_NAME_ARG, getUsername());
         startActivity(intent);
     }
 
@@ -66,5 +73,23 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
     @Override
     public void displaySurveyPlacesNotFound() {
         placeAdapter.clearData();
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Place place = placeAdapter.getItem(i);
+        openSurveyBuildingHistoryActivity(place);
+    }
+
+    private void openSurveyBuildingHistoryActivity(Place place) {
+        Intent intent = new Intent(MainActivity.this, SurveyBuildingHistoryActivity.class);
+        intent.putExtra(SurveyBuildingHistoryActivity.PLACE_UUID_ARG, place.getId().toString());
+        intent.putExtra(SurveyBuildingHistoryActivity.USER_NAME_ARG, getUsername());
+        startActivity(intent);
+    }
+
+    @NonNull
+    private String getUsername() {
+        return "sara";
     }
 }

@@ -3,6 +3,9 @@ package th.or.nectec.tanrabad.survey.utils.prompt;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
+import android.widget.TextView;
+
+import th.or.nectec.tanrabad.survey.R;
 
 public class AlertDialogPromptMessage implements PromptMessage {
 
@@ -15,8 +18,10 @@ public class AlertDialogPromptMessage implements PromptMessage {
     @Override
     public void show(String title, String message) {
         alertDialog.setTitle(title);
-        alertDialog.setMessage(message);
-        alertDialog.show();
+        alertDialog.setView(R.layout.dialog_message_layout);
+        AlertDialog dialog = alertDialog.show();
+        TextView messageView = (TextView) dialog.findViewById(R.id.dialog_message);
+        messageView.setText(message);
     }
 
     @Override

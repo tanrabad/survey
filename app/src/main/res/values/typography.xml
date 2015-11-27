@@ -44,12 +44,10 @@
 
     <style name="TanrabadTextAppearance.Title">
         <item name="android:textSize">@dimen/text_title</item>
-        <item name="android:textStyle">bold</item>
+        <item name="fontPath">fonts/ThaiSansNeue-Bold.otf</item>
     </style>
 
     <style name="TanrabadTextAppearance.Caption">
         <item name="android:textSize">@dimen/text_caption</item>
     </style>
-
-
 </resources>

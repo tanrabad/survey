@@ -1,23 +1,32 @@
+/*
+ * Copyright (c) 2015 NECTEC
+ *   National Electronics and Computer Technology Center, Thailand
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package th.or.nectec.tanrabad.survey.presenter.maps;
 
-import android.annotation.TargetApi;
 import android.graphics.Color;
-import android.os.Build;
-import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
-
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMapOptions;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
-
 import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.utils.android.ResourceUtils;
 
 public class LiteMapFragment {
 
@@ -48,12 +57,6 @@ public class LiteMapFragment {
         return supportMapFragment;
     }
 
-    private static void moveMapByLocation(GoogleMap googleMap, SupportMapFragment supportMapFragment, LatLng position) {
-        MarkerOptions marker = buildMarker(googleMap, supportMapFragment, position);
-        googleMap.addMarker(marker);
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 16));
-    }
-
     private static void moveMapToThailand(GoogleMap googleMap, SupportMapFragment supportMapFragment) {
         DisplayMetrics metrics = new DisplayMetrics();
         supportMapFragment.getActivity().getWindowManager().getDefaultDisplay()
@@ -64,9 +67,15 @@ public class LiteMapFragment {
         googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(thailand, width, height, 40));
     }
 
+    private static void moveMapByLocation(GoogleMap googleMap, SupportMapFragment supportMapFragment, LatLng position) {
+        MarkerOptions marker = buildMarker(googleMap, supportMapFragment, position);
+        googleMap.addMarker(marker);
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 16));
+    }
+
     @NonNull
     private static MarkerOptions buildMarker(GoogleMap googleMap, SupportMapFragment supportMapFragment, LatLng position) {
-        int color = getColor(supportMapFragment, R.color.shock_pink);
+        int color = ResourceUtils.from(supportMapFragment.getActivity()).getColor(R.color.shock_pink);
         float hsv[] = new float[3];
         Color.colorToHSV(color, hsv);
         MarkerOptions marker = new MarkerOptions();
@@ -76,12 +85,5 @@ public class LiteMapFragment {
         return marker;
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
-    private static int getColor(SupportMapFragment supportMapFragment, @ColorRes int color) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            return supportMapFragment.getResources().getColor(color, supportMapFragment.getActivity().getTheme());
-        else
-            //noinspection deprecation
-            return supportMapFragment.getResources().getColor(color);
-    }
+
 }

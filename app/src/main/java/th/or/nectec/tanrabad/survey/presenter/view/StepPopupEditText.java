@@ -32,7 +32,7 @@ import android.widget.PopupWindow;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.utils.EditTextStepper;
 import th.or.nectec.tanrabad.survey.utils.android.DP;
-import th.or.nectec.tanrabad.survey.utils.android.DrawableResource;
+import th.or.nectec.tanrabad.survey.utils.android.ResourceUtils;
 
 public class StepPopupEditText extends EditText {
     private StepperPopup popUp;
@@ -95,7 +95,7 @@ public class StepPopupEditText extends EditText {
 
         private void init() {
             setOutsideTouchable(true);
-            setBackgroundDrawable(DrawableResource.get(R.drawable.popup_bg));
+            setBackgroundDrawable(ResourceUtils.from(context).getDrawable(R.drawable.popup_bg));
 
             ImageButton minus = getButton(R.id.minus, R.mipmap.ic_minus_1);
             ImageButton plus = getButton(R.id.plus, R.mipmap.ic_plus_1);
@@ -104,7 +104,7 @@ public class StepPopupEditText extends EditText {
 
         private ImageButton getButton(@IdRes int id, @DrawableRes int drawable) {
             ImageButton button = new ImageButton(context);
-            button.setImageDrawable(DrawableResource.get(drawable));
+            button.setImageDrawable(ResourceUtils.from(context).getDrawable(drawable));
             button.setId(id);
             button.setPadding(getButtonPadding(), getButtonPadding(), getButtonPadding(), getButtonPadding());
             button.setOnClickListener(this);

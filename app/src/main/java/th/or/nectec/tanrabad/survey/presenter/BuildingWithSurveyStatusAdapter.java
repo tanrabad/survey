@@ -25,13 +25,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
+import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.utils.android.BackgroundSetter;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
-import th.or.nectec.tanrabad.survey.R;
-import th.or.nectec.tanrabad.survey.utils.android.DrawableResource;
 
 public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<BuildingWithSurveyStatusAdapter.ViewHolder> implements ListViewAdapter<BuildingWithSurveyStatus> {
 
@@ -64,6 +63,16 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
     }
 
     @Override
+    public void setOnItemClickListener(AdapterView.OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    @Override
+    public void setOnItemLongClickListener(AdapterView.OnItemLongClickListener onItemLongClickListener) {
+        this.onItemLongClickListener = onItemLongClickListener;
+    }
+
+    @Override
     public BuildingWithSurveyStatusAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_building, parent, false);
         return new ViewHolder(view, this);
@@ -75,9 +84,11 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
         holder.buildingTextView.setText(buildingWithSurveyStatus.getBuilding().getName());
 
         if (buildingWithSurveyStatus.isSurvey()) {
-            holder.buildingIcon.setBackgroundDrawable(DrawableResource.get(R.drawable.container_bg_pink));
+            BackgroundSetter.set(holder.buildingIcon, R.drawable.container_bg_pink);
+            //holder.buildingIcon.setBackground(ResourceUtils.from(context).getDrawable(R.drawable.container_bg_pink));
         } else {
-            holder.buildingIcon.setBackgroundDrawable(DrawableResource.get(R.drawable.container_bg));
+            BackgroundSetter.set(holder.buildingIcon, R.drawable.container_bg);
+            //holder.buildingIcon.setBackground(ResourceUtils.from(context).getDrawable(R.drawable.container_bg));
         }
     }
 
@@ -91,21 +102,11 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
         return buildings.size();
     }
 
-    @Override
-    public void setOnItemClickListener(AdapterView.OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
-    }
-
     private void onItemHolderClick(ViewHolder itemHolder) {
         if (onItemClickListener != null) {
             onItemClickListener.onItemClick(null, itemHolder.itemView,
                     itemHolder.getAdapterPosition(), itemHolder.getItemId());
         }
-    }
-
-    @Override
-    public void setOnItemLongClickListener(AdapterView.OnItemLongClickListener onItemLongClickListener) {
-        this.onItemLongClickListener = onItemLongClickListener;
     }
 
     private void onItemHolderLongClick(ViewHolder itemHolder) {

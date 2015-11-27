@@ -21,30 +21,36 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
-import th.or.nectec.tanrabad.survey.TanrabadApp;
 
-public class DrawableResource {
+public class ResourceUtils {
 
-    private final int drawableId;
     private Context context;
 
-
-    public DrawableResource(@DrawableRes int drawableId) {
-        this.drawableId = drawableId;
-        this.context = TanrabadApp.instance();
+    public ResourceUtils(Context context) {
+        this.context = context;
     }
 
-    public static Drawable get(@DrawableRes int drawableId) {
-        return new DrawableResource(drawableId).get();
+    public static ResourceUtils from(Context context) {
+        return new ResourceUtils(context);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private Drawable get() {
+    public Drawable getDrawable(@DrawableRes int drawableId) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             return context.getResources().getDrawable(drawableId, null);
         else
             //noinspection deprecation
             return context.getResources().getDrawable(drawableId);
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    public int getColor(@ColorRes int color) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            return context.getResources().getColor(color, context.getTheme());
+        else
+            //noinspection deprecation
+            return context.getResources().getColor(color);
     }
 }

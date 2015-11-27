@@ -39,4 +39,5 @@
     <dimen name="toolbar_size">@dimen/actionbar_size</dimen>
     <dimen name="header_height_with_padding">320dp</dimen>
     <dimen name="header_height_padding">254dp</dimen>
+    <dimen name="list_card_width">568dp</dimen>
 </resources>

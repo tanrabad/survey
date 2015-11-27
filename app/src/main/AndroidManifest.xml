@@ -13,7 +13,7 @@
   ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
-  -->
+-->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="th.or.nectec.tanrabad.survey">
@@ -21,14 +21,13 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
 
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.FLASHLIGHT"/>
-
-    <uses-feature android:name="android.hardware.camera"/>
+    <uses-feature android:name="android.hardware.camera" />
     <uses-feature
-            android:name="android.hardware.camera.flash"
-            android:required="false"/>
+        android:name="android.hardware.camera.flash"
+        android:required="false" />
 
     <application
         android:name=".TanrabadApp"
@@ -43,9 +42,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="${google_map_key}" />
 
+
         <activity
-            android:name=".presenter.PlaceListActivity"
-            android:label="@string/define_place_survey"
+            android:name=".presenter.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -53,10 +52,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".presenter.PlaceListActivity"
+            android:label="@string/define_place_survey"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity
             android:name=".presenter.BuildingListActivity"
-            android:label="@string/define_building_survey">
-        </activity>
+            android:label="@string/define_building_survey" />
         <activity
             android:name=".presenter.SurveyActivity"
             android:label="@string/title_activity_survey"
@@ -80,7 +84,6 @@
             android:label="@string/building_add"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
-
         <activity
             android:name=".presenter.MapMarkerActivity"
             android:label="@string/add_location" />

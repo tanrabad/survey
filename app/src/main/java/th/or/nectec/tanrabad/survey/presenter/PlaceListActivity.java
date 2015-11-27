@@ -32,6 +32,8 @@ import uk.co.chrisjenx.calligraphy.TypefaceUtils;
 
 public class PlaceListActivity extends TanrabadActivity {
 
+    public static final String USER_NAME_ARG = "user_name_arg";
+
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager placePager;

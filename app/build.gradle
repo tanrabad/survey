@@ -104,20 +104,21 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':domain')
     compile project(':entity')
-    compile 'com.android.support:design:' + rootProject.ext.supportLibVersion
     compile 'com.android.support:cardview-v7:' + rootProject.ext.supportLibVersion
+    compile 'com.android.support:design:' + rootProject.ext.supportLibVersion
+    compile 'com.android.support:percent:' + rootProject.ext.supportLibVersion
     compile 'com.google.android.gms:play-services-location:' + rootProject.ext.playServicesVersion
     compile 'com.google.android.gms:play-services-maps:' + rootProject.ext.playServicesVersion
-    compile('com.crashlytics.sdk.android:crashlytics:2.5.2@aar') { transitive = true; }
     compile('com.crashlytics.sdk.android:answers:1.3.3@aar') { transitive = true; }
+    compile('com.crashlytics.sdk.android:crashlytics:2.5.2@aar') { transitive = true; }
+    compile 'com.bartoszlipinski.recyclerviewheader:library:1.2.0'
     compile 'joda-time:joda-time:' + rootProject.ext.jodaTimeVersion
     compile 'uk.co.chrisjenx:calligraphy:' + rootProject.ext.calligraphyVersion
-    compile 'com.bartoszlipinski.recyclerviewheader:library:1.2.0'
     testCompile 'junit:junit:' + rootProject.ext.junitVersion
     testCompile 'org.mockito:mockito-core:' + rootProject.ext.mockitoVersion
     testCompile "org.robolectric:robolectric:" + rootProject.ext.robolectricVersion
     androidTestCompile 'com.android.support:support-annotations:' + rootProject.ext.supportLibVersion
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:' + rootProject.ext.espressoVersion
     androidTestCompile 'com.android.support.test:runner:' + rootProject.ext.runnerVersion
     androidTestCompile 'com.android.support.test:rules:' + rootProject.ext.rulesVersion
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:' + rootProject.ext.espressoVersion
 }

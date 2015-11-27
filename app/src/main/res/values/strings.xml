@@ -91,5 +91,6 @@
     <string name="define_building_survey">ระบุอาคารสำรวจ</string>
     <string name="define_place_survey">ระบุสถานที่สำรวจ</string>
     <string name="abort_survey">ยกเลิกการสำรวจ</string>
+    <string name="press_to_start_survey">กดเพื่อเริ่มสำรวจ</string>
 
 </resources>

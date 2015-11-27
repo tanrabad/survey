@@ -42,6 +42,8 @@
     <color name="header_building">#5284a3</color>
     <color name="header_survey">#028490</color>
     <color name="header_survey_building_history">#73a737</color>
+
+    <color name="water_blue">#02B0FF</color>
 <!--    <color name="light_pink">#fdbfde</color>
 
     <color name="orange1">#ff5900</color>
@@ -63,7 +65,7 @@
     <color name="blue1">#0380f5</color>
     <color name="blue2">#028cb3</color>
     <color name="blue3">#02c9fa</color>
-    <color name="light_blue">#9cf4fd</color>
+
 
     <color name="dark_purple">#420187</color>
     <color name="purple1">#7503ff</color>

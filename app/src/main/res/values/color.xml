@@ -27,6 +27,7 @@
     <color name="gray">#999999</color>-->
     <color name="light_gray">#e2e2e2</color>
     <color name="white">#ffffff</color>
+    <color name="transparent">#00000000</color>
     <color name="black_transparent_20">#33000000</color>
     <color name="black_transparent_50">#80000000</color>
 
@@ -43,7 +44,7 @@
     <color name="header_survey">#028490</color>
     <color name="header_survey_building_history">#73a737</color>
 
-    <color name="water_blue">#02B0FF</color>
+    <color name="water_blue">#1F88F2</color>
 <!--    <color name="light_pink">#fdbfde</color>
 
     <color name="orange1">#ff5900</color>

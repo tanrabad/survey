@@ -38,4 +38,7 @@ public interface PlaceRepository {
 
     List<LocationEntity> findInBoundaryLocation(Location minimumLocation, Location maximumLocation);
 
+    List<LocationEntity> findTrimmedInBoundaryLocation(Location insideMinimumLocation, Location outsideMinimumLocation, Location insideMaximumLocation, Location outsideMaximumLocation);
+
+
 }

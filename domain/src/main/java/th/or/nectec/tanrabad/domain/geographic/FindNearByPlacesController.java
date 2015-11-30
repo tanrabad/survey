@@ -23,16 +23,16 @@ import th.or.nectec.tanrabad.entity.LocationEntity;
 
 import java.util.List;
 
-public class FindNearByPlaceController {
+public class FindNearByPlacesController {
     private FilterBoundaryCalculator filterBoundaryCalculator;
     private PlaceRepository placeRepository;
     private DistanceSorter distanceSorter;
     private NearbyPlacePresenter nearbyPlacePresenter;
 
-    public FindNearByPlaceController(FilterBoundaryCalculator filterBoundaryCalculator,
-                                     PlaceRepository placeRepository,
-                                     DistanceSorter distanceSorter,
-                                     NearbyPlacePresenter nearbyPlacePresenter) {
+    public FindNearByPlacesController(FilterBoundaryCalculator filterBoundaryCalculator,
+                                      PlaceRepository placeRepository,
+                                      DistanceSorter distanceSorter,
+                                      NearbyPlacePresenter nearbyPlacePresenter) {
         this.filterBoundaryCalculator = filterBoundaryCalculator;
         this.placeRepository = placeRepository;
         this.distanceSorter = distanceSorter;
@@ -52,5 +52,4 @@ public class FindNearByPlaceController {
             nearbyPlacePresenter.displayNearByPlaces(placeFiltered);
         }
     }
-
 }

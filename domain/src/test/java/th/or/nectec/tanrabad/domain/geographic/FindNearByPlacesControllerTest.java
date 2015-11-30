@@ -29,7 +29,7 @@ import th.or.nectec.tanrabad.entity.Place;
 
 import java.util.ArrayList;
 
-public class FindNearByPlaceControllerTest {
+public class FindNearByPlacesControllerTest {
 
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
@@ -107,7 +107,7 @@ public class FindNearByPlaceControllerTest {
                 oneOf(nearbyPlacePresenter).displayNearByPlaces(placesFilter);
             }
         });
-        FindNearByPlaceController locationBoundaryController = new FindNearByPlaceController(filterBoundaryCalculate,
+        FindNearByPlacesController locationBoundaryController = new FindNearByPlacesController(filterBoundaryCalculate,
                 placeRepository,
                 distanceSorter,
                 nearbyPlacePresenter);
@@ -136,7 +136,7 @@ public class FindNearByPlaceControllerTest {
                 oneOf(nearbyPlacePresenter).displayPlaceNotFound();
             }
         });
-        FindNearByPlaceController locationBoundaryController = new FindNearByPlaceController(filterBoundaryCalculate,
+        FindNearByPlacesController locationBoundaryController = new FindNearByPlacesController(filterBoundaryCalculate,
                 placeRepository,
                 distanceSorter,
                 nearbyPlacePresenter);

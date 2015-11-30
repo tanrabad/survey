@@ -1,78 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2015 NECTEC
+  ~   National Electronics and Computer Technology Center, Thailand
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".presenter.MainActivity">
+       xmlns:app="http://schemas.android.com/apk/res-auto"
+       xmlns:tools="http://schemas.android.com/tools"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       tools:context=".presenter.MainActivity">
 
-    <android.support.percent.PercentFrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/water_blue">
-
-        <ImageView
+    <View
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/pink_transparent_30"
-            android:contentDescription="@null"
-            app:layout_heightPercent="70%" />
+            android:background="#1F88F2"/>
 
-    </android.support.percent.PercentFrameLayout>
+
+    <ImageView
+            android:layout_gravity="center_horizontal"
+            android:layout_width="600dp"
+            android:layout_height="1024dp"
+
+            android:contentDescription="@null"
+            android:src="@drawable/larvae_deep"
+    />
+    <ImageView
+            android:layout_gravity="center_horizontal"
+            android:layout_width="600dp"
+            android:layout_height="1024dp"
+            android:contentDescription="@null"
+            android:id="@+id/water_shadow"
+            android:src="@drawable/water_shadow"
+    />
+    <ImageView
+            android:layout_gravity="center_horizontal"
+            android:layout_width="600dp"
+            android:layout_height="1024dp"
+            android:contentDescription="@null"
+            android:src="@drawable/larvae_main"/>
+    <ImageView
+            android:layout_gravity="center_horizontal"
+            android:layout_width="600dp"
+            android:layout_height="1024dp"
+            android:contentDescription="@null"
+            android:src="@drawable/magnifer"
+    />
+
 
     <android.support.design.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
         <android.support.design.widget.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:fitsSystemWindows="true">
-
-            <android.support.design.widget.CollapsingToolbarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                app:titleEnabled="false">
+                android:background="@android:color/transparent"
+                android:fitsSystemWindows="true">
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                    app:titleEnabled="false">
 
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="700dp" />
+                        android:layout_width="match_parent"
+                        android:layout_height="720dp"/>
 
             </android.support.design.widget.CollapsingToolbarLayout>
         </android.support.design.widget.AppBarLayout>
 
         <Button
-            android:id="@+id/start_survey"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/press_to_start_survey"
-            android:textSize="@dimen/text_headline" />
+                android:id="@+id/start_survey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="invisible"
+                android:text="@string/press_to_start_survey"
+                android:textSize="@dimen/text_headline"/>
 
         <android.support.v7.widget.CardView
-            android:layout_width="@dimen/list_card_width"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="@dimen/activity_horizontal_margin"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                android:layout_width="@dimen/list_card_width"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/place_history_list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                    android:id="@+id/place_history_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
 
             <com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader
-                android:id="@+id/card_header"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                    android:id="@+id/card_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/actionbar_size"
-                    android:padding="@dimen/activity_horizontal_margin"
-                    android:text="@string/find_place_by_recent_survey" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/actionbar_size"
+                        android:padding="@dimen/activity_horizontal_margin"
+                        android:text="@string/find_place_by_recent_survey"/>
             </com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader>
         </android.support.v7.widget.CardView>
     </android.support.design.widget.CoordinatorLayout>

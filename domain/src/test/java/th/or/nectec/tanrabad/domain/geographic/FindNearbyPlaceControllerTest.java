@@ -29,14 +29,14 @@ import th.or.nectec.tanrabad.entity.Place;
 
 import java.util.ArrayList;
 
-public class FindNearbyPlaceControllerTest {
+public class FindNearByPlaceControllerTest {
 
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
     double currentLatitude = 40.6892;
     double currentLongitude = -74.0444;
     final Location currentLocation = new Location(currentLatitude, currentLongitude);
-    int distanceInKm = 100;
+    double distanceInKm = 100;
     private PlaceRepository placeRepository;
     private NearbyPlacePresenter nearbyPlacePresenter;
     private FilterBoundaryCalculator filterBoundaryCalculate;
@@ -107,11 +107,11 @@ public class FindNearbyPlaceControllerTest {
                 oneOf(nearbyPlacePresenter).displayNearByPlaces(placesFilter);
             }
         });
-        FindNearbyPlaceController locationBoundaryController = new FindNearbyPlaceController(filterBoundaryCalculate,
+        FindNearByPlaceController locationBoundaryController = new FindNearByPlaceController(filterBoundaryCalculate,
                 placeRepository,
                 distanceSorter,
                 nearbyPlacePresenter);
-        locationBoundaryController.findNearbyPlace(currentLocation, distanceInKm);
+        locationBoundaryController.findNearByPlace(currentLocation, distanceInKm);
     }
 
     @Test
@@ -136,11 +136,11 @@ public class FindNearbyPlaceControllerTest {
                 oneOf(nearbyPlacePresenter).displayPlaceNotFound();
             }
         });
-        FindNearbyPlaceController locationBoundaryController = new FindNearbyPlaceController(filterBoundaryCalculate,
+        FindNearByPlaceController locationBoundaryController = new FindNearByPlaceController(filterBoundaryCalculate,
                 placeRepository,
                 distanceSorter,
                 nearbyPlacePresenter);
-        locationBoundaryController.findNearbyPlace(currentLocation, distanceInKm);
+        locationBoundaryController.findNearByPlace(currentLocation, distanceInKm);
     }
 
 }

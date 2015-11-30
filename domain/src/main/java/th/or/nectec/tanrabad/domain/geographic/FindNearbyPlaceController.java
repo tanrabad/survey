@@ -23,13 +23,13 @@ import th.or.nectec.tanrabad.entity.LocationEntity;
 
 import java.util.List;
 
-public class FindNearbyPlaceController {
+public class FindNearByPlaceController {
     private FilterBoundaryCalculator filterBoundaryCalculator;
     private PlaceRepository placeRepository;
     private DistanceSorter distanceSorter;
     private NearbyPlacePresenter nearbyPlacePresenter;
 
-    public FindNearbyPlaceController(FilterBoundaryCalculator filterBoundaryCalculator,
+    public FindNearByPlaceController(FilterBoundaryCalculator filterBoundaryCalculator,
                                      PlaceRepository placeRepository,
                                      DistanceSorter distanceSorter,
                                      NearbyPlacePresenter nearbyPlacePresenter) {
@@ -39,7 +39,7 @@ public class FindNearbyPlaceController {
         this.nearbyPlacePresenter = nearbyPlacePresenter;
     }
 
-    public void findNearbyPlace(Location currentLocation, int distanceInKm) {
+    public void findNearByPlace(Location currentLocation, double distanceInKm) {
         Location minimumLocation = filterBoundaryCalculator.getMinLocation(currentLocation, distanceInKm);
         Location maximumLocation = filterBoundaryCalculator.getMaxLocation(currentLocation, distanceInKm);
 

@@ -12,7 +12,7 @@ public class ContainerIconMapping {
         containerIconMapper.put(1, R.drawable.jar);
         containerIconMapper.put(2, R.drawable.bottle24);
         containerIconMapper.put(3, R.drawable.glass37);
-        containerIconMapper.put(4, R.drawable.container1);
+        containerIconMapper.put(4, R.drawable.ant_tray);
         containerIconMapper.put(5, R.drawable.ornament84);
         containerIconMapper.put(6, R.drawable.lotus);
         containerIconMapper.put(7, R.drawable.vehicle40);

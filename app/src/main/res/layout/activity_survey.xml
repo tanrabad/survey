@@ -188,38 +188,38 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <LinearLayout
+
+            <android.support.percent.PercentRelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:baselineAligned="false"
-                android:onClick="onRootViewClick"
-                android:orientation="horizontal">
-
+                android:onClick="onRootViewClick">
 
                 <LinearLayout
                     android:id="@+id/indoor_container"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:background="@color/light_gray"
                     android:orientation="vertical"
-                    android:paddingBottom="@dimen/activity_horizontal_margin">
-
-                </LinearLayout>
+                    android:paddingBottom="@dimen/activity_horizontal_margin"
+                    app:layout_widthPercent="50%" />
 
 
                 <LinearLayout
                     android:id="@+id/outdoor_container"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_toRightOf="@id/indoor_container"
                     android:layout_weight="1"
                     android:background="@color/white"
                     android:orientation="vertical"
-                    android:paddingBottom="@dimen/activity_horizontal_margin">
+                    android:paddingBottom="@dimen/activity_horizontal_margin"
+                    app:layout_widthPercent="50%" />
 
-                </LinearLayout>
-            </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="320dp"
+                    android:layout_below="@id/indoor_container" />
+            </android.support.percent.PercentRelativeLayout>
         </android.support.v4.widget.NestedScrollView>
     </LinearLayout>
 

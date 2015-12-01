@@ -37,6 +37,7 @@ public class MainSurveyTest extends TanrabadEspressoTestBase {
     @Before
     public void setUp() {
         Intent intent = new Intent();
+        intent.putExtra("isUiTesting",true);
         mActivity = mActivityTestRule.launchActivity(intent);
     }
     @Test

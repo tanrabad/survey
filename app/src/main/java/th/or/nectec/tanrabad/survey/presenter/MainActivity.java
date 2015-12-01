@@ -55,7 +55,9 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
                 this);
         placeWithSurveyHistoryChooser.showSurveyPlaceList(getUsername());
 
-        startAnimation();
+        if (!isUiTesting()) {
+            startAnimation();
+        }
     }
 
     private void setupList() {

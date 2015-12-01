@@ -36,4 +36,7 @@ public class TanrabadActivity extends AppCompatActivity {
         Alert.init(this);
     }
 
+    public boolean isUiTesting() {
+        return getIntent().getBooleanExtra("isUiTesting",false);
+    }
 }

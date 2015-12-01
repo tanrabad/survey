@@ -67,7 +67,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     public static final String BUILDING_UUID_ARG = "building_uuid";
     public static final String USERNAME_ARG = "username_arg";
-
+    ContainerIconMapping containerIconMapping;
     private HashMap<Integer, SurveyContainerView> indoorContainerViews;
     private HashMap<Integer, SurveyContainerView> outdoorContainerViews;
     private LinearLayout outdoorContainerLayout;
@@ -177,6 +177,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     @Override
     public void displayContainerList(List<ContainerType> containers) {
+        containerIconMapping = new ContainerIconMapping();
         initContainerView();
         for (ContainerType eachContainerType : containers) {
             buildIndoorContainerView(eachContainerType);
@@ -198,12 +199,14 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     private void buildIndoorContainerView(ContainerType containerType) {
         SurveyContainerView surveyContainerView = buildContainerView(containerType);
+        surveyContainerView.setContainerIcon(containerIconMapping.getContainerIcon(containerType));
         indoorContainerViews.put(containerType.getId(), surveyContainerView);
         indoorContainerLayout.addView(surveyContainerView);
     }
 
     private void buildOutdoorContainerView(ContainerType containerType) {
         SurveyContainerView surveyContainerView = buildContainerView(containerType);
+        surveyContainerView.setContainerIcon(containerIconMapping.getContainerIcon(containerType));
         outdoorContainerViews.put(containerType.getId(), surveyContainerView);
         outdoorContainerLayout.addView(surveyContainerView);
     }

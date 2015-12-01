@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.ColorRes;
+import android.support.annotation.DrawableRes;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import th.or.nectec.tanrabad.entity.ContainerType;
 import th.or.nectec.tanrabad.entity.SurveyDetail;
 import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.utils.android.ResourceUtils;
 
 public class SurveyContainerView extends LinearLayout {
     private ContainerType containerType;
@@ -25,6 +27,7 @@ public class SurveyContainerView extends LinearLayout {
     private TextView containerTypeView;
     private EditText totalContainerView;
     private EditText foundContainerView;
+    private ImageView containerIconView;
 
     public SurveyContainerView(Context context) {
         super(context);
@@ -46,6 +49,7 @@ public class SurveyContainerView extends LinearLayout {
     private void initInstances() {
         containerTypeView = (TextView) findViewById(R.id.container_type);
         foundContainerView = (EditText) findViewById(R.id.found_larvae_container);
+        containerIconView = (ImageView) findViewById(R.id.container_icon);
         foundContainerView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -97,7 +101,10 @@ public class SurveyContainerView extends LinearLayout {
     public void setContainerType(ContainerType container) {
         containerType = container;
         containerTypeView.setText(container.getName());
-        ImageView containerIconView = (ImageView) findViewById(R.id.container_icon);
+    }
+
+    public void setContainerIcon(@DrawableRes int iconResource) {
+        containerIconView.setImageDrawable(ResourceUtils.from(getContext()).getDrawable(iconResource));
     }
 
     public SurveyDetail getSurveyDetail() {

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2015 NECTEC
   ~   National Electronics and Computer Technology Center, Thailand
   ~
@@ -17,82 +16,82 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
     <ImageView
-            android:id="@+id/container_icon"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/container_bg"
-            android:contentDescription="@string/survey_container_description"/>
+        android:id="@+id/container_icon"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:contentDescription="@string/survey_container_description" />
 
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="100dp"
-            android:layout_marginTop="20dp"
-            android:textSize="@dimen/text_title"
-            android:id="@+id/container_type"
-            android:textIsSelectable="false"
-            tools:text="ประเภทภาชนะ"/>
+        android:id="@+id/container_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="20dp"
+        android:textIsSelectable="false"
+        android:textSize="@dimen/text_title"
+        tools:text="ประเภทภาชนะ" />
 
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="70dp"
-            android:text="@string/total"
-            android:id="@+id/text_total"
-            android:textIsSelectable="false"
-            android:textColor="@color/dark_gray"
-            android:layout_alignLeft="@id/container_type"
-            android:textSize="@dimen/text_body"/>
+        android:id="@+id/text_total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/container_type"
+        android:layout_marginTop="70dp"
+        android:text="@string/total"
+        android:textColor="@color/dark_gray"
+        android:textIsSelectable="false"
+        android:textSize="@dimen/text_body" />
 
     <th.or.nectec.tanrabad.survey.presenter.view.StepPopupEditText
-            android:id="@+id/total_container"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/text_total"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="60dp"
-            android:background="@drawable/textfield_background"
-            android:gravity="center"
-            android:imeOptions="actionNext"
-            android:inputType="number"
-            android:maxLength="2"
-            android:padding="@dimen/between_view"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_body"/>
+        android:id="@+id/total_container"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="60dp"
+        android:layout_toRightOf="@id/text_total"
+        android:background="@drawable/textfield_background"
+        android:gravity="center"
+        android:imeOptions="actionNext"
+        android:inputType="number"
+        android:maxLength="2"
+        android:padding="@dimen/between_view"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_body" />
 
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/total_container"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="70dp"
-            android:text="@string/found"
-            android:id="@+id/text_found"
-            android:textColor="@color/dark_gray"
-            android:textSize="@dimen/text_body"
-            android:textIsSelectable="false"/>
+        android:id="@+id/text_found"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="70dp"
+        android:layout_toRightOf="@+id/total_container"
+        android:text="@string/found"
+        android:textColor="@color/dark_gray"
+        android:textIsSelectable="false"
+        android:textSize="@dimen/text_body" />
 
     <th.or.nectec.tanrabad.survey.presenter.view.StepPopupEditText
-            android:id="@+id/found_larvae_container"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/text_found"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="60dp"
-            android:background="@drawable/textfield_background"
-            android:gravity="center"
-            android:inputType="number"
-            android:imeOptions="actionNext"
-            android:maxLength="2"
-            android:padding="@dimen/between_view"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_body"/>
+        android:id="@+id/found_larvae_container"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="60dp"
+        android:layout_toRightOf="@id/text_found"
+        android:background="@drawable/textfield_background"
+        android:gravity="center"
+        android:imeOptions="actionNext"
+        android:inputType="number"
+        android:maxLength="2"
+        android:padding="@dimen/between_view"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_body" />
 
 </RelativeLayout>

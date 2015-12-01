@@ -23,7 +23,7 @@
         <!-- Define Actionbar Style-->
         <item name="actionBarStyle">@style/ActionBar</item>
         <item name="toolbarStyle">@style/Toolbar</item>
-        <item name="actionMenuTextAppearance">@style/ActionBar.TitleTextAppearance</item>
+        <item name="actionMenuTextAppearance">@style/ActionBarTitleTextAppearance</item>
 
         <!-- Defind Widget Theme -->
         <item name="android:textViewStyle">@style/TextViewTanrabad</item>
@@ -40,8 +40,7 @@
         <item name="android:textAppearanceLarge">@style/TanrabadTextAppearance.Title</item>
         <item name="android:textAppearanceLargeInverse">@style/TanrabadTextAppearance.Title</item>
         <item name="android:textAppearanceListItem">@style/TanrabadTextAppearance.Body</item>
-        <item name="android:textAppearanceListItemSmall">@style/TanrabadTextAppearance.Caption
-        </item>
+        <item name="android:textAppearanceListItemSmall">@style/TanrabadTextAppearance.Caption</item>
         <item name="android:itemTextAppearance">@style/TanrabadTextAppearance.Body</item>
 
         <!-- Define Color Theme-->

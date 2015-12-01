@@ -19,25 +19,25 @@
 <resources>
 
     <style name="Dialog" parent="Base.Theme.AppCompat.Light.Dialog.Alert">
-        <item name="android:windowTitleStyle">@style/Dialog.Title</item>
+        <item name="android:windowTitleStyle">@style/DialogTitle</item>
         <item name="android:textAppearance">@style/TanrabadTextAppearance.Subhead</item>
-        <item name="buttonBarPositiveButtonStyle">@style/Dialog.Button.Positive</item>
-        <item name="buttonBarNegativeButtonStyle">@style/Dialog.Button</item>
-        <item name="buttonBarNeutralButtonStyle">@style/Dialog.Button</item>
+        <item name="buttonBarPositiveButtonStyle">@style/DialogButton.Positive</item>
+        <item name="buttonBarNegativeButtonStyle">@style/DialogButton</item>
+        <item name="buttonBarNeutralButtonStyle">@style/DialogButton</item>
         <item name="colorAccent">@color/color_accent</item>
     </style>
 
-    <style name="Dialog.Button" parent="Base.Widget.AppCompat.Button.Borderless.Colored">
+    <style name="DialogButton" parent="Base.Widget.AppCompat.Button.Borderless.Colored">
         <item name="android:textSize">@dimen/text_title</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/water_blue</item>
     </style>
 
-    <style name="Dialog.Button.Positive">
+    <style name="DialogButton.Positive">
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="Dialog.Title">
+    <style name="DialogTitle">
         <item name="android:textAppearance">@style/TanrabadTextAppearance.Title</item>
     </style>
 

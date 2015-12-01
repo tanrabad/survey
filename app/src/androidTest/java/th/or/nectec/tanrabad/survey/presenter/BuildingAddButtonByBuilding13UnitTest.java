@@ -19,7 +19,6 @@ package th.or.nectec.tanrabad.survey.presenter;
 
 
 import android.content.Intent;
-import android.support.test.espresso.Espresso;
 import android.support.test.rule.ActivityTestRule;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,6 +28,7 @@ import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
 import java.util.UUID;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
@@ -64,6 +64,6 @@ public class BuildingAddButtonByBuilding13UnitTest extends TanrabadEspressoTestB
         textDisplayed(R.string.house_no);
         textDisplayed(R.string.building_location);
         textDisplayed(R.string.define_building_location);
-        Espresso.pressBack();
+        pressBack();
     }
 }

@@ -27,8 +27,8 @@ import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
 import java.util.UUID;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.pressBack;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -64,5 +64,6 @@ public class BuildingAddButtonByBuilding0UnitTest extends TanrabadEspressoTestBa
         textDisplayed(R.string.building_location);
         textDisplayed(R.string.define_building_location);
         pressBack();
+        waitingFor(5000);
     }
 }

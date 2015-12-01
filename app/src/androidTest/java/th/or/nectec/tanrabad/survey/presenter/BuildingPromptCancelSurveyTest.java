@@ -18,7 +18,6 @@
 package th.or.nectec.tanrabad.survey.presenter;
 
 import android.content.Intent;
-import android.support.test.espresso.Espresso;
 import android.support.test.rule.ActivityTestRule;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,6 +25,7 @@ import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -52,14 +52,14 @@ public class BuildingPromptCancelSurveyTest extends TanrabadEspressoTestBase {
                 .check(matches(withText("รายชื่ออาคาร")));
         onView(withId(R.id.building_count))
                 .check(matches(withText("0")));
-        Espresso.pressBack();
+        pressBack();
         textDisplayed(R.string.abort_survey);
         textDisplayed("ชุมชนกอล์ฟวิว");
         textDisplayed(R.string.yes);
         onView(withText(R.string.no))
                 .perform(click());
 
-        Espresso.pressBack();
+        pressBack();
         textDisplayed(R.string.abort_survey);
         textDisplayed("ชุมชนกอล์ฟวิว");
         textDisplayed(R.string.yes);

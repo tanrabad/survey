@@ -17,7 +17,7 @@ public class ContainerIconMapping {
         containerIconMapper.put(6, R.drawable.lotus);
         containerIconMapper.put(7, R.drawable.vehicle40);
         containerIconMapper.put(8, R.drawable.leaf1);
-        containerIconMapper.put(9, R.drawable.garbage);
+        containerIconMapper.put(9, R.drawable.garbages);
         containerIconMapper.put(10, R.drawable.bowl3);
     }
 

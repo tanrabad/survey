@@ -29,61 +29,49 @@
             android:layout_height="match_parent"
             android:background="@color/water_blue"/>
 
-
-    <Button
-            android:id="@+id/start_survey"
-            android:layout_width="380dp"
-            android:layout_height="380dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="200dp"
-            android:background="@color/transparent"
-            android:textSize="@dimen/text_headline"/>
-
-
     <ImageView
+        android:layout_width="600dp"
+        android:layout_height="1024dp"
             android:layout_gravity="center_horizontal"
-            android:layout_width="600dp"
-            android:layout_height="1024dp"
 
             android:contentDescription="@null"
             android:src="@drawable/larvae_deep"
     />
     <ImageView
-            android:layout_gravity="center_horizontal"
+        android:id="@+id/water_shadow"
             android:layout_width="600dp"
             android:layout_height="600dp"
+        android:layout_gravity="center_horizontal"
             android:layout_marginTop="84dp"
-            android:scaleType="center"
-            android:foregroundGravity="center"
             android:contentDescription="@null"
-            android:id="@+id/water_shadow"
+        android:foregroundGravity="center"
+        android:scaleType="center"
             android:src="@drawable/water_shadow"
     />
     <ImageView
+        android:layout_width="600dp"
+        android:layout_height="1024dp"
             android:layout_gravity="center_horizontal"
-            android:layout_width="600dp"
-            android:layout_height="1024dp"
             android:contentDescription="@null"
             android:src="@drawable/larvae_main"/>
     <ImageView
+        android:layout_width="600dp"
+        android:layout_height="1024dp"
             android:layout_gravity="center_horizontal"
-            android:layout_width="600dp"
-            android:layout_height="1024dp"
-            android:scaleType="center"
             android:contentDescription="@null"
+        android:scaleType="center"
             android:src="@drawable/magnifier"
     />
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="680dp"
+        android:text="@string/press_to_start_survey"
             android:textColor="@color/white"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:textSize="@dimen/text_subhead"
-            android:text="@string/press_to_start_survey"
     />
-
 
     <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
@@ -104,6 +92,15 @@
                 <View
                         android:layout_width="match_parent"
                         android:layout_height="740dp"/>
+
+                <Button
+                    android:id="@+id/start_survey"
+                    android:layout_width="380dp"
+                    android:layout_height="380dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="200dp"
+                    android:background="@color/transparent"
+                    android:textSize="@dimen/text_headline" />
 
             </android.support.design.widget.CollapsingToolbarLayout>
         </android.support.design.widget.AppBarLayout>

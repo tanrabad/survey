@@ -25,6 +25,7 @@ import th.or.nectec.tanrabad.survey.presenter.*;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+        MainSurveyTest.class,
         PlaceListInDatabaseTest.class,
         ChoosePlaceFromPlaceListTest.class,
         PlaceFoundBuildingListTest.class,

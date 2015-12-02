@@ -27,7 +27,11 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
+
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
+
+import java.util.ArrayList;
+
 import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyHistoryChooser;
 import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyHistoryListPresenter;
 import th.or.nectec.tanrabad.entity.Place;
@@ -36,11 +40,10 @@ import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 
-import java.util.ArrayList;
-
 public class MainActivity extends TanrabadActivity implements View.OnClickListener, PlaceWithSurveyHistoryListPresenter, AdapterView.OnItemClickListener {
 
     private PlaceAdapter placeAdapter;
+    private RecyclerView placeHistoryList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +64,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
     }
 
     private void setupList() {
-        RecyclerView placeHistoryList = (RecyclerView) findViewById(R.id.place_history_list);
+        placeHistoryList = (RecyclerView) findViewById(R.id.place_history_list);
         placeAdapter = new PlaceAdapter(this);
         placeHistoryList.setAdapter(placeAdapter);
         placeHistoryList.setLayoutManager(new LinearLayoutManager(this));
@@ -105,6 +108,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
     @Override
     public void displaySurveyPlacesNotFound() {
         placeAdapter.clearData();
+        placeHistoryList.setVisibility(View.GONE);
     }
 
     @Override

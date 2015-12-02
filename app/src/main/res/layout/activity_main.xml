@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2015 NECTEC
   ~   National Electronics and Computer Technology Center, Thailand
   ~
@@ -17,81 +16,80 @@
   -->
 
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-       xmlns:app="http://schemas.android.com/apk/res-auto"
-       xmlns:tools="http://schemas.android.com/tools"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       tools:context=".presenter.MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presenter.MainActivity">
 
 
     <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/water_blue"/>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/water_blue" />
 
     <ImageView
         android:layout_width="600dp"
         android:layout_height="1024dp"
-            android:layout_gravity="center_horizontal"
+        android:layout_gravity="center_horizontal"
 
-            android:contentDescription="@null"
-            android:src="@drawable/larvae_deep"
-    />
+        android:contentDescription="@null"
+        android:src="@drawable/larvae_deep" />
+
     <ImageView
         android:id="@+id/water_shadow"
-            android:layout_width="600dp"
-            android:layout_height="600dp"
+        android:layout_width="600dp"
+        android:layout_height="600dp"
         android:layout_gravity="center_horizontal"
-            android:layout_marginTop="84dp"
-            android:contentDescription="@null"
+        android:layout_marginTop="84dp"
+        android:contentDescription="@null"
         android:foregroundGravity="center"
         android:scaleType="center"
-            android:src="@drawable/water_shadow"
-    />
+        android:src="@drawable/water_shadow" />
+
     <ImageView
         android:layout_width="600dp"
         android:layout_height="1024dp"
-            android:layout_gravity="center_horizontal"
-            android:contentDescription="@null"
-            android:src="@drawable/larvae_main"/>
+        android:layout_gravity="center_horizontal"
+        android:contentDescription="@null"
+        android:src="@drawable/larvae_main" />
+
     <ImageView
         android:layout_width="600dp"
         android:layout_height="1024dp"
-            android:layout_gravity="center_horizontal"
-            android:contentDescription="@null"
+        android:layout_gravity="center_horizontal"
+        android:contentDescription="@null"
         android:scaleType="center"
-            android:src="@drawable/magnifier"
-    />
+        android:src="@drawable/magnifier" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="680dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="680dp"
         android:text="@string/press_to_start_survey"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_subhead"
-    />
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_subhead" />
 
     <android.support.design.widget.CoordinatorLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <android.support.design.widget.AppBarLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:fitsSystemWindows="true">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:fitsSystemWindows="true">
 
             <android.support.design.widget.CollapsingToolbarLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                    app:titleEnabled="false">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:titleEnabled="false">
 
                 <View
-                        android:layout_width="match_parent"
-                        android:layout_height="740dp"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="740dp" />
 
                 <Button
                     android:id="@+id/start_survey"
@@ -107,27 +105,29 @@
 
 
         <android.support.v7.widget.CardView
-                android:layout_width="@dimen/list_card_width"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:layout_width="@dimen/list_card_width"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+
+            android:layout_marginBottom="@dimen/activity_horizontal_margin"
+            android:minHeight="@dimen/header_height"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <android.support.v7.widget.RecyclerView
-                    android:id="@+id/place_history_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                android:id="@+id/place_history_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader
-                    android:id="@+id/card_header"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                android:id="@+id/card_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/actionbar_size"
-                        android:padding="@dimen/activity_horizontal_margin"
-                        android:text="@string/find_place_by_recent_survey"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/actionbar_size"
+                    android:padding="@dimen/activity_horizontal_margin"
+                    android:text="@string/find_place_by_recent_survey" />
             </com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader>
         </android.support.v7.widget.CardView>
     </android.support.design.widget.CoordinatorLayout>

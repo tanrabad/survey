@@ -240,6 +240,7 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
     @Override
     public void displaySaveSuccess() {
         setResult(RESULT_OK);
+        finish();
         openSurveyActivity(building);
     }
 

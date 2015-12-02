@@ -17,176 +17,175 @@
 
 
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:onClick="onRootViewClick">
+                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                 xmlns:tools="http://schemas.android.com/tools"
+                                                 android:layout_width="match_parent"
+                                                 android:layout_height="match_parent"
+                                                 android:onClick="onRootViewClick">
 
     <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
-        android:onClick="onRootViewClick">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:onClick="onRootViewClick">
 
         <android.support.design.widget.CollapsingToolbarLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            app:contentScrim="@color/shock_pink"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:titleEnabled="false">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                app:contentScrim="@color/shock_pink"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:titleEnabled="false">
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/toolbar_size"
-                android:background="@color/header_survey"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/toolbar_size"
+                    android:background="@color/header_survey"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:contentDescription="@string/survey_container_bg_description"
-                    android:src="@drawable/header_larvae_survey" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:contentDescription="@string/survey_container_bg_description"
+                        android:src="@drawable/header_larvae_survey"/>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end|top"
-                    android:orientation="vertical"
-                    android:paddingEnd="@dimen/padding_right"
-                    android:paddingLeft="@dimen/padding_left"
-                    android:paddingRight="@dimen/padding_right"
-                    android:paddingStart="@dimen/padding_right"
-                    android:paddingTop="@dimen/padding_top">
-
-                    <TextView
-                        android:id="@+id/building_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:layout_marginBottom="@dimen/between_text_margin_bottom"
-                        android:layout_marginTop="@dimen/between_text_margin_top"
-                        android:gravity="end"
-                        android:textColor="@color/white"
-                        android:textIsSelectable="true"
-                        android:textSize="@dimen/text_headline"
-                        tools:text="บ้านเลขที่ 123/321" />
+                        android:layout_gravity="end|top"
+                        android:orientation="vertical"
+                        android:paddingEnd="@dimen/padding_right"
+                        android:paddingLeft="@dimen/padding_left"
+                        android:paddingRight="@dimen/padding_right"
+                        android:paddingStart="@dimen/padding_right"
+                        android:paddingTop="@dimen/padding_top">
 
                     <TextView
-                        android:id="@+id/place_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:layout_marginBottom="@dimen/between_text_margin_bottom"
-                        android:gravity="end"
-                        android:textColor="@color/white"
-                        android:textIsSelectable="false"
-                        android:textSize="@dimen/text_subhead"
-                        tools:text="หมู่ที่ 1 บ้านบางไผ่" />
+                            android:id="@+id/building_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginBottom="@dimen/between_text_margin_bottom"
+                            android:layout_marginTop="@dimen/between_text_margin_top"
+                            android:gravity="end"
+                            android:textColor="@color/white"
+                            android:textIsSelectable="true"
+                            android:textSize="@dimen/text_headline"
+                            tools:text="บ้านเลขที่ 123/321"/>
+
+                    <TextView
+                            android:id="@+id/place_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginBottom="@dimen/between_text_margin_bottom"
+                            android:gravity="end"
+                            android:textColor="@color/white"
+                            android:textIsSelectable="false"
+                            android:textSize="@dimen/text_subhead"
+                            tools:text="หมู่ที่ 1 บ้านบางไผ่"/>
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="end"
-                        android:layout_marginBottom="@dimen/between_text_margin_bottom"
-                        android:layout_marginTop="@dimen/between_text_margin_top"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="end"
+                            android:layout_marginBottom="@dimen/between_text_margin_bottom"
+                            android:layout_marginTop="@dimen/between_text_margin_top"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="@dimen/between_view"
-                            android:layout_marginRight="@dimen/between_view"
-                            android:text="@string/number_of_resident"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/text_subhead" />
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="@dimen/between_view"
+                                android:layout_marginRight="@dimen/between_view"
+                                android:text="@string/number_of_resident"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/text_subhead"/>
 
                         <th.or.nectec.tanrabad.survey.presenter.view.StepPopupEditText
-                            android:id="@+id/resident_count"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
-                            android:background="@drawable/textfield_background"
-                            android:ems="2"
-                            android:gravity="center"
-                            android:inputType="number"
-                            android:maxLength="3"
-                            android:padding="10dp"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/text_body"
-                            tools:text="10" />
+                                android:id="@+id/resident_count"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom"
+                                android:background="@drawable/textfield_background"
+                                android:ems="2"
+                                android:gravity="center"
+                                android:inputType="number"
+                                android:maxLength="3"
+                                android:padding="10dp"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/text_body"
+                                tools:text="10"/>
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/between_view"
-                            android:layout_marginStart="@dimen/between_view"
-                            android:text="@string/person"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/text_subhead" />
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/between_view"
+                                android:layout_marginStart="@dimen/between_view"
+                                android:text="@string/person"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/text_subhead"/>
                     </LinearLayout>
 
                 </LinearLayout>
             </FrameLayout>
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/toolbar_size"
-                android:background="@color/shock_pink"
-                android:fitsSystemWindows="true"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/AppTheme.AppBarOverlay"
-                app:theme="@style/AppTheme.AppBarOverlay" />
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/toolbar_size"
+                    android:background="@color/shock_pink"
+                    android:fitsSystemWindows="true"
+                    app:layout_collapseMode="pin"
+                    app:popupTheme="@style/AppTheme.AppBarOverlay"
+                    app:theme="@style/AppTheme.AppBarOverlay"/>
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onRootViewClick"
-        android:orientation="vertical"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <LinearLayout
+    <android.support.percent.PercentRelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:onClick="onRootViewClick"
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/shock_pink"
-                android:gravity="center"
-                android:paddingBottom="@dimen/indoor_outdoor_padding_bottom"
-                android:paddingTop="@dimen/indoor_outdoor_padding_top"
-                android:text="@string/indoor"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_title" />
+                    app:layout_widthPercent="50%"
+                    android:layout_width="0dp"
+                    android:layout_height="64dp"
+                    android:background="@color/shock_pink"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/indoor_outdoor_padding_bottom"
+                    android:paddingTop="@dimen/indoor_outdoor_padding_top"
+                    android:text="@string/indoor"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_title"/>
 
-            <TextView
+        <TextView
+                app:layout_widthPercent="50%"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_height="64dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:background="@color/pink"
                 android:gravity="center"
                 android:paddingBottom="@dimen/indoor_outdoor_padding_bottom"
                 android:paddingTop="@dimen/indoor_outdoor_padding_top"
                 android:text="@string/outdoor"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_title" />
-        </LinearLayout>
+                android:textSize="@dimen/text_title"/>
+
 
         <android.support.v4.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="64dp">
 
 
             <android.support.percent.PercentRelativeLayout
@@ -202,7 +201,7 @@
                         android:background="@color/light_gray"
                         android:orientation="vertical"
                         android:paddingBottom="40dp"
-                        app:layout_widthPercent="50%" />
+                        app:layout_widthPercent="50%"/>
 
 
                 <LinearLayout
@@ -210,20 +209,34 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_toRightOf="@id/indoor_container"
+                        android:layout_toEndOf="@id/indoor_container"
                         android:layout_weight="1"
                         android:background="@color/white"
                         android:orientation="vertical"
                         android:paddingBottom="40dp"
-                        app:layout_widthPercent="50%" />
+                        app:layout_widthPercent="50%"/>
 
-                <View
+
+                <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/soft_keyboard_height"
                         android:background="@color/dark_gray"
-                        android:layout_below="@id/indoor_container" />
+                        android:layout_below="@id/indoor_container">
+
+                    <View
+                            android:layout_width="match_parent"
+                            android:layout_height="24dp"
+                            android:background="@drawable/shadow_top_down"/>
+                </FrameLayout>
             </android.support.percent.PercentRelativeLayout>
         </android.support.v4.widget.NestedScrollView>
-    </LinearLayout>
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:layout_marginTop="64dp"
+                android:background="@drawable/shadow_top_down"/>
+    </android.support.percent.PercentRelativeLayout>
 
 
 </android.support.design.widget.CoordinatorLayout>

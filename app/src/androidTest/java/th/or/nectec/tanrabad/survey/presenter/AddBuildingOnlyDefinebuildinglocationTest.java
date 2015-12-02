@@ -17,6 +17,7 @@
 
 package th.or.nectec.tanrabad.survey.presenter;
 
+
 import android.content.Intent;
 import android.support.test.rule.ActivityTestRule;
 import org.junit.Before;
@@ -27,42 +28,35 @@ import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
 import java.util.UUID;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.Matchers.allOf;
 
-public class BuildingAddButtonByBuilding0UnitTest extends TanrabadEspressoTestBase {
-    public ActivityTestRule<BuildingListActivity> mActivityTestRule = new ActivityTestRule<>(BuildingListActivity.class);
-    BuildingListActivity mAtivity;
+public class AddBuildingOnlyDefinebuildinglocationTest extends TanrabadEspressoTestBase {
+    public ActivityTestRule<BuildingAddActivity> mActivityTestRule = new ActivityTestRule<>(BuildingAddActivity.class);
+    BuildingAddActivity mActivity;
 
     @Before
     public void setUp() {
         Intent intent = new Intent();
-        intent.putExtra("place_uuid_arg", UUID.nameUUIDFromBytes("67UIP".getBytes()).toString());
+        intent.putExtra("place_uuid_arg", UUID.nameUUIDFromBytes("1abc".getBytes()).toString());
         intent.putExtra("username_arg", "sara");
-        mAtivity = mActivityTestRule.launchActivity(intent);
+        mActivity = mActivityTestRule.launchActivity(intent);
     }
 
     @Test
-    public void testClickBuildingAddButtonShouldOpenBuildingAddPage() {
+    public void testClickDefineBuildingLocationButtonShouldHaveMarker() {
         textDisplayed("เพิ่มอาคาร");
-        textDisplayed("ชุมชนกอล์ฟวิว");
-        onView(withId(R.id.text_show_title_building_list))
-                .check(matches(withText(R.string.survey_building)));
-        onView(allOf(withId(R.id.building_count), withContentDescription(R.string.number_building_list)))
-                .check(matches(withText("0")));
-        onView(withText(R.string.building_add))
-                .perform(click());
-        textDisplayed("เพิ่มอาคาร");
-        textDisplayed("ชุมชนกอล์ฟวิว");
+        textDisplayed("หมู่บ้านพาลาซเซตโต้");
         textDisplayed(R.string.save);
         textDisplayed(R.string.house_no);
         textDisplayed(R.string.building_location);
         textDisplayed(R.string.define_building_location);
-        pressBack();
+        onView(withId(R.id.add_marker))
+                .perform(click());
+        onView(withText(R.string.save_location))
+                .perform(click());
+       textDisplayed(R.string.edit_location);
     }
+
 }

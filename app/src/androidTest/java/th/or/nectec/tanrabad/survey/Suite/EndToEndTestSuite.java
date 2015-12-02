@@ -32,7 +32,8 @@ import th.or.nectec.tanrabad.survey.presenter.*;
         BuildingAddButtonByBuilding0UnitTest.class,
         BuildingAddButtonByBuilding13UnitTest.class,
         BuildingPromptCancelSurveyTest.class,
-        ChooseBuildingFromTypeVillageCommunityListTest.class
+        ChooseBuildingFromTypeVillageCommunityListTest.class,
+        AddBuildingOnlyDefinebuildinglocationTest.class
 })
 
 public class EndToEndTestSuite {

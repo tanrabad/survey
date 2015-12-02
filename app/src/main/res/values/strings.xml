@@ -36,8 +36,9 @@
 
     <string name="survey_container_description">ภาชนะที่สำรวจ</string>
     <string name="survey_container_bg_description">ภาพพื้นหลังการสำรวจภาชนะ</string>
-    <string name="survey_place">รายชื่อสถานที่</string>
-    <string name="survey_building">รายชื่ออาคาร</string>
+    <string name="title_card_place_in_database">@string/find_place_by_database</string>
+    <string name="title_card_place_recent_survey">@string/find_place_by_recent_survey</string>
+    <string name="title_card_building_list">รายชื่ออาคาร</string>
 
     <!--building category-->
     <string name="building_icon">ไอคอนอาคาร</string>

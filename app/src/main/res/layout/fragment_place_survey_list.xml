@@ -16,10 +16,9 @@
   -->
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -53,63 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-            <com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader
-                android:id="@+id/card_header"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:paddingBottom="@dimen/indoor_outdoor_padding_bottom"
-                        android:paddingTop="@dimen/indoor_outdoor_padding_top"
-                        android:text="@string/survey_place"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_body" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/place_count"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/between_view"
-                            android:layout_marginStart="@dimen/between_view"
-                            android:paddingBottom="@dimen/indoor_outdoor_padding_bottom"
-                            android:paddingTop="@dimen/indoor_outdoor_padding_top"
-                            android:textColor="@color/gray"
-                            android:textIsSelectable="false"
-                            android:textSize="@dimen/text_body"
-                            tools:text="200" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/between_view"
-                            android:layout_marginStart="@dimen/between_view"
-                            android:paddingBottom="@dimen/indoor_outdoor_padding_bottom"
-                            android:paddingTop="@dimen/indoor_outdoor_padding_top"
-                            android:text="@string/list_unit"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/text_body" />
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader>
+            <include layout="@layout/card_header_place_recent_survey"/>
 
             <TextView
                 android:id="@+id/empty_view"

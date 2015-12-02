@@ -28,11 +28,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
-
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
-
-import java.util.ArrayList;
-
 import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyHistoryChooser;
 import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyHistoryListPresenter;
 import th.or.nectec.tanrabad.entity.Place;
@@ -40,6 +36,8 @@ import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
+
+import java.util.ArrayList;
 
 public class PlaceSurveyListFragment extends Fragment implements PlaceWithSurveyHistoryListPresenter, AdapterView.OnItemClickListener {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -99,7 +97,7 @@ public class PlaceSurveyListFragment extends Fragment implements PlaceWithSurvey
     public void displaySurveyPlaceList(ArrayList<Place> surveyPlace) {
         emptyView.setVisibility(View.GONE);
         placeAdapter.updateData(surveyPlace);
-        placeCountView.setText(String.valueOf(surveyPlace.size()));
+        placeCountView.setText(getString(R.string.format_place_count, surveyPlace.size()));
     }
 
     @Override
@@ -110,7 +108,7 @@ public class PlaceSurveyListFragment extends Fragment implements PlaceWithSurvey
     @Override
     public void displaySurveyPlacesNotFound() {
         placeAdapter.clearData();
-        placeCountView.setText(String.valueOf(0));
+        placeCountView.setText(getString(R.string.format_place_count, 0));
         emptyView.setVisibility(View.VISIBLE);
     }
 

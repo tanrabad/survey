@@ -66,17 +66,17 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/text_show_title_building_list"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:paddingBottom="@dimen/indoor_outdoor_padding_bottom"
-                        android:paddingTop="@dimen/indoor_outdoor_padding_top"
-                        android:text="@string/survey_building"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_body" />
+                            android:id="@+id/text_show_title_building_list"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:paddingBottom="@dimen/indoor_outdoor_padding_bottom"
+                            android:paddingTop="@dimen/indoor_outdoor_padding_top"
+                            android:text="@string/title_card_building_list"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_body" />
 
                     <LinearLayout
                         android:layout_width="0dp"

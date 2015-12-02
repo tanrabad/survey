@@ -29,6 +29,7 @@ import java.util.UUID;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -49,8 +50,11 @@ public class BuildingAddButtonByBuilding0UnitTest extends TanrabadEspressoTestBa
 
     @Test
     public void testClickBuildingAddButtonShouldOpenBuildingAddPage() {
+        String placeName = "ชุมชนกอล์ฟวิว";
+        String buildingNo = "ตึก1 สีม่วง";
+
         textDisplayed("เพิ่มอาคาร");
-        textDisplayed("ชุมชนกอล์ฟวิว");
+        textDisplayed(placeName);
         onView(withId(R.id.text_show_title_building_list))
                 .check(matches(withText(R.string.survey_building)));
         onView(allOf(withId(R.id.building_count), withContentDescription(R.string.number_building_list)))
@@ -58,11 +62,29 @@ public class BuildingAddButtonByBuilding0UnitTest extends TanrabadEspressoTestBa
         onView(withText(R.string.building_add))
                 .perform(click());
         textDisplayed("เพิ่มอาคาร");
-        textDisplayed("ชุมชนกอล์ฟวิว");
+        textDisplayed(placeName);
         textDisplayed(R.string.save);
         textDisplayed(R.string.house_no);
         textDisplayed(R.string.building_location);
         textDisplayed(R.string.define_building_location);
+        onView(withId(R.id.building_name))
+                .perform(replaceText(buildingNo));
+        onView(withId(R.id.add_marker))
+                .perform(click());
+        onView(withText(R.string.save_location))
+                .perform(click());
+        onView(withId(R.id.building_name))
+                .check(matches(withText(buildingNo)));
+        textDisplayed(R.string.edit_location);
+        onView(withText(R.string.save))
+                .perform(click());
+        textDisplayed(R.string.title_activity_survey);
+        onView(withId(R.id.place_name))
+                .check(matches(withText(placeName)));
+        onView(withId(R.id.building_name))
+                .check(matches(withText(buildingNo)));
         pressBack();
+        textDisplayed(R.string.define_building_survey);
+        textDisplayed(buildingNo);
     }
 }

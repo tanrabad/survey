@@ -62,6 +62,7 @@ import th.or.nectec.tanrabad.survey.utils.Torch;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
 import th.or.nectec.tanrabad.survey.validator.SaveSurveyValidator;
+import th.or.nectec.tanrabad.survey.validator.ValidatorException;
 
 public class SurveyActivity extends TanrabadActivity implements ContainerPresenter, SurveyPresenter, SurveySavePresenter {
 
@@ -265,10 +266,12 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
             SurveySaver surveySaver = new SurveySaver(this, new SaveSurveyValidator(this), surveyRepository);
             surveySaver.save(survey);
         } catch (SurveyDetail.ContainerFoundLarvaOverTotalException e) {
-            Toast.makeText(SurveyActivity.this, R.string.over_total_container, Toast.LENGTH_LONG).show();
+            Alert.highLevel().show(R.string.over_total_container);
             validateSurveyContainerViews(indoorContainerViews);
             validateSurveyContainerViews(outdoorContainerViews);
             TanrabadApp.error().logException(e);
+        } catch (ValidatorException e) {
+            Alert.highLevel().show(e.getMessageID());
         }
     }
 

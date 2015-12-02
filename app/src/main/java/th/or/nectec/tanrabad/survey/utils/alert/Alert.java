@@ -2,9 +2,7 @@ package th.or.nectec.tanrabad.survey.utils.alert;
 
 import android.content.Context;
 
-/**
- * Created by N. Choatravee on 17/11/2558.
- */
+
 public class Alert {
 
     private static Context context;
@@ -22,7 +20,7 @@ public class Alert {
     }
 
     public static AlertMessage highLevel() {
-        return new ToastAlertMessage(context);
+        return new DialogAlertMessage(context);
     }
 
 }

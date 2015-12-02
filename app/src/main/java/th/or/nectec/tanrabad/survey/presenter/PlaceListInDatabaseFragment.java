@@ -29,11 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
-
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
-
-import java.util.List;
-
 import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyStatus;
 import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyStatusListPresenter;
 import th.or.nectec.tanrabad.domain.survey.SurveyPlaceChooser;
@@ -44,6 +40,8 @@ import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
+
+import java.util.List;
 
 public class PlaceListInDatabaseFragment extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener, PlaceWithSurveyStatusListPresenter {
 
@@ -125,7 +123,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
     @Override
     public void displayAllSurveyPlaceList(List<PlaceWithSurveyStatus> buildingsWithSurveyStatuses) {
         placeAdapter.updateData(buildingsWithSurveyStatuses);
-        placeCountView.setText(String.valueOf(buildingsWithSurveyStatuses.size()));
+        placeCountView.setText(getString(R.string.format_place_count, buildingsWithSurveyStatuses.size()));
         emptyLayoutView.setVisibility(View.GONE);
     }
 
@@ -148,6 +146,13 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
 
     }
 
+    private void openBuildingSurveyHistoryActivity(PlaceWithSurveyStatus placeWithSurveyStatus) {
+        Intent intent = new Intent(getActivity(), SurveyBuildingHistoryActivity.class);
+        intent.putExtra(SurveyBuildingHistoryActivity.PLACE_UUID_ARG, placeWithSurveyStatus.getPlace().getId().toString());
+        intent.putExtra(SurveyBuildingHistoryActivity.USER_NAME_ARG, getUsername());
+        startActivity(intent);
+    }
+
     private void openBuildingListActivity(PlaceWithSurveyStatus placeWithSurveyStatus) {
         Intent intent = new Intent(getActivity(), BuildingListActivity.class);
         intent.putExtra(BuildingListActivity.PLACE_UUID_ARG, placeWithSurveyStatus.getPlace().getId().toString());
@@ -155,11 +160,8 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
         startActivity(intent);
     }
 
-    private void openBuildingSurveyHistoryActivity(PlaceWithSurveyStatus placeWithSurveyStatus) {
-        Intent intent = new Intent(getActivity(), SurveyBuildingHistoryActivity.class);
-        intent.putExtra(SurveyBuildingHistoryActivity.PLACE_UUID_ARG, placeWithSurveyStatus.getPlace().getId().toString());
-        intent.putExtra(SurveyBuildingHistoryActivity.USER_NAME_ARG, getUsername());
-        startActivity(intent);
+    private String getUsername() {
+        return "sara";
     }
 
     @Override
@@ -170,10 +172,6 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
         } else {
             placeChooser.displaySurveyBuildingOf(getUsername());
         }
-    }
-
-    private String getUsername() {
-        return "sara";
     }
 
     @Override

@@ -91,7 +91,7 @@
     <string name="define_building_survey">ระบุอาคารสำรวจ</string>
     <string name="define_place_survey">ระบุสถานที่สำรวจ</string>
     <string name="abort_survey">ยกเลิกการสำรวจ</string>
-    <string name="press_to_start_survey">กดเพื่อเริ่มสำรวจ</string>
+    <string name="press_to_start_survey">กดที่ลูกน้ำเพื่อเริ่มสำรวจ</string>
     <string name="got_it">รับทราบ</string>
     <string name="enable_gps">เปิดการตั้งค่า GPS</string>
     <string name="gps_dialog_tilte">GPS ยังไม่ได้เปิดการใช้งาน</string>
@@ -103,5 +103,7 @@
     <string name="detail_history_building_list">รายละเอียดการสำรวจ</string>
     <string name="add_place">เพิ่มสถานที่</string>
     <string name="places_not_found">ไม่พบรายการสถานที่</string>
+    <string name="place_type">ประเภทสถานที่</string>
+    <string name="format_place_count">%1$d รายการ</string>
 
 </resources>

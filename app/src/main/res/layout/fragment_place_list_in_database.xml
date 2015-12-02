@@ -16,112 +16,42 @@
   -->
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
 
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/header_height_with_padding"
-        android:background="@color/header_place_in_db">
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/header_height_with_padding"
+            android:background="@color/header_place_in_db">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/header_height"
-            android:layout_gravity="center_horizontal"
-            android:contentDescription="@string/place_bg"
-            android:src="@drawable/header_place_in_database" />
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/header_height"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="@string/place_bg"
+                android:src="@drawable/header_place_in_database"/>
     </FrameLayout>
 
 
     <android.support.design.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
         <include layout="@layout/component_header_collapsing_transparent"/>
 
         <android.support.v7.widget.CardView
-            android:layout_width="568dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                android:layout_width="568dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/place_list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader
-                android:id="@+id/card_header"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <LinearLayout
+                    android:id="@+id/place_list"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:paddingBottom="@dimen/indoor_outdoor_padding_bottom"
-                            android:paddingTop="@dimen/indoor_outdoor_padding_top"
-                            android:text="@string/survey_place"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/text_body" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/place_count"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/between_view"
-                                android:layout_marginStart="@dimen/between_view"
-                                android:contentDescription="@string/number_place_list_in_database"
-                                android:paddingBottom="@dimen/indoor_outdoor_padding_bottom"
-                                android:paddingTop="@dimen/indoor_outdoor_padding_top"
-                                android:textColor="@color/gray"
-                                android:textIsSelectable="false"
-                                android:textSize="@dimen/text_body"
-                                tools:text="200" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/between_view"
-                                android:layout_marginStart="@dimen/between_view"
-                                android:paddingBottom="@dimen/indoor_outdoor_padding_bottom"
-                                android:paddingTop="@dimen/indoor_outdoor_padding_top"
-                                android:text="@string/list_unit"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/text_body" />
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <android.support.v7.widget.AppCompatSpinner
-                        android:id="@+id/place_filter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
-            </com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader>
+                    android:layout_height="match_parent"/>
+            <include layout="@layout/card_header_place_list_in_database"/>
 
             <th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView
                 android:id="@+id/empty_layout"

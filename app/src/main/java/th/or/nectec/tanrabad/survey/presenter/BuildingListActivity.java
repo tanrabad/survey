@@ -26,12 +26,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
-
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
-
-import java.util.List;
-import java.util.UUID;
-
 import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
 import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatusListPresenter;
 import th.or.nectec.tanrabad.domain.place.PlaceController;
@@ -47,6 +42,9 @@ import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
+
+import java.util.List;
+import java.util.UUID;
 
 public class BuildingListActivity extends TanrabadActivity implements BuildingWithSurveyStatusListPresenter, PlacePresenter {
 
@@ -131,7 +129,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
 
     @Override
     public void alertBuildingsNotFound() {
-        buildingCountView.setText(String.valueOf(0));
+        buildingCountView.setText(getString(R.string.format_building_count, 0));
         buildingAdapter.clearData();
         Alert.lowLevel().show(R.string.building_not_found);
     }
@@ -140,12 +138,11 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     public void displayAllSurveyBuildingList(List<BuildingWithSurveyStatus> buildingsWithSurveyStatuses) {
         buildingAdapter.updateData(buildingsWithSurveyStatuses);
         buildingList.setAdapter(buildingAdapter);
-        buildingCountView.setText(String.valueOf(buildingsWithSurveyStatuses.size()));
+        buildingCountView.setText(getString(R.string.format_building_count, buildingsWithSurveyStatuses.size()));
     }
 
     @Override
     public void alertUserNotFound() {
-
     }
 
     @Override

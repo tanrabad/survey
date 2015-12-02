@@ -106,5 +106,6 @@
     <string name="places_not_found">ไม่พบรายการสถานที่</string>
     <string name="place_type">ประเภทสถานที่</string>
     <string name="format_place_count">%1$d รายการ</string>
+    <string name="format_building_count">%1$d อาคาร</string>
 
 </resources>

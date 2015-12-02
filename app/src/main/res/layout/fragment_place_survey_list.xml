@@ -110,6 +110,15 @@
                 </LinearLayout>
 
             </com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader>
+
+            <TextView
+                android:id="@+id/empty_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:minHeight="@dimen/card_min_height"
+                android:text="@string/survey_place_not_found"
+                android:textColor="@color/black" />
         </android.support.v7.widget.CardView>
 
     </android.support.design.widget.CoordinatorLayout>

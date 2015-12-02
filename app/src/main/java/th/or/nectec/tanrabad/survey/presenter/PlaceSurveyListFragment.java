@@ -48,7 +48,7 @@ public class PlaceSurveyListFragment extends Fragment implements PlaceWithSurvey
 
     private PlaceAdapter placeAdapter;
     private PlaceWithSurveyHistoryChooser placeChooser = new PlaceWithSurveyHistoryChooser(new StubUserRepository(), InMemorySurveyRepository.getInstance(), this);
-    private TextView placeCountView;
+    private TextView placeCountView, emptyView;
     private RecyclerView placeListView;
     private RecyclerViewHeader recyclerViewHeader;
 
@@ -81,6 +81,7 @@ public class PlaceSurveyListFragment extends Fragment implements PlaceWithSurvey
     private void setupViews(View view) {
         placeListView = (RecyclerView) view.findViewById(R.id.place_list);
         placeCountView = (TextView) view.findViewById(R.id.place_count);
+        emptyView = (TextView) view.findViewById(R.id.empty_view);
         recyclerViewHeader = (RecyclerViewHeader) view.findViewById(R.id.card_header);
     }
 
@@ -95,6 +96,7 @@ public class PlaceSurveyListFragment extends Fragment implements PlaceWithSurvey
 
     @Override
     public void displaySurveyPlaceList(ArrayList<Place> surveyPlace) {
+        emptyView.setVisibility(View.GONE);
         placeAdapter.updateData(surveyPlace);
         placeCountView.setText(String.valueOf(surveyPlace.size()));
     }
@@ -108,7 +110,7 @@ public class PlaceSurveyListFragment extends Fragment implements PlaceWithSurvey
     public void displaySurveyPlacesNotFound() {
         placeAdapter.clearData();
         placeCountView.setText(String.valueOf(0));
-        Alert.lowLevel().show(R.string.survey_place_not_found);
+        emptyView.setVisibility(View.VISIBLE);
     }
 
     @Override

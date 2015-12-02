@@ -50,7 +50,7 @@
 
         <activity
             android:name=".presenter.MainActivity"
-            android:label="@string/define_place_survey"
+            android:label="@string/app_name"
             android:icon="@mipmap/ic_launcher"
             android:theme="@style/AppTheme.NoActionBar">
 

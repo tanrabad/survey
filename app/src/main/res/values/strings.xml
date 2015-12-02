@@ -101,5 +101,7 @@
     <string name="format_container_count">ภาชนะทั้งหมด %1$d พบลูกน้ำยุงลาย %2$d</string>
     <string name="format_house_survey">"สำรวจ %1$d อาคาร พบลูกน้ำยุงลาย %2$d อาคาร "</string>
     <string name="detail_history_building_list">รายละเอียดการสำรวจ</string>
+    <string name="add_place">เพิ่มสถานที่</string>
+    <string name="places_not_found">ไม่พบรายการสถานที่</string>
 
 </resources>

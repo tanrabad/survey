@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/empty_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:minHeight="@dimen/card_min_height"
+    android:orientation="vertical"
+    tools:showIn="@layout/fragment_place_list_in_database">
+
+    <ImageView
+        android:id="@+id/empty_icon"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:contentDescription="@null" />
+
+    <TextView
+        android:id="@+id/empty_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        tools:text="ไม่พบข้อมูลในรายการ" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/empty_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        tools:text="เพิ่มอะไรบางอย่าง" />
+</LinearLayout>

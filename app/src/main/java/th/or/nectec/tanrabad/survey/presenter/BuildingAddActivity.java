@@ -28,8 +28,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.domain.building.BuildingController;
 import th.or.nectec.tanrabad.domain.building.BuildingPresenter;
 import th.or.nectec.tanrabad.domain.building.BuildingSavePresenter;
@@ -46,8 +50,7 @@ import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
 import th.or.nectec.tanrabad.survey.validator.SaveBuildingValidator;
-
-import java.util.UUID;
+import th.or.nectec.tanrabad.survey.validator.ValidatorException;
 
 public class BuildingAddActivity extends TanrabadActivity implements PlacePresenter, BuildingPresenter, BuildingSavePresenter, View.OnClickListener {
 
@@ -187,6 +190,13 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
         startActivityForResult(intent, MARK_LOCATION_REQUEST_CODE);
     }
 
+    private void openSurveyActivity(Building building) {
+        Intent intent = new Intent(BuildingAddActivity.this, SurveyActivity.class);
+        intent.putExtra(SurveyActivity.BUILDING_UUID_ARG, building.getId().toString());
+        intent.putExtra(SurveyActivity.USERNAME_ARG, "sara");
+        startActivity(intent);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -220,19 +230,22 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
         Location location = buildingLocation == null
                 ? null : new Location(buildingLocation.latitude, buildingLocation.longitude);
         building.setLocation(location);
-        buildingSaver.save(building);
+        try {
+            buildingSaver.save(building);
+        } catch (ValidatorException e) {
+            Alert.highLevel().show(e.getMessageID());
+        }
     }
 
     @Override
     public void displaySaveSuccess() {
-        Alert.lowLevel().show(R.string.save_success);
         setResult(RESULT_OK);
         finish();
     }
 
     @Override
     public void displaySaveFail() {
-        Alert.highLevel().show(R.string.save_fail);
+        Alert.lowLevel().show(R.string.save_fail);
     }
 
     public void onRootViewClick(View view){

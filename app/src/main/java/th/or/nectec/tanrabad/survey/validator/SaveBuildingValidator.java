@@ -18,14 +18,14 @@
 package th.or.nectec.tanrabad.survey.validator;
 
 import android.text.TextUtils;
+
+import java.util.List;
+
 import th.or.nectec.tanrabad.domain.building.BuildingRepository;
 import th.or.nectec.tanrabad.domain.building.BuildingValidator;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
-import th.or.nectec.tanrabad.survey.utils.alert.Alert;
-
-import java.util.List;
 
 public class SaveBuildingValidator implements BuildingValidator {
     private BuildingRepository buildingRepository;
@@ -34,25 +34,20 @@ public class SaveBuildingValidator implements BuildingValidator {
     public boolean validate(Building building) {
 
         if (TextUtils.isEmpty(building.getName())) {
-            if (building.getPlace().getType() == Place.TYPE_VILLAGE_COMMUNITY)
-                Alert.highLevel().show(R.string.please_define_house_no);
-            else
-                Alert.highLevel().show(R.string.please_define_building_name);
 
-            return false;
+            throw new ValidatorException(building.getPlace().getType() == Place.TYPE_VILLAGE_COMMUNITY ?
+                    R.string.please_define_house_no : R.string.please_define_building_name);
         }
 
         if (building.getLocation() == null) {
-            Alert.highLevel().show(R.string.please_define_building_location);
-            return false;
+            throw new ValidatorException(R.string.please_define_building_location);
         }
 
         List<Building> buildingInPlace = buildingRepository.findBuildingInPlace(building.getPlace().getId());
-        if(buildingInPlace!=null){
-            for(Building eachBuilding : buildingInPlace){
-                if(eachBuilding.getName().equals(building.getName())){
-                    Alert.highLevel().show(R.string.cant_save_same_building_name);
-                    return false;
+        if (buildingInPlace != null) {
+            for (Building eachBuilding : buildingInPlace) {
+                if (eachBuilding.getName().equals(building.getName())) {
+                    throw new ValidatorException(R.string.cant_save_same_building_name);
                 }
             }
         }

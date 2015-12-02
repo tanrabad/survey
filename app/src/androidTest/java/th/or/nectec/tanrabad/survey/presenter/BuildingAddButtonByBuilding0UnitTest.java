@@ -84,6 +84,10 @@ public class BuildingAddButtonByBuilding0UnitTest extends TanrabadEspressoTestBa
         onView(withId(R.id.building_name))
                 .check(matches(withText(buildingNo)));
         pressBack();
+        textDisplayed("ยกเลิกการสำรวจ");
+        textDisplayed(buildingNo);
+        onView(withText("ใช่"))
+                .perform(click());
         textDisplayed(R.string.define_building_survey);
         textDisplayed(buildingNo);
     }

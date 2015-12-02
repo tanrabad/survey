@@ -25,6 +25,7 @@ import java.util.List;
 public class HouseIndex {
 
     private List<Survey> surveys;
+    private int foundLarvaeCount;
 
     public HouseIndex() {
         this(new ArrayList<Survey>());
@@ -42,12 +43,20 @@ public class HouseIndex {
         if (surveys.size() == 0)
             throw new IllegalStateException("must have some survey before calculate");
 
-        int foundLarvaeCount = 0;
+        foundLarvaeCount = 0;
         for (Survey survey : surveys) {
             if (survey.isFoundLarvae()) {
                 foundLarvaeCount++;
             }
         }
         return foundLarvaeCount / (float) surveys.size() * 100;
+    }
+
+    public int getFoundLarvaeHouse() {
+        return foundLarvaeCount;
+    }
+
+    public int getTotalSurveyHouse() {
+        return surveys.size();
     }
 }

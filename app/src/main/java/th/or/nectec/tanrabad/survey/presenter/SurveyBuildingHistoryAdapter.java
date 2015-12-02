@@ -26,6 +26,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import th.or.nectec.tanrabad.entity.Survey;
+import th.or.nectec.tanrabad.entity.utils.ContainerIndex;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.view.TimeAgoView;
 import th.or.nectec.tanrabad.survey.utils.time.DurationTimePrinter;
@@ -86,9 +87,19 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Survey currentSurvey = surveyBuildings.get(position);
-        holder.duration.setText(DurationTimePrinter.print(currentSurvey.getStartTimestamp(), currentSurvey.getFinishTimestamp()));
+
         holder.surveyBuildingTextView.setText(currentSurvey.getSurveyBuilding().getName());
+        holder.duration.setText(context.getString(R.string.survey_duration) + " " + getDuration(currentSurvey));
         holder.timeAgoView.setTime(currentSurvey.getFinishTimestamp());
+
+        ContainerIndex ci = new ContainerIndex(currentSurvey);
+        holder.containerIndex.setText(context.getString(R.string.format_ci, (int) ci.calculate()));
+        holder.containerCount.setText(context.getString(R.string.format_container_count,
+                ci.getTotalContainer(), ci.getFoundLarvaeContainer()));
+    }
+
+    private String getDuration(Survey currentSurvey) {
+        return DurationTimePrinter.print(currentSurvey.getStartTimestamp(), currentSurvey.getFinishTimestamp());
     }
 
     @Override
@@ -106,6 +117,8 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
         TextView surveyBuildingTextView;
         ImageView surveyBuildingIcon;
         TimeAgoView timeAgoView;
+        TextView containerIndex;
+        TextView containerCount;
         private SurveyBuildingHistoryAdapter adapter;
 
         public ViewHolder(View itemView, SurveyBuildingHistoryAdapter adapter) {
@@ -116,6 +129,8 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
             surveyBuildingIcon = (ImageView) itemView.findViewById(R.id.survey_building_icon);
             timeAgoView = (TimeAgoView) itemView.findViewById(R.id.time_ago);
             duration = (TextView) itemView.findViewById(R.id.survey_duration);
+            containerIndex = (TextView) itemView.findViewById(R.id.survey_ci);
+            containerCount = (TextView) itemView.findViewById(R.id.survey_container_count);
         }
 
         @Override

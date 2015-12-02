@@ -16,28 +16,44 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/list_item_bg"
-    android:gravity="center_vertical"
-    android:orientation="horizontal"
-    android:padding="@dimen/activity_horizontal_margin">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/list_item_bg"
+              android:gravity="center_vertical"
+              android:orientation="horizontal"
+              android:padding="@dimen/activity_horizontal_margin">
 
-    <ImageView
-        android:id="@+id/survey_building_icon"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:contentDescription="@string/building_icon"
-        android:src="@drawable/container_bg" />
+    <LinearLayout android:layout_width="80dp"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical">
+        <ImageView
+                android:id="@+id/survey_building_icon"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginTop="8dp"
+                android:contentDescription="@string/building_icon"
+                android:background="@drawable/container_bg"
+                tools:src="@drawable/container_bg"/>
+        <TextView
+                style="@style/TanrabadTextAppearance.Caption"
+                android:id="@+id/survey_ci"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textIsSelectable="false"
+                android:gravity="start"
+                tools:text="CI 50.5%"
+                android:singleLine="true"/>
+    </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="@dimen/horizontal_align_margin"
-        android:layout_marginStart="@dimen/horizontal_align_margin"
-        android:orientation="vertical">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:orientation="vertical">
 
         <TextView
                 android:id="@+id/survey_building_name"
@@ -45,21 +61,30 @@
                 android:layout_height="wrap_content"
                 android:textIsSelectable="true"
                 android:textSize="@dimen/text_title"
-                tools:text="บ้านเลขที่ 1" />
+                tools:text="บ้านเลขที่ 1"/>
 
         <TextView
+                style="@style/TanrabadTextAppearance.Caption"
+                android:id="@+id/survey_duration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textIsSelectable="false"
-                tools:text="01:20"
-                android:id="@+id/survey_duration"/>
+                tools:text="เวลาที่ใช้สำรวจ 01:20"/>
+        <TextView
+                android:id="@+id/survey_container_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textIsSelectable="false"
+                tools:text="ภาชนะทั้งหมด 100 พบลูกน้ำ 5"/>
     </LinearLayout>
 
     <th.or.nectec.tanrabad.survey.presenter.view.RelativeTimeAgoTextView
-        android:id="@+id/time_ago"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="right|center_vertical"
-        tools:text="2 นาที" />
+            style="@style/TanrabadTextAppearance.Caption"
+            android:id="@+id/time_ago"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textIsSelectable="false"
+            android:gravity="top|end"
+            tools:text="2 นาที"/>
 </LinearLayout>

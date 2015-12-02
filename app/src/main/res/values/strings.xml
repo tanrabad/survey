@@ -96,5 +96,9 @@
     <string name="enable_gps">เปิดการตั้งค่า GPS</string>
     <string name="gps_dialog_tilte">GPS ยังไม่ได้เปิดการใช้งาน</string>
     <string name="gps_dialog_message">คุณต้องการเปิดการตั้งค่าการใช้งาน GPS หรือไม่</string>
+    <string name="survey_duration">เวลาที่ใช้สำรวจ</string>
+    <string name="format_ci">CI %1$d%%</string>
+    <string name="format_container_count">ภาชนะทั้งหมด %1$d พบลูกน้ำยุงลาย %2$d</string>
+    <string name="format_house_survey">"สำรวจ %1$d อาคาร พบลูกน้ำยุงลาย %2$d อาคาร "</string>
 
 </resources>

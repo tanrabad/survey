@@ -81,7 +81,7 @@
         </activity>
         <activity
             android:name=".presenter.SurveyBuildingHistoryActivity"
-            android:label="สำรวจ" />
+            android:label= "@string/survey_building_history" />
 
 
         <activity

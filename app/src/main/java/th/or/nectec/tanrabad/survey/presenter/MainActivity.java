@@ -68,6 +68,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
         placeAdapter = new PlaceAdapter(this);
         placeHistoryList.setAdapter(placeAdapter);
         placeHistoryList.setLayoutManager(new LinearLayoutManager(this));
+        placeHistoryList.addItemDecoration(new SimpleDividerItemDecoration(this));
         placeAdapter.setOnItemClickListener(this);
         RecyclerViewHeader recyclerViewHeader = (RecyclerViewHeader) findViewById(R.id.card_header);
         recyclerViewHeader.attachTo(placeHistoryList, true);

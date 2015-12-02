@@ -96,6 +96,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
         placeAdapter = new PlaceWithSurveyStatusAdapter(getActivity());
         placeAdapter.setOnItemClickListener(this);
         placeListView.setAdapter(placeAdapter);
+        placeListView.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         placeListView.setLayoutManager(linearLayoutManager);
         recyclerViewHeader.attachTo(placeListView, true);

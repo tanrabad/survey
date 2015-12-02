@@ -26,7 +26,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
+
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
+
+import java.util.List;
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
 import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatusListPresenter;
 import th.or.nectec.tanrabad.domain.place.PlaceController;
@@ -42,9 +47,6 @@ import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
-
-import java.util.List;
-import java.util.UUID;
 
 public class BuildingListActivity extends TanrabadActivity implements BuildingWithSurveyStatusListPresenter, PlacePresenter {
 
@@ -70,6 +72,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         buildingAdapter = new BuildingWithSurveyStatusAdapter(this);
         buildingList = (RecyclerView) findViewById(R.id.building_list);
         buildingList.setAdapter(buildingAdapter);
+        buildingList.addItemDecoration(new SimpleDividerItemDecoration(this));
         buildingList.setLayoutManager(new LinearLayoutManager(this));
         buildingAdapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

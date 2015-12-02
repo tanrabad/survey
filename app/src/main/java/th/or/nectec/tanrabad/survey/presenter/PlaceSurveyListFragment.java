@@ -89,6 +89,7 @@ public class PlaceSurveyListFragment extends Fragment implements PlaceWithSurvey
         placeAdapter = new PlaceAdapter(getActivity());
         placeAdapter.setOnItemClickListener(this);
         placeListView.setAdapter(placeAdapter);
+        placeListView.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         placeListView.setLayoutManager(linearLayoutManager);
         recyclerViewHeader.attachTo(placeListView, true);

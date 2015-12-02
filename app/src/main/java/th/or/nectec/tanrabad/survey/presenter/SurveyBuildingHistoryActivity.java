@@ -83,6 +83,7 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
         RecyclerView surveyBuildingHistoryList = (RecyclerView) findViewById(R.id.survey_building_history_list);
         surveyBuildingHistoryList.setAdapter(surveyBuildingHistoryAdapter);
         surveyBuildingHistoryList.setLayoutManager(new LinearLayoutManager(this));
+        surveyBuildingHistoryList.addItemDecoration(new SimpleDividerItemDecoration(this));
         surveyBuildingHistoryAdapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

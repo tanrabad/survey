@@ -38,10 +38,10 @@ import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyStatus;
 import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyStatusListPresenter;
 import th.or.nectec.tanrabad.domain.survey.SurveyPlaceChooser;
 import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView;
 import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
-import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 
@@ -54,6 +54,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
     private RecyclerView placeListView;
     private AppCompatSpinner placeFilterView;
     private RecyclerViewHeader recyclerViewHeader;
+    private EmptyLayoutView emptyLayoutView;
 
     public static PlaceListInDatabaseFragment newInstance() {
         PlaceListInDatabaseFragment fragment = new PlaceListInDatabaseFragment();
@@ -73,9 +74,16 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
 
         View view = inflater.inflate(R.layout.fragment_place_list_in_database, container, false);
         setupViews(view);
+        setupEmptyList(view);
         setupPlaceFilterSpinner();
         setupPlaceList();
         return view;
+    }
+
+    private void setupEmptyList(View view) {
+        emptyLayoutView = (EmptyLayoutView) view.findViewById(R.id.empty_layout);
+        emptyLayoutView.setEmptyButtonText(R.string.add_place);
+        emptyLayoutView.setEmptyText(R.string.places_not_found);
     }
 
     private void setupViews(View view) {
@@ -111,13 +119,14 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
     public void displayPlacesNotfound() {
         placeAdapter.clearData();
         placeCountView.setText(String.valueOf(0));
-        Alert.highLevel().show(R.string.place_not_found);
+        emptyLayoutView.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void displayAllSurveyPlaceList(List<PlaceWithSurveyStatus> buildingsWithSurveyStatuses) {
         placeAdapter.updateData(buildingsWithSurveyStatuses);
         placeCountView.setText(String.valueOf(buildingsWithSurveyStatuses.size()));
+        emptyLayoutView.setVisibility(View.GONE);
     }
 
     @Override

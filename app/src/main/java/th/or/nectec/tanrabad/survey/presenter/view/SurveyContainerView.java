@@ -19,7 +19,6 @@ import android.widget.TextView;
 import th.or.nectec.tanrabad.entity.ContainerType;
 import th.or.nectec.tanrabad.entity.SurveyDetail;
 import th.or.nectec.tanrabad.survey.R;
-import th.or.nectec.tanrabad.survey.utils.android.ResourceUtils;
 
 public class SurveyContainerView extends LinearLayout {
     private ContainerType containerType;
@@ -104,7 +103,7 @@ public class SurveyContainerView extends LinearLayout {
     }
 
     public void setContainerIcon(@DrawableRes int iconResource) {
-        containerIconView.setImageDrawable(ResourceUtils.from(getContext()).getDrawable(iconResource));
+        containerIconView.setImageResource(iconResource);
     }
 
     public SurveyDetail getSurveyDetail() {

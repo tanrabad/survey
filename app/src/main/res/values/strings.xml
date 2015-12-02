@@ -76,7 +76,6 @@
     <string name="please_define_building_name">กรุณาระบุชื่ออาคาร</string>
     <string name="please_define_house_no">กรุณาระบุบ้านเลขที่</string>
     <string name="building_edit">แก้ไขอาคาร</string>
-    <string name="list_unit">รายการ</string>
     <string name="survey_place_not_found">ไม่พบรายการสถานที่ที่สำรวจ</string>
     <string name="find_place_by_database">ค้นหาจากคลังข้อมูล</string>
     <string name="find_place_by_recent_survey">สถานที่ที่สำรวจล่าสุด</string>

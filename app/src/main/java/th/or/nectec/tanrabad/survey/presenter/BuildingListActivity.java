@@ -129,9 +129,8 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
 
     @Override
     public void alertBuildingsNotFound() {
-        buildingCountView.setText(getString(R.string.format_building_count, 0));
+        buildingCountView.setVisibility(View.GONE);
         buildingAdapter.clearData();
-        Alert.lowLevel().show(R.string.building_not_found);
     }
 
     @Override
@@ -139,6 +138,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         buildingAdapter.updateData(buildingsWithSurveyStatuses);
         buildingList.setAdapter(buildingAdapter);
         buildingCountView.setText(getString(R.string.format_building_count, buildingsWithSurveyStatuses.size()));
+        buildingCountView.setVisibility(View.VISIBLE);
     }
 
     @Override

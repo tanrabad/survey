@@ -78,18 +78,18 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
         return view;
     }
 
-    private void setupEmptyList(View view) {
-        emptyLayoutView = (EmptyLayoutView) view.findViewById(R.id.empty_layout);
-        emptyLayoutView.setEmptyButtonText(R.string.add_place);
-        emptyLayoutView.setEmptyText(R.string.places_not_found);
-    }
-
     private void setupViews(View view) {
         this.placeListView = (RecyclerView) view.findViewById(R.id.place_list);
         this.placeCountView = (TextView) view.findViewById(R.id.place_count);
         this.placeFilterView = (AppCompatSpinner) view.findViewById(R.id.place_filter);
         recyclerViewHeader = (RecyclerViewHeader) view.findViewById(R.id.card_header);
 
+    }
+
+    private void setupEmptyList(View view) {
+        emptyLayoutView = (EmptyLayoutView) view.findViewById(R.id.empty_layout);
+        emptyLayoutView.setEmptyButtonText(R.string.add_place);
+        emptyLayoutView.setEmptyText(R.string.places_not_found);
     }
 
     private void setupPlaceFilterSpinner() {
@@ -116,7 +116,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
     @Override
     public void displayPlacesNotfound() {
         placeAdapter.clearData();
-        placeCountView.setText(String.valueOf(0));
+        placeCountView.setVisibility(View.GONE);
         emptyLayoutView.setVisibility(View.VISIBLE);
     }
 
@@ -124,6 +124,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
     public void displayAllSurveyPlaceList(List<PlaceWithSurveyStatus> buildingsWithSurveyStatuses) {
         placeAdapter.updateData(buildingsWithSurveyStatuses);
         placeCountView.setText(getString(R.string.format_place_count, buildingsWithSurveyStatuses.size()));
+        placeCountView.setVisibility(View.VISIBLE);
         emptyLayoutView.setVisibility(View.GONE);
     }
 

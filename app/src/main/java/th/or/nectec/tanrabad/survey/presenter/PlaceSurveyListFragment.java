@@ -98,6 +98,7 @@ public class PlaceSurveyListFragment extends Fragment implements PlaceWithSurvey
         emptyView.setVisibility(View.GONE);
         placeAdapter.updateData(surveyPlace);
         placeCountView.setText(getString(R.string.format_place_count, surveyPlace.size()));
+        placeCountView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -108,7 +109,7 @@ public class PlaceSurveyListFragment extends Fragment implements PlaceWithSurvey
     @Override
     public void displaySurveyPlacesNotFound() {
         placeAdapter.clearData();
-        placeCountView.setText(getString(R.string.format_place_count, 0));
+        placeCountView.setVisibility(View.GONE);
         emptyView.setVisibility(View.VISIBLE);
     }
 

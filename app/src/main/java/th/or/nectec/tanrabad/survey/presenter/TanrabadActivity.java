@@ -21,6 +21,7 @@ package th.or.nectec.tanrabad.survey.presenter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
+
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -29,7 +30,6 @@ public class TanrabadActivity extends AppCompatActivity {
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-        setupAlertFactory();
     }
 
     private void setupAlertFactory() {
@@ -38,5 +38,11 @@ public class TanrabadActivity extends AppCompatActivity {
 
     public boolean isUiTesting() {
         return getIntent().getBooleanExtra("isUiTesting",false);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setupAlertFactory();
     }
 }

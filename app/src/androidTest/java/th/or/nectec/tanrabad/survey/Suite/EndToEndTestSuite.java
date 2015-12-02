@@ -31,8 +31,9 @@ import th.or.nectec.tanrabad.survey.presenter.*;
         PlaceFoundBuildingListTest.class,
         BuildingAddButtonByBuilding0UnitTest.class,
         BuildingAddButtonByBuilding13UnitTest.class,
-        BuildingPromptCancelSurveyTest.class
+        BuildingPromptCancelSurveyTest.class,
+        ChooseBuildingFromTypeVillageCommunityListTest.class
 })
 
-public class AndroidSuite {
+public class EndToEndTestSuite {
 }

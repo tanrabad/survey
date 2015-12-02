@@ -49,7 +49,10 @@ public class MapMarkerFragment extends TanrabadSupportMapFragment implements Goo
     @Override
     public void onConnected(Bundle connectionHint) {
         super.onConnected(connectionHint);
-        if (location == null) {
+        if (location != null)
+            return;
+
+        if (getCurrentLocation() != null) {
             location = new LatLng(getCurrentLocation().getLatitude(), getCurrentLocation().getLongitude());
             addMarker(location);
             moveToLocation(location);

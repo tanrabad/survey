@@ -146,6 +146,9 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
                 .perform(click());
         onView(withText(R.string.factory))
                 .perform(click());
+        textDisplayed(R.string.place_not_found);
+        onView(withText(R.string.got_it))
+                .perform(click());
         textDisplayed(R.string.factory);
         onView(allOf(withId(R.id.place_count), withContentDescription(R.string.number_place_list_in_database)))
                 .check(matches(withText("0")));

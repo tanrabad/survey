@@ -20,6 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:textIsSelectable="false"
         tools:text="ไม่พบข้อมูลในรายการ" />
 
     <android.support.v7.widget.AppCompatButton

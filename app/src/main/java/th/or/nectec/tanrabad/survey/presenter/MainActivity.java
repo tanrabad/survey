@@ -20,6 +20,7 @@ package th.or.nectec.tanrabad.survey.presenter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -44,12 +45,14 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
 
     private PlaceAdapter placeAdapter;
     private RecyclerView placeHistoryList;
+    private CardView cardView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupList();
+        cardView = (CardView) findViewById(R.id.card_layout);
         Button startSurveyButton = (Button) findViewById(R.id.start_survey);
         startSurveyButton.setOnClickListener(this);
         PlaceWithSurveyHistoryChooser placeWithSurveyHistoryChooser = new PlaceWithSurveyHistoryChooser(
@@ -99,6 +102,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
     @Override
     public void displaySurveyPlaceList(ArrayList<Place> surveyPlace) {
         placeAdapter.updateData(surveyPlace);
+        cardView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -109,7 +113,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
     @Override
     public void displaySurveyPlacesNotFound() {
         placeAdapter.clearData();
-        placeHistoryList.setVisibility(View.GONE);
+        cardView.setVisibility(View.GONE);
     }
 
     @Override

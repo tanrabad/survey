@@ -2,7 +2,6 @@ package th.or.nectec.tanrabad.survey.presenter.maps;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
@@ -10,7 +9,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.ColorRes;
-import android.support.v7.app.AlertDialog;
 import android.util.DisplayMetrics;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -28,6 +26,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
+import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
+import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 
 public class TanrabadSupportMapFragment extends com.google.android.gms.maps.SupportMapFragment implements
         GoogleApiClient.ConnectionCallbacks,
@@ -222,20 +222,16 @@ public class TanrabadSupportMapFragment extends com.google.android.gms.maps.Supp
      * Show gps setting dialog when gps disable
      */
     private void showGpsSettingsDialog() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-        alertDialog.setTitle("GPS ยังไม่ได้เปิดการใช้งาน");
-        alertDialog.setMessage("คุณต้องการเปิดการตั้งค่าการใช้งาน GPS หรือไม่");
-        alertDialog.setPositiveButton("เปิดการตั้งค่า GPS",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(
-                                Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                        startActivity(intent);
-                    }
-                });
-        alertDialog.setNegativeButton("ยกเลิก", null);
-        alertDialog.setCancelable(false);
-        alertDialog.show();
+        PromptMessage promptMessage = new AlertDialogPromptMessage(getActivity());
+        promptMessage.setOnConfirm(getString(R.string.enable_gps), new PromptMessage.OnConfirmListener() {
+            @Override
+            public void onConfirm() {
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(intent);
+            }
+        });
+        promptMessage.setOnCancel(getResources().getString(R.string.cancel), null);
+        promptMessage.show(getString(R.string.gps_dialog_tilte), getString(R.string.gps_dialog_message));
     }
 
     @Override

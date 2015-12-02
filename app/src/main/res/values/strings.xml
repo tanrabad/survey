@@ -93,5 +93,8 @@
     <string name="abort_survey">ยกเลิกการสำรวจ</string>
     <string name="press_to_start_survey">กดเพื่อเริ่มสำรวจ</string>
     <string name="got_it">รับทราบ</string>
+    <string name="enable_gps">เปิดการตั้งค่า GPS</string>
+    <string name="gps_dialog_tilte">GPS ยังไม่ได้เปิดการใช้งาน</string>
+    <string name="gps_dialog_message">คุณต้องการเปิดการตั้งค่าการใช้งาน GPS หรือไม่</string>
 
 </resources>

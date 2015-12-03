@@ -47,6 +47,8 @@
     <string name="add_building">เพิ่มอาคาร</string>
     <string name="house_no">บ้านเลขที่</string>
     <string name="building_name">ชื่ออาคาร</string>
+    <string name="abort_add_building">ยกเลิกการเพิ่มอาคารภายใน</string>
+    <string name="abort_edit_building">ยกเลิกการแก้ไขอาคาร</string>
     <string name="place_icon">ไอคอนหน้าสถานที่สำรวจ</string>
     <string name="place_bg">พื้นหลังหน้าสถานที่สำรวจ</string>
     <string name="place_not_found">ไม่พบข้อมูลสถานที่</string>

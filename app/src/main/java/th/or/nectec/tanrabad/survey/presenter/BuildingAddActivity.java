@@ -49,6 +49,8 @@ import th.or.nectec.tanrabad.survey.repository.InMemoryBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
+import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
+import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 import th.or.nectec.tanrabad.survey.validator.SaveBuildingValidator;
 import th.or.nectec.tanrabad.survey.validator.ValidatorException;
 
@@ -103,7 +105,7 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
     private void loadBuildingData() {
         if (TextUtils.isEmpty(getBuildingUUID())) {
             setupPreviewMap();
-            this.building = Building.withName(null);
+            building = Building.withName(null);
         } else {
             buildingController.showBuilding(UUID.fromString(getBuildingUUID()));
         }
@@ -251,5 +253,25 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
 
     public void onRootViewClick(View view){
         SoftKeyboard.hideOn(this);
+    }
+
+    @Override
+    public void onBackPressed() {
+        showAbortAddBuildingPrompt();
+    }
+
+    private void showAbortAddBuildingPrompt() {
+        PromptMessage prompt = new AlertDialogPromptMessage(this);
+        prompt.setOnCancel(getString(R.string.no), null);
+        prompt.setOnConfirm(getString(R.string.yes), new PromptMessage.OnConfirmListener() {
+            @Override
+            public void onConfirm() {
+                finish();
+            }
+        });
+        String promptTitle = TextUtils.isEmpty(getBuildingUUID()) ?
+                getString(R.string.abort_add_building) : getString(R.string.abort_edit_building);
+        String promptMessage = TextUtils.isEmpty(getBuildingUUID()) ? place.getName() : building.getName();
+        prompt.show(promptTitle, promptMessage);
     }
 }

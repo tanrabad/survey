@@ -17,25 +17,24 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center"
-    android:minHeight="@dimen/card_min_height"
-    android:orientation="vertical"
-    tools:showIn="@layout/fragment_place_list_in_database">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="140dp"
+              android:gravity="center"
+              android:orientation="vertical">
 
     <ImageView
-        android:id="@+id/empty_icon"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:contentDescription="@null" />
+            tools:src="@mipmap/ic_place"
+            android:id="@+id/empty_icon"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:contentDescription="@null" />
 
     <TextView
             android:id="@+id/empty_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/screen_vertical_margin"
             android:textIsSelectable="false"
             tools:text="ไม่พบข้อมูลในรายการ" />
 
@@ -43,6 +42,6 @@
             android:id="@+id/empty_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/screen_vertical_margin"
+            android:layout_marginTop="24dp"
             tools:text="เพิ่มอะไรบางอย่าง" />
 </LinearLayout>

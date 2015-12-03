@@ -25,19 +25,10 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.AdapterView;
 import android.widget.TextView;
-
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
-
-import java.util.List;
-
 import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyStatus;
 import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyStatusListPresenter;
 import th.or.nectec.tanrabad.domain.survey.SurveyPlaceChooser;
@@ -49,6 +40,8 @@ import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
+
+import java.util.List;
 
 public class PlaceListInDatabaseFragment extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener, PlaceWithSurveyStatusListPresenter {
 
@@ -67,59 +60,6 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.fragment_place_list_in_database, container, false);
-        setupViews(view);
-        setupEmptyList();
-        setupPlaceFilterSpinner();
-        setupPlaceList();
-        setHasOptionsMenu(true);
-        return view;
-    }
-
-    private void setupViews(View view) {
-        this.placeListView = (RecyclerView) view.findViewById(R.id.place_list);
-        this.placeCountView = (TextView) view.findViewById(R.id.place_count);
-        this.placeFilterView = (AppCompatSpinner) view.findViewById(R.id.place_filter);
-        recyclerViewHeader = (RecyclerViewHeader) view.findViewById(R.id.card_header);
-        emptyLayoutView = (EmptyLayoutView) view.findViewById(R.id.empty_layout);
-
-    }
-
-    private void setupEmptyList() {
-        emptyLayoutView.setEmptyButtonText(R.string.add_place, new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openAddPlaceActivity();
-            }
-        });
-        emptyLayoutView.setEmptyText(R.string.places_not_found);
-    }
-
-    private void setupPlaceFilterSpinner() {
-        placeFilterView.setOnItemSelectedListener(this);
-        placeTypeAdapter = new PlaceTypeAdapter(getActivity());
-        placeFilterView.setAdapter(placeTypeAdapter);
-    }
-
-    private void setupPlaceList() {
-        placeAdapter = new PlaceWithSurveyStatusAdapter(getActivity());
-        placeAdapter.setOnItemClickListener(this);
-        placeListView.setAdapter(placeAdapter);
-        placeListView.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        placeListView.setLayoutManager(linearLayoutManager);
-        recyclerViewHeader.attachTo(placeListView, true);
     }
 
     @Override
@@ -204,6 +144,65 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_place_list_in_database, container, false);
+        setupViews(view);
+        setupEmptyList();
+        setupPlaceFilterSpinner();
+        setupPlaceList();
+        setHasOptionsMenu(true);
+        return view;
+    }
+
+    private void setupViews(View view) {
+        this.placeListView = (RecyclerView) view.findViewById(R.id.place_list);
+        this.placeCountView = (TextView) view.findViewById(R.id.place_count);
+        this.placeFilterView = (AppCompatSpinner) view.findViewById(R.id.place_filter);
+        recyclerViewHeader = (RecyclerViewHeader) view.findViewById(R.id.card_header);
+        emptyLayoutView = (EmptyLayoutView) view.findViewById(R.id.empty_layout);
+        emptyLayoutView.setEmptyIcon(R.mipmap.ic_place);
+
+    }
+
+    private void setupEmptyList() {
+        emptyLayoutView.setEmptyButtonText(R.string.add_place, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openAddPlaceActivity();
+            }
+        });
+        emptyLayoutView.setEmptyText(R.string.places_not_found);
+    }
+
+    private void setupPlaceFilterSpinner() {
+        placeFilterView.setOnItemSelectedListener(this);
+        placeTypeAdapter = new PlaceTypeAdapter(getActivity());
+        placeFilterView.setAdapter(placeTypeAdapter);
+    }
+
+    private void setupPlaceList() {
+        placeAdapter = new PlaceWithSurveyStatusAdapter(getActivity());
+        placeAdapter.setOnItemClickListener(this);
+        placeListView.setAdapter(placeAdapter);
+        placeListView.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        placeListView.setLayoutManager(linearLayoutManager);
+        recyclerViewHeader.attachTo(placeListView, true);
+    }
+
+    private void openAddPlaceActivity() {
+        Intent intent = new Intent(getActivity(), PlaceAddActivity.class);
+        startActivityForResult(intent, ADD_PLACE_REQ_CODE);
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.action_activity_place_list, menu);
         super.onCreateOptionsMenu(menu, inflater);
@@ -217,10 +216,5 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void openAddPlaceActivity() {
-        Intent intent = new Intent(getActivity(), PlaceAddActivity.class);
-        startActivityForResult(intent, ADD_PLACE_REQ_CODE);
     }
 }

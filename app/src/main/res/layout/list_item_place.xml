@@ -24,7 +24,7 @@
 
     <ImageView
             style="@style/ListIcon"
-            tools:src="@mipmap/ic_logo_hospital"
+            tools:src="@mipmap/ic_place_hospital"
             android:id="@+id/place_icon"
             android:contentDescription="@string/place_icon"/>
 

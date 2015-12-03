@@ -24,7 +24,7 @@
 
     <ImageView
             style="@style/ListIcon"
-            tools:src="@mipmap/ic_logo_home"
+            tools:src="@mipmap/ic_building_home"
             android:id="@+id/building_icon"
             android:contentDescription="@string/building_icon"/>
 

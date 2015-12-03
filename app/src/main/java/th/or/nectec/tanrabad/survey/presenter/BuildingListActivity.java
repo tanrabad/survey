@@ -26,12 +26,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
-
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
-
-import java.util.List;
-import java.util.UUID;
-
 import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
 import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatusListPresenter;
 import th.or.nectec.tanrabad.domain.place.PlaceController;
@@ -49,13 +44,15 @@ import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 
+import java.util.List;
+import java.util.UUID;
+
 public class BuildingListActivity extends TanrabadActivity implements BuildingWithSurveyStatusListPresenter, PlacePresenter {
 
     public static final String PLACE_UUID_ARG = "place_uuid_arg";
     public static final String IS_NEW_SURVEY_ARG = "is_new_survey_arg";
     private static final int ADD_BUILDING_REQ_CODE = 40000;
     private RecyclerView buildingList;
-    private TextView buildingCountView;
     private BuildingWithSurveyStatusAdapter buildingAdapter;
     private Place place;
     private EmptyLayoutView emptyLayoutView;
@@ -64,11 +61,16 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_building_list);
-        buildingCountView = (TextView) findViewById(R.id.building_count);
+
         showPlaceName();
         setupBuildingList();
         setupEmptyLayout();
         loadSurveyBuildingList();
+    }
+
+    private void showPlaceName() {
+        PlaceController placeController = new PlaceController(InMemoryPlaceRepository.getInstance(), this);
+        placeController.showPlace(getPlaceUuidFromIntent());
     }
 
     private void setupBuildingList() {
@@ -98,6 +100,8 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
 
     private void setupEmptyLayout() {
         emptyLayoutView = (EmptyLayoutView) findViewById(R.id.empty_layout);
+        emptyLayoutView.setEmptyIcon(place.getType() == Place.TYPE_VILLAGE_COMMUNITY ?
+                R.mipmap.ic_building_home : R.mipmap.ic_building);
         emptyLayoutView.setEmptyText(R.string.building_list_not_found);
         emptyLayoutView.setEmptyButtonText(R.string.add_building, new View.OnClickListener() {
             @Override
@@ -107,14 +111,14 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         });
     }
 
-    private void showPlaceName() {
-        PlaceController placeController = new PlaceController(InMemoryPlaceRepository.getInstance(), this);
-        placeController.showPlace(getPlaceUuidFromIntent());
-    }
-
     private void loadSurveyBuildingList() {
         SurveyBuildingChooser surveyBuildingChooser = new SurveyBuildingChooser(new StubUserRepository(), InMemoryPlaceRepository.getInstance(), InMemoryBuildingRepository.getInstance(), InMemorySurveyRepository.getInstance(), this);
         surveyBuildingChooser.displaySurveyBuildingOf(getPlaceUuidFromIntent().toString(), "sara");
+    }
+
+    private UUID getPlaceUuidFromIntent() {
+        String uuid = getIntent().getStringExtra(PLACE_UUID_ARG);
+        return UUID.fromString(uuid);
     }
 
     private void openSurveyActivity(Building building) {
@@ -131,9 +135,10 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         startActivityForResult(intent, ADD_BUILDING_REQ_CODE);
     }
 
-    private UUID getPlaceUuidFromIntent() {
-        String uuid = getIntent().getStringExtra(PLACE_UUID_ARG);
-        return UUID.fromString(uuid);
+    private void openAddBuildingActivity() {
+        Intent intent = new Intent(BuildingListActivity.this, BuildingAddActivity.class);
+        intent.putExtra(PLACE_UUID_ARG, getIntent().getStringExtra(PLACE_UUID_ARG));
+        startActivityForResult(intent, ADD_BUILDING_REQ_CODE);
     }
 
     @Override
@@ -146,6 +151,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     @Override
     public void alertBuildingsNotFound() {
         emptyLayoutView.setVisibility(View.VISIBLE);
+        TextView buildingCountView = (TextView) findViewById(R.id.building_count);
         buildingCountView.setVisibility(View.GONE);
         buildingAdapter.clearData();
     }
@@ -155,6 +161,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         emptyLayoutView.setVisibility(View.GONE);
         buildingAdapter.updateData(buildingsWithSurveyStatuses);
         buildingList.setAdapter(buildingAdapter);
+        TextView buildingCountView = (TextView) findViewById(R.id.building_count);
         buildingCountView.setText(getString(R.string.format_building_count, buildingsWithSurveyStatuses.size()));
         buildingCountView.setVisibility(View.VISIBLE);
     }
@@ -182,12 +189,6 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void openAddBuildingActivity() {
-        Intent intent = new Intent(BuildingListActivity.this, BuildingAddActivity.class);
-        intent.putExtra(PLACE_UUID_ARG, getIntent().getStringExtra(PLACE_UUID_ARG));
-        startActivityForResult(intent, ADD_BUILDING_REQ_CODE);
     }
 
     @Override

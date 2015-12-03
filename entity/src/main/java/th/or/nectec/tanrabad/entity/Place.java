@@ -22,6 +22,9 @@ import java.util.UUID;
 public class Place implements LocationEntity {
     public static final int TYPE_VILLAGE_COMMUNITY = 1;
     public static final int TYPE_WORSHIP = 2;
+    public static final int SUBTYPE_TEMPLE = 21;
+    public static final int SUBTYPE_CHURCH = 22;
+    public static final int SUBTYPE_MOSQUE = 23;
     public static final int TYPE_SCHOOL = 3;
     public static final int TYPE_HOSPITAL = 4;
     public static final int TYPE_FACTORY = 5;
@@ -29,6 +32,7 @@ public class Place implements LocationEntity {
     private UUID id;
     private String name;
     private int type;
+    private int subType;
     private Location location;
 
     public Place(UUID id, String name) {
@@ -62,6 +66,14 @@ public class Place implements LocationEntity {
         return null;
     }
 
+    public int getSubType() {
+        return subType;
+    }
+
+    public void setSubType(int subType) {
+        this.subType = subType;
+    }
+
     @Override
     public Location getLocation() {
         return location;
@@ -72,14 +84,6 @@ public class Place implements LocationEntity {
     }
 
     @Override
-    public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + type;
-        return result;
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -87,9 +91,21 @@ public class Place implements LocationEntity {
         Place place = (Place) o;
 
         if (type != place.type) return false;
+        if (subType != place.subType) return false;
         if (!id.equals(place.id)) return false;
-        return !(name != null ? !name.equals(place.name) : place.name != null);
+        if (!name.equals(place.name)) return false;
+        return !(location != null ? !location.equals(place.location) : place.location != null);
 
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + name.hashCode();
+        result = 31 * result + type;
+        result = 31 * result + subType;
+        result = 31 * result + (location != null ? location.hashCode() : 0);
+        return result;
     }
 
     @Override
@@ -97,6 +113,9 @@ public class Place implements LocationEntity {
         return "Place{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", type=" + type +
+                ", subType=" + subType +
+                ", location=" + location +
                 '}';
     }
 }

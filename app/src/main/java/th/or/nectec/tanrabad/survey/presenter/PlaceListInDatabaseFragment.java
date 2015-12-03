@@ -29,7 +29,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
+
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
+
+import java.util.List;
+
 import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyStatus;
 import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyStatusListPresenter;
 import th.or.nectec.tanrabad.domain.survey.SurveyPlaceChooser;
@@ -40,8 +44,6 @@ import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
-
-import java.util.List;
 
 public class PlaceListInDatabaseFragment extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener, PlaceWithSurveyStatusListPresenter {
 
@@ -72,7 +74,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
 
         View view = inflater.inflate(R.layout.fragment_place_list_in_database, container, false);
         setupViews(view);
-        setupEmptyList(view);
+        setupEmptyList();
         setupPlaceFilterSpinner();
         setupPlaceList();
         return view;
@@ -83,11 +85,11 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
         this.placeCountView = (TextView) view.findViewById(R.id.place_count);
         this.placeFilterView = (AppCompatSpinner) view.findViewById(R.id.place_filter);
         recyclerViewHeader = (RecyclerViewHeader) view.findViewById(R.id.card_header);
+        emptyLayoutView = (EmptyLayoutView) view.findViewById(R.id.empty_layout);
 
     }
 
-    private void setupEmptyList(View view) {
-        emptyLayoutView = (EmptyLayoutView) view.findViewById(R.id.empty_layout);
+    private void setupEmptyList() {
         emptyLayoutView.setEmptyButtonText(R.string.add_place);
         emptyLayoutView.setEmptyText(R.string.places_not_found);
     }

@@ -54,14 +54,10 @@
 
             <include layout="@layout/card_header_place_recent_survey"/>
 
-            <TextView
-                android:id="@+id/empty_view"
+            <th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView
+                android:id="@+id/empty_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:minHeight="@dimen/card_min_height"
-                android:text="@string/survey_place_not_found"
-                android:textColor="@color/black" />
+                android:layout_height="wrap_content" />
         </android.support.v7.widget.CardView>
 
     </android.support.design.widget.CoordinatorLayout>

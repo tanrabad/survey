@@ -116,5 +116,8 @@
     <string name="church">โบสถ์</string>
     <string name="mosque">มัสยิด</string>
     <string name="place_worship_type">ประเภทศาสนสถาน</string>
+    <string name="please_define_place_name">กรุณาระบุชื่อสถานที่</string>
+    <string name="please_define_place_location">กรุณาระบุพิกัดของสถานที่</string>
+    <string name="cant_save_same_place_name">ไม่สามารถบันทึกข้อมูลสถานที่ได้ เนื่องจากมีชื่อสถานที่นี้ในฐานข้อมูลแล้ว</string>
 
 </resources>

@@ -24,13 +24,14 @@ public class PlaceSaver {
         private final PlaceRepository placeRepository;
         private final PlaceValidator placeValidator;
 
-    public PlaceSaver(PlaceSavePresenter placeSavePresenter,
+    public PlaceSaver(PlaceRepository placeRepository,
                       PlaceValidator placeValidator,
-                      PlaceRepository placeRepository) {
+                      PlaceSavePresenter placeSavePresenter) {
 
         this.placeRepository = placeRepository;
         this.placeSavePresenter = placeSavePresenter;
         this.placeValidator = placeValidator;
+        placeValidator.setPlaceRepository(placeRepository);
     }
 
     public void save(Place place) {

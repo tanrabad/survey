@@ -22,4 +22,6 @@ import th.or.nectec.tanrabad.entity.Place;
 public interface PlaceValidator {
     boolean validate(Place with);
 
+    void setPlaceRepository(PlaceRepository placeRepository);
+
 }

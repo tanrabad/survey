@@ -48,7 +48,7 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
     @Test
     public void testDefaultPageDefineSurveyPlace() {
         onView(allOf(ViewMatchers.withId(R.id.place_count), withContentDescription(R.string.number_place_list_in_database)))
-                .check(matches(withText("7 รายการ")));
+                .check(matches(withText("8 รายการ")));
         onView(withText(R.string.not_define_place_type))
                 .check(matches(isDisplayed()));
     }
@@ -110,7 +110,7 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
                 .perform(click());
         textDisplayed(R.string.worship);
         onView(allOf(withId(R.id.place_count), withContentDescription(R.string.number_place_list_in_database)))
-                .check(matches(withText("1 รายการ")));
+                .check(matches(withText("2 รายการ")));
         textDisplayed("วัดป่าภูก้อน");
     }
 

@@ -18,6 +18,7 @@
 package th.or.nectec.tanrabad.survey.presenter;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -25,6 +26,9 @@ import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -48,6 +52,7 @@ import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 
 public class PlaceListInDatabaseFragment extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener, PlaceWithSurveyStatusListPresenter {
 
+    public static final int ADD_PLACE_REQ_CODE = 30000;
     private PlaceWithSurveyStatusAdapter placeAdapter;
     private PlaceTypeAdapter placeTypeAdapter;
     private SurveyPlaceChooser placeChooser = new SurveyPlaceChooser(new StubUserRepository(), InMemoryPlaceRepository.getInstance(), InMemorySurveyRepository.getInstance(), this);
@@ -78,6 +83,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
         setupEmptyList();
         setupPlaceFilterSpinner();
         setupPlaceList();
+        setHasOptionsMenu(true);
         return view;
     }
 
@@ -91,7 +97,12 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
     }
 
     private void setupEmptyList() {
-        emptyLayoutView.setEmptyButtonText(R.string.add_place);
+        emptyLayoutView.setEmptyButtonText(R.string.add_place, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openAddPlaceActivity();
+            }
+        });
         emptyLayoutView.setEmptyText(R.string.places_not_found);
     }
 
@@ -181,5 +192,35 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            placeFilterView.setSelection(0);
+            placeChooser.displaySurveyBuildingOf(getUsername());
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.action_activity_place_list, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.add_place_menu:
+                openAddPlaceActivity();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void openAddPlaceActivity() {
+        Intent intent = new Intent(getActivity(), PlaceAddActivity.class);
+        startActivityForResult(intent, ADD_PLACE_REQ_CODE);
     }
 }

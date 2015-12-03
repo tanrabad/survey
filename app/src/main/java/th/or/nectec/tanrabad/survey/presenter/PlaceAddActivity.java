@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,17 +18,31 @@ import android.widget.TextView;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.UUID;
+
+import th.or.nectec.tanrabad.domain.place.PlaceController;
+import th.or.nectec.tanrabad.domain.place.PlacePresenter;
+import th.or.nectec.tanrabad.domain.place.PlaceRepository;
+import th.or.nectec.tanrabad.domain.place.PlaceSavePresenter;
+import th.or.nectec.tanrabad.domain.place.PlaceSaver;
+import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.maps.LiteMapFragment;
+import th.or.nectec.tanrabad.survey.repository.InMemoryPlaceRepository;
+import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
+import th.or.nectec.tanrabad.survey.validator.SavePlaceValidator;
+import th.or.nectec.tanrabad.survey.validator.ValidatorException;
 
-public class PlaceAddActivity extends TanrabadActivity implements View.OnClickListener {
+public class PlaceAddActivity extends TanrabadActivity implements View.OnClickListener, PlaceSavePresenter, PlacePresenter {
 
     public static final String PLACE_UUID_ARG = "place_uuid_arg";
-    public static final String BUILDING_UUID_ARG = "building_uuid_arg";
     public static final int MARK_LOCATION_REQUEST_CODE = 50000;
-    private EditText placeName;
+    Place place;
+    PlaceRepository placeRepository = InMemoryPlaceRepository.getInstance();
+    PlaceSaver placeSaver = new PlaceSaver(placeRepository, new SavePlaceValidator(), this);
+    private EditText placeNameView;
     private EditText addressSelect;
     private AppCompatSpinner placeTypeSelector;
     private RelativeLayout placeSubtypeLayout;
@@ -47,20 +62,33 @@ public class PlaceAddActivity extends TanrabadActivity implements View.OnClickLi
         setupViews();
         setupPreviewMap();
         setupPlaceTypeSelector();
+        loadPlaceData();
+    }
+
+    private void loadPlaceData() {
+        if (TextUtils.isEmpty(getPlaceUUID())) {
+            setupPreviewMap();
+            place = Place.withName(null);
+        } else {
+            PlaceController placeController = new PlaceController(placeRepository, this);
+            placeController.showPlace(UUID.fromString(getPlaceUUID()));
+        }
     }
 
     private void setupViews() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        placeName = (EditText) findViewById(R.id.place_name);
+        placeNameView = (EditText) findViewById(R.id.place_name);
         addressSelect = (EditText) findViewById(R.id.address_select);
         placeTypeSelector = (AppCompatSpinner) findViewById(R.id.place_type_selector);
         placeSubtypeLayout = (RelativeLayout) findViewById(R.id.place_subtype_layout);
         placeSubtypeLabel = (TextView) findViewById(R.id.place_subtype_label);
         placeSubtypeSelector = (AppCompatSpinner) findViewById(R.id.place_subtype_selector);
-        editLocationButton = (Button) findViewById(R.id.edit_location);
         mapContainer = (FrameLayout) findViewById(R.id.map_container);
         addLocationBackground = (FrameLayout) findViewById(R.id.add_location_background);
         addMarkerButton = (Button) findViewById(R.id.add_marker);
+
+        editLocationButton = (Button) findViewById(R.id.edit_location);
+        editLocationButton.setVisibility(View.GONE);
 
         setSupportActionBar(toolbar);
         addMarkerButton.setOnClickListener(this);
@@ -100,8 +128,14 @@ public class PlaceAddActivity extends TanrabadActivity implements View.OnClickLi
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save:
+                doSaveData();
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public String getPlaceUUID() {
+        return getIntent().getStringExtra(PLACE_UUID_ARG);
     }
 
     private void openMapMarkerActivity() {
@@ -154,5 +188,49 @@ public class PlaceAddActivity extends TanrabadActivity implements View.OnClickLi
                 openEditMapMarkerActivity(placeLocation);
                 break;
         }
+    }
+
+    public void doSaveData() {
+        place.setName(placeNameView.getText().toString());
+        int placeTypeID = ((PlaceType) placeTypeSelector.getSelectedItem()).id;
+        place.setType(placeTypeID);
+        if (placeTypeID == Place.TYPE_WORSHIP) {
+            place.setSubType(((PlaceType) placeSubtypeSelector.getSelectedItem()).id);
+        }
+        Location location = placeLocation == null
+                ? null : new Location(placeLocation.latitude, placeLocation.longitude);
+        place.setLocation(location);
+
+        try {
+            placeSaver.save(place);
+        } catch (ValidatorException e) {
+            Alert.highLevel().show(e.getMessageID());
+        }
+    }
+
+    @Override
+    public void displaySaveSuccess() {
+        setResult(RESULT_OK);
+        finish();
+    }
+
+    @Override
+    public void displaySaveFail() {
+
+    }
+
+    @Override
+    public void alertCannotSaveVillageType() {
+
+    }
+
+    @Override
+    public void displayPlace(Place place) {
+        this.place = place;
+    }
+
+    @Override
+    public void alertPlaceNotFound() {
+        this.place = Place.withName(null);
     }
 }

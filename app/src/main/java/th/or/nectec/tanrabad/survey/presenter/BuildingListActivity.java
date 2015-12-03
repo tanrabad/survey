@@ -42,8 +42,8 @@ import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView;
 import th.or.nectec.tanrabad.survey.repository.InMemoryBuildingRepository;
+import th.or.nectec.tanrabad.survey.repository.InMemoryPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
-import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
@@ -108,12 +108,12 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     }
 
     private void showPlaceName() {
-        PlaceController placeController = new PlaceController(new StubPlaceRepository(), this);
+        PlaceController placeController = new PlaceController(InMemoryPlaceRepository.getInstance(), this);
         placeController.showPlace(getPlaceUuidFromIntent());
     }
 
     private void loadSurveyBuildingList() {
-        SurveyBuildingChooser surveyBuildingChooser = new SurveyBuildingChooser(new StubUserRepository(), new StubPlaceRepository(), InMemoryBuildingRepository.getInstance(), InMemorySurveyRepository.getInstance(), this);
+        SurveyBuildingChooser surveyBuildingChooser = new SurveyBuildingChooser(new StubUserRepository(), InMemoryPlaceRepository.getInstance(), InMemoryBuildingRepository.getInstance(), InMemorySurveyRepository.getInstance(), this);
         surveyBuildingChooser.displaySurveyBuildingOf(getPlaceUuidFromIntent().toString(), "sara");
     }
 

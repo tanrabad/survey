@@ -39,8 +39,8 @@ import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyStatusListPresenter;
 import th.or.nectec.tanrabad.domain.survey.SurveyPlaceChooser;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView;
+import th.or.nectec.tanrabad.survey.repository.InMemoryPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
-import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
@@ -50,7 +50,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
 
     private PlaceWithSurveyStatusAdapter placeAdapter;
     private PlaceTypeAdapter placeTypeAdapter;
-    private SurveyPlaceChooser placeChooser = new SurveyPlaceChooser(new StubUserRepository(), new StubPlaceRepository(), InMemorySurveyRepository.getInstance(), this);
+    private SurveyPlaceChooser placeChooser = new SurveyPlaceChooser(new StubUserRepository(), InMemoryPlaceRepository.getInstance(), InMemorySurveyRepository.getInstance(), this);
     private TextView placeCountView;
     private RecyclerView placeListView;
     private AppCompatSpinner placeFilterView;

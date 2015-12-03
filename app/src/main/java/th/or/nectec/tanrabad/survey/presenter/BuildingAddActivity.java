@@ -46,7 +46,7 @@ import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.maps.LiteMapFragment;
 import th.or.nectec.tanrabad.survey.repository.InMemoryBuildingRepository;
-import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
+import th.or.nectec.tanrabad.survey.repository.InMemoryPlaceRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
@@ -67,7 +67,7 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
     private EditText buildingNameView;
     private FrameLayout addLocationBackground;
     private LatLng buildingLocation;
-    private PlaceController placeController = new PlaceController(new StubPlaceRepository(), this);
+    private PlaceController placeController = new PlaceController(InMemoryPlaceRepository.getInstance(), this);
     private BuildingController buildingController = new BuildingController(InMemoryBuildingRepository.getInstance(), this);
     private BuildingSaver buildingSaver = new BuildingSaver(InMemoryBuildingRepository.getInstance(), new SaveBuildingValidator(), this);
 

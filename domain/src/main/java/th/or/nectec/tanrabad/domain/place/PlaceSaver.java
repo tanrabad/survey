@@ -19,7 +19,7 @@ package th.or.nectec.tanrabad.domain.place;
 
 import th.or.nectec.tanrabad.entity.Place;
 
-class PlaceSaver {
+public class PlaceSaver {
         private final PlaceSavePresenter placeSavePresenter;
         private final PlaceRepository placeRepository;
         private final PlaceValidator placeValidator;

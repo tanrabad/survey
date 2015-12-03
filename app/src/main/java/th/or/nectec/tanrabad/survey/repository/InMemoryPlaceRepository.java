@@ -29,8 +29,9 @@ import th.or.nectec.tanrabad.entity.LocationEntity;
 import th.or.nectec.tanrabad.entity.Place;
 
 
-public class StubPlaceRepository implements PlaceRepository {
+public class InMemoryPlaceRepository implements PlaceRepository {
 
+    public static InMemoryPlaceRepository instance;
     private final Place palazzettoVillage;
     private final Place bangkokHospital;
     private final Place watpaphukon;
@@ -42,7 +43,7 @@ public class StubPlaceRepository implements PlaceRepository {
     private final Place golfView;
     ArrayList<Place> places = new ArrayList<>();
 
-    public StubPlaceRepository() {
+    public InMemoryPlaceRepository() {
         palazzettoVillage = new Place(generateUUID("1abc"), "หมู่บ้านพาลาซเซตโต้");
         palazzettoVillage.setType(Place.TYPE_VILLAGE_COMMUNITY);
         golfView = new Place(generateUUID("67UIP"), "ชุมชนกอล์ฟวิว");
@@ -72,6 +73,13 @@ public class StubPlaceRepository implements PlaceRepository {
         places.add(saintMarySchool);
         places.add(donboscoSchool);
         places.add(anubarnNursery);
+    }
+
+    public static InMemoryPlaceRepository getInstance() {
+        if (instance == null) {
+            instance = new InMemoryPlaceRepository();
+        }
+        return instance;
     }
 
     @NonNull

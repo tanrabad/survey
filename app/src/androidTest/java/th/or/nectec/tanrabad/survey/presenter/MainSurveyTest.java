@@ -43,11 +43,9 @@ public class MainSurveyTest extends TanrabadEspressoTestBase {
     @Test
     public void testClickMagnifyingGlassShoutOpenDefinePlaceSurvey() {
         textDisplayed(R.string.press_to_start_survey);
-        textDisplayed(R.string.find_place_by_recent_survey);
         onView(withId(R.id.start_survey))
                 .perform(click());
         textDisplayed(R.string.define_place_survey);
-        textDisplayed(R.string.find_place_by_database);
         pressBack();
     }
 }

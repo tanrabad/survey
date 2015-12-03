@@ -37,18 +37,18 @@ import static org.hamcrest.Matchers.allOf;
 @RunWith(AndroidJUnit4.class)
 public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
     public ActivityTestRule<PlaceListActivity> mActivityTestRule = new ActivityTestRule<>(PlaceListActivity.class);
-    PlaceListActivity mAtivity;
+    PlaceListActivity mActivity;
 
     @Before
     public void setUp() {
         Intent intent = new Intent();
-        mAtivity = mActivityTestRule.launchActivity(intent);
+        mActivity = mActivityTestRule.launchActivity(intent);
     }
 
     @Test
     public void testDefaultPageDefineSurveyPlace() {
         onView(allOf(ViewMatchers.withId(R.id.place_count), withContentDescription(R.string.number_place_list_in_database)))
-                .check(matches(withText("7")));
+                .check(matches(withText("7 รายการ")));
         onView(withText(R.string.not_define_place_type))
                 .check(matches(isDisplayed()));
     }
@@ -97,7 +97,7 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
                 .perform(click());
         textDisplayed(R.string.village_community);
         onView(allOf(withId(R.id.place_count), withContentDescription(R.string.number_place_list_in_database)))
-                .check(matches(withText("2")));
+                .check(matches(withText("2 รายการ")));
         textDisplayed("หมู่บ้านพาลาซเซตโต้");
         textDisplayed("ชุมชนกอล์ฟวิว");
     }
@@ -110,7 +110,7 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
                 .perform(click());
         textDisplayed(R.string.worship);
         onView(allOf(withId(R.id.place_count), withContentDescription(R.string.number_place_list_in_database)))
-                .check(matches(withText("1")));
+                .check(matches(withText("1 รายการ")));
         textDisplayed("วัดป่าภูก้อน");
     }
 
@@ -122,7 +122,7 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
                 .perform(click());
         textDisplayed(R.string.school);
         onView(allOf(withId(R.id.place_count), withContentDescription(R.string.number_place_list_in_database)))
-                .check(matches(withText("3")));
+                .check(matches(withText("3 รายการ")));
         textDisplayed("โรงเรียนเซนต์เมรี่");
         textDisplayed("โรงเรียนดอนบอสโก");
         textDisplayed("โรงเรียนอนุบาล");
@@ -136,7 +136,7 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
                 .perform(click());
         textDisplayed(R.string.hospital);
         onView(allOf(withId(R.id.place_count), withContentDescription(R.string.number_place_list_in_database)))
-                .check(matches(withText("1")));
+                .check(matches(withText("1 รายการ")));
         textDisplayed("โรงพยาบาลกรุงเทพ");
     }
 
@@ -146,11 +146,7 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
                 .perform(click());
         onView(withText(R.string.factory))
                 .perform(click());
-        textDisplayed(R.string.place_not_found);
-        onView(withText(R.string.got_it))
-                .perform(click());
+        textDisplayed(R.string.places_not_found);
         textDisplayed(R.string.factory);
-        onView(allOf(withId(R.id.place_count), withContentDescription(R.string.number_place_list_in_database)))
-                .check(matches(withText("0")));
     }
 }

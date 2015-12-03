@@ -36,17 +36,18 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.allOf;
 
 public class BuildingAddButtonByBuilding0UnitTest extends TanrabadEspressoTestBase {
     public ActivityTestRule<BuildingListActivity> mActivityTestRule = new ActivityTestRule<>(BuildingListActivity.class);
-    BuildingListActivity mAtivity;
+    BuildingListActivity mActivity;
 
     @Before
     public void setUp() {
         Intent intent = new Intent();
         intent.putExtra("place_uuid_arg", UUID.nameUUIDFromBytes("67UIP".getBytes()).toString());
         intent.putExtra("username_arg", "sara");
-        mAtivity = mActivityTestRule.launchActivity(intent);
+        mActivity = mActivityTestRule.launchActivity(intent);
     }
 
     @Test
@@ -56,8 +57,8 @@ public class BuildingAddButtonByBuilding0UnitTest extends TanrabadEspressoTestBa
 
         textDisplayed("เพิ่มอาคาร");
         textDisplayed(placeName);
-        onView(withId(R.id.text_show_title_building_list))
-                .check(matches(withText(R.string.survey_building)));
+        onView(withId(R.id.card_title))
+                .check(matches(withText(R.string.title_card_building_list)));
         onView(allOf(withId(R.id.building_count), withContentDescription(R.string.number_building_list)))
                 .check(matches(withText("0")));
         onView(withText(R.string.add_building))

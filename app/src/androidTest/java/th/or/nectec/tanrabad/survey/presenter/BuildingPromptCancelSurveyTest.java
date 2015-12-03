@@ -34,12 +34,12 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 public class BuildingPromptCancelSurveyTest extends TanrabadEspressoTestBase {
     public ActivityTestRule<PlaceListActivity> mActivityTestRule =
             new ActivityTestRule<>(PlaceListActivity.class);
-    PlaceListActivity mAtivity;
+    PlaceListActivity mActivity;
 
     @Before
     public void setUp() {
         Intent intent = new Intent();
-        mAtivity = mActivityTestRule.launchActivity(intent);
+        mActivity = mActivityTestRule.launchActivity(intent);
     }
 
     @Test
@@ -48,10 +48,9 @@ public class BuildingPromptCancelSurveyTest extends TanrabadEspressoTestBase {
                 .perform(click());
         clickSurveyButton();
         textDisplayed("ชุมชนกอล์ฟวิว");
-        onView(withId(R.id.text_show_title_building_list))
+        onView(withId(R.id.card_title))
                 .check(matches(withText("รายชื่ออาคาร")));
-        onView(withId(R.id.building_count))
-                .check(matches(withText("0")));
+        textDisplayed(R.string.building_list_not_found);
         pressBack();
         textDisplayed(R.string.abort_survey);
         textDisplayed("ชุมชนกอล์ฟวิว");

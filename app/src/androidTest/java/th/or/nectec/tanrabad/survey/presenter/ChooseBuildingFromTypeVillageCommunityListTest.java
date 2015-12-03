@@ -26,6 +26,7 @@ import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
 
 import java.util.UUID;
 
+import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -47,10 +48,12 @@ public class ChooseBuildingFromTypeVillageCommunityListTest extends TanrabadEspr
 
     @Test
     public void testClickBuildingAddButtonShouldOpenBuildingAddPage() {
+        onView(allOf(withId(R.id.empty_button), hasSibling(withText("เพิ่มอาคาร"))))
+                .perform(click());
         textDisplayed("เพิ่มอาคาร");
         textDisplayed("หมู่บ้านพาลาซเซตโต้");
-        onView(withId(R.id.text_show_title_building_list))
-                .check(matches(withText(R.string.survey_building)));
+        onView(withId(R.id.card_title))
+                .check(matches(withText(R.string.title_card_building_list)));
         onView(allOf(withId(R.id.building_count), withContentDescription(R.string.number_building_list)))
                 .check(matches(withText("13")));
         onView(withText("214/43"))
@@ -64,4 +67,6 @@ public class ChooseBuildingFromTypeVillageCommunityListTest extends TanrabadEspr
         textDisplayed(R.string.save);
         pressBack();
     }
+
+
 }

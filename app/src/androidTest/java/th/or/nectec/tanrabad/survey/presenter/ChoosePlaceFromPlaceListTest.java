@@ -36,12 +36,12 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 public class ChoosePlaceFromPlaceListTest extends TanrabadEspressoTestBase {
     public ActivityTestRule<PlaceListActivity> mActivityTestRule =
             new ActivityTestRule<>(PlaceListActivity.class);
-    PlaceListActivity mAtivity;
+    PlaceListActivity mActivity;
 
     @Before
     public void setUp() {
         Intent intent = new Intent();
-        mAtivity = mActivityTestRule.launchActivity(intent);
+        mActivity = mActivityTestRule.launchActivity(intent);
     }
 
     @Test
@@ -50,10 +50,9 @@ public class ChoosePlaceFromPlaceListTest extends TanrabadEspressoTestBase {
                 .perform(click());
         clickSurveyButton();
         textDisplayed("ชุมชนกอล์ฟวิว");
-        onView(withId(R.id.text_show_title_building_list))
-                .check(matches(withText("รายชื่ออาคาร")));
-        onView(withId(R.id.building_count))
-                .check(matches(withText("0")));
+        onView(withId(R.id.card_title))
+                .check(matches(withText(R.string.title_card_building_list)));
+        textDisplayed(R.string.building_list_not_found);
         pressBack();
     }
 
@@ -63,10 +62,10 @@ public class ChoosePlaceFromPlaceListTest extends TanrabadEspressoTestBase {
                 .perform(click());
         clickSurveyButton();
         textDisplayed("หมู่บ้านพาลาซเซตโต้");
-        onView(withId(R.id.text_show_title_building_list))
-                .check(matches(withText("รายชื่ออาคาร")));
+        onView(withId(R.id.card_title))
+                .check(matches(withText(R.string.title_card_building_list)));
         onView(withId(R.id.building_count))
-                .check(matches(withText("13")));
+                .check(matches(withText("13 อาคาร")));
         textDisplayed("214/43");
         textDisplayed("214/44");
         textDisplayed("214/45");

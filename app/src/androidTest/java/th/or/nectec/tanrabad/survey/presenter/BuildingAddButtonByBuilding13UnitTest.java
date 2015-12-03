@@ -37,6 +37,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.allOf;
 
 public class BuildingAddButtonByBuilding13UnitTest extends TanrabadEspressoTestBase {
     public ActivityTestRule<BuildingListActivity> mActivityTestRule = new ActivityTestRule<>(BuildingListActivity.class);
@@ -55,12 +56,12 @@ public class BuildingAddButtonByBuilding13UnitTest extends TanrabadEspressoTestB
         String placeName = "หมู่บ้านพาลาซเซตโต้";
         String houseNo = "13/7";
 
-        textDisplayed("เพิ่มอาคาร");
+//        textDisplayed("เพิ่มอาคาร");
         textDisplayed(placeName);
-        onView(withId(R.id.text_show_title_building_list))
-                .check(matches(withText(R.string.survey_building)));
+        onView(withId(R.id.card_title))
+                .check(matches(withText(R.string.title_card_building_list)));
         onView(allOf(withId(R.id.building_count), withContentDescription(R.string.number_building_list)))
-                .check(matches(withText("13")));
+                .check(matches(withText("13 อาคาร")));
         onView(withText(R.string.add_building))
                 .perform(click());
         textDisplayed("เพิ่มอาคาร");

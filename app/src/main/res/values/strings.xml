@@ -16,7 +16,7 @@
   -->
 
 <resources>
-    <string name="app_name">Tanlabad-survey</string>
+    <string name="app_name">ทันระบาด</string>
     <string name="title_activity_survey">สำรวจ</string>
     <string name="title_activity_edit_survey">แก้ไขสำรวจ</string>
     <string name="save">บันทึก</string>

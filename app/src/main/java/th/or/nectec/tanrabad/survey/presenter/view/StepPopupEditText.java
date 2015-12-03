@@ -31,6 +31,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.utils.EditTextStepper;
+import th.or.nectec.tanrabad.survey.utils.android.BackgroundSetter;
 import th.or.nectec.tanrabad.survey.utils.android.DP;
 import th.or.nectec.tanrabad.survey.utils.android.ResourceUtils;
 
@@ -84,7 +85,7 @@ public class StepPopupEditText extends EditText {
         private static final int BUTTON_HEIGHT = 64;
         private static final int BUTTON_WIDTH = 80;
         private static final int BUTTON_PADDING = 4;
-        private static final int POPUP_PADDING = 4;
+        private static final int POPUP_PADDING = 2;
         private final Context context;
 
         public EditTextPopup(Context context) {
@@ -99,6 +100,8 @@ public class StepPopupEditText extends EditText {
 
             ImageButton minus = getButton(R.id.minus, R.mipmap.ic_minus_1);
             ImageButton plus = getButton(R.id.plus, R.mipmap.ic_plus_1);
+            BackgroundSetter.set(minus, R.drawable.bg_popup_button_left);
+            BackgroundSetter.set(plus, R.drawable.bg_popup_button_right);
             setContentView(getLayout(minus, plus));
         }
 
@@ -108,6 +111,7 @@ public class StepPopupEditText extends EditText {
             button.setId(id);
             button.setPadding(getButtonPadding(), getButtonPadding(), getButtonPadding(), getButtonPadding());
             button.setOnClickListener(this);
+
             return button;
         }
 

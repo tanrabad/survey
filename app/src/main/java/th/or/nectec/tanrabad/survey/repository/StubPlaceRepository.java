@@ -19,17 +19,14 @@ package th.or.nectec.tanrabad.survey.repository;
 
 import android.support.annotation.NonNull;
 
-import th.or.nectec.tanrabad.domain.geographic.CoordinateLocationCalculate;
-import th.or.nectec.tanrabad.domain.place.PlaceRepository;
-import th.or.nectec.tanrabad.entity.LocationEntity;
-import th.or.nectec.tanrabad.entity.Place;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-
+import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Location;
+import th.or.nectec.tanrabad.entity.LocationEntity;
+import th.or.nectec.tanrabad.entity.Place;
 
 
 public class StubPlaceRepository implements PlaceRepository {
@@ -37,6 +34,7 @@ public class StubPlaceRepository implements PlaceRepository {
     private final Place palazzettoVillage;
     private final Place bangkokHospital;
     private final Place watpaphukon;
+    private final Place saintMaryChurch;
     private final Place saintMarySchool;
     private final Place donboscoSchool;
     private final Place anubarnNursery;
@@ -55,6 +53,10 @@ public class StubPlaceRepository implements PlaceRepository {
         thammasatHospital.setType(Place.TYPE_HOSPITAL);
         watpaphukon = new Place(generateUUID("3def"), "วัดป่าภูก้อน");
         watpaphukon.setType(Place.TYPE_WORSHIP);
+        watpaphukon.setSubType(Place.SUBTYPE_TEMPLE);
+        saintMaryChurch = new Place(generateUUID("3xss"), "โบสถ์เซนต์เมรี่");
+        saintMaryChurch.setType(Place.TYPE_WORSHIP);
+        saintMaryChurch.setSubType(Place.SUBTYPE_CHURCH);
         saintMarySchool = new Place(generateUUID("042ST"), "โรงเรียนเซนต์เมรี่");
         saintMarySchool.setType(Place.TYPE_SCHOOL);
         donboscoSchool = new Place(generateUUID("12AJK"), "โรงเรียนดอนบอสโก");
@@ -66,6 +68,7 @@ public class StubPlaceRepository implements PlaceRepository {
         places.add(golfView);
         places.add(bangkokHospital);
         places.add(watpaphukon);
+        places.add(saintMaryChurch);
         places.add(saintMarySchool);
         places.add(donboscoSchool);
         places.add(anubarnNursery);

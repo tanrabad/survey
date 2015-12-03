@@ -31,14 +31,12 @@ import java.util.List;
 
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
-import th.or.nectec.tanrabad.survey.presenter.view.PlaceIconMapping;
 
 public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> implements ListViewAdapter<Place> {
 
     Context context;
 
     ArrayList<Place> places = new ArrayList<>();
-    PlaceIconMapping placeIconMapping = new PlaceIconMapping();
     private AdapterView.OnItemClickListener onItemClickListener;
     private AdapterView.OnItemLongClickListener onItemLongClickListener;
 
@@ -69,7 +67,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> 
     public void onBindViewHolder(ViewHolder holder, int position) {
         Place place = places.get(position);
         holder.placeTextView.setText(place.getName());
-        holder.placeIcon.setImageResource(placeIconMapping.getContainerIcon(place));
+        holder.placeIcon.setImageResource(PlaceIconMapping.getPlaceIcon(place));
     }
 
     @Override

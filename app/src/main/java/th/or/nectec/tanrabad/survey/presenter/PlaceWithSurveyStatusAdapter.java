@@ -31,7 +31,6 @@ import java.util.List;
 
 import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyStatus;
 import th.or.nectec.tanrabad.survey.R;
-import th.or.nectec.tanrabad.survey.presenter.view.PlaceIconMapping;
 
 public class PlaceWithSurveyStatusAdapter extends RecyclerView.Adapter<PlaceWithSurveyStatusAdapter.ViewHolder> implements ListViewAdapter<PlaceWithSurveyStatus> {
 
@@ -40,7 +39,6 @@ public class PlaceWithSurveyStatusAdapter extends RecyclerView.Adapter<PlaceWith
     ArrayList<PlaceWithSurveyStatus> places = new ArrayList<>();
     private AdapterView.OnItemClickListener onItemClickListener;
     private AdapterView.OnItemLongClickListener onItemLongClickListener;
-    private PlaceIconMapping placeIconMapping = new PlaceIconMapping();
 
     public PlaceWithSurveyStatusAdapter(Context context) {
         this.context = context;
@@ -69,7 +67,7 @@ public class PlaceWithSurveyStatusAdapter extends RecyclerView.Adapter<PlaceWith
     public void onBindViewHolder(ViewHolder holder, int position) {
         PlaceWithSurveyStatus placeWithSurveyStatus = places.get(position);
         holder.placeTextView.setText(placeWithSurveyStatus.getPlace().getName());
-        holder.placeIcon.setImageResource(placeIconMapping.getContainerIcon(placeWithSurveyStatus.getPlace()));
+        holder.placeIcon.setImageResource(PlaceIconMapping.getPlaceIcon(placeWithSurveyStatus.getPlace()));
     }
 
     @Override

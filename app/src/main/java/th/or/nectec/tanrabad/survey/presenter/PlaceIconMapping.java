@@ -1,6 +1,4 @@
-package th.or.nectec.tanrabad.survey.presenter.view;
-
-import android.util.Log;
+package th.or.nectec.tanrabad.survey.presenter;
 
 import java.util.HashMap;
 
@@ -8,6 +6,7 @@ import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
 
 public class PlaceIconMapping {
+    private static PlaceIconMapping instances;
     HashMap<Integer, Integer> containerIconMapper = new HashMap<>();
 
     public PlaceIconMapping() {
@@ -20,12 +19,13 @@ public class PlaceIconMapping {
         containerIconMapper.put(Place.TYPE_FACTORY, R.mipmap.ic_logo_factory);
     }
 
-    public int getContainerIcon(Place place) {
-        Log.d("place type", place.getType() + "");
+    public static int getPlaceIcon(Place place) {
+        if (instances == null)
+            instances = new PlaceIconMapping();
         if (place.getType() == Place.TYPE_WORSHIP) {
-            return containerIconMapper.get(place.getSubType());
+            return instances.containerIconMapper.get(place.getSubType());
         } else {
-            return containerIconMapper.get(place.getType());
+            return instances.containerIconMapper.get(place.getType());
         }
     }
 }

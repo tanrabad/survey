@@ -18,6 +18,7 @@
 package th.or.nectec.tanrabad.survey.presenter;
 
 import android.content.Context;
+import android.support.annotation.DrawableRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,24 +26,26 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.utils.ContainerIndex;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.view.TimeAgoView;
 import th.or.nectec.tanrabad.survey.utils.time.DurationTimePrinter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBuildingHistoryAdapter.ViewHolder> implements ListViewAdapter<Survey> {
 
     Context context;
-
     ArrayList<Survey> surveyBuildings = new ArrayList<>();
+    private int buildingIcon;
     private AdapterView.OnItemClickListener onItemClickListener;
 
-    public SurveyBuildingHistoryAdapter(Context context) {
+    public SurveyBuildingHistoryAdapter(Context context, @DrawableRes int buildingIcon) {
         this.context = context;
+        this.buildingIcon = buildingIcon;
     }
 
     @Override
@@ -87,7 +90,7 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Survey currentSurvey = surveyBuildings.get(position);
-
+        holder.surveyBuildingIcon.setImageResource(buildingIcon);
         holder.surveyBuildingTextView.setText(currentSurvey.getSurveyBuilding().getName());
         holder.duration.setText(context.getString(R.string.survey_duration) + " " + getDuration(currentSurvey));
         holder.timeAgoView.setTime(currentSurvey.getFinishTimestamp());

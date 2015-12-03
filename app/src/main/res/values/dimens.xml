@@ -41,4 +41,5 @@
     <dimen name="list_card_width">568dp</dimen>
     <dimen name="card_min_height">400dp</dimen>
     <dimen name="soft_keyboard_height">240dp</dimen>
+    <dimen name="icon_padding">10dp</dimen>
 </resources>

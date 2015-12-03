@@ -18,6 +18,7 @@
 package th.or.nectec.tanrabad.survey.presenter;
 
 import android.content.Context;
+import android.support.annotation.DrawableRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,23 +26,26 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
-import th.or.nectec.tanrabad.survey.R;
-import th.or.nectec.tanrabad.survey.utils.android.BackgroundSetter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
+import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.utils.android.BackgroundSetter;
+
 public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<BuildingWithSurveyStatusAdapter.ViewHolder> implements ListViewAdapter<BuildingWithSurveyStatus> {
 
     Context context;
+    int buildingIcon;
 
     ArrayList<BuildingWithSurveyStatus> buildings = new ArrayList<>();
     private AdapterView.OnItemClickListener onItemClickListener;
     private AdapterView.OnItemLongClickListener onItemLongClickListener;
 
-    public BuildingWithSurveyStatusAdapter(Context context) {
+    public BuildingWithSurveyStatusAdapter(Context context, @DrawableRes int buildingIcon) {
         this.context = context;
+        this.buildingIcon = buildingIcon;
     }
 
     @Override
@@ -82,13 +86,11 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
     public void onBindViewHolder(BuildingWithSurveyStatusAdapter.ViewHolder holder, int position) {
         BuildingWithSurveyStatus buildingWithSurveyStatus = buildings.get(position);
         holder.buildingTextView.setText(buildingWithSurveyStatus.getBuilding().getName());
-
+        holder.buildingIcon.setImageResource(buildingIcon);
         if (buildingWithSurveyStatus.isSurvey()) {
             BackgroundSetter.set(holder.buildingIcon, R.drawable.container_bg_pink);
-            //holder.buildingIcon.setBackground(ResourceUtils.from(context).getDrawable(R.drawable.container_bg_pink));
         } else {
             BackgroundSetter.set(holder.buildingIcon, R.drawable.container_bg);
-            //holder.buildingIcon.setBackground(ResourceUtils.from(context).getDrawable(R.drawable.container_bg));
         }
     }
 

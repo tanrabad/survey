@@ -65,14 +65,14 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_building_list);
         buildingCountView = (TextView) findViewById(R.id.building_count);
+        showPlaceName();
         setupBuildingList();
         setupEmptyLayout();
-        showPlaceName();
         loadSurveyBuildingList();
     }
 
     private void setupBuildingList() {
-        buildingAdapter = new BuildingWithSurveyStatusAdapter(this);
+        buildingAdapter = new BuildingWithSurveyStatusAdapter(this, BuildingIconMapping.getBuildingIcon(place));
         buildingList = (RecyclerView) findViewById(R.id.building_list);
         buildingList.setAdapter(buildingAdapter);
         buildingList.addItemDecoration(new SimpleDividerItemDecoration(this));

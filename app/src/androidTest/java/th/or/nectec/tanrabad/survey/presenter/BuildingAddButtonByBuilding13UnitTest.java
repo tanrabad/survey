@@ -20,20 +20,23 @@ package th.or.nectec.tanrabad.survey.presenter;
 
 import android.content.Intent;
 import android.support.test.rule.ActivityTestRule;
+
 import org.junit.Before;
 import org.junit.Test;
-import th.or.nectec.tanrabad.survey.R;
-import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
 
 import java.util.UUID;
+
+import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.*;
-import static org.hamcrest.Matchers.allOf;
+import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 public class BuildingAddButtonByBuilding13UnitTest extends TanrabadEspressoTestBase {
     public ActivityTestRule<BuildingListActivity> mActivityTestRule = new ActivityTestRule<>(BuildingListActivity.class);
@@ -58,7 +61,7 @@ public class BuildingAddButtonByBuilding13UnitTest extends TanrabadEspressoTestB
                 .check(matches(withText(R.string.survey_building)));
         onView(allOf(withId(R.id.building_count), withContentDescription(R.string.number_building_list)))
                 .check(matches(withText("13")));
-        onView(withText(R.string.building_add))
+        onView(withText(R.string.add_building))
                 .perform(click());
         textDisplayed("เพิ่มอาคาร");
         textDisplayed(placeName);

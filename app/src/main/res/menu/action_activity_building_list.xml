@@ -20,6 +20,6 @@
     <item
         android:id="@+id/add_building_menu"
         android:icon="@drawable/ic_action_circle_check"
-        android:title="@string/building_add"
+        android:title="@string/add_building"
         app:showAsAction="always|withText" />
 </menu>

@@ -153,7 +153,7 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
     @Override
     public void alertBuildingNotFound() {
         if (getSupportActionBar() != null)
-            getSupportActionBar().setTitle(R.string.building_add);
+            getSupportActionBar().setTitle(R.string.add_building);
         Alert.mediumLevel().show(R.string.building_not_found);
     }
 

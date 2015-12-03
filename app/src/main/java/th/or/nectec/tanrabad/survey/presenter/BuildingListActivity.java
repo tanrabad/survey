@@ -26,7 +26,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
+
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
+
+import java.util.List;
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
 import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatusListPresenter;
 import th.or.nectec.tanrabad.domain.place.PlaceController;
@@ -35,6 +40,7 @@ import th.or.nectec.tanrabad.domain.survey.SurveyBuildingChooser;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView;
 import th.or.nectec.tanrabad.survey.repository.InMemoryBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
@@ -42,9 +48,6 @@ import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
-
-import java.util.List;
-import java.util.UUID;
 
 public class BuildingListActivity extends TanrabadActivity implements BuildingWithSurveyStatusListPresenter, PlacePresenter {
 
@@ -55,6 +58,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     private TextView buildingCountView;
     private BuildingWithSurveyStatusAdapter buildingAdapter;
     private Place place;
+    private EmptyLayoutView emptyLayoutView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +66,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         setContentView(R.layout.activity_building_list);
         buildingCountView = (TextView) findViewById(R.id.building_count);
         setupBuildingList();
+        setupEmptyLayout();
         showPlaceName();
         loadSurveyBuildingList();
     }
@@ -89,6 +94,17 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         });
         RecyclerViewHeader recyclerViewHeader = (RecyclerViewHeader) findViewById(R.id.card_header);
         recyclerViewHeader.attachTo(buildingList, true);
+    }
+
+    private void setupEmptyLayout() {
+        emptyLayoutView = (EmptyLayoutView) findViewById(R.id.empty_layout);
+        emptyLayoutView.setEmptyText(R.string.building_list_not_found);
+        emptyLayoutView.setEmptyButtonText(R.string.add_building, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openAddBuildingActivity();
+            }
+        });
     }
 
     private void showPlaceName() {
@@ -129,12 +145,14 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
 
     @Override
     public void alertBuildingsNotFound() {
+        emptyLayoutView.setVisibility(View.VISIBLE);
         buildingCountView.setVisibility(View.GONE);
         buildingAdapter.clearData();
     }
 
     @Override
     public void displayAllSurveyBuildingList(List<BuildingWithSurveyStatus> buildingsWithSurveyStatuses) {
+        emptyLayoutView.setVisibility(View.GONE);
         buildingAdapter.updateData(buildingsWithSurveyStatuses);
         buildingList.setAdapter(buildingAdapter);
         buildingCountView.setText(getString(R.string.format_building_count, buildingsWithSurveyStatuses.size()));

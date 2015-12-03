@@ -43,7 +43,8 @@
     <!--building category-->
     <string name="building_icon">ไอคอนอาคาร</string>
     <string name="building_not_found">ไม่พบข้อมูลอาคาร</string>
-    <string name="building_add">เพิ่มอาคาร</string>
+    <string name="building_list_not_found">ไม่พบรายการอาคาร</string>
+    <string name="add_building">เพิ่มอาคาร</string>
     <string name="house_no">บ้านเลขที่</string>
     <string name="building_name">ชื่ออาคาร</string>
     <string name="place_icon">ไอคอนหน้าสถานที่สำรวจ</string>

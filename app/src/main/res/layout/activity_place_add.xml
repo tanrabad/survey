@@ -104,13 +104,13 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
             android:layout_marginBottom="@dimen/between_view"
             android:layout_marginRight="@dimen/between_view">
 
             <TextView
                 android:id="@+id/place_type_label"
                 style="@style/TextViewTanrabad"
+                android:layout_centerVertical="true"
                 android:text="@string/place_type"
                 android:textIsSelectable="false" />
 
@@ -118,7 +118,9 @@
                 android:id="@+id/place_type_selector"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/place_type_label"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/place_type_label"
+                android:layout_toRightOf="@+id/place_type_label"
                 android:inputType="text" />
         </RelativeLayout>
 
@@ -126,7 +128,6 @@
             android:id="@+id/place_subtype_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
             android:layout_marginBottom="@dimen/between_view"
             android:layout_marginRight="@dimen/between_view">
 
@@ -135,6 +136,7 @@
                 style="@style/TextViewTanrabad"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:textIsSelectable="false"
                 tools:text="ประเภทศาสนสถาน" />
 
@@ -142,7 +144,9 @@
                 android:id="@+id/place_subtype_selector"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/place_subtype_label"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/place_subtype_label"
+                android:layout_toRightOf="@+id/place_subtype_label"
                 android:inputType="text" />
         </RelativeLayout>
 

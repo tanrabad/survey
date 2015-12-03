@@ -29,18 +29,16 @@ import java.util.ArrayList;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
 
-public class PlaceTypeAdapter extends BaseAdapter {
+public class PlaceTypeForAddAdapter extends BaseAdapter {
 
     Context context;
 
     ArrayList<PlaceType> placeTypes = new ArrayList<>();
 
-    public PlaceTypeAdapter(Context context) {
+    public PlaceTypeForAddAdapter(Context context) {
         this.context = context;
 
         ArrayList<PlaceType> placeTypes = new ArrayList<>();
-        placeTypes.add(new PlaceType(-1, context.getString(R.string.not_define_place_type)));
-        placeTypes.add(new PlaceType(Place.TYPE_VILLAGE_COMMUNITY, context.getString(R.string.village_community)));
         placeTypes.add(new PlaceType(Place.TYPE_WORSHIP, context.getString(R.string.worship)));
         placeTypes.add(new PlaceType(Place.TYPE_SCHOOL, context.getString(R.string.school)));
         placeTypes.add(new PlaceType(Place.TYPE_HOSPITAL, context.getString(R.string.hospital)));
@@ -56,7 +54,6 @@ public class PlaceTypeAdapter extends BaseAdapter {
 
     @Override
     public PlaceType getItem(int i) {
-
         return placeTypes.get(i);
     }
 
@@ -88,4 +85,5 @@ public class PlaceTypeAdapter extends BaseAdapter {
     public class ViewHolder {
         TextView nameView;
     }
+
 }

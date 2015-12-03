@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
+import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.maps.LiteMapFragment;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
@@ -25,7 +27,6 @@ public class PlaceAddActivity extends TanrabadActivity implements View.OnClickLi
     public static final String PLACE_UUID_ARG = "place_uuid_arg";
     public static final String BUILDING_UUID_ARG = "building_uuid_arg";
     public static final int MARK_LOCATION_REQUEST_CODE = 50000;
-    private TextView placeNameLabel;
     private EditText placeName;
     private EditText addressSelect;
     private AppCompatSpinner placeTypeSelector;
@@ -45,11 +46,11 @@ public class PlaceAddActivity extends TanrabadActivity implements View.OnClickLi
         setContentView(R.layout.activity_place_add);
         setupViews();
         setupPreviewMap();
+        setupPlaceTypeSelector();
     }
 
     private void setupViews() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        placeNameLabel = (TextView) findViewById(R.id.place_name_label);
         placeName = (EditText) findViewById(R.id.place_name);
         addressSelect = (EditText) findViewById(R.id.address_select);
         placeTypeSelector = (AppCompatSpinner) findViewById(R.id.place_type_selector);
@@ -64,6 +65,29 @@ public class PlaceAddActivity extends TanrabadActivity implements View.OnClickLi
         setSupportActionBar(toolbar);
         addMarkerButton.setOnClickListener(this);
         editLocationButton.setOnClickListener(this);
+    }
+
+    private void setupPlaceTypeSelector() {
+        final PlaceTypeForAddAdapter placeAdapter = new PlaceTypeForAddAdapter(this);
+        placeTypeSelector.setAdapter(placeAdapter);
+        placeTypeSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (placeAdapter.getItem(i).id == Place.TYPE_WORSHIP) {
+                    placeSubtypeLayout.setVisibility(View.VISIBLE);
+                    placeSubtypeLabel.setText(R.string.place_worship_type);
+                    placeSubtypeSelector.setAdapter(new PlaceSubTypeOfWorshipAdapter(PlaceAddActivity.this));
+                } else {
+                    placeSubtypeLayout.setVisibility(View.GONE);
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     @Override

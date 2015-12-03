@@ -112,5 +112,9 @@
     <string name="place_location">พิกัดสถานที่</string>
     <string name="place_name">ชื่อสถานที่</string>
     <string name="address">ที่อยู่</string>
+    <string name="temple">วัด</string>
+    <string name="church">โบสถ์</string>
+    <string name="mosque">มัสยิด</string>
+    <string name="place_worship_type">ประเภทศาสนสถาน</string>
 
 </resources>

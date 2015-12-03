@@ -1,3 +1,20 @@
+/*
+ * Copyright (c) 2015 NECTEC
+ *   National Electronics and Computer Technology Center, Thailand
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package th.or.nectec.tanrabad.survey.presenter;
 
 import android.content.Intent;
@@ -8,23 +25,10 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
+import android.widget.*;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-
-import java.util.UUID;
-
-import th.or.nectec.tanrabad.domain.place.PlaceController;
-import th.or.nectec.tanrabad.domain.place.PlacePresenter;
-import th.or.nectec.tanrabad.domain.place.PlaceRepository;
-import th.or.nectec.tanrabad.domain.place.PlaceSavePresenter;
-import th.or.nectec.tanrabad.domain.place.PlaceSaver;
+import th.or.nectec.tanrabad.domain.place.*;
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
@@ -34,6 +38,8 @@ import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
 import th.or.nectec.tanrabad.survey.validator.SavePlaceValidator;
 import th.or.nectec.tanrabad.survey.validator.ValidatorException;
+
+import java.util.UUID;
 
 public class PlaceAddActivity extends TanrabadActivity implements View.OnClickListener, PlaceSavePresenter, PlacePresenter {
 
@@ -45,7 +51,7 @@ public class PlaceAddActivity extends TanrabadActivity implements View.OnClickLi
     private EditText placeNameView;
     private EditText addressSelect;
     private AppCompatSpinner placeTypeSelector;
-    private RelativeLayout placeSubtypeLayout;
+    private View placeSubtypeLayout;
     private TextView placeSubtypeLabel;
     private AppCompatSpinner placeSubtypeSelector;
     private Button editLocationButton;
@@ -65,22 +71,12 @@ public class PlaceAddActivity extends TanrabadActivity implements View.OnClickLi
         loadPlaceData();
     }
 
-    private void loadPlaceData() {
-        if (TextUtils.isEmpty(getPlaceUUID())) {
-            setupPreviewMap();
-            place = Place.withName(null);
-        } else {
-            PlaceController placeController = new PlaceController(placeRepository, this);
-            placeController.showPlace(UUID.fromString(getPlaceUUID()));
-        }
-    }
-
     private void setupViews() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         placeNameView = (EditText) findViewById(R.id.place_name);
         addressSelect = (EditText) findViewById(R.id.address_select);
         placeTypeSelector = (AppCompatSpinner) findViewById(R.id.place_type_selector);
-        placeSubtypeLayout = (RelativeLayout) findViewById(R.id.place_subtype_layout);
+        placeSubtypeLayout = findViewById(R.id.place_subtype_layout);
         placeSubtypeLabel = (TextView) findViewById(R.id.place_subtype_label);
         placeSubtypeSelector = (AppCompatSpinner) findViewById(R.id.place_subtype_selector);
         mapContainer = (FrameLayout) findViewById(R.id.map_container);
@@ -93,6 +89,11 @@ public class PlaceAddActivity extends TanrabadActivity implements View.OnClickLi
         setSupportActionBar(toolbar);
         addMarkerButton.setOnClickListener(this);
         editLocationButton.setOnClickListener(this);
+    }
+
+    private void setupPreviewMap() {
+        SupportMapFragment supportMapFragment = LiteMapFragment.setupLiteMapFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.map_container, supportMapFragment).commit();
     }
 
     private void setupPlaceTypeSelector() {
@@ -118,6 +119,20 @@ public class PlaceAddActivity extends TanrabadActivity implements View.OnClickLi
         });
     }
 
+    private void loadPlaceData() {
+        if (TextUtils.isEmpty(getPlaceUUID())) {
+            setupPreviewMap();
+            place = Place.withName(null);
+        } else {
+            PlaceController placeController = new PlaceController(placeRepository, this);
+            placeController.showPlace(UUID.fromString(getPlaceUUID()));
+        }
+    }
+
+    public String getPlaceUUID() {
+        return getIntent().getStringExtra(PLACE_UUID_ARG);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.action_activity_place_add, menu);
@@ -134,19 +149,22 @@ public class PlaceAddActivity extends TanrabadActivity implements View.OnClickLi
         return super.onOptionsItemSelected(item);
     }
 
-    public String getPlaceUUID() {
-        return getIntent().getStringExtra(PLACE_UUID_ARG);
-    }
+    public void doSaveData() {
+        place.setName(placeNameView.getText().toString());
+        int placeTypeID = ((PlaceType) placeTypeSelector.getSelectedItem()).id;
+        place.setType(placeTypeID);
+        if (placeTypeID == Place.TYPE_WORSHIP) {
+            place.setSubType(((PlaceType) placeSubtypeSelector.getSelectedItem()).id);
+        }
+        Location location = placeLocation == null
+                ? null : new Location(placeLocation.latitude, placeLocation.longitude);
+        place.setLocation(location);
 
-    private void openMapMarkerActivity() {
-        Intent intent = new Intent(PlaceAddActivity.this, MapMarkerActivity.class);
-        startActivityForResult(intent, MARK_LOCATION_REQUEST_CODE);
-    }
-
-    private void openEditMapMarkerActivity(LatLng location) {
-        Intent intent = new Intent(PlaceAddActivity.this, MapMarkerActivity.class);
-        intent.putExtra(MapMarkerActivity.MAP_LOCATION, location);
-        startActivityForResult(intent, MARK_LOCATION_REQUEST_CODE);
+        try {
+            placeSaver.save(place);
+        } catch (ValidatorException e) {
+            Alert.highLevel().show(e.getMessageID());
+        }
     }
 
     @Override
@@ -158,11 +176,6 @@ public class PlaceAddActivity extends TanrabadActivity implements View.OnClickLi
                     setupPreviewMapWithPosition(data.<LatLng>getParcelableExtra(MapMarkerActivity.MAP_LOCATION));
                 }
         }
-    }
-
-    private void setupPreviewMap() {
-        SupportMapFragment supportMapFragment = LiteMapFragment.setupLiteMapFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.map_container, supportMapFragment).commit();
     }
 
     private void setupPreviewMapWithPosition(LatLng latLng) {
@@ -190,22 +203,15 @@ public class PlaceAddActivity extends TanrabadActivity implements View.OnClickLi
         }
     }
 
-    public void doSaveData() {
-        place.setName(placeNameView.getText().toString());
-        int placeTypeID = ((PlaceType) placeTypeSelector.getSelectedItem()).id;
-        place.setType(placeTypeID);
-        if (placeTypeID == Place.TYPE_WORSHIP) {
-            place.setSubType(((PlaceType) placeSubtypeSelector.getSelectedItem()).id);
-        }
-        Location location = placeLocation == null
-                ? null : new Location(placeLocation.latitude, placeLocation.longitude);
-        place.setLocation(location);
+    private void openMapMarkerActivity() {
+        Intent intent = new Intent(PlaceAddActivity.this, MapMarkerActivity.class);
+        startActivityForResult(intent, MARK_LOCATION_REQUEST_CODE);
+    }
 
-        try {
-            placeSaver.save(place);
-        } catch (ValidatorException e) {
-            Alert.highLevel().show(e.getMessageID());
-        }
+    private void openEditMapMarkerActivity(LatLng location) {
+        Intent intent = new Intent(PlaceAddActivity.this, MapMarkerActivity.class);
+        intent.putExtra(MapMarkerActivity.MAP_LOCATION, location);
+        startActivityForResult(intent, MARK_LOCATION_REQUEST_CODE);
     }
 
     @Override

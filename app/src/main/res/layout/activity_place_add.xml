@@ -62,54 +62,40 @@
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
+        <TextView
                 android:id="@+id/place_name_label"
                 style="@style/TextViewTanrabad.Label"
-                android:text="@string/place_name" />
+                android:text="@string/place_name"/>
 
-            <EditText
+        <EditText
                 android:id="@+id/place_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/place_name_label"
-                android:inputType="text" />
-        </RelativeLayout>
+                android:inputType="text"/>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/space_between_content">
-
-            <TextView
+        <TextView
                 android:id="@+id/address_title"
                 style="@style/TextViewTanrabad.Label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/address"
-                android:textIsSelectable="false" />
+                android:textIsSelectable="false"/>
 
-            <EditText
+        <EditText
                 android:id="@+id/address_select"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/address_title"
-                android:inputType="text" />
-        </RelativeLayout>
+                android:inputType="text"/>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_between_content"
-            android:layout_marginRight="@dimen/screen_horizontal_margin">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_between_content"
+                android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/place_type_label"
                 style="@style/TextViewTanrabad"
-                android:layout_centerVertical="true"
                 android:text="@string/place_type"
                 android:textIsSelectable="false" />
 
@@ -117,47 +103,39 @@
                 android:id="@+id/place_type_selector"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toEndOf="@id/place_type_label"
-                android:layout_toRightOf="@id/place_type_label"
                 android:inputType="text" />
-        </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/place_subtype_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_between_content"
-            android:layout_marginRight="@dimen/screen_horizontal_margin">
+            <LinearLayout
+                    android:id="@+id/place_subtype_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_between_content"
+                    android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/place_subtype_label"
-                style="@style/TextViewTanrabad"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:textIsSelectable="false"
-                tools:text="ประเภทศาสนสถาน" />
+                <TextView
+                        android:id="@+id/place_subtype_label"
+                        style="@style/TextViewTanrabad"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textIsSelectable="false"
+                        tools:text="ประเภทศาสนสถาน"/>
 
-            <android.support.v7.widget.AppCompatSpinner
-                android:id="@+id/place_subtype_selector"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/place_subtype_label"
-                android:layout_toRightOf="@+id/place_subtype_label"
-                android:inputType="text" />
-        </RelativeLayout>
-
+                <android.support.v7.widget.AppCompatSpinner
+                        android:id="@+id/place_subtype_selector"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"/>
+            </LinearLayout>
+        </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/space_between_content"
+                android:orientation="horizontal">
 
             <TextView
                 style="@style/TextViewTanrabad"
-                android:layout_marginRight="@dimen/space_between_content"
                 android:text="@string/place_location" />
 
             <android.support.v7.widget.AppCompatButton

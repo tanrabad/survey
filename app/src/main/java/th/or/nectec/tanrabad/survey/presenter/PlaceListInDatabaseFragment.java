@@ -42,6 +42,7 @@ import th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView;
 import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
+import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 
@@ -112,7 +113,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
 
     @Override
     public void alertUserNotFound() {
-
+        Alert.highLevel().show(R.string.user_not_found);
     }
 
     @Override

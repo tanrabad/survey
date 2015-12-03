@@ -67,8 +67,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="end"
-                            android:layout_marginBottom="@dimen/between_text_margin_bottom"
-                            android:layout_marginTop="@dimen/between_text_margin_top"
                             android:gravity="end"
                             android:textColor="@color/white"
                             android:textIsSelectable="true"
@@ -80,7 +78,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="end"
-                            android:layout_marginBottom="@dimen/between_text_margin_bottom"
                             android:gravity="end"
                             android:textColor="@color/white"
                             android:textIsSelectable="false"
@@ -91,8 +88,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_gravity="end"
-                            android:layout_marginBottom="@dimen/between_text_margin_bottom"
-                            android:layout_marginTop="@dimen/between_text_margin_top"
+                            android:layout_marginTop="@dimen/space_between_content"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
 
@@ -161,8 +157,6 @@
                     android:layout_height="64dp"
                     android:background="@color/shock_pink"
                     android:gravity="center"
-                    android:paddingBottom="@dimen/indoor_outdoor_padding_bottom"
-                    android:paddingTop="@dimen/indoor_outdoor_padding_top"
                     android:text="@string/indoor"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_title"/>
@@ -175,8 +169,6 @@
                 android:layout_alignParentEnd="true"
                 android:background="@color/pink"
                 android:gravity="center"
-                android:paddingBottom="@dimen/indoor_outdoor_padding_bottom"
-                android:paddingTop="@dimen/indoor_outdoor_padding_top"
                 android:text="@string/outdoor"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_title"/>

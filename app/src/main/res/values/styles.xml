@@ -60,7 +60,7 @@
         <item name="android:layout_width">@dimen/list_icon_size</item>
         <item name="android:layout_height">@dimen/list_icon_size</item>
         <item name="android:background">@drawable/bg_icon</item>
-        <item name="android:padding">@dimen/icon_padding</item>
+        <item name="android:padding">@dimen/list_icon_padding</item>
         <item name="android:scaleType">centerInside</item>
     </style>
 

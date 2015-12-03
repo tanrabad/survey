@@ -19,26 +19,20 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <!--<dimen name="activity_vertical_margin">16dp</dimen>-->
-
-    <dimen name="indoor_outdoor_padding_top">16dp</dimen>
-    <dimen name="indoor_outdoor_padding_bottom">16dp</dimen>
-
     <dimen name="padding_right">20dp</dimen>
     <dimen name="padding_left">20dp</dimen>
     <dimen name="padding_top">16dp</dimen>
 
-    <dimen name="between_text_margin_top">2dp</dimen>
-    <dimen name="between_text_margin_bottom">2dp</dimen>
-
     <dimen name="header_height">271dp</dimen>
-
+    <dimen name="header_height_with_padding">320dp</dimen>
+    <dimen name="space_between_content">8dp</dimen>
     <dimen name="actionbar_size">64dp</dimen>
     <dimen name="toolbar_size">@dimen/actionbar_size</dimen>
-    <dimen name="header_height_with_padding">320dp</dimen>
     <dimen name="card_width">568dp</dimen>
     <dimen name="card_min_height">400dp</dimen>
     <dimen name="soft_keyboard_height">320dp</dimen>
-    <dimen name="icon_padding">8dp</dimen>
+
+    <dimen name="list_icon_padding">8dp</dimen>
     <dimen name="list_padding_left">16dp</dimen>
     <dimen name="list_padding_right">16dp</dimen>
     <dimen name="list_padding_bottom">20dp</dimen>
@@ -46,5 +40,5 @@
     <dimen name="list_icon_size">64dp</dimen>
     <dimen name="list_text_padding_left">80dp</dimen>
     <dimen name="list_item_min_height">48dp</dimen>
-    <dimen name="space_between_content">8dp</dimen>
+
 </resources>

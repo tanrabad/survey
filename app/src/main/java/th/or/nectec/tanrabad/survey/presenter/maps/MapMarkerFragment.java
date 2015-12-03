@@ -5,12 +5,14 @@ import android.os.Bundle;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 
-public class MapMarkerFragment extends TanrabadSupportMapFragment implements GoogleMap.OnMapLongClickListener, OnMapReadyCallback {
+public class MapMarkerFragment extends TanrabadSupportMapFragment implements GoogleMap.OnMapLongClickListener, GoogleMap.OnMarkerDragListener, OnMapReadyCallback {
 
     public static final String FRAGMENT_TAG = "map_marker_fragment";
     public static final String ARGS_LOCATION = "args_location";
     LatLng location;
+    Marker marker;
 
     public static MapMarkerFragment newInstance() {
         MapMarkerFragment mapMarkerFragment = new MapMarkerFragment();
@@ -36,12 +38,13 @@ public class MapMarkerFragment extends TanrabadSupportMapFragment implements Goo
         location = args.getParcelable(ARGS_LOCATION);
         getMapAsync(this);
         getMap().setOnMapLongClickListener(this);
+        getMap().setOnMarkerDragListener(this);
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         if (location != null) {
-            addMarker(location);
+            addDraggableMarker(location);
             moveToLocation(location);
         }
     }
@@ -63,7 +66,23 @@ public class MapMarkerFragment extends TanrabadSupportMapFragment implements Goo
     public void onMapLongClick(LatLng latLng) {
         removeMarkedLocation();
         location = latLng;
-        addMarker(location);
+        addDraggableMarker(location);
+    }
+
+    @Override
+    public void onMarkerDragStart(Marker marker) {
+        getMap().getUiSettings().setScrollGesturesEnabled(false);
+    }
+
+    @Override
+    public void onMarkerDrag(Marker marker) {
+
+    }
+
+    @Override
+    public void onMarkerDragEnd(Marker marker) {
+        location = marker.getPosition();
+        getMap().getUiSettings().setScrollGesturesEnabled(true);
     }
 
     public LatLng getMarkedLocation() {

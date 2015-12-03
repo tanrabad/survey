@@ -136,14 +136,19 @@ public class TanrabadSupportMapFragment extends com.google.android.gms.maps.Supp
     }
 
     public void addMarker(LatLng position) {
-        addMarker(position, getColor(R.color.shock_pink));
+        addMarker(position, getColor(R.color.shock_pink), false);
     }
 
-    public void addMarker(LatLng position, int color) {
+    public void addDraggableMarker(LatLng position) {
+        addMarker(position, getColor(R.color.shock_pink), true);
+    }
+
+    private void addMarker(LatLng position, int color, boolean draggable) {
         float hsv[] = new float[3];
         Color.colorToHSV(color, hsv);
 
         MarkerOptions marker = new MarkerOptions();
+        marker.draggable(draggable);
         marker.icon(BitmapDescriptorFactory.defaultMarker(hsv[0]));
         marker.position(position);
         googleMap.addMarker(marker);

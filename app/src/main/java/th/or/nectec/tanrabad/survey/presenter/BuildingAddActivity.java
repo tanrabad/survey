@@ -28,12 +28,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-
-import java.util.UUID;
-
 import th.or.nectec.tanrabad.domain.building.BuildingController;
 import th.or.nectec.tanrabad.domain.building.BuildingPresenter;
 import th.or.nectec.tanrabad.domain.building.BuildingSavePresenter;
@@ -53,6 +49,8 @@ import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 import th.or.nectec.tanrabad.survey.validator.SaveBuildingValidator;
 import th.or.nectec.tanrabad.survey.validator.ValidatorException;
+
+import java.util.UUID;
 
 public class BuildingAddActivity extends TanrabadActivity implements PlacePresenter, BuildingPresenter, BuildingSavePresenter, View.OnClickListener {
 
@@ -89,7 +87,7 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
     private void assignViews() {
         placeName = (TextView) findViewById(R.id.place_name);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        buildingNameTitle = (TextView) findViewById(R.id.building_name_title);
+        buildingNameTitle = (TextView) findViewById(R.id.building_name_label);
         buildingNameView = (EditText) findViewById(R.id.building_name);
         addLocationBackground = (FrameLayout) findViewById(R.id.add_location_background);
         editLocationButton = (Button) findViewById(R.id.edit_location);
@@ -128,6 +126,7 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
             buildingNameTitle.setText(R.string.house_no);
         } else {
             buildingNameTitle.setText(R.string.building_name);
+            buildingNameView.setHint(R.string.touch_to_type_building_name);
         }
     }
 
@@ -192,13 +191,6 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
         startActivityForResult(intent, MARK_LOCATION_REQUEST_CODE);
     }
 
-    private void openSurveyActivity(Building building) {
-        Intent intent = new Intent(BuildingAddActivity.this, SurveyActivity.class);
-        intent.putExtra(SurveyActivity.BUILDING_UUID_ARG, building.getId().toString());
-        intent.putExtra(SurveyActivity.USERNAME_ARG, "sara");
-        startActivity(intent);
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -208,6 +200,26 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
                     setupPreviewMapWithPosition(data.<LatLng>getParcelableExtra(MapMarkerActivity.MAP_LOCATION));
                 }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        showAbortAddBuildingPrompt();
+    }
+
+    private void showAbortAddBuildingPrompt() {
+        PromptMessage prompt = new AlertDialogPromptMessage(this);
+        prompt.setOnCancel(getString(R.string.no), null);
+        prompt.setOnConfirm(getString(R.string.yes), new PromptMessage.OnConfirmListener() {
+            @Override
+            public void onConfirm() {
+                finish();
+            }
+        });
+        String promptTitle = TextUtils.isEmpty(getBuildingUUID()) ?
+                getString(R.string.abort_add_building) : getString(R.string.abort_edit_building);
+        String promptMessage = TextUtils.isEmpty(getBuildingUUID()) ? place.getName() : building.getName();
+        prompt.show(promptTitle, promptMessage);
     }
 
     @Override
@@ -246,32 +258,19 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
         openSurveyActivity(building);
     }
 
+    private void openSurveyActivity(Building building) {
+        Intent intent = new Intent(BuildingAddActivity.this, SurveyActivity.class);
+        intent.putExtra(SurveyActivity.BUILDING_UUID_ARG, building.getId().toString());
+        intent.putExtra(SurveyActivity.USERNAME_ARG, "sara");
+        startActivity(intent);
+    }
+
     @Override
     public void displaySaveFail() {
         Alert.lowLevel().show(R.string.save_fail);
     }
 
-    public void onRootViewClick(View view){
+    public void onRootViewClick(View view) {
         SoftKeyboard.hideOn(this);
-    }
-
-    @Override
-    public void onBackPressed() {
-        showAbortAddBuildingPrompt();
-    }
-
-    private void showAbortAddBuildingPrompt() {
-        PromptMessage prompt = new AlertDialogPromptMessage(this);
-        prompt.setOnCancel(getString(R.string.no), null);
-        prompt.setOnConfirm(getString(R.string.yes), new PromptMessage.OnConfirmListener() {
-            @Override
-            public void onConfirm() {
-                finish();
-            }
-        });
-        String promptTitle = TextUtils.isEmpty(getBuildingUUID()) ?
-                getString(R.string.abort_add_building) : getString(R.string.abort_edit_building);
-        String promptMessage = TextUtils.isEmpty(getBuildingUUID()) ? place.getName() : building.getName();
-        prompt.show(promptTitle, promptMessage);
     }
 }

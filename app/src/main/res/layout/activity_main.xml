@@ -32,7 +32,6 @@
         android:layout_width="600dp"
         android:layout_height="1024dp"
         android:layout_gravity="center_horizontal"
-
         android:contentDescription="@null"
         android:src="@drawable/larvae_deep" />
 
@@ -63,13 +62,13 @@
         android:src="@drawable/magnifier" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="680dp"
-        android:text="@string/press_to_start_survey"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_subhead" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="680dp"
+            android:text="@string/touch_to_start_survey"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_subhead" />
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"

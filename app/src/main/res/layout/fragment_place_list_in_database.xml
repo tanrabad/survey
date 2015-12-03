@@ -29,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/header_height"
                 android:layout_gravity="center_horizontal"
-                android:contentDescription="@string/place_bg"
+                android:contentDescription="@null"
                 android:src="@drawable/header_place_in_database"/>
     </FrameLayout>
 

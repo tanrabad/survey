@@ -47,7 +47,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/header_larvae_survey"
-                    android:contentDescription="@string/survey_container_bg_description"
+                    android:contentDescription="@null"
                     android:scaleType="fitCenter"/>
 
             <TextView
@@ -71,28 +71,24 @@
             android:orientation="vertical"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
+
+        <TextView
+                android:id="@+id/building_name_label"
+                style="@style/TextViewTanrabad.Label"
+                android:textIsSelectable="false"
+                tools:text="บ้านเลขที่"/>
+
+        <EditText
+                android:id="@+id/building_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/space_between_content"
-                android:orientation="vertical">
-
-            <TextView
-                    android:id="@+id/building_name_title"
-                    style="@style/TextViewTanrabad.Label"
-                    android:textIsSelectable="false"
-                    tools:text="บ้านเลขที่"/>
-
-            <EditText
-                    android:id="@+id/building_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"/>
-        </LinearLayout>
+                android:hint="@string/touch_to_type_house_no"
+                android:inputType="text"/>
 
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_between_content"
                 android:orientation="vertical">
 
             <LinearLayout

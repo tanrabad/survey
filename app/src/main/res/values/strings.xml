@@ -76,6 +76,7 @@
     <string name="hospital">โรงพยาบาล</string>
     <string name="factory">โรงงาน</string>
     <string name="not_define_place_type">ทั้งหมด</string>
+
     <string name="please_define_building_name">กรุณาระบุชื่ออาคาร</string>
     <string name="please_define_house_no">กรุณาระบุบ้านเลขที่</string>
     <string name="building_edit">แก้ไขอาคาร</string>
@@ -94,7 +95,7 @@
     <string name="define_building_survey">ระบุอาคารสำรวจ</string>
     <string name="define_place_survey">ระบุสถานที่สำรวจ</string>
     <string name="abort_survey">ยกเลิกการสำรวจ</string>
-    <string name="press_to_start_survey">กดที่ลูกน้ำเพื่อเริ่มสำรวจ</string>
+
     <string name="got_it">รับทราบ</string>
     <string name="enable_gps">เปิดการตั้งค่า GPS</string>
     <string name="gps_dialog_tilte">GPS ยังไม่ได้เปิดการใช้งาน</string>
@@ -119,5 +120,12 @@
     <string name="please_define_place_name">กรุณาระบุชื่อสถานที่</string>
     <string name="please_define_place_location">กรุณาระบุพิกัดของสถานที่</string>
     <string name="cant_save_same_place_name">ไม่สามารถบันทึกข้อมูลสถานที่ได้ เนื่องจากมีชื่อสถานที่นี้ในฐานข้อมูลแล้ว</string>
+
+    <!--hint -->
+    <string name="touch_to_start_survey">แตะที่ลูกน้ำเพื่อเริ่มสำรวจ</string>
+    <string name="touch_to_type_place_name">แตะเพื่อพิมพ์ชื่อสถานที่</string>
+    <string name="touch_to_define_address">แตะเพื่อระบุที่อยู่</string>
+    <string name="touch_to_type_house_no">แตะเพื่อพิมพ์บ้านเลขที่</string>
+    <string name="touch_to_type_building_name">แตะเพื่อพิมพ์ชื่ออาคาร</string>
 
 </resources>

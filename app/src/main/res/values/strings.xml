@@ -109,5 +109,8 @@
     <string name="place_type">ประเภทสถานที่</string>
     <string name="format_place_count">%1$d รายการ</string>
     <string name="format_building_count">%1$d อาคาร</string>
+    <string name="place_location">พิกัดสถานที่</string>
+    <string name="place_name">ชื่อสถานที่</string>
+    <string name="address">ที่อยู่</string>
 
 </resources>

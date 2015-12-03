@@ -17,11 +17,14 @@
 
 package th.or.nectec.tanrabad.survey.presenter;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -74,5 +77,26 @@ public class PlaceListActivity extends TanrabadActivity {
                 }
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.action_activity_place_list, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.add_place_menu:
+                openAddPlaceActivity();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void openAddPlaceActivity() {
+        Intent intent = new Intent(PlaceListActivity.this, PlaceAddActivity.class);
+        startActivity(intent);
     }
 }

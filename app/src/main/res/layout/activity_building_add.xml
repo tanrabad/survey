@@ -88,10 +88,10 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/between_view"
-            android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/space_between_content"
+                android:orientation="vertical">
 
             <TextView
                 android:id="@+id/building_name_title"
@@ -117,10 +117,10 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    style="@style/TextViewTanrabad.Label"
-                    android:layout_marginRight="@dimen/between_view"
-                    android:text="@string/building_location"
-                    android:textIsSelectable="false" />
+                        style="@style/TextViewTanrabad.Label"
+                        android:layout_marginRight="@dimen/space_between_content"
+                        android:text="@string/building_location"
+                        android:textIsSelectable="false" />
 
                 <android.support.v7.widget.AppCompatButton
                     android:id="@+id/edit_location"

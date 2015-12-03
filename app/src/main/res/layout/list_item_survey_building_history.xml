@@ -17,76 +17,72 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
+                style="@style/ListItem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_list_item"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="@dimen/activity_horizontal_margin">
+                android:background="@drawable/bg_list_item">
 
     <ImageView
+            style="@style/ListIcon"
             android:id="@+id/survey_building_icon"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_marginTop="8dp"
             android:background="@drawable/bg_icon"
             android:contentDescription="@string/building_icon"
-            android:padding="@dimen/icon_padding"
-            tools:src="@drawable/bg_icon"/>
+            tools:src="@mipmap/ic_logo_home"/>
 
     <TextView
-        android:id="@+id/survey_ci"
-        style="@style/TanrabadTextAppearance.Caption"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/survey_building_icon"
-        android:layout_marginTop="8dp"
-        android:gravity="start"
-        android:singleLine="true"
-        android:textIsSelectable="false"
-        tools:text="CI 50.5%" />
+            android:id="@+id/survey_ci"
+            style="@style/TanrabadTextAppearance.Caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/survey_building_icon"
+            android:layout_marginTop="@dimen/space_between_content"
+            android:gravity="start"
+            android:singleLine="true"
+            android:textIsSelectable="false"
+            tools:text="CI 50.5%" />
 
     <th.or.nectec.tanrabad.survey.presenter.view.RelativeTimeAgoTextView
-        android:id="@+id/time_ago"
-        style="@style/TanrabadTextAppearance.Caption"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:gravity="top|end"
-        android:textIsSelectable="false"
-        tools:text="2 นาที" />
+            android:id="@+id/time_ago"
+            style="@style/TanrabadTextAppearance.Caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:gravity="top|end"
+            android:textIsSelectable="false"
+            tools:text="2 นาที" />
 
     <TextView
-        android:id="@+id/survey_building_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="72dp"
-        android:layout_marginStart="72dp"
-        android:layout_toLeftOf="@+id/time_ago"
-        android:layout_toStartOf="@+id/time_ago"
-        android:textIsSelectable="true"
-        android:textSize="@dimen/text_title"
-        tools:text="บ้านเลขที่ 1" />
+            style="@style/ListTitle"
+            android:id="@+id/survey_building_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/time_ago"
+            android:layout_toStartOf="@+id/time_ago"
+            android:textIsSelectable="true"
+            tools:text="บ้านเลขที่ 1" />
 
     <TextView
-        android:id="@+id/survey_duration"
-        style="@style/TanrabadTextAppearance.Caption"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/survey_building_name"
-        android:layout_below="@id/survey_building_name"
-        android:textIsSelectable="false"
-        tools:text="เวลาที่ใช้สำรวจ 01:20" />
+            android:id="@+id/survey_duration"
+            style="@style/TanrabadTextAppearance.Caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/survey_building_name"
+            android:layout_alignStart="@id/survey_building_name"
+            android:layout_below="@id/survey_building_name"
+            android:textIsSelectable="false"
+            tools:text="เวลาที่ใช้สำรวจ 01:20" />
 
     <TextView
-        android:id="@+id/survey_container_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@id/survey_ci"
-        android:layout_alignLeft="@id/survey_building_name"
-        android:layout_below="@id/survey_duration"
-        android:textIsSelectable="false"
-        tools:text="ภาชนะทั้งหมด 100 พบลูกน้ำ 5" />
+            android:id="@+id/survey_container_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/survey_ci"
+            android:layout_alignLeft="@id/survey_building_name"
+            android:layout_alignStart="@id/survey_building_name"
+            android:layout_below="@id/survey_duration"
+            android:textIsSelectable="false"
+            tools:text="ภาชนะทั้งหมด 100 พบลูกน้ำ 5" />
 
 
 </RelativeLayout>

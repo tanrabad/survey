@@ -16,36 +16,24 @@
   ~ limitations under the License.
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@drawable/bg_list_item"
-              android:orientation="horizontal"
-              android:padding="@dimen/activity_horizontal_margin">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/ListItem">
 
     <ImageView
+            style="@style/ListIcon"
+            tools:src="@mipmap/ic_logo_hospital"
             android:id="@+id/place_icon"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:background="@drawable/bg_icon"
-            android:contentDescription="@string/place_icon"
-            android:padding="@dimen/icon_padding" />
+            android:contentDescription="@string/place_icon"/>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="@dimen/horizontal_align_margin"
-        android:layout_marginStart="@dimen/horizontal_align_margin"
-        android:orientation="vertical">
-
-        <TextView
-                android:id="@+id/place_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textIsSelectable="false"
-                android:textSize="@dimen/text_title"
-                tools:text="หม่ที่ 1" />
-    </LinearLayout>
-</LinearLayout>
+    <TextView
+            style="@style/ListTitle"
+            android:id="@+id/place_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textIsSelectable="false"
+            tools:text="หม่ที่ 1"/>
+</RelativeLayout>

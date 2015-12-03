@@ -53,146 +53,140 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:onClick="onRootViewClick"
+        android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/between_view">
+
+            <TextView
+                android:id="@+id/place_name_label"
+                style="@style/TextViewTanrabad.Label"
+                android:text="@string/place_name" />
+
+            <EditText
+                android:id="@+id/place_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/place_name_label"
+                android:inputType="text" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/between_view">
+
+            <TextView
+                android:id="@+id/address_title"
+                style="@style/TextViewTanrabad.Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/address"
+                android:textIsSelectable="false" />
+
+            <EditText
+                android:id="@+id/address_select"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/address_title"
+                android:inputType="text" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="@dimen/between_view"
+            android:layout_marginRight="@dimen/between_view">
+
+            <TextView
+                android:id="@+id/place_type_label"
+                style="@style/TextViewTanrabad"
+                android:text="@string/place_type"
+                android:textIsSelectable="false" />
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/place_type_selector"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/place_type_label"
+                android:inputType="text" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/place_subtype_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="@dimen/between_view"
+            android:layout_marginRight="@dimen/between_view">
+
+            <TextView
+                android:id="@+id/place_subtype_label"
+                style="@style/TextViewTanrabad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textIsSelectable="false"
+                tools:text="ประเภทศาสนสถาน" />
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/place_subtype_selector"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/place_subtype_label"
+                android:inputType="text" />
+        </RelativeLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/activity_horizontal_margin"
-            android:onClick="onRootViewClick"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="@dimen/between_view">
+            <TextView
+                style="@style/TextViewTanrabad"
+                android:layout_marginRight="@dimen/between_view"
+                android:text="@string/place_location" />
 
-                <TextView
-                    android:id="@+id/place_name_label"
-                    style="@style/TextViewTanrabad.Label"
-                    android:text="@string/place_name" />
-
-                <EditText
-                    android:id="@+id/place_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/place_name_label"
-                    android:inputType="text" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="@dimen/between_view">
-
-                <TextView
-                    android:id="@+id/address_title"
-                    style="@style/TextViewTanrabad.Label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/address"
-                    android:textIsSelectable="false" />
-
-                <EditText
-                    android:id="@+id/address_select"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/address_title"
-                    android:inputType="text" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/edit_location"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginBottom="@dimen/between_view"
-                android:layout_marginRight="@dimen/between_view">
+                android:text="@string/edit_location" />
+        </LinearLayout>
 
-                <TextView
-                    android:id="@+id/place_type_label"
-                    style="@style/TextViewTanrabad"
-                    android:text="@string/place_type"
-                    android:textIsSelectable="false" />
-
-                <android.support.v7.widget.AppCompatSpinner
-                    android:id="@+id/place_type_selector"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/place_type_label"
-                    android:inputType="text" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/place_subtype_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginBottom="@dimen/between_view"
-                android:layout_marginRight="@dimen/between_view">
-
-                <TextView
-                    android:id="@+id/place_subtype_label"
-                    style="@style/TextViewTanrabad"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textIsSelectable="false"
-                    tools:text="ประเภทศาสนสถาน" />
-
-                <android.support.v7.widget.AppCompatSpinner
-                    android:id="@+id/place_subtype_selector"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/place_subtype_label"
-                    android:inputType="text" />
-            </RelativeLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/TextViewTanrabad"
-                    android:layout_marginRight="@dimen/between_view"
-                    android:text="@string/place_location" />
-
-                <android.support.v7.widget.AppCompatButton
-                    android:id="@+id/edit_location"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/edit_location" />
-            </LinearLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:minHeight="500dp">
 
             <FrameLayout
+                android:id="@+id/map_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <FrameLayout
+                android:id="@+id/add_location_background"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:minHeight="500dp">
+                android:background="@color/black_transparent_50">
 
-                <FrameLayout
-                    android:id="@+id/map_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-                <FrameLayout
-                    android:id="@+id/add_location_background"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/black_transparent_50">
-
-                    <Button
-                        android:id="@+id/add_marker"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="@string/define_building_location" />
-                </FrameLayout>
+                <Button
+                    android:id="@+id/add_marker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/define_building_location" />
             </FrameLayout>
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
-
-
+        </FrameLayout>
+    </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

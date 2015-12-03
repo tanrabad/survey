@@ -1,5 +1,6 @@
 package th.or.nectec.tanrabad.survey.presenter;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.Toolbar;
@@ -12,11 +13,18 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+
 import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.presenter.maps.LiteMapFragment;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
 
-public class PlaceAddActivity extends TanrabadActivity {
+public class PlaceAddActivity extends TanrabadActivity implements View.OnClickListener {
 
+    public static final String PLACE_UUID_ARG = "place_uuid_arg";
+    public static final String BUILDING_UUID_ARG = "building_uuid_arg";
+    public static final int MARK_LOCATION_REQUEST_CODE = 50000;
     private TextView placeNameLabel;
     private EditText placeName;
     private EditText addressSelect;
@@ -24,17 +32,19 @@ public class PlaceAddActivity extends TanrabadActivity {
     private RelativeLayout placeSubtypeLayout;
     private TextView placeSubtypeLabel;
     private AppCompatSpinner placeSubtypeSelector;
-    private Button editLocation;
+    private Button editLocationButton;
     private FrameLayout mapContainer;
     private FrameLayout addLocationBackground;
-    private Button addMarker;
+    private Button addMarkerButton;
     private Toolbar toolbar;
+    private LatLng placeLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_add);
         setupViews();
+        setupPreviewMap();
     }
 
     private void setupViews() {
@@ -46,12 +56,14 @@ public class PlaceAddActivity extends TanrabadActivity {
         placeSubtypeLayout = (RelativeLayout) findViewById(R.id.place_subtype_layout);
         placeSubtypeLabel = (TextView) findViewById(R.id.place_subtype_label);
         placeSubtypeSelector = (AppCompatSpinner) findViewById(R.id.place_subtype_selector);
-        editLocation = (Button) findViewById(R.id.edit_location);
+        editLocationButton = (Button) findViewById(R.id.edit_location);
         mapContainer = (FrameLayout) findViewById(R.id.map_container);
         addLocationBackground = (FrameLayout) findViewById(R.id.add_location_background);
-        addMarker = (Button) findViewById(R.id.add_marker);
+        addMarkerButton = (Button) findViewById(R.id.add_marker);
 
         setSupportActionBar(toolbar);
+        addMarkerButton.setOnClickListener(this);
+        editLocationButton.setOnClickListener(this);
     }
 
     @Override
@@ -68,7 +80,55 @@ public class PlaceAddActivity extends TanrabadActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void openMapMarkerActivity() {
+        Intent intent = new Intent(PlaceAddActivity.this, MapMarkerActivity.class);
+        startActivityForResult(intent, MARK_LOCATION_REQUEST_CODE);
+    }
+
+    private void openEditMapMarkerActivity(LatLng location) {
+        Intent intent = new Intent(PlaceAddActivity.this, MapMarkerActivity.class);
+        intent.putExtra(MapMarkerActivity.MAP_LOCATION, location);
+        startActivityForResult(intent, MARK_LOCATION_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case MARK_LOCATION_REQUEST_CODE:
+                if (resultCode == RESULT_OK) {
+                    setupPreviewMapWithPosition(data.<LatLng>getParcelableExtra(MapMarkerActivity.MAP_LOCATION));
+                }
+        }
+    }
+
+    private void setupPreviewMap() {
+        SupportMapFragment supportMapFragment = LiteMapFragment.setupLiteMapFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.map_container, supportMapFragment).commit();
+    }
+
+    private void setupPreviewMapWithPosition(LatLng latLng) {
+        addLocationBackground.setVisibility(View.GONE);
+        editLocationButton.setVisibility(View.VISIBLE);
+        editLocationButton.setOnClickListener(this);
+        placeLocation = latLng;
+        SupportMapFragment supportMapFragment = LiteMapFragment.setupLiteMapFragmentWithPosition(latLng);
+        getSupportFragmentManager().beginTransaction().replace(R.id.map_container, supportMapFragment).commit();
+    }
+
     public void onRootViewClick(View view) {
         SoftKeyboard.hideOn(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.add_marker:
+                openMapMarkerActivity();
+                break;
+            case R.id.edit_location:
+                openEditMapMarkerActivity(placeLocation);
+                break;
+        }
     }
 }

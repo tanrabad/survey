@@ -26,15 +26,15 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.utils.ContainerIndex;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.view.TimeAgoView;
 import th.or.nectec.tanrabad.survey.utils.time.DurationTimePrinter;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBuildingHistoryAdapter.ViewHolder> implements ListViewAdapter<Survey> {
 
@@ -50,6 +50,7 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
 
     @Override
     public void updateData(List<Survey> dataList) {
+        Collections.sort(dataList, Collections.<Survey>reverseOrder());
         this.surveyBuildings.clear();
         this.surveyBuildings.addAll(dataList);
         notifyDataSetChanged();

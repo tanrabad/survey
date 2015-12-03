@@ -22,7 +22,7 @@ import org.joda.time.DateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Survey implements LocationEntity {
+public class Survey implements LocationEntity, Comparable<Survey> {
     private User user;
     private Building surveyBuilding;
     private int residentCount;
@@ -51,14 +51,6 @@ public class Survey implements LocationEntity {
 
     public void setStartTimestamp(DateTime startTimestamp) {
         this.startTimestamp = startTimestamp;
-    }
-
-    public DateTime getFinishTimestamp() {
-        return finishTimestamp;
-    }
-
-    public void setFinishTimestamp(DateTime finishTimestamp) {
-        this.finishTimestamp = finishTimestamp;
     }
 
     public int getResidentCount() {
@@ -157,6 +149,19 @@ public class Survey implements LocationEntity {
             }
         }
         return false;
+    }
+
+    @Override
+    public int compareTo(Survey other) {
+        return this.getFinishTimestamp().compareTo(other.getFinishTimestamp());
+    }
+
+    public DateTime getFinishTimestamp() {
+        return finishTimestamp;
+    }
+
+    public void setFinishTimestamp(DateTime finishTimestamp) {
+        this.finishTimestamp = finishTimestamp;
     }
 
     public static class Builder {

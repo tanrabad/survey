@@ -41,7 +41,7 @@ import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import java.util.ArrayList;
 
 public class PlaceSurveyListFragment extends Fragment implements PlaceWithSurveyHistoryListPresenter, AdapterView.OnItemClickListener {
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private static final String USERNAME_ARG = "username_arg";
     private String username;
 

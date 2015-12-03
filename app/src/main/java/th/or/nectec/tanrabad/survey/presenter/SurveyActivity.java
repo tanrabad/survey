@@ -356,7 +356,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
                 finish();
             }
         });
-        promptMessage.show(getString(R.string.abort_survey), survey.getSurveyBuilding().getName());
+        promptMessage.show(getString(R.string.abort_survey),getBuildingNameWithPrefix(survey.getSurveyBuilding()));
     }
 
     public void onRootViewClick(View view) {

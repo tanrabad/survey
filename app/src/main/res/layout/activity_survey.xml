@@ -56,11 +56,9 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="end|top"
                         android:orientation="vertical"
-                        android:paddingEnd="@dimen/padding_right"
-                        android:paddingLeft="@dimen/padding_left"
-                        android:paddingRight="@dimen/padding_right"
-                        android:paddingStart="@dimen/padding_right"
-                        android:paddingTop="@dimen/padding_top">
+                        android:paddingEnd="@dimen/screen_horizontal_margin"
+                        android:paddingRight="@dimen/screen_horizontal_margin"
+                        android:paddingTop="@dimen/screen_vertical_margin">
 
                     <TextView
                             android:id="@+id/building_name"

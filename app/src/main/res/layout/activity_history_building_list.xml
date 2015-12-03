@@ -93,13 +93,13 @@
     </android.support.design.widget.CoordinatorLayout>
 
     <Button
-        android:id="@+id/survey_more_building_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_marginBottom="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:text="@string/survey_more_building_button_text"
-        android:textColor="@color/pink"
-        android:textSize="@dimen/text_title" />
+            android:id="@+id/survey_more_building_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="@dimen/screen_horizontal_margin"
+            android:layout_marginRight="@dimen/screen_horizontal_margin"
+            android:text="@string/survey_more_building_button_text"
+            android:textColor="@color/pink"
+            android:textSize="@dimen/text_title" />
 </merge>

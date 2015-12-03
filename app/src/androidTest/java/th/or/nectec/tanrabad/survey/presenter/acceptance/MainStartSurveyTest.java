@@ -25,7 +25,12 @@ import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
 import th.or.nectec.tanrabad.survey.presenter.MainActivity;
 
-public class MainStartSurvey extends TanrabadEspressoTestBase {
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+
+public class MainStartSurveyTest extends TanrabadEspressoTestBase {
     public ActivityTestRule<MainActivity> mActivityTestRule
             = new ActivityTestRule<>(MainActivity.class);
     MainActivity mActivity;
@@ -38,7 +43,9 @@ public class MainStartSurvey extends TanrabadEspressoTestBase {
     }
 
     @Test
-    public void testClickMagnifyingGlassShoutOpenDefinePlaceSurvey() {
+    public void openMainPageShoutFoundMagnifyingGlassIsDisplay() {
+        onView(withId(R.id.start_survey))
+                .check(matches(isDisplayed()));
         textDisplayed(R.string.press_to_start_survey);
     }
 }

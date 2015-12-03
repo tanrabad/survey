@@ -19,11 +19,11 @@ package th.or.nectec.tanrabad.survey.Suite;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import th.or.nectec.tanrabad.survey.presenter.acceptance.MainStartSurvey;
+import th.or.nectec.tanrabad.survey.presenter.acceptance.MainStartSurveyTest;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        MainStartSurvey.class
+        MainStartSurveyTest.class
 })
 
 public class AcceptanceTestSuite {

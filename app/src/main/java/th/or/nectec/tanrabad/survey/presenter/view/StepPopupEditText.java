@@ -95,7 +95,7 @@ public class StepPopupEditText extends EditText {
 
         private void init() {
             setOutsideTouchable(true);
-            setBackgroundDrawable(ResourceUtils.from(context).getDrawable(R.drawable.popup_bg));
+            setBackgroundDrawable(ResourceUtils.from(context).getDrawable(R.drawable.bg_popup));
 
             ImageButton minus = getButton(R.id.minus, R.mipmap.ic_minus_1);
             ImageButton plus = getButton(R.id.plus, R.mipmap.ic_plus_1);

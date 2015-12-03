@@ -51,20 +51,20 @@
         android:textSize="@dimen/text_body" />
 
     <th.or.nectec.tanrabad.survey.presenter.view.StepPopupEditText
-        android:id="@+id/total_container"
-        android:layout_width="60dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="60dp"
-        android:layout_toRightOf="@id/text_total"
-        android:background="@drawable/textfield_background"
-        android:gravity="center"
-        android:imeOptions="actionNext"
-        android:inputType="number"
-        android:maxLength="2"
-        android:padding="@dimen/between_view"
-        android:textColor="@color/black"
-        android:textSize="@dimen/text_body" />
+            android:id="@+id/total_container"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="60dp"
+            android:layout_toRightOf="@id/text_total"
+            android:background="@drawable/bg_edittext_number"
+            android:gravity="center"
+            android:imeOptions="actionNext"
+            android:inputType="number"
+            android:maxLength="2"
+            android:padding="@dimen/between_view"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_body" />
 
     <TextView
         android:id="@+id/text_found"
@@ -79,19 +79,19 @@
         android:textSize="@dimen/text_body" />
 
     <th.or.nectec.tanrabad.survey.presenter.view.StepPopupEditText
-        android:id="@+id/found_larvae_container"
-        android:layout_width="60dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="60dp"
-        android:layout_toRightOf="@id/text_found"
-        android:background="@drawable/textfield_background"
-        android:gravity="center"
-        android:imeOptions="actionNext"
-        android:inputType="number"
-        android:maxLength="2"
-        android:padding="@dimen/between_view"
-        android:textColor="@color/black"
-        android:textSize="@dimen/text_body" />
+            android:id="@+id/found_larvae_container"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="60dp"
+            android:layout_toRightOf="@id/text_found"
+            android:background="@drawable/bg_edittext_number"
+            android:gravity="center"
+            android:imeOptions="actionNext"
+            android:inputType="number"
+            android:maxLength="2"
+            android:padding="@dimen/between_view"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_body" />
 
 </RelativeLayout>

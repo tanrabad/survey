@@ -26,13 +26,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.utils.android.BackgroundSetter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<BuildingWithSurveyStatusAdapter.ViewHolder> implements ListViewAdapter<BuildingWithSurveyStatus> {
 
@@ -88,9 +87,9 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
         holder.buildingTextView.setText(buildingWithSurveyStatus.getBuilding().getName());
         holder.buildingIcon.setImageResource(buildingIcon);
         if (buildingWithSurveyStatus.isSurvey()) {
-            BackgroundSetter.set(holder.buildingIcon, R.drawable.container_bg_pink);
+            BackgroundSetter.set(holder.buildingIcon, R.drawable.bg_icon_highlight);
         } else {
-            BackgroundSetter.set(holder.buildingIcon, R.drawable.container_bg);
+            BackgroundSetter.set(holder.buildingIcon, R.drawable.bg_icon);
         }
     }
 

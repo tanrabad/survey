@@ -110,7 +110,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="bottom"
-                                android:background="@drawable/textfield_background"
+                                android:background="@drawable/bg_edittext_number"
                                 android:ems="2"
                                 android:gravity="center"
                                 android:inputType="number"
@@ -226,7 +226,7 @@
                     <View
                             android:layout_width="match_parent"
                             android:layout_height="24dp"
-                            android:background="@drawable/shadow_top_down"/>
+                            android:background="@drawable/shape_shadow_top_down"/>
                 </FrameLayout>
             </android.support.percent.PercentRelativeLayout>
         </android.support.v4.widget.NestedScrollView>
@@ -235,7 +235,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="8dp"
                 android:layout_marginTop="64dp"
-                android:background="@drawable/shadow_top_down"/>
+                android:background="@drawable/shape_shadow_top_down"/>
     </android.support.percent.PercentRelativeLayout>
 
 

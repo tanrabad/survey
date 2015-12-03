@@ -20,10 +20,12 @@ package th.or.nectec.tanrabad.survey.Suite;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import th.or.nectec.tanrabad.survey.presenter.acceptance.MainStartSurveyTest;
+import th.or.nectec.tanrabad.survey.presenter.acceptance.PlaceListInDatabaseTest;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        MainStartSurveyTest.class
+        MainStartSurveyTest.class,
+        PlaceListInDatabaseTest.class
 })
 
 public class AcceptanceTestSuite {

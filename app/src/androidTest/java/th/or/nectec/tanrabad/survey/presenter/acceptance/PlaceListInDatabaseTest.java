@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey.presenter;
+package th.or.nectec.tanrabad.survey.presenter.acceptance;
 
 import android.content.Intent;
 import android.support.test.espresso.matcher.ViewMatchers;
@@ -27,6 +27,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
+import th.or.nectec.tanrabad.survey.presenter.PlaceListActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -36,7 +37,8 @@ import static org.hamcrest.Matchers.allOf;
 
 @RunWith(AndroidJUnit4.class)
 public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
-    public ActivityTestRule<PlaceListActivity> mActivityTestRule = new ActivityTestRule<>(PlaceListActivity.class);
+    public ActivityTestRule<PlaceListActivity> mActivityTestRule
+            = new ActivityTestRule<>(PlaceListActivity.class);
     PlaceListActivity mActivity;
 
     @Before
@@ -46,15 +48,16 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
     }
 
     @Test
-    public void testDefaultPageDefineSurveyPlace() {
-        onView(allOf(ViewMatchers.withId(R.id.place_count), withContentDescription(R.string.number_place_list_in_database)))
+    public void defaultPageDefineSurveyPlaceShouldFoundListPlaceAllType() {
+        onView(allOf(ViewMatchers.withId(R.id.place_count)
+                , withContentDescription(R.string.number_place_list_in_database)))
                 .check(matches(withText("8 รายการ")));
         onView(withText(R.string.not_define_place_type))
                 .check(matches(isDisplayed()));
     }
 
     @Test
-    public void testClickCancelButtonAtPromptMustStayOn() {
+    public void clickCancelButtonAtPromptMustStayOn() {
         textDisplayed("หมู่บ้านพาลาซเซตโต้");
         textDisplayed("โรงพยาบาลกรุงเทพ");
         textDisplayed("วัดป่าภูก้อน");
@@ -90,7 +93,7 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
     }
 
     @Test
-    public void testChooseTypeVillageCommunity() {
+    public void chooseTypeVillageCommunityShouldFoundListPlaceTypeVillageCommunity() {
         onView(withText(R.string.not_define_place_type))
                 .perform(click());
         onView(withText(R.string.village_community))
@@ -103,7 +106,7 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
     }
 
     @Test
-    public void testChooseTypeWorship() {
+    public void chooseTypeWorshipShouldFoundListPlaceTypeWorship() {
         onView(withText(R.string.not_define_place_type))
                 .perform(click());
         onView(withText(R.string.worship))
@@ -112,10 +115,11 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
         onView(allOf(withId(R.id.place_count), withContentDescription(R.string.number_place_list_in_database)))
                 .check(matches(withText("2 รายการ")));
         textDisplayed("วัดป่าภูก้อน");
+        textDisplayed("โบสถ์เซนต์เมรี่");
     }
 
     @Test
-    public void testChooseTypeSchool() {
+    public void chooseTypeSchoolShouldFoundListPlaceTypeSchool() {
         onView(withText(R.string.not_define_place_type))
                 .perform(click());
         onView(withText(R.string.school))
@@ -129,7 +133,7 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
     }
 
     @Test
-    public void testChooseTypeHospital() {
+    public void chooseTypeHospitalShouldFoundListPlaceTypeHospital() {
         onView(withText(R.string.not_define_place_type))
                 .perform(click());
         onView(withText(R.string.hospital))
@@ -141,7 +145,7 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
     }
 
     @Test
-    public void testChooseTypeFactory() {
+    public void chooseTypeFactoryShouldNotFoundListPlace() {
         onView(withText(R.string.not_define_place_type))
                 .perform(click());
         onView(withText(R.string.factory))

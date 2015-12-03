@@ -1,3 +1,20 @@
+/*
+ * Copyright (c) 2015 NECTEC
+ *   National Electronics and Computer Technology Center, Thailand
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package th.or.nectec.tanrabad.survey.presenter.view;
 
 import android.annotation.TargetApi;
@@ -15,7 +32,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import th.or.nectec.tanrabad.entity.ContainerType;
 import th.or.nectec.tanrabad.entity.SurveyDetail;
 import th.or.nectec.tanrabad.survey.R;
@@ -34,15 +50,9 @@ public class SurveyContainerView extends LinearLayout {
         initInstances();
     }
 
-    public SurveyContainerView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        initInflate();
-        initInstances();
-    }
-
     private void initInflate() {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.view_survey_container_layout, this);
+        inflater.inflate(R.layout.view_survey_container, this);
     }
 
     private void initInstances() {
@@ -97,6 +107,22 @@ public class SurveyContainerView extends LinearLayout {
         }
     }
 
+    private int getFoundValue() {
+        String foundStr = foundContainerView.getText().toString();
+        return TextUtils.isEmpty(foundStr) ? 0 : Integer.valueOf(foundStr);
+    }
+
+    private int getTotalValue() {
+        String totalStr = totalContainerView.getText().toString();
+        return TextUtils.isEmpty(totalStr) ? 0 : Integer.valueOf(totalStr);
+    }
+
+    public SurveyContainerView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        initInflate();
+        initInstances();
+    }
+
     public void setContainerType(ContainerType container) {
         containerType = container;
         containerTypeView.setText(container.getName());
@@ -118,16 +144,6 @@ public class SurveyContainerView extends LinearLayout {
         int foundLarvaContainer = surveyDetail.getFoundLarvaContainer();
         if (foundLarvaContainer > 0)
             foundContainerView.setText(String.valueOf(surveyDetail.getFoundLarvaContainer()));
-    }
-
-    private int getFoundValue() {
-        String foundStr = foundContainerView.getText().toString();
-        return TextUtils.isEmpty(foundStr) ? 0 : Integer.valueOf(foundStr);
-    }
-
-    private int getTotalValue() {
-        String totalStr = totalContainerView.getText().toString();
-        return TextUtils.isEmpty(totalStr) ? 0 : Integer.valueOf(totalStr);
     }
 
     public boolean isValid() {

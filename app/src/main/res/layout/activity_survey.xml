@@ -198,7 +198,7 @@
                         android:id="@+id/indoor_container"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:background="@color/light_gray"
+                        android:background="@color/lighter_gray"
                         android:orientation="vertical"
                         android:paddingBottom="40dp"
                         app:layout_widthPercent="50%"/>

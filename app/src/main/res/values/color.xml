@@ -24,16 +24,14 @@
 
     <color name="black">#000000</color>
     <color name="dark_gray">#464646</color>
+    <color name="gray">#999999</color>
+    <color name="lighter_gray">#F5F5F5</color>
     <color name="light_gray">#e2e2e2</color>
     <color name="white">#ffffff</color>
     <color name="transparent">#00000000</color>
     <color name="black_transparent_10">#1A000000</color>
     <color name="black_transparent_20">#33000000</color>
     <color name="black_transparent_50">#80000000</color>
-
-    <!--<color name="brown">#a90101</color>
-    <color name="red1">#fc0202</color>
-    <color name="red2">#ff0270</color>-->
     <color name="shock_pink">#E91E63</color>
     <color name="dark_pink">#C2185B</color>
     <color name="pink">#F06292</color>
@@ -45,34 +43,4 @@
     <color name="header_survey_building_history">#73a737</color>
 
     <color name="water_blue">#1F88F2</color>
-<!--    <color name="light_pink">#fdbfde</color>
-
-    <color name="orange1">#ff5900</color>
-    <color name="orange2">#ff9625</color>
-    <color name="light_orange">#5efd6e01</color>
-    <color name="deep_orange_500">#ff5722</color>
-    <color name="orange_yellow">#fdbf02</color>
-    <color name="yellow">#fcf802</color>
-    <color name="light_yellow">#fae67f</color>
-    <color name="orange_a200">#ffab40</color>
-
-    <color name="dark_green">#177b01</color>
-    <color name="green1">#29ff03</color>
-    <color name="green2">#9dfd02</color>
-    <color name="light_green">#bafc78</color>
-    <color name="green_blue">#01fc48</color>
-
-    <color name="dark_blue">#010a86</color>
-    <color name="blue1">#0380f5</color>
-    <color name="blue2">#028cb3</color>
-    <color name="blue3">#02c9fa</color>
-
-
-    <color name="dark_purple">#420187</color>
-    <color name="purple1">#7503ff</color>
-    <color name="purple2">#d503ff</color>
-    <color name="pueple_pink">#d656fd</color>
-    <color name="light_purple">#cc90fd</color>
-
-    <color name="transparent">#cc90fd</color>-->
 </resources>

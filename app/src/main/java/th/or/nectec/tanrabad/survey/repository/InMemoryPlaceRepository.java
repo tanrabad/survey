@@ -130,8 +130,9 @@ public class InMemoryPlaceRepository implements PlaceRepository {
     }
 
     @Override
-    public boolean save(Place with) {
-        return false;
+    public boolean save(Place place) {
+        places.add(place);
+        return true;
     }
 
     @Override

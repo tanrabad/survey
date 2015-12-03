@@ -86,7 +86,9 @@
             android:label="@string/add_location" />
         <activity
             android:name=".presenter.PlaceAddActivity"
-            android:label="@string/add_place" />
+            android:label="@string/add_place"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden" />
     </application>
 
 </manifest>

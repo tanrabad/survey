@@ -2,6 +2,7 @@ package th.or.nectec.tanrabad.survey.presenter;
 
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatSpinner;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +28,7 @@ public class PlaceAddActivity extends TanrabadActivity {
     private FrameLayout mapContainer;
     private FrameLayout addLocationBackground;
     private Button addMarker;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,7 @@ public class PlaceAddActivity extends TanrabadActivity {
     }
 
     private void setupViews() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         placeNameLabel = (TextView) findViewById(R.id.place_name_label);
         placeName = (EditText) findViewById(R.id.place_name);
         addressSelect = (EditText) findViewById(R.id.address_select);
@@ -47,6 +50,8 @@ public class PlaceAddActivity extends TanrabadActivity {
         mapContainer = (FrameLayout) findViewById(R.id.map_container);
         addLocationBackground = (FrameLayout) findViewById(R.id.add_location_background);
         addMarker = (Button) findViewById(R.id.add_marker);
+
+        setSupportActionBar(toolbar);
     }
 
     @Override

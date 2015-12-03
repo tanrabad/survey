@@ -16,78 +16,85 @@
   -->
 
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+       xmlns:app="http://schemas.android.com/apk/res-auto"
+       xmlns:tools="http://schemas.android.com/tools"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/header_height_with_padding"
-        android:background="@color/header_survey_building_history">
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/header_height_with_padding"
+            android:background="@color/header_survey_building_history">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/header_height"
-            android:layout_gravity="center_horizontal"
-            android:contentDescription="@null" />
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/header_height"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="@null"/>
 
         <TextView
                 android:id="@+id/place_name"
                 style="@style/TextViewTanrabad.Header.Right"
-                android:layout_alignParentRight="true"
-            android:textIsSelectable="true"
-                tools:text="หมู่ 1 บ้านบางไผ่" />
+                android:textIsSelectable="true"
+                tools:text="หมู่ 1 บ้านบางไผ่"/>
         <TextView
-            android:id="@+id/card_subhead"
                 style="@style/TanrabadTextAppearance.Subhead"
+                android:id="@+id/place_subhead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignRight="@id/place_name"
+                android:layout_alignEnd="@id/place_name"
                 android:layout_below="@id/place_name"
-            android:textColor="@color/white"
-            android:textIsSelectable="false"
-            tools:text="สำรวจ 100 อาคาร  พบลูกน้ำ 20 อาคาร"
-        />
+                android:textColor="@color/white"
+                android:textIsSelectable="false"
+                tools:text="สำรวจ 100 อาคาร  พบลูกน้ำ 20 อาคาร"/>
     </RelativeLayout>
 
 
     <android.support.design.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
         <include layout="@layout/component_header_collapsing_transparent"/>
 
         <android.support.v7.widget.CardView
-            android:layout_width="568dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                android:layout_width="568dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/survey_building_history_list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                    android:id="@+id/survey_building_history_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
 
             <com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader
                     android:id="@+id/card_header"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
                 <TextView
                         style="@style/TanrabadTextAppearance.Title"
+                        android:id="@+id/card_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/detail_history_building_list"/>
 
+                <TextView
+                        style="@style/TanrabadTextAppearance.Caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/card_title"
+                        android:text="@string/notify_only_survey_on_current_device"/>
+
             </com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader>
 
             <th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView
-                android:id="@+id/empty_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                    android:id="@+id/empty_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
         </android.support.v7.widget.CardView>
 
     </android.support.design.widget.CoordinatorLayout>
@@ -97,9 +104,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
-            android:layout_marginBottom="@dimen/screen_horizontal_margin"
+            android:layout_marginBottom="@dimen/screen_vertical_margin"
             android:layout_marginRight="@dimen/screen_horizontal_margin"
+            android:layout_marginEnd="@dimen/screen_horizontal_margin"
             android:text="@string/survey_more_building_button_text"
             android:textColor="@color/pink"
-            android:textSize="@dimen/text_title" />
+            android:textSize="@dimen/text_title"/>
 </merge>

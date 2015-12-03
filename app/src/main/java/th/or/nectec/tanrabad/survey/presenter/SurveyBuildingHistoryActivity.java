@@ -27,12 +27,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
-
-import java.util.List;
-import java.util.UUID;
-
 import th.or.nectec.tanrabad.domain.place.PlaceController;
 import th.or.nectec.tanrabad.domain.place.PlacePresenter;
 import th.or.nectec.tanrabad.domain.survey.SurveyBuildingHistoryController;
@@ -49,6 +44,9 @@ import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
+
+import java.util.List;
+import java.util.UUID;
 
 public class SurveyBuildingHistoryActivity extends TanrabadActivity implements SurveyBuildingPresenter, PlacePresenter {
 
@@ -169,7 +167,7 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
     @Override
     public void displaySurveyBuildingList(List<Survey> surveys) {
         emptyLayoutView.setVisibility(View.GONE);
-        cardSubhead = (TextView) findViewById(R.id.card_subhead);
+        cardSubhead = (TextView) findViewById(R.id.place_subhead);
         HouseIndex hi = new HouseIndex(surveys);
         hi.calculate();
         cardSubhead.setText(getString(R.string.format_house_survey, hi.getTotalSurveyHouse(), hi.getFoundLarvaeHouse()));

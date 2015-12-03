@@ -127,5 +127,6 @@
     <string name="touch_to_define_address">แตะเพื่อระบุที่อยู่</string>
     <string name="touch_to_type_house_no">แตะเพื่อพิมพ์บ้านเลขที่</string>
     <string name="touch_to_type_building_name">แตะเพื่อพิมพ์ชื่ออาคาร</string>
+    <string name="notify_only_survey_on_current_device">ข้อมูลเฉพาะที่สำรวจด้วยเครื่องนี้เท่านี้น</string>
 
 </resources>

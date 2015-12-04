@@ -28,11 +28,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
-
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
-
-import java.util.ArrayList;
-
 import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyHistoryChooser;
 import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyHistoryListPresenter;
 import th.or.nectec.tanrabad.entity.Place;
@@ -40,6 +36,8 @@ import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
+
+import java.util.ArrayList;
 
 public class MainActivity extends TanrabadActivity implements View.OnClickListener, PlaceWithSurveyHistoryListPresenter, AdapterView.OnItemClickListener {
 
@@ -83,9 +81,11 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
     }
 
     private void startAnimation() {
-        View waterShadow = findViewById(R.id.water_shadow);
-        Animation waterShadowRotate = AnimationUtils.loadAnimation(this, R.anim.water_shadow_rotate);
-        waterShadow.startAnimation(waterShadowRotate);
+        Animation waterShadowRotate = AnimationUtils.loadAnimation(this, R.anim.water_shadow);
+        findViewById(R.id.water_shadow).startAnimation(waterShadowRotate);
+
+        Animation larvaeAnimation = AnimationUtils.loadAnimation(this, R.anim.larvae_deep);
+        findViewById(R.id.larvae_deep).startAnimation(larvaeAnimation);
     }
 
     @Override

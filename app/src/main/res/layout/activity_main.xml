@@ -29,11 +29,12 @@
         android:background="@color/water_blue" />
 
     <ImageView
-        android:layout_width="600dp"
-        android:layout_height="1024dp"
-        android:layout_gravity="center_horizontal"
-        android:contentDescription="@null"
-        android:src="@drawable/larvae_deep" />
+            android:id="@+id/larvae_deep"
+            android:layout_width="600dp"
+            android:layout_height="1024dp"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="@null"
+            android:src="@drawable/larvae_deep" />
 
     <ImageView
         android:id="@+id/water_shadow"

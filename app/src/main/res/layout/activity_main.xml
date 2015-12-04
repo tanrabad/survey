@@ -24,9 +24,9 @@
 
 
     <View
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/water_blue" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_water"/>
 
     <ImageView
             android:id="@+id/larvae_deep"

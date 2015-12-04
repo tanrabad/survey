@@ -20,21 +20,23 @@ package th.or.nectec.tanrabad.survey.utils.android;
 import android.content.Context;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 
-public class DP {
+public class DPCalculator {
 
+    private static DPCalculator instance;
     private int dp;
     private Context context;
 
-    public DP(int dp) {
-        this.dp = dp;
-        context = TanrabadApp.instance();
+    public DPCalculator(Context context) {
+        this.context = context;
     }
 
-    public static int toPX(int dp) {
-        return new DP(dp).toPX();
+    public static DPCalculator from(Context context){
+        if(instance == null)
+            instance = new DPCalculator(context);
+        return instance;
     }
 
-    public int toPX() {
+    public int toPX(int dp) {
         return (int) (dp * context.getResources().getDisplayMetrics().density + 0.5f);
     }
 }

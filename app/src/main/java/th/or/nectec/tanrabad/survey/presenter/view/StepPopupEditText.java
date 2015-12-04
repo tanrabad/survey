@@ -32,7 +32,7 @@ import android.widget.PopupWindow;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.utils.EditTextStepper;
 import th.or.nectec.tanrabad.survey.utils.android.BackgroundSetter;
-import th.or.nectec.tanrabad.survey.utils.android.DP;
+import th.or.nectec.tanrabad.survey.utils.android.DPCalculator;
 import th.or.nectec.tanrabad.survey.utils.android.ResourceUtils;
 
 public class StepPopupEditText extends EditText {
@@ -127,19 +127,19 @@ public class StepPopupEditText extends EditText {
         }
 
         private int getButtonPadding() {
-            return DP.toPX(BUTTON_PADDING);
+            return DPCalculator.from(context).toPX(BUTTON_PADDING);
         }
 
         private int getButtonWidth() {
-            return DP.toPX(BUTTON_WIDTH);
+            return DPCalculator.from(context).toPX(BUTTON_WIDTH);
         }
 
         private int getButtonHeight() {
-            return DP.toPX(BUTTON_HEIGHT);
+            return DPCalculator.from(context).toPX(BUTTON_HEIGHT);
         }
 
         private int getPopupPadding() {
-            return DP.toPX(POPUP_PADDING);
+            return DPCalculator.from(context).toPX(POPUP_PADDING);
         }
 
         @Override
@@ -159,7 +159,7 @@ public class StepPopupEditText extends EditText {
         }
 
         private int getYoffset() {
-            return DP.toPX(8);
+            return DPCalculator.from(context).toPX(8);
         }
 
         private int getPopupWidth() {

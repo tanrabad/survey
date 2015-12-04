@@ -97,13 +97,20 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
         holder.timeAgoView.setTime(currentSurvey.getFinishTimestamp());
 
         ContainerIndex ci = new ContainerIndex(currentSurvey);
-        holder.containerIndex.setText(context.getString(R.string.format_ci, (int) ci.calculate()));
+        float ciValue = ci.calculate();
+        holder.surveyBuildingIcon.setBackgroundResource(getIconBackgroundByCI(ciValue));
+        holder.containerIndex.setText(context.getString(R.string.format_ci, (int) ciValue));
         holder.containerCount.setText(context.getString(R.string.format_container_count,
                 ci.getTotalContainer(), ci.getFoundLarvaeContainer()));
     }
 
     private String getDuration(Survey currentSurvey) {
         return DurationTimePrinter.print(currentSurvey.getStartTimestamp(), currentSurvey.getFinishTimestamp());
+    }
+
+    @DrawableRes
+    private int getIconBackgroundByCI(float ciValue) {
+        return ciValue == 0 ? R.drawable.bg_icon_building_without_larvae : R.drawable.bg_icon_building_have_larvae;
     }
 
     @Override

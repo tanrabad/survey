@@ -59,7 +59,7 @@
 
     <th.or.nectec.tanrabad.survey.presenter.view.StepPopupEditText
             android:id="@+id/total_container"
-            android:layout_width="60dp"
+            android:layout_width="@dimen/number_input_size"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/space_between_content"
             android:layout_marginStart="@dimen/space_between_content"
@@ -70,7 +70,7 @@
             android:gravity="center"
             android:imeOptions="actionNext"
             android:inputType="number"
-            android:maxLength="2"
+            android:maxLength="3"
             android:padding="@dimen/space_between_content"
             android:textColor="@color/black"
             android:textSize="@dimen/text_body"/>
@@ -90,7 +90,7 @@
 
     <th.or.nectec.tanrabad.survey.presenter.view.StepPopupEditText
             android:id="@+id/found_larvae_container"
-            android:layout_width="60dp"
+            android:layout_width="@dimen/number_input_size"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/space_between_content"
             android:layout_marginStart="@dimen/space_between_content"
@@ -101,7 +101,7 @@
             android:gravity="center"
             android:imeOptions="actionNext"
             android:inputType="number"
-            android:maxLength="2"
+            android:maxLength="3"
             android:padding="@dimen/space_between_content"
             android:textColor="@color/black"/>
 

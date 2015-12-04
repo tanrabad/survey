@@ -51,14 +51,24 @@
                         android:contentDescription="@string/survey_container_bg_description"
                         android:src="@drawable/header_larvae_survey"/>
 
+                <ImageButton
+                        android:id="@+id/torch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:layout_marginTop="@dimen/screen_vertical_margin"
+                        android:layout_marginLeft="@dimen/screen_horizontal_margin"
+                        android:layout_marginStart="@dimen/screen_horizontal_margin"
+                        android:src="@drawable/flashlight"/>
+
                 <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end|top"
                         android:orientation="vertical"
-                        android:paddingEnd="@dimen/screen_horizontal_margin"
-                        android:paddingRight="@dimen/screen_horizontal_margin"
-                        android:paddingTop="@dimen/screen_vertical_margin">
+                        android:layout_marginEnd="@dimen/screen_horizontal_margin"
+                        android:layout_marginRight="@dimen/screen_horizontal_margin"
+                        android:layout_marginTop="@dimen/screen_vertical_margin">
 
                     <TextView
                             android:id="@+id/building_name"
@@ -101,7 +111,7 @@
 
                         <th.or.nectec.tanrabad.survey.presenter.view.StepPopupEditText
                                 android:id="@+id/resident_count"
-                                android:layout_width="wrap_content"
+                                android:layout_width="@dimen/number_input_size"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="bottom"
                                 android:background="@drawable/bg_edittext_number"
@@ -149,15 +159,15 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
-            <TextView
-                    app:layout_widthPercent="50%"
-                    android:layout_width="0dp"
-                    android:layout_height="64dp"
-                    android:background="@color/shock_pink"
-                    android:gravity="center"
-                    android:text="@string/indoor"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_title"/>
+        <TextView
+                app:layout_widthPercent="50%"
+                android:layout_width="0dp"
+                android:layout_height="64dp"
+                android:background="@color/shock_pink"
+                android:gravity="center"
+                android:text="@string/indoor"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_title"/>
 
         <TextView
                 app:layout_widthPercent="50%"

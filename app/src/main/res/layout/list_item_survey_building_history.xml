@@ -39,6 +39,7 @@
             android:gravity="start"
             android:singleLine="true"
             android:textIsSelectable="false"
+            android:textColor="@color/black"
             tools:text="CI 50.5%" />
 
     <th.or.nectec.tanrabad.survey.presenter.view.RelativeTimeAgoTextView

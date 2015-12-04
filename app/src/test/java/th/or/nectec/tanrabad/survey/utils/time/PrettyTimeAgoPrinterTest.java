@@ -45,8 +45,8 @@ public class PrettyTimeAgoPrinterTest {
     public void testShowInSecondAgo() {
         TimePrettyPrinter inSecondAgoPretty = new SecondsAgoPrinter(currentTimer);
 
-        assertEquals("1 วิที่แล้ว", inSecondAgoPretty.print(CURRENT_TIME_MILLS - (TimePrettyPrinter.SECOND_IN_MILLS)));
-        assertEquals("59 วิที่แล้ว", inSecondAgoPretty.print(CURRENT_TIME_MILLS - (TimePrettyPrinter.SECOND_IN_MILLS * 59)));
+        assertEquals("1 วินาทีที่แล้ว", inSecondAgoPretty.print(CURRENT_TIME_MILLS - (TimePrettyPrinter.SECOND_IN_MILLS)));
+        assertEquals("59 วินาทีที่แล้ว", inSecondAgoPretty.print(CURRENT_TIME_MILLS - (TimePrettyPrinter.SECOND_IN_MILLS * 59)));
     }
 
     @Test
@@ -87,7 +87,7 @@ public class PrettyTimeAgoPrinterTest {
     public void testFactory() throws Exception {
         TimePrettyPrinter factory = new TimePrettyPrinterFactory(currentTimer);
 
-        assertEquals("35 วิที่แล้ว", factory.print(CURRENT_DATETIME.minusSeconds(35).getMillis()));
+        assertEquals("35 วินาทีที่แล้ว", factory.print(CURRENT_DATETIME.minusSeconds(35).getMillis()));
         assertEquals("1 นาทีที่แล้ว", factory.print(CURRENT_DATETIME.minusMinutes(1).getMillis()));
         assertEquals("1 ชั่วโมงที่แล้ว", factory.print(CURRENT_DATETIME.minusHours(1).getMillis()));
         assertEquals("เมื่อวาน 23:04", factory.print(CURRENT_DATETIME.minusHours(16).getMillis()));

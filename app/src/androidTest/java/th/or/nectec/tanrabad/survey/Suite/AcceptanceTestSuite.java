@@ -19,6 +19,7 @@ package th.or.nectec.tanrabad.survey.Suite;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import th.or.nectec.tanrabad.survey.presenter.acceptance.BuildingTypeHospitalListSurveyTest;
 import th.or.nectec.tanrabad.survey.presenter.acceptance.BuildingTypeVillageCommunityListSurveyTest;
 import th.or.nectec.tanrabad.survey.presenter.acceptance.MainStartSurveyTest;
 import th.or.nectec.tanrabad.survey.presenter.acceptance.PlaceListInDatabaseTest;
@@ -27,7 +28,8 @@ import th.or.nectec.tanrabad.survey.presenter.acceptance.PlaceListInDatabaseTest
 @Suite.SuiteClasses({
         MainStartSurveyTest.class,
         PlaceListInDatabaseTest.class,
-        BuildingTypeVillageCommunityListSurveyTest.class
+        BuildingTypeVillageCommunityListSurveyTest.class,
+        BuildingTypeHospitalListSurveyTest.class
 })
 
 public class AcceptanceTestSuite {

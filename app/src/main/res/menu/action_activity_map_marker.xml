@@ -18,8 +18,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/save_marker_menu"
-        android:icon="@drawable/ic_action_circle_check"
-        android:title="@string/save_location"
-        app:showAsAction="always|withText" />
+            android:id="@+id/save_marker_menu"
+            android:icon="@mipmap/ic_action_circle_check"
+            android:title="@string/save_location"
+            app:showAsAction="always|withText" />
 </menu>

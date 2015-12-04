@@ -33,8 +33,18 @@
             android:id="@+id/building_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:textIsSelectable="false"
             android:textSize="@dimen/text_title"
             tools:text="บ้านเลขที่ 1"/>
+
+    <TextView
+            style="@style/TanrabadTextAppearance.Caption"
+            android:id="@+id/surveyed"
+            android:text="สำรวจแล้ว"
+            android:textColor="@color/color_accent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/building_name"
+            android:layout_alignLeft="@+id/building_name"
+            android:layout_alignStart="@+id/building_name"/>
 </RelativeLayout>

@@ -28,7 +28,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
 import th.or.nectec.tanrabad.survey.R;
-import th.or.nectec.tanrabad.survey.utils.android.BackgroundSetter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,9 +86,13 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
         holder.buildingTextView.setText(buildingWithSurveyStatus.getBuilding().getName());
         holder.buildingIcon.setImageResource(buildingIcon);
         if (buildingWithSurveyStatus.isSurvey()) {
-            BackgroundSetter.set(holder.buildingIcon, R.drawable.bg_icon_highlight);
+            holder.rootView.setEnabled(false);
+            holder.surveyed.setVisibility(View.VISIBLE);
+            //BackgroundSetter.set(holder.buildingIcon, R.drawable.bg_icon_highlight);
         } else {
-            BackgroundSetter.set(holder.buildingIcon, R.drawable.bg_icon);
+            holder.rootView.setEnabled(true);
+            holder.surveyed.setVisibility(View.INVISIBLE);
+            // BackgroundSetter.set(holder.buildingIcon, R.drawable.bg_icon);
         }
     }
 
@@ -120,25 +123,27 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         TextView buildingTextView;
         ImageView buildingIcon;
-        private BuildingWithSurveyStatusAdapter adapter;
+        View surveyed;
+        View rootView;
 
         public ViewHolder(View itemView, BuildingWithSurveyStatusAdapter adapter) {
             super(itemView);
-            this.adapter = adapter;
+            rootView = itemView;
             buildingTextView = (TextView) itemView.findViewById(R.id.building_name);
             buildingIcon = (ImageView) itemView.findViewById(R.id.building_icon);
+            surveyed = itemView.findViewById(R.id.surveyed);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            adapter.onItemHolderClick(this);
+            onItemHolderClick(this);
         }
 
         @Override
         public boolean onLongClick(View view) {
-            adapter.onItemHolderLongClick(this);
+            onItemHolderLongClick(this);
             return true;
         }
     }

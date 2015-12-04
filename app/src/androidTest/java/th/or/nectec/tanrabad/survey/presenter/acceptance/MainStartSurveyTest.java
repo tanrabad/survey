@@ -46,6 +46,6 @@ public class MainStartSurveyTest extends TanrabadEspressoTestBase {
     public void openMainPageShoutFoundMagnifyingGlassIsDisplay() {
         onView(withId(R.id.start_survey))
                 .check(matches(isDisplayed()));
-        textDisplayed(R.string.press_to_start_survey);
+        textDisplayed(R.string.touch_to_start_survey);
     }
 }

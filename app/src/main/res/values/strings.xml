@@ -129,5 +129,6 @@
     <string name="touch_to_type_building_name">แตะเพื่อพิมพ์ชื่ออาคาร</string>
 
     <string name="notify_only_survey_on_current_device">เฉพาะข้อมูลที่สำรวจด้วยเครื่องนี้</string>
+    <string name="building_already_survey">สำรวจแล้ว</string>
 
 </resources>

@@ -40,7 +40,7 @@
     <TextView
             style="@style/TanrabadTextAppearance.Caption"
             android:id="@+id/surveyed"
-            android:text="สำรวจแล้ว"
+            android:text="@string/building_already_survey"
             android:textColor="@color/color_accent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

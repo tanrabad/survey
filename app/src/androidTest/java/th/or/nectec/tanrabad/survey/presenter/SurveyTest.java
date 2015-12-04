@@ -28,6 +28,8 @@ import org.junit.runner.RunWith;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
 
+import java.util.UUID;
+
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -46,17 +48,20 @@ public class SurveyTest extends TanrabadEspressoTestBase {
     @Before
     public void setUp(){
         Intent intent = new Intent();
+        intent.putExtra("building_uuid", UUID.nameUUIDFromBytes("1xyz".getBytes()).toString());
+        intent.putExtra("username_arg", "sara");
         mActivity = mActivityTestRule.launchActivity(intent);
     }
 
     @Test
     public void newSurvey() {
+        waitingFor(10000);
         onView(withText("บ้านพาลาซเซตโต้"))
                 .check(matches(isDisplayed()));
-        onView(ViewMatchers.withId(R.id.building_name))
-                .check(matches(withText("214/44")));
+        onView(withId(R.id.building_name))
+                .check(matches(withText("บ้านเลขที่ 214/43")));
         onView(withId(R.id.place_name))
-                .check(matches(withText("บ้านพาลาซเซตโต้")));
+                .check(matches(withText("หมู่บ้านพาลาซเซตโต้")));
         onView(withId(R.id.resident_count))
                 .perform(replaceText("5"));
         onView(allOf(withId(R.id.total_container), withContentDescription("น้ำใช้ภายในอาคาร")))

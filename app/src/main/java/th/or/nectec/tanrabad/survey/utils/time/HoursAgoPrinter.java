@@ -29,6 +29,6 @@ class HoursAgoPrinter implements TimePrettyPrinter {
         long currentTimeInMills = currentTimer.getInMills();
         long diff = currentTimeInMills - referenceTime;
 
-        return diff / HOUR_IN_MILLS + " ชั่วโมง";
+        return diff / HOUR_IN_MILLS + " ชั่วโมงที่แล้ว";
     }
 }

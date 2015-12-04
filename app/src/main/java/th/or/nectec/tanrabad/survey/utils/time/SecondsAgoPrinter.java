@@ -28,6 +28,6 @@ class SecondsAgoPrinter implements TimePrettyPrinter {
     public String print(long referenceTime) {
         long currentTimeInMills = currentTimer.getInMills();
         long diff = currentTimeInMills - referenceTime;
-        return diff / SECOND_IN_MILLS + " วิ";
+        return diff / SECOND_IN_MILLS + " วิที่แล้ว";
     }
 }

@@ -7,6 +7,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Location;
@@ -81,23 +82,23 @@ public class FilterTrimmedBoundaryControllerTest {
     @Test
     public void testGetTrimmedPlaceListLocation() throws Exception {
 
-        final ArrayList<LocationEntity> placesFilter = new ArrayList<>();
+        final ArrayList<LocationEntity> locationEntities = new ArrayList<>();
 
         Place place6 = Place.withName("f");
         place6.setLocation(new Location(40.90000, -74.10000));
-        placesFilter.add(place6);
+        locationEntities.add(place6);
 
         Place place7 = Place.withName("g");
         place7.setLocation(new Location(40.85000, -74.05000));
-        placesFilter.add(place7);
+        locationEntities.add(place7);
 
         Place place8 = Place.withName("h");
         place8.setLocation(new Location(40.09000, -73.30000));
-        placesFilter.add(place8);
+        locationEntities.add(place8);
 
         Place place9 = Place.withName("i");
         place9.setLocation(new Location(40.10000, -73.35000));
-        placesFilter.add(place9);
+        locationEntities.add(place9);
 
         double minimumLatitude = 39.78477101124205;
         double minimumLongitude = -74.93966316260665;
@@ -126,8 +127,8 @@ public class FilterTrimmedBoundaryControllerTest {
                 oneOf(coordinateLocationCalculate).getNewMaxLocation(with(currentLocation), with(distanceInKm));
                 will(returnValue(insideMaximumLocation));
                 oneOf(placeRepository).findTrimmedInBoundaryLocation(insideMinimumLocation, outsideMinimumLocation, insideMaximumLocation, outsideMaximumLocation);
-                will(returnValue(placesFilter));
-                oneOf(nearbyPlacePresenter).displayNearByPlaces(placesFilter);
+                will(returnValue(locationEntities));
+                oneOf(nearbyPlacePresenter).displayNearByPlaces(locationEntities);
             }
         });
         FilterTrimmedBoundaryController filterTrimmedBoundaryController = new FilterTrimmedBoundaryController(filterBoundaryCalculate, coordinateLocationCalculate,

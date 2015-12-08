@@ -119,6 +119,7 @@ dependencies {
     testCompile "org.robolectric:robolectric:" + rootProject.ext.robolectricVersion
     androidTestCompile 'com.android.support:support-annotations:' + rootProject.ext.supportLibVersion
     androidTestCompile 'com.android.support.test.espresso:espresso-core:' + rootProject.ext.espressoVersion
+    androidTestCompile 'com.android.support.test.espresso:espresso-intents:' + rootProject.ext.espressoVersion
     androidTestCompile 'com.android.support.test:runner:' + rootProject.ext.runnerVersion
     androidTestCompile 'com.android.support.test:rules:' + rootProject.ext.rulesVersion
 }

@@ -17,22 +17,30 @@
 
 package th.or.nectec.tanrabad.survey.presenter;
 
+import android.content.ComponentName;
 import android.content.Intent;
-import android.support.test.rule.ActivityTestRule;
+import android.support.test.espresso.action.ViewActions;
+import android.support.test.espresso.intent.Intents;
+import android.support.test.espresso.intent.rule.IntentsTestRule;
+import org.hamcrest.Matchers;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
-import th.or.nectec.tanrabad.survey.presenter.MainActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtraWithKey;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 public class MainStartSurveyTest extends TanrabadEspressoTestBase {
-    public ActivityTestRule<MainActivity> mActivityTestRule
-            = new ActivityTestRule<>(MainActivity.class);
+
+    @Rule
+    public IntentsTestRule<MainActivity> mActivityTestRule
+            = new IntentsTestRule<>(MainActivity.class, false, false);
     MainActivity mActivity;
 
     @Before
@@ -43,9 +51,20 @@ public class MainStartSurveyTest extends TanrabadEspressoTestBase {
     }
 
     @Test
-    public void openMainPageShoutFoundMagnifyingGlassIsDisplay() {
+    public void openMainPageShouldFoundMagnifyingGlassIsDisplay() {
         onView(withId(R.id.start_survey))
                 .check(matches(isDisplayed()));
         textDisplayed(R.string.touch_to_start_survey);
+    }
+
+    @Test
+    public void testStartSurvey() throws Exception {
+        onView(withId(R.id.start_survey))
+                .perform(ViewActions.click());
+
+        Intents.intended(Matchers.allOf(
+                hasComponent(new ComponentName(mActivity, PlaceListActivity.class)),
+                hasExtraWithKey(TanrabadActivity.USER_NAME_ARG)
+        ));
     }
 }

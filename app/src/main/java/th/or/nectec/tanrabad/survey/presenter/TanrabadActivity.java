@@ -21,28 +21,30 @@ package th.or.nectec.tanrabad.survey.presenter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
-
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 @SuppressLint("Registered")
 public class TanrabadActivity extends AppCompatActivity {
+
+    protected static final String USER_NAME_ARG = "user_name_arg";
+
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
-    private void setupAlertFactory() {
-        Alert.init(this);
-    }
-
     public boolean isUiTesting() {
-        return getIntent().getBooleanExtra("isUiTesting",false);
+        return getIntent().getBooleanExtra("isUiTesting", false);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         setupAlertFactory();
+    }
+
+    private void setupAlertFactory() {
+        Alert.init(this);
     }
 }

@@ -25,14 +25,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import th.or.nectec.tanrabad.survey.R;
 import uk.co.chrisjenx.calligraphy.CalligraphyUtils;
 import uk.co.chrisjenx.calligraphy.TypefaceUtils;
 
 public class PlaceListActivity extends TanrabadActivity {
 
-    public static final String USER_NAME_ARG = "user_name_arg";
     public static final int ADD_PLACE_REQ_CODE = 30000;
     private Toolbar toolbar;
     private TabLayout tabLayout;

@@ -33,7 +33,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
-public class AddBuildingTypeHospitalTest extends TanrabadEspressoTestBase {
+public class AddBuildingTypeVillageCommunityTest extends TanrabadEspressoTestBase {
     public ActivityTestRule<BuildingAddActivity> mActivityTestRule
             = new ActivityTestRule<>(BuildingAddActivity.class);
     BuildingAddActivity mActivity;
@@ -41,23 +41,23 @@ public class AddBuildingTypeHospitalTest extends TanrabadEspressoTestBase {
     @Before
     public void setUp() {
         Intent intent = new Intent();
-        intent.putExtra("place_uuid_arg", UUID.nameUUIDFromBytes("2bcd".getBytes()).toString());
+        intent.putExtra("place_uuid_arg", UUID.nameUUIDFromBytes("67UIP".getBytes()).toString());
         mActivity = mActivityTestRule.launchActivity(intent);
     }
 
     @Test
-    public void openAddBuildingTypeHospitalPageShouldFoundBuildingTypeHospitalPage() {
+    public void openAddBuildingTypeVillageCommunityPageShouldFoundBuildingTypeVillageCommunityPage() {
         textDisplayed("เพิ่มอาคาร");
-        textDisplayed("โรงพยาบาลกรุงเทพ");
+        textDisplayed("ชุมชนกอล์ฟวิว");
         textDisplayed(R.string.save);
-        textDisplayed(R.string.building_name);
+        textDisplayed(R.string.house_no);
         textDisplayed(R.string.building_location);
         textDisplayed(R.string.define_building_location);
         onView(withId(R.id.add_marker))
                 .check(matches(isDisplayed()));
         onView(withText(R.string.save))
                 .perform(click());
-        textDisplayed(R.string.please_define_building_name);
+        textDisplayed(R.string.please_define_house_no);
         onView(withText(R.string.got_it))
                 .perform(click());
     }

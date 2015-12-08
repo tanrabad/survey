@@ -30,7 +30,8 @@ import th.or.nectec.tanrabad.survey.presenter.*;
         BuildingTypeWorshipListSurveyTest.class,
         BuildingTypeSchoolListSurveyTest.class,
         SurveyBuildingTypeVillageCommunityTest.class,
-        AddBuildingTypeHospitalTest.class
+        AddBuildingTypeHospitalTest.class,
+        AddBuildingTypeVillageCommunityTest.class
 })
 
 public class AcceptanceTestSuite {

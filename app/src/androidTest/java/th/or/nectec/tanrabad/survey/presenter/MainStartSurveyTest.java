@@ -22,10 +22,12 @@ import android.content.Intent;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
+import android.support.test.runner.AndroidJUnit4;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
 
@@ -36,6 +38,7 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExt
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
+@RunWith(AndroidJUnit4.class)
 public class MainStartSurveyTest extends TanrabadEspressoTestBase {
 
     @Rule
@@ -58,7 +61,7 @@ public class MainStartSurveyTest extends TanrabadEspressoTestBase {
     }
 
     @Test
-    public void testStartSurvey() throws Exception {
+    public void testStartSurvey() {
         onView(withId(R.id.start_survey))
                 .perform(ViewActions.click());
 

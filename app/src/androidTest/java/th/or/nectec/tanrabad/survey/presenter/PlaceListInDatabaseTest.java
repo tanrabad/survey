@@ -17,28 +17,41 @@
 
 package th.or.nectec.tanrabad.survey.presenter;
 
+import android.content.ComponentName;
 import android.content.Intent;
 import android.support.annotation.StringRes;
+import android.support.test.espresso.action.ViewActions;
+import android.support.test.espresso.intent.Intents;
+import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import org.hamcrest.Matchers;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
+
+import java.util.UUID;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtra;
 import static android.support.test.espresso.matcher.ViewMatchers.*;
 import static org.hamcrest.Matchers.allOf;
 
 @RunWith(AndroidJUnit4.class)
 public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
+
+    @Rule
     public ActivityTestRule<PlaceListActivity> mActivityTestRule
-            = new ActivityTestRule<>(PlaceListActivity.class);
+            = new IntentsTestRule<>(PlaceListActivity.class, false, false);
     PlaceListActivity mActivity;
 
     @Before
@@ -70,6 +83,27 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
         changePlaceTypeFilterTo(R.string.factory);
 
         textDisplayed(R.string.places_not_found);
+    }
+
+    @Test
+    public void clickAddPlace() {
+        onView(withId(R.id.add_place_menu))
+                .perform(click());
+
+        Intents.intended(
+                hasComponent(new ComponentName(mActivity, PlaceAddActivity.class)
+        ));
+    }
+
+    @Test
+    public void clickAddPlaceTypeFactory() {
+        changePlaceTypeFilterTo(R.string.factory);
+        onView(withId(R.id.add_place_menu))
+                .perform(click());
+        Intents.intended(Matchers.allOf(
+                hasComponent(new ComponentName(mActivity, PlaceAddActivity.class)),
+                hasExtra(PlaceAddActivity.PLACE_TYPE_ID_ARG, Place.TYPE_FACTORY)
+        ));
     }
 
     private void changePlaceTypeFilterTo(@StringRes int placeType) {

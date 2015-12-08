@@ -29,20 +29,25 @@ import com.google.android.gms.maps.model.LatLng;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.maps.MapMarkerFragment;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
-import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
-import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
+import th.or.nectec.tanrabad.survey.utils.android.TwiceBackPressed;
 
 public class MapMarkerActivity extends TanrabadActivity implements View.OnClickListener {
 
     public static final String MAP_LOCATION = "map_location";
     MapMarkerFragment mapMarkerFragment;
+    private TwiceBackPressed twiceBackPressed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_marker);
+        setupTwiceBackPressed();
         assignViews();
         setupMap();
+    }
+
+    private void setupTwiceBackPressed() {
+        twiceBackPressed = new TwiceBackPressed(this);
     }
 
     private void assignViews() {
@@ -102,19 +107,8 @@ public class MapMarkerActivity extends TanrabadActivity implements View.OnClickL
 
     @Override
     public void onBackPressed() {
-        showAbortAddMarkerPrompt();
-    }
-
-    private void showAbortAddMarkerPrompt() {
-        PromptMessage prompt = new AlertDialogPromptMessage(this);
-        prompt.setOnCancel(getString(R.string.no), null);
-        prompt.setOnConfirm(getString(R.string.yes), new PromptMessage.OnConfirmListener() {
-            @Override
-            public void onConfirm() {
-                finish();
-            }
-        });
-        String promptTitle = getString(R.string.abort_add_marker);
-        prompt.show(promptTitle, null);
+        if (twiceBackPressed.onTwiceBackPressed()) {
+            finish();
+        }
     }
 }

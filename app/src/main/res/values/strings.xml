@@ -47,8 +47,6 @@
     <string name="add_building">เพิ่มอาคาร</string>
     <string name="house_no">บ้านเลขที่</string>
     <string name="building_name">ชื่ออาคาร</string>
-    <string name="abort_add_building">ยกเลิกการเพิ่มอาคารภายใน</string>
-    <string name="abort_edit_building">ยกเลิกการแก้ไขอาคาร</string>
     <string name="place_icon">ไอคอนหน้าสถานที่สำรวจ</string>
     <string name="place_bg">พื้นหลังหน้าสถานที่สำรวจ</string>
     <string name="place_not_found">ไม่พบข้อมูลสถานที่</string>
@@ -130,7 +128,6 @@
 
     <string name="notify_only_survey_on_current_device">เฉพาะข้อมูลที่สำรวจด้วยเครื่องนี้</string>
     <string name="building_already_survey">สำรวจแล้ว</string>
-    <string name="abort_add_marker">ยกเลิกการเพิ่มพิกัด</string>
     <string name="press_back_again_to_exit">กรุณากดอีกครั้งเพื่อออก</string>
 
 </resources>

@@ -23,6 +23,9 @@ import th.or.nectec.tanrabad.entity.Location;
 import static org.junit.Assert.assertEquals;
 
 public class SphereDistanceTest {
+
+    public static final int DELTA = 5;
+
     @Test
     public void testCalculateBetweenPoint() throws Exception {
         Location startLocation = new Location(40.6892,-74.0444);
@@ -30,6 +33,7 @@ public class SphereDistanceTest {
 
         SphereDistance sphereDistance = new SphereDistance();
 
-        assertEquals(sphereDistance.calculate(startLocation, destinationLocation), 125, 5);
+
+        assertEquals(125, sphereDistance.calculate(startLocation, destinationLocation), DELTA);
     }
 }

@@ -43,7 +43,7 @@
     <!--building category-->
     <string name="building_icon">ไอคอนอาคาร</string>
     <string name="building_not_found">ไม่พบข้อมูลอาคาร</string>
-    <string name="building_list_not_found">ไม่พบรายการอาคาร</string>
+    <string name="building_list_not_found">ไม่พบอาคาร</string>
     <string name="add_building">เพิ่มอาคาร</string>
     <string name="house_no">บ้านเลขที่</string>
     <string name="building_name">ชื่ออาคาร</string>
@@ -80,7 +80,7 @@
     <string name="please_define_building_name">กรุณาระบุชื่ออาคาร</string>
     <string name="please_define_house_no">กรุณาระบุบ้านเลขที่</string>
     <string name="building_edit">แก้ไขอาคาร</string>
-    <string name="survey_place_not_found">ไม่พบรายการสถานที่ที่สำรวจ</string>
+    <string name="survey_place_not_found">ไม่พบสถานที่ที่สำรวจ</string>
     <string name="find_place_by_database">ค้นหาจากคลังข้อมูล</string>
     <string name="find_place_by_recent_survey">สถานที่ที่สำรวจล่าสุด</string>
     <string name="number_place_list_in_database">จำนวนรายการของรายชื่อสถานที่ที่แถบคลังข้อมูลตามประเภทที่เลือก</string>
@@ -106,7 +106,7 @@
     <string name="format_house_survey">"สำรวจ %1$d อาคาร พบลูกน้ำยุงลาย %2$d อาคาร "</string>
     <string name="detail_history_building_list">รายละเอียดการสำรวจ</string>
     <string name="add_place">เพิ่มสถานที่</string>
-    <string name="places_not_found">ไม่พบรายการสถานที่</string>
+    <string name="places_not_found">ไม่พบสถานที่</string>
     <string name="place_type">ประเภทสถานที่</string>
     <string name="format_place_count">%1$d รายการ</string>
     <string name="format_building_count">%1$d อาคาร</string>

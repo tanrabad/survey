@@ -61,7 +61,6 @@
     <string name="add_location">เพิ่มพิกัด</string>
     <string name="edit_location">แก้ไขพิกัด</string>
     <string name="define_building_location">ระบุพิกัดอาคาร</string>
-    <string name="building_location">พิกัดอาคาร</string>
     <string name="remove_location">ลบพิกัด</string>
     <string name="please_define_location">กรุณาระบุพิกัด</string>
     <string name="please_define_building_location">กรุณาระบุพิกัดของอาคาร</string>
@@ -99,7 +98,7 @@
     <string name="gps_dialog_message">คุณต้องการเปิดการตั้งค่าการใช้งาน GPS หรือไม่</string>
     <string name="survey_duration">เวลาที่ใช้สำรวจ</string>
     <string name="format_ci">CI %1$d%%</string>
-    <string name="format_container_count"><![CDATA[ภาชนะทั้งหมด <font color="#E91E63">%1$d</font> พบลูกน้ำยุงลาย <font color="#E91E63">%2$d</font>]]></string>
+    <string name="format_container_count"><![CDATA[ภาชนะทั้งหมด <font color=“#E91E63”>%1$d</font> พบลูกน้ำยุงลาย <font color=“#E91E63”>%2$d</font>]]></string>
     <string name="format_house_survey">"สำรวจ %1$d อาคาร พบลูกน้ำยุงลาย %2$d อาคาร "</string>
     <string name="detail_history_building_list">รายละเอียดการสำรวจ</string>
     <string name="add_place">เพิ่มสถานที่</string>
@@ -107,7 +106,6 @@
     <string name="place_type">ประเภทสถานที่</string>
     <string name="format_place_count">%1$d รายการ</string>
     <string name="format_building_count">%1$d อาคาร</string>
-    <string name="place_location">พิกัดสถานที่</string>
     <string name="place_name">ชื่อสถานที่</string>
     <string name="address">ที่อยู่</string>
     <string name="temple">วัด</string>
@@ -128,5 +126,6 @@
     <string name="notify_only_survey_on_current_device">เฉพาะข้อมูลที่สำรวจด้วยเครื่องนี้</string>
     <string name="building_already_survey">สำรวจแล้ว</string>
     <string name="press_back_again_to_exit">กรุณากดอีกครั้งเพื่อออก</string>
+    <string name="location">พิกัด</string>
 
 </resources>

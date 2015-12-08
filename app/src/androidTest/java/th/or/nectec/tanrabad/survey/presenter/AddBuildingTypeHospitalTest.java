@@ -53,7 +53,7 @@ public class AddBuildingTypeHospitalTest extends TanrabadEspressoTestBase {
         textDisplayed("โรงพยาบาลกรุงเทพ");
         textDisplayed(R.string.save);
         textDisplayed(R.string.building_name);
-        textDisplayed(R.string.building_location);
+        textDisplayed(R.string.location);
         textDisplayed(R.string.define_building_location);
         onView(withId(R.id.add_marker))
                 .check(matches(isDisplayed()));

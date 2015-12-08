@@ -38,16 +38,16 @@
                 android:textIsSelectable="true"
                 tools:text="หมู่ 1 บ้านบางไผ่"/>
         <TextView
-                style="@style/TanrabadTextAppearance.Subhead"
-                android:id="@+id/place_subhead"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignRight="@id/place_name"
-                android:layout_alignEnd="@id/place_name"
-                android:layout_below="@id/place_name"
-                android:textColor="@color/white"
-                android:textIsSelectable="false"
-                tools:text="สำรวจ 100 อาคาร  พบลูกน้ำ 20 อาคาร"/>
+            android:id="@+id/place_subhead"
+            style="@style/TanrabadTextAppearance.Subhead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@id/place_name"
+            android:layout_alignRight="@id/place_name"
+            android:layout_below="@id/place_name"
+            android:textColor="@color/white"
+            android:textIsSelectable="false"
+            tools:text="สำรวจ 100 อาคาร  พบลูกน้ำ 20 อาคาร"/>
     </RelativeLayout>
 
 
@@ -76,11 +76,11 @@
                     android:padding="16dp">
 
                 <TextView
-                        style="@style/TanrabadTextAppearance.Title"
-                        android:id="@+id/card_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/detail_history_building_list"/>
+                    android:id="@+id/card_title"
+                    style="@style/TanrabadTextAppearance.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/detail_history_building_list"/>
 
                 <TextView
                         style="@style/TanrabadTextAppearance.Caption"
@@ -100,14 +100,13 @@
     </android.support.design.widget.CoordinatorLayout>
 
     <Button
-            android:id="@+id/survey_more_building_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:layout_marginBottom="@dimen/screen_vertical_margin"
-            android:layout_marginRight="@dimen/screen_horizontal_margin"
-            android:layout_marginEnd="@dimen/screen_horizontal_margin"
-            android:text="@string/survey_more_building_button_text"
-            android:textColor="@color/pink"
-            android:textSize="@dimen/text_title"/>
+        android:id="@+id/survey_more_building_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="@dimen/screen_vertical_margin"
+        android:layout_marginEnd="@dimen/screen_horizontal_margin"
+        android:layout_marginRight="@dimen/screen_horizontal_margin"
+        android:text="@string/survey_more_building_button_text"
+        android:textSize="@dimen/text_title"/>
 </merge>

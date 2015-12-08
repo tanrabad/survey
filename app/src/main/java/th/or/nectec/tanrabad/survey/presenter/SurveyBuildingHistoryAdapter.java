@@ -21,7 +21,6 @@ import android.content.Context;
 import android.support.annotation.DrawableRes;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -113,7 +112,6 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
 
     @DrawableRes
     private int getIconBackgroundByCI(float ciValue) {
-        Log.d("ci val", ciValue + "");
         return ciValue == 0 || Float.isNaN(ciValue) ? R.drawable.bg_icon_building_without_larvae : R.drawable.bg_icon_building_have_larvae;
     }
 

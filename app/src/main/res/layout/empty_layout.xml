@@ -25,11 +25,11 @@
               android:orientation="vertical">
 
     <ImageView
-            tools:src="@mipmap/ic_place"
-            android:id="@+id/empty_icon"
-            android:layout_width="140dp"
-            android:layout_height="140dp"
-            android:contentDescription="@null" />
+        android:id="@+id/empty_icon"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:contentDescription="@null"
+        tools:src="@mipmap/ic_place"/>
 
     <TextView
             android:id="@+id/empty_text"
@@ -38,7 +38,7 @@
             android:textIsSelectable="false"
             tools:text="ไม่พบข้อมูลในรายการ" />
 
-    <android.support.v7.widget.AppCompatButton
+    <Button
             android:id="@+id/empty_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

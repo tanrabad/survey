@@ -53,7 +53,7 @@ public class AddBuildingOnlyDefinebuildinglocationTest extends TanrabadEspressoT
         textDisplayed("หมู่บ้านพาลาซเซตโต้");
         textDisplayed(R.string.save);
         textDisplayed(R.string.house_no);
-        textDisplayed(R.string.building_location);
+        textDisplayed(R.string.location);
         textDisplayed(R.string.define_building_location);
         onView(withId(R.id.add_marker))
                 .perform(click());

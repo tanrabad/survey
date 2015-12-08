@@ -20,6 +20,7 @@
         android:layout_gravity="left|bottom"
         android:layout_marginBottom="32dp"
         android:layout_marginLeft="16dp"
+        android:drawableLeft="@mipmap/ic_clear_white_24dp"
         android:text="@string/remove_location" />
 
 </merge>

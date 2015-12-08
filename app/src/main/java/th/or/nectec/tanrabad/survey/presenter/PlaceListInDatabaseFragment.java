@@ -146,7 +146,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
         emptyLayoutView.setEmptyButtonText(R.string.add_place, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PlaceAddActivity.openAddPlaceActivity(getActivity(), placeTypeID);
+                PlaceFormActivity.startAdd(getActivity(), placeTypeID);
             }
         });
         emptyLayoutView.setEmptyText(R.string.places_not_found);
@@ -178,7 +178,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add_place_menu:
-                PlaceAddActivity.openAddPlaceActivity(getActivity(), placeTypeID);
+                PlaceFormActivity.startAdd(getActivity(), placeTypeID);
                 break;
         }
         return super.onOptionsItemSelected(item);

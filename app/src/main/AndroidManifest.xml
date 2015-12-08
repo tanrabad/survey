@@ -85,7 +85,7 @@
             android:name=".presenter.MapMarkerActivity"
             android:label="@string/add_location" />
         <activity
-            android:name=".presenter.PlaceAddActivity"
+            android:name=".presenter.PlaceFormActivity"
             android:label="@string/add_place"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />

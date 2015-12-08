@@ -53,7 +53,7 @@ import th.or.nectec.tanrabad.survey.utils.android.TwiceBackPressed;
 import th.or.nectec.tanrabad.survey.validator.SavePlaceValidator;
 import th.or.nectec.tanrabad.survey.validator.ValidatorException;
 
-public class PlaceAddActivity extends TanrabadActivity implements View.OnClickListener, PlaceSavePresenter, PlacePresenter {
+public class PlaceFormActivity extends TanrabadActivity implements View.OnClickListener, PlaceSavePresenter, PlacePresenter {
 
     public static final String PLACE_TYPE_ID_ARG = "place_category_id_arg";
     public static final String PLACE_UUID_ARG = "place_uuid_arg";
@@ -76,16 +76,16 @@ public class PlaceAddActivity extends TanrabadActivity implements View.OnClickLi
     private LatLng placeLocation;
     private TwiceBackPressed twiceBackPressed;
 
-    public static void openAddPlaceActivity(Activity activity, int placeTypeID) {
-        Intent intent = new Intent(activity, PlaceAddActivity.class);
-        intent.putExtra(PlaceAddActivity.PLACE_TYPE_ID_ARG, placeTypeID);
+    public static void startAdd(Activity activity, int placeTypeID) {
+        Intent intent = new Intent(activity, PlaceFormActivity.class);
+        intent.putExtra(PlaceFormActivity.PLACE_TYPE_ID_ARG, placeTypeID);
         activity.startActivityForResult(intent, ADD_PLACE_REQ_CODE);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_place_add);
+        setContentView(R.layout.activity_place_form);
         setupTwiceBackPressed();
         setupViews();
         setupPreviewMap();
@@ -130,11 +130,10 @@ public class PlaceAddActivity extends TanrabadActivity implements View.OnClickLi
                 if (placeAdapter.getItem(i).id == Place.TYPE_WORSHIP) {
                     placeSubtypeLayout.setVisibility(View.VISIBLE);
                     placeSubtypeLabel.setText(R.string.place_worship_type);
-                    placeSubtypeSelector.setAdapter(new PlaceSubTypeOfWorshipAdapter(PlaceAddActivity.this));
+                    placeSubtypeSelector.setAdapter(new PlaceSubTypeOfWorshipAdapter(PlaceFormActivity.this));
                 } else {
                     placeSubtypeLayout.setVisibility(View.GONE);
                 }
-
             }
 
             @Override
@@ -165,7 +164,7 @@ public class PlaceAddActivity extends TanrabadActivity implements View.OnClickLi
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.action_activity_place_add, menu);
+        getMenuInflater().inflate(R.menu.action_activity_place_form, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -241,12 +240,12 @@ public class PlaceAddActivity extends TanrabadActivity implements View.OnClickLi
     }
 
     private void openMapMarkerActivity() {
-        Intent intent = new Intent(PlaceAddActivity.this, MapMarkerActivity.class);
+        Intent intent = new Intent(PlaceFormActivity.this, MapMarkerActivity.class);
         startActivityForResult(intent, MARK_LOCATION_REQUEST_CODE);
     }
 
     private void openEditMapMarkerActivity(LatLng location) {
-        Intent intent = new Intent(PlaceAddActivity.this, MapMarkerActivity.class);
+        Intent intent = new Intent(PlaceFormActivity.this, MapMarkerActivity.class);
         intent.putExtra(MapMarkerActivity.MAP_LOCATION, location);
         startActivityForResult(intent, MARK_LOCATION_REQUEST_CODE);
     }
@@ -255,7 +254,7 @@ public class PlaceAddActivity extends TanrabadActivity implements View.OnClickLi
     public void displaySaveSuccess() {
         setResult(RESULT_OK);
         finish();
-        SurveyBuildingHistoryActivity.openBuildingSurveyHistoryActivity(PlaceAddActivity.this, place, "sara");
+        SurveyBuildingHistoryActivity.openBuildingSurveyHistoryActivity(PlaceFormActivity.this, place, "sara");
     }
 
     @Override

@@ -25,10 +25,22 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.TextView;
+
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import th.or.nectec.tanrabad.domain.place.*;
+
+import java.util.UUID;
+
+import th.or.nectec.tanrabad.domain.place.PlaceController;
+import th.or.nectec.tanrabad.domain.place.PlacePresenter;
+import th.or.nectec.tanrabad.domain.place.PlaceRepository;
+import th.or.nectec.tanrabad.domain.place.PlaceSavePresenter;
+import th.or.nectec.tanrabad.domain.place.PlaceSaver;
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
@@ -38,8 +50,6 @@ import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
 import th.or.nectec.tanrabad.survey.validator.SavePlaceValidator;
 import th.or.nectec.tanrabad.survey.validator.ValidatorException;
-
-import java.util.UUID;
 
 public class PlaceAddActivity extends TanrabadActivity implements View.OnClickListener, PlaceSavePresenter, PlacePresenter {
 
@@ -218,6 +228,7 @@ public class PlaceAddActivity extends TanrabadActivity implements View.OnClickLi
     public void displaySaveSuccess() {
         setResult(RESULT_OK);
         finish();
+        openBuildingListActivity(place);
     }
 
     @Override
@@ -238,5 +249,12 @@ public class PlaceAddActivity extends TanrabadActivity implements View.OnClickLi
     @Override
     public void alertPlaceNotFound() {
         this.place = Place.withName(null);
+    }
+
+    private void openBuildingListActivity(Place placeData) {
+        Intent intent = new Intent(PlaceAddActivity.this, BuildingListActivity.class);
+        intent.putExtra(BuildingListActivity.PLACE_UUID_ARG, placeData.getId().toString());
+        intent.putExtra(SurveyActivity.USERNAME_ARG, "sara");
+        startActivity(intent);
     }
 }

@@ -59,8 +59,7 @@ public class BuildingTypeVillageCommunityListSurveyTest extends TanrabadEspresso
                 .check(matches(isDisplayed()));
         textDisplayed("หมู่บ้านพาลาซเซตโต้");
         textDisplayed(R.string.title_card_building_list);
-        onView(allOf(withId(R.id.building_count)
-                , withContentDescription(R.string.number_building_list)))
+        onView(withId(R.id.building_count))
                 .check(matches(withText("13 อาคาร")));
         textDisplayed("214/43");
         textDisplayed("214/44");

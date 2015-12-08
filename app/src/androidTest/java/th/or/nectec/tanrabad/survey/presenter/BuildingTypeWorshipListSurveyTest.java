@@ -51,8 +51,7 @@ public class BuildingTypeWorshipListSurveyTest extends TanrabadEspressoTestBase 
                 .check(matches(isDisplayed()));
         textDisplayed("วัดป่าภูก้อน");
         textDisplayed(R.string.title_card_building_list);
-        onView(allOf(withId(R.id.building_count)
-                , withContentDescription(R.string.number_building_list)))
+        onView(withId(R.id.building_count))
                 .check(matches(withText("3 อาคาร")));
         textDisplayed("ศาลาใหญ่");
         textDisplayed("เมรุ");

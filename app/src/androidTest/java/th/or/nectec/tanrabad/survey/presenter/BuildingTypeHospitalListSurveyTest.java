@@ -51,8 +51,7 @@ public class BuildingTypeHospitalListSurveyTest extends TanrabadEspressoTestBase
                 .check(matches(isDisplayed()));
         textDisplayed("โรงพยาบาลกรุงเทพ");
         textDisplayed(R.string.title_card_building_list);
-        onView(allOf(withId(R.id.building_count)
-                , withContentDescription(R.string.number_building_list)))
+        onView(withId(R.id.building_count))
                 .check(matches(withText("3 อาคาร")));
         textDisplayed("ตึก1");
         textDisplayed("ตึกพักญาติ");

@@ -51,7 +51,7 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
     public void openDefineSurveyPlaceShouldFoundListPlace8List() {
         onView(allOf(ViewMatchers.withId(R.id.place_count)
                 , withContentDescription(R.string.number_place_list_in_database)))
-                .check(matches(withText("8 รายการ")));
+                .check(matches(containText("8")));
     }
 
     @Test
@@ -60,7 +60,7 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
 
         onView(allOf(withId(R.id.place_count)
                 , withContentDescription(R.string.number_place_list_in_database)))
-                .check(matches(withText("2 รายการ")));
+                .check(matches(containText("2")));
         textDisplayed("หมู่บ้านพาลาซเซตโต้");
         textDisplayed("ชุมชนกอล์ฟวิว");
     }
@@ -73,10 +73,9 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
     }
 
     private void changePlaceTypeFilterTo(@StringRes int placeType) {
-        onView(withText(R.string.not_define_place_type))
+        onView(withId(R.id.place_filter))
                 .perform(click());
         onView(withText(placeType))
                 .perform(click());
-
     }
 }

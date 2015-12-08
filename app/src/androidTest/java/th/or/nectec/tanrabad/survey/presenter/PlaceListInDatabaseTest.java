@@ -18,6 +18,7 @@
 package th.or.nectec.tanrabad.survey.presenter;
 
 import android.content.Intent;
+import android.support.annotation.StringRes;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -55,9 +56,7 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
 
     @Test
     public void chooseTypeVillageCommunityShouldFound2List() {
-        clickPlaceTypeNotDefine();
-        onView(withText(R.string.village_community))
-                .perform(click());
+        changePlaceTypeFilterTo(R.string.village_community);
 
         onView(allOf(withId(R.id.place_count)
                 , withContentDescription(R.string.number_place_list_in_database)))
@@ -68,15 +67,16 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
 
     @Test
     public void chooseTypeFactoryShouldNotFoundListPlace() {
-        clickPlaceTypeNotDefine();
-        onView(withText(R.string.factory))
-                .perform(click());
+        changePlaceTypeFilterTo(R.string.factory);
 
         textDisplayed(R.string.places_not_found);
     }
 
-    private void clickPlaceTypeNotDefine() {
+    private void changePlaceTypeFilterTo(@StringRes int placeType) {
         onView(withText(R.string.not_define_place_type))
                 .perform(click());
+        onView(withText(placeType))
+                .perform(click());
+
     }
 }

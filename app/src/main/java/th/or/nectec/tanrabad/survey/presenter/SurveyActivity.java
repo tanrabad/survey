@@ -30,8 +30,25 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import th.or.nectec.tanrabad.domain.survey.*;
-import th.or.nectec.tanrabad.entity.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import th.or.nectec.tanrabad.domain.survey.ContainerController;
+import th.or.nectec.tanrabad.domain.survey.ContainerPresenter;
+import th.or.nectec.tanrabad.domain.survey.SurveyController;
+import th.or.nectec.tanrabad.domain.survey.SurveyPresenter;
+import th.or.nectec.tanrabad.domain.survey.SurveyRepository;
+import th.or.nectec.tanrabad.domain.survey.SurveySavePresenter;
+import th.or.nectec.tanrabad.domain.survey.SurveySaver;
+import th.or.nectec.tanrabad.entity.Building;
+import th.or.nectec.tanrabad.entity.ContainerType;
+import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.Survey;
+import th.or.nectec.tanrabad.entity.SurveyDetail;
+import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.presenter.view.SurveyContainerView;
@@ -48,11 +65,6 @@ import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 import th.or.nectec.tanrabad.survey.validator.SaveSurveyValidator;
 import th.or.nectec.tanrabad.survey.validator.ValidatorException;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class SurveyActivity extends TanrabadActivity implements ContainerPresenter, SurveyPresenter, SurveySavePresenter {
 
@@ -236,7 +248,6 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     @Override
     public void displaySaveSuccess() {
-        Toast.makeText(SurveyActivity.this, R.string.save_success, Toast.LENGTH_LONG).show();
         finish();
         openSurveyBuildingHistory();
     }

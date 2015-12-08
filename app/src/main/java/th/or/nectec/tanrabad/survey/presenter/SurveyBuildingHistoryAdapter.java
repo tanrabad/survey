@@ -20,21 +20,24 @@ package th.or.nectec.tanrabad.survey.presenter;
 import android.content.Context;
 import android.support.annotation.DrawableRes;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.utils.ContainerIndex;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.view.TimeAgoView;
 import th.or.nectec.tanrabad.survey.utils.time.DurationTimePrinter;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBuildingHistoryAdapter.ViewHolder> implements ListViewAdapter<Survey> {
 
@@ -100,8 +103,8 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
         float ciValue = ci.calculate();
         holder.surveyBuildingIcon.setBackgroundResource(getIconBackgroundByCI(ciValue));
         holder.containerIndex.setText(context.getString(R.string.format_ci, (int) ciValue));
-        holder.containerCount.setText(context.getString(R.string.format_container_count,
-                ci.getTotalContainer(), ci.getFoundLarvaeContainer()));
+        holder.containerCount.setText(Html.fromHtml(context.getString(R.string.format_container_count,
+                ci.getTotalContainer(), ci.getFoundLarvaeContainer())));
     }
 
     private String getDuration(Survey currentSurvey) {
@@ -110,7 +113,8 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
 
     @DrawableRes
     private int getIconBackgroundByCI(float ciValue) {
-        return ciValue == 0 ? R.drawable.bg_icon_building_without_larvae : R.drawable.bg_icon_building_have_larvae;
+        Log.d("ci val", ciValue + "");
+        return ciValue == 0 || Float.isNaN(ciValue) ? R.drawable.bg_icon_building_without_larvae : R.drawable.bg_icon_building_have_larvae;
     }
 
     @Override

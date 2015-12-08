@@ -20,13 +20,15 @@ package th.or.nectec.tanrabad.survey.end2end;
 
 import android.content.Intent;
 import android.support.test.rule.ActivityTestRule;
+
 import org.junit.Before;
 import org.junit.Test;
-import th.or.nectec.tanrabad.survey.R;
-import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
-import th.or.nectec.tanrabad.survey.presenter.BuildingAddActivity;
 
 import java.util.UUID;
+
+import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
+import th.or.nectec.tanrabad.survey.presenter.BuildingFormActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -34,8 +36,8 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 public class AddBuildingOnlyDefinebuildinglocationTest extends TanrabadEspressoTestBase {
-    public ActivityTestRule<BuildingAddActivity> mActivityTestRule = new ActivityTestRule<>(BuildingAddActivity.class);
-    BuildingAddActivity mActivity;
+    public ActivityTestRule<BuildingFormActivity> mActivityTestRule = new ActivityTestRule<>(BuildingFormActivity.class);
+    BuildingFormActivity mActivity;
 
     @Before
     public void setUp() {

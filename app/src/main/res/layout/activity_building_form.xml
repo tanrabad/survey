@@ -51,8 +51,8 @@
                     android:scaleType="fitCenter"/>
 
             <TextView
-                    style="@style/TextViewTanrabad.Header.Right"
                     android:id="@+id/place_name"
+                    style="@style/TextViewTanrabad.Header.Right"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"

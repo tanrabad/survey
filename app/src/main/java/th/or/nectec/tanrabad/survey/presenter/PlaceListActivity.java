@@ -17,6 +17,8 @@
 
 package th.or.nectec.tanrabad.survey.presenter;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
@@ -25,6 +27,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import th.or.nectec.tanrabad.survey.R;
 import uk.co.chrisjenx.calligraphy.CalligraphyUtils;
 import uk.co.chrisjenx.calligraphy.TypefaceUtils;
@@ -35,6 +38,12 @@ public class PlaceListActivity extends TanrabadActivity {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager placePager;
+
+    public static void open(Activity activity) {
+        Intent intent = new Intent(activity, PlaceListActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        activity.startActivity(intent);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

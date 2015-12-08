@@ -26,11 +26,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
-import th.or.nectec.tanrabad.survey.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
+import th.or.nectec.tanrabad.survey.R;
 
 public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<BuildingWithSurveyStatusAdapter.ViewHolder> implements ListViewAdapter<BuildingWithSurveyStatus> {
 
@@ -77,7 +78,7 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
     @Override
     public BuildingWithSurveyStatusAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_building, parent, false);
-        return new ViewHolder(view, this);
+        return new ViewHolder(view);
     }
 
     @Override
@@ -126,7 +127,7 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
         View surveyed;
         View rootView;
 
-        public ViewHolder(View itemView, BuildingWithSurveyStatusAdapter adapter) {
+        public ViewHolder(View itemView) {
             super(itemView);
             rootView = itemView;
             buildingTextView = (TextView) itemView.findViewById(R.id.building_name);

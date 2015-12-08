@@ -17,6 +17,7 @@
 
 package th.or.nectec.tanrabad.survey.presenter;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -53,10 +54,12 @@ import th.or.nectec.tanrabad.survey.utils.android.TwiceBackPressed;
 import th.or.nectec.tanrabad.survey.validator.SaveBuildingValidator;
 import th.or.nectec.tanrabad.survey.validator.ValidatorException;
 
-public class BuildingAddActivity extends TanrabadActivity implements PlacePresenter, BuildingPresenter, BuildingSavePresenter, View.OnClickListener {
+public class BuildingFormActivity extends TanrabadActivity implements PlacePresenter, BuildingPresenter, BuildingSavePresenter, View.OnClickListener {
 
     public static final String PLACE_UUID_ARG = "place_uuid_arg";
     public static final String BUILDING_UUID_ARG = "building_uuid_arg";
+
+    public static final int ADD_BUILDING_REQ_CODE = 40000;
     public static final int MARK_LOCATION_REQUEST_CODE = 50000;
 
 
@@ -75,10 +78,23 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
     private Button editLocationButton;
     private TwiceBackPressed twiceBackPressed;
 
+    public static void startEdit(Activity activity, String placeUUID, String buildingUUID) {
+        Intent intent = new Intent(activity, BuildingFormActivity.class);
+        intent.putExtra(PLACE_UUID_ARG, placeUUID);
+        intent.putExtra(BuildingFormActivity.BUILDING_UUID_ARG, buildingUUID);
+        activity.startActivityForResult(intent, ADD_BUILDING_REQ_CODE);
+    }
+
+    public static void startAdd(Activity activity, String placeUUID) {
+        Intent intent = new Intent(activity, BuildingFormActivity.class);
+        intent.putExtra(PLACE_UUID_ARG, placeUUID);
+        activity.startActivityForResult(intent, ADD_BUILDING_REQ_CODE);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_building_add);
+        setContentView(R.layout.activity_building_form);
         assignViews();
 
         setupTwiceBackPressed();
@@ -188,12 +204,12 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
     }
 
     private void openMapMarkerActivity() {
-        Intent intent = new Intent(BuildingAddActivity.this, MapMarkerActivity.class);
+        Intent intent = new Intent(BuildingFormActivity.this, MapMarkerActivity.class);
         startActivityForResult(intent, MARK_LOCATION_REQUEST_CODE);
     }
 
     private void openEditMapMarkerActivity(LatLng location) {
-        Intent intent = new Intent(BuildingAddActivity.this, MapMarkerActivity.class);
+        Intent intent = new Intent(BuildingFormActivity.this, MapMarkerActivity.class);
         intent.putExtra(MapMarkerActivity.MAP_LOCATION, location);
         startActivityForResult(intent, MARK_LOCATION_REQUEST_CODE);
     }
@@ -253,7 +269,7 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
     }
 
     private void openSurveyActivity(Building building) {
-        Intent intent = new Intent(BuildingAddActivity.this, SurveyActivity.class);
+        Intent intent = new Intent(BuildingFormActivity.this, SurveyActivity.class);
         intent.putExtra(SurveyActivity.BUILDING_UUID_ARG, building.getId().toString());
         intent.putExtra(SurveyActivity.USERNAME_ARG, "sara");
         startActivity(intent);

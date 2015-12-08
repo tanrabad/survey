@@ -234,7 +234,7 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.action_activity_building_add, menu);
+        getMenuInflater().inflate(R.menu.action_activity_building_form, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

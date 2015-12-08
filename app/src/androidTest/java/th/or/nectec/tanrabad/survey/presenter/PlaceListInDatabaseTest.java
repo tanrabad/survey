@@ -27,7 +27,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
-import th.or.nectec.tanrabad.survey.presenter.PlaceListActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -48,85 +47,82 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
     }
 
     @Test
-    public void defaultPageDefineSurveyPlaceShouldFoundListPlaceAllType() {
+    public void openDefineSurveyPlaceShouldFoundListPlace8List() {
         onView(allOf(ViewMatchers.withId(R.id.place_count)
                 , withContentDescription(R.string.number_place_list_in_database)))
                 .check(matches(withText("8 รายการ")));
-        onView(withText(R.string.not_define_place_type))
-                .check(matches(isDisplayed()));
     }
 
     @Test
-    public void clickCancelButtonAtPromptMustStayOn() {
-        textDisplayed("หมู่บ้านพาลาซเซตโต้");
-        textDisplayed("โรงพยาบาลกรุงเทพ");
-        textDisplayed("วัดป่าภูก้อน");
-        textDisplayed(R.string.total);
-
-        onView(withText("หมู่บ้านพาลาซเซตโต้"))
+    public void chooseTypeVillageCommunityShouldFound2List() {
+        clickPlaceTypeNotDefine();
+        onView(withText(R.string.village_community))
                 .perform(click());
-        textDisplayed(R.string.start_survey);
-        textDisplayed(R.string.survey);
-        textDisplayed("หมู่บ้านพาลาซเซตโต้");
-        clickCancelButton();
+        onView(allOf(withId(R.id.place_count)
+                , withContentDescription(R.string.number_place_list_in_database)))
+                .check(matches(withText("2 รายการ")));
+    }
 
-        textDisplayed(R.string.total);
-        onView(withText("โรงพยาบาลกรุงเทพ"))
+    @Test
+    public void chooseTypeWorshipShouldFound2List() {
+        clickPlaceTypeNotDefine();
+        onView(withText(R.string.worship))
                 .perform(click());
-        textDisplayed(R.string.start_survey);
-        textDisplayed(R.string.survey);
-        textDisplayed("โรงพยาบาลกรุงเทพ");
-        clickCancelButton();
+        onView(allOf(withId(R.id.place_count)
+                , withContentDescription(R.string.number_place_list_in_database)))
+                .check(matches(withText("2 รายการ")));
+    }
 
-        textDisplayed(R.string.total);
-        onView(withText("วัดป่าภูก้อน"))
+    @Test
+    public void chooseTypeSchoolShouldFound3List() {
+        clickPlaceTypeNotDefine();
+        onView(withText(R.string.school))
                 .perform(click());
-        textDisplayed(R.string.start_survey);
-        textDisplayed(R.string.survey);
-        textDisplayed("วัดป่าภูก้อน");
-        clickCancelButton();
+        onView(allOf(withId(R.id.place_count)
+                , withContentDescription(R.string.number_place_list_in_database)))
+                .check(matches(withText("3 รายการ")));
+    }
 
-        textDisplayed("หมู่บ้านพาลาซเซตโต้");
-        textDisplayed("โรงพยาบาลกรุงเทพ");
-        textDisplayed("วัดป่าภูก้อน");
-        textDisplayed(R.string.total);
+    @Test
+    public void chooseTypeHospitalShouldFound1List() {
+        clickPlaceTypeNotDefine();
+        onView(withText(R.string.hospital))
+                .perform(click());
+        onView(allOf(withId(R.id.place_count), withContentDescription(R.string.number_place_list_in_database)))
+                .check(matches(withText("1 รายการ")));
+    }
+
+    @Test
+    public void chooseTypeFactoryShouldNotFoundListPlace() {
+        clickPlaceTypeNotDefine();
+        onView(withText(R.string.factory))
+                .perform(click());
+        textDisplayed(R.string.places_not_found);
     }
 
     @Test
     public void chooseTypeVillageCommunityShouldFoundListPlaceTypeVillageCommunity() {
-        onView(withText(R.string.not_define_place_type))
-                .perform(click());
+        clickPlaceTypeNotDefine();
         onView(withText(R.string.village_community))
                 .perform(click());
-        textDisplayed(R.string.village_community);
-        onView(allOf(withId(R.id.place_count), withContentDescription(R.string.number_place_list_in_database)))
-                .check(matches(withText("2 รายการ")));
         textDisplayed("หมู่บ้านพาลาซเซตโต้");
         textDisplayed("ชุมชนกอล์ฟวิว");
     }
 
     @Test
     public void chooseTypeWorshipShouldFoundListPlaceTypeWorship() {
-        onView(withText(R.string.not_define_place_type))
-                .perform(click());
+        clickPlaceTypeNotDefine();
         onView(withText(R.string.worship))
                 .perform(click());
-        textDisplayed(R.string.worship);
-        onView(allOf(withId(R.id.place_count), withContentDescription(R.string.number_place_list_in_database)))
-                .check(matches(withText("2 รายการ")));
         textDisplayed("วัดป่าภูก้อน");
         textDisplayed("โบสถ์เซนต์เมรี่");
     }
 
     @Test
     public void chooseTypeSchoolShouldFoundListPlaceTypeSchool() {
-        onView(withText(R.string.not_define_place_type))
-                .perform(click());
+        clickPlaceTypeNotDefine();
         onView(withText(R.string.school))
                 .perform(click());
-        textDisplayed(R.string.school);
-        onView(allOf(withId(R.id.place_count), withContentDescription(R.string.number_place_list_in_database)))
-                .check(matches(withText("3 รายการ")));
         textDisplayed("โรงเรียนเซนต์เมรี่");
         textDisplayed("โรงเรียนดอนบอสโก");
         textDisplayed("โรงเรียนอนุบาล");
@@ -134,8 +130,7 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
 
     @Test
     public void chooseTypeHospitalShouldFoundListPlaceTypeHospital() {
-        onView(withText(R.string.not_define_place_type))
-                .perform(click());
+        clickPlaceTypeNotDefine();
         onView(withText(R.string.hospital))
                 .perform(click());
         textDisplayed(R.string.hospital);
@@ -144,13 +139,8 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
         textDisplayed("โรงพยาบาลกรุงเทพ");
     }
 
-    @Test
-    public void chooseTypeFactoryShouldNotFoundListPlace() {
+    private void clickPlaceTypeNotDefine() {
         onView(withText(R.string.not_define_place_type))
                 .perform(click());
-        onView(withText(R.string.factory))
-                .perform(click());
-        textDisplayed(R.string.places_not_found);
-        textDisplayed(R.string.factory);
     }
 }

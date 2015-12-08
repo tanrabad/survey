@@ -17,6 +17,7 @@
 
 package th.or.nectec.tanrabad.survey.presenter;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -34,8 +35,20 @@ import th.or.nectec.tanrabad.survey.utils.android.TwiceBackPressed;
 public class MapMarkerActivity extends TanrabadActivity implements View.OnClickListener {
 
     public static final String MAP_LOCATION = "map_location";
+    public static final int MARK_LOCATION_REQUEST_CODE = 50000;
     MapMarkerFragment mapMarkerFragment;
     private TwiceBackPressed twiceBackPressed;
+
+    public static void startAdd(Activity activity) {
+        Intent intent = new Intent(activity, MapMarkerActivity.class);
+        activity.startActivityForResult(intent, MARK_LOCATION_REQUEST_CODE);
+    }
+
+    public static void startEdit(Activity activity, LatLng location) {
+        Intent intent = new Intent(activity, MapMarkerActivity.class);
+        intent.putExtra(MapMarkerActivity.MAP_LOCATION, location);
+        activity.startActivityForResult(intent, MARK_LOCATION_REQUEST_CODE);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

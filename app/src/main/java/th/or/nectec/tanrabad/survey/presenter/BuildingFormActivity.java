@@ -60,7 +60,6 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
     public static final String BUILDING_UUID_ARG = "building_uuid_arg";
 
     public static final int ADD_BUILDING_REQ_CODE = 40000;
-    public static final int MARK_LOCATION_REQUEST_CODE = 50000;
 
 
     private TextView placeName;
@@ -194,31 +193,19 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.add_marker:
-                openMapMarkerActivity();
+                MapMarkerActivity.startAdd(BuildingFormActivity.this);
                 break;
             case R.id.edit_location:
-                openEditMapMarkerActivity(buildingLocation);
+                MapMarkerActivity.startEdit(BuildingFormActivity.this, buildingLocation);
                 break;
         }
-
-    }
-
-    private void openMapMarkerActivity() {
-        Intent intent = new Intent(BuildingFormActivity.this, MapMarkerActivity.class);
-        startActivityForResult(intent, MARK_LOCATION_REQUEST_CODE);
-    }
-
-    private void openEditMapMarkerActivity(LatLng location) {
-        Intent intent = new Intent(BuildingFormActivity.this, MapMarkerActivity.class);
-        intent.putExtra(MapMarkerActivity.MAP_LOCATION, location);
-        startActivityForResult(intent, MARK_LOCATION_REQUEST_CODE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case MARK_LOCATION_REQUEST_CODE:
+            case MapMarkerActivity.MARK_LOCATION_REQUEST_CODE:
                 if (resultCode == RESULT_OK) {
                     setupPreviewMapWithPosition(data.<LatLng>getParcelableExtra(MapMarkerActivity.MAP_LOCATION));
                 }

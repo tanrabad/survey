@@ -17,14 +17,14 @@
 
 package th.or.nectec.tanrabad.domain.survey;
 
+import java.util.List;
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.User;
-
-import java.util.List;
-import java.util.UUID;
 
 public class SurveyBuildingHistoryController {
     private UserRepository userRepository;
@@ -49,7 +49,7 @@ public class SurveyBuildingHistoryController {
 
         List<Survey> buildings = surveyRepository.findByPlaceAndUserIn7Days(place, user);
         if (buildings == null) {
-            surveyBuildingPresenter.alertSurveyBuildingsNotFound();
+            surveyBuildingPresenter.displaySurveyBuildingsNotFound();
             return;
         }
 

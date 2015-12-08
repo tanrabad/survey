@@ -25,30 +25,34 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
+
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
-import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyStatus;
-import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyStatusListPresenter;
-import th.or.nectec.tanrabad.domain.survey.SurveyPlaceChooser;
-import th.or.nectec.tanrabad.survey.R;
-import th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView;
-import th.or.nectec.tanrabad.survey.repository.InMemoryPlaceRepository;
-import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
-import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
-import th.or.nectec.tanrabad.survey.utils.alert.Alert;
-import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
-import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 
 import java.util.List;
 
-public class PlaceListInDatabaseFragment extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener, PlaceWithSurveyStatusListPresenter {
+import th.or.nectec.tanrabad.domain.place.PlaceChooser;
+import th.or.nectec.tanrabad.domain.place.PlaceListPresenter;
+import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView;
+import th.or.nectec.tanrabad.survey.repository.InMemoryPlaceRepository;
+import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
+import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
+
+public class PlaceListInDatabaseFragment extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener, PlaceListPresenter {
 
     public static final int ADD_PLACE_REQ_CODE = 30000;
-    private PlaceWithSurveyStatusAdapter placeAdapter;
+    private PlaceAdapter placeAdapter;
     private PlaceTypeAdapter placeTypeAdapter;
-    private SurveyPlaceChooser placeChooser = new SurveyPlaceChooser(new StubUserRepository(), InMemoryPlaceRepository.getInstance(), InMemorySurveyRepository.getInstance(), this);
+    private PlaceChooser placeChooser = new PlaceChooser(InMemoryPlaceRepository.getInstance(), this);
     private TextView placeCountView;
     private RecyclerView placeListView;
     private AppCompatSpinner placeFilterView;
@@ -63,55 +67,39 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
     }
 
     @Override
-    public void alertUserNotFound() {
-        Alert.highLevel().show(R.string.user_not_found);
+    public void displayPlaceList(List<Place> places) {
+        placeAdapter.updateData(places);
+        placeCountView.setText(getString(R.string.format_place_count, places.size()));
+        placeCountView.setVisibility(View.VISIBLE);
+        emptyLayoutView.setVisibility(View.GONE);
     }
 
     @Override
-    public void displayPlacesNotfound() {
+    public void displayPlaceNotFound() {
         placeAdapter.clearData();
         placeCountView.setVisibility(View.GONE);
         emptyLayoutView.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void displayAllSurveyPlaceList(List<PlaceWithSurveyStatus> buildingsWithSurveyStatuses) {
-        placeAdapter.updateData(buildingsWithSurveyStatuses);
-        placeCountView.setText(getString(R.string.format_place_count, buildingsWithSurveyStatuses.size()));
-        placeCountView.setVisibility(View.VISIBLE);
-        emptyLayoutView.setVisibility(View.GONE);
-    }
-
-    @Override
     public void onItemClick(AdapterView<?> adapterView, View view, final int position, long l) {
-        final PlaceWithSurveyStatus placeWithSurveyStatus = placeAdapter.getItem(position);
+        final Place placeData = placeAdapter.getItem(position);
         PromptMessage promptMessage = new AlertDialogPromptMessage(getActivity());
         promptMessage.setOnConfirm(getString(R.string.survey), new PromptMessage.OnConfirmListener() {
             @Override
             public void onConfirm() {
-                if (placeWithSurveyStatus.isSurvey()) {
-                    openBuildingSurveyHistoryActivity(placeWithSurveyStatus);
-                } else {
-                    openBuildingListActivity(placeWithSurveyStatus);
-                }
+                openBuildingSurveyHistoryActivity(placeData);
             }
         });
         promptMessage.setOnCancel(getString(R.string.cancel), null);
-        promptMessage.show(getString(R.string.start_survey), placeAdapter.getItem(position).getPlace().getName());
+        promptMessage.show(getString(R.string.start_survey), placeAdapter.getItem(position).getName());
 
     }
 
-    private void openBuildingSurveyHistoryActivity(PlaceWithSurveyStatus placeWithSurveyStatus) {
+    private void openBuildingSurveyHistoryActivity(Place placeData) {
         Intent intent = new Intent(getActivity(), SurveyBuildingHistoryActivity.class);
-        intent.putExtra(SurveyBuildingHistoryActivity.PLACE_UUID_ARG, placeWithSurveyStatus.getPlace().getId().toString());
+        intent.putExtra(SurveyBuildingHistoryActivity.PLACE_UUID_ARG, placeData.getId().toString());
         intent.putExtra(SurveyBuildingHistoryActivity.USER_NAME_ARG, getUsername());
-        startActivity(intent);
-    }
-
-    private void openBuildingListActivity(PlaceWithSurveyStatus placeWithSurveyStatus) {
-        Intent intent = new Intent(getActivity(), BuildingListActivity.class);
-        intent.putExtra(BuildingListActivity.PLACE_UUID_ARG, placeWithSurveyStatus.getPlace().getId().toString());
-        intent.putExtra(BuildingListActivity.IS_NEW_SURVEY_ARG, true);
         startActivity(intent);
     }
 
@@ -123,9 +111,9 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
         int selectedID = (int) placeTypeAdapter.getItemId(position);
         if (selectedID > 0) {
-            placeChooser.getPlaceListWithPlaceFilter(selectedID, getUsername());
+            placeChooser.getPlaceListWithPlaceFilter(selectedID);
         } else {
-            placeChooser.displaySurveyBuildingOf(getUsername());
+            placeChooser.getPlaceList();
         }
     }
 
@@ -139,7 +127,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             placeFilterView.setSelection(0);
-            placeChooser.displaySurveyBuildingOf(getUsername());
+            placeChooser.getPlaceList();
         }
     }
 
@@ -168,7 +156,6 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
         recyclerViewHeader = (RecyclerViewHeader) view.findViewById(R.id.card_header);
         emptyLayoutView = (EmptyLayoutView) view.findViewById(R.id.empty_layout);
         emptyLayoutView.setEmptyIcon(R.mipmap.ic_place);
-
     }
 
     private void setupEmptyList() {
@@ -188,7 +175,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
     }
 
     private void setupPlaceList() {
-        placeAdapter = new PlaceWithSurveyStatusAdapter(getActivity());
+        placeAdapter = new PlaceAdapter(getActivity());
         placeAdapter.setOnItemClickListener(this);
         placeListView.setAdapter(placeAdapter);
         placeListView.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));

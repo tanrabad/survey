@@ -17,16 +17,16 @@
 
 package th.or.nectec.tanrabad.domain.survey;
 
-import th.or.nectec.tanrabad.entity.Survey;
-
 import java.util.List;
+
+import th.or.nectec.tanrabad.entity.Survey;
 
 public interface SurveyBuildingPresenter {
     void alertUserNotFound();
 
     void alertPlaceNotFound();
 
-    void alertSurveyBuildingsNotFound();
+    void displaySurveyBuildingsNotFound();
 
     void displaySurveyBuildingList(List<Survey> buildings);
 }

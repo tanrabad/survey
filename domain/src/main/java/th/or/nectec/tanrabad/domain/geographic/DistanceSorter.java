@@ -23,5 +23,5 @@ import java.util.List;
 
 public interface DistanceSorter {
 
-    List<LocationEntity> sort(List<LocationEntity> locationings);
+    List<LocationEntity> sort(List<LocationEntity> locationEntity);
 }

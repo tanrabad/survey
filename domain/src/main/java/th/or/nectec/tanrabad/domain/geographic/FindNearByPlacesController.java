@@ -25,25 +25,45 @@ import java.util.List;
 
 public class FindNearByPlacesController {
     private FilterBoundaryCalculator filterBoundaryCalculator;
+    private CoordinateLocationCalculator coordinateLocationCalculate;
     private PlaceRepository placeRepository;
     private DistanceSorter distanceSorter;
     private NearbyPlacePresenter nearbyPlacePresenter;
 
     public FindNearByPlacesController(FilterBoundaryCalculator filterBoundaryCalculator,
-                                      PlaceRepository placeRepository,
+                                      CoordinateLocationCalculator coordinateLocationCalculate, PlaceRepository placeRepository,
                                       DistanceSorter distanceSorter,
                                       NearbyPlacePresenter nearbyPlacePresenter) {
         this.filterBoundaryCalculator = filterBoundaryCalculator;
+        this.coordinateLocationCalculate = coordinateLocationCalculate;
         this.placeRepository = placeRepository;
         this.distanceSorter = distanceSorter;
         this.nearbyPlacePresenter = nearbyPlacePresenter;
     }
 
     public void findNearByPlace(Location currentLocation, double distanceInKm) {
-        Location minimumLocation = filterBoundaryCalculator.getMinLocation(currentLocation, distanceInKm);
+/*        Location minimumLocation = filterBoundaryCalculator.getMinLocation(currentLocation, distanceInKm);
         Location maximumLocation = filterBoundaryCalculator.getMaxLocation(currentLocation, distanceInKm);
 
+        Location newMinimumLocation = coordinateLocationCalculate.getNewMinLocation(currentLocation,distanceInKm);
+        Location newMaximumLocation = coordinateLocationCalculate.getNewMaxLocation(currentLocation, distanceInKm);
+
         List<LocationEntity> placeFiltered = placeRepository.findInBoundaryLocation(minimumLocation, maximumLocation);
+
+        if (placeFiltered == null) {
+            nearbyPlacePresenter.displayPlaceNotFound();
+        } else {
+            distanceSorter.sort(placeFiltered);
+            nearbyPlacePresenter.displayNearByPlaces(placeFiltered);
+        }*/
+
+        Location outsideMinimumLocation = filterBoundaryCalculator.getMinLocation(currentLocation, distanceInKm);
+        Location outsideMaximumLocation = filterBoundaryCalculator.getMaxLocation(currentLocation, distanceInKm);
+
+        Location insideMinimumLocation = coordinateLocationCalculate.getNewMinLocation(currentLocation, distanceInKm);
+        Location insideMaximumLocation = coordinateLocationCalculate.getNewMaxLocation(currentLocation, distanceInKm);
+
+        List<LocationEntity> placeFiltered = placeRepository.findTrimmedInBoundaryLocation(insideMinimumLocation, outsideMinimumLocation, insideMaximumLocation, outsideMaximumLocation);
 
         if (placeFiltered == null) {
             nearbyPlacePresenter.displayPlaceNotFound();

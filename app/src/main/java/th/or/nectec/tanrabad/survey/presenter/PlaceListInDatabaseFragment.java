@@ -18,7 +18,6 @@
 package th.or.nectec.tanrabad.survey.presenter;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatSpinner;
@@ -48,7 +47,7 @@ import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 
 public class PlaceListInDatabaseFragment extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener, PlaceListPresenter {
 
-    public static final int ADD_PLACE_REQ_CODE = 30000;
+
     private PlaceAdapter placeAdapter;
     private PlaceTypeAdapter placeTypeAdapter;
     private PlaceChooser placeChooser = new PlaceChooser(InMemoryPlaceRepository.getInstance(), this);
@@ -89,19 +88,12 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
         promptMessage.setOnConfirm(getString(R.string.survey), new PromptMessage.OnConfirmListener() {
             @Override
             public void onConfirm() {
-                openBuildingSurveyHistoryActivity(placeData);
+                SurveyBuildingHistoryActivity.openBuildingSurveyHistoryActivity(getActivity(), placeData, "sara");
             }
         });
         promptMessage.setOnCancel(getString(R.string.cancel), null);
         promptMessage.show(getString(R.string.start_survey), placeAdapter.getItem(position).getName());
 
-    }
-
-    private void openBuildingSurveyHistoryActivity(Place placeData) {
-        Intent intent = new Intent(getActivity(), SurveyBuildingHistoryActivity.class);
-        intent.putExtra(SurveyBuildingHistoryActivity.PLACE_UUID_ARG, placeData.getId().toString());
-        intent.putExtra(SurveyBuildingHistoryActivity.USER_NAME_ARG, getUsername());
-        startActivity(intent);
     }
 
     private String getUsername() {
@@ -154,7 +146,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
         emptyLayoutView.setEmptyButtonText(R.string.add_place, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openAddPlaceActivity();
+                PlaceAddActivity.openAddPlaceActivity(getActivity(), placeTypeID);
             }
         });
         emptyLayoutView.setEmptyText(R.string.places_not_found);
@@ -176,12 +168,6 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
         recyclerViewHeader.attachTo(placeListView, true);
     }
 
-    private void openAddPlaceActivity() {
-        Intent intent = new Intent(getActivity(), PlaceAddActivity.class);
-        intent.putExtra(PlaceAddActivity.PLACE_TYPE_ID_ARG, placeTypeID);
-        startActivityForResult(intent, ADD_PLACE_REQ_CODE);
-    }
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.action_activity_place_list, menu);
@@ -192,7 +178,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add_place_menu:
-                openAddPlaceActivity();
+                PlaceAddActivity.openAddPlaceActivity(getActivity(), placeTypeID);
                 break;
         }
         return super.onOptionsItemSelected(item);

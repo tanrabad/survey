@@ -17,6 +17,7 @@
 
 package th.or.nectec.tanrabad.survey.presenter;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -63,6 +64,13 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
     private TextView cardSubhead;
     private EmptyLayoutView emptyLayoutView;
 
+    public static void openBuildingSurveyHistoryActivity(Activity activity, Place placeData, String username) {
+        Intent intent = new Intent(activity, SurveyBuildingHistoryActivity.class);
+        intent.putExtra(SurveyBuildingHistoryActivity.PLACE_UUID_ARG, placeData.getId().toString());
+        intent.putExtra(SurveyBuildingHistoryActivity.USER_NAME_ARG, username);
+        activity.startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +91,10 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
         placeController.showPlace(UUID.fromString(getPlaceUuidFromIntent()));
     }
 
+    private String getPlaceUuidFromIntent() {
+        return getIntent().getStringExtra(PLACE_UUID_ARG);
+    }
+
     private void setupBuildingHistoryList() {
         surveyBuildingHistoryAdapter = new SurveyBuildingHistoryAdapter(this, BuildingIconMapping.getBuildingIcon(place));
         RecyclerView surveyBuildingHistoryList = (RecyclerView) findViewById(R.id.survey_building_history_list);
@@ -99,6 +111,17 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
         RecyclerViewHeader recyclerViewHeader = (RecyclerViewHeader) findViewById(R.id.card_header);
 
         recyclerViewHeader.attachTo(surveyBuildingHistoryList, true);
+    }
+
+    private void openSurveyActivity(Building building) {
+        Intent intent = new Intent(SurveyBuildingHistoryActivity.this, SurveyActivity.class);
+        intent.putExtra(SurveyActivity.BUILDING_UUID_ARG, building.getId().toString());
+        intent.putExtra(SurveyActivity.USERNAME_ARG, getUsernameFromIntent());
+        startActivity(intent);
+    }
+
+    private String getUsernameFromIntent() {
+        return getIntent().getStringExtra(USER_NAME_ARG);
     }
 
     private void setupEmptyLayout() {
@@ -120,21 +143,6 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
                 openBuildingListActivity();
             }
         });
-    }
-
-    private String getPlaceUuidFromIntent() {
-        return getIntent().getStringExtra(PLACE_UUID_ARG);
-    }
-
-    private void openSurveyActivity(Building building) {
-        Intent intent = new Intent(SurveyBuildingHistoryActivity.this, SurveyActivity.class);
-        intent.putExtra(SurveyActivity.BUILDING_UUID_ARG, building.getId().toString());
-        intent.putExtra(SurveyActivity.USERNAME_ARG, getUsernameFromIntent());
-        startActivity(intent);
-    }
-
-    private String getUsernameFromIntent() {
-        return getIntent().getStringExtra(USER_NAME_ARG);
     }
 
     private void openBuildingListActivity() {

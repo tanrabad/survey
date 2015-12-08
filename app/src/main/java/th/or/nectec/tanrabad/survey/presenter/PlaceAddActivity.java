@@ -17,6 +17,7 @@
 
 package th.or.nectec.tanrabad.survey.presenter;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatSpinner;
@@ -56,6 +57,8 @@ public class PlaceAddActivity extends TanrabadActivity implements View.OnClickLi
 
     public static final String PLACE_TYPE_ID_ARG = "place_category_id_arg";
     public static final String PLACE_UUID_ARG = "place_uuid_arg";
+
+    public static final int ADD_PLACE_REQ_CODE = 30000;
     public static final int MARK_LOCATION_REQUEST_CODE = 50000;
     Place place;
     PlaceRepository placeRepository = InMemoryPlaceRepository.getInstance();
@@ -67,12 +70,17 @@ public class PlaceAddActivity extends TanrabadActivity implements View.OnClickLi
     private TextView placeSubtypeLabel;
     private AppCompatSpinner placeSubtypeSelector;
     private Button editLocationButton;
-    private FrameLayout mapContainer;
     private FrameLayout addLocationBackground;
     private Button addMarkerButton;
     private Toolbar toolbar;
     private LatLng placeLocation;
     private TwiceBackPressed twiceBackPressed;
+
+    public static void openAddPlaceActivity(Activity activity, int placeTypeID) {
+        Intent intent = new Intent(activity, PlaceAddActivity.class);
+        intent.putExtra(PlaceAddActivity.PLACE_TYPE_ID_ARG, placeTypeID);
+        activity.startActivityForResult(intent, ADD_PLACE_REQ_CODE);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +105,6 @@ public class PlaceAddActivity extends TanrabadActivity implements View.OnClickLi
         placeSubtypeLayout = findViewById(R.id.place_subtype_layout);
         placeSubtypeLabel = (TextView) findViewById(R.id.place_subtype_label);
         placeSubtypeSelector = (AppCompatSpinner) findViewById(R.id.place_subtype_selector);
-        mapContainer = (FrameLayout) findViewById(R.id.map_container);
         addLocationBackground = (FrameLayout) findViewById(R.id.add_location_background);
         addMarkerButton = (Button) findViewById(R.id.add_marker);
 
@@ -139,9 +146,12 @@ public class PlaceAddActivity extends TanrabadActivity implements View.OnClickLi
         placeTypeSelector.setSelection(placeAdapter.getPlaceTypePosition(getPlaceTypeID()));
     }
 
+    private int getPlaceTypeID() {
+        return getIntent().getIntExtra(PLACE_TYPE_ID_ARG, Place.SUBTYPE_TEMPLE);
+    }
+
     private void loadPlaceData() {
         if (TextUtils.isEmpty(getPlaceUUID())) {
-            setupPreviewMap();
             place = Place.withName(null);
         } else {
             PlaceController placeController = new PlaceController(placeRepository, this);
@@ -151,10 +161,6 @@ public class PlaceAddActivity extends TanrabadActivity implements View.OnClickLi
 
     public String getPlaceUUID() {
         return getIntent().getStringExtra(PLACE_UUID_ARG);
-    }
-
-    private int getPlaceTypeID() {
-        return getIntent().getIntExtra(PLACE_TYPE_ID_ARG, Place.SUBTYPE_TEMPLE);
     }
 
     @Override
@@ -211,6 +217,13 @@ public class PlaceAddActivity extends TanrabadActivity implements View.OnClickLi
         getSupportFragmentManager().beginTransaction().replace(R.id.map_container, supportMapFragment).commit();
     }
 
+    @Override
+    public void onBackPressed() {
+        if (twiceBackPressed.onTwiceBackPressed()) {
+            finish();
+        }
+    }
+
     public void onRootViewClick(View view) {
         SoftKeyboard.hideOn(this);
     }
@@ -242,7 +255,7 @@ public class PlaceAddActivity extends TanrabadActivity implements View.OnClickLi
     public void displaySaveSuccess() {
         setResult(RESULT_OK);
         finish();
-        openBuildingListActivity(place);
+        SurveyBuildingHistoryActivity.openBuildingSurveyHistoryActivity(PlaceAddActivity.this, place, "sara");
     }
 
     @Override
@@ -263,19 +276,5 @@ public class PlaceAddActivity extends TanrabadActivity implements View.OnClickLi
     @Override
     public void alertPlaceNotFound() {
         this.place = Place.withName(null);
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (twiceBackPressed.onTwiceBackPressed()) {
-            finish();
-        }
-    }
-
-    private void openBuildingListActivity(Place placeData) {
-        Intent intent = new Intent(PlaceAddActivity.this, BuildingListActivity.class);
-        intent.putExtra(BuildingListActivity.PLACE_UUID_ARG, placeData.getId().toString());
-        intent.putExtra(SurveyActivity.USERNAME_ARG, "sara");
-        startActivity(intent);
     }
 }

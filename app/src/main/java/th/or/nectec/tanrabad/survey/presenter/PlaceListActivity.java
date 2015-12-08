@@ -34,8 +34,6 @@ import uk.co.chrisjenx.calligraphy.TypefaceUtils;
 
 public class PlaceListActivity extends TanrabadActivity {
 
-    public static final int ADD_PLACE_REQ_CODE = 30000;
-    private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager placePager;
 
@@ -56,7 +54,7 @@ public class PlaceListActivity extends TanrabadActivity {
     }
 
     private void setupViews() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         placePager = (ViewPager) findViewById(R.id.place_pager);
         setSupportActionBar(toolbar);

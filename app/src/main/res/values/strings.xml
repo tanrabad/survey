@@ -131,5 +131,6 @@
     <string name="notify_only_survey_on_current_device">เฉพาะข้อมูลที่สำรวจด้วยเครื่องนี้</string>
     <string name="building_already_survey">สำรวจแล้ว</string>
     <string name="abort_add_marker">ยกเลิกการเพิ่มพิกัด</string>
+    <string name="press_back_again_to_exit">กรุณากดอีกครั้งเพื่อออก</string>
 
 </resources>

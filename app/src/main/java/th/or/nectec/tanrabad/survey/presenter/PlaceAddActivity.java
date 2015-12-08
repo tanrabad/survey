@@ -48,6 +48,7 @@ import th.or.nectec.tanrabad.survey.presenter.maps.LiteMapFragment;
 import th.or.nectec.tanrabad.survey.repository.InMemoryPlaceRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
+import th.or.nectec.tanrabad.survey.utils.android.TwiceBackPressed;
 import th.or.nectec.tanrabad.survey.validator.SavePlaceValidator;
 import th.or.nectec.tanrabad.survey.validator.ValidatorException;
 
@@ -70,15 +71,21 @@ public class PlaceAddActivity extends TanrabadActivity implements View.OnClickLi
     private Button addMarkerButton;
     private Toolbar toolbar;
     private LatLng placeLocation;
+    private TwiceBackPressed twiceBackPressed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_add);
+        setupTwiceBackPressed();
         setupViews();
         setupPreviewMap();
         setupPlaceTypeSelector();
         loadPlaceData();
+    }
+
+    private void setupTwiceBackPressed() {
+        twiceBackPressed = new TwiceBackPressed(this);
     }
 
     private void setupViews() {
@@ -249,6 +256,13 @@ public class PlaceAddActivity extends TanrabadActivity implements View.OnClickLi
     @Override
     public void alertPlaceNotFound() {
         this.place = Place.withName(null);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (twiceBackPressed.onTwiceBackPressed()) {
+            finish();
+        }
     }
 
     private void openBuildingListActivity(Place placeData) {

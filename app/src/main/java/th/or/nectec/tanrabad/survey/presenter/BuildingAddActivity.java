@@ -28,8 +28,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.domain.building.BuildingController;
 import th.or.nectec.tanrabad.domain.building.BuildingPresenter;
 import th.or.nectec.tanrabad.domain.building.BuildingSavePresenter;
@@ -45,12 +49,9 @@ import th.or.nectec.tanrabad.survey.repository.InMemoryBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.InMemoryPlaceRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
-import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
-import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
+import th.or.nectec.tanrabad.survey.utils.android.TwiceBackPressed;
 import th.or.nectec.tanrabad.survey.validator.SaveBuildingValidator;
 import th.or.nectec.tanrabad.survey.validator.ValidatorException;
-
-import java.util.UUID;
 
 public class BuildingAddActivity extends TanrabadActivity implements PlacePresenter, BuildingPresenter, BuildingSavePresenter, View.OnClickListener {
 
@@ -72,6 +73,7 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
     private Place place;
     private Building building;
     private Button editLocationButton;
+    private TwiceBackPressed twiceBackPressed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,9 +81,14 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
         setContentView(R.layout.activity_building_add);
         assignViews();
 
+        setupTwiceBackPressed();
         setSupportActionBar(toolbar);
         placeController.showPlace(UUID.fromString(getPlaceUUID()));
         loadBuildingData();
+    }
+
+    private void setupTwiceBackPressed() {
+        twiceBackPressed = new TwiceBackPressed(this);
     }
 
     private void assignViews() {
@@ -204,22 +211,9 @@ public class BuildingAddActivity extends TanrabadActivity implements PlacePresen
 
     @Override
     public void onBackPressed() {
-        showAbortAddBuildingPrompt();
-    }
-
-    private void showAbortAddBuildingPrompt() {
-        PromptMessage prompt = new AlertDialogPromptMessage(this);
-        prompt.setOnCancel(getString(R.string.no), null);
-        prompt.setOnConfirm(getString(R.string.yes), new PromptMessage.OnConfirmListener() {
-            @Override
-            public void onConfirm() {
-                finish();
-            }
-        });
-        String promptTitle = TextUtils.isEmpty(getBuildingUUID()) ?
-                getString(R.string.abort_add_building) : getString(R.string.abort_edit_building);
-        String promptMessage = TextUtils.isEmpty(getBuildingUUID()) ? place.getName() : building.getName();
-        prompt.show(promptTitle, promptMessage);
+        if (twiceBackPressed.onTwiceBackPressed()) {
+            finish();
+        }
     }
 
     @Override

@@ -265,14 +265,7 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
     public void displaySaveSuccess() {
         setResult(RESULT_OK);
         finish();
-        openSurveyActivity(building);
-    }
-
-    private void openSurveyActivity(Building building) {
-        Intent intent = new Intent(BuildingFormActivity.this, SurveyActivity.class);
-        intent.putExtra(SurveyActivity.BUILDING_UUID_ARG, building.getId().toString());
-        intent.putExtra(SurveyActivity.USERNAME_ARG, "sara");
-        startActivity(intent);
+        SurveyActivity.open(BuildingFormActivity.this, building);
     }
 
     @Override

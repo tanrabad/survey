@@ -38,7 +38,6 @@ import th.or.nectec.tanrabad.domain.place.PlaceController;
 import th.or.nectec.tanrabad.domain.place.PlacePresenter;
 import th.or.nectec.tanrabad.domain.survey.SurveyBuildingHistoryController;
 import th.or.nectec.tanrabad.domain.survey.SurveyBuildingPresenter;
-import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.utils.HouseIndex;
@@ -61,7 +60,6 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
 
     private SurveyBuildingHistoryAdapter surveyBuildingHistoryAdapter;
     private Place place;
-    private TextView cardSubhead;
     private EmptyLayoutView emptyLayoutView;
 
     public static void openBuildingSurveyHistoryActivity(Activity activity, Place placeData, String username) {
@@ -105,23 +103,12 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Survey survey = surveyBuildingHistoryAdapter.getItem(position);
-                openSurveyActivity(survey.getSurveyBuilding());
+                SurveyActivity.open(SurveyBuildingHistoryActivity.this, survey.getSurveyBuilding());
             }
         });
         RecyclerViewHeader recyclerViewHeader = (RecyclerViewHeader) findViewById(R.id.card_header);
 
         recyclerViewHeader.attachTo(surveyBuildingHistoryList, true);
-    }
-
-    private void openSurveyActivity(Building building) {
-        Intent intent = new Intent(SurveyBuildingHistoryActivity.this, SurveyActivity.class);
-        intent.putExtra(SurveyActivity.BUILDING_UUID_ARG, building.getId().toString());
-        intent.putExtra(SurveyActivity.USERNAME_ARG, getUsernameFromIntent());
-        startActivity(intent);
-    }
-
-    private String getUsernameFromIntent() {
-        return getIntent().getStringExtra(USER_NAME_ARG);
     }
 
     private void setupEmptyLayout() {
@@ -143,6 +130,10 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
                 openBuildingListActivity();
             }
         });
+    }
+
+    private String getUsernameFromIntent() {
+        return getIntent().getStringExtra(USER_NAME_ARG);
     }
 
     private void openBuildingListActivity() {
@@ -177,7 +168,7 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
     @Override
     public void displaySurveyBuildingList(List<Survey> surveys) {
         emptyLayoutView.setVisibility(View.GONE);
-        cardSubhead = (TextView) findViewById(R.id.place_subhead);
+        TextView cardSubhead = (TextView) findViewById(R.id.place_subhead);
         HouseIndex hi = new HouseIndex(surveys);
         hi.calculate();
         cardSubhead.setText(getString(R.string.format_house_survey, hi.getTotalSurveyHouse(), hi.getFoundLarvaeHouse()));

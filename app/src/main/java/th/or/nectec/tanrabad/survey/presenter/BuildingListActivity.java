@@ -37,7 +37,6 @@ import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatusListPresent
 import th.or.nectec.tanrabad.domain.place.PlaceController;
 import th.or.nectec.tanrabad.domain.place.PlacePresenter;
 import th.or.nectec.tanrabad.domain.survey.SurveyBuildingChooser;
-import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView;
@@ -89,7 +88,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 BuildingWithSurveyStatus building = buildingAdapter.getItem(position);
-                openSurveyActivity(building.getBuilding());
+                SurveyActivity.open(BuildingListActivity.this, building.getBuilding());
             }
         });
         buildingAdapter.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -104,13 +103,6 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         });
         RecyclerViewHeader recyclerViewHeader = (RecyclerViewHeader) findViewById(R.id.card_header);
         recyclerViewHeader.attachTo(buildingList, true);
-    }
-
-    private void openSurveyActivity(Building building) {
-        Intent intent = new Intent(BuildingListActivity.this, SurveyActivity.class);
-        intent.putExtra(SurveyActivity.BUILDING_UUID_ARG, building.getId().toString());
-        intent.putExtra(SurveyActivity.USERNAME_ARG, "sara");
-        startActivity(intent);
     }
 
     private void setupEmptyLayout() {

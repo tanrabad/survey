@@ -19,7 +19,7 @@ package th.or.nectec.tanrabad.survey.Suite;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import th.or.nectec.tanrabad.survey.presenter.acceptance.*;
+import th.or.nectec.tanrabad.survey.presenter.*;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({

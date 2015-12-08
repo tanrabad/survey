@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey.presenter.acceptance;
+package th.or.nectec.tanrabad.survey.presenter;
 
 import android.content.Intent;
 import android.support.test.rule.ActivityTestRule;
@@ -32,7 +32,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.*;
 import static org.hamcrest.Matchers.allOf;
 
-public class BuildingTypeWorshipListSurveyTest extends TanrabadEspressoTestBase {
+public class BuildingTypeHospitalListSurveyTest extends TanrabadEspressoTestBase {
     public ActivityTestRule<BuildingListActivity> mActivityTestRule
             = new ActivityTestRule<>(BuildingListActivity.class);
     BuildingListActivity mActivity;
@@ -40,22 +40,22 @@ public class BuildingTypeWorshipListSurveyTest extends TanrabadEspressoTestBase 
     @Before
     public void setUp() {
         Intent intent = new Intent();
-        intent.putExtra("place_uuid_arg", UUID.nameUUIDFromBytes("3def".getBytes()).toString());
+        intent.putExtra("place_uuid_arg", UUID.nameUUIDFromBytes("2bcd".getBytes()).toString());
         mActivity = mActivityTestRule.launchActivity(intent);
     }
-    
+
     @Test
-    public void openBuildingTypeWorshipShouldfoundBuildinglistTypeWorship() {
+    public void openBuildingTypeHospitalShouldfoundBuildinglistTypeHospital() {
         textDisplayed(R.string.define_building_survey);
         onView(withId(R.id.add_building_menu))
                 .check(matches(isDisplayed()));
-        textDisplayed("วัดป่าภูก้อน");
+        textDisplayed("โรงพยาบาลกรุงเทพ");
         textDisplayed(R.string.title_card_building_list);
         onView(allOf(withId(R.id.building_count)
                 , withContentDescription(R.string.number_building_list)))
                 .check(matches(withText("3 อาคาร")));
-        textDisplayed("ศาลาใหญ่");
-        textDisplayed("เมรุ");
-        textDisplayed("ลานหน้าศาลากลาง");
+        textDisplayed("ตึก1");
+        textDisplayed("ตึกพักญาติ");
+        textDisplayed("โรงอาหาร");
     }
 }

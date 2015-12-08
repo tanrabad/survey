@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey.presenter.acceptance;
+package th.or.nectec.tanrabad.survey.end2end;
 
 import android.content.Intent;
 import android.support.test.rule.ActivityTestRule;
@@ -26,26 +26,27 @@ import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
 import th.or.nectec.tanrabad.survey.presenter.MainActivity;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.Espresso.pressBack;
+import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
-public class MainStartSurveyTest extends TanrabadEspressoTestBase {
+public class MainSurveyTest extends TanrabadEspressoTestBase {
     public ActivityTestRule<MainActivity> mActivityTestRule
             = new ActivityTestRule<>(MainActivity.class);
-    MainActivity mActivity;
 
+    MainActivity mActivity;
     @Before
     public void setUp() {
         Intent intent = new Intent();
-        intent.putExtra("isUiTesting", true);
+        intent.putExtra("isUiTesting",true);
         mActivity = mActivityTestRule.launchActivity(intent);
     }
-
     @Test
-    public void openMainPageShoutFoundMagnifyingGlassIsDisplay() {
-        onView(withId(R.id.start_survey))
-                .check(matches(isDisplayed()));
+    public void testClickMagnifyingGlassShoutOpenDefinePlaceSurvey() {
         textDisplayed(R.string.touch_to_start_survey);
+        onView(withId(R.id.start_survey))
+                .perform(click());
+        textDisplayed(R.string.define_place_survey);
+        pressBack();
     }
 }

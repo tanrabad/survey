@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey.presenter;
+package th.or.nectec.tanrabad.survey.end2end;
 
 import android.content.Intent;
 import android.support.test.rule.ActivityTestRule;
@@ -23,29 +23,47 @@ import org.junit.Before;
 import org.junit.Test;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
+import th.or.nectec.tanrabad.survey.presenter.PlaceListActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
-public class MainSurveyTest extends TanrabadEspressoTestBase {
-    public ActivityTestRule<MainActivity> mActivityTestRule
-            = new ActivityTestRule<>(MainActivity.class);
+public class BuildingPromptCancelSurveyTest extends TanrabadEspressoTestBase {
+    public ActivityTestRule<PlaceListActivity> mActivityTestRule =
+            new ActivityTestRule<>(PlaceListActivity.class);
+    PlaceListActivity mActivity;
 
-    MainActivity mActivity;
     @Before
     public void setUp() {
         Intent intent = new Intent();
-        intent.putExtra("isUiTesting",true);
         mActivity = mActivityTestRule.launchActivity(intent);
     }
+
     @Test
-    public void testClickMagnifyingGlassShoutOpenDefinePlaceSurvey() {
-        textDisplayed(R.string.touch_to_start_survey);
-        onView(withId(R.id.start_survey))
+    public void testChoosePlaceThenClickPressBack() {
+        onView(withText("ชุมชนกอล์ฟวิว"))
                 .perform(click());
-        textDisplayed(R.string.define_place_survey);
+        clickSurveyButton();
+        textDisplayed("ชุมชนกอล์ฟวิว");
+        onView(withId(R.id.card_title))
+                .check(matches(withText("รายชื่ออาคาร")));
+        textDisplayed(R.string.building_list_not_found);
         pressBack();
+        textDisplayed(R.string.abort_survey);
+        textDisplayed("ชุมชนกอล์ฟวิว");
+        textDisplayed(R.string.yes);
+        onView(withText(R.string.no))
+                .perform(click());
+
+        pressBack();
+        textDisplayed(R.string.abort_survey);
+        textDisplayed("ชุมชนกอล์ฟวิว");
+        textDisplayed(R.string.yes);
+        onView(withText(R.string.yes))
+                .perform(click());
     }
 }

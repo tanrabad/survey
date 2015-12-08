@@ -17,46 +17,35 @@
 
 package th.or.nectec.tanrabad.survey.presenter;
 
-
 import android.content.Intent;
 import android.support.test.rule.ActivityTestRule;
 import org.junit.Before;
 import org.junit.Test;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
-
-import java.util.UUID;
+import th.or.nectec.tanrabad.survey.presenter.MainActivity;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
-public class AddBuildingOnlyDefinebuildinglocationTest extends TanrabadEspressoTestBase {
-    public ActivityTestRule<BuildingAddActivity> mActivityTestRule = new ActivityTestRule<>(BuildingAddActivity.class);
-    BuildingAddActivity mActivity;
+public class MainStartSurveyTest extends TanrabadEspressoTestBase {
+    public ActivityTestRule<MainActivity> mActivityTestRule
+            = new ActivityTestRule<>(MainActivity.class);
+    MainActivity mActivity;
 
     @Before
     public void setUp() {
         Intent intent = new Intent();
-        intent.putExtra("place_uuid_arg", UUID.nameUUIDFromBytes("1abc".getBytes()).toString());
-        intent.putExtra("username_arg", "sara");
+        intent.putExtra("isUiTesting", true);
         mActivity = mActivityTestRule.launchActivity(intent);
     }
 
     @Test
-    public void testClickDefineBuildingLocationButtonShouldHaveMarker() {
-        textDisplayed("เพิ่มอาคาร");
-        textDisplayed("หมู่บ้านพาลาซเซตโต้");
-        textDisplayed(R.string.save);
-        textDisplayed(R.string.house_no);
-        textDisplayed(R.string.building_location);
-        textDisplayed(R.string.define_building_location);
-        onView(withId(R.id.add_marker))
-                .perform(click());
-        onView(withText(R.string.save_location))
-                .perform(click());
-       textDisplayed(R.string.edit_location);
+    public void openMainPageShoutFoundMagnifyingGlassIsDisplay() {
+        onView(withId(R.id.start_survey))
+                .check(matches(isDisplayed()));
+        textDisplayed(R.string.touch_to_start_survey);
     }
-
 }

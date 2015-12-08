@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey.presenter;
+package th.or.nectec.tanrabad.survey.end2end;
 
 import android.content.Intent;
 import android.support.test.espresso.matcher.ViewMatchers;
@@ -27,6 +27,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
+import th.or.nectec.tanrabad.survey.presenter.SurveyActivity;
 
 import java.util.UUID;
 

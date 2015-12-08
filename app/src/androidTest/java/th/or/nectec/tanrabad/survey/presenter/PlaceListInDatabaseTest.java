@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey.presenter.acceptance;
+package th.or.nectec.tanrabad.survey.presenter;
 
 import android.content.Intent;
 import android.support.test.espresso.matcher.ViewMatchers;

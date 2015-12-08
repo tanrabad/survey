@@ -21,7 +21,7 @@ package th.or.nectec.tanrabad.survey.Suite;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-import th.or.nectec.tanrabad.survey.presenter.*;
+import th.or.nectec.tanrabad.survey.end2end.*;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({

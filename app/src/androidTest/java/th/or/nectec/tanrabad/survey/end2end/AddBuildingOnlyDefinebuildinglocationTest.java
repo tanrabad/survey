@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey.presenter;
+package th.or.nectec.tanrabad.survey.end2end;
+
 
 import android.content.Intent;
 import android.support.test.rule.ActivityTestRule;
@@ -23,46 +24,40 @@ import org.junit.Before;
 import org.junit.Test;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
+import th.or.nectec.tanrabad.survey.presenter.BuildingAddActivity;
+
+import java.util.UUID;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
-public class BuildingPromptCancelSurveyTest extends TanrabadEspressoTestBase {
-    public ActivityTestRule<PlaceListActivity> mActivityTestRule =
-            new ActivityTestRule<>(PlaceListActivity.class);
-    PlaceListActivity mActivity;
+public class AddBuildingOnlyDefinebuildinglocationTest extends TanrabadEspressoTestBase {
+    public ActivityTestRule<BuildingAddActivity> mActivityTestRule = new ActivityTestRule<>(BuildingAddActivity.class);
+    BuildingAddActivity mActivity;
 
     @Before
     public void setUp() {
         Intent intent = new Intent();
+        intent.putExtra("place_uuid_arg", UUID.nameUUIDFromBytes("1abc".getBytes()).toString());
+        intent.putExtra("username_arg", "sara");
         mActivity = mActivityTestRule.launchActivity(intent);
     }
 
     @Test
-    public void testChoosePlaceThenClickPressBack() {
-        onView(withText("ชุมชนกอล์ฟวิว"))
+    public void testClickDefineBuildingLocationButtonShouldHaveMarker() {
+        textDisplayed("เพิ่มอาคาร");
+        textDisplayed("หมู่บ้านพาลาซเซตโต้");
+        textDisplayed(R.string.save);
+        textDisplayed(R.string.house_no);
+        textDisplayed(R.string.building_location);
+        textDisplayed(R.string.define_building_location);
+        onView(withId(R.id.add_marker))
                 .perform(click());
-        clickSurveyButton();
-        textDisplayed("ชุมชนกอล์ฟวิว");
-        onView(withId(R.id.card_title))
-                .check(matches(withText("รายชื่ออาคาร")));
-        textDisplayed(R.string.building_list_not_found);
-        pressBack();
-        textDisplayed(R.string.abort_survey);
-        textDisplayed("ชุมชนกอล์ฟวิว");
-        textDisplayed(R.string.yes);
-        onView(withText(R.string.no))
+        onView(withText(R.string.save_location))
                 .perform(click());
-
-        pressBack();
-        textDisplayed(R.string.abort_survey);
-        textDisplayed("ชุมชนกอล์ฟวิว");
-        textDisplayed(R.string.yes);
-        onView(withText(R.string.yes))
-                .perform(click());
+       textDisplayed(R.string.edit_location);
     }
+
 }

@@ -54,6 +54,7 @@ import th.or.nectec.tanrabad.survey.validator.ValidatorException;
 
 public class PlaceAddActivity extends TanrabadActivity implements View.OnClickListener, PlaceSavePresenter, PlacePresenter {
 
+    public static final String PLACE_TYPE_ID_ARG = "place_category_id_arg";
     public static final String PLACE_UUID_ARG = "place_uuid_arg";
     public static final int MARK_LOCATION_REQUEST_CODE = 50000;
     Place place;
@@ -134,6 +135,8 @@ public class PlaceAddActivity extends TanrabadActivity implements View.OnClickLi
 
             }
         });
+
+        placeTypeSelector.setSelection(placeAdapter.getPlaceTypePosition(getPlaceTypeID()));
     }
 
     private void loadPlaceData() {
@@ -148,6 +151,10 @@ public class PlaceAddActivity extends TanrabadActivity implements View.OnClickLi
 
     public String getPlaceUUID() {
         return getIntent().getStringExtra(PLACE_UUID_ARG);
+    }
+
+    private int getPlaceTypeID() {
+        return getIntent().getIntExtra(PLACE_TYPE_ID_ARG, Place.SUBTYPE_TEMPLE);
     }
 
     @Override

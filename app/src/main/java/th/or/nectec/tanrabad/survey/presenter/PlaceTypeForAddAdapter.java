@@ -57,6 +57,14 @@ public class PlaceTypeForAddAdapter extends BaseAdapter {
         return placeTypes.get(i);
     }
 
+    public int getPlaceTypePosition(int placeTypeID) {
+        for (PlaceType eachPlaceTypes : placeTypes) {
+            if (eachPlaceTypes.id == placeTypeID)
+                return placeTypes.indexOf(eachPlaceTypes);
+        }
+        return -1;
+    }
+
     @Override
     public long getItemId(int i) {
         return placeTypes.get(i).id;

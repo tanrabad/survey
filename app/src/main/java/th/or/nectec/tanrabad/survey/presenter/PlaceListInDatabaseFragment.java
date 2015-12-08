@@ -18,7 +18,6 @@
 package th.or.nectec.tanrabad.survey.presenter;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -58,6 +57,8 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
     private AppCompatSpinner placeFilterView;
     private RecyclerViewHeader recyclerViewHeader;
     private EmptyLayoutView emptyLayoutView;
+
+    private int placeTypeID = -1;
 
     public static PlaceListInDatabaseFragment newInstance() {
         PlaceListInDatabaseFragment fragment = new PlaceListInDatabaseFragment();
@@ -109,9 +110,9 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-        int selectedID = (int) placeTypeAdapter.getItemId(position);
-        if (selectedID > 0) {
-            placeChooser.getPlaceListWithPlaceFilter(selectedID);
+        placeTypeID = (int) placeTypeAdapter.getItemId(position);
+        if (placeTypeID > 0) {
+            placeChooser.getPlaceListWithPlaceFilter(placeTypeID);
         } else {
             placeChooser.getPlaceList();
         }
@@ -120,15 +121,6 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
-            placeFilterView.setSelection(0);
-            placeChooser.getPlaceList();
-        }
     }
 
     @Override
@@ -186,6 +178,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
 
     private void openAddPlaceActivity() {
         Intent intent = new Intent(getActivity(), PlaceAddActivity.class);
+        intent.putExtra(PlaceAddActivity.PLACE_TYPE_ID_ARG, placeTypeID);
         startActivityForResult(intent, ADD_PLACE_REQ_CODE);
     }
 

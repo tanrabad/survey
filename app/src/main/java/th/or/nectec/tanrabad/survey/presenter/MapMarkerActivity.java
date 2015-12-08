@@ -23,10 +23,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+
 import com.google.android.gms.maps.model.LatLng;
+
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.maps.MapMarkerFragment;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
+import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
+import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 
 public class MapMarkerActivity extends TanrabadActivity implements View.OnClickListener {
 
@@ -94,5 +98,23 @@ public class MapMarkerActivity extends TanrabadActivity implements View.OnClickL
                 mapMarkerFragment.removeMarkedLocation();
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        showAbortAddMarkerPrompt();
+    }
+
+    private void showAbortAddMarkerPrompt() {
+        PromptMessage prompt = new AlertDialogPromptMessage(this);
+        prompt.setOnCancel(getString(R.string.no), null);
+        prompt.setOnConfirm(getString(R.string.yes), new PromptMessage.OnConfirmListener() {
+            @Override
+            public void onConfirm() {
+                finish();
+            }
+        });
+        String promptTitle = getString(R.string.abort_add_marker);
+        prompt.show(promptTitle, null);
     }
 }

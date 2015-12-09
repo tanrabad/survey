@@ -123,7 +123,7 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
     }
 
     @Test
-    public void clickPlaceShouldOpenDefindBuildingPage() {
+    public void clickPlaceShouldOpenDefineBuildingPage() {
         onView(withText("ชุมชนกอล์ฟวิว"))
                 .perform(click());
         onView(withText("สำรวจ"))

@@ -19,8 +19,8 @@ package th.or.nectec.tanrabad.survey.presenter;
 
 import android.content.ComponentName;
 import android.content.Intent;
+
 import android.support.annotation.StringRes;
-import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.espresso.matcher.ViewMatchers;
@@ -28,15 +28,15 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.hamcrest.Matchers;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
-
-import java.util.UUID;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -86,7 +86,7 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
     }
 
     @Test
-    public void clickAddPlace() {
+    public void clickAddPlaceNotChooseType() {
         onView(withId(R.id.add_place_menu))
                 .perform(click());
 
@@ -98,11 +98,25 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
     @Test
     public void clickAddPlaceTypeFactory() {
         changePlaceTypeFilterTo(R.string.factory);
+
+
         onView(withId(R.id.add_place_menu))
                 .perform(click());
         Intents.intended(Matchers.allOf(
                 hasComponent(new ComponentName(mActivity, PlaceFormActivity.class)),
                 hasExtra(PlaceFormActivity.PLACE_TYPE_ID_ARG, Place.TYPE_FACTORY)
+        ));
+    }
+
+    @Test
+    public void clickAddPlaceTypeSchool() {
+        changePlaceTypeFilterTo(R.string.school);
+        
+        onView(withId(R.id.add_place_menu))
+                .perform(click());
+        Intents.intended(Matchers.allOf(
+                hasComponent(new ComponentName(mActivity, PlaceFormActivity.class)),
+                hasExtra(PlaceFormActivity.PLACE_TYPE_ID_ARG, Place.TYPE_SCHOOL)
         ));
     }
 

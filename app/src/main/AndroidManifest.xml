@@ -14,9 +14,10 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
 -->
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="th.or.nectec.tanrabad.survey">
+<manifest
+    package="th.or.nectec.tanrabad.survey"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -84,6 +85,9 @@
         <activity
             android:name=".presenter.MapMarkerActivity"
             android:label="@string/add_location" />
+        <activity
+            android:name=".presenter.BuildingMapMarkerActivity"
+            android:label="@string/add_location"/>
         <activity
             android:name=".presenter.PlaceFormActivity"
             android:label="@string/add_place"

@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -185,29 +186,36 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
         editLocationButton.setVisibility(View.VISIBLE);
         editLocationButton.setOnClickListener(this);
         buildingLocation = latLng;
+        Log.d("posiiotn", latLng.toString());
         SupportMapFragment supportMapFragment = LiteMapFragment.setupLiteMapFragmentWithPosition(latLng);
         getSupportFragmentManager().beginTransaction().replace(R.id.map_container, supportMapFragment).commit();
     }
 
     @Override
     public void onClick(View view) {
+        LatLng placeLocation = getPlaceLocation();
         switch (view.getId()) {
             case R.id.add_marker:
-                MapMarkerActivity.startAdd(BuildingFormActivity.this);
+                BuildingMapMarkerActivity.startAdd(BuildingFormActivity.this, placeLocation);
                 break;
             case R.id.edit_location:
-                MapMarkerActivity.startEdit(BuildingFormActivity.this, buildingLocation);
+                BuildingMapMarkerActivity.startEdit(BuildingFormActivity.this, placeLocation, buildingLocation);
                 break;
         }
+    }
+
+    private LatLng getPlaceLocation() {
+        Location placeLocation = place.getLocation();
+        return place.getLocation() == null ? null : new LatLng(placeLocation.getLatitude(), placeLocation.getLongitude());
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case MapMarkerActivity.MARK_LOCATION_REQUEST_CODE:
+            case BuildingMapMarkerActivity.MARK_LOCATION_REQUEST_CODE:
                 if (resultCode == RESULT_OK) {
-                    setupPreviewMapWithPosition(data.<LatLng>getParcelableExtra(MapMarkerActivity.MAP_LOCATION));
+                    setupPreviewMapWithPosition(data.<LatLng>getParcelableExtra(BuildingMapMarkerActivity.BUILDING_LOCATION));
                 }
         }
     }

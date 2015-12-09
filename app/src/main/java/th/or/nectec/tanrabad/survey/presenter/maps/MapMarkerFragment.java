@@ -2,6 +2,7 @@ package th.or.nectec.tanrabad.survey.presenter.maps;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -54,31 +55,30 @@ public class MapMarkerFragment extends TanrabadSupportMapFragment implements Goo
 
         if (getLastLocation() != null) {
             location = new LatLng(getLastLocation().getLatitude(), getLastLocation().getLongitude());
-            addDraggableMarker(location);
+            marker = addDraggableMarker(location);
             moveToLocation(location);
         }
     }
 
-    public void addDraggableMarker(LatLng position) {
-        addMarker(position, ResourceUtils.from(getActivity()).getColor(R.color.shock_pink), true);
+    public Marker addDraggableMarker(LatLng position) {
+        return addMarker(position, ResourceUtils.from(getActivity()).getColor(R.color.shock_pink), true);
     }
 
-    private void addMarker(LatLng position, int color, boolean draggable) {
+    protected Marker addMarker(LatLng position, @ColorInt int color, boolean draggable) {
         float hsv[] = new float[3];
         Color.colorToHSV(color, hsv);
-
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.draggable(draggable);
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(hsv[0]));
         markerOptions.position(position);
-        marker = googleMap.addMarker(markerOptions);
+        return googleMap.addMarker(markerOptions);
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         LatLng location = getArguments().getParcelable(ARGS_LOCATION);
         if (location != null) {
-            addDraggableMarker(location);
+            marker = addDraggableMarker(location);
             moveToLocation(location);
         }
     }
@@ -86,7 +86,7 @@ public class MapMarkerFragment extends TanrabadSupportMapFragment implements Goo
     @Override
     public void onMapLongClick(LatLng latLng) {
         removeMarkedLocation();
-        addDraggableMarker(latLng);
+        marker = addDraggableMarker(latLng);
     }
 
     public void removeMarkedLocation() {

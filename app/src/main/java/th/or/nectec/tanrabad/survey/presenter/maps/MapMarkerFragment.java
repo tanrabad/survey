@@ -1,17 +1,22 @@
 package th.or.nectec.tanrabad.survey.presenter.maps;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.utils.android.ResourceUtils;
 
 public class MapMarkerFragment extends TanrabadSupportMapFragment implements GoogleMap.OnMapLongClickListener, GoogleMap.OnMarkerDragListener, OnMapReadyCallback {
 
     public static final String FRAGMENT_TAG = "map_marker_fragment";
     public static final String ARGS_LOCATION = "args_location";
-    LatLng location;
     Marker marker;
 
     public static MapMarkerFragment newInstance() {
@@ -34,39 +39,62 @@ public class MapMarkerFragment extends TanrabadSupportMapFragment implements Goo
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Bundle args = getArguments();
-        location = args.getParcelable(ARGS_LOCATION);
+
         getMapAsync(this);
         getMap().setOnMapLongClickListener(this);
         getMap().setOnMarkerDragListener(this);
     }
 
     @Override
+    public void onConnected(Bundle connectionHint) {
+        super.onConnected(connectionHint);
+        LatLng location = getArguments().getParcelable(ARGS_LOCATION);
+        if (location != null)
+            return;
+
+        if (getLastLocation() != null) {
+            location = new LatLng(getLastLocation().getLatitude(), getLastLocation().getLongitude());
+            addMarker(location);
+            moveToLocation(location);
+        }
+    }
+
+    public void addMarker(LatLng position) {
+        addMarker(position, ResourceUtils.from(getActivity()).getColor(R.color.shock_pink), false);
+    }
+
+    private void addMarker(LatLng position, int color, boolean draggable) {
+        float hsv[] = new float[3];
+        Color.colorToHSV(color, hsv);
+
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.draggable(draggable);
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(hsv[0]));
+        markerOptions.position(position);
+        marker = googleMap.addMarker(markerOptions);
+    }
+
+    @Override
     public void onMapReady(GoogleMap googleMap) {
+        LatLng location = getArguments().getParcelable(ARGS_LOCATION);
         if (location != null) {
             addDraggableMarker(location);
             moveToLocation(location);
         }
     }
 
-    @Override
-    public void onConnected(Bundle connectionHint) {
-        super.onConnected(connectionHint);
-        if (location != null)
-            return;
-
-        if (getCurrentLocation() != null) {
-            location = new LatLng(getCurrentLocation().getLatitude(), getCurrentLocation().getLongitude());
-            addMarker(location);
-            moveToLocation(location);
-        }
+    public void addDraggableMarker(LatLng position) {
+        addMarker(position, ResourceUtils.from(getActivity()).getColor(R.color.shock_pink), true);
     }
 
     @Override
     public void onMapLongClick(LatLng latLng) {
         removeMarkedLocation();
-        location = latLng;
-        addDraggableMarker(location);
+        addDraggableMarker(latLng);
+    }
+
+    public void removeMarkedLocation() {
+        marker.remove();
     }
 
     @Override
@@ -81,16 +109,10 @@ public class MapMarkerFragment extends TanrabadSupportMapFragment implements Goo
 
     @Override
     public void onMarkerDragEnd(Marker marker) {
-        location = marker.getPosition();
         getMap().getUiSettings().setScrollGesturesEnabled(true);
     }
 
     public LatLng getMarkedLocation() {
-        return location;
-    }
-
-    public void removeMarkedLocation() {
-        location = null;
-        clearMap();
+        return marker.getPosition();
     }
 }

@@ -17,48 +17,48 @@
   -->
 
 <com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader
-        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/card_header"
-        android:layout_width="match_parent"
+    android:id="@+id/card_header"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/card_title"
+        style="@style/TanrabadTextAppearance.Title"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/title_card_place_in_database"/>
 
     <TextView
-            style="@style/TanrabadTextAppearance.Title"
-            android:id="@+id/card_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/title_card_place_in_database"/>
-
+        android:id="@+id/place_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/card_title"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:contentDescription="@string/number_place_list_in_database"
+        android:textIsSelectable="false"
+        android:textSize="@dimen/text_body"
+        tools:text="200 สถานที่"/>
     <TextView
-            android:id="@+id/place_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignBaseline="@id/card_title"
-            android:contentDescription="@string/number_place_list_in_database"
-            android:textIsSelectable="false"
-            android:textSize="@dimen/text_body"
-            tools:text="200 สถานที่"/>
-    <TextView
-            android:id="@+id/place_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/card_title"
-            android:text="@string/place_type"/>
+        android:id="@+id/place_type"
+        style="@style/TextViewTanrabad.Label"
+        android:layout_below="@id/card_title"
+        android:text="@string/place_type"/>
 
     <android.support.v7.widget.AppCompatSpinner
-            android:id="@+id/place_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@id/place_type"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_toRightOf="@id/place_type"
-            android:layout_toEndOf="@id/place_type"
+        android:id="@+id/place_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/place_type"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_toEndOf="@id/place_type"
+        android:layout_toRightOf="@id/place_type"
     />
 
 </com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader>

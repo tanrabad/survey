@@ -26,6 +26,7 @@ import th.or.nectec.tanrabad.survey.presenter.*;
         MainStartSurveyTest.class,
         PlaceListInDatabaseTest.class,
         BuildingListPageAtBuildingNotFoundTest.class,
+        BuildingListPageByFoundBuildingTest.class,
         BuildingTypeVillageCommunityListSurveyTest.class,
         BuildingTypeHospitalListSurveyTest.class,
         BuildingTypeWorshipListSurveyTest.class,

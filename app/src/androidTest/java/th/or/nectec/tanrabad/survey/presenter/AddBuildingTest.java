@@ -43,7 +43,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
-public class AddBuilding extends TanrabadEspressoTestBase {
+public class AddBuildingTest extends TanrabadEspressoTestBase {
 
     @Rule
     public ActivityTestRule<BuildingFormActivity> mActivityTestRule

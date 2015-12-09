@@ -43,6 +43,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtra;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
 public class BuildingListPageByFoundBuildingTest extends TanrabadEspressoTestBase {
@@ -78,6 +79,17 @@ public class BuildingListPageByFoundBuildingTest extends TanrabadEspressoTestBas
         Intents.intended(Matchers.allOf(
                 hasComponent(new ComponentName(mActivity, BuildingFormActivity.class)),
                 hasExtra(BuildingFormActivity.PLACE_UUID_ARG, UUID.nameUUIDFromBytes("2bcd".getBytes()).toString())
+        ));
+    }
+
+    @Test
+    public void touchBuildingListShouldOpenSurveyPage() {
+        onView(withText("ตึกพักญาติ"))
+                .perform(click());
+
+        Intents.intended(Matchers.allOf(
+                hasComponent(new ComponentName(mActivity, SurveyActivity.class)),
+                hasExtra(SurveyActivity.BUILDING_UUID_ARG, UUID.nameUUIDFromBytes("2opj".getBytes()).toString())
         ));
     }
 }

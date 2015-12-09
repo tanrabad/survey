@@ -17,11 +17,16 @@
 
 package th.or.nectec.tanrabad.survey.presenter;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.support.test.espresso.intent.Intents;
+import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.rule.ActivityTestRule;
 
 import android.support.test.runner.AndroidJUnit4;
+import org.hamcrest.Matchers;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.junit.runner.RunWith;
@@ -33,7 +38,10 @@ import java.util.UUID;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtra;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -41,8 +49,9 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 @RunWith(AndroidJUnit4.class)
 public class SurveyBuildingTypeVillageCommunityTest extends TanrabadEspressoTestBase {
 
+    @Rule
     public ActivityTestRule<SurveyActivity> mActivityTestRule
-            = new ActivityTestRule<>(SurveyActivity.class);
+            = new IntentsTestRule<>(SurveyActivity.class, false, false);
     SurveyActivity mActivity;
 
     @Before
@@ -78,5 +87,18 @@ public class SurveyBuildingTypeVillageCommunityTest extends TanrabadEspressoTest
         textDisplayed(R.string.yes);
         onView(withText(R.string.no))
                 .perform(click());
+    }
+
+    @Test
+    public void surveySuccessThenTouchSaveShouldOpenIntentSurveyBuildingHistoryPage() {
+        onView(withId(R.id.resident_count))
+                .perform(replaceText("9"));
+        onView(withId(R.id.save))
+                .perform(click());
+
+        Intents.intended(Matchers.allOf(
+                hasComponent(new ComponentName(mActivity, SurveyBuildingHistoryActivity.class)),
+                hasExtra(SurveyBuildingHistoryActivity.PLACE_UUID_ARG, UUID.nameUUIDFromBytes("1abc".getBytes()).toString())
+        ));
     }
 }

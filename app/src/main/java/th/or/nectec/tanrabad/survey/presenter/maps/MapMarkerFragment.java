@@ -54,13 +54,13 @@ public class MapMarkerFragment extends TanrabadSupportMapFragment implements Goo
 
         if (getLastLocation() != null) {
             location = new LatLng(getLastLocation().getLatitude(), getLastLocation().getLongitude());
-            addMarker(location);
+            addDraggableMarker(location);
             moveToLocation(location);
         }
     }
 
-    public void addMarker(LatLng position) {
-        addMarker(position, ResourceUtils.from(getActivity()).getColor(R.color.shock_pink), false);
+    public void addDraggableMarker(LatLng position) {
+        addMarker(position, ResourceUtils.from(getActivity()).getColor(R.color.shock_pink), true);
     }
 
     private void addMarker(LatLng position, int color, boolean draggable) {
@@ -83,10 +83,6 @@ public class MapMarkerFragment extends TanrabadSupportMapFragment implements Goo
         }
     }
 
-    public void addDraggableMarker(LatLng position) {
-        addMarker(position, ResourceUtils.from(getActivity()).getColor(R.color.shock_pink), true);
-    }
-
     @Override
     public void onMapLongClick(LatLng latLng) {
         removeMarkedLocation();
@@ -94,7 +90,11 @@ public class MapMarkerFragment extends TanrabadSupportMapFragment implements Goo
     }
 
     public void removeMarkedLocation() {
+        if (marker == null)
+            return;
+
         marker.remove();
+        marker = null;
     }
 
     @Override
@@ -113,6 +113,6 @@ public class MapMarkerFragment extends TanrabadSupportMapFragment implements Goo
     }
 
     public LatLng getMarkedLocation() {
-        return marker.getPosition();
+        return marker == null ? null : marker.getPosition();
     }
 }

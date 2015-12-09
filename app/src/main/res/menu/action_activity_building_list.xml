@@ -19,7 +19,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
             android:id="@+id/add_building_menu"
-            android:icon="@mipmap/ic_action_circle_check"
+            android:icon="@drawable/ic_action_add"
             android:title="@string/add_building"
             app:showAsAction="always|withText" />
 </menu>

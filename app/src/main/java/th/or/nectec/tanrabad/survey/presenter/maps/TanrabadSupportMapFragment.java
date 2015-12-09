@@ -1,3 +1,20 @@
+/*
+ * Copyright (c) 2015 NECTEC
+ *   National Electronics and Computer Technology Center, Thailand
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package th.or.nectec.tanrabad.survey.presenter.maps;
 
 import android.app.Activity;
@@ -6,8 +23,6 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.DisplayMetrics;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -17,8 +32,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
-
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
@@ -35,8 +48,7 @@ public class TanrabadSupportMapFragment extends com.google.android.gms.maps.Supp
 
     private static final long UPDATE_INTERVAL_MS = 500;
     private static final long FASTEST_INTERVAL_MS = 100;
-    private static LatLngBounds THAILAND = new LatLngBounds(new LatLng(5, 97),
-            new LatLng(21, 105));
+
     protected GoogleMap googleMap;
     private OnPositionChangeListener mLocationListener;
     private OnCurrentCameraChangeListener mCameraChangeListener;
@@ -57,17 +69,22 @@ public class TanrabadSupportMapFragment extends com.google.android.gms.maps.Supp
         setupLocationAPI();
     }
 
+    private void setupMapOption() {
+        Bundle args = getArguments();
+        if (args != null) {
+            isLocked = args.getBoolean(ARGS_LOCKED_MAP, false);
+            isZoomable = args.getBoolean(ARGS_ZOOMABLE, true);
+            isLocationEnabled = args.getBoolean(ARGS_MYLOCATION_ENABLE, true);
+            isMoveToMyLocation = args.getBoolean(ARGS_MOVE_TO_MY_LOCATION, isLocationEnabled);
+        }
+    }
+
     private void setupMap() {
         googleMap = getMap();
         googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         googleMap.setOnCameraChangeListener(this);
         setLockedMap(isLocked);
         googleMap.getUiSettings().setZoomControlsEnabled(isZoomable);
-    }
-
-    public void setLockedMap(boolean isLocked) {
-        googleMap.getUiSettings().setScrollGesturesEnabled(!isLocked);
-        googleMap.getUiSettings().setMyLocationButtonEnabled(!isLocked);
     }
 
     private void setupLocationAPI() {
@@ -78,14 +95,9 @@ public class TanrabadSupportMapFragment extends com.google.android.gms.maps.Supp
                 .build();
     }
 
-    private void setupMapOption() {
-        Bundle args = getArguments();
-        if (args != null) {
-            isLocked = args.getBoolean(ARGS_LOCKED_MAP, false);
-            isZoomable = args.getBoolean(ARGS_ZOOMABLE, true);
-            isLocationEnabled = args.getBoolean(ARGS_MYLOCATION_ENABLE, true);
-            isMoveToMyLocation = args.getBoolean(ARGS_MOVE_TO_MY_LOCATION, isLocationEnabled);
-        }
+    public void setLockedMap(boolean isLocked) {
+        googleMap.getUiSettings().setScrollGesturesEnabled(!isLocked);
+        googleMap.getUiSettings().setMyLocationButtonEnabled(!isLocked);
     }
 
     @Override
@@ -122,61 +134,24 @@ public class TanrabadSupportMapFragment extends com.google.android.gms.maps.Supp
         }
     }
 
-    private void moveToLastLocationOrThailand() {
-        lastLocation = getLastLocation();
-        if (lastLocation != null) {
-            onMoveToLocation(lastLocation);
-        } else {
-            moveCameraToThailand(getActivity(), googleMap);
-        }
-    }
-
-    public Location getLastLocation() {
-        return LocationServices.FusedLocationApi.getLastLocation(locationApiClient);
-    }
-
-    public static void moveCameraToThailand(Activity activity, GoogleMap map) {
-        if (map == null)
-            return;
-
-        DisplayMetrics metrics = new DisplayMetrics();
-        activity.getWindowManager().getDefaultDisplay()
-                .getMetrics(metrics);
-        int height = metrics.heightPixels;
-        int width = metrics.widthPixels;
-        map.moveCamera(CameraUpdateFactory.newLatLngBounds(THAILAND, width,
-                height, 32));
-    }
-
-    public void onMoveToLocation(Location location) {
-        LatLng cur = new LatLng(location.getLatitude(), location.getLongitude());
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(cur, 15));
-    }
-
-    private boolean isGpsEnabled() {
-        LocationManager locationManager = (LocationManager) getActivity().getSystemService(Activity.LOCATION_SERVICE);
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-    }
-
     public void setLocationEnabled(boolean isLocationEnabled) {
         googleMap.setMyLocationEnabled(isLocationEnabled);
         if (isLocationEnabled)
             setupLocationUpdateService();
     }
 
-    private void setupLocationUpdateService() {
-        LocationRequest locationRequest = LocationRequest.create();
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-
-        locationRequest.setInterval(UPDATE_INTERVAL_MS);
-        locationRequest.setFastestInterval(FASTEST_INTERVAL_MS);
-
-        LocationServices.FusedLocationApi.requestLocationUpdates(
-                locationApiClient, locationRequest, this);
+    private void moveToLastLocationOrThailand() {
+        lastLocation = getLastLocation();
+        if (lastLocation != null) {
+            onMoveToLocation(lastLocation);
+        } else {
+            ThailandLocation.move(getActivity(), googleMap);
+        }
     }
 
-    @Override
-    public void onConnectionSuspended(int cause) {
+    private boolean isGpsEnabled() {
+        LocationManager locationManager = (LocationManager) getActivity().getSystemService(Activity.LOCATION_SERVICE);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
     /**
@@ -196,6 +171,30 @@ public class TanrabadSupportMapFragment extends com.google.android.gms.maps.Supp
             promptMessage.show(getString(R.string.gps_dialog_tilte), getString(R.string.gps_dialog_message));
             isGPSDialogShowed = true;
         }
+    }
+
+    private void setupLocationUpdateService() {
+        LocationRequest locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+        locationRequest.setInterval(UPDATE_INTERVAL_MS);
+        locationRequest.setFastestInterval(FASTEST_INTERVAL_MS);
+
+        LocationServices.FusedLocationApi.requestLocationUpdates(
+                locationApiClient, locationRequest, this);
+    }
+
+    public Location getLastLocation() {
+        return LocationServices.FusedLocationApi.getLastLocation(locationApiClient);
+    }
+
+    public void onMoveToLocation(Location location) {
+        LatLng cur = new LatLng(location.getLatitude(), location.getLongitude());
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(cur, 15));
+    }
+
+    @Override
+    public void onConnectionSuspended(int cause) {
     }
 
     @Override

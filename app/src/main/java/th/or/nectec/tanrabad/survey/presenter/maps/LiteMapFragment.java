@@ -19,11 +19,9 @@ package th.or.nectec.tanrabad.survey.presenter.maps;
 
 import android.graphics.Color;
 import android.support.annotation.NonNull;
-import android.util.DisplayMetrics;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.utils.android.ResourceUtils;
@@ -48,23 +46,13 @@ public class LiteMapFragment {
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 if (position == null) {
-                    moveMapToThailand(googleMap, supportMapFragment);
+                    ThailandLocation.move(supportMapFragment.getActivity(), googleMap);
                 } else {
                     moveMapByLocation(googleMap, supportMapFragment, position);
                 }
             }
         });
         return supportMapFragment;
-    }
-
-    private static void moveMapToThailand(GoogleMap googleMap, SupportMapFragment supportMapFragment) {
-        DisplayMetrics metrics = new DisplayMetrics();
-        supportMapFragment.getActivity().getWindowManager().getDefaultDisplay()
-                .getMetrics(metrics);
-        int height = metrics.heightPixels;
-        int width = metrics.widthPixels;
-        LatLngBounds thailand = new LatLngBounds(new LatLng(5, 97), new LatLng(21, 105));
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(thailand, width, height, 40));
     }
 
     private static void moveMapByLocation(GoogleMap googleMap, SupportMapFragment supportMapFragment, LatLng position) {

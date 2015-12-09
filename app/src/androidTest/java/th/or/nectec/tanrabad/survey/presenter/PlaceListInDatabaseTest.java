@@ -91,7 +91,7 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
                 .perform(click());
 
         Intents.intended(
-                hasComponent(new ComponentName(mActivity, PlaceAddActivity.class)
+                hasComponent(new ComponentName(mActivity, PlaceFormActivity.class)
         ));
     }
 
@@ -101,8 +101,8 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
         onView(withId(R.id.add_place_menu))
                 .perform(click());
         Intents.intended(Matchers.allOf(
-                hasComponent(new ComponentName(mActivity, PlaceAddActivity.class)),
-                hasExtra(PlaceAddActivity.PLACE_TYPE_ID_ARG, Place.TYPE_FACTORY)
+                hasComponent(new ComponentName(mActivity, PlaceFormActivity.class)),
+                hasExtra(PlaceFormActivity.PLACE_TYPE_ID_ARG, Place.TYPE_FACTORY)
         ));
     }
 

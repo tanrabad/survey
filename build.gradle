@@ -41,6 +41,7 @@ ext {
 
     supportLibVersion = "23.1.1"
     playServicesVersion = "8.3.0"
+    androidMapUtilsVersion = '0.4'
     jodaTimeVersion = "2.9.1"
     calligraphyVersion = "2.1.0"
 

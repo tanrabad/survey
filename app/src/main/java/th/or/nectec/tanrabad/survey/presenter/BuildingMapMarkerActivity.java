@@ -31,24 +31,26 @@ import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.maps.BuildingMapMarkerFragment;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.TwiceBackPressed;
+import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
+import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 
 public class BuildingMapMarkerActivity extends TanrabadActivity implements View.OnClickListener {
 
-    public static final String PLACE_LOCATION = "place_location";
+    public static final String PLACE_UUID = "place_uuid";
     public static final String BUILDING_LOCATION = "building_location";
     public static final int MARK_LOCATION_REQUEST_CODE = 50000;
     BuildingMapMarkerFragment buildingMapMarkerFragment;
     private TwiceBackPressed twiceBackPressed;
 
-    public static void startAdd(Activity activity, LatLng placeLocation) {
+    public static void startAdd(Activity activity, String placeUUID) {
         Intent intent = new Intent(activity, BuildingMapMarkerActivity.class);
-        intent.putExtra(BuildingMapMarkerActivity.PLACE_LOCATION, placeLocation);
+        intent.putExtra(BuildingMapMarkerActivity.PLACE_UUID, placeUUID);
         activity.startActivityForResult(intent, MARK_LOCATION_REQUEST_CODE);
     }
 
-    public static void startEdit(Activity activity, LatLng placeLocation, LatLng buildingLocation) {
+    public static void startEdit(Activity activity, String placeUUID, LatLng buildingLocation) {
         Intent intent = new Intent(activity, BuildingMapMarkerActivity.class);
-        intent.putExtra(BuildingMapMarkerActivity.PLACE_LOCATION, placeLocation);
+        intent.putExtra(BuildingMapMarkerActivity.PLACE_UUID, placeUUID);
         intent.putExtra(BuildingMapMarkerActivity.BUILDING_LOCATION, buildingLocation);
         activity.startActivityForResult(intent, MARK_LOCATION_REQUEST_CODE);
     }
@@ -72,17 +74,20 @@ public class BuildingMapMarkerActivity extends TanrabadActivity implements View.
     }
 
     private void setupMap() {
-        LatLng placeLocation = getIntent().getParcelableExtra(PLACE_LOCATION);
         LatLng buildingLocation = getIntent().getParcelableExtra(BUILDING_LOCATION);
         if (buildingLocation == null) {
-            buildingMapMarkerFragment = BuildingMapMarkerFragment.newInstance(placeLocation);
+            buildingMapMarkerFragment = BuildingMapMarkerFragment.newInstance(getPlaceUUID());
         } else {
             if (getSupportActionBar() != null)
                 getSupportActionBar().setTitle(R.string.edit_location);
-            buildingMapMarkerFragment = BuildingMapMarkerFragment.newInstanceWithLocation(placeLocation, buildingLocation);
+            buildingMapMarkerFragment = BuildingMapMarkerFragment.newInstanceWithLocation(getPlaceUUID(), buildingLocation);
         }
 
         getSupportFragmentManager().beginTransaction().replace(R.id.map_container, buildingMapMarkerFragment, BuildingMapMarkerFragment.FRAGMENT_TAG).commit();
+    }
+
+    public String getPlaceUUID() {
+        return getIntent().getStringExtra(PLACE_UUID);
     }
 
     @Override
@@ -97,13 +102,30 @@ public class BuildingMapMarkerActivity extends TanrabadActivity implements View.
             case R.id.save_marker_menu:
                 LatLng markedLocation = buildingMapMarkerFragment.getMarkedLocation();
                 if (markedLocation != null) {
-                    sendMarkedLocationResult();
+                    if (buildingMapMarkerFragment.isDistanceBetweenPlaceAndBuildingExceed()) {
+                        showPromptWhenPositionBetweenBuildingAndPlaceIsExceed();
+                    } else {
+                        sendMarkedLocationResult();
+                    }
                 } else {
                     Alert.highLevel().show(R.string.please_define_location);
                 }
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showPromptWhenPositionBetweenBuildingAndPlaceIsExceed() {
+        PromptMessage promptMessage = new AlertDialogPromptMessage(this);
+        promptMessage.setOnConfirm(getString(R.string.confirm), new PromptMessage.OnConfirmListener() {
+            @Override
+            public void onConfirm() {
+                sendMarkedLocationResult();
+            }
+        });
+
+        promptMessage.setOnCancel(getString(R.string.cancel), null);
+        promptMessage.show("ระยะทางระหว่างตำแหน่งของสถานที่กับอาคาร", BuildingMapMarkerFragment.DISTANCE_LIMIT_IN_METER / 1000 + "กม.");
     }
 
     private void sendMarkedLocationResult() {

@@ -22,7 +22,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -168,9 +167,9 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
         if (this.building.getLocation() == null) {
             setupPreviewMap();
         } else {
-            double latitiude = this.building.getLocation().getLatitude();
+            double latitude = this.building.getLocation().getLatitude();
             double longitude = this.building.getLocation().getLongitude();
-            setupPreviewMapWithPosition(new LatLng(latitiude, longitude));
+            setupPreviewMapWithPosition(new LatLng(latitude, longitude));
         }
     }
 
@@ -186,20 +185,18 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
         editLocationButton.setVisibility(View.VISIBLE);
         editLocationButton.setOnClickListener(this);
         buildingLocation = latLng;
-        Log.d("posiiotn", latLng.toString());
         SupportMapFragment supportMapFragment = LiteMapFragment.setupLiteMapFragmentWithPosition(latLng);
         getSupportFragmentManager().beginTransaction().replace(R.id.map_container, supportMapFragment).commit();
     }
 
     @Override
     public void onClick(View view) {
-        LatLng placeLocation = getPlaceLocation();
         switch (view.getId()) {
             case R.id.add_marker:
-                BuildingMapMarkerActivity.startAdd(BuildingFormActivity.this, placeLocation);
+                BuildingMapMarkerActivity.startAdd(BuildingFormActivity.this, getPlaceUUID());
                 break;
             case R.id.edit_location:
-                BuildingMapMarkerActivity.startEdit(BuildingFormActivity.this, placeLocation, buildingLocation);
+                BuildingMapMarkerActivity.startEdit(BuildingFormActivity.this, getPlaceUUID(), buildingLocation);
                 break;
         }
     }

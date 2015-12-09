@@ -1,18 +1,16 @@
 package th.or.nectec.tanrabad.survey.presenter.maps;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import th.or.nectec.tanrabad.survey.R;
-import th.or.nectec.tanrabad.survey.utils.android.ResourceUtils;
+import th.or.nectec.tanrabad.survey.utils.MapUtils;
 
 public class MapMarkerFragment extends TanrabadSupportMapFragment implements GoogleMap.OnMapLongClickListener, GoogleMap.OnMarkerDragListener, OnMapReadyCallback {
 
@@ -61,15 +59,13 @@ public class MapMarkerFragment extends TanrabadSupportMapFragment implements Goo
     }
 
     public Marker addDraggableMarker(LatLng position) {
-        return addMarker(position, ResourceUtils.from(getActivity()).getColor(R.color.shock_pink), true);
+        return addMarker(position, R.color.shock_pink, true);
     }
 
-    protected Marker addMarker(LatLng position, @ColorInt int color, boolean draggable) {
-        float hsv[] = new float[3];
-        Color.colorToHSV(color, hsv);
+    protected Marker addMarker(LatLng position, @ColorRes int color, boolean draggable) {
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.draggable(draggable);
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(hsv[0]));
+        markerOptions.icon(MapUtils.getIconBitmapDescriptor(getActivity(), color));
         markerOptions.position(position);
         return googleMap.addMarker(markerOptions);
     }

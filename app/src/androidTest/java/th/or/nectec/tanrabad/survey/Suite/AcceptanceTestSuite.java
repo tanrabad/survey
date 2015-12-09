@@ -28,6 +28,7 @@ import th.or.nectec.tanrabad.survey.presenter.*;
         BuildingListPageAtBuildingNotFoundTest.class,
         BuildingListPageByFoundBuildingTest.class,
         SurveyBuildingTypeVillageCommunityTest.class,
+        AddBuilding.class,
         AddBuildingTypeHospitalTest.class,
         AddBuildingTypeVillageCommunityTest.class
 })

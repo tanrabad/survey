@@ -26,32 +26,23 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.TextView;
-
+import android.widget.*;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-
-import java.util.UUID;
-
-import th.or.nectec.tanrabad.domain.place.PlaceController;
-import th.or.nectec.tanrabad.domain.place.PlacePresenter;
-import th.or.nectec.tanrabad.domain.place.PlaceRepository;
-import th.or.nectec.tanrabad.domain.place.PlaceSavePresenter;
-import th.or.nectec.tanrabad.domain.place.PlaceSaver;
+import th.or.nectec.tanrabad.domain.place.*;
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.maps.LiteMapFragment;
 import th.or.nectec.tanrabad.survey.repository.InMemoryPlaceRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
+import th.or.nectec.tanrabad.survey.utils.android.ResourceUtils;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
 import th.or.nectec.tanrabad.survey.utils.android.TwiceBackPressed;
 import th.or.nectec.tanrabad.survey.validator.SavePlaceValidator;
 import th.or.nectec.tanrabad.survey.validator.ValidatorException;
+
+import java.util.UUID;
 
 public class PlaceFormActivity extends TanrabadActivity implements View.OnClickListener, PlaceSavePresenter, PlacePresenter {
 
@@ -105,6 +96,12 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         placeSubtypeLabel = (TextView) findViewById(R.id.place_subtype_label);
         placeSubtypeSelector = (AppCompatSpinner) findViewById(R.id.place_subtype_selector);
         addLocationBackground = (FrameLayout) findViewById(R.id.add_location_background);
+        addLocationBackground.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SoftKeyboard.hideOn(PlaceFormActivity.this);
+            }
+        });
         addMarkerButton = (Button) findViewById(R.id.add_marker);
 
         editLocationButton = (Button) findViewById(R.id.edit_location);
@@ -144,10 +141,6 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         placeTypeSelector.setSelection(placeAdapter.getPlaceTypePosition(getPlaceTypeID()));
     }
 
-    private int getPlaceTypeID() {
-        return getIntent().getIntExtra(PLACE_TYPE_ID_ARG, Place.SUBTYPE_TEMPLE);
-    }
-
     private void loadPlaceData() {
         if (TextUtils.isEmpty(getPlaceUUID())) {
             place = Place.withName(null);
@@ -155,6 +148,10 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
             PlaceController placeController = new PlaceController(placeRepository, this);
             placeController.showPlace(UUID.fromString(getPlaceUUID()));
         }
+    }
+
+    private int getPlaceTypeID() {
+        return getIntent().getIntExtra(PLACE_TYPE_ID_ARG, Place.SUBTYPE_TEMPLE);
     }
 
     public String getPlaceUUID() {
@@ -207,7 +204,8 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     }
 
     private void setupPreviewMapWithPosition(LatLng latLng) {
-        addLocationBackground.setVisibility(View.GONE);
+        addLocationBackground.setBackgroundColor(ResourceUtils.from(this).getColor(R.color.transparent));
+        addMarkerButton.setVisibility(View.GONE);
         editLocationButton.setVisibility(View.VISIBLE);
         editLocationButton.setOnClickListener(this);
         placeLocation = latLng;
@@ -227,6 +225,13 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     }
 
     @Override
+    public void displaySaveSuccess() {
+        setResult(RESULT_OK);
+        finish();
+        SurveyBuildingHistoryActivity.openBuildingSurveyHistoryActivity(PlaceFormActivity.this, place, "sara");
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.add_marker:
@@ -236,13 +241,6 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
                 MapMarkerActivity.startEdit(PlaceFormActivity.this, placeLocation);
                 break;
         }
-    }
-
-    @Override
-    public void displaySaveSuccess() {
-        setResult(RESULT_OK);
-        finish();
-        SurveyBuildingHistoryActivity.openBuildingSurveyHistoryActivity(PlaceFormActivity.this, place, "sara");
     }
 
     @Override
@@ -264,4 +262,6 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     public void alertPlaceNotFound() {
         this.place = Place.withName(null);
     }
+
+
 }

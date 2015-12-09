@@ -25,6 +25,7 @@ import th.or.nectec.tanrabad.survey.presenter.*;
 @Suite.SuiteClasses({
         MainStartSurveyTest.class,
         PlaceListInDatabaseTest.class,
+        BuildingListPageAtBuildingNotFoundTest.class,
         BuildingTypeVillageCommunityListSurveyTest.class,
         BuildingTypeHospitalListSurveyTest.class,
         BuildingTypeWorshipListSurveyTest.class,

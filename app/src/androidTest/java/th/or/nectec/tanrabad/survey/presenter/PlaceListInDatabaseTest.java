@@ -38,6 +38,8 @@ import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
 
+import java.util.UUID;
+
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -111,12 +113,25 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
     @Test
     public void clickAddPlaceTypeSchool() {
         changePlaceTypeFilterTo(R.string.school);
-        
+
         onView(withId(R.id.add_place_menu))
                 .perform(click());
         Intents.intended(Matchers.allOf(
                 hasComponent(new ComponentName(mActivity, PlaceFormActivity.class)),
                 hasExtra(PlaceFormActivity.PLACE_TYPE_ID_ARG, Place.TYPE_SCHOOL)
+        ));
+    }
+
+    @Test
+    public void clickPlaceShouldOpenDefindBuildingPage() {
+        onView(withText("ชุมชนกอล์ฟวิว"))
+                .perform(click());
+        onView(withText("สำรวจ"))
+                .perform(click());
+
+        Intents.intended(Matchers.allOf(
+                hasComponent(new ComponentName(mActivity, BuildingListActivity.class)),
+                hasExtra(BuildingListActivity.PLACE_UUID_ARG, UUID.nameUUIDFromBytes("67UIP".getBytes()).toString())
         ));
     }
 

@@ -127,5 +127,8 @@
     <string name="building_already_survey">สำรวจแล้ว</string>
     <string name="press_back_again_to_exit">กรุณากดอีกครั้งเพื่อออก</string>
     <string name="location">พิกัด</string>
+    <string name="distance_between_place_and_building">รัศมีของสถานที่ %1$s กม.\nระยะทางระหว่างอาคารกับสถานที่ %2$s
+        กม.\nเกินจากรัศมีของสถานที่ %3$s กม.
+    </string>
 
 </resources>

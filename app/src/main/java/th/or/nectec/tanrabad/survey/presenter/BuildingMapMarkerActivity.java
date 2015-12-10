@@ -24,9 +24,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-
 import com.google.android.gms.maps.model.LatLng;
-
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.maps.BuildingMapMarkerFragment;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
@@ -34,12 +32,15 @@ import th.or.nectec.tanrabad.survey.utils.android.TwiceBackPressed;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 
+import java.text.DecimalFormat;
+
 public class BuildingMapMarkerActivity extends TanrabadActivity implements View.OnClickListener {
 
     public static final String PLACE_UUID = "place_uuid";
     public static final String BUILDING_LOCATION = "building_location";
     public static final int MARK_LOCATION_REQUEST_CODE = 50000;
     BuildingMapMarkerFragment buildingMapMarkerFragment;
+    DecimalFormat decimalFormat = new DecimalFormat("#.##");
     private TwiceBackPressed twiceBackPressed;
 
     public static void startAdd(Activity activity, String placeUUID) {
@@ -123,9 +124,17 @@ public class BuildingMapMarkerActivity extends TanrabadActivity implements View.
                 sendMarkedLocationResult();
             }
         });
-
         promptMessage.setOnCancel(getString(R.string.cancel), null);
-        promptMessage.show("ระยะทางระหว่างตำแหน่งของสถานที่กับอาคาร", BuildingMapMarkerFragment.DISTANCE_LIMIT_IN_METER / 1000 + "กม.");
+        promptMessage.show(getString(R.string.add_location), getDistanceBetweenBuildingAndPlaceMessage());
+    }
+
+    private String getDistanceBetweenBuildingAndPlaceMessage() {
+        double distanceBetweenBuildingAndPlaceInKm = buildingMapMarkerFragment.getDistanceBetweenPlaceAndBuilding() / 1000.f;
+        double differenceOfDistanceInKm = (buildingMapMarkerFragment.getDistanceBetweenPlaceAndBuilding() - BuildingMapMarkerFragment.DISTANCE_LIMIT_IN_METER) / 1000.f;
+        return String.format(getString(R.string.distance_between_place_and_building),
+                BuildingMapMarkerFragment.DISTANCE_LIMIT_IN_METER / 1000.f,
+                decimalFormat.format(distanceBetweenBuildingAndPlaceInKm),
+                decimalFormat.format(differenceOfDistanceInKm));
     }
 
     private void sendMarkedLocationResult() {

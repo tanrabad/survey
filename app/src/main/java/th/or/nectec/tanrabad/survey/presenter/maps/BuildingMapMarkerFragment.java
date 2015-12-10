@@ -2,7 +2,6 @@ package th.or.nectec.tanrabad.survey.presenter.maps;
 
 import android.os.Bundle;
 import android.support.v4.graphics.ColorUtils;
-
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CircleOptions;
@@ -10,15 +9,14 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.SphericalUtil;
-
-import java.util.UUID;
-
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.repository.InMemoryPlaceRepository;
 import th.or.nectec.tanrabad.survey.utils.MapUtils;
 import th.or.nectec.tanrabad.survey.utils.android.ResourceUtils;
+
+import java.util.UUID;
 
 public class BuildingMapMarkerFragment extends MapMarkerFragment implements GoogleMap.OnMapLongClickListener, GoogleMap.OnMarkerDragListener, OnMapReadyCallback {
 
@@ -92,6 +90,10 @@ public class BuildingMapMarkerFragment extends MapMarkerFragment implements Goog
     }
 
     public boolean isDistanceBetweenPlaceAndBuildingExceed() {
-        return placeMarker != null && SphericalUtil.computeDistanceBetween(placeMarker.getPosition(), marker.getPosition()) > DISTANCE_LIMIT_IN_METER;
+        return placeMarker != null && getDistanceBetweenPlaceAndBuilding() > DISTANCE_LIMIT_IN_METER;
+    }
+
+    public double getDistanceBetweenPlaceAndBuilding() {
+        return SphericalUtil.computeDistanceBetween(placeMarker.getPosition(), marker.getPosition());
     }
 }

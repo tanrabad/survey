@@ -27,11 +27,6 @@ public class TanrabadApp extends Application {
 
     private static CrashLogger crashLogger;
     private static ActionLogger actionLogger;
-    private static TanrabadApp tanrabadApp;
-
-    public static TanrabadApp instance() {
-        return tanrabadApp;
-    }
 
     public static ActionLogger action() {
         return actionLogger;
@@ -44,7 +39,6 @@ public class TanrabadApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        tanrabadApp = this;
         setupAnalysisTools();
         setupDefaultFont();
     }

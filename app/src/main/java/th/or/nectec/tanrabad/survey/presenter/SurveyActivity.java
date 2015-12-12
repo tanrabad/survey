@@ -27,19 +27,21 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.*;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 import th.or.nectec.tanrabad.domain.survey.*;
 import th.or.nectec.tanrabad.entity.*;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.presenter.view.SurveyContainerView;
+import th.or.nectec.tanrabad.survey.presenter.view.TorchButton;
 import th.or.nectec.tanrabad.survey.repository.InMemoryBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.InMemoryContainerTypeRepository;
 import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
-import th.or.nectec.tanrabad.survey.utils.CameraFlashLight;
 import th.or.nectec.tanrabad.survey.utils.EditTextStepper;
-import th.or.nectec.tanrabad.survey.utils.Torch;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
@@ -64,8 +66,6 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     private EditText residentCountView;
     private SurveyRepository surveyRepository;
     private Survey survey;
-    private Torch torch;
-    private ImageButton torchView;
 
     public static void open(Activity activity, Building building) {
         Intent intent = new Intent(activity, SurveyActivity.class);
@@ -94,8 +94,6 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         outdoorContainerLayout = (LinearLayout) findViewById(R.id.outdoor_container);
         residentCountView = (EditText) findViewById(R.id.resident_count);
 
-        setupTorchView();
-
     }
 
     private void showContainerList() {
@@ -113,32 +111,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         surveyController.checkThisBuildingAndUserCanSurvey(buildingUUID, username);
     }
 
-    private void setupTorchView() {
-        torchView = (ImageButton) findViewById(R.id.torch);
-        torch = CameraFlashLight.getInstance(this);
-        if (!torch.isAvailable()) {
-            torchView.setVisibility(View.INVISIBLE);
-            return;
-        }
-        torchView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toggleTorchLight();
-            }
-        });
-    }
 
-    private void toggleTorchLight() {
-        torchView.setEnabled(false);
-        if (torch.isTurningOn()) {
-            torch.turnOff();
-            torchView.setImageResource(R.drawable.torch_off);
-        } else {
-            torch.turnOn();
-            torchView.setImageResource(R.drawable.torch_on);
-        }
-        torchView.setEnabled(true);
-    }
 
     @Override
     public void onEditSurvey(Survey survey) {
@@ -351,8 +324,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     @Override
     protected void onPause() {
-        if (torch.isAvailable() && torch.isTurningOn())
-            toggleTorchLight();
+        ((TorchButton) findViewById(R.id.torch)).safeTurnOff();
         super.onPause();
     }
 

@@ -117,9 +117,11 @@ dependencies {
     compile 'com.bartoszlipinski.recyclerviewheader:library:1.2.0'
     compile 'joda-time:joda-time:' + rootProject.ext.jodaTimeVersion
     compile 'uk.co.chrisjenx:calligraphy:' + rootProject.ext.calligraphyVersion
+
     testCompile 'junit:junit:' + rootProject.ext.junitVersion
     testCompile 'org.mockito:mockito-core:' + rootProject.ext.mockitoVersion
-    testCompile "org.robolectric:robolectric:" + rootProject.ext.robolectricVersion
+    testCompile 'org.robolectric:robolectric:' + rootProject.ext.robolectricVersion
+
     androidTestCompile 'com.android.support:support-annotations:' + rootProject.ext.supportLibVersion
     androidTestCompile 'com.android.support.test.espresso:espresso-core:' + rootProject.ext.espressoVersion
     androidTestCompile 'com.android.support.test.espresso:espresso-intents:' + rootProject.ext.espressoVersion

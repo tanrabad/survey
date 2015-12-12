@@ -60,7 +60,7 @@
                         android:layout_marginTop="@dimen/screen_vertical_margin"
                         android:layout_marginLeft="@dimen/screen_horizontal_margin"
                         android:layout_marginStart="@dimen/screen_horizontal_margin"
-                        android:src="@drawable/torch_on"/>
+                        android:src="@drawable/torch_off"/>
 
                 <LinearLayout
                         android:layout_width="wrap_content"

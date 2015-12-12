@@ -27,29 +27,9 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import th.or.nectec.tanrabad.domain.survey.ContainerController;
-import th.or.nectec.tanrabad.domain.survey.ContainerPresenter;
-import th.or.nectec.tanrabad.domain.survey.SurveyController;
-import th.or.nectec.tanrabad.domain.survey.SurveyPresenter;
-import th.or.nectec.tanrabad.domain.survey.SurveyRepository;
-import th.or.nectec.tanrabad.domain.survey.SurveySavePresenter;
-import th.or.nectec.tanrabad.domain.survey.SurveySaver;
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.ContainerType;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.Survey;
-import th.or.nectec.tanrabad.entity.SurveyDetail;
-import th.or.nectec.tanrabad.entity.User;
+import android.widget.*;
+import th.or.nectec.tanrabad.domain.survey.*;
+import th.or.nectec.tanrabad.entity.*;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.presenter.view.SurveyContainerView;
@@ -67,6 +47,11 @@ import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 import th.or.nectec.tanrabad.survey.validator.SaveSurveyValidator;
 import th.or.nectec.tanrabad.survey.validator.ValidatorException;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class SurveyActivity extends TanrabadActivity implements ContainerPresenter, SurveyPresenter, SurveySavePresenter {
 
     public static final String BUILDING_UUID_ARG = "building_uuid";
@@ -80,6 +65,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     private SurveyRepository surveyRepository;
     private Survey survey;
     private Torch torch;
+    private ImageButton torchView;
 
     public static void open(Activity activity, Building building) {
         Intent intent = new Intent(activity, SurveyActivity.class);
@@ -112,8 +98,23 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     }
 
+    private void showContainerList() {
+        ContainerController containerController = new ContainerController(InMemoryContainerTypeRepository.getInstance(), this);
+        containerController.showList();
+    }
+
+    private void initSurvey() {
+        surveyRepository = InMemorySurveyRepository.getInstance();
+        SurveyController surveyController = new SurveyController(surveyRepository, InMemoryBuildingRepository.getInstance(), new StubUserRepository(), this);
+
+        String buildingUUID = getIntent().getStringExtra(BUILDING_UUID_ARG);
+        String username = getIntent().getStringExtra(USERNAME_ARG);
+
+        surveyController.checkThisBuildingAndUserCanSurvey(buildingUUID, username);
+    }
+
     private void setupTorchView() {
-        View torchView = findViewById(R.id.torch);
+        torchView = (ImageButton) findViewById(R.id.torch);
         torch = CameraFlashLight.getInstance(this);
         if (!torch.isAvailable()) {
             torchView.setVisibility(View.INVISIBLE);
@@ -128,25 +129,13 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     }
 
     private void toggleTorchLight() {
-        if (torch.isTurningOn())
+        if (torch.isTurningOn()) {
             torch.turnOff();
-        else
+            torchView.setImageResource(R.drawable.torch_off);
+        } else {
             torch.turnOn();
-    }
-
-    private void showContainerList() {
-        ContainerController containerController = new ContainerController(InMemoryContainerTypeRepository.getInstance(), this);
-        containerController.showList();
-    }
-
-    private void initSurvey() {
-        surveyRepository = InMemorySurveyRepository.getInstance();
-        SurveyController surveyController = new SurveyController(surveyRepository, InMemoryBuildingRepository.getInstance(), new StubUserRepository(), this);
-
-        String buildingUUID = getIntent().getStringExtra(BUILDING_UUID_ARG);
-        String username = getIntent().getStringExtra(USERNAME_ARG);
-
-        surveyController.checkThisBuildingAndUserCanSurvey(buildingUUID, username);
+            torchView.setImageResource(R.drawable.torch_on);
+        }
     }
 
     @Override
@@ -189,6 +178,12 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         ((TextView) findViewById(R.id.place_name)).setText(building.getPlace().getName());
     }
 
+    private void loadSurveyData(Survey survey) {
+        residentCountView.setText(String.valueOf(survey.getResidentCount()));
+        loadSurveyDetail(survey.getIndoorDetail(), indoorContainerViews);
+        loadSurveyDetail(survey.getOutdoorDetail(), outdoorContainerViews);
+    }
+
     private String getBuildingNameWithPrefix(Building building) {
         String houseNoPrefix = "บ้านเลขที่ ";
         String buildName = building.getName();
@@ -197,12 +192,6 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
             buildName = houseNoPrefix + buildName;
         }
         return buildName;
-    }
-
-    private void loadSurveyData(Survey survey) {
-        residentCountView.setText(String.valueOf(survey.getResidentCount()));
-        loadSurveyDetail(survey.getIndoorDetail(), indoorContainerViews);
-        loadSurveyDetail(survey.getOutdoorDetail(), outdoorContainerViews);
     }
 
     private void loadSurveyDetail(List<SurveyDetail> indoorDetails, HashMap<Integer, SurveyContainerView> surveyContainerViews) {
@@ -241,17 +230,17 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         indoorContainerLayout.addView(surveyContainerView);
     }
 
-    private SurveyContainerView buildContainerView(ContainerType containerType) {
-        SurveyContainerView surveyContainerView = new SurveyContainerView(SurveyActivity.this);
-        surveyContainerView.setContainerType(containerType);
-        return surveyContainerView;
-    }
-
     private void buildOutdoorContainerView(ContainerType containerType) {
         SurveyContainerView surveyContainerView = buildContainerView(containerType);
         surveyContainerView.setContainerIcon(containerIconMapping.getContainerIcon(containerType));
         outdoorContainerViews.put(containerType.getId(), surveyContainerView);
         outdoorContainerLayout.addView(surveyContainerView);
+    }
+
+    private SurveyContainerView buildContainerView(ContainerType containerType) {
+        SurveyContainerView surveyContainerView = new SurveyContainerView(SurveyActivity.this);
+        surveyContainerView.setContainerType(containerType);
+        return surveyContainerView;
     }
 
     @Override
@@ -360,9 +349,8 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     @Override
     protected void onPause() {
-        Torch torch = CameraFlashLight.getInstance(this);
         if (torch.isAvailable() && torch.isTurningOn())
-            torch.turnOff();
+            toggleTorchLight();
         super.onPause();
     }
 

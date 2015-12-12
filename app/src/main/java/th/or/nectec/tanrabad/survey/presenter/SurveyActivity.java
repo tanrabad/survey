@@ -129,6 +129,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     }
 
     private void toggleTorchLight() {
+        torchView.setEnabled(false);
         if (torch.isTurningOn()) {
             torch.turnOff();
             torchView.setImageResource(R.drawable.torch_off);
@@ -136,6 +137,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
             torch.turnOn();
             torchView.setImageResource(R.drawable.torch_on);
         }
+        torchView.setEnabled(true);
     }
 
     @Override

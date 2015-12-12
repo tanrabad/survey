@@ -16,10 +16,24 @@
   ~ limitations under the License.
   -->
 
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-       android:shape="rectangle">
-    <corners
-            android:topRightRadius="@dimen/popup_corner_radius"
-            android:bottomRightRadius="@dimen/popup_corner_radius"/>
-    <solid android:color="@color/lighter_gray"/>
-</shape>
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android"
+          android:interpolator="@android:anim/accelerate_interpolator"
+          android:exitFadeDuration="200">
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <corners
+                    android:topRightRadius="@dimen/popup_corner_radius"
+                    android:bottomRightRadius="@dimen/popup_corner_radius"/>
+            <solid android:color="@color/light_gray"/>
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <corners
+                    android:topRightRadius="@dimen/popup_corner_radius"
+                    android:bottomRightRadius="@dimen/popup_corner_radius"/>
+            <solid android:color="@color/lighter_gray"/>
+        </shape>
+    </item>
+</selector>

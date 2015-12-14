@@ -57,14 +57,18 @@ public class BuildingMapMarkerFragment extends MapMarkerFragment implements Goog
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
-        super.onMapReady(googleMap);
+    public void onConnected(Bundle connectionHint) {
+        super.onConnected(connectionHint);
         Location placeLocation = place.getLocation();
         if (placeLocation != null) {
-            addPlaceMarker(place);
-            addPlaceCircle(place);
-            moveToLocation(new LatLng(placeLocation.getLatitude(), placeLocation.getLongitude()));
+            addPlaceLocation(placeLocation);
         }
+    }
+
+    private void addPlaceLocation(Location placeLocation) {
+        addPlaceMarker(place);
+        addPlaceCircle(place);
+        moveToLocation(new LatLng(placeLocation.getLatitude(), placeLocation.getLongitude()));
     }
 
     private void addPlaceMarker(Place place) {

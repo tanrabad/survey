@@ -85,12 +85,12 @@ public class AddBuildingTest extends TanrabadEspressoTestBase {
     }
 
     @Test
-    public void touchDefineLocationShouldOpenIntentAddLocationPage() {
+    public void touchDefineLocationShouldOpenIntentBuildingLocationPage() {
         onView(withId(R.id.add_marker))
                 .perform(click());
 
         Intents.intended(
-                hasComponent(new ComponentName(mActivity, MapMarkerActivity.class)
+                hasComponent(new ComponentName(mActivity, BuildingMapMarkerActivity.class)
                 ));
     }
 }

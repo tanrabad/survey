@@ -18,13 +18,12 @@
 package th.or.nectec.tanrabad.survey.validator;
 
 import android.text.TextUtils;
-
-import java.util.List;
-
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceValidator;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
+
+import java.util.List;
 
 public class SavePlaceValidator implements PlaceValidator {
     private PlaceRepository placeRepository;
@@ -33,8 +32,11 @@ public class SavePlaceValidator implements PlaceValidator {
     public boolean validate(Place place) {
 
         if (TextUtils.isEmpty(place.getName())) {
-
             throw new ValidatorException(R.string.please_define_place_name);
+        }
+
+        if (place.getAddress() == null) {
+            throw new ValidatorException(R.string.please_define_place_address);
         }
 
         if (place.getLocation() == null) {

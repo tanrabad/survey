@@ -33,6 +33,7 @@ import th.or.nectec.android.widget.thai.address.AppCompatAddressPicker;
 import th.or.nectec.tanrabad.domain.place.*;
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.utils.Address;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.maps.LiteMapFragment;
 import th.or.nectec.tanrabad.survey.repository.InMemoryPlaceRepository;
@@ -182,6 +183,9 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         if (placeTypeID == Place.TYPE_WORSHIP) {
             place.setSubType(((PlaceType) placeSubtypeSelector.getSelectedItem()).id);
         }
+
+        place.setAddress(getPlaceAddressFromField());
+
         Location location = placeLocation == null
                 ? null : new Location(placeLocation.latitude, placeLocation.longitude);
         place.setLocation(location);
@@ -191,6 +195,18 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         } catch (ValidatorException e) {
             Alert.highLevel().show(e.getMessageID());
         }
+    }
+
+    private Address getPlaceAddressFromField() {
+        if (addressSelect.getAddress() == null)
+            return null;
+
+        Address placeAddress = new Address();
+        placeAddress.setAddressCode(addressSelect.getAddress().getSubdistrictCode());
+        placeAddress.setSubdistrict(addressSelect.getAddress().getSubdistrict().getName());
+        placeAddress.setDistrict(addressSelect.getAddress().getDistrict().getName());
+        placeAddress.setProvince(addressSelect.getAddress().getProvince().getName());
+        return placeAddress;
     }
 
     @Override
@@ -243,6 +259,16 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     }
 
     @Override
+    public void displayPlace(Place place) {
+        this.place = place;
+    }
+
+    @Override
+    public void alertPlaceNotFound() {
+        this.place = Place.withName(null);
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.add_marker:
@@ -254,15 +280,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         }
     }
 
-    @Override
-    public void displayPlace(Place place) {
-        this.place = place;
-    }
 
-    @Override
-    public void alertPlaceNotFound() {
-        this.place = Place.withName(null);
-    }
 
 
 }

@@ -41,4 +41,13 @@ public class BuildingSaver {
             buildingSavePresenter.displaySaveFail();
         }
     }
+
+    public void update(Building building) {
+        if (buildingValidator.validate(building)) {
+            if (buildingRepository.update(building))
+                buildingSavePresenter.displayUpdateSuccess();
+        } else {
+            buildingSavePresenter.displayUpdateFail();
+        }
+    }
 }

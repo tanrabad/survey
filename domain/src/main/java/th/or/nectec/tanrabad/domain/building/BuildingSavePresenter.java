@@ -21,4 +21,8 @@ public interface BuildingSavePresenter {
     void displaySaveSuccess();
 
     void displaySaveFail();
+
+    void displayUpdateFail();
+
+    void displayUpdateSuccess();
 }

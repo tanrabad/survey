@@ -22,11 +22,12 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.Place;
-
-import java.util.UUID;
 
 
 public class BuildingSaverTest {
@@ -59,7 +60,7 @@ public class BuildingSaverTest {
     }
 
     @Test
-    public void testHappyPath() throws Exception {
+    public void testSaveSuccess() throws Exception {
 
         context.checking(new Expectations() {
             {
@@ -76,7 +77,7 @@ public class BuildingSaverTest {
     }
 
     @Test
-    public void testSadPath() throws Exception {
+    public void testSaveFail() throws Exception {
 
         building.setName(null);
         context.checking(new Expectations() {
@@ -90,6 +91,38 @@ public class BuildingSaverTest {
         });
         BuildingSaver buildingSaver = new BuildingSaver(buildingRepository, buildingValidator, buildingSavePresenter);
         buildingSaver.save(building);
+    }
+
+    @Test
+    public void testUpdateSuccess() throws Exception {
+        context.checking(new Expectations() {
+            {
+                oneOf(buildingValidator).setBuildingRepository(with(buildingRepository));
+                allowing(buildingValidator).validate(with(building));
+                will(returnValue(true));
+                oneOf(BuildingSaverTest.this.buildingRepository).update(with(building));
+                will(returnValue(true));
+                oneOf(BuildingSaverTest.this.buildingSavePresenter).displayUpdateSuccess();
+            }
+        });
+        BuildingSaver buildingSaver = new BuildingSaver(buildingRepository, buildingValidator, buildingSavePresenter);
+        buildingSaver.update(building);
+    }
+
+    @Test
+    public void testUpdateFail() throws Exception {
+        building.setName(null);
+        context.checking(new Expectations() {
+            {
+                oneOf(buildingValidator).setBuildingRepository(with(buildingRepository));
+                allowing(buildingValidator).validate(building);
+                will(returnValue(false));
+                never(buildingRepository);
+                oneOf(buildingSavePresenter).displayUpdateFail();
+            }
+        });
+        BuildingSaver buildingSaver = new BuildingSaver(buildingRepository, buildingValidator, buildingSavePresenter);
+        buildingSaver.update(building);
     }
 
     @Test

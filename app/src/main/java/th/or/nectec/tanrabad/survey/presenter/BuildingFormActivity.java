@@ -102,10 +102,6 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
         loadBuildingData();
     }
 
-    private void setupTwiceBackPressed() {
-        twiceBackPressed = new TwiceBackPressed(this);
-    }
-
     private void assignViews() {
         placeName = (TextView) findViewById(R.id.place_name);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -116,6 +112,10 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
         editLocationButton.setVisibility(View.GONE);
         Button addMarkerButton = (Button) findViewById(R.id.add_marker);
         addMarkerButton.setOnClickListener(this);
+    }
+
+    private void setupTwiceBackPressed() {
+        twiceBackPressed = new TwiceBackPressed(this);
     }
 
     private String getPlaceUUID() {
@@ -263,6 +263,16 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
     @Override
     public void displaySaveFail() {
         Alert.lowLevel().show(R.string.save_fail);
+    }
+
+    @Override
+    public void displayUpdateFail() {
+
+    }
+
+    @Override
+    public void displayUpdateSuccess() {
+
     }
 
     public void onRootViewClick(View view) {

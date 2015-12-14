@@ -112,15 +112,15 @@ public class InMemoryBuildingRepository implements BuildingRepository {
         buildings.add(building9);
     }
 
+    @NonNull
+    private UUID generateUUID(String input) {
+        return UUID.nameUUIDFromBytes(input.getBytes());
+    }
+
     public static InMemoryBuildingRepository getInstance() {
         if (instance == null)
             instance = new InMemoryBuildingRepository();
         return instance;
-    }
-
-    @NonNull
-    private UUID generateUUID(String input) {
-        return UUID.nameUUIDFromBytes(input.getBytes());
     }
 
     @Override
@@ -161,6 +161,12 @@ public class InMemoryBuildingRepository implements BuildingRepository {
         } else {
             buildings.add(building);
         }
+        return true;
+    }
+
+    @Override
+    public boolean update(Building building) {
+        buildings.set(buildings.indexOf(building), building);
         return true;
     }
 

@@ -17,10 +17,10 @@
 
 package th.or.nectec.tanrabad.domain.building;
 
-import th.or.nectec.tanrabad.entity.Building;
-
 import java.util.List;
 import java.util.UUID;
+
+import th.or.nectec.tanrabad.entity.Building;
 
 public interface BuildingRepository {
     List<Building> findBuildingInPlace(UUID placeUuid);
@@ -29,5 +29,7 @@ public interface BuildingRepository {
 
     Building findBuildingByUUID(UUID uuid);
 
-    boolean save(Building with);
+    boolean save(Building building);
+
+    boolean update(Building building);
 }

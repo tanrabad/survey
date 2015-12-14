@@ -26,11 +26,23 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.TextView;
+
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+
+import java.util.UUID;
+
 import th.or.nectec.android.widget.thai.address.AppCompatAddressPicker;
-import th.or.nectec.tanrabad.domain.place.*;
+import th.or.nectec.tanrabad.domain.place.PlaceController;
+import th.or.nectec.tanrabad.domain.place.PlacePresenter;
+import th.or.nectec.tanrabad.domain.place.PlaceRepository;
+import th.or.nectec.tanrabad.domain.place.PlaceSavePresenter;
+import th.or.nectec.tanrabad.domain.place.PlaceSaver;
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.utils.Address;
@@ -42,9 +54,8 @@ import th.or.nectec.tanrabad.survey.utils.android.ResourceUtils;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
 import th.or.nectec.tanrabad.survey.utils.android.TwiceBackPressed;
 import th.or.nectec.tanrabad.survey.validator.SavePlaceValidator;
+import th.or.nectec.tanrabad.survey.validator.UpdatePlaceValidator;
 import th.or.nectec.tanrabad.survey.validator.ValidatorException;
-
-import java.util.UUID;
 
 public class PlaceFormActivity extends TanrabadActivity implements View.OnClickListener, PlaceSavePresenter, PlacePresenter {
 
@@ -54,7 +65,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     public static final int ADD_PLACE_REQ_CODE = 30000;
     Place place;
     PlaceRepository placeRepository = InMemoryPlaceRepository.getInstance();
-    PlaceSaver placeSaver = new PlaceSaver(placeRepository, new SavePlaceValidator(), this);
+
     private EditText placeNameView;
     private AppCompatAddressPicker addressSelect;
     private AppCompatSpinner placeTypeSelector;
@@ -71,6 +82,13 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     public static void startAdd(Activity activity, int placeTypeID) {
         Intent intent = new Intent(activity, PlaceFormActivity.class);
         intent.putExtra(PlaceFormActivity.PLACE_TYPE_ID_ARG, placeTypeID);
+        activity.startActivityForResult(intent, ADD_PLACE_REQ_CODE);
+    }
+
+    public static void startEdit(Activity activity, Place place) {
+        Intent intent = new Intent(activity, PlaceFormActivity.class);
+        intent.putExtra(PlaceFormActivity.PLACE_UUID_ARG, place.getId().toString());
+        intent.putExtra(PlaceFormActivity.PLACE_TYPE_ID_ARG, place.getType());
         activity.startActivityForResult(intent, ADD_PLACE_REQ_CODE);
     }
 
@@ -127,8 +145,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (placeAdapter.getItem(i).id == Place.TYPE_WORSHIP) {
                     placeSubtypeLayout.setVisibility(View.VISIBLE);
-                    placeSubtypeLabel.setText(R.string.place_worship_type);
-                    placeSubtypeSelector.setAdapter(new PlaceSubTypeOfWorshipAdapter(PlaceFormActivity.this));
+                    setupWorshipPlaceSubtypeSpinner();
                 } else {
                     placeSubtypeLayout.setVisibility(View.GONE);
                 }
@@ -143,10 +160,6 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         placeTypeSelector.setSelection(placeAdapter.getPlaceTypePosition(getPlaceTypeID()));
     }
 
-    private int getPlaceTypeID() {
-        return getIntent().getIntExtra(PLACE_TYPE_ID_ARG, Place.SUBTYPE_TEMPLE);
-    }
-
     private void loadPlaceData() {
         if (TextUtils.isEmpty(getPlaceUUID())) {
             place = Place.withName(null);
@@ -154,6 +167,17 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
             PlaceController placeController = new PlaceController(placeRepository, this);
             placeController.showPlace(UUID.fromString(getPlaceUUID()));
         }
+    }
+
+    private void setupWorshipPlaceSubtypeSpinner() {
+        placeSubtypeLabel.setText(R.string.place_worship_type);
+        placeSubtypeSelector.setAdapter(new PlaceSubTypeOfWorshipAdapter(PlaceFormActivity.this));
+        PlaceSubTypeOfWorshipAdapter placeSubTypeOfWorshipAdapter = new PlaceSubTypeOfWorshipAdapter(PlaceFormActivity.this);
+        placeSubtypeSelector.setSelection(placeSubTypeOfWorshipAdapter.getPosition(place.getSubType()));
+    }
+
+    private int getPlaceTypeID() {
+        return getIntent().getIntExtra(PLACE_TYPE_ID_ARG, Place.TYPE_WORSHIP);
     }
 
     public String getPlaceUUID() {
@@ -191,7 +215,13 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         place.setLocation(location);
 
         try {
-            placeSaver.save(place);
+            if (TextUtils.isEmpty(getPlaceUUID())) {
+                PlaceSaver placeSaver = new PlaceSaver(placeRepository, new SavePlaceValidator(), this);
+                placeSaver.save(place);
+            } else {
+                PlaceSaver placeSaver = new PlaceSaver(placeRepository, new UpdatePlaceValidator(), this);
+                placeSaver.update(place);
+            }
         } catch (ValidatorException e) {
             Alert.highLevel().show(e.getMessageID());
         }
@@ -260,7 +290,9 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
 
     @Override
     public void displayUpdateSuccess() {
-
+        setResult(RESULT_OK);
+        finish();
+        PlaceListActivity.open(this);
     }
 
     @Override
@@ -271,6 +303,16 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     @Override
     public void displayPlace(Place place) {
         this.place = place;
+        placeNameView.setText(place.getName());
+
+        if (place.getAddress() != null)
+            addressSelect.setAddressCode(place.getAddress().getAddressCode());
+
+        Location location = place.getLocation();
+        if (location != null) {
+            placeLocation = new LatLng(location.getLatitude(), location.getLongitude());
+            setupPreviewMapWithPosition(placeLocation);
+        }
     }
 
     @Override
@@ -289,8 +331,4 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
                 break;
         }
     }
-
-
-
-
 }

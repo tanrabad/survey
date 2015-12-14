@@ -82,6 +82,15 @@ public class PlaceSubTypeOfWorshipAdapter extends BaseAdapter {
         return view;
     }
 
+    public int getPosition(int subtypeID) {
+        for (PlaceType eachPlaceType : placeTypes) {
+            if (eachPlaceType.id == subtypeID) {
+                return placeTypes.indexOf(eachPlaceType);
+            }
+        }
+        return -1;
+    }
+
     public class ViewHolder {
         TextView nameView;
     }

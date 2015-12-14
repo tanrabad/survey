@@ -58,6 +58,21 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> 
     }
 
     @Override
+    public Place getItem(int position) {
+        return places.get(position);
+    }
+
+    @Override
+    public void setOnItemClickListener(AdapterView.OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    @Override
+    public void setOnItemLongClickListener(AdapterView.OnItemLongClickListener onItemLongClickListener) {
+        this.onItemLongClickListener = onItemLongClickListener;
+    }
+
+    @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_place, parent, false);
         return new ViewHolder(v, this);
@@ -80,11 +95,6 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> 
         return places.size();
     }
 
-    @Override
-    public void setOnItemClickListener(AdapterView.OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
-    }
-
     private void onItemHolderClick(ViewHolder itemHolder) {
         if (onItemClickListener != null) {
             onItemClickListener.onItemClick(null, itemHolder.itemView,
@@ -92,17 +102,14 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> 
         }
     }
 
-    @Override
-    public void setOnItemLongClickListener(AdapterView.OnItemLongClickListener onItemLongClickListener) {
-        this.onItemLongClickListener = onItemLongClickListener;
+    private void onItemHolderLongClick(ViewHolder itemHolder) {
+        if (onItemLongClickListener != null) {
+            onItemLongClickListener.onItemLongClick(null, itemHolder.itemView,
+                    itemHolder.getAdapterPosition(), itemHolder.getItemId());
+        }
     }
 
-    @Override
-    public Place getItem(int position) {
-        return places.get(position);
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         TextView placeTextView;
         ImageView placeIcon;
         private PlaceAdapter adapter;
@@ -111,6 +118,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> 
             super(itemView);
             this.adapter = adapter;
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
             placeTextView = (TextView) itemView.findViewById(R.id.place_name);
             placeIcon = (ImageView) itemView.findViewById(R.id.place_icon);
         }
@@ -118,6 +126,12 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> 
         @Override
         public void onClick(View view) {
             adapter.onItemHolderClick(this);
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            adapter.onItemHolderLongClick(this);
+            return true;
         }
     }
 }

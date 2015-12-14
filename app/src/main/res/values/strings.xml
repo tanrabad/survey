@@ -131,5 +131,6 @@
     <string name="distance_between_place_and_building">รัศมีของสถานที่ %1$s กม.\nระยะทางระหว่างอาคารกับสถานที่ %2$s
         กม.\nเกินจากรัศมีของสถานที่ %3$s กม.
     </string>
+    <string name="cant_edit_community_village">ไม่สามารถแก้ไขข้อมูลสถานที่ที่เป็นชุมชน/หมู่บ้าน</string>
 
 </resources>

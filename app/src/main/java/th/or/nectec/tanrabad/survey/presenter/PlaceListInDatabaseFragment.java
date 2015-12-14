@@ -42,10 +42,11 @@ import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView;
 import th.or.nectec.tanrabad.survey.repository.InMemoryPlaceRepository;
+import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 
-public class PlaceListInDatabaseFragment extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener, PlaceListPresenter {
+public class PlaceListInDatabaseFragment extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener, AdapterView.OnItemSelectedListener, PlaceListPresenter {
 
 
     private PlaceAdapter placeAdapter;
@@ -81,20 +82,6 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
         emptyLayoutView.setVisibility(View.VISIBLE);
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, final int position, long l) {
-        final Place placeData = placeAdapter.getItem(position);
-        PromptMessage promptMessage = new AlertDialogPromptMessage(getActivity());
-        promptMessage.setOnConfirm(getString(R.string.survey), new PromptMessage.OnConfirmListener() {
-            @Override
-            public void onConfirm() {
-                SurveyBuildingHistoryActivity.openBuildingSurveyHistoryActivity(getActivity(), placeData, "sara");
-            }
-        });
-        promptMessage.setOnCancel(getString(R.string.cancel), null);
-        promptMessage.show(getString(R.string.start_survey), placeAdapter.getItem(position).getName());
-
-    }
 
     private String getUsername() {
         return "sara";
@@ -103,8 +90,12 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
         placeTypeID = (int) placeTypeAdapter.getItemId(position);
+        loadPlaceList(placeTypeID);
+    }
+
+    private void loadPlaceList(int placeTypeID) {
         if (placeTypeID > 0) {
-            placeChooser.getPlaceListWithPlaceFilter(placeTypeID);
+            placeChooser.getPlaceListWithPlaceFilter(this.placeTypeID);
         } else {
             placeChooser.getPlaceList();
         }
@@ -161,6 +152,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
     private void setupPlaceList() {
         placeAdapter = new PlaceAdapter(getActivity());
         placeAdapter.setOnItemClickListener(this);
+        placeAdapter.setOnItemLongClickListener(this);
         placeListView.setAdapter(placeAdapter);
         placeListView.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -182,5 +174,32 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, final int position, long l) {
+        final Place placeData = placeAdapter.getItem(position);
+        PromptMessage promptMessage = new AlertDialogPromptMessage(getActivity());
+        promptMessage.setOnConfirm(getString(R.string.survey), new PromptMessage.OnConfirmListener() {
+            @Override
+            public void onConfirm() {
+                SurveyBuildingHistoryActivity.openBuildingSurveyHistoryActivity(getActivity(), placeData, "sara");
+            }
+        });
+        promptMessage.setOnCancel(getString(R.string.cancel), null);
+        promptMessage.show(getString(R.string.start_survey), placeAdapter.getItem(position).getName());
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
+        final Place placeData = placeAdapter.getItem(position);
+
+        if (placeData.getType() == Place.TYPE_VILLAGE_COMMUNITY) {
+            Alert.lowLevel().show(R.string.cant_edit_community_village);
+            return false;
+        } else {
+            PlaceFormActivity.startEdit(getActivity(), placeData);
+            return true;
+        }
     }
 }

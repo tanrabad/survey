@@ -22,11 +22,10 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
-import java.util.UUID;
-
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.Place;
+
+import java.util.UUID;
 
 public class PlaceSaverTest {
     @Rule
@@ -59,7 +58,7 @@ public class PlaceSaverTest {
     }
 
     @Test
-    public void testHappyPath() throws Exception {
+    public void testSavePlace() throws Exception {
 
         context.checking(new Expectations() {
             {
@@ -76,7 +75,24 @@ public class PlaceSaverTest {
     }
 
     @Test
-    public void testSadPath() throws Exception {
+    public void testUpdatePlace() throws Exception {
+
+        context.checking(new Expectations() {
+            {
+                allowing(PlaceSaverTest.this.placeValidator).setPlaceRepository(placeRepository);
+                allowing(PlaceSaverTest.this.placeValidator).validate(with(place));
+                will(returnValue(true));
+                oneOf(PlaceSaverTest.this.placeRepository).update(with(place));
+                will(returnValue(true));
+                oneOf(PlaceSaverTest.this.placeSavePresenter).displayUpdateSuccess();
+            }
+        });
+        PlaceSaver placeSaver = new PlaceSaver(placeRepository, placeValidator, placeSavePresenter);
+        placeSaver.update(place);
+    }
+
+    @Test
+    public void testSaveFail() throws Exception {
 
         context.checking(new Expectations() {
             {
@@ -89,6 +105,22 @@ public class PlaceSaverTest {
         });
         PlaceSaver placeSaver = new PlaceSaver(placeRepository, placeValidator, placeSavePresenter);
         placeSaver.save(place);
+    }
+
+    @Test
+    public void testUpdateFail() throws Exception {
+
+        context.checking(new Expectations() {
+            {
+                allowing(PlaceSaverTest.this.placeValidator).setPlaceRepository(placeRepository);
+                allowing(placeValidator).validate(place);
+                will(returnValue(false));
+                never(placeRepository);
+                oneOf(placeSavePresenter).displayUpdateFail();
+            }
+        });
+        PlaceSaver placeSaver = new PlaceSaver(placeRepository, placeValidator, placeSavePresenter);
+        placeSaver.update(place);
     }
 
     @Test

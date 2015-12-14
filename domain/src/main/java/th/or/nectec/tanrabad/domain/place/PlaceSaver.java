@@ -47,4 +47,13 @@ public class PlaceSaver {
             placeSavePresenter.displaySaveFail();
         }
     }
+
+    public void update(Place place) {
+        if (placeValidator.validate(place)) {
+            if (placeRepository.update(place))
+                placeSavePresenter.displayUpdateSuccess();
+        } else {
+            placeSavePresenter.displayUpdateFail();
+        }
+    }
 }

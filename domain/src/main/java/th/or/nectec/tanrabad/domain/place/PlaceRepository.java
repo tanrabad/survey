@@ -34,7 +34,9 @@ public interface PlaceRepository {
 
     List<Place> findPlacesWithPlaceFilter(int typeVillageCommunity);
 
-    boolean save(Place with);
+    boolean save(Place place);
+
+    boolean update(Place place);
 
     List<LocationEntity> findInBoundaryLocation(Location minimumLocation, Location maximumLocation);
 

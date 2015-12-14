@@ -259,6 +259,16 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     }
 
     @Override
+    public void displayUpdateSuccess() {
+
+    }
+
+    @Override
+    public void displayUpdateFail() {
+
+    }
+
+    @Override
     public void displayPlace(Place place) {
         this.place = place;
     }

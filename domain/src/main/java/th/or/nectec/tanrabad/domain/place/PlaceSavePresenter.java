@@ -24,4 +24,7 @@ public interface PlaceSavePresenter {
 
     void alertCannotSaveVillageType();
 
+    void displayUpdateSuccess();
+
+    void displayUpdateFail();
 }

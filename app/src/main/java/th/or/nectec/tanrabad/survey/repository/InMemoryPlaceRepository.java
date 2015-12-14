@@ -18,15 +18,14 @@
 package th.or.nectec.tanrabad.survey.repository;
 
 import android.support.annotation.NonNull;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.LocationEntity;
 import th.or.nectec.tanrabad.entity.Place;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 
 public class InMemoryPlaceRepository implements PlaceRepository {
@@ -75,16 +74,16 @@ public class InMemoryPlaceRepository implements PlaceRepository {
         places.add(anubarnNursery);
     }
 
+    @NonNull
+    private UUID generateUUID(String input) {
+        return UUID.nameUUIDFromBytes(input.getBytes());
+    }
+
     public static InMemoryPlaceRepository getInstance() {
         if (instance == null) {
             instance = new InMemoryPlaceRepository();
         }
         return instance;
-    }
-
-    @NonNull
-    private UUID generateUUID(String input) {
-        return UUID.nameUUIDFromBytes(input.getBytes());
     }
 
     public Place getPalazzettoVillage() {
@@ -132,6 +131,12 @@ public class InMemoryPlaceRepository implements PlaceRepository {
     @Override
     public boolean save(Place place) {
         places.add(place);
+        return true;
+    }
+
+    @Override
+    public boolean update(Place place) {
+        places.set(places.indexOf(place), place);
         return true;
     }
 

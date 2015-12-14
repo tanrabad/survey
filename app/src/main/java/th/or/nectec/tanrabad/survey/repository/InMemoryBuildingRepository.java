@@ -169,5 +169,4 @@ public class InMemoryBuildingRepository implements BuildingRepository {
         buildings.set(buildings.indexOf(building), building);
         return true;
     }
-
 }

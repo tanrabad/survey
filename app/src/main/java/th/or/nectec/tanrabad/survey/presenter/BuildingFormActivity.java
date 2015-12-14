@@ -52,6 +52,7 @@ import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
 import th.or.nectec.tanrabad.survey.utils.android.TwiceBackPressed;
 import th.or.nectec.tanrabad.survey.validator.SaveBuildingValidator;
+import th.or.nectec.tanrabad.survey.validator.UpdateBuildingValidator;
 import th.or.nectec.tanrabad.survey.validator.ValidatorException;
 
 public class BuildingFormActivity extends TanrabadActivity implements PlacePresenter, BuildingPresenter, BuildingSavePresenter, View.OnClickListener {
@@ -70,7 +71,6 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
     private LatLng buildingLocation;
     private PlaceController placeController = new PlaceController(InMemoryPlaceRepository.getInstance(), this);
     private BuildingController buildingController = new BuildingController(InMemoryBuildingRepository.getInstance(), this);
-    private BuildingSaver buildingSaver = new BuildingSaver(InMemoryBuildingRepository.getInstance(), new SaveBuildingValidator(), this);
 
     private Place place;
     private Building building;
@@ -247,7 +247,13 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
                 ? null : new Location(buildingLocation.latitude, buildingLocation.longitude);
         building.setLocation(location);
         try {
-            buildingSaver.save(building);
+            if (TextUtils.isEmpty(getBuildingUUID())) {
+                BuildingSaver buildingSaver = new BuildingSaver(InMemoryBuildingRepository.getInstance(), new SaveBuildingValidator(), this);
+                buildingSaver.save(building);
+            } else {
+                BuildingSaver buildingSaver = new BuildingSaver(InMemoryBuildingRepository.getInstance(), new UpdateBuildingValidator(), this);
+                buildingSaver.update(building);
+            }
         } catch (ValidatorException e) {
             Alert.highLevel().show(e.getMessageID());
         }
@@ -272,7 +278,8 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
 
     @Override
     public void displayUpdateSuccess() {
-
+        setResult(RESULT_OK);
+        finish();
     }
 
     public void onRootViewClick(View view) {

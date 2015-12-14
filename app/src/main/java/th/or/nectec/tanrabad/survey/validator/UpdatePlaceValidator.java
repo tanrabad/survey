@@ -19,13 +19,15 @@ package th.or.nectec.tanrabad.survey.validator;
 
 import android.text.TextUtils;
 
+import java.util.List;
+
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceValidator;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
 
 public class UpdatePlaceValidator implements PlaceValidator {
-    ;
+    private PlaceRepository placeRepository;
 
     @Override
     public boolean validate(Place place) {
@@ -42,10 +44,19 @@ public class UpdatePlaceValidator implements PlaceValidator {
             throw new ValidatorException(R.string.please_define_place_location);
         }
 
+        List<Place> places = placeRepository.findPlaces();
+        if (places != null) {
+            for (Place eachPlace : places) {
+                if (eachPlace.getName().equals(place.getName()) && !eachPlace.getId().equals(place.getId())) {
+                    throw new ValidatorException(R.string.cant_save_same_place_name);
+                }
+            }
+        }
         return true;
     }
 
     @Override
     public void setPlaceRepository(PlaceRepository placeRepository) {
+        this.placeRepository = placeRepository;
     }
 }

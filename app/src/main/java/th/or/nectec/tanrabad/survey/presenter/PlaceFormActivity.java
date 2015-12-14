@@ -29,6 +29,7 @@ import android.view.View;
 import android.widget.*;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import th.or.nectec.android.widget.thai.address.AppCompatAddressPicker;
 import th.or.nectec.tanrabad.domain.place.*;
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.Place;
@@ -54,7 +55,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     PlaceRepository placeRepository = InMemoryPlaceRepository.getInstance();
     PlaceSaver placeSaver = new PlaceSaver(placeRepository, new SavePlaceValidator(), this);
     private EditText placeNameView;
-    private EditText addressSelect;
+    private AppCompatAddressPicker addressSelect;
     private AppCompatSpinner placeTypeSelector;
     private View placeSubtypeLayout;
     private TextView placeSubtypeLabel;
@@ -90,7 +91,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     private void setupViews() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         placeNameView = (EditText) findViewById(R.id.place_name);
-        addressSelect = (EditText) findViewById(R.id.address_select);
+        addressSelect = (AppCompatAddressPicker) findViewById(R.id.address_select);
         placeTypeSelector = (AppCompatSpinner) findViewById(R.id.place_type_selector);
         placeSubtypeLayout = findViewById(R.id.place_subtype_layout);
         placeSubtypeLabel = (TextView) findViewById(R.id.place_subtype_label);
@@ -141,6 +142,10 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         placeTypeSelector.setSelection(placeAdapter.getPlaceTypePosition(getPlaceTypeID()));
     }
 
+    private int getPlaceTypeID() {
+        return getIntent().getIntExtra(PLACE_TYPE_ID_ARG, Place.SUBTYPE_TEMPLE);
+    }
+
     private void loadPlaceData() {
         if (TextUtils.isEmpty(getPlaceUUID())) {
             place = Place.withName(null);
@@ -148,10 +153,6 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
             PlaceController placeController = new PlaceController(placeRepository, this);
             placeController.showPlace(UUID.fromString(getPlaceUUID()));
         }
-    }
-
-    private int getPlaceTypeID() {
-        return getIntent().getIntExtra(PLACE_TYPE_ID_ARG, Place.SUBTYPE_TEMPLE);
     }
 
     public String getPlaceUUID() {
@@ -232,6 +233,16 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     }
 
     @Override
+    public void displaySaveFail() {
+
+    }
+
+    @Override
+    public void alertCannotSaveVillageType() {
+
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.add_marker:
@@ -241,16 +252,6 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
                 MapMarkerActivity.startEdit(PlaceFormActivity.this, placeLocation);
                 break;
         }
-    }
-
-    @Override
-    public void displaySaveFail() {
-
-    }
-
-    @Override
-    public void alertCannotSaveVillageType() {
-
     }
 
     @Override

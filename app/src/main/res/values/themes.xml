@@ -30,9 +30,11 @@
         <item name="buttonStyle">@style/ButtonTanrabad</item>
 
         <!-- Define AlertDialog theme-->
+        <item name="android:dialogTheme">@style/Dialog</item>
         <item name="alertDialogTheme">@style/Dialog</item>
 
         <!-- Define text appearance -->
+        <item name="android:textAppearance">@style/TanrabadTextAppearance.Body</item>
         <item name="android:textAppearanceSmall">@style/TanrabadTextAppearance.Caption</item>
         <item name="android:textAppearanceSmallInverse">@style/TanrabadTextAppearance.Caption</item>
         <item name="android:textAppearanceMedium">@style/TanrabadTextAppearance.Body</item>

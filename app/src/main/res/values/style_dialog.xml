@@ -20,6 +20,7 @@
 
     <style name="Dialog" parent="Base.Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:windowTitleStyle">@style/DialogTitle</item>
+        <item name="android:textAppearanceLarge">@style/TanrabadTextAppearance.Title</item>
         <item name="android:textAppearance">@style/TanrabadTextAppearance.Subhead</item>
         <item name="buttonBarPositiveButtonStyle">@style/DialogButton.Positive</item>
         <item name="buttonBarNegativeButtonStyle">@style/DialogButton</item>

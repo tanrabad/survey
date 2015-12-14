@@ -44,6 +44,7 @@ ext {
     androidMapUtilsVersion = '0.4'
     jodaTimeVersion = "2.9.1"
     calligraphyVersion = "2.1.0"
+    thaiWidgetVersion = "0.3.4"
 
     junitVersion = "4.12"
     jMockVersion = "2.8.1"

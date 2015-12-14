@@ -109,7 +109,7 @@ public class BuildingMapMarkerActivity extends TanrabadActivity implements View.
                         sendMarkedLocationResult();
                     }
                 } else {
-                    Alert.highLevel().show(R.string.please_define_location);
+                    Alert.highLevel().show(R.string.please_define_building_location);
                 }
                 break;
         }

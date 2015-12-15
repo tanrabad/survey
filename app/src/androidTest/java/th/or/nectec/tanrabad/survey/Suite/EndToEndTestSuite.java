@@ -27,7 +27,6 @@ import th.or.nectec.tanrabad.survey.end2end.*;
 @Suite.SuiteClasses({
         AddBuildingTest.class,
         //ChoosePlaceFromPlaceListTest.class,
-//        ChooseBuildingFromTypeVillageCommunityListTest.class,
         AddBuildingOnlyDefinebuildinglocationTest.class
 })
 

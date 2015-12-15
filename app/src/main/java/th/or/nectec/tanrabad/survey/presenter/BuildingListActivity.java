@@ -73,11 +73,6 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         placeController.showPlace(getPlaceUuidFromIntent());
     }
 
-    private UUID getPlaceUuidFromIntent() {
-        String uuid = getIntent().getStringExtra(PLACE_UUID_ARG);
-        return UUID.fromString(uuid);
-    }
-
     private void setupBuildingList() {
         buildingAdapter = new BuildingWithSurveyStatusAdapter(this, BuildingIconMapping.getBuildingIcon(place));
         buildingList = (RecyclerView) findViewById(R.id.building_list);
@@ -121,6 +116,11 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     private void loadSurveyBuildingList() {
         SurveyBuildingChooser surveyBuildingChooser = new SurveyBuildingChooser(new StubUserRepository(), InMemoryPlaceRepository.getInstance(), InMemoryBuildingRepository.getInstance(), InMemorySurveyRepository.getInstance(), this);
         surveyBuildingChooser.displaySurveyBuildingOf(getPlaceUuidFromIntent().toString(), "sara");
+    }
+
+    private UUID getPlaceUuidFromIntent() {
+        String uuid = getIntent().getStringExtra(PLACE_UUID_ARG);
+        return UUID.fromString(uuid);
     }
 
     @Override
@@ -189,7 +189,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         if (isNewSurvey()) {
             showFinishSurveyPrompt();
         } else {
-            openPlaceListActivity();
+            finish();
         }
     }
 

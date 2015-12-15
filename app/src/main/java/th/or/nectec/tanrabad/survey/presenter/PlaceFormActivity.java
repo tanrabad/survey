@@ -302,6 +302,9 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
 
     @Override
     public void displayPlace(Place place) {
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setTitle(R.string.edit_place);
+
         this.place = place;
         placeNameView.setText(place.getName());
 

@@ -132,5 +132,6 @@
         กม.\nเกินจากรัศมีของสถานที่ %3$s กม.
     </string>
     <string name="cant_edit_community_village">ไม่สามารถแก้ไขข้อมูลสถานที่ที่เป็นชุมชน/หมู่บ้าน</string>
+    <string name="edit_place">แก้ไขสถานที่</string>
 
 </resources>

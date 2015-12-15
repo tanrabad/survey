@@ -60,6 +60,4 @@ public class AddBuildingLocationTest extends TanrabadEspressoTestBase {
                 .perform(click());
         textDisplayed(R.string.please_define_building_location);
     }
-
-
 }

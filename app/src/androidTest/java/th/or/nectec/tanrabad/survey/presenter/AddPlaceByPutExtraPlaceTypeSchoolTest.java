@@ -71,9 +71,29 @@ public class AddPlaceByPutExtraPlaceTypeSchoolTest extends TanrabadEspressoTestB
     }
 
     @Test
-    public void touchSaveByTypePlaceNameButNotDefineLocationThenTouchSaveShouldFoundPromptPleaseDefinePlaceLocation() {
+    public void touchSaveByTypeJustPlaceNameThenTouchSaveShouldFoundPromptPleaseDefineAddress() {
         onView(withId(R.id.place_name))
                 .perform(replaceText("โรงเรียนอนุบาลเนคเทค"));
+        onView(withId(R.id.save))
+                .perform(click());
+
+        textDisplayed(R.string.please_define_place_address);
+    }
+
+    @Test
+    public void touchSaveByTypeJustPlaceNameAndAddressThenTouchSaveShouldFoundPromptPleaseDefinePlaceLocation() {
+        onView(withId(R.id.place_name))
+                .perform(replaceText("โรงเรียนอนุบาลเนคเทค"));
+        onView(withId(R.id.address_select))
+                .perform(click());
+        onView(withText("ภาคกลาง"))
+                .perform(click());
+        onView(withText("ปทุมธานี"))
+                .perform(click());
+        onView(withText("คลองหลวง"))
+                .perform(click());
+        onView(withText("คลองสอง"))
+                .perform(click());
         onView(withId(R.id.save))
                 .perform(click());
 

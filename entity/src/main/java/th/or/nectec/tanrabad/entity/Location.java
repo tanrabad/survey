@@ -21,14 +21,6 @@ public class Location {
     double latitude;
     double longitude;
 
-    @Override
-    public String toString() {
-        return "Location{" +
-                "latitude=" + latitude +
-                ", longitude=" + longitude +
-                '}';
-    }
-
     public Location(double latitude, double longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
@@ -38,8 +30,27 @@ public class Location {
         return latitude;
     }
 
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
     public double getLongitude() {
         return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(latitude);
+        result = (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(longitude);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
     }
 
     @Override
@@ -55,13 +66,10 @@ public class Location {
     }
 
     @Override
-    public int hashCode() {
-        int result;
-        long temp;
-        temp = Double.doubleToLongBits(latitude);
-        result = (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(longitude);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        return result;
+    public String toString() {
+        return "Location{" +
+                "latitude=" + latitude +
+                ", longitude=" + longitude +
+                '}';
     }
 }

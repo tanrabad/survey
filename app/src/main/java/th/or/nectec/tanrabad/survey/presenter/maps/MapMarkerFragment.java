@@ -20,7 +20,6 @@ public class MapMarkerFragment extends BaseMapFragment implements MapMarkerInter
 
     Marker marker;
     private th.or.nectec.tanrabad.entity.Location markedLocation;
-    private th.or.nectec.tanrabad.entity.Location fixedLocation;
 
     public static MapMarkerFragment newInstance() {
         MapMarkerFragment mapMarkerFragment = new MapMarkerFragment();
@@ -39,7 +38,6 @@ public class MapMarkerFragment extends BaseMapFragment implements MapMarkerInter
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        getMapAsync(this);
         getMap().setOnMapLongClickListener(this);
         getMap().setOnMarkerDragListener(this);
     }
@@ -49,13 +47,13 @@ public class MapMarkerFragment extends BaseMapFragment implements MapMarkerInter
         super.onConnected(connectionHint);
         LatLng targetLocation;
         if (markedLocation != null) {
-            targetLocation = new LatLng(markedLocation.getLatitude(), markedLocation.getLongitude());
+            targetLocation = LocationUtils.convertLocationToLatLng(markedLocation);
             marker = addDraggableMarker(targetLocation);
             moveToLocation(targetLocation);
         } else {
             Location lastLocation = getLastLocation();
             if (lastLocation != null) {
-                targetLocation = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
+                targetLocation = LocationUtils.convertLocationToLatLng(lastLocation);
                 marker = addDraggableMarker(targetLocation);
                 moveToLocation(targetLocation);
             }
@@ -101,11 +99,6 @@ public class MapMarkerFragment extends BaseMapFragment implements MapMarkerInter
     @Override
     public void onMarkerDragEnd(Marker marker) {
         getMap().getUiSettings().setScrollGesturesEnabled(true);
-    }
-
-    @Override
-    public void setFixedLocation(th.or.nectec.tanrabad.entity.Location location) {
-        fixedLocation = location;
     }
 
     public th.or.nectec.tanrabad.entity.Location getMarkedLocation() {

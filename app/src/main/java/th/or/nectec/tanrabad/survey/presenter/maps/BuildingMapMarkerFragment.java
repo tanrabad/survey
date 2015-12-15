@@ -51,20 +51,16 @@ public class BuildingMapMarkerFragment extends MapMarkerFragment implements Goog
         super.onConnected(connectionHint);
         Location placeLocation = place.getLocation();
         if (placeLocation != null) {
-            addPlaceLocation();
+            addPlaceMarker();
+            addPlaceCircle();
             if (getMarkedLocation() == null) {
-                moveToLocation(new LatLng(placeLocation.getLatitude(), placeLocation.getLongitude()));
+                moveToLocation(LocationUtils.convertLocationToLatLng(placeLocation));
             }
         }
     }
 
-    private void addPlaceLocation() {
-        addPlaceMarker(place);
-        addPlaceCircle(place);
-    }
-
-    private void addPlaceMarker(Place place) {
-        LatLng placePosition = new LatLng(place.getLocation().getLatitude(), place.getLocation().getLongitude());
+    private void addPlaceMarker() {
+        LatLng placePosition = LocationUtils.convertLocationToLatLng(place.getLocation());
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.icon(MapUtils.getIconBitmapDescriptor(getActivity(), R.color.water_blue));
         markerOptions.position(placePosition);
@@ -72,8 +68,8 @@ public class BuildingMapMarkerFragment extends MapMarkerFragment implements Goog
         placeMarker = googleMap.addMarker(markerOptions);
     }
 
-    private void addPlaceCircle(Place place) {
-        LatLng placePosition = new LatLng(place.getLocation().getLatitude(), place.getLocation().getLongitude());
+    private void addPlaceCircle() {
+        LatLng placePosition = LocationUtils.convertLocationToLatLng(place.getLocation());
         int placeColor = ResourceUtils.from(getActivity()).getColor(R.color.water_blue);
         CircleOptions circleOptions = new CircleOptions();
         circleOptions.center(placePosition);

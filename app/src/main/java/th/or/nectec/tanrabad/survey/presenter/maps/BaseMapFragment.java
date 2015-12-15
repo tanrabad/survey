@@ -33,6 +33,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 
 import th.or.nectec.tanrabad.survey.R;
@@ -71,9 +72,10 @@ class BaseMapFragment extends com.google.android.gms.maps.SupportMapFragment imp
         googleMap = getMap();
         googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         getMapAsync(this);
-        googleMap.getUiSettings().setScrollGesturesEnabled(!isLocked);
-        googleMap.getUiSettings().setMyLocationButtonEnabled(isMyLocationButtonEnabled);
-        googleMap.getUiSettings().setZoomControlsEnabled(isZoomable);
+        UiSettings googleMapUiSettings = googleMap.getUiSettings();
+        googleMapUiSettings.setScrollGesturesEnabled(!isLocked);
+        googleMapUiSettings.setMyLocationButtonEnabled(isMyLocationButtonEnabled);
+        googleMapUiSettings.setZoomControlsEnabled(isZoomable);
     }
 
     private void setupLocationAPI() {
@@ -135,9 +137,6 @@ class BaseMapFragment extends com.google.android.gms.maps.SupportMapFragment imp
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
-    /**
-     * Show gps setting dialog when gps disable
-     */
     private void showGpsSettingsDialog() {
         if (!isGPSDialogShowed) {
             PromptMessage promptMessage = new AlertDialogPromptMessage(getActivity());
@@ -176,6 +175,7 @@ class BaseMapFragment extends com.google.android.gms.maps.SupportMapFragment imp
 
     @Override
     public void onConnectionSuspended(int cause) {
+        Alert.lowLevel().show("Google Play Service ระงับการติดต่อชั่วคราว");
     }
 
     @Override

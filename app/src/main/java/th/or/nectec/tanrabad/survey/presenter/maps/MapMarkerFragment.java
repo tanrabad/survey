@@ -3,7 +3,6 @@ package th.or.nectec.tanrabad.survey.presenter.maps;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
-import android.util.Log;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -102,7 +101,6 @@ public class MapMarkerFragment extends BaseMapFragment implements MapMarkerInter
     }
 
     public th.or.nectec.tanrabad.entity.Location getMarkedLocation() {
-        Log.d("marker", marker.getPosition().toString());
         return marker == null ? null : new th.or.nectec.tanrabad.entity.Location(marker.getPosition().latitude, marker.getPosition().longitude);
     }
 

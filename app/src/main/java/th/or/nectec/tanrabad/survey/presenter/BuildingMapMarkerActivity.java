@@ -24,15 +24,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import com.google.android.gms.maps.model.LatLng;
+
+import java.text.DecimalFormat;
+
+import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.maps.BuildingMapMarkerFragment;
+import th.or.nectec.tanrabad.survey.presenter.maps.LocationUtils;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.TwiceBackPressed;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
-
-import java.text.DecimalFormat;
 
 public class BuildingMapMarkerActivity extends TanrabadActivity implements View.OnClickListener {
 
@@ -49,10 +51,10 @@ public class BuildingMapMarkerActivity extends TanrabadActivity implements View.
         activity.startActivityForResult(intent, MARK_LOCATION_REQUEST_CODE);
     }
 
-    public static void startEdit(Activity activity, String placeUUID, LatLng buildingLocation) {
+    public static void startEdit(Activity activity, String placeUUID, Location buildingLocation) {
         Intent intent = new Intent(activity, BuildingMapMarkerActivity.class);
         intent.putExtra(BuildingMapMarkerActivity.PLACE_UUID, placeUUID);
-        intent.putExtra(BuildingMapMarkerActivity.BUILDING_LOCATION, buildingLocation);
+        intent.putExtra(BuildingMapMarkerActivity.BUILDING_LOCATION, LocationUtils.convertLocationToJson(buildingLocation));
         activity.startActivityForResult(intent, MARK_LOCATION_REQUEST_CODE);
     }
 
@@ -75,7 +77,7 @@ public class BuildingMapMarkerActivity extends TanrabadActivity implements View.
     }
 
     private void setupMap() {
-        LatLng buildingLocation = getIntent().getParcelableExtra(BUILDING_LOCATION);
+        Location buildingLocation = LocationUtils.convertJsonToLocation(getIntent().getStringExtra(BUILDING_LOCATION));
         if (buildingLocation == null) {
             buildingMapMarkerFragment = BuildingMapMarkerFragment.newInstance(getPlaceUUID());
         } else {
@@ -101,7 +103,7 @@ public class BuildingMapMarkerActivity extends TanrabadActivity implements View.
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save_marker_menu:
-                LatLng markedLocation = buildingMapMarkerFragment.getMarkedLocation();
+                Location markedLocation = buildingMapMarkerFragment.getMarkedLocation();
                 if (markedLocation != null) {
                     if (buildingMapMarkerFragment.isDistanceBetweenPlaceAndBuildingExceed()) {
                         showPromptWhenPositionBetweenBuildingAndPlaceIsExceed();
@@ -128,6 +130,13 @@ public class BuildingMapMarkerActivity extends TanrabadActivity implements View.
         promptMessage.show(getString(R.string.add_location), getDistanceBetweenBuildingAndPlaceMessage());
     }
 
+    private void sendMarkedLocationResult() {
+        Intent data = new Intent();
+        data.putExtra(BUILDING_LOCATION, LocationUtils.convertLocationToJson(buildingMapMarkerFragment.getMarkedLocation()));
+        setResult(RESULT_OK, data);
+        finish();
+    }
+
     private String getDistanceBetweenBuildingAndPlaceMessage() {
         double distanceBetweenBuildingAndPlaceInKm = buildingMapMarkerFragment.getDistanceBetweenPlaceAndBuilding() / 1000.f;
         double differenceOfDistanceInKm = (buildingMapMarkerFragment.getDistanceBetweenPlaceAndBuilding() - BuildingMapMarkerFragment.DISTANCE_LIMIT_IN_METER) / 1000.f;
@@ -135,13 +144,6 @@ public class BuildingMapMarkerActivity extends TanrabadActivity implements View.
                 BuildingMapMarkerFragment.DISTANCE_LIMIT_IN_METER / 1000.f,
                 decimalFormat.format(distanceBetweenBuildingAndPlaceInKm),
                 decimalFormat.format(differenceOfDistanceInKm));
-    }
-
-    private void sendMarkedLocationResult() {
-        Intent data = new Intent();
-        data.putExtra(BUILDING_LOCATION, buildingMapMarkerFragment.getMarkedLocation());
-        setResult(RESULT_OK, data);
-        finish();
     }
 
     @Override

@@ -17,12 +17,14 @@
 
 package th.or.nectec.tanrabad.survey.presenter.maps;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -30,60 +32,47 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 
-public class TanrabadSupportMapFragment extends com.google.android.gms.maps.SupportMapFragment implements
+@SuppressLint("ValidFragment")
+class BaseMapFragment extends com.google.android.gms.maps.SupportMapFragment implements MapFragmentInterface,
         GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener, LocationListener, GoogleMap.OnCameraChangeListener {
-
-    public static final String ARGS_LOCKED_MAP = "args_locked_map";
-    public static final String ARGS_ZOOMABLE = "args_zoomable";
-    public static final String ARGS_MYLOCATION_ENABLE = "args_mylocation_enable";
-    public static final String ARGS_MOVE_TO_MY_LOCATION = "args_move_to_my_location";
+        GoogleApiClient.OnConnectionFailedListener, LocationListener, OnMapReadyCallback {
 
     private static final long UPDATE_INTERVAL_MS = 500;
     private static final long FASTEST_INTERVAL_MS = 100;
 
     protected GoogleMap googleMap;
-    private OnPositionChangeListener mLocationListener;
-    private OnCurrentCameraChangeListener mCameraChangeListener;
     private Boolean isLocked = false;
     private Boolean isZoomable = false;
     private Boolean isMoveToMyLocation = false;
     private Boolean isGPSDialogShowed = false;
-    private Boolean isLocationEnabled = true;
-    private Location lastLocation;
+    private Boolean isMyLocationEnabled = true;
+    private boolean isMyLocationButtonEnabled = true;
+
     private GoogleApiClient locationApiClient;
+    private Location myLocation;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        setupMapOption();
         setupMap();
         setupLocationAPI();
     }
 
-    private void setupMapOption() {
-        Bundle args = getArguments();
-        if (args != null) {
-            isLocked = args.getBoolean(ARGS_LOCKED_MAP, false);
-            isZoomable = args.getBoolean(ARGS_ZOOMABLE, true);
-            isLocationEnabled = args.getBoolean(ARGS_MYLOCATION_ENABLE, true);
-            isMoveToMyLocation = args.getBoolean(ARGS_MOVE_TO_MY_LOCATION, isLocationEnabled);
-        }
-    }
 
     private void setupMap() {
         googleMap = getMap();
         googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-        googleMap.setOnCameraChangeListener(this);
-        setLockedMap(isLocked);
+        getMapAsync(this);
+        googleMap.getUiSettings().setScrollGesturesEnabled(!isLocked);
+        googleMap.getUiSettings().setMyLocationButtonEnabled(isMyLocationButtonEnabled);
         googleMap.getUiSettings().setZoomControlsEnabled(isZoomable);
     }
 
@@ -93,11 +82,6 @@ public class TanrabadSupportMapFragment extends com.google.android.gms.maps.Supp
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
-    }
-
-    public void setLockedMap(boolean isLocked) {
-        googleMap.getUiSettings().setScrollGesturesEnabled(!isLocked);
-        googleMap.getUiSettings().setMyLocationButtonEnabled(!isLocked);
     }
 
     @Override
@@ -123,10 +107,10 @@ public class TanrabadSupportMapFragment extends com.google.android.gms.maps.Supp
 
     @Override
     public void onConnected(Bundle connectionHint) {
-        setLocationEnabled(isLocationEnabled);
+        setMyLocationEnabled(isMyLocationEnabled);
 
         if (isMoveToMyLocation) {
-            moveToLastLocationOrThailand();
+            moveToLastLocation();
         }
 
         if (!isGpsEnabled()) {
@@ -134,19 +118,16 @@ public class TanrabadSupportMapFragment extends com.google.android.gms.maps.Supp
         }
     }
 
-    public void setLocationEnabled(boolean isLocationEnabled) {
+    public void setMyLocationEnabled(boolean isLocationEnabled) {
         googleMap.setMyLocationEnabled(isLocationEnabled);
         if (isLocationEnabled)
             setupLocationUpdateService();
     }
 
-    private void moveToLastLocationOrThailand() {
-        lastLocation = getLastLocation();
-        if (lastLocation != null) {
-            onMoveToLocation(lastLocation);
-        } else {
-            ThailandLocation.move(getActivity(), googleMap);
-        }
+    private void moveToLastLocation() {
+        myLocation = getLastLocation();
+        if (myLocation != null)
+            moveToLocation(myLocation);
     }
 
     private boolean isGpsEnabled() {
@@ -188,7 +169,7 @@ public class TanrabadSupportMapFragment extends com.google.android.gms.maps.Supp
         return LocationServices.FusedLocationApi.getLastLocation(locationApiClient);
     }
 
-    public void onMoveToLocation(Location location) {
+    public void moveToLocation(Location location) {
         LatLng cur = new LatLng(location.getLatitude(), location.getLongitude());
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(cur, 15));
     }
@@ -199,37 +180,40 @@ public class TanrabadSupportMapFragment extends com.google.android.gms.maps.Supp
 
     @Override
     public void onLocationChanged(Location location) {
-        lastLocation = location;
-        LatLng position = new LatLng(location.getLatitude(), location.getLongitude());
-        if (mLocationListener != null) {
-            mLocationListener.onPositionChange(position);
-        }
-    }
-
-    @Override
-    public void onCameraChange(CameraPosition position) {
-        if (mCameraChangeListener != null) {
-            mCameraChangeListener.setOnCameraChangeListener(position);
-        }
+        myLocation = location;
     }
 
     public void moveToLocation(LatLng position) {
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
     }
 
-    public void setOnPositionChangeListener(OnPositionChangeListener listener) {
-        mLocationListener = listener;
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        ThailandLocation.move(getActivity(), googleMap);
     }
 
-    public void setOnCameraChangeListener(OnCurrentCameraChangeListener listener) {
-        mCameraChangeListener = listener;
+    @Override
+    public void setMapCanScrolled(boolean isCanScroll) {
+        isLocked = !isCanScroll;
     }
 
-    public interface OnPositionChangeListener {
-        void onPositionChange(LatLng position);
+    @Override
+    public void setMoveToMyLocation(boolean isMoved) {
+        isMoveToMyLocation = isMoved;
     }
 
-    public interface OnCurrentCameraChangeListener {
-        void setOnCameraChangeListener(CameraPosition position);
+    @Override
+    public void setMapZoomable(boolean isZoomable) {
+        this.isZoomable = isZoomable;
+    }
+
+    @Override
+    public void setShowMyLocation(boolean isShowMyLocation) {
+        this.isMyLocationEnabled = isShowMyLocation;
+    }
+
+    @Override
+    public void setMoveToMyLocationButtonEnabled(boolean isMyLocationButtonEnabled) {
+        this.isMyLocationButtonEnabled = isMyLocationButtonEnabled;
     }
 }

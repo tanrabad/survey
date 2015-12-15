@@ -1,7 +1,9 @@
 package th.or.nectec.tanrabad.survey.presenter.maps;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
+import android.util.Log;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -12,26 +14,24 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.utils.MapUtils;
 
-public class MapMarkerFragment extends TanrabadSupportMapFragment implements GoogleMap.OnMapLongClickListener, GoogleMap.OnMarkerDragListener, OnMapReadyCallback {
+public class MapMarkerFragment extends BaseMapFragment implements MapMarkerInterface, GoogleMap.OnMapLongClickListener, GoogleMap.OnMarkerDragListener, OnMapReadyCallback {
 
     public static final String FRAGMENT_TAG = "map_marker_fragment";
-    public static final String ARGS_LOCATION = "args_location";
+
     Marker marker;
+    private th.or.nectec.tanrabad.entity.Location markedLocation;
+    private th.or.nectec.tanrabad.entity.Location fixedLocation;
 
     public static MapMarkerFragment newInstance() {
         MapMarkerFragment mapMarkerFragment = new MapMarkerFragment();
-        Bundle args = new Bundle();
-        args.putBoolean(ARGS_MOVE_TO_MY_LOCATION, true);
-        mapMarkerFragment.setArguments(args);
+        mapMarkerFragment.setMoveToMyLocation(true);
         return mapMarkerFragment;
     }
 
-    public static MapMarkerFragment newInstanceWithLocation(LatLng location) {
+    public static MapMarkerFragment newInstanceWithLocation(th.or.nectec.tanrabad.entity.Location buildingLocation) {
         MapMarkerFragment mapMarkerFragment = new MapMarkerFragment();
-        Bundle args = new Bundle();
-        args.putBoolean(ARGS_MOVE_TO_MY_LOCATION, false);
-        args.putParcelable(ARGS_LOCATION, location);
-        mapMarkerFragment.setArguments(args);
+        mapMarkerFragment.setMoveToMyLocation(false);
+        mapMarkerFragment.setMarkedLocation(buildingLocation);
         return mapMarkerFragment;
     }
 
@@ -47,14 +47,18 @@ public class MapMarkerFragment extends TanrabadSupportMapFragment implements Goo
     @Override
     public void onConnected(Bundle connectionHint) {
         super.onConnected(connectionHint);
-        LatLng location = getArguments().getParcelable(ARGS_LOCATION);
-        if (location != null)
-            return;
-
-        if (getLastLocation() != null) {
-            location = new LatLng(getLastLocation().getLatitude(), getLastLocation().getLongitude());
-            marker = addDraggableMarker(location);
-            moveToLocation(location);
+        LatLng targetLocation;
+        if (markedLocation != null) {
+            targetLocation = new LatLng(markedLocation.getLatitude(), markedLocation.getLongitude());
+            marker = addDraggableMarker(targetLocation);
+            moveToLocation(targetLocation);
+        } else {
+            Location lastLocation = getLastLocation();
+            if (lastLocation != null) {
+                targetLocation = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
+                marker = addDraggableMarker(targetLocation);
+                moveToLocation(targetLocation);
+            }
         }
     }
 
@@ -68,15 +72,6 @@ public class MapMarkerFragment extends TanrabadSupportMapFragment implements Goo
         markerOptions.icon(MapUtils.getIconBitmapDescriptor(getActivity(), color));
         markerOptions.position(position);
         return googleMap.addMarker(markerOptions);
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        LatLng location = getArguments().getParcelable(ARGS_LOCATION);
-        if (location != null) {
-            marker = addDraggableMarker(location);
-            moveToLocation(location);
-        }
     }
 
     @Override
@@ -108,7 +103,18 @@ public class MapMarkerFragment extends TanrabadSupportMapFragment implements Goo
         getMap().getUiSettings().setScrollGesturesEnabled(true);
     }
 
-    public LatLng getMarkedLocation() {
-        return marker == null ? null : marker.getPosition();
+    @Override
+    public void setFixedLocation(th.or.nectec.tanrabad.entity.Location location) {
+        fixedLocation = location;
+    }
+
+    public th.or.nectec.tanrabad.entity.Location getMarkedLocation() {
+        Log.d("marker", marker.getPosition().toString());
+        return marker == null ? null : new th.or.nectec.tanrabad.entity.Location(marker.getPosition().latitude, marker.getPosition().longitude);
+    }
+
+    @Override
+    public void setMarkedLocation(th.or.nectec.tanrabad.entity.Location location) {
+        markedLocation = location;
     }
 }

@@ -17,9 +17,9 @@
 
 package th.or.nectec.tanrabad.entity;
 
-import th.or.nectec.tanrabad.entity.utils.Address;
-
 import java.util.UUID;
+
+import th.or.nectec.tanrabad.entity.utils.Address;
 
 public class Place implements LocationEntity {
     public static final int TYPE_VILLAGE_COMMUNITY = 1;

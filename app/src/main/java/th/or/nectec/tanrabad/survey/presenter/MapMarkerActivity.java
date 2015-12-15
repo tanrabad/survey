@@ -25,9 +25,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import com.google.android.gms.maps.model.LatLng;
-
+import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.presenter.maps.LocationUtils;
 import th.or.nectec.tanrabad.survey.presenter.maps.MapMarkerFragment;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.TwiceBackPressed;
@@ -44,9 +44,9 @@ public class MapMarkerActivity extends TanrabadActivity implements View.OnClickL
         activity.startActivityForResult(intent, MARK_LOCATION_REQUEST_CODE);
     }
 
-    public static void startEdit(Activity activity, LatLng location) {
+    public static void startEdit(Activity activity, Location location) {
         Intent intent = new Intent(activity, MapMarkerActivity.class);
-        intent.putExtra(MapMarkerActivity.MAP_LOCATION, location);
+        intent.putExtra(MapMarkerActivity.MAP_LOCATION, LocationUtils.convertLocationToJson(location));
         activity.startActivityForResult(intent, MARK_LOCATION_REQUEST_CODE);
     }
 
@@ -69,13 +69,13 @@ public class MapMarkerActivity extends TanrabadActivity implements View.OnClickL
     }
 
     private void setupMap() {
-        LatLng location = getIntent().getParcelableExtra(MAP_LOCATION);
-        if (location == null) {
-            mapMarkerFragment = MapMarkerFragment.newInstance();
-        } else {
+        Location location = LocationUtils.convertJsonToLocation(getIntent().getStringExtra(MAP_LOCATION));
+        if (location != null) {
             if (getSupportActionBar() != null)
                 getSupportActionBar().setTitle(R.string.edit_location);
             mapMarkerFragment = MapMarkerFragment.newInstanceWithLocation(location);
+        } else {
+            mapMarkerFragment = MapMarkerFragment.newInstance();
         }
 
         getSupportFragmentManager().beginTransaction().replace(R.id.map_container, mapMarkerFragment, MapMarkerFragment.FRAGMENT_TAG).commit();
@@ -91,7 +91,7 @@ public class MapMarkerActivity extends TanrabadActivity implements View.OnClickL
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save_marker_menu:
-                LatLng markedLocation = mapMarkerFragment.getMarkedLocation();
+                Location markedLocation = mapMarkerFragment.getMarkedLocation();
                 if (markedLocation != null) {
                     sendMarkedLocationResult();
                 } else {
@@ -104,7 +104,7 @@ public class MapMarkerActivity extends TanrabadActivity implements View.OnClickL
 
     private void sendMarkedLocationResult() {
         Intent data = new Intent();
-        data.putExtra(MAP_LOCATION, mapMarkerFragment.getMarkedLocation());
+        data.putExtra(MAP_LOCATION, LocationUtils.convertLocationToJson(mapMarkerFragment.getMarkedLocation()));
         setResult(RESULT_OK, data);
         finish();
     }

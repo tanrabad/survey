@@ -33,7 +33,6 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
 
 import java.util.UUID;
 
@@ -48,6 +47,7 @@ import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.utils.Address;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.maps.LiteMapFragment;
+import th.or.nectec.tanrabad.survey.presenter.maps.LocationUtils;
 import th.or.nectec.tanrabad.survey.repository.InMemoryPlaceRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.ResourceUtils;
@@ -75,8 +75,6 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     private Button editLocationButton;
     private FrameLayout addLocationBackground;
     private Button addMarkerButton;
-    private Toolbar toolbar;
-    private LatLng placeLocation;
     private TwiceBackPressed twiceBackPressed;
 
     public static void startAdd(Activity activity, int placeTypeID) {
@@ -108,7 +106,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     }
 
     private void setupViews() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         placeNameView = (EditText) findViewById(R.id.place_name);
         addressSelect = (AppCompatAddressPicker) findViewById(R.id.address_select);
         placeTypeSelector = (AppCompatSpinner) findViewById(R.id.place_type_selector);
@@ -133,7 +131,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     }
 
     private void setupPreviewMap() {
-        SupportMapFragment supportMapFragment = LiteMapFragment.setupLiteMapFragment();
+        SupportMapFragment supportMapFragment = LiteMapFragment.newInstance();
         getSupportFragmentManager().beginTransaction().replace(R.id.map_container, supportMapFragment).commit();
     }
 
@@ -194,13 +192,37 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save:
-                doSaveData();
+                if (TextUtils.isEmpty(getPlaceUUID())) {
+                    doSaveData();
+                } else {
+                    doUpdateData();
+                }
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
     public void doSaveData() {
+        getPlaceFieldData();
+        try {
+            PlaceSaver placeSaver = new PlaceSaver(placeRepository, new SavePlaceValidator(), this);
+            placeSaver.save(place);
+        } catch (ValidatorException e) {
+            Alert.highLevel().show(e.getMessageID());
+        }
+    }
+
+    public void doUpdateData() {
+        getPlaceFieldData();
+        try {
+            PlaceSaver placeSaver = new PlaceSaver(placeRepository, new UpdatePlaceValidator(), this);
+            placeSaver.update(place);
+        } catch (ValidatorException e) {
+            Alert.highLevel().show(e.getMessageID());
+        }
+    }
+
+    private void getPlaceFieldData() {
         place.setName(placeNameView.getText().toString());
         int placeTypeID = ((PlaceType) placeTypeSelector.getSelectedItem()).id;
         place.setType(placeTypeID);
@@ -209,22 +231,6 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         }
 
         place.setAddress(getPlaceAddressFromField());
-
-        Location location = placeLocation == null
-                ? null : new Location(placeLocation.latitude, placeLocation.longitude);
-        place.setLocation(location);
-
-        try {
-            if (TextUtils.isEmpty(getPlaceUUID())) {
-                PlaceSaver placeSaver = new PlaceSaver(placeRepository, new SavePlaceValidator(), this);
-                placeSaver.save(place);
-            } else {
-                PlaceSaver placeSaver = new PlaceSaver(placeRepository, new UpdatePlaceValidator(), this);
-                placeSaver.update(place);
-            }
-        } catch (ValidatorException e) {
-            Alert.highLevel().show(e.getMessageID());
-        }
     }
 
     private Address getPlaceAddressFromField() {
@@ -245,18 +251,19 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         switch (requestCode) {
             case MapMarkerActivity.MARK_LOCATION_REQUEST_CODE:
                 if (resultCode == RESULT_OK) {
-                    setupPreviewMapWithPosition(data.<LatLng>getParcelableExtra(MapMarkerActivity.MAP_LOCATION));
+                    Location placeLocation = LocationUtils.convertJsonToLocation(data.getStringExtra(MapMarkerActivity.MAP_LOCATION));
+                    place.setLocation(placeLocation);
+                    setupPreviewMapWithPosition(placeLocation);
                 }
         }
     }
 
-    private void setupPreviewMapWithPosition(LatLng latLng) {
+    private void setupPreviewMapWithPosition(Location location) {
         addLocationBackground.setBackgroundColor(ResourceUtils.from(this).getColor(R.color.transparent));
         addMarkerButton.setVisibility(View.GONE);
         editLocationButton.setVisibility(View.VISIBLE);
         editLocationButton.setOnClickListener(this);
-        placeLocation = latLng;
-        SupportMapFragment supportMapFragment = LiteMapFragment.setupLiteMapFragmentWithPosition(latLng);
+        SupportMapFragment supportMapFragment = LiteMapFragment.newInstance(location);
         getSupportFragmentManager().beginTransaction().replace(R.id.map_container, supportMapFragment).commit();
     }
 
@@ -311,11 +318,8 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         if (place.getAddress() != null)
             addressSelect.setAddressCode(place.getAddress().getAddressCode());
 
-        Location location = place.getLocation();
-        if (location != null) {
-            placeLocation = new LatLng(location.getLatitude(), location.getLongitude());
-            setupPreviewMapWithPosition(placeLocation);
-        }
+        if (place.getLocation() != null)
+            setupPreviewMapWithPosition(place.getLocation());
     }
 
     @Override
@@ -330,7 +334,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
                 MapMarkerActivity.startAdd(PlaceFormActivity.this);
                 break;
             case R.id.edit_location:
-                MapMarkerActivity.startEdit(PlaceFormActivity.this, placeLocation);
+                MapMarkerActivity.startEdit(PlaceFormActivity.this, place.getLocation());
                 break;
         }
     }

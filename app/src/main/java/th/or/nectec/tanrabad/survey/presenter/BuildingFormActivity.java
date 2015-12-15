@@ -31,7 +31,6 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
 
 import java.util.UUID;
 
@@ -46,6 +45,7 @@ import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.maps.LiteMapFragment;
+import th.or.nectec.tanrabad.survey.presenter.maps.LocationUtils;
 import th.or.nectec.tanrabad.survey.repository.InMemoryBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.InMemoryPlaceRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
@@ -68,7 +68,6 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
     private TextView buildingNameTitle;
     private EditText buildingNameView;
     private FrameLayout addLocationBackground;
-    private LatLng buildingLocation;
     private PlaceController placeController = new PlaceController(InMemoryPlaceRepository.getInstance(), this);
     private BuildingController buildingController = new BuildingController(InMemoryBuildingRepository.getInstance(), this);
 
@@ -136,7 +135,7 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
     }
 
     private void setupPreviewMap() {
-        SupportMapFragment supportMapFragment = LiteMapFragment.setupLiteMapFragment();
+        SupportMapFragment supportMapFragment = LiteMapFragment.newInstance();
         getSupportFragmentManager().beginTransaction().replace(R.id.map_container, supportMapFragment).commit();
     }
 
@@ -167,9 +166,7 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
         if (this.building.getLocation() == null) {
             setupPreviewMap();
         } else {
-            double latitude = this.building.getLocation().getLatitude();
-            double longitude = this.building.getLocation().getLongitude();
-            setupPreviewMapWithPosition(new LatLng(latitude, longitude));
+            setupPreviewMapWithPosition(building.getLocation());
         }
     }
 
@@ -180,12 +177,11 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
         Alert.mediumLevel().show(R.string.building_not_found);
     }
 
-    private void setupPreviewMapWithPosition(LatLng latLng) {
+    private void setupPreviewMapWithPosition(Location location) {
         addLocationBackground.setVisibility(View.GONE);
         editLocationButton.setVisibility(View.VISIBLE);
         editLocationButton.setOnClickListener(this);
-        buildingLocation = latLng;
-        SupportMapFragment supportMapFragment = LiteMapFragment.setupLiteMapFragmentWithPosition(latLng);
+        SupportMapFragment supportMapFragment = LiteMapFragment.newInstance(location);
         getSupportFragmentManager().beginTransaction().replace(R.id.map_container, supportMapFragment).commit();
     }
 
@@ -196,14 +192,9 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
                 BuildingMapMarkerActivity.startAdd(BuildingFormActivity.this, getPlaceUUID());
                 break;
             case R.id.edit_location:
-                BuildingMapMarkerActivity.startEdit(BuildingFormActivity.this, getPlaceUUID(), buildingLocation);
+                BuildingMapMarkerActivity.startEdit(BuildingFormActivity.this, getPlaceUUID(), building.getLocation());
                 break;
         }
-    }
-
-    private LatLng getPlaceLocation() {
-        Location placeLocation = place.getLocation();
-        return place.getLocation() == null ? null : new LatLng(placeLocation.getLatitude(), placeLocation.getLongitude());
     }
 
     @Override
@@ -212,7 +203,9 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
         switch (requestCode) {
             case BuildingMapMarkerActivity.MARK_LOCATION_REQUEST_CODE:
                 if (resultCode == RESULT_OK) {
-                    setupPreviewMapWithPosition(data.<LatLng>getParcelableExtra(BuildingMapMarkerActivity.BUILDING_LOCATION));
+                    Location buildingLocation = LocationUtils.convertJsonToLocation(data.getStringExtra(BuildingMapMarkerActivity.BUILDING_LOCATION));
+                    building.setLocation(buildingLocation);
+                    setupPreviewMapWithPosition(buildingLocation);
                 }
         }
     }
@@ -243,9 +236,6 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
     private void saveBuildingData() {
         building.setName(buildingNameView.getText().toString());
         building.setPlace(place);
-        Location location = buildingLocation == null
-                ? null : new Location(buildingLocation.latitude, buildingLocation.longitude);
-        building.setLocation(location);
         try {
             if (TextUtils.isEmpty(getBuildingUUID())) {
                 BuildingSaver buildingSaver = new BuildingSaver(InMemoryBuildingRepository.getInstance(), new SaveBuildingValidator(), this);

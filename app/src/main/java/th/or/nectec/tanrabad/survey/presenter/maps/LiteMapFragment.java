@@ -17,61 +17,30 @@
 
 package th.or.nectec.tanrabad.survey.presenter.maps;
 
-import android.graphics.Color;
-import android.support.annotation.NonNull;
-import com.google.android.gms.maps.*;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import th.or.nectec.tanrabad.survey.R;
-import th.or.nectec.tanrabad.survey.utils.android.ResourceUtils;
+import th.or.nectec.tanrabad.entity.Location;
 
 public class LiteMapFragment {
 
-    public static SupportMapFragment setupLiteMapFragment() {
-        return setupLiteMapFragmentWithPosition(null);
+    public static BaseMapFragment newInstance() {
+        return newInstance(null);
     }
 
-    public static SupportMapFragment setupLiteMapFragmentWithPosition(final LatLng position) {
-        GoogleMapOptions googleMapOptions = new GoogleMapOptions();
-        googleMapOptions.tiltGesturesEnabled(false);
-        googleMapOptions.scrollGesturesEnabled(false);
-        googleMapOptions.zoomGesturesEnabled(false);
-        googleMapOptions.rotateGesturesEnabled(false);
-        googleMapOptions.mapType(GoogleMap.MAP_TYPE_SATELLITE);
-        googleMapOptions.mapToolbarEnabled(false);
+    public static BaseMapFragment newInstance(Location location) {
 
-        final SupportMapFragment supportMapFragment = SupportMapFragment.newInstance(googleMapOptions);
-        supportMapFragment.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap googleMap) {
-                if (position == null) {
-                    ThailandLocation.move(supportMapFragment.getActivity(), googleMap);
-                } else {
-                    moveMapByLocation(googleMap, supportMapFragment, position);
-                }
-            }
-        });
+        BaseMapFragment supportMapFragment;
+
+        if (location == null) {
+            supportMapFragment = new BaseMapFragment();
+        } else {
+            supportMapFragment = MapMarkerFragment.newInstanceWithLocation(location);
+        }
+
+        supportMapFragment.setMoveToMyLocation(false);
+        supportMapFragment.setMapCanScrolled(false);
+        supportMapFragment.setMapZoomable(false);
+        supportMapFragment.setShowMyLocation(false);
+        supportMapFragment.setMoveToMyLocationButtonEnabled(false);
+
         return supportMapFragment;
     }
-
-    private static void moveMapByLocation(GoogleMap googleMap, SupportMapFragment supportMapFragment, LatLng position) {
-        MarkerOptions marker = buildMarker(googleMap, supportMapFragment, position);
-        googleMap.addMarker(marker);
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 16));
-    }
-
-    @NonNull
-    private static MarkerOptions buildMarker(GoogleMap googleMap, SupportMapFragment supportMapFragment, LatLng position) {
-        int color = ResourceUtils.from(supportMapFragment.getActivity()).getColor(R.color.shock_pink);
-        float hsv[] = new float[3];
-        Color.colorToHSV(color, hsv);
-        MarkerOptions marker = new MarkerOptions();
-        marker.icon(BitmapDescriptorFactory.defaultMarker(hsv[0]));
-        marker.position(position);
-        googleMap.addMarker(marker);
-        return marker;
-    }
-
-
 }

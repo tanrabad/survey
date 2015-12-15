@@ -1,0 +1,13 @@
+package th.or.nectec.tanrabad.survey.presenter.maps;
+
+public interface MapFragmentInterface {
+    void setMapCanScrolled(boolean isCanScroll);
+
+    void setMoveToMyLocation(boolean isMoved);
+
+    void setMapZoomable(boolean isZoomable);
+
+    void setShowMyLocation(boolean isShowed);
+
+    void setMoveToMyLocationButtonEnabled(boolean isMyLocationButtonEnabled);
+}

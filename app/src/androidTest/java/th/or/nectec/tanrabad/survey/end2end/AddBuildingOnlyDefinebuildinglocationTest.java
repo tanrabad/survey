@@ -21,11 +21,13 @@ package th.or.nectec.tanrabad.survey.end2end;
 import android.content.Intent;
 import android.support.test.rule.ActivityTestRule;
 
+import android.support.test.runner.AndroidJUnit4;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.UUID;
 
+import org.junit.runner.RunWith;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
 import th.or.nectec.tanrabad.survey.presenter.BuildingFormActivity;
@@ -35,31 +37,29 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
+@RunWith(AndroidJUnit4.class)
 public class AddBuildingOnlyDefinebuildinglocationTest extends TanrabadEspressoTestBase {
-    public ActivityTestRule<BuildingFormActivity> mActivityTestRule = new ActivityTestRule<>(BuildingFormActivity.class);
+    public ActivityTestRule<BuildingFormActivity> mActivityTestRule
+            = new ActivityTestRule<>(BuildingFormActivity.class);
     BuildingFormActivity mActivity;
 
     @Before
     public void setUp() {
         Intent intent = new Intent();
         intent.putExtra("place_uuid_arg", UUID.nameUUIDFromBytes("1abc".getBytes()).toString());
-        intent.putExtra("username_arg", "sara");
         mActivity = mActivityTestRule.launchActivity(intent);
     }
 
     @Test
-    public void testClickDefineBuildingLocationButtonShouldHaveMarker() {
-        textDisplayed("เพิ่มอาคาร");
-        textDisplayed("หมู่บ้านพาลาซเซตโต้");
-        textDisplayed(R.string.save);
-        textDisplayed(R.string.house_no);
-        textDisplayed(R.string.location);
-        textDisplayed(R.string.define_building_location);
+    public void addLocationThenTouchEditLocationShouldSuccess() {
         onView(withId(R.id.add_marker))
                 .perform(click());
         onView(withText(R.string.save_location))
                 .perform(click());
-       textDisplayed(R.string.edit_location);
-    }
 
+        onView(withId(R.id.edit_location))
+                .perform(click());
+        onView(withText(R.string.save_location))
+                .perform(click());
+    }
 }

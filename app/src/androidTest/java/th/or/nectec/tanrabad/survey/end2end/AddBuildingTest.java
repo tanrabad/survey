@@ -70,17 +70,4 @@ public class AddBuildingTest extends TanrabadEspressoTestBase {
         onView(withId(R.id.building_name))
                 .check(matches(containText(buildingName)));
     }
-
-    @Test
-    public void addLocationThenTouchEditLocationShouldSuccess() {
-        onView(withId(R.id.add_marker))
-                .perform(click());
-        onView(withText(R.string.save_location))
-                .perform(click());
-
-        onView(withId(R.id.edit_location))
-                .perform(click());
-        onView(withText(R.string.save_location))
-                .perform(click());
-    }
 }

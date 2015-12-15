@@ -25,6 +25,7 @@ import th.or.nectec.tanrabad.survey.end2end.*;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+        AddBuildingTest.class,
         ChoosePlaceFromPlaceListTest.class,
 //        BuildingAddButtonByBuilding0UnitTest.class,
 //        BuildingAddButtonByBuilding13UnitTest.class,

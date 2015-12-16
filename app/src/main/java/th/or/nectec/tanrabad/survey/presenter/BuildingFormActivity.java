@@ -234,7 +234,7 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
     }
 
     private void saveBuildingData() {
-        building.setName(buildingNameView.getText().toString());
+        building.setName(buildingNameView.getText().toString().trim());
         building.setPlace(place);
         try {
             if (TextUtils.isEmpty(getBuildingUUID())) {

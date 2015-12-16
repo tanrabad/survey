@@ -223,7 +223,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     }
 
     private void getPlaceFieldData() {
-        place.setName(placeNameView.getText().toString());
+        place.setName(placeNameView.getText().toString().trim());
         int placeTypeID = ((PlaceType) placeTypeSelector.getSelectedItem()).id;
         place.setType(placeTypeID);
         if (placeTypeID == Place.TYPE_WORSHIP) {

@@ -21,6 +21,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageButton;
+
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.utils.CameraFlashLight;
 import th.or.nectec.tanrabad.survey.utils.Torch;
@@ -45,7 +46,6 @@ public class TorchButton extends ImageButton {
         super(context, attrs, defStyleAttr);
         this.torch = torch;
         setupView();
-
     }
 
     private void setupView() {

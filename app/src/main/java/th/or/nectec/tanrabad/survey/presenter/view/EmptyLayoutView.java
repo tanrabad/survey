@@ -18,9 +18,7 @@ public class EmptyLayoutView extends LinearLayout {
     private Button emptyButtonView;
 
     public EmptyLayoutView(Context context) {
-        super(context);
-        initInflate();
-        initInstances();
+        this(context, null);
     }
 
     public EmptyLayoutView(Context context, AttributeSet attrs) {

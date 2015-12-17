@@ -22,6 +22,11 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.domain.survey.SurveyBuildingChooser;
@@ -30,10 +35,6 @@ import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.User;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 public class BuildingWithSurveyStatusChooserTest {
 
@@ -49,9 +50,7 @@ public class BuildingWithSurveyStatusChooserTest {
     private String placeUUID;
     private String username;
     private BuildingRepository buildingRepository;
-    private Building building1;
-    private Building building2;
-    private Building building3;
+    private Building building1, building2, building3, building4, building5;
 
     @Before
     public void setUp() {
@@ -75,6 +74,12 @@ public class BuildingWithSurveyStatusChooserTest {
 
         building3 = Building.withName("125");
         building3.setPlace(place);
+
+        building4 = Building.withName("131");
+        building4.setPlace(place);
+
+        building5 = Building.withName("134");
+        building5.setPlace(place);
     }
 
     @Test
@@ -113,6 +118,39 @@ public class BuildingWithSurveyStatusChooserTest {
         });
         SurveyBuildingChooser surveyBuildingHistoryController = new SurveyBuildingChooser(userRepository, placeRepository, buildingRepository, surveyRepository, buildingWithSurveyStatusListPresenter);
         surveyBuildingHistoryController.displaySurveyBuildingOf(placeUUID, username);
+    }
+
+    @Test
+    public void testSearchSurveyBuildingListByName() throws Exception {
+        final String searchBuildingName = "13";
+
+        final List<Building> queryBuildings = new ArrayList<>();
+        queryBuildings.add(building4);
+        queryBuildings.add(building5);
+
+        final List<BuildingWithSurveyStatus> buildingsWithSurveyStatuses = new ArrayList<>();
+        buildingsWithSurveyStatuses.add(new BuildingWithSurveyStatus(building4, false));
+        buildingsWithSurveyStatuses.add(new BuildingWithSurveyStatus(building5, false));
+
+        context.checking(new Expectations() {
+            {
+                allowing(placeRepository).findPlaceByPlaceUUID(with(UUID.fromString(placeUUID)));
+                will(returnValue(place));
+
+                allowing(userRepository).findUserByName(with(username));
+                will(returnValue(user));
+
+                allowing(buildingRepository).searchBuildingInPlaceByName(with(place.getId()), with(searchBuildingName));
+                will(returnValue(queryBuildings));
+
+                allowing(surveyRepository).findByPlaceAndUserIn7Days(with(place), with(user));
+                will(returnValue(null));
+
+                allowing(buildingWithSurveyStatusListPresenter).displayAllSurveyBuildingList(with(buildingsWithSurveyStatuses));
+            }
+        });
+        SurveyBuildingChooser surveyBuildingHistoryController = new SurveyBuildingChooser(userRepository, placeRepository, buildingRepository, surveyRepository, buildingWithSurveyStatusListPresenter);
+        surveyBuildingHistoryController.searchSurveyBuildingOfPlaceByName(searchBuildingName, placeUUID, username);
     }
 
 

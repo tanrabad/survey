@@ -17,6 +17,10 @@
 
 package th.or.nectec.tanrabad.domain.survey;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.domain.building.BuildingRepository;
 import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
@@ -26,10 +30,6 @@ import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.User;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 public class SurveyBuildingChooser {
 
@@ -84,5 +84,34 @@ public class SurveyBuildingChooser {
             }
         }
         return false;
+    }
+
+    public void searchSurveyBuildingOfPlaceByName(String searchBuildingName, String placeUUID, String username) {
+        User user = userRepository.findUserByName(username);
+        if (user == null) {
+            surveyBuildingPresenter.alertUserNotFound();
+            return;
+        }
+
+        Place place = placeRepository.findPlaceByPlaceUUID(UUID.fromString(placeUUID));
+        if (place == null) {
+            surveyBuildingPresenter.alertPlaceNotFound();
+            return;
+        }
+
+        List<Building> buildings = buildingRepository.searchBuildingInPlaceByName(place.getId(), searchBuildingName);
+
+        if (buildings == null) {
+            surveyBuildingPresenter.alertBuildingsNotFound();
+            return;
+        }
+
+        List<Survey> surveys = surveyRepository.findByPlaceAndUserIn7Days(place, user);
+        List<BuildingWithSurveyStatus> buildingsWithSurveyStatuses = new ArrayList<>();
+        for (Building eachBuilding : buildings) {
+            BuildingWithSurveyStatus buildingWithSurveyStatus = new BuildingWithSurveyStatus(eachBuilding, surveys != null && isBuildingSurveyed(surveys, eachBuilding));
+            buildingsWithSurveyStatuses.add(buildingWithSurveyStatus);
+        }
+        surveyBuildingPresenter.displayAllSurveyBuildingList(buildingsWithSurveyStatuses);
     }
 }

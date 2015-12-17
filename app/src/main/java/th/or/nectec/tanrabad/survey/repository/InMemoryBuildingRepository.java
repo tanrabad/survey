@@ -169,4 +169,15 @@ public class InMemoryBuildingRepository implements BuildingRepository {
         buildings.set(buildings.indexOf(building), building);
         return true;
     }
+
+    @Override
+    public List<Building> searchBuildingInPlaceByName(UUID placeUUID, String buildingName) {
+        ArrayList<Building> newBuildingList = new ArrayList<>();
+        for (Building eachBuilding : buildings) {
+            if (eachBuilding.getPlace().getId().equals(placeUUID) && eachBuilding.getName().contains(buildingName)) {
+                newBuildingList.add(eachBuilding);
+            }
+        }
+        return newBuildingList.isEmpty() ? null : newBuildingList;
+    }
 }

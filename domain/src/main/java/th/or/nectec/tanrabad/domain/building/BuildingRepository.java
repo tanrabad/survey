@@ -32,4 +32,6 @@ public interface BuildingRepository {
     boolean save(Building building);
 
     boolean update(Building building);
+
+    List<Building> searchBuildingInPlaceByName(UUID placeUUID, String buildingName);
 }

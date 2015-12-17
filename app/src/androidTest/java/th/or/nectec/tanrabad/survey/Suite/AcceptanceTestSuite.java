@@ -27,12 +27,12 @@ import th.or.nectec.tanrabad.survey.presenter.*;
 
         PlaceListInDatabaseTest.class,
         MarkPlaceLocationTest.class,
-        AddPlaceByPutExtraPlaceTypeSchoolTest.class,
+        PlaceFormActivityByPutExtraPlaceTypeSchoolTest.class,
         EditPlaceByPutExtraTypeHospitalTest.class,
 
         BuildingListPageAtBuildingNotFoundTest.class,
         BuildingListPageByFoundBuildingTest.class,
-        AddBuildingTest.class,
+        BuildingFormActivityTest.class,
         MarkBuildingLocationTest.class,
         EditBuildingTest.class,
 

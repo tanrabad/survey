@@ -42,7 +42,7 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.hasCom
 import static android.support.test.espresso.matcher.ViewMatchers.*;
 
 @RunWith(AndroidJUnit4.class)
-public class AddPlaceByPutExtraPlaceTypeSchoolTest extends TanrabadEspressoTestBase {
+public class PlaceFormActivityByPutExtraPlaceTypeSchoolTest extends TanrabadEspressoTestBase {
 
     @Rule
     public ActivityTestRule<PlaceFormActivity> mActivityTestRule
@@ -101,7 +101,7 @@ public class AddPlaceByPutExtraPlaceTypeSchoolTest extends TanrabadEspressoTestB
     }
 
     @Test
-    public void touchDefineLocationShouldOpenIntentPlaceLocationPage() {
+    public void touchDefineLocationShouldOpenIntentMarkPlaceLocationPage() {
         onView(withId(R.id.add_marker))
                 .perform(click());
 

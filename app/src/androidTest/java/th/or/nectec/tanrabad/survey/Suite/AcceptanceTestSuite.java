@@ -34,6 +34,7 @@ import th.or.nectec.tanrabad.survey.presenter.*;
         BuildingListPageByFoundBuildingTest.class,
         AddBuildingTest.class,
         AddBuildingLocationTest.class,
+        EditBuildingTest.class,
 
         SurveyBuildingTypeVillageCommunityTest.class,
 })

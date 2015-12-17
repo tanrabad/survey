@@ -19,14 +19,17 @@ package th.or.nectec.tanrabad.survey.presenter;
 
 import android.content.ComponentName;
 import android.content.Intent;
+
 import android.support.test.espresso.intent.Intents;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
@@ -35,6 +38,7 @@ import java.util.UUID;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -58,18 +62,26 @@ public class EditPlaceByPutExtraTypeHospitalTest extends TanrabadEspressoTestBas
     }
 
     @Test
-    public void testName() throws Exception {
-        waitingFor(5000);
-    }
-
-    @Test
-    public void touchDefineLocationShouldOpenIntentPlaceLocationPage() {
+    public void editBuildingNameAddressTypePlaceDefineLocationThenSaveShouldOpenPlaceListPage() {
+        onView(withId(R.id.place_name))
+                .perform(replaceText("โรงเรียนอนุบาลเนคเทค"));
+        onView(withId(R.id.address_select))
+                .perform(click());
+        onView(withText("คลองห้า"))
+                .perform(click());
+        onView(withText("โรงพยาบาล"))
+                .perform(click());
+        onView(withText("โรงเรียน"))
+                .perform(click());
         onView(withId(R.id.add_marker))
                 .perform(click());
+        onView(withId(R.id.save_marker_menu))
+                .perform(click());
 
+        onView(withId(R.id.save))
+                .perform(click());
         Intents.intended(
-                hasComponent(new ComponentName(mActivity, MapMarkerActivity.class)
+                hasComponent(new ComponentName(mActivity, PlaceListActivity.class)
                 ));
     }
-
 }

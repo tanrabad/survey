@@ -24,14 +24,18 @@ import th.or.nectec.tanrabad.survey.presenter.*;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         MainStartSurveyTest.class,
+
         PlaceListInDatabaseTest.class,
+        AddPlaceLocationTest.class,
+        AddPlaceByPutExtraPlaceTypeSchoolTest.class,
+        EditPlaceByPutExtraTypeHospitalTest.class,
+
         BuildingListPageAtBuildingNotFoundTest.class,
         BuildingListPageByFoundBuildingTest.class,
-        SurveyBuildingTypeVillageCommunityTest.class,
         AddBuildingTest.class,
         AddBuildingLocationTest.class,
-        AddPlaceLocationTest.class,
-        AddPlaceByPutExtraPlaceTypeSchoolTest.class
+
+        SurveyBuildingTypeVillageCommunityTest.class,
 })
 
 public class AcceptanceTestSuite {

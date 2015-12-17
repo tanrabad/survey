@@ -47,6 +47,11 @@
             android:name="io.fabric.ApiKey"
             android:value="985b93fe45ed65dc37e25e81a8c5ce5ba9c217fa"/>
 
+        <provider
+            android:name=".presenter.PlaceSuggestionProvider"
+            android:authorities="th.or.nectec.tanrabad.survey.PlaceSuggestionProvider"
+            android:exported="false"/>
+
         <activity
             android:name=".presenter.MainActivity"
             android:icon="@mipmap/ic_launcher"
@@ -103,7 +108,7 @@
             </intent-filter>
             <meta-data
                 android:name="android.app.searchable"
-                android:resource="@xml/searchable"/>
+                android:resource="@xml/places_searchable"/>
         </activity>
     </application>
 

@@ -113,11 +113,6 @@ public class InMemoryPlaceRepository implements PlaceRepository {
     }
 
     @Override
-    public void findPlaceByPlaceName(String placeName) {
-
-    }
-
-    @Override
     public Place findPlaceByPlaceUUID(UUID placeUUID) {
         for (Place eachPlace : places) {
             if (eachPlace.getId().equals(placeUUID)) {

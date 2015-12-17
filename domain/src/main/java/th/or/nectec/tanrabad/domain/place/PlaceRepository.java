@@ -28,8 +28,6 @@ public interface PlaceRepository {
 
     List<Place> findPlaces();
 
-    void findPlaceByPlaceName(String placeName);
-
     Place findPlaceByPlaceUUID(UUID placeUUID);
 
     List<Place> findPlacesWithPlaceFilter(int typeVillageCommunity);

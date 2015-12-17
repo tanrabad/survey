@@ -38,7 +38,7 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 @RunWith(AndroidJUnit4.class)
-public class AddBuildingLocationTest extends TanrabadEspressoTestBase {
+public class MarkBuildingLocationTest extends TanrabadEspressoTestBase {
 
     @Rule
     public ActivityTestRule<BuildingMapMarkerActivity> mActivityTestRule
@@ -53,17 +53,17 @@ public class AddBuildingLocationTest extends TanrabadEspressoTestBase {
     }
 
     @Test
+    public void touchSaveLocationShouldNotFoundPromptPleaseMarkLocation() {
+        onView(withId(R.id.save_marker_menu))
+                .perform(click());
+    }
+
+    @Test
     public void touchDeleteLocationButtonThenTouchSaveLocationShouldFoundPromptPleaseMarkLocation() {
         onView(withId(R.id.remove_location))
             .perform(click());
         onView(withId(R.id.save_marker_menu))
                 .perform(click());
         textDisplayed(R.string.please_define_building_location);
-    }
-
-    @Test
-    public void touchSaveLocationShouldNotFoundPromptPleaseMarkLocation() {
-        onView(withId(R.id.save_marker_menu))
-                .perform(click());
     }
 }

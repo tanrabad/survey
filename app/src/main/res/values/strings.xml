@@ -134,5 +134,6 @@
     <string name="cant_edit_community_village">ไม่สามารถแก้ไขข้อมูลสถานที่ที่เป็นชุมชน/หมู่บ้าน</string>
     <string name="edit_place">แก้ไขสถานที่</string>
     <string name="search_building_by_name_hint">พิมพ์ชื่ออาคารเพื่อค้นหา</string>
+    <string name="search_place">ค้นหาสถานที่</string>
 
 </resources>

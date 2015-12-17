@@ -162,7 +162,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.action_activity_place_list, menu);
+        inflater.inflate(R.menu.action_activity_place_add, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 

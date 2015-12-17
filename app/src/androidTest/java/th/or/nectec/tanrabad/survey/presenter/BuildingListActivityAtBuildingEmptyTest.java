@@ -19,7 +19,6 @@ package th.or.nectec.tanrabad.survey.presenter;
 
 import android.content.ComponentName;
 import android.content.Intent;
-
 import android.support.test.espresso.intent.Intents;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.rule.ActivityTestRule;
@@ -39,16 +38,12 @@ import java.util.UUID;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.replaceText;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtra;
-import static android.support.test.espresso.matcher.ViewMatchers.withHint;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
-public class BuildingListPageByFoundBuildingTest extends TanrabadEspressoTestBase {
+public class BuildingListActivityAtBuildingEmptyTest extends TanrabadEspressoTestBase {
 
     @Rule
     public ActivityTestRule<BuildingListActivity> mActivityTestRule
@@ -58,19 +53,15 @@ public class BuildingListPageByFoundBuildingTest extends TanrabadEspressoTestBas
     @Before
     public void setUp() {
         Intent intent = new Intent();
-        intent.putExtra("place_uuid_arg", UUID.nameUUIDFromBytes("2bcd".getBytes()).toString());
+        intent.putExtra("place_uuid_arg", UUID.nameUUIDFromBytes("67UIP".getBytes()).toString());
         mActivity = mActivityTestRule.launchActivity(intent);
     }
 
     @Test
-    public void openBangkokHospitalShouldfoundBuildingListOfBangkokHospital() {
+    public void openGoftViewShouldNotfoundBuildingInGoftViewPlace() {
         textDisplayed(R.string.define_building_survey);
-        textDisplayed("โรงพยาบาลกรุงเทพ");
-        onView(withId(R.id.building_count))
-                .check(matches(containText("3")));
-        textDisplayed("ตึก1");
-        textDisplayed("ตึกพักญาติ");
-        textDisplayed("โรงอาหาร");
+        textDisplayed("ชุมชนกอล์ฟวิว");
+        textDisplayed(R.string.building_list_not_found);
     }
 
     @Test
@@ -80,28 +71,7 @@ public class BuildingListPageByFoundBuildingTest extends TanrabadEspressoTestBas
 
         Intents.intended(Matchers.allOf(
                 hasComponent(new ComponentName(mActivity, BuildingFormActivity.class)),
-                hasExtra(BuildingFormActivity.PLACE_UUID_ARG, UUID.nameUUIDFromBytes("2bcd".getBytes()).toString())
+                hasExtra(BuildingFormActivity.PLACE_UUID_ARG, UUID.nameUUIDFromBytes("67UIP".getBytes()).toString())
         ));
-    }
-
-    @Test
-    public void touchBuildingListShouldOpenSurveyPage() {
-        onView(withText("ตึกพักญาติ"))
-                .perform(click());
-
-        Intents.intended(Matchers.allOf(
-                hasComponent(new ComponentName(mActivity, SurveyActivity.class)),
-                hasExtra(SurveyActivity.BUILDING_UUID_ARG, UUID.nameUUIDFromBytes("2opj".getBytes()).toString())
-        ));
-    }
-    
-    @Test
-    public void touchSearchThenTypeTextShouldFoundThisBuildingAtBuildingList() {
-        onView(withId(R.id.building_search))
-                .perform(click());
-        onView(withHint(R.string.search_building_by_name_hint))
-                .perform(replaceText("อาหาร"));
-
-        textDisplayed("โรงอาหาร");
     }
 }

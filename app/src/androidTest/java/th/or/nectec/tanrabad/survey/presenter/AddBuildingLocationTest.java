@@ -60,4 +60,10 @@ public class AddBuildingLocationTest extends TanrabadEspressoTestBase {
                 .perform(click());
         textDisplayed(R.string.please_define_building_location);
     }
+
+    @Test
+    public void touchSaveLocationShouldNotFoundPromptPleaseMarkLocation() {
+        onView(withId(R.id.save_marker_menu))
+                .perform(click());
+    }
 }

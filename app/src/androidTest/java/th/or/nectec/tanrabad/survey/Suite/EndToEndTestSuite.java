@@ -26,7 +26,7 @@ import th.or.nectec.tanrabad.survey.end2end.*;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         AddBuildingTest.class,
-        AddBuildingOnlyDefinebuildinglocationTest.class
+        EditBuildingLocationTest.class
 })
 
 public class EndToEndTestSuite {

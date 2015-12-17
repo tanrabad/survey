@@ -62,6 +62,11 @@ public class EditPlaceByPutExtraTypeHospitalTest extends TanrabadEspressoTestBas
     }
 
     @Test
+    public void openEditPlaceShouldFoundPlaceData() {
+        textDisplayed("โรงพยาบาลธรรมศาสตร์");
+    }
+
+    @Test
     public void editPlaceNameAddressTypePlaceDefineLocationThenSaveShouldOpenPlaceListPage() {
         onView(withId(R.id.place_name))
                 .perform(replaceText("โรงเรียนอนุบาลเนคเทค"));

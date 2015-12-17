@@ -62,7 +62,7 @@ public class EditPlaceByPutExtraTypeHospitalTest extends TanrabadEspressoTestBas
     }
 
     @Test
-    public void editBuildingNameAddressTypePlaceDefineLocationThenSaveShouldOpenPlaceListPage() {
+    public void editPlaceNameAddressTypePlaceDefineLocationThenSaveShouldOpenPlaceListPage() {
         onView(withId(R.id.place_name))
                 .perform(replaceText("โรงเรียนอนุบาลเนคเทค"));
         onView(withId(R.id.address_select))

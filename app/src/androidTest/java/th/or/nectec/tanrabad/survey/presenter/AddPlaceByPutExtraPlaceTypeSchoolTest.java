@@ -109,4 +109,28 @@ public class AddPlaceByPutExtraPlaceTypeSchoolTest extends TanrabadEspressoTestB
                 hasComponent(new ComponentName(mActivity, MapMarkerActivity.class)
                 ));
     }
+
+    @Test
+    public void AddPlaceNameSamePlaceNameInDatabaseShouldFoundPromptCannotSaveThisPlace() {
+        onView(withId(R.id.place_name))
+                .perform(replaceText(" วัดป่าภูก้อน "));
+        onView(withId(R.id.address_select))
+                .perform(click());
+        onView(withText("ภาคกลาง"))
+                .perform(click());
+        onView(withText("ปทุมธานี"))
+                .perform(click());
+        onView(withText("คลองหลวง"))
+                .perform(click());
+        onView(withText("คลองสอง"))
+                .perform(click());
+        onView(withId(R.id.add_marker))
+                .perform(click());
+        onView(withId(R.id.save_marker_menu))
+                .perform(click());
+        onView(withId(R.id.save))
+                .perform(click());
+
+        textDisplayed(R.string.cant_save_same_place_name);
+    }
 }

@@ -22,6 +22,7 @@ import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.LocationEntity;
 import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.utils.Address;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +51,12 @@ public class InMemoryPlaceRepository implements PlaceRepository {
         bangkokHospital = new Place(generateUUID("2bcd"), "โรงพยาบาลกรุงเทพ");
         bangkokHospital.setType(Place.TYPE_HOSPITAL);
         thammasatHospital = new Place(generateUUID("32UAW"), "โรงพยาบาลธรรมศาสตร์");
+        Address address = new Address();
+        address.setAddressCode("130202");
+        address.setSubdistrict("คลองหลวง");
+        address.setDistrict("คลองสอง");
+        address.setProvince("ปทุมธานี");
+        thammasatHospital.setAddress(address);
         thammasatHospital.setType(Place.TYPE_HOSPITAL);
         watpaphukon = new Place(generateUUID("3def"), "วัดป่าภูก้อน");
         watpaphukon.setType(Place.TYPE_WORSHIP);
@@ -67,6 +74,7 @@ public class InMemoryPlaceRepository implements PlaceRepository {
         places.add(palazzettoVillage);
         places.add(golfView);
         places.add(bangkokHospital);
+        places.add(thammasatHospital);
         places.add(watpaphukon);
         places.add(saintMaryChurch);
         places.add(saintMarySchool);

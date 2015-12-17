@@ -66,7 +66,7 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
     public void openDefineSurveyPlaceShouldFoundListPlace8List() {
         onView(allOf(ViewMatchers.withId(R.id.place_count)
                 , withContentDescription(R.string.number_place_list_in_database)))
-                .check(matches(containText("8")));
+                .check(matches(containText("9")));
     }
 
     @Test

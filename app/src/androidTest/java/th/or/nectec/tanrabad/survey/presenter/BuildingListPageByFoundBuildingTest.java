@@ -39,9 +39,11 @@ import java.util.UUID;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtra;
+import static android.support.test.espresso.matcher.ViewMatchers.withHint;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
@@ -91,5 +93,15 @@ public class BuildingListPageByFoundBuildingTest extends TanrabadEspressoTestBas
                 hasComponent(new ComponentName(mActivity, SurveyActivity.class)),
                 hasExtra(SurveyActivity.BUILDING_UUID_ARG, UUID.nameUUIDFromBytes("2opj".getBytes()).toString())
         ));
+    }
+    
+    @Test
+    public void touchSearchThenTypeTextShouldFoundThisBuildingAtBuildingList() {
+        onView(withId(R.id.building_search))
+                .perform(click());
+        onView(withHint(R.string.search_building_by_name_hint))
+                .perform(replaceText("อาหาร"));
+
+        textDisplayed("โรงอาหาร");
     }
 }

@@ -93,6 +93,7 @@ public class PlaceListActivity extends TanrabadActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_search:
+                PlaceSearchActivity.open(this);
                 break;
         }
         return super.onOptionsItemSelected(item);

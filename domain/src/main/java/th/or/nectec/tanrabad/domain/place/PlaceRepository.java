@@ -17,12 +17,12 @@
 
 package th.or.nectec.tanrabad.domain.place;
 
+import java.util.List;
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.LocationEntity;
 import th.or.nectec.tanrabad.entity.Place;
-
-import java.util.List;
-import java.util.UUID;
 
 public interface PlaceRepository {
 
@@ -42,5 +42,5 @@ public interface PlaceRepository {
 
     List<LocationEntity> findTrimmedInBoundaryLocation(Location insideMinimumLocation, Location outsideMinimumLocation, Location insideMaximumLocation, Location outsideMaximumLocation);
 
-
+    List<Place> findByName(String placeName);
 }

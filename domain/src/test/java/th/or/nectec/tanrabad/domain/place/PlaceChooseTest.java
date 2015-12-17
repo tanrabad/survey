@@ -22,10 +22,11 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import th.or.nectec.tanrabad.entity.Place;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import th.or.nectec.tanrabad.entity.Place;
 
 public class PlaceChooseTest {
 
@@ -55,6 +56,25 @@ public class PlaceChooseTest {
         });
         PlaceChooser chooser = new PlaceChooser(placeRepository, placeListPresenter);
         chooser.getPlaceList();
+    }
+
+    @Test
+    public void searchPlaceListByName() {
+        final List<Place> places = new ArrayList<>();
+        places.add(Place.withName("Vaillage A"));
+        places.add(Place.withName("Vaillage C"));
+
+        final String buildingName = "Vailla";
+
+        context.checking(new Expectations() {
+            {
+                oneOf(placeRepository).findByName(with(buildingName));
+                will(returnValue(places));
+                oneOf(placeListPresenter).displayPlaceList(places);
+            }
+        });
+        PlaceChooser chooser = new PlaceChooser(placeRepository, placeListPresenter);
+        chooser.searchByName(buildingName);
     }
 
     @Test

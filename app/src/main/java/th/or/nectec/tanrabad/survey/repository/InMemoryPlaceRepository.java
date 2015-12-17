@@ -18,15 +18,16 @@
 package th.or.nectec.tanrabad.survey.repository;
 
 import android.support.annotation.NonNull;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.LocationEntity;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.utils.Address;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 
 public class InMemoryPlaceRepository implements PlaceRepository {
@@ -159,33 +160,25 @@ public class InMemoryPlaceRepository implements PlaceRepository {
         return filterPlaces.isEmpty() ? null : filterPlaces;
     }
 
-    private boolean isMoreThanOrEqualMinimumLocation(Location minimumLocation, Location location) {
-        return location.getLatitude() >= minimumLocation.getLatitude() && location.getLongitude() >= minimumLocation.getLongitude();
-    }
-
-    private boolean isLessThanOrEqualMaximumLocation(Location maximumLocation, Location location) {
-        return location.getLatitude() <= maximumLocation.getLatitude() && location.getLongitude() <= maximumLocation.getLongitude();
-    }
-
     @Override
     public List<LocationEntity> findTrimmedInBoundaryLocation(Location insideMinimumLocation, Location outsideMinimumLocation, Location insideMaximumLocation, Location outsideMaximumLocation) {
         List<LocationEntity> filterPlaces = findInBoundaryLocation(outsideMinimumLocation, outsideMaximumLocation);
         for (int i = 0; i < 4; i++) {
-            switch (i){
+            switch (i) {
                 case 0:
                     trim(insideMaximumLocation, outsideMaximumLocation, filterPlaces);
                     break;
                 case 1:
-                    Location topLeftSouthEastMiniBoundary = new Location(insideMaximumLocation.getLatitude(),insideMinimumLocation.getLongitude());
-                    Location bottomRightSouthEastMiniBoundary = new Location(outsideMaximumLocation.getLatitude(),outsideMinimumLocation.getLongitude());
+                    Location topLeftSouthEastMiniBoundary = new Location(insideMaximumLocation.getLatitude(), insideMinimumLocation.getLongitude());
+                    Location bottomRightSouthEastMiniBoundary = new Location(outsideMaximumLocation.getLatitude(), outsideMinimumLocation.getLongitude());
                     trim(topLeftSouthEastMiniBoundary, bottomRightSouthEastMiniBoundary, filterPlaces);
                     break;
                 case 2:
                     trim(outsideMinimumLocation, insideMinimumLocation, filterPlaces);
                     break;
                 case 3:
-                    Location topLeftNorthWestMiniBoundary = new Location(outsideMinimumLocation.getLatitude(),outsideMaximumLocation.getLongitude());
-                    Location bottomRightNorthWestMiniBoundary = new Location(insideMinimumLocation.getLatitude(),insideMaximumLocation.getLongitude());
+                    Location topLeftNorthWestMiniBoundary = new Location(outsideMinimumLocation.getLatitude(), outsideMaximumLocation.getLongitude());
+                    Location bottomRightNorthWestMiniBoundary = new Location(insideMinimumLocation.getLatitude(), insideMaximumLocation.getLongitude());
                     trim(topLeftNorthWestMiniBoundary, bottomRightNorthWestMiniBoundary, filterPlaces);
                     break;
             }
@@ -193,8 +186,26 @@ public class InMemoryPlaceRepository implements PlaceRepository {
         return filterPlaces.isEmpty() ? null : filterPlaces;
     }
 
+    @Override
+    public List<Place> findByName(String placeName) {
+        ArrayList<Place> filterPlaces = new ArrayList<>();
+        for (Place eachPlace : places) {
+            if (eachPlace.getName().contains(placeName))
+                filterPlaces.add(eachPlace);
+        }
+        return filterPlaces.isEmpty() ? null : filterPlaces;
+    }
+
     private void trim(Location insideMaximumLocation, Location outsideMaximumLocation, List<LocationEntity> filterPlaces) {
         List<LocationEntity> trimmedNorthEast = findInBoundaryLocation(insideMaximumLocation,outsideMaximumLocation);
         filterPlaces.removeAll(trimmedNorthEast);
+    }
+
+    private boolean isLessThanOrEqualMaximumLocation(Location maximumLocation, Location location) {
+        return location.getLatitude() <= maximumLocation.getLatitude() && location.getLongitude() <= maximumLocation.getLongitude();
+    }
+
+    private boolean isMoreThanOrEqualMinimumLocation(Location minimumLocation, Location location) {
+        return location.getLatitude() >= minimumLocation.getLatitude() && location.getLongitude() >= minimumLocation.getLongitude();
     }
 }

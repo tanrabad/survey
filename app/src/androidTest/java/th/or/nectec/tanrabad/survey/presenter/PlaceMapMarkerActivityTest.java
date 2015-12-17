@@ -27,28 +27,24 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
-
-import java.util.UUID;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 @RunWith(AndroidJUnit4.class)
-public class MarkBuildingLocationTest extends TanrabadEspressoTestBase {
+public class PlaceMapMarkerActivityTest extends TanrabadEspressoTestBase {
 
     @Rule
-    public ActivityTestRule<BuildingMapMarkerActivity> mActivityTestRule
-            = new IntentsTestRule<>(BuildingMapMarkerActivity.class, false, false);
-    BuildingMapMarkerActivity mActivity;
+    public ActivityTestRule<MapMarkerActivity> mActivityTestRule
+            = new IntentsTestRule<>(MapMarkerActivity.class, false, false);
+    MapMarkerActivity mActivity;
 
     @Before
     public void setUp() {
         Intent intent = new Intent();
-        intent.putExtra("place_uuid", UUID.nameUUIDFromBytes("67UIP".getBytes()).toString());
         mActivity = mActivityTestRule.launchActivity(intent);
     }
 
@@ -61,9 +57,9 @@ public class MarkBuildingLocationTest extends TanrabadEspressoTestBase {
     @Test
     public void touchDeleteLocationButtonThenTouchSaveLocationShouldFoundPromptPleaseMarkLocation() {
         onView(withId(R.id.remove_location))
-            .perform(click());
+                .perform(click());
         onView(withId(R.id.save_marker_menu))
                 .perform(click());
-        textDisplayed(R.string.please_define_building_location);
+        textDisplayed(R.string.please_define_location);
     }
 }

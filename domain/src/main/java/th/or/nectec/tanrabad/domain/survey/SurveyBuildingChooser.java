@@ -38,6 +38,8 @@ public class SurveyBuildingChooser {
     private BuildingRepository buildingRepository;
     private SurveyRepository surveyRepository;
     private BuildingWithSurveyStatusListPresenter surveyBuildingPresenter;
+    private User user;
+    private Place place;
 
     public SurveyBuildingChooser(UserRepository userRepository, PlaceRepository placeRepository, BuildingRepository buildingRepository, SurveyRepository surveyRepository, BuildingWithSurveyStatusListPresenter surveyBuildingPresenter) {
 
@@ -49,20 +51,29 @@ public class SurveyBuildingChooser {
     }
 
     public void displaySurveyBuildingOf(String placeUUID, String username) {
-        User user = userRepository.findUserByName(username);
-        if (user == null) {
-            surveyBuildingPresenter.alertUserNotFound();
-            return;
-        }
-
-        Place place = placeRepository.findPlaceByPlaceUUID(UUID.fromString(placeUUID));
-        if (place == null) {
-            surveyBuildingPresenter.alertPlaceNotFound();
-            return;
-        }
+        if (!isUserAndPlaceFound(placeUUID, username)) return;
 
         List<Building> buildings = buildingRepository.findBuildingInPlace(place.getId());
 
+        checkBuildingAreFoundAndUpdateBuildingSurveyStatus(buildings);
+    }
+
+    private boolean isUserAndPlaceFound(String placeUUID, String username) {
+        user = userRepository.findUserByName(username);
+        if (user == null) {
+            surveyBuildingPresenter.alertUserNotFound();
+            return false;
+        }
+
+        place = placeRepository.findPlaceByPlaceUUID(UUID.fromString(placeUUID));
+        if (place == null) {
+            surveyBuildingPresenter.alertPlaceNotFound();
+            return false;
+        }
+        return true;
+    }
+
+    private void checkBuildingAreFoundAndUpdateBuildingSurveyStatus(List<Building> buildings) {
         if (buildings == null) {
             surveyBuildingPresenter.alertBuildingsNotFound();
             return;
@@ -87,31 +98,10 @@ public class SurveyBuildingChooser {
     }
 
     public void searchSurveyBuildingOfPlaceByName(String searchBuildingName, String placeUUID, String username) {
-        User user = userRepository.findUserByName(username);
-        if (user == null) {
-            surveyBuildingPresenter.alertUserNotFound();
-            return;
-        }
-
-        Place place = placeRepository.findPlaceByPlaceUUID(UUID.fromString(placeUUID));
-        if (place == null) {
-            surveyBuildingPresenter.alertPlaceNotFound();
-            return;
-        }
+        if (!isUserAndPlaceFound(placeUUID, username)) return;
 
         List<Building> buildings = buildingRepository.searchBuildingInPlaceByName(place.getId(), searchBuildingName);
 
-        if (buildings == null) {
-            surveyBuildingPresenter.alertBuildingsNotFound();
-            return;
-        }
-
-        List<Survey> surveys = surveyRepository.findByPlaceAndUserIn7Days(place, user);
-        List<BuildingWithSurveyStatus> buildingsWithSurveyStatuses = new ArrayList<>();
-        for (Building eachBuilding : buildings) {
-            BuildingWithSurveyStatus buildingWithSurveyStatus = new BuildingWithSurveyStatus(eachBuilding, surveys != null && isBuildingSurveyed(surveys, eachBuilding));
-            buildingsWithSurveyStatuses.add(buildingWithSurveyStatus);
-        }
-        surveyBuildingPresenter.displayAllSurveyBuildingList(buildingsWithSurveyStatuses);
+        checkBuildingAreFoundAndUpdateBuildingSurveyStatus(buildings);
     }
 }

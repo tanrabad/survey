@@ -17,30 +17,42 @@
   -->
 
 <com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/card_header"
-        android:padding="16dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    android:id="@+id/card_header"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
 
 
     <TextView
-            style="@style/TanrabadTextAppearance.Title"
-            android:id="@+id/card_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/title_card_building_list"/>
+        android:id="@+id/card_title"
+        style="@style/TanrabadTextAppearance.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_card_building_list"/>
 
 
     <TextView
-            android:id="@+id/building_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/number_building_list"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignBaseline="@id/card_title"
-            android:textIsSelectable="false"
-            tools:text="200"/>
+        android:id="@+id/building_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/card_title"
+        android:contentDescription="@string/number_building_list"
+        android:gravity="center"
+        android:textIsSelectable="false"
+        tools:text="200"/>
+
+    <android.support.v7.widget.SearchView
+        android:id="@+id/building_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/card_title"
+        app:queryHint="@string/search_building_by_name_hint"
+        app:searchHintIcon="@null"/>
+
+
 </com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader>

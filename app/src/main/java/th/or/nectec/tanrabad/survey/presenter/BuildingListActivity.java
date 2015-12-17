@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -56,6 +57,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     private BuildingWithSurveyStatusAdapter buildingAdapter;
     private Place place;
     private EmptyLayoutView emptyLayoutView;
+    private SurveyBuildingChooser surveyBuildingChooser = new SurveyBuildingChooser(new StubUserRepository(), InMemoryPlaceRepository.getInstance(), InMemoryBuildingRepository.getInstance(), InMemorySurveyRepository.getInstance(), this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
 
         showPlaceName();
         setupBuildingList();
+        setupSearchView();
         setupEmptyLayout();
         loadSurveyBuildingList();
     }
@@ -100,6 +103,23 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         recyclerViewHeader.attachTo(buildingList, true);
     }
 
+    private void setupSearchView() {
+        SearchView buildingSearchView = (SearchView) findViewById(R.id.building_search);
+        buildingSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String searchString) {
+                surveyBuildingChooser.searchSurveyBuildingOfPlaceByName(searchString, getPlaceUuidFromIntent().toString(), "sara");
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String searchString) {
+                surveyBuildingChooser.searchSurveyBuildingOfPlaceByName(searchString, getPlaceUuidFromIntent().toString(), "sara");
+                return true;
+            }
+        });
+    }
+
     private void setupEmptyLayout() {
         emptyLayoutView = (EmptyLayoutView) findViewById(R.id.empty_layout);
         emptyLayoutView.setEmptyIcon(place.getType() == Place.TYPE_VILLAGE_COMMUNITY ?
@@ -114,7 +134,6 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     }
 
     private void loadSurveyBuildingList() {
-        SurveyBuildingChooser surveyBuildingChooser = new SurveyBuildingChooser(new StubUserRepository(), InMemoryPlaceRepository.getInstance(), InMemoryBuildingRepository.getInstance(), InMemorySurveyRepository.getInstance(), this);
         surveyBuildingChooser.displaySurveyBuildingOf(getPlaceUuidFromIntent().toString(), "sara");
     }
 

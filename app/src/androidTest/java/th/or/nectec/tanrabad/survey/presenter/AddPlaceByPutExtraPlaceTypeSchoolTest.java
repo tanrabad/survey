@@ -111,7 +111,7 @@ public class AddPlaceByPutExtraPlaceTypeSchoolTest extends TanrabadEspressoTestB
     }
 
     @Test
-    public void AddPlaceNameSamePlaceNameInDatabaseShouldFoundPromptCannotSaveThisPlace() {
+    public void addPlaceNameSamePlaceNameInDatabaseShouldFoundPromptCannotSaveThisPlace() {
         onView(withId(R.id.place_name))
                 .perform(replaceText(" วัดป่าภูก้อน "));
         onView(withId(R.id.address_select))

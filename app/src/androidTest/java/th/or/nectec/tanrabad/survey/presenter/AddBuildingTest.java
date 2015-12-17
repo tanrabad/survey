@@ -53,13 +53,13 @@ public class AddBuildingTest extends TanrabadEspressoTestBase {
     @Before
     public void setUp() {
         Intent intent = new Intent();
-        intent.putExtra("place_uuid_arg", UUID.nameUUIDFromBytes("67UIP".getBytes()).toString());
+        intent.putExtra("place_uuid_arg", UUID.nameUUIDFromBytes("1abc".getBytes()).toString());
         mActivity = mActivityTestRule.launchActivity(intent);
     }
 
     @Test
     public void openAddBuildingShouldFoundPlaceData() {
-        textDisplayed("ชุมชนกอล์ฟวิว");
+        textDisplayed("หมู่บ้านพาลาซเซตโต้");
     }
 
     @Test
@@ -68,8 +68,6 @@ public class AddBuildingTest extends TanrabadEspressoTestBase {
                 .perform(click());
 
         textDisplayed(R.string.please_define_house_no);
-        onView(withText(R.string.got_it))
-                .perform(click());
     }
 
     @Test
@@ -80,8 +78,6 @@ public class AddBuildingTest extends TanrabadEspressoTestBase {
                 .perform(click());
 
         textDisplayed(R.string.please_define_building_location);
-        onView(withText(R.string.got_it))
-                .perform(click());
     }
 
     @Test
@@ -92,5 +88,19 @@ public class AddBuildingTest extends TanrabadEspressoTestBase {
         Intents.intended(
                 hasComponent(new ComponentName(mActivity, BuildingMapMarkerActivity.class)
                 ));
+    }
+
+    @Test
+    public void addBuildingNameSameBuildingNameInDatabaseShouldFoundPromptCanNotSaveThisBuilding() {
+        onView(withId(R.id.building_name))
+                .perform(replaceText(" 214/43 "));
+        onView(withId(R.id.add_marker))
+                .perform(click());
+        onView(withId(R.id.save_marker_menu))
+                .perform(click());
+        onView(withId(R.id.save))
+                .perform(click());
+
+        textDisplayed(R.string.cant_save_same_building_name);
     }
 }

@@ -139,5 +139,6 @@
     <string name="search">ค้นหา</string>
     <string name="place_name_notfound">ไม่พบชื่อสถานที่นี้</string>
     <string name="edit">แก้ไข</string>
+    <string name="please_wait">กรุณารอสักครู่&#8230;</string>
 
 </resources>

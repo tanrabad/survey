@@ -22,13 +22,13 @@ import android.content.Intent;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.rule.ActivityTestRule;
-
 import android.support.test.runner.AndroidJUnit4;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
 import org.junit.runner.RunWith;
+
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
@@ -54,7 +54,7 @@ public class PlaceFormActivityDoSaveDataTest extends TanrabadEspressoTestBase {
     @Before
     public void setUp() {
         Intent intent = new Intent();
-        intent.putExtra("place_category_id_arg", Place.TYPE_SCHOOL);
+        intent.putExtra("place_category_id_arg", Place.TYPE_HOSPITAL);
         mActivity = mActivityTestRule.launchActivity(intent);
     }
 
@@ -75,6 +75,38 @@ public class PlaceFormActivityDoSaveDataTest extends TanrabadEspressoTestBase {
         onView(withId(R.id.add_marker))
                 .perform(click());
         onView(withId(R.id.save_marker_menu))
+                .perform(click());
+
+        onView(withText("โรงพยาบาล"))
+                .perform(click());
+        onView(withText("โรงเรียน"))
+                .perform(click());
+
+        onView(withId(R.id.save))
+                .perform(click());
+        Intents.intended(
+                hasComponent(new ComponentName(mActivity, SurveyBuildingHistoryActivity.class)
+                ));
+    }
+
+    @Test
+    public void addPlaceThatNameAndTypeSamePlaceInDatabaseButDifferenAddressShouldSaveSuccess() {
+        onView(withId(R.id.place_name))
+                .perform(replaceText("ธรรมศาสตร์"));
+        onView(withId(R.id.add_marker))
+                .perform(click());
+        onView(withId(R.id.save_marker_menu))
+                .perform(click());
+
+        onView(withId(R.id.address_select))
+                .perform(click());
+        onView(withText("ภาคตะวันออก"))
+                .perform(click());
+        onView(withText("ชลบุรี"))
+                .perform(click());
+        onView(withText("บ้านบึง"))
+                .perform(click());
+        onView(withText("บ้านบึง"))
                 .perform(click());
 
         onView(withId(R.id.save))

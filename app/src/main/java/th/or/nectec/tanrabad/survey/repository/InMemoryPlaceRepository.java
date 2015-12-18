@@ -18,6 +18,7 @@
 package th.or.nectec.tanrabad.survey.repository;
 
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -183,6 +184,9 @@ public class InMemoryPlaceRepository implements PlaceRepository {
 
     @Override
     public List<Place> findByName(String placeName) {
+        if (TextUtils.isEmpty(placeName))
+            return null;
+
         ArrayList<Place> filterPlaces = new ArrayList<>();
         for (Place eachPlace : places) {
             if (eachPlace.getName().contains(placeName))

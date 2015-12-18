@@ -52,7 +52,7 @@ public class InMemoryPlaceRepository implements PlaceRepository {
         golfView.setType(Place.TYPE_VILLAGE_COMMUNITY);
         bangkokHospital = new Place(generateUUID("2bcd"), "โรงพยาบาลกรุงเทพ");
         bangkokHospital.setType(Place.TYPE_HOSPITAL);
-        thammasatHospital = new Place(generateUUID("32UAW"), "โรงพยาบาลธรรมศาสตร์");
+        thammasatHospital = new Place(generateUUID("32UAW"), "ธรรมศาสตร์");
         Address address = new Address();
         address.setAddressCode("130202");
         address.setSubdistrict("คลองหลวง");

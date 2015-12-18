@@ -15,38 +15,36 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey.presenter;
+package th.or.nectec.tanrabad.survey.end2end;
 
 import android.content.ComponentName;
 import android.content.Intent;
-
 import android.support.test.espresso.intent.Intents;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
 
+import android.support.test.runner.AndroidJUnit4;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
+import org.junit.runner.RunWith;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
+import th.or.nectec.tanrabad.survey.presenter.PlaceFormActivity;
+import th.or.nectec.tanrabad.survey.presenter.SurveyBuildingHistoryActivity;
 
-import java.util.UUID;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.replaceText;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
-public class EditPlaceByPutExtraTypeHospitalTest extends TanrabadEspressoTestBase {
+public class PlaceFormActivityDoSavePlaceTest extends TanrabadEspressoTestBase {
 
     @Rule
     public ActivityTestRule<PlaceFormActivity> mActivityTestRule
@@ -56,26 +54,23 @@ public class EditPlaceByPutExtraTypeHospitalTest extends TanrabadEspressoTestBas
     @Before
     public void setUp() {
         Intent intent = new Intent();
-        intent.putExtra("place_uuid_arg", UUID.nameUUIDFromBytes("32UAW".getBytes()).toString());
-        intent.putExtra("place_category_id_arg", Place.TYPE_HOSPITAL);
+        intent.putExtra("place_category_id_arg", Place.TYPE_SCHOOL);
         mActivity = mActivityTestRule.launchActivity(intent);
     }
 
     @Test
-    public void editPlaceNameAddressTypePlaceDefineLocationThenSaveShouldOpenPlaceListPage() {
+    public void addPlaceThatNameAndAddressSamePlaceInDatabaseButDifferenTypeShouldSaveSuccess() {
         onView(withId(R.id.place_name))
-                .check(matches(withText("ธรรมศาสตร์")));
-        onView(withId(R.id.place_name))
-                .perform(replaceText("อนุบาลชมพู"));
+                .perform(replaceText("ธรรมศาสตร์"));
         onView(withId(R.id.address_select))
                 .perform(click());
-        onView(withId(R.id.address_select))
+        onView(withText("ภาคกลาง"))
                 .perform(click());
-        onView(withText("คลองห้า"))
+        onView(withText("ปทุมธานี"))
                 .perform(click());
-        onView(withText("โรงพยาบาล"))
+        onView(withText("คลองหลวง"))
                 .perform(click());
-        onView(withText("โรงเรียน"))
+        onView(withText("คลองสอง"))
                 .perform(click());
         onView(withId(R.id.add_marker))
                 .perform(click());
@@ -85,7 +80,7 @@ public class EditPlaceByPutExtraTypeHospitalTest extends TanrabadEspressoTestBas
         onView(withId(R.id.save))
                 .perform(click());
         Intents.intended(
-                hasComponent(new ComponentName(mActivity, PlaceListActivity.class)
+                hasComponent(new ComponentName(mActivity, SurveyBuildingHistoryActivity.class)
                 ));
     }
 }

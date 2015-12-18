@@ -22,14 +22,15 @@ import android.content.Intent;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.rule.ActivityTestRule;
-
 import android.support.test.runner.AndroidJUnit4;
+
 import org.hamcrest.Matchers;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
 import org.junit.runner.RunWith;
+
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
 
@@ -47,7 +48,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
-public class SurveyBuildingTypeVillageCommunityTest extends TanrabadEspressoTestBase {
+public class SurveyActivityTest extends TanrabadEspressoTestBase {
 
     @Rule
     public ActivityTestRule<SurveyActivity> mActivityTestRule
@@ -71,22 +72,27 @@ public class SurveyBuildingTypeVillageCommunityTest extends TanrabadEspressoTest
     }
 
     @Test
-    public void touchSaveByNotTypeResidentThenTouchGotItShouldStayOn() {
+    public void touchSaveByNotTypeResidentShouldFoundPromptPleaseEnterResidentThenTouchGotItShouldStayOn() {
         onView(withId(R.id.save))
                 .perform(click());
         textDisplayed(R.string.please_enter_resident);
         onView(withText(R.string.got_it))
                 .perform(click());
+
+        onView(withId(R.id.building_name))
+                .check(matches(containText("214/43")));
     }
 
     @Test
-    public void touchPressBackThenTouchNoShouldStayOn() {
+    public void touchPressBackShouldFoundPromptAbortSurveyThenTouchNoShouldStayOn() {
         pressBack();
         onView(containText("214/43"))
                 .check(matches(isDisplayed()));
-        textDisplayed(R.string.yes);
         onView(withText(R.string.no))
                 .perform(click());
+
+        onView(withId(R.id.building_name))
+                .check(matches(containText("214/43")));
     }
 
     @Test

@@ -36,7 +36,7 @@ import th.or.nectec.tanrabad.survey.presenter.*;
         BuildingMapMarkerActivityTest.class,
         EditBuildingTest.class,
 
-        SurveyBuildingTypeVillageCommunityTest.class,
+        SurveyActivityTest.class,
 })
 
 public class AcceptanceTestSuite {

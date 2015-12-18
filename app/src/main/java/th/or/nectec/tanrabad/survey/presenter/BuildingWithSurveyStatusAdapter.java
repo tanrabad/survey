@@ -17,6 +17,7 @@
 
 package th.or.nectec.tanrabad.survey.presenter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.DrawableRes;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +25,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
+import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.survey.R;
 
 public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<BuildingWithSurveyStatusAdapter.ViewHolder> implements ListViewAdapter<BuildingWithSurveyStatus> {
@@ -41,6 +44,7 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
     ArrayList<BuildingWithSurveyStatus> buildings = new ArrayList<>();
     private AdapterView.OnItemClickListener onItemClickListener;
     private AdapterView.OnItemLongClickListener onItemLongClickListener;
+    private boolean isEditButtonVisible;
 
     public BuildingWithSurveyStatusAdapter(Context context, @DrawableRes int buildingIcon) {
         this.context = context;
@@ -75,6 +79,11 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
         this.onItemLongClickListener = onItemLongClickListener;
     }
 
+    public void setEditButtonVisibility(boolean isEditButtonVisible) {
+        this.isEditButtonVisible = isEditButtonVisible;
+        notifyDataSetChanged();
+    }
+
     @Override
     public BuildingWithSurveyStatusAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_building, parent, false);
@@ -94,6 +103,12 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
             holder.rootView.setEnabled(true);
             holder.surveyed.setVisibility(View.INVISIBLE);
             // BackgroundSetter.set(holder.buildingIcon, R.drawable.bg_icon);
+        }
+
+        if (isEditButtonVisible) {
+            holder.editBuilding.setVisibility(View.VISIBLE);
+        } else {
+            holder.editBuilding.setVisibility(View.GONE);
         }
     }
 
@@ -123,6 +138,7 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         TextView buildingTextView;
+        Button editBuilding;
         ImageView buildingIcon;
         View surveyed;
         View rootView;
@@ -132,14 +148,21 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
             rootView = itemView;
             buildingTextView = (TextView) itemView.findViewById(R.id.building_name);
             buildingIcon = (ImageView) itemView.findViewById(R.id.building_icon);
+            editBuilding = (Button) itemView.findViewById(R.id.edit_building);
             surveyed = itemView.findViewById(R.id.surveyed);
+            editBuilding.setOnClickListener(this);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            onItemHolderClick(this);
+            if (view.getId() == R.id.edit_building) {
+                Building building = buildings.get(getAdapterPosition()).getBuilding();
+                BuildingFormActivity.startEdit((Activity) context, building.getPlace().getId().toString(), building.getId().toString());
+            } else {
+                onItemHolderClick(this);
+            }
         }
 
         @Override

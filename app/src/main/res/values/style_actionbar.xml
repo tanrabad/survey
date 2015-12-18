@@ -24,6 +24,11 @@
         <item name="titleTextStyle">@style/ActionBarTitleTextAppearance</item>
     </style>
 
+    <style name="ActionMode" parent="@style/Widget.AppCompat.ActionMode">
+        <item name="titleTextStyle">@style/ActionBarTitleTextAppearance</item>
+        <item name="windowActionModeOverlay">true</item>
+    </style>
+
     <style name="ActionBarTitleTextAppearance" parent="@style/Base.TextAppearance.AppCompat.Title">
         <item name="android:textSize">@dimen/text_title</item>
     </style>
@@ -39,7 +44,8 @@
 
     <style name="AppTabLayout" parent="Widget.Design.TabLayout">
         <item name="tabIndicatorColor">@color/white</item>
-        <item name="tabBackground" tools:ignore="PrivateResource">?attr/selectableItemBackground </item>
+        <item name="tabBackground" tools:ignore="PrivateResource">?attr/selectableItemBackground
+        </item>
         <item name="tabTextAppearance">@style/AppTabTextAppearance</item>
         <item name="tabMaxWidth">0dp</item>
         <item name="tabGravity">fill</item>

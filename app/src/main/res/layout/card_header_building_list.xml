@@ -33,6 +33,17 @@
         android:layout_height="wrap_content"
         android:text="@string/title_card_building_list"/>
 
+    <ImageButton
+        android:id="@+id/edit_building"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/card_title"
+        android:layout_toEndOf="@id/card_title"
+        android:layout_toRightOf="@id/card_title"
+        android:background="@color/transparent"
+        android:contentDescription="@string/building_edit"
+        android:padding="@dimen/list_icon_padding"
+        android:src="@mipmap/ic_edit_black"/>
 
     <TextView
         android:id="@+id/building_count"

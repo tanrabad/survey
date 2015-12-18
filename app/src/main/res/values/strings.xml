@@ -138,5 +138,6 @@
     <string name="search_place">ค้นหาสถานที่</string>
     <string name="search">ค้นหา</string>
     <string name="place_name_notfound">ไม่พบชื่อสถานที่นี้</string>
+    <string name="edit">แก้ไข</string>
 
 </resources>

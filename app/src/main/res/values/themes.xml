@@ -22,6 +22,8 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Define Actionbar Style-->
         <item name="actionBarStyle">@style/ActionBar</item>
+        <item name="actionModeStyle">@style/ActionMode</item>
+        <item name="actionModeCloseDrawable">@mipmap/ic_clear_white_24dp</item>
         <item name="toolbarStyle">@style/Toolbar</item>
         <item name="actionMenuTextAppearance">@style/ActionBarTitleTextAppearance</item>
 

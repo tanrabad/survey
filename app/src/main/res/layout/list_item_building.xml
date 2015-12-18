@@ -16,35 +16,45 @@
   ~ limitations under the License.
   -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/ListItem">
+<RelativeLayout
+    style="@style/ListItem"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <ImageView
-            style="@style/ListIcon"
-            tools:src="@mipmap/ic_building_home"
-            android:id="@+id/building_icon"
-            android:contentDescription="@string/building_icon"/>
+        android:id="@+id/building_icon"
+        style="@style/ListIcon"
+        android:contentDescription="@string/building_icon"
+        tools:src="@mipmap/ic_building_home"/>
 
     <TextView
-            style="@style/ListTitle"
-            android:id="@+id/building_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textIsSelectable="false"
-            android:textSize="@dimen/text_title"
-            tools:text="บ้านเลขที่ 1"/>
+        android:id="@+id/building_name"
+        style="@style/ListTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textIsSelectable="false"
+        android:textSize="@dimen/text_title"
+        tools:text="บ้านเลขที่ 1"/>
 
     <TextView
-            style="@style/TanrabadTextAppearance.Caption"
-            android:id="@+id/surveyed"
-            android:text="@string/building_already_survey"
-            android:textColor="@color/color_accent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/building_name"
-            android:layout_alignLeft="@+id/building_name"
-            android:layout_alignStart="@+id/building_name"/>
+        android:id="@+id/surveyed"
+        style="@style/TanrabadTextAppearance.Caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/building_name"
+        android:layout_alignStart="@+id/building_name"
+        android:layout_below="@+id/building_name"
+        android:text="@string/building_already_survey"
+        android:textColor="@color/color_accent"/>
+
+    <Button
+        android:id="@+id/edit_building"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:text="@string/edit"/>
 </RelativeLayout>

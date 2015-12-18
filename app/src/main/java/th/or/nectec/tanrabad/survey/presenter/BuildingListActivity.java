@@ -19,6 +19,7 @@ package th.or.nectec.tanrabad.survey.presenter;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -26,6 +27,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
@@ -49,26 +51,40 @@ import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 
-public class BuildingListActivity extends TanrabadActivity implements BuildingWithSurveyStatusListPresenter, PlacePresenter {
+public class BuildingListActivity extends TanrabadActivity implements BuildingWithSurveyStatusListPresenter, PlacePresenter, ActionMode.Callback {
 
     public static final String PLACE_UUID_ARG = "place_uuid_arg";
     public static final String IS_NEW_SURVEY_ARG = "is_new_survey_arg";
+    ImageButton editBuildingButton;
     private RecyclerView buildingList;
     private BuildingWithSurveyStatusAdapter buildingAdapter;
     private Place place;
     private EmptyLayoutView emptyLayoutView;
     private SurveyBuildingChooser surveyBuildingChooser = new SurveyBuildingChooser(new StubUserRepository(), InMemoryPlaceRepository.getInstance(), InMemoryBuildingRepository.getInstance(), InMemorySurveyRepository.getInstance(), this);
+    private ActionMode actionMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_building_list);
         setupHomeButton();
+        setupEditButton();
         showPlaceName();
         setupBuildingList();
         setupSearchView();
         setupEmptyLayout();
         loadSurveyBuildingList();
+    }
+
+    private void setupEditButton() {
+        editBuildingButton = (ImageButton) findViewById(R.id.edit_building);
+        editBuildingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                actionMode = BuildingListActivity.this.startSupportActionMode(BuildingListActivity.this);
+                buildingAdapter.setEditButtonVisibility(true);
+            }
+        });
     }
 
     private void showPlaceName() {
@@ -231,5 +247,27 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     private void openPlaceListActivity() {
         PlaceListActivity.open(BuildingListActivity.this);
         finish();
+    }
+
+    @Override
+    public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+        mode.setTitle(R.string.building_edit);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+        return false;
+    }
+
+    @Override
+    public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+        return false;
+    }
+
+    @Override
+    public void onDestroyActionMode(ActionMode mode) {
+        actionMode = null;
+        buildingAdapter.setEditButtonVisibility(false);
     }
 }

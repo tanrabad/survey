@@ -18,12 +18,13 @@
 package th.or.nectec.tanrabad.survey.validator;
 
 import android.text.TextUtils;
+
+import java.util.List;
+
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceValidator;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
-
-import java.util.List;
 
 public class SavePlaceValidator implements PlaceValidator {
     private PlaceRepository placeRepository;
@@ -46,7 +47,7 @@ public class SavePlaceValidator implements PlaceValidator {
         List<Place> places = placeRepository.findPlaces();
         if (places != null) {
             for (Place eachPlace : places) {
-                if (eachPlace.getName().equals(place.getName())) {
+                if (eachPlace.getName().equals(place.getName()) && eachPlace.getType() == place.getType()) {
                     throw new ValidatorException(R.string.cant_save_same_place_name);
                 }
             }

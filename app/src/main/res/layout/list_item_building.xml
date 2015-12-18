@@ -56,5 +56,6 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:text="@string/edit"/>
+        android:text="@string/edit"
+        tools:ignore="RelativeOverlap"/>
 </RelativeLayout>

@@ -18,15 +18,77 @@
 package th.or.nectec.tanrabad.survey.presenter;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.widget.TextView;
 import th.or.nectec.tanrabad.survey.R;
 
-public class InitialActivity extends AppCompatActivity {
+public class InitialActivity extends TanrabadActivity {
+
+    private TextView loadingText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial);
+
+        loadingText = (TextView) findViewById(R.id.loading);
+
+        new InitialJobRunner()
+                .addJob(new MockJob(1))
+                .addJob(new MockJob(2))
+                .addJob(new MockJob(3))
+                .start();
     }
+
+    public void updateLoadingText(Job startingJob) {
+        switch (startingJob.id()) {
+            case 1:
+                loadingText.setText("กำลังจะนอน");
+                break;
+            case 2:
+                loadingText.setText("ง่วงสัสแล้วนะ");
+                break;
+            default:
+                loadingText.setText("ยังไงหละนี้");
+                break;
+        }
+    }
+
+    public static class MockJob implements Job {
+
+        private int id;
+
+        public MockJob(int id) {
+            this.id = id;
+        }
+
+        @Override
+        public int id() {
+            return id;
+        }
+
+        @Override
+        public void execute() {
+            try {
+                Thread.sleep(2500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public class InitialJobRunner extends JobRunner {
+
+        @Override
+        void onJobStart(Job startingJob) {
+            updateLoadingText(startingJob);
+        }
+
+        @Override
+        void onJobsDone() {
+            finish();
+        }
+    }
+
+
 
 }

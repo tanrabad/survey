@@ -42,5 +42,4 @@ build
 
 # Fabric.io
 fabric.properties
-
-
+session_analytics.tap

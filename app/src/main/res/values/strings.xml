@@ -138,6 +138,5 @@
     <string name="search_place">ค้นหาสถานที่</string>
     <string name="search">ค้นหา</string>
     <string name="place_name_notfound">ไม่พบชื่อสถานที่นี้</string>
-    <string name="clear_search_history">ล้างประวัติการค้นหา</string>
 
 </resources>

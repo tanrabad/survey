@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -25,7 +26,6 @@ import th.or.nectec.tanrabad.domain.place.PlaceListPresenter;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.repository.InMemoryPlaceRepository;
-import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 
 public class PlaceSearchActivity extends TanrabadActivity implements SearchView.OnQueryTextListener, PlaceListPresenter {
 
@@ -35,6 +35,8 @@ public class PlaceSearchActivity extends TanrabadActivity implements SearchView.
     private SearchView searchView;
     private ListView searchHistoryListView;
     private SimpleCursorAdapter searchHistoryAdapter;
+    private RecyclerView placeListView;
+    private TextView emptyText;
 
     public static void open(Activity activity) {
         Intent intent = new Intent(activity, PlaceSearchActivity.class);
@@ -45,6 +47,7 @@ public class PlaceSearchActivity extends TanrabadActivity implements SearchView.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_search);
+        emptyText = (TextView) findViewById(R.id.place_name_notfound);
         setupHomeButton();
         setupSearchHistoryList();
         querySuggestion(null);
@@ -82,7 +85,7 @@ public class PlaceSearchActivity extends TanrabadActivity implements SearchView.
                 finish();
             }
         });
-        RecyclerView placeListView = (RecyclerView) findViewById(R.id.place_list);
+        placeListView = (RecyclerView) findViewById(R.id.place_list);
         placeListView.setAdapter(placeAdapter);
         placeListView.addItemDecoration(new SimpleDividerItemDecoration(this));
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -105,6 +108,7 @@ public class PlaceSearchActivity extends TanrabadActivity implements SearchView.
         searchView.setIconified(false);
         searchView.setIconifiedByDefault(false);
         searchView.setOnQueryTextListener(this);
+        searchView.setMaxWidth(Integer.MAX_VALUE);
     }
 
     @Override
@@ -113,9 +117,6 @@ public class PlaceSearchActivity extends TanrabadActivity implements SearchView.
             case android.R.id.home:
                 finish();
                 break;
-            case R.id.clear_history:
-                suggestions.clearHistory();
-                querySuggestion(null);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -124,26 +125,30 @@ public class PlaceSearchActivity extends TanrabadActivity implements SearchView.
     public boolean onQueryTextSubmit(String query) {
         placeChooser.searchByName(query);
         suggestions.saveRecentQuery(query, null);
+        searchHistoryListView.setVisibility(View.GONE);
         return true;
     }
 
     @Override
     public boolean onQueryTextChange(String query) {
-        placeChooser.searchByName(query);
+        searchHistoryListView.setVisibility(View.VISIBLE);
+        placeListView.setVisibility(View.GONE);
+        querySuggestion(query);
+        emptyText.setVisibility(View.GONE);
         return true;
     }
 
     @Override
     public void displayPlaceList(List<Place> places) {
-        searchHistoryListView.setVisibility(View.GONE);
         placeAdapter.updateData(places);
+        placeListView.setVisibility(View.VISIBLE);
+        emptyText.setVisibility(View.GONE);
     }
 
     @Override
     public void displayPlaceNotFound() {
-        Alert.lowLevel().show(R.string.place_name_notfound);
-        searchHistoryListView.setVisibility(View.VISIBLE);
         placeAdapter.clearData();
-        querySuggestion(null);
+        placeListView.setVisibility(View.GONE);
+        emptyText.setVisibility(View.VISIBLE);
     }
 }

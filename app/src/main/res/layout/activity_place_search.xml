@@ -6,12 +6,21 @@
     <ListView
         android:id="@+id/place_search_history_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/white"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/place_list"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/white"/>
+
+    <TextView
+        android:id="@+id/place_name_notfound"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:gravity="center_horizontal"
+        android:paddingTop="16dp"
+        android:text="@string/place_name_notfound"/>
 </LinearLayout>

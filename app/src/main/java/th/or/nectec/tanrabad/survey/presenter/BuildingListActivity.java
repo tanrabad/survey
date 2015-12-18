@@ -63,7 +63,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_building_list);
-
+        setupHomeButton();
         showPlaceName();
         setupBuildingList();
         setupSearchView();
@@ -74,6 +74,11 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     private void showPlaceName() {
         PlaceController placeController = new PlaceController(InMemoryPlaceRepository.getInstance(), this);
         placeController.showPlace(getPlaceUuidFromIntent());
+    }
+
+    private UUID getPlaceUuidFromIntent() {
+        String uuid = getIntent().getStringExtra(PLACE_UUID_ARG);
+        return UUID.fromString(uuid);
     }
 
     private void setupBuildingList() {
@@ -135,11 +140,6 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
 
     private void loadSurveyBuildingList() {
         surveyBuildingChooser.displaySurveyBuildingOf(getPlaceUuidFromIntent().toString(), "sara");
-    }
-
-    private UUID getPlaceUuidFromIntent() {
-        String uuid = getIntent().getStringExtra(PLACE_UUID_ARG);
-        return UUID.fromString(uuid);
     }
 
     @Override

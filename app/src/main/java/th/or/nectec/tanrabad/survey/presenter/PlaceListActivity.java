@@ -49,8 +49,8 @@ public class PlaceListActivity extends TanrabadActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_list);
-
         setupViews();
+        setupHomeButton();
         setupTabPager();
         changeTabsFont();
     }

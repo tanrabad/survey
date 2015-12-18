@@ -73,15 +73,17 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_building_list);
-
-        placeName = (TextView) findViewById(R.id.place_name);
-
-        surveyMoreBuildingButton = (Button) findViewById(R.id.survey_more_building_button);
-
+        setupHomeButton();
+        setupView();
         showPlaceInfo();
         setupBuildingHistoryList();
         setupEmptyLayout();
         showSurveyBuildingHistoryList();
+    }
+
+    private void setupView() {
+        placeName = (TextView) findViewById(R.id.place_name);
+        surveyMoreBuildingButton = (Button) findViewById(R.id.survey_more_building_button);
     }
 
     private void showPlaceInfo() {
@@ -187,8 +189,11 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
             case R.id.finish:
                 showFinishSurveyPrompt();
                 break;
+            case android.R.id.home:
+                showFinishSurveyPrompt();
+                break;
         }
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
     public void showFinishSurveyPrompt() {

@@ -54,6 +54,7 @@ public class MapMarkerActivity extends TanrabadActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_marker);
+        setupHomeButton();
         setupTwiceBackPressed();
         assignViews();
         setupMap();

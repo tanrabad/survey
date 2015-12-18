@@ -94,8 +94,9 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_form);
-        setupTwiceBackPressed();
         setupViews();
+        setupHomeButton();
+        setupTwiceBackPressed();
         setupPreviewMap();
         setupPlaceTypeSelector();
         loadPlaceData();
@@ -158,15 +159,6 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         placeTypeSelector.setSelection(placeAdapter.getPlaceTypePosition(getPlaceTypeID()));
     }
 
-    private void loadPlaceData() {
-        if (TextUtils.isEmpty(getPlaceUUID())) {
-            place = Place.withName(null);
-        } else {
-            PlaceController placeController = new PlaceController(placeRepository, this);
-            placeController.showPlace(UUID.fromString(getPlaceUUID()));
-        }
-    }
-
     private void setupWorshipPlaceSubtypeSpinner() {
         placeSubtypeLabel.setText(R.string.place_worship_type);
         placeSubtypeSelector.setAdapter(new PlaceSubTypeOfWorshipAdapter(PlaceFormActivity.this));
@@ -176,6 +168,15 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
 
     private int getPlaceTypeID() {
         return getIntent().getIntExtra(PLACE_TYPE_ID_ARG, Place.TYPE_WORSHIP);
+    }
+
+    private void loadPlaceData() {
+        if (TextUtils.isEmpty(getPlaceUUID())) {
+            place = Place.withName(null);
+        } else {
+            PlaceController placeController = new PlaceController(placeRepository, this);
+            placeController.showPlace(UUID.fromString(getPlaceUUID()));
+        }
     }
 
     public String getPlaceUUID() {

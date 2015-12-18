@@ -21,6 +21,8 @@ package th.or.nectec.tanrabad.survey.presenter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
+
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -32,6 +34,13 @@ public class TanrabadActivity extends AppCompatActivity {
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+    protected void setupHomeButton() {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+        }
     }
 
     public boolean isUiTesting() {
@@ -46,5 +55,15 @@ public class TanrabadActivity extends AppCompatActivity {
 
     private void setupAlertFactory() {
         Alert.init(this);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

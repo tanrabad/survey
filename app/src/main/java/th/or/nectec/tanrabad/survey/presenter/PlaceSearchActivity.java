@@ -45,18 +45,10 @@ public class PlaceSearchActivity extends TanrabadActivity implements SearchView.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_search);
-        setupActionBar();
-
+        setupHomeButton();
         setupSearchHistoryList();
         querySuggestion(null);
         setupPlaceList();
-    }
-
-    private void setupActionBar() {
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeButtonEnabled(true);
-        }
     }
 
     private void setupSearchHistoryList() {

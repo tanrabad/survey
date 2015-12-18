@@ -91,6 +91,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_survey);
         setupToolbar();
+        setupHomeButton();
         findViewsFromLayout();
         showContainerList();
         initSurvey();
@@ -164,12 +165,6 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         ((TextView) findViewById(R.id.place_name)).setText(building.getPlace().getName());
     }
 
-    private void loadSurveyData(Survey survey) {
-        residentCountView.setText(String.valueOf(survey.getResidentCount()));
-        loadSurveyDetail(survey.getIndoorDetail(), indoorContainerViews);
-        loadSurveyDetail(survey.getOutdoorDetail(), outdoorContainerViews);
-    }
-
     private String getBuildingNameWithPrefix(Building building) {
         String houseNoPrefix = "บ้านเลขที่ ";
         String buildName = building.getName();
@@ -178,6 +173,12 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
             buildName = houseNoPrefix + buildName;
         }
         return buildName;
+    }
+
+    private void loadSurveyData(Survey survey) {
+        residentCountView.setText(String.valueOf(survey.getResidentCount()));
+        loadSurveyDetail(survey.getIndoorDetail(), indoorContainerViews);
+        loadSurveyDetail(survey.getOutdoorDetail(), outdoorContainerViews);
     }
 
     private void loadSurveyDetail(List<SurveyDetail> indoorDetails, HashMap<Integer, SurveyContainerView> surveyContainerViews) {
@@ -216,17 +217,17 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         indoorContainerLayout.addView(surveyContainerView);
     }
 
+    private SurveyContainerView buildContainerView(ContainerType containerType) {
+        SurveyContainerView surveyContainerView = new SurveyContainerView(SurveyActivity.this);
+        surveyContainerView.setContainerType(containerType);
+        return surveyContainerView;
+    }
+
     private void buildOutdoorContainerView(ContainerType containerType) {
         SurveyContainerView surveyContainerView = buildContainerView(containerType);
         surveyContainerView.setContainerIcon(containerIconMapping.getContainerIcon(containerType));
         outdoorContainerViews.put(containerType.getId(), surveyContainerView);
         outdoorContainerLayout.addView(surveyContainerView);
-    }
-
-    private SurveyContainerView buildContainerView(ContainerType containerType) {
-        SurveyContainerView surveyContainerView = new SurveyContainerView(SurveyActivity.this);
-        surveyContainerView.setContainerType(containerType);
-        return surveyContainerView;
     }
 
     @Override
@@ -259,8 +260,11 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
             case R.id.save:
                 SaveSurveyData();
                 break;
+            case android.R.id.home:
+                showAbortSurveyPrompt();
+                break;
         }
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
     private void SaveSurveyData() {
@@ -305,6 +309,18 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         return isValid;
     }
 
+    private void showAbortSurveyPrompt() {
+        PromptMessage promptMessage = new AlertDialogPromptMessage(this);
+        promptMessage.setOnCancel(getString(R.string.no), null);
+        promptMessage.setOnConfirm(getString(R.string.yes), new PromptMessage.OnConfirmListener() {
+            @Override
+            public void onConfirm() {
+                finish();
+            }
+        });
+        promptMessage.show(getString(R.string.abort_survey), getBuildingNameWithPrefix(survey.getSurveyBuilding()));
+    }
+
     @Override
     public void onBackPressed() {
         showAbortSurveyPrompt();
@@ -339,18 +355,6 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     protected void onPause() {
         ((TorchButton) findViewById(R.id.torch)).safeTurnOff();
         super.onPause();
-    }
-
-    private void showAbortSurveyPrompt() {
-        PromptMessage promptMessage = new AlertDialogPromptMessage(this);
-        promptMessage.setOnCancel(getString(R.string.no), null);
-        promptMessage.setOnConfirm(getString(R.string.yes), new PromptMessage.OnConfirmListener() {
-            @Override
-            public void onConfirm() {
-                finish();
-            }
-        });
-        promptMessage.show(getString(R.string.abort_survey), getBuildingNameWithPrefix(survey.getSurveyBuilding()));
     }
 
     public void onRootViewClick(View view) {

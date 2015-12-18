@@ -94,9 +94,9 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_building_form);
         assignViews();
-
-        setupTwiceBackPressed();
         setSupportActionBar(toolbar);
+        setupHomeButton();
+        setupTwiceBackPressed();
         placeController.showPlace(UUID.fromString(getPlaceUUID()));
         loadBuildingData();
     }

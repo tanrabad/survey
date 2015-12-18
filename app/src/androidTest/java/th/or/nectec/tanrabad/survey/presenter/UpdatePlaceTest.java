@@ -62,7 +62,7 @@ public class UpdatePlaceTest extends TanrabadEspressoTestBase {
     }
 
     @Test
-    public void editPlaceNameAddressTypePlaceDefineLocationThenSaveShouldOpenPlaceListPage() {
+    public void editPlaceNameAddressTypePlaceDefineLocationThenSaveShouldNotFoundCanNotSave() {
         onView(withId(R.id.place_name))
                 .check(matches(withText("ธรรมศาสตร์")));
         onView(withId(R.id.place_name))
@@ -82,8 +82,5 @@ public class UpdatePlaceTest extends TanrabadEspressoTestBase {
 
         onView(withId(R.id.save))
                 .perform(click());
-        Intents.intended(
-                hasComponent(new ComponentName(mActivity, PlaceListActivity.class)
-                ));
     }
 }

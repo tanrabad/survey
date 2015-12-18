@@ -63,6 +63,7 @@ public class InMemoryPlaceRepository implements PlaceRepository {
         watpaphukon = new Place(generateUUID("3def"), "วัดป่าภูก้อน");
         watpaphukon.setType(Place.TYPE_WORSHIP);
         watpaphukon.setSubType(Place.SUBTYPE_TEMPLE);
+        watpaphukon.setAddress(address);
         saintMaryChurch = new Place(generateUUID("3xss"), "โบสถ์เซนต์เมรี่");
         saintMaryChurch.setType(Place.TYPE_WORSHIP);
         saintMaryChurch.setSubType(Place.SUBTYPE_CHURCH);

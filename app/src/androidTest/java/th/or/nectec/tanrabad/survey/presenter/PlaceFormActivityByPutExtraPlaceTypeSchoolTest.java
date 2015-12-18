@@ -124,6 +124,10 @@ public class PlaceFormActivityByPutExtraPlaceTypeSchoolTest extends TanrabadEspr
                 .perform(click());
         onView(withText("คลองสอง"))
                 .perform(click());
+        onView(withText("โรงเรียน"))
+                .perform(click());
+        onView(withText("ศาสนสถาน"))
+                .perform(click());
         onView(withId(R.id.add_marker))
                 .perform(click());
         onView(withId(R.id.save_marker_menu))

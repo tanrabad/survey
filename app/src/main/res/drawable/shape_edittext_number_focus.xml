@@ -22,5 +22,5 @@
     <solid android:color="@color/black_transparent_20" />
     <stroke
         android:width="2dp"
-        android:color="@color/pink"/>
+        android:color="@color/color_accent"/>
 </shape>

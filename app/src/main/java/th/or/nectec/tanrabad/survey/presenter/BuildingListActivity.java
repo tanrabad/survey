@@ -27,6 +27,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -51,24 +52,25 @@ import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 
-public class BuildingListActivity extends TanrabadActivity implements BuildingWithSurveyStatusListPresenter, PlacePresenter, ActionMode.Callback {
+public class BuildingListActivity extends TanrabadActivity implements BuildingWithSurveyStatusListPresenter, PlacePresenter, ActionMode.Callback, View.OnClickListener {
 
     public static final String PLACE_UUID_ARG = "place_uuid_arg";
     public static final String IS_NEW_SURVEY_ARG = "is_new_survey_arg";
+    Button editPlaceButton;
     ImageButton editBuildingButton;
     private RecyclerView buildingList;
     private BuildingWithSurveyStatusAdapter buildingAdapter;
     private Place place;
     private EmptyLayoutView emptyLayoutView;
     private SurveyBuildingChooser surveyBuildingChooser = new SurveyBuildingChooser(new StubUserRepository(), InMemoryPlaceRepository.getInstance(), InMemoryBuildingRepository.getInstance(), InMemorySurveyRepository.getInstance(), this);
-    private ActionMode actionMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_building_list);
         setupHomeButton();
-        setupEditButton();
+        setupEditPlaceButton();
+        setupEditBuildingButton();
         showPlaceName();
         setupBuildingList();
         setupSearchView();
@@ -76,15 +78,14 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         loadSurveyBuildingList();
     }
 
-    private void setupEditButton() {
+    private void setupEditPlaceButton() {
+        editPlaceButton = (Button) findViewById(R.id.edit_place);
+        editPlaceButton.setOnClickListener(this);
+    }
+
+    private void setupEditBuildingButton() {
         editBuildingButton = (ImageButton) findViewById(R.id.edit_building);
-        editBuildingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                actionMode = BuildingListActivity.this.startSupportActionMode(BuildingListActivity.this);
-                buildingAdapter.setEditButtonVisibility(true);
-            }
-        });
+        editBuildingButton.setOnClickListener(this);
     }
 
     private void showPlaceName() {
@@ -163,6 +164,11 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         this.place = place;
         TextView placeName = (TextView) findViewById(R.id.place_name);
         placeName.setText(place.getName());
+        if (place.getType() == Place.TYPE_VILLAGE_COMMUNITY) {
+            editPlaceButton.setVisibility(View.GONE);
+        } else {
+            editPlaceButton.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -216,6 +222,12 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
                 if (resultCode == RESULT_OK) {
                     loadSurveyBuildingList();
                 }
+                break;
+            case PlaceFormActivity.ADD_PLACE_REQ_CODE:
+                if (resultCode == RESULT_OK) {
+                    showPlaceName();
+                }
+                break;
         }
     }
 
@@ -267,7 +279,19 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
 
     @Override
     public void onDestroyActionMode(ActionMode mode) {
-        actionMode = null;
         buildingAdapter.setEditButtonVisibility(false);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.edit_place:
+                PlaceFormActivity.startEdit(BuildingListActivity.this, place);
+                break;
+            case R.id.edit_building:
+                BuildingListActivity.this.startSupportActionMode(BuildingListActivity.this);
+                buildingAdapter.setEditButtonVisibility(true);
+                break;
+        }
     }
 }

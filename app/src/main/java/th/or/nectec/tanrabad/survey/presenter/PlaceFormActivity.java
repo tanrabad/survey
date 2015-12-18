@@ -300,7 +300,6 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     public void displayUpdateSuccess() {
         setResult(RESULT_OK);
         finish();
-        PlaceListActivity.open(this);
     }
 
     @Override

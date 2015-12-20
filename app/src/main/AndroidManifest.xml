@@ -61,6 +61,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+
         </activity>
         <activity
                 android:name=".presenter.PlaceListActivity"
@@ -110,11 +111,8 @@
                     android:resource="@xml/places_searchable"/>
         </activity>
         <activity
-                android:name=".presenter.InitialActivity"
-                android:parentActivityName=".presenter.TanrabadActivity">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="th.or.nectec.tanrabad.survey.presenter.TanrabadActivity"/>
+                android:name=".presenter.InitialActivity">
+
         </activity>
     </application>
 

@@ -15,10 +15,12 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey.presenter;
+package th.or.nectec.tanrabad.survey.repository;
 
-public interface Job {
-    int id();
+import th.or.nectec.tanrabad.survey.presenter.job.service.Tambon;
 
-    void execute();
+import java.util.List;
+
+public interface AddressRepository {
+    void updateTambon(List<Tambon> updateTambon);
 }

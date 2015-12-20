@@ -20,6 +20,9 @@ package th.or.nectec.tanrabad.survey.presenter;
 import android.os.Bundle;
 import android.widget.TextView;
 import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.presenter.job.AbsJobRunner;
+import th.or.nectec.tanrabad.survey.presenter.job.InMemoryInitializeJob;
+import th.or.nectec.tanrabad.survey.presenter.job.Job;
 
 public class InitialActivity extends TanrabadActivity {
 
@@ -34,6 +37,7 @@ public class InitialActivity extends TanrabadActivity {
 
         new InitialJobRunner()
                 .addJob(new MockJob(1))
+                .addJob(new InMemoryInitializeJob())
                 .addJob(new MockJob(2))
                 .addJob(new MockJob(3))
                 .start();
@@ -41,6 +45,9 @@ public class InitialActivity extends TanrabadActivity {
 
     public void updateLoadingText(Job startingJob) {
         switch (startingJob.id()) {
+            case InMemoryInitializeJob.ID:
+                loadingText.setText("หาลูกน้ำมาให้สำรวจ");
+                break;
             case 1:
                 loadingText.setText("กำลังจะนอน");
                 break;
@@ -76,15 +83,15 @@ public class InitialActivity extends TanrabadActivity {
         }
     }
 
-    public class InitialJobRunner extends JobRunner {
+    public class InitialJobRunner extends AbsJobRunner {
 
         @Override
-        void onJobStart(Job startingJob) {
+        protected void onJobStart(Job startingJob) {
             updateLoadingText(startingJob);
         }
 
         @Override
-        void onJobsDone() {
+        protected void onRunFinish() {
             finish();
         }
     }

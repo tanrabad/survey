@@ -27,7 +27,8 @@ import th.or.nectec.tanrabad.survey.end2end.*;
 @Suite.SuiteClasses({
         AddBuildingTest.class,
         EditBuildingLocationTest.class,
-        PlaceFormActivityDoSaveDataTest.class
+        PlaceFormActivityDoSaveDataTest.class,
+        SurveyBuildingExistTest.class
 })
 
 public class EndToEndTestSuite {

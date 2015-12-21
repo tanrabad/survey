@@ -28,7 +28,8 @@ import th.or.nectec.tanrabad.survey.end2end.*;
         AddBuildingTest.class,
         EditBuildingLocationTest.class,
         PlaceFormActivityDoSaveDataTest.class,
-        SurveyBuildingExistTest.class
+        SurveyBuildingExistTest.class,
+        SurveyByAddNewPlaceAddNewBuildingTest.class
 })
 
 public class EndToEndTestSuite {

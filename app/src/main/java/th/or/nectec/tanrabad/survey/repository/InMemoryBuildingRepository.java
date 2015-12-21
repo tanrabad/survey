@@ -18,14 +18,13 @@
 package th.or.nectec.tanrabad.survey.repository;
 
 import android.support.annotation.NonNull;
+import th.or.nectec.tanrabad.domain.building.BuildingDuplicateException;
+import th.or.nectec.tanrabad.domain.building.BuildingRepository;
+import th.or.nectec.tanrabad.entity.Building;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import th.or.nectec.tanrabad.domain.building.BuildingDuplicateException;
-import th.or.nectec.tanrabad.domain.building.BuildingRepository;
-import th.or.nectec.tanrabad.entity.Building;
 
 public class InMemoryBuildingRepository implements BuildingRepository {
 
@@ -158,9 +157,8 @@ public class InMemoryBuildingRepository implements BuildingRepository {
     public boolean save(Building building) {
         if (buildings.contains(building)) {
             throw new BuildingDuplicateException();
-        } else {
-            buildings.add(building);
         }
+        buildings.add(building);
         return true;
     }
 
@@ -168,6 +166,17 @@ public class InMemoryBuildingRepository implements BuildingRepository {
     public boolean update(Building building) {
         buildings.set(buildings.indexOf(building), building);
         return true;
+    }
+
+    @Override
+    public void updateOrInsert(Building[] buildings) {
+        for (Building building : buildings) {
+            try {
+                update(building);
+            } catch (IndexOutOfBoundsException iob) {
+                save(building);
+            }
+        }
     }
 
     @Override

@@ -21,8 +21,10 @@ import android.os.Bundle;
 import android.widget.TextView;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.job.AbsJobRunner;
+import th.or.nectec.tanrabad.survey.presenter.job.BuildingUpdateJob;
 import th.or.nectec.tanrabad.survey.presenter.job.InMemoryInitializeJob;
 import th.or.nectec.tanrabad.survey.presenter.job.Job;
+import th.or.nectec.tanrabad.survey.repository.InMemoryBuildingRepository;
 
 public class InitialActivity extends TanrabadActivity {
 
@@ -40,6 +42,7 @@ public class InitialActivity extends TanrabadActivity {
                 .addJob(new InMemoryInitializeJob())
                 .addJob(new MockJob(2))
                 .addJob(new MockJob(3))
+                .addJob(new BuildingUpdateJob(InMemoryBuildingRepository.getInstance()))
                 .start();
     }
 
@@ -47,6 +50,9 @@ public class InitialActivity extends TanrabadActivity {
         switch (startingJob.id()) {
             case InMemoryInitializeJob.ID:
                 loadingText.setText("หาลูกน้ำมาให้สำรวจ");
+                break;
+            case BuildingUpdateJob.ID:
+                loadingText.setText("ตรวจสอบคุณภาพอาคาร");
                 break;
             case 1:
                 loadingText.setText("กำลังจะนอน");
@@ -58,6 +64,11 @@ public class InitialActivity extends TanrabadActivity {
                 loadingText.setText("ยังไงหละนี้");
                 break;
         }
+    }
+
+    private void openMainActivityThenFinish() {
+        MainActivity.open(InitialActivity.this);
+        finish();
     }
 
     public static class MockJob implements Job {
@@ -92,10 +103,8 @@ public class InitialActivity extends TanrabadActivity {
 
         @Override
         protected void onRunFinish() {
-            finish();
+            openMainActivityThenFinish();
         }
     }
-
-
 
 }

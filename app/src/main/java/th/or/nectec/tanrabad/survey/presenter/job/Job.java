@@ -20,5 +20,5 @@ package th.or.nectec.tanrabad.survey.presenter.job;
 public interface Job {
     int id();
 
-    void execute();
+    void execute() throws JobException;
 }

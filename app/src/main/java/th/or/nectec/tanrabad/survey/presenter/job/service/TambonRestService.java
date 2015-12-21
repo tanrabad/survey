@@ -17,10 +17,11 @@
 
 package th.or.nectec.tanrabad.survey.presenter.job.service;
 
-import org.joda.time.DateTime;
 import java.util.List;
 
-public interface TambonService {
-
-    List<Tambon> getUpdate();
+public class TambonRestService implements RestService<Tambon> {
+    @Override
+    public List<Tambon> getUpdate() {
+        return null;
+    }
 }

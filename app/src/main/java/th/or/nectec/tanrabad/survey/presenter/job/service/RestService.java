@@ -17,14 +17,8 @@
 
 package th.or.nectec.tanrabad.survey.presenter.job.service;
 
-import org.joda.time.DateTime;
-import th.or.nectec.tanrabad.entity.Building;
-
 import java.util.List;
 
-public interface BuildingService {
-
-    List<Building> getUpdateBuilidngSince(DateTime dateTime);
-
-    void postBuilding(List<Building> buildings) throws PostFailreException;
+public interface RestService <T> {
+    List<T> getUpdate();
 }

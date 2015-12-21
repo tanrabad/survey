@@ -17,6 +17,7 @@
 
 package th.or.nectec.tanrabad.survey.presenter;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -44,6 +45,11 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
     private PlaceAdapter placeAdapter;
     private RecyclerView placeHistoryList;
     private CardView cardView;
+
+    public static void open(Activity activity) {
+        Intent intent = new Intent(activity, MainActivity.class);
+        activity.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

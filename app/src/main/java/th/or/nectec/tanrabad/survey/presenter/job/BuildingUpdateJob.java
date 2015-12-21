@@ -17,18 +17,22 @@
 
 package th.or.nectec.tanrabad.survey.presenter.job;
 
+import th.or.nectec.tanrabad.domain.building.BuildingRepository;
+import th.or.nectec.tanrabad.entity.Building;
+import th.or.nectec.tanrabad.survey.presenter.job.service.BuildingRestService;
 import th.or.nectec.tanrabad.survey.presenter.job.service.RestService;
-import th.or.nectec.tanrabad.survey.presenter.job.service.Tambon;
-import th.or.nectec.tanrabad.survey.presenter.job.service.TambonRestService;
-import th.or.nectec.tanrabad.survey.repository.AddressRepository;
-import th.or.nectec.tanrabad.survey.repository.AddressRepositoryImpl;
 
 import java.util.List;
 
-public class TambonUpdateJob implements Job {
+public class BuildingUpdateJob implements Job {
 
-    public static final int ID = 520001;
-    private final RestService<Tambon> service = new TambonRestService();
+    public static final int ID = 293711;
+
+    private BuildingRepository buildingRepository;
+
+    public BuildingUpdateJob(BuildingRepository buildingRepository) {
+        this.buildingRepository = buildingRepository;
+    }
 
     @Override
     public int id() {
@@ -36,11 +40,10 @@ public class TambonUpdateJob implements Job {
     }
 
     @Override
-    public void execute() {
-        List<Tambon> updateTambon = service.getUpdate();
-        if (updateTambon != null) {
-            AddressRepository addressRepo = AddressRepositoryImpl.getInstance();
-            addressRepo.updateTambon(updateTambon);
-        }
+    public void execute() throws JobException {
+        RestService<Building> service = new BuildingRestService();
+        List<Building> buildingList = service.getUpdate();
+        Building[] buildingArray = buildingList.toArray(new Building[buildingList.size()]);
+        buildingRepository.updateOrInsert(buildingArray);
     }
 }

@@ -17,8 +17,22 @@
 
 package th.or.nectec.tanrabad.survey.repository;
 
-public class AddressRepositoryImpl {
+import th.or.nectec.tanrabad.survey.presenter.job.service.Tambon;
+
+import java.util.List;
+
+public class AddressRepositoryImpl implements AddressRepository {
+
+    private static AddressRepository instance;
+
     public static AddressRepository getInstance() {
-        return null;
+        if (instance == null)
+            instance = new AddressRepositoryImpl();
+        return instance;
+    }
+
+    @Override
+    public void updateTambon(List<Tambon> updateTambon) {
+
     }
 }

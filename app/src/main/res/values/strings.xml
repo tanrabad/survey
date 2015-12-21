@@ -64,6 +64,7 @@
     <string name="remove_location">ลบพิกัด</string>
     <string name="please_define_location">กรุณาระบุพิกัด</string>
     <string name="please_define_building_location">กรุณาระบุพิกัดของอาคาร</string>
+    <string name="confirm_add_building_location">ยืนยันบันทึกพิกัดอาคารหรือไม่</string>
 
     <!--place type-->
     <string name="village_community">หมู่บ้าน/ชุมชน</string>
@@ -128,8 +129,8 @@
     <string name="building_already_survey">สำรวจแล้ว</string>
     <string name="press_back_again_to_exit">กรุณากดอีกครั้งเพื่อออก</string>
     <string name="location">พิกัด</string>
-    <string name="distance_between_place_and_building">รัศมีของสถานที่ %1$s กม.\nระยะทางระหว่างอาคารกับสถานที่ %2$s
-        กม.\nเกินจากรัศมีของสถานที่ %3$s กม.
+    <string name="distance_between_place_and_building">เนื่องจากพิกัดอาคารห่างจากพิกัดสถานที่ %2$s
+        กม. \n(รัศมี %1$s กม. จากพิกัดสถานที่)
     </string>
     <string name="cant_edit_community_village">ไม่สามารถแก้ไขข้อมูลสถานที่ที่เป็นชุมชน/หมู่บ้าน</string>
     <string name="edit_place">แก้ไขสถานที่</string>

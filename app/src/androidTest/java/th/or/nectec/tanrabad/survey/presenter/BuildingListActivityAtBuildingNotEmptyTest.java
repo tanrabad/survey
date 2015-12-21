@@ -104,4 +104,14 @@ public class BuildingListActivityAtBuildingNotEmptyTest extends TanrabadEspresso
 
         textDisplayed("โรงอาหาร");
     }
+
+    @Test
+    public void touchSearchThenTypeBuildingNameAtNotExistInDatabaseShouldFoundTextNotFoundBuild() {
+        onView(withId(R.id.building_search))
+                .perform(click());
+        onView(withHint(R.string.search_building_by_name_hint))
+                .perform(replaceText("กากา"));
+
+        textDisplayed(R.string.building_list_not_found);
+    }
 }

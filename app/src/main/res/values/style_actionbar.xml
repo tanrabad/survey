@@ -19,7 +19,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="ActionBar" parent="@style/Widget.AppCompat.Light.ActionBar">
-        <item name="background">@color/shock_pink</item>
+        <item name="background">@color/color_primary</item>
         <item name="android:height">@dimen/actionbar_size</item>
         <item name="titleTextStyle">@style/ActionBarTitleTextAppearance</item>
     </style>
@@ -33,8 +33,12 @@
         <item name="android:textSize">@dimen/text_title</item>
     </style>
 
+    <style name="ActionBar.Alternate">
+        <item name="background">@color/darker_gray</item>
+    </style>
+
     <style name="Toolbar" parent="@style/Widget.AppCompat.Toolbar">
-        <item name="background">@color/shock_pink</item>
+        <item name="background">@color/color_primary</item>
         <item name="titleTextAppearance">@style/ToolbarTitleTextAppearance</item>
     </style>
 

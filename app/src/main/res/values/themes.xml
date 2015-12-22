@@ -59,6 +59,12 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="AppTheme.Alternate">
+        <item name="actionBarStyle">@style/ActionBar.Alternate</item>
+        <item name="colorPrimary">@color/darker_gray</item>
+        <item name="colorPrimaryDark">@color/black</item>
+    </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

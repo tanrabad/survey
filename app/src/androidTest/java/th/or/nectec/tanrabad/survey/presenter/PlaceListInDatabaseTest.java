@@ -88,17 +88,17 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
     }
 
     @Test
-    public void clickAddPlaceNotChooseType() {
+    public void touchAddPlaceNotChooseType() {
         onView(withId(R.id.add_place_menu))
                 .perform(click());
 
         Intents.intended(
                 hasComponent(new ComponentName(mActivity, PlaceFormActivity.class)
-        ));
+                ));
     }
 
     @Test
-    public void clickAddPlaceTypeFactory() {
+    public void touchAddPlaceTypeFactory() {
         changePlaceTypeFilterTo(R.string.factory);
 
 
@@ -111,7 +111,7 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
     }
 
     @Test
-    public void clickAddPlaceTypeSchool() {
+    public void touchAddPlaceTypeSchool() {
         changePlaceTypeFilterTo(R.string.school);
 
         onView(withId(R.id.add_place_menu))
@@ -123,7 +123,7 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
     }
 
     @Test
-    public void clickPlaceShouldOpenDefineBuildingPage() {
+    public void touchPlaceShouldOpenDefineBuildingPage() {
         onView(withText("ชุมชนกอล์ฟวิว"))
                 .perform(click());
         onView(withText("สำรวจ"))
@@ -133,6 +133,16 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
                 hasComponent(new ComponentName(mActivity, BuildingListActivity.class)),
                 hasExtra(BuildingListActivity.PLACE_UUID_ARG, UUID.nameUUIDFromBytes("67UIP".getBytes()).toString())
         ));
+    }
+
+    @Test
+    public void touchSearhShouldOpenPlaceSearchPage() {
+        onView(withId(R.id.action_search))
+                .perform(click());
+
+        Intents.intended(
+                hasComponent(new ComponentName(mActivity, PlaceSearchActivity.class)
+                ));
     }
 
     private void changePlaceTypeFilterTo(@StringRes int placeType) {

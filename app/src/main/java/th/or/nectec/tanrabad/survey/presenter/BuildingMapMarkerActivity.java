@@ -141,7 +141,6 @@ public class BuildingMapMarkerActivity extends TanrabadActivity implements View.
     private String getDistanceBetweenBuildingAndPlaceMessage() {
         double distanceBetweenBuildingAndPlaceInKm = buildingMapMarkerFragment.getDistanceBetweenPlaceAndBuilding() / 1000.f;
         return String.format(getString(R.string.distance_between_place_and_building),
-                BuildingMapMarkerFragment.DISTANCE_LIMIT_IN_METER / 1000.f,
                 decimalFormat.format(distanceBetweenBuildingAndPlaceInKm));
     }
 

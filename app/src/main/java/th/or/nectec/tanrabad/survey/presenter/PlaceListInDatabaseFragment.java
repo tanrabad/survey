@@ -48,13 +48,12 @@ import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 
 public class PlaceListInDatabaseFragment extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener, AdapterView.OnItemSelectedListener, PlaceListPresenter {
 
-
     private PlaceAdapter placeAdapter;
     private PlaceTypeAdapter placeTypeAdapter;
     private PlaceChooser placeChooser = new PlaceChooser(InMemoryPlaceRepository.getInstance(), this);
     private TextView placeCountView;
     private RecyclerView placeListView;
-    private AppCompatSpinner placeFilterView;
+    private AppCompatSpinner placeTypeFilterView;
     private RecyclerViewHeader recyclerViewHeader;
     private EmptyLayoutView emptyLayoutView;
 
@@ -90,10 +89,10 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
         placeTypeID = (int) placeTypeAdapter.getItemId(position);
-        loadPlaceList(placeTypeID);
+        loadPlaceList();
     }
 
-    private void loadPlaceList(int placeTypeID) {
+    protected void loadPlaceList() {
         if (placeTypeID > 0) {
             placeChooser.getPlaceListWithPlaceFilter(this.placeTypeID);
         } else {
@@ -127,7 +126,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
     private void setupViews(View view) {
         this.placeListView = (RecyclerView) view.findViewById(R.id.place_list);
         this.placeCountView = (TextView) view.findViewById(R.id.place_count);
-        this.placeFilterView = (AppCompatSpinner) view.findViewById(R.id.place_filter);
+        this.placeTypeFilterView = (AppCompatSpinner) view.findViewById(R.id.place_filter);
         recyclerViewHeader = (RecyclerViewHeader) view.findViewById(R.id.card_header);
         emptyLayoutView = (EmptyLayoutView) view.findViewById(R.id.empty_layout);
         emptyLayoutView.setEmptyIcon(R.mipmap.ic_place);
@@ -144,9 +143,9 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
     }
 
     private void setupPlaceFilterSpinner() {
-        placeFilterView.setOnItemSelectedListener(this);
+        placeTypeFilterView.setOnItemSelectedListener(this);
         placeTypeAdapter = new PlaceTypeAdapter(getActivity());
-        placeFilterView.setAdapter(placeTypeAdapter);
+        placeTypeFilterView.setAdapter(placeTypeAdapter);
     }
 
     private void setupPlaceList() {

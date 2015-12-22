@@ -21,18 +21,22 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
 import th.or.nectec.tanrabad.survey.R;
 
 
 public class PlacePagerAdapter extends FragmentPagerAdapter {
 
     private Context context;
-    private String username;
+    private final PlaceListInDatabaseFragment placeListInDatabaseFragment;
+    private final PlaceSurveyListFragment placeSurveyListFragment;
 
     public PlacePagerAdapter(FragmentManager fm, Context context, String username) {
         super(fm);
         this.context = context;
-        this.username = username;
+
+        placeListInDatabaseFragment = PlaceListInDatabaseFragment.newInstance();
+        placeSurveyListFragment = PlaceSurveyListFragment.newInstance(username);
     }
 
     @Override
@@ -43,11 +47,11 @@ public class PlacePagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        switch (position){
+        switch (position) {
             case 0:
-                return PlaceListInDatabaseFragment.newInstance();
+                return placeListInDatabaseFragment;
             case 1:
-                return PlaceSurveyListFragment.newInstance(username);
+                return placeSurveyListFragment;
             default:
                 return null;
         }
@@ -55,7 +59,7 @@ public class PlacePagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        switch (position){
+        switch (position) {
             case 0:
                 return context.getResources().getString(R.string.find_place_by_database);
             case 1:
@@ -63,5 +67,9 @@ public class PlacePagerAdapter extends FragmentPagerAdapter {
             default:
                 return null;
         }
+    }
+
+    public void refreshPlaceListData() {
+        placeListInDatabaseFragment.loadPlaceList();
     }
 }

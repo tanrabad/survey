@@ -21,7 +21,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -38,6 +37,7 @@ public class PlaceListActivity extends TanrabadActivity {
 
     private TabLayout tabLayout;
     private ViewPager placePager;
+    private PlacePagerAdapter placePagerAdapter;
 
     public static void open(Activity activity) {
         Intent intent = new Intent(activity, PlaceListActivity.class);
@@ -63,7 +63,7 @@ public class PlaceListActivity extends TanrabadActivity {
     }
 
     private void setupTabPager() {
-        PagerAdapter placePagerAdapter = new PlacePagerAdapter(getSupportFragmentManager(), PlaceListActivity.this, "sara");
+        placePagerAdapter = new PlacePagerAdapter(getSupportFragmentManager(), PlaceListActivity.this, "sara");
         placePager.setAdapter(placePagerAdapter);
         tabLayout.setupWithViewPager(placePager);
     }
@@ -81,6 +81,18 @@ public class PlaceListActivity extends TanrabadActivity {
                 }
             }
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case PlaceFormActivity.ADD_PLACE_REQ_CODE:
+                if (resultCode == RESULT_OK)
+                    placePagerAdapter.refreshPlaceListData();
+                break;
+        }
+
     }
 
     @Override

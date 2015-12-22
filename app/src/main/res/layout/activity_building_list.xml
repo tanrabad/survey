@@ -15,11 +15,11 @@
   ~ limitations under the License.
   -->
 
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                 xmlns:tools="http://schemas.android.com/tools"
+                                                 android:layout_width="match_parent"
+                                                 android:layout_height="match_parent">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -30,73 +30,66 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/header_height"
             android:layout_gravity="center_horizontal"
-            android:contentDescription="@string/place_bg" />
+            android:contentDescription="@string/place_bg"/>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/header_height">
+
+            <TextView
+                android:id="@+id/place_name"
+                style="@style/TextViewTanrabad.Header.Right"
+                android:textIsSelectable="false"
+                tools:text="หมู่ 1 บ้านบางไผ่"/>
+
+            <Button
+                android:id="@+id/edit_place"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/place_name"
+                android:layout_alignRight="@+id/place_name"
+                android:layout_below="@+id/place_name"
+                android:drawableLeft="@mipmap/ic_edit_white"
+                android:text="@string/edit_place"/>
+        </RelativeLayout>
     </FrameLayout>
 
-    <android.support.design.widget.CoordinatorLayout
+    <android.support.design.widget.AppBarLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:fitsSystemWindows="true"
+        tools:showIn="@layout/fragment_place_list_in_database">
 
-        <android.support.design.widget.AppBarLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
+        <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
+            android:layout_height="@dimen/header_height"
             android:fitsSystemWindows="true"
-            tools:showIn="@layout/fragment_place_list_in_database">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:titleEnabled="false">
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
 
-            <android.support.design.widget.CollapsingToolbarLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fitsSystemWindows="true"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                app:titleEnabled="false">
+    <android.support.v7.widget.CardView
+        android:layout_width="@dimen/card_width"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/header_height">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/building_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
-                    <TextView
-                        android:id="@+id/place_name"
-                        style="@style/TextViewTanrabad.Header.Right"
-                        android:textIsSelectable="false"
-                        tools:text="หมู่ 1 บ้านบางไผ่"/>
+        <include layout="@layout/card_header_building_list"/>
 
-                    <Button
-                        android:id="@+id/edit_place"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignEnd="@+id/place_name"
-                        android:layout_alignRight="@+id/place_name"
-                        android:layout_below="@+id/place_name"
-                        android:drawableLeft="@mipmap/ic_edit_white"
-                        android:text="@string/edit_place"/>
-                </RelativeLayout>
+        <th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView
+            android:id="@+id/empty_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </android.support.v7.widget.CardView>
 
-            </android.support.design.widget.CollapsingToolbarLayout>
-        </android.support.design.widget.AppBarLayout>
-
-        <android.support.v7.widget.CardView
-                android:layout_width="@dimen/card_width"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/building_list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <include layout="@layout/card_header_building_list" />
-
-            <th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView
-                android:id="@+id/empty_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </android.support.v7.widget.CardView>
-
-    </android.support.design.widget.CoordinatorLayout>
-</merge>
+</android.support.design.widget.CoordinatorLayout>

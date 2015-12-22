@@ -18,97 +18,101 @@
 package th.or.nectec.tanrabad.survey.repository;
 
 import android.support.annotation.NonNull;
-import th.or.nectec.tanrabad.domain.building.BuildingDuplicateException;
 import th.or.nectec.tanrabad.domain.building.BuildingRepository;
+import th.or.nectec.tanrabad.domain.building.BuildingRepositoryException;
 import th.or.nectec.tanrabad.entity.Building;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class InMemoryBuildingRepository implements BuildingRepository {
 
     private static InMemoryBuildingRepository instance;
-    List<Building> buildings = new ArrayList<>();
+    Map<UUID,Building> buildingMap = new HashMap<>();
+
 
     private InMemoryBuildingRepository() {
         InMemoryPlaceRepository inMemoryPlaceRepository = InMemoryPlaceRepository.getInstance();
 
         Building building1 = new Building(generateUUID("1xyz"), "214/43");
         building1.setPlace(inMemoryPlaceRepository.getPalazzettoVillage());
-        buildings.add(building1);
 
         Building building2 = new Building(generateUUID("2xyz"), "214/44");
         building2.setPlace(inMemoryPlaceRepository.getPalazzettoVillage());
-        buildings.add(building2);
 
         Building building3 = new Building(generateUUID("3xyz"), "214/45");
         building3.setPlace(inMemoryPlaceRepository.getPalazzettoVillage());
-        buildings.add(building3);
 
         Building buildingPR01 = new Building(generateUUID("PR01xyz"), "214/46");
         buildingPR01.setPlace(inMemoryPlaceRepository.getPalazzettoVillage());
-        buildings.add(buildingPR01);
 
         Building buildingPR02 = new Building(generateUUID("PR02xyz"), "214/47");
         buildingPR02.setPlace(inMemoryPlaceRepository.getPalazzettoVillage());
-        buildings.add(buildingPR02);
 
         Building buildingPR03 = new Building(generateUUID("PR03xyz"), "214/48");
         buildingPR03.setPlace(inMemoryPlaceRepository.getPalazzettoVillage());
-        buildings.add(buildingPR03);
 
         Building buildingPR04 = new Building(generateUUID("PR04xyz"), "214/49");
         buildingPR04.setPlace(inMemoryPlaceRepository.getPalazzettoVillage());
-        buildings.add(buildingPR04);
 
         Building buildingPR05 = new Building(generateUUID("PR05xyz"), "214/50");
         buildingPR05.setPlace(inMemoryPlaceRepository.getPalazzettoVillage());
-        buildings.add(buildingPR05);
 
         Building buildingPR06 = new Building(generateUUID("PR06xyz"), "214/51");
         buildingPR06.setPlace(inMemoryPlaceRepository.getPalazzettoVillage());
-        buildings.add(buildingPR06);
 
         Building buildingPR07 = new Building(generateUUID("PR07xyz"), "214/52");
         buildingPR07.setPlace(inMemoryPlaceRepository.getPalazzettoVillage());
-        buildings.add(buildingPR07);
 
         Building buildingPR08 = new Building(generateUUID("PR08xyz"), "214/53");
         buildingPR08.setPlace(inMemoryPlaceRepository.getPalazzettoVillage());
-        buildings.add(buildingPR08);
 
         Building buildingPR09 = new Building(generateUUID("PR09xyz"), "214/54");
         buildingPR09.setPlace(inMemoryPlaceRepository.getPalazzettoVillage());
-        buildings.add(buildingPR09);
 
         Building buildingPR10 = new Building(generateUUID("PR10xyz"), "214/55");
         buildingPR10.setPlace(inMemoryPlaceRepository.getPalazzettoVillage());
-        buildings.add(buildingPR10);
 
         Building building4 = new Building(generateUUID("1opj"), "ตึก1");
         building4.setPlace(inMemoryPlaceRepository.getBangkokHospital());
-        buildings.add(building4);
 
         Building building5 = new Building(generateUUID("2opj"), "ตึกพักญาติ");
         building5.setPlace(inMemoryPlaceRepository.getBangkokHospital());
-        buildings.add(building5);
+
 
         Building building6 = new Building(generateUUID("3opj"), "โรงอาหาร");
         building6.setPlace(inMemoryPlaceRepository.getBangkokHospital());
-        buildings.add(building6);
+
 
         Building building7 = new Building(generateUUID("1hij"), "ศาลาใหญ่");
         building7.setPlace(inMemoryPlaceRepository.getWatpaphukon());
-        buildings.add(building7);
 
         Building building8 = new Building(generateUUID("2hij"), "เมรุ");
         building8.setPlace(inMemoryPlaceRepository.getWatpaphukon());
-        buildings.add(building8);
 
         Building building9 = new Building(generateUUID("3hij"), "ลานหน้าศาลากลาง");
         building9.setPlace(inMemoryPlaceRepository.getWatpaphukon());
-        buildings.add(building9);
+
+        buildingMap.put(building1.getId(), building1);
+        buildingMap.put(building2.getId(), building2);
+        buildingMap.put(building3.getId(), building3);
+        buildingMap.put(building4.getId(), building4);
+        buildingMap.put(building5.getId(), building5);
+        buildingMap.put(building6.getId(), building6);
+        buildingMap.put(building7.getId(), building7);
+        buildingMap.put(building8.getId(), building8);
+        buildingMap.put(building9.getId(), building9);
+        buildingMap.put(buildingPR01.getId(), buildingPR01);
+        buildingMap.put(buildingPR02.getId(), buildingPR02);
+        buildingMap.put(buildingPR03.getId(), buildingPR03);
+        buildingMap.put(buildingPR04.getId(), buildingPR04);
+        buildingMap.put(buildingPR05.getId(), buildingPR05);
+        buildingMap.put(buildingPR06.getId(), buildingPR06);
+        buildingMap.put(buildingPR07.getId(), buildingPR07);
+        buildingMap.put(buildingPR08.getId(), buildingPR08);
+        buildingMap.put(buildingPR09.getId(), buildingPR09);
+        buildingMap.put(buildingPR10.getId(), buildingPR10);
+
+
     }
 
     @NonNull
@@ -124,8 +128,9 @@ public class InMemoryBuildingRepository implements BuildingRepository {
 
     @Override
     public List<Building> findBuildingInPlace(UUID placeUuid) {
+
         ArrayList<Building> newBuildingList = new ArrayList<>();
-        for (Building eachBuilding : buildings) {
+        for (Building eachBuilding : buildingMap.values()) {
             if (eachBuilding.getPlace().getId().equals(placeUuid)) {
                 newBuildingList.add(eachBuilding);
             }
@@ -135,7 +140,7 @@ public class InMemoryBuildingRepository implements BuildingRepository {
 
     @Override
     public Building findBuildingByName(String buildingName) {
-        for (Building eachBuilding : buildings) {
+        for (Building eachBuilding : buildingMap.values()) {
             if (eachBuilding.getName().equals(buildingName)) {
                 return eachBuilding;
             }
@@ -145,7 +150,7 @@ public class InMemoryBuildingRepository implements BuildingRepository {
 
     @Override
     public Building findBuildingByUUID(UUID buildingUUID) {
-        for (Building eachBuilding : buildings) {
+        for (Building eachBuilding : buildingMap.values()) {
             if (eachBuilding.getId().equals(buildingUUID)) {
                 return eachBuilding;
             }
@@ -155,16 +160,19 @@ public class InMemoryBuildingRepository implements BuildingRepository {
 
     @Override
     public boolean save(Building building) {
-        if (buildings.contains(building)) {
-            throw new BuildingDuplicateException();
+        if (buildingMap.containsKey(building.getId())) {
+            throw new BuildingRepositoryException();
         }
-        buildings.add(building);
+        buildingMap.put(building.getId(), building);
         return true;
     }
 
     @Override
     public boolean update(Building building) {
-        buildings.set(buildings.indexOf(building), building);
+        if (!buildingMap.containsKey(building.getId())) {
+            throw new BuildingRepositoryException();
+        }
+        buildingMap.put(building.getId(), building);
         return true;
     }
 
@@ -182,7 +190,7 @@ public class InMemoryBuildingRepository implements BuildingRepository {
     @Override
     public List<Building> searchBuildingInPlaceByName(UUID placeUUID, String buildingName) {
         ArrayList<Building> newBuildingList = new ArrayList<>();
-        for (Building eachBuilding : buildings) {
+        for (Building eachBuilding : buildingMap.values()) {
             if (eachBuilding.getPlace().getId().equals(placeUUID) && eachBuilding.getName().contains(buildingName)) {
                 newBuildingList.add(eachBuilding);
             }

@@ -18,9 +18,8 @@
 package th.or.nectec.tanrabad.survey.repository;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import th.or.nectec.tanrabad.domain.building.BuildingDuplicateException;
+import th.or.nectec.tanrabad.domain.building.BuildingRepositoryException;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
 
@@ -46,7 +45,7 @@ public class InMemoryBuildingRepositoryTest {
         buildingRepo.save(towerB);
     }
 
-    @Test(expected = BuildingDuplicateException.class)
+    @Test(expected = BuildingRepositoryException.class)
     public void testSaveExistBuildingMustThrowException() throws Exception {
         buildingRepo.save(towerA);
     }
@@ -63,16 +62,19 @@ public class InMemoryBuildingRepositoryTest {
         assertEquals(null, buildingRepo.findBuildingByUUID(UUID.randomUUID()));
     }
 
-    @Ignore
     @Test
     public void testUpdate() throws Exception {
         Building towerANewName = new Building(towerA.getId(), "Tower I");
         towerANewName.setPlace(NationalPark);
-        buildingRepo.save(towerA);
 
         buildingRepo.update(towerANewName);
 
-        assertEquals(towerA, buildingRepo.findBuildingByUUID(towerA.getId()));
+        assertEquals(towerANewName, buildingRepo.findBuildingByUUID(towerA.getId()));
+    }
+
+    @Test(expected = BuildingRepositoryException.class)
+    public void testUpdateNotExistBuildingMustThrowException() throws Exception {
+        buildingRepo.update(new Building(UUID.randomUUID(), "New Building"));
     }
 
     @Test

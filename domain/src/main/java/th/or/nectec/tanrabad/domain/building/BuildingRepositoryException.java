@@ -17,5 +17,5 @@
 
 package th.or.nectec.tanrabad.domain.building;
 
-public class BuildingDuplicateException extends RuntimeException {
+public class BuildingRepositoryException extends RuntimeException {
 }

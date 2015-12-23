@@ -124,14 +124,14 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
 
     @Test
     public void touchPlaceShouldOpenDefineBuildingPage() {
-        onView(withText("ชุมชนกอล์ฟวิว"))
+        onView(withText("โบสถ์เซนต์เมรี่"))
                 .perform(click());
         onView(withText("สำรวจ"))
                 .perform(click());
 
         Intents.intended(Matchers.allOf(
                 hasComponent(new ComponentName(mActivity, BuildingListActivity.class)),
-                hasExtra(BuildingListActivity.PLACE_UUID_ARG, UUID.nameUUIDFromBytes("67UIP".getBytes()).toString())
+                hasExtra(BuildingListActivity.PLACE_UUID_ARG, UUID.nameUUIDFromBytes("3xss".getBytes()).toString())
         ));
     }
 

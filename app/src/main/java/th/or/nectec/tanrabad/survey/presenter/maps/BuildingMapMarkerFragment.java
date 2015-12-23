@@ -35,7 +35,7 @@ public class BuildingMapMarkerFragment extends MapMarkerFragment implements Goog
     }
 
     private void loadPlaceData(String placeUUID) {
-        place = InMemoryPlaceRepository.getInstance().findPlaceByPlaceUUID(UUID.fromString(placeUUID));
+        place = InMemoryPlaceRepository.getInstance().findPlaceByUUID(UUID.fromString(placeUUID));
     }
 
     public static BuildingMapMarkerFragment newInstanceWithLocation(String placeUUID, Location buildingLocation) {

@@ -100,7 +100,7 @@ public class BuildingWithSurveyStatusChooserTest {
 
         context.checking(new Expectations() {
             {
-                allowing(placeRepository).findPlaceByPlaceUUID(with(UUID.fromString(placeUUID)));
+                allowing(placeRepository).findPlaceByUUID(with(UUID.fromString(placeUUID)));
                 will(returnValue(place));
 
                 allowing(userRepository).findUserByName(with(username));
@@ -134,7 +134,7 @@ public class BuildingWithSurveyStatusChooserTest {
 
         context.checking(new Expectations() {
             {
-                allowing(placeRepository).findPlaceByPlaceUUID(with(UUID.fromString(placeUUID)));
+                allowing(placeRepository).findPlaceByUUID(with(UUID.fromString(placeUUID)));
                 will(returnValue(place));
 
                 allowing(userRepository).findUserByName(with(username));
@@ -170,7 +170,7 @@ public class BuildingWithSurveyStatusChooserTest {
 
         context.checking(new Expectations() {
             {
-                allowing(placeRepository).findPlaceByPlaceUUID(with(UUID.fromString(placeUUID)));
+                allowing(placeRepository).findPlaceByUUID(with(UUID.fromString(placeUUID)));
                 will(returnValue(place));
 
                 allowing(userRepository).findUserByName(with(username));
@@ -197,7 +197,7 @@ public class BuildingWithSurveyStatusChooserTest {
                 allowing(userRepository).findUserByName(with(username));
                 will(returnValue(user));
 
-                allowing(placeRepository).findPlaceByPlaceUUID(with(UUID.fromString(placeUUID)));
+                allowing(placeRepository).findPlaceByUUID(with(UUID.fromString(placeUUID)));
                 will(returnValue(place));
 
                 allowing(buildingRepository).findBuildingInPlace(with(place.getId()));
@@ -236,7 +236,7 @@ public class BuildingWithSurveyStatusChooserTest {
                 allowing(userRepository).findUserByName(with(username));
                 will(returnValue(user));
 
-                allowing(placeRepository).findPlaceByPlaceUUID(with(UUID.fromString(placeUUID)));
+                allowing(placeRepository).findPlaceByUUID(with(UUID.fromString(placeUUID)));
                 will(returnValue(null));
                 oneOf(buildingWithSurveyStatusListPresenter).alertPlaceNotFound();
             }

@@ -21,10 +21,13 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
+import th.or.nectec.tanrabad.domain.place.PlaceRepositoryException;
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.LocationEntity;
 import th.or.nectec.tanrabad.entity.Place;
@@ -43,9 +46,11 @@ public class InMemoryPlaceRepository implements PlaceRepository {
     private final Place anubarnNursery;
     private final Place thammasatHospital;
     private final Place golfView;
-    ArrayList<Place> places = new ArrayList<>();
 
-    public InMemoryPlaceRepository() {
+    //ArrayList<Place> places = new ArrayList<>();
+    Map<UUID, Place> placesMap = new HashMap<>();
+
+    private InMemoryPlaceRepository() {
         palazzettoVillage = new Place(generateUUID("1abc"), "หมู่บ้านพาลาซเซตโต้");
         palazzettoVillage.setType(Place.TYPE_VILLAGE_COMMUNITY);
         golfView = new Place(generateUUID("67UIP"), "ชุมชนกอล์ฟวิว");
@@ -74,15 +79,15 @@ public class InMemoryPlaceRepository implements PlaceRepository {
         anubarnNursery = new Place(generateUUID("45JKO"), "โรงเรียนอนุบาล");
         anubarnNursery.setType(Place.TYPE_SCHOOL);
 
-        places.add(palazzettoVillage);
-        places.add(golfView);
-        places.add(bangkokHospital);
-        places.add(thammasatHospital);
-        places.add(watpaphukon);
-        places.add(saintMaryChurch);
-        places.add(saintMarySchool);
-        places.add(donboscoSchool);
-        places.add(anubarnNursery);
+        placesMap.put(generateUUID("1abc"), palazzettoVillage);
+        placesMap.put(generateUUID("67UIP"), golfView);
+        placesMap.put(generateUUID("2bcd"), bangkokHospital);
+        placesMap.put(generateUUID("32UAW"), thammasatHospital);
+        placesMap.put(generateUUID("3def"), watpaphukon);
+        placesMap.put(generateUUID("3xss"), saintMaryChurch);
+        placesMap.put(generateUUID("042ST"), saintMarySchool);
+        placesMap.put(generateUUID("12AJK"), donboscoSchool);
+        placesMap.put(generateUUID("45JKO"), anubarnNursery);
     }
 
     @NonNull
@@ -111,12 +116,12 @@ public class InMemoryPlaceRepository implements PlaceRepository {
 
     @Override
     public List<Place> findPlaces() {
-        return places;
+        return new ArrayList<>(placesMap.values());
     }
 
     @Override
-    public Place findPlaceByPlaceUUID(UUID placeUUID) {
-        for (Place eachPlace : places) {
+    public Place findPlaceByUUID(UUID placeUUID) {
+        for (Place eachPlace : placesMap.values()) {
             if (eachPlace.getId().equals(placeUUID)) {
                 return eachPlace;
             }
@@ -127,7 +132,7 @@ public class InMemoryPlaceRepository implements PlaceRepository {
     @Override
     public List<Place> findPlacesWithPlaceFilter(int placeType) {
         ArrayList<Place> filterPlaces = new ArrayList<>();
-        for (Place eachPlace : places) {
+        for (Place eachPlace : placesMap.values()) {
             if (eachPlace.getType() == placeType)
                 filterPlaces.add(eachPlace);
         }
@@ -136,20 +141,26 @@ public class InMemoryPlaceRepository implements PlaceRepository {
 
     @Override
     public boolean save(Place place) {
-        places.add(place);
+        if (placesMap.containsKey(place.getId())) {
+            throw new PlaceRepositoryException();
+        }
+        placesMap.put(place.getId(), place);
         return true;
     }
 
     @Override
     public boolean update(Place place) {
-        places.set(places.indexOf(place), place);
+        if (!placesMap.containsKey(place.getId())) {
+            throw new PlaceRepositoryException();
+        }
+        placesMap.put(place.getId(), place);
         return true;
     }
 
     @Override
     public List<LocationEntity> findInBoundaryLocation(Location minimumLocation, Location maximumLocation) {
         ArrayList<LocationEntity> filterPlaces = new ArrayList<>();
-        for (LocationEntity eachPlace : places) {
+        for (LocationEntity eachPlace : placesMap.values()) {
             final Location location = eachPlace.getLocation();
             if (isLessThanOrEqualMaximumLocation(minimumLocation, location) && isMoreThanOrEqualMinimumLocation(maximumLocation, location))
                 filterPlaces.add(eachPlace);
@@ -189,7 +200,7 @@ public class InMemoryPlaceRepository implements PlaceRepository {
             return null;
 
         ArrayList<Place> filterPlaces = new ArrayList<>();
-        for (Place eachPlace : places) {
+        for (Place eachPlace : placesMap.values()) {
             if (eachPlace.getName().contains(placeName))
                 filterPlaces.add(eachPlace);
         }

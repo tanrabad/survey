@@ -22,16 +22,17 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.User;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 public class SurveyBuildingHistoryControllerTest {
 
@@ -73,7 +74,7 @@ public class SurveyBuildingHistoryControllerTest {
 
         context.checking(new Expectations() {
             {
-                allowing(placeRepository).findPlaceByPlaceUUID(with(UUID.fromString(placeUUID)));
+                allowing(placeRepository).findPlaceByUUID(with(UUID.fromString(placeUUID)));
                 will(returnValue(place));
 
                 allowing(userRepository).findUserByName(with(username));
@@ -93,7 +94,7 @@ public class SurveyBuildingHistoryControllerTest {
 
         context.checking(new Expectations() {
             {
-                allowing(placeRepository).findPlaceByPlaceUUID(with(UUID.fromString(placeUUID)));
+                allowing(placeRepository).findPlaceByUUID(with(UUID.fromString(placeUUID)));
                 will(returnValue(null));
                 oneOf(surveyBuildingPresenter).alertPlaceNotFound();
 

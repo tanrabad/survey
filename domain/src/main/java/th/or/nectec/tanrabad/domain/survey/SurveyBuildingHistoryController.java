@@ -67,7 +67,7 @@ public class SurveyBuildingHistoryController {
     }
 
     private Place checkPlaceExist(String placeUUID) {
-        Place place = placeRepository.findPlaceByPlaceUUID(UUID.fromString(placeUUID));
+        Place place = placeRepository.findPlaceByUUID(UUID.fromString(placeUUID));
         if (place == null) {
 
             surveyBuildingPresenter.alertPlaceNotFound();

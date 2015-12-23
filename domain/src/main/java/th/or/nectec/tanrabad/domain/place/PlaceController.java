@@ -17,9 +17,9 @@
 
 package th.or.nectec.tanrabad.domain.place;
 
-import th.or.nectec.tanrabad.entity.Place;
-
 import java.util.UUID;
+
+import th.or.nectec.tanrabad.entity.Place;
 
 public class PlaceController {
 
@@ -32,7 +32,7 @@ public class PlaceController {
     }
 
     public void showPlace(UUID placeUUID) {
-        Place placeByUUID = placeRepository.findPlaceByPlaceUUID(placeUUID);
+        Place placeByUUID = placeRepository.findPlaceByUUID(placeUUID);
         if (placeByUUID == null) {
             placePresenter.alertPlaceNotFound();
         } else {

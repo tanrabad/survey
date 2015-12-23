@@ -28,7 +28,7 @@ public interface PlaceRepository {
 
     List<Place> findPlaces();
 
-    Place findPlaceByPlaceUUID(UUID placeUUID);
+    Place findPlaceByUUID(UUID placeUUID);
 
     List<Place> findPlacesWithPlaceFilter(int typeVillageCommunity);
 

@@ -22,9 +22,10 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import th.or.nectec.tanrabad.entity.Place;
 
 import java.util.UUID;
+
+import th.or.nectec.tanrabad.entity.Place;
 
 public class PlaceControllerTest {
     public final String placeName = "New York";
@@ -50,7 +51,7 @@ public class PlaceControllerTest {
     public void testFoundPlace() throws Exception {
         context.checking(new Expectations() {
             {
-                allowing(placeRepository).findPlaceByPlaceUUID(placeUUID);
+                allowing(placeRepository).findPlaceByUUID(placeUUID);
                 will(returnValue(place));
                 oneOf(placePresenter).displayPlace(place);
             }
@@ -63,7 +64,7 @@ public class PlaceControllerTest {
     public void testNotFoundPlace() throws Exception {
         context.checking(new Expectations() {
             {
-            allowing(placeRepository).findPlaceByPlaceUUID(placeUUID);
+                allowing(placeRepository).findPlaceByUUID(placeUUID);
                 will(returnValue(null));
                 oneOf(placePresenter).alertPlaceNotFound();
             }

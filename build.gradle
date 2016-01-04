@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -45,6 +45,7 @@ ext {
     jodaTimeVersion = "2.9.1"
     calligraphyVersion = "2.1.0"
     thaiWidgetVersion = "0.3.4"
+    gsonVersion = "2.4"
 
     junitVersion = "4.12"
     jMockVersion = "2.8.1"

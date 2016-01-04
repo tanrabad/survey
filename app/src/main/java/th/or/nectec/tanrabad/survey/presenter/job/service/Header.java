@@ -15,17 +15,8 @@
  * limitations under the License.
  */
 
-apply plugin: 'java'
+package th.or.nectec.tanrabad.survey.presenter.job.service;
 
-//noinspection GroovyUnusedAssignment
-sourceCompatibility = rootProject.ext.javaSourceCompatibility
-//noinspection GroovyUnusedAssignment
-targetCompatibility = rootProject.ext.javaTargetCompatibility
-
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'joda-time:joda-time:' + rootProject.ext.jodaTimeVersion
-    compile 'com.google.code.gson:gson:' + rootProject.ext.gsonVersion
-
-    testCompile 'junit:junit:' + rootProject.ext.junitVersion
+public class Header {
+    public static final String IF_MODIFIED_SINCE = "if-Modified-Since";
 }

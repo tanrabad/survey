@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,6 +17,8 @@
 
 package th.or.nectec.tanrabad.entity;
 
+import com.google.gson.Gson;
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -111,5 +113,20 @@ public class BuildingTest {
         sameChurch.setPlace(saintMarry);
 
         assertEquals(mainChurch, sameChurch);
+    }
+
+    @Test
+    public void testGson() throws Exception {
+        Building building = new Gson().fromJson(Resource.readFile("building.json"), Building.class);
+        DateTime updateTime = DateTime.parse("2015-12-24T05:05:19.626Z");
+
+        assertEquals(uuid("b7a9d934-04fc-a22e-0539-6c17504f732e"), building.getId());
+        assertEquals(uuid("b7a9d934-000c-b33a-0539-6c17504b345e"), building.getPlaceId());
+        assertEquals("อาคาร 1", building.getName());
+        assertEquals(updateTime, building.getUpdateTimestamp());
+    }
+
+    private UUID uuid(String uuid) {
+        return UUID.fromString(uuid);
     }
 }

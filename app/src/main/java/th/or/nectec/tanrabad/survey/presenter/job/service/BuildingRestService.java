@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,41 +17,81 @@
 
 package th.or.nectec.tanrabad.survey.presenter.job.service;
 
-import android.support.annotation.NonNull;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.survey.repository.InMemoryPlaceRepository;
 
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class BuildingRestService implements RestService<Building> {
 
-    private static List<Building> buildings = new ArrayList<>();
+    public static final String BASE_API = "http://tanrabad.igridproject.info/v1";
+    private final OkHttpClient client = new OkHttpClient();
 
-    static {
-        InMemoryPlaceRepository inMemoryPlaceRepository = InMemoryPlaceRepository.getInstance();
+    LastUpdate lastUpdate;
+    String apiBaseUrl;
 
-        Building building1 = new Building(UUID.randomUUID(), "213/11");
-        building1.setPlace(inMemoryPlaceRepository.getPalazzettoVillage());
-        buildings.add(building1);
-
-        Building building2 = new Building(UUID.randomUUID(), "213/12");
-        building2.setPlace(inMemoryPlaceRepository.getPalazzettoVillage());
-        buildings.add(building2);
-
-        Building building3 = new Building(generateUUID("1xyz"), "214/43");
-        building3.setPlace(inMemoryPlaceRepository.getBangkokHospital());
-        buildings.add(building3);
+    public BuildingRestService(){
+        this(BASE_API, new LastUpdatePreference());
     }
 
-    @NonNull
-    private static UUID generateUUID(String input) {
-        return UUID.nameUUIDFromBytes(input.getBytes());
+    public BuildingRestService(String apiBaseUrl, LastUpdate lastUpdate) {
+        this.apiBaseUrl = apiBaseUrl;
+        this.lastUpdate = lastUpdate;
     }
 
     @Override
     public List<Building> getUpdate() {
-        return buildings;
+        try {
+            Request request = makeRequest();
+            Response response = client.newCall(request).execute();
+
+            if (isNotModified(response))
+                return new ArrayList<>();
+            if (isNotSuccess(response))
+                throw new RestServiceException();
+
+            return toJson(response.body().string());
+
+        } catch (IOException io) {
+            throw new RestServiceException();
+        }
     }
+
+    private Request makeRequest() {
+        return new Request.Builder()
+                .get()
+                .url(buildingUrl())
+                .header(Header.IF_MODIFIED_SINCE, lastUpdate.get().toDateTimeISO().toString())
+                .build();
+    }
+
+    private boolean isNotModified(Response response) {
+        return response.code() == Status.NOT_MODIFIED;
+    }
+
+    private boolean isNotSuccess(Response response) {
+        return !response.isSuccessful();
+    }
+
+    private List<Building> toJson(String responseBody) {
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<Building>>() {}.getType();
+        return gson.fromJson(responseBody, listType);
+    }
+
+    public String buildingUrl() {
+        return apiBaseUrl + getPath();
+    }
+
+    private String getPath() {
+        return "/building";
+    }
+
 }

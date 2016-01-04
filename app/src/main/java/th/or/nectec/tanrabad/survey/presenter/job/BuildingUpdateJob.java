@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,8 +19,8 @@ package th.or.nectec.tanrabad.survey.presenter.job;
 
 import th.or.nectec.tanrabad.domain.building.BuildingRepository;
 import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.survey.presenter.job.service.BuildingRestService;
 import th.or.nectec.tanrabad.survey.presenter.job.service.RestService;
+import th.or.nectec.tanrabad.survey.presenter.job.service.StubBuildingRestService;
 
 import java.util.List;
 
@@ -41,7 +41,7 @@ public class BuildingUpdateJob implements Job {
 
     @Override
     public void execute() throws JobException {
-        RestService<Building> service = new BuildingRestService();
+        RestService<Building> service = new StubBuildingRestService();
         List<Building> buildingList = service.getUpdate();
         Building[] buildingArray = buildingList.toArray(new Building[buildingList.size()]);
         buildingRepository.updateOrInsert(buildingArray);

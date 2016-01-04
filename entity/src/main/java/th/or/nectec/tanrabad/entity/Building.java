@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,12 +17,17 @@
 
 package th.or.nectec.tanrabad.entity;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.UUID;
 
-public class Building implements LocationEntity {
+public class Building extends Entity implements LocationEntity {
 
+    @SerializedName("building_id")
     private UUID id;
     private String name;
+    @SerializedName("place_id")
+    private UUID placeId;
     private Place place;
     private Location location;
 
@@ -34,6 +39,14 @@ public class Building implements LocationEntity {
     public static Building withName(String name) {
         UUID uuid = UUID.randomUUID();
         return new Building(uuid, name);
+    }
+
+    public UUID getPlaceId() {
+        return placeId;
+    }
+
+    public void setPlaceId(UUID placeId) {
+        this.placeId = placeId;
     }
 
     public Place getPlace() {

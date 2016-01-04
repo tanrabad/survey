@@ -15,17 +15,20 @@
  * limitations under the License.
  */
 
-apply plugin: 'java'
+package th.or.nectec.tanrabad.survey.presenter.job.service;
 
-//noinspection GroovyUnusedAssignment
-sourceCompatibility = rootProject.ext.javaSourceCompatibility
-//noinspection GroovyUnusedAssignment
-targetCompatibility = rootProject.ext.javaTargetCompatibility
+import org.joda.time.DateTime;
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'joda-time:joda-time:' + rootProject.ext.jodaTimeVersion
-    compile 'com.google.code.gson:gson:' + rootProject.ext.gsonVersion
 
-    testCompile 'junit:junit:' + rootProject.ext.junitVersion
+public class LastUpdatePreference implements LastUpdate {
+    @Override
+    public void save(DateTime dateTime) {
+
+    }
+
+    @Override
+    public DateTime get() {
+        return DateTime.now().minusYears(1);
+    }
+
 }

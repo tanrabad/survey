@@ -15,17 +15,22 @@
  * limitations under the License.
  */
 
-apply plugin: 'java'
+package th.or.nectec.tanrabad.entity;
 
-//noinspection GroovyUnusedAssignment
-sourceCompatibility = rootProject.ext.javaSourceCompatibility
-//noinspection GroovyUnusedAssignment
-targetCompatibility = rootProject.ext.javaTargetCompatibility
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'joda-time:joda-time:' + rootProject.ext.jodaTimeVersion
-    compile 'com.google.code.gson:gson:' + rootProject.ext.gsonVersion
+import com.google.gson.annotations.SerializedName;
+import org.joda.time.DateTime;
 
-    testCompile 'junit:junit:' + rootProject.ext.junitVersion
+public class Entity {
+
+    @SerializedName("update_timestamp")
+    private String updateTimestamp;
+
+    public DateTime getUpdateTimestamp() {
+        return DateTime.parse(updateTimestamp);
+    }
+
+    public void setUpdateTimestamp(String updateTimestamp) {
+        this.updateTimestamp = updateTimestamp;
+    }
 }

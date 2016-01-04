@@ -17,8 +17,6 @@
 
 package th.or.nectec.tanrabad.survey.validator;
 
-import android.text.TextUtils;
-
 import java.util.List;
 
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
@@ -32,7 +30,7 @@ public class UpdatePlaceValidator implements PlaceValidator {
     @Override
     public boolean validate(Place place) {
 
-        if (TextUtils.isEmpty(place.getName())) {
+        if (place.getName() == null || place.getName().isEmpty()) {
             throw new EmptyNameException(R.string.please_define_place_name);
         }
 
@@ -48,12 +46,28 @@ public class UpdatePlaceValidator implements PlaceValidator {
         List<Place> places = placeRepository.findPlaces();
         if (places != null) {
             for (Place eachPlace : places) {
-                if (!eachPlace.getId().equals(place.getId()) && eachPlace.getName().equals(place.getName()) && eachPlace.getAddress().equals(place.getAddress())) {
+                if (!eachPlace.getId().equals(place.getId()) && isSamePlaceName(place, eachPlace)
+                        && isSamePlaceType(place, eachPlace) && isSamePlaceAddress(place, eachPlace)) {
                     throw new ValidatorException(R.string.cant_save_same_place_name);
                 }
             }
         }
         return true;
+    }
+
+    private boolean isSamePlaceType(Place place, Place comparePlace) {
+        if (place.getType() == Place.TYPE_WORSHIP) {
+            return comparePlace.getSubType() == place.getSubType();
+        }
+        return comparePlace.getType() == place.getType();
+    }
+
+    private boolean isSamePlaceAddress(Place place, Place comparePlace) {
+        return comparePlace.getAddress().equals(place.getAddress());
+    }
+
+    private boolean isSamePlaceName(Place place, Place comparePlace) {
+        return comparePlace.getName().equals(place.getName());
     }
 
     @Override

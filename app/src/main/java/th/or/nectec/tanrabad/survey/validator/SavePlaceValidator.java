@@ -47,7 +47,7 @@ public class SavePlaceValidator implements PlaceValidator {
         List<Place> places = placeRepository.findPlaces();
         if (places != null) {
             for (Place eachPlace : places) {
-                if (isSamePlaceName(place, eachPlace) && eachPlace.getType() == place.getType() && isSamePlaceAddress(place, eachPlace)) {
+                if (isSamePlaceName(place, eachPlace) && isSamePlaceType(place, eachPlace) && isSamePlaceAddress(place, eachPlace)) {
                     throw new ValidatorException(R.string.cant_save_same_place_name);
                 }
             }
@@ -58,6 +58,13 @@ public class SavePlaceValidator implements PlaceValidator {
 
     private boolean isSamePlaceAddress(Place place, Place comparePlace) {
         return comparePlace.getAddress().equals(place.getAddress());
+    }
+
+    private boolean isSamePlaceType(Place place, Place comparePlace) {
+        if (place.getType() == Place.TYPE_WORSHIP) {
+            return comparePlace.getSubType() == place.getSubType();
+        }
+        return comparePlace.getType() == place.getType();
     }
 
     private boolean isSamePlaceName(Place place, Place comparePlace) {

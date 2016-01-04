@@ -18,6 +18,8 @@
 package th.or.nectec.tanrabad.survey.presenter;
 
 import android.content.Intent;
+import android.support.test.espresso.ViewAction;
+import android.support.test.espresso.action.ViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -48,7 +50,8 @@ public class PlaceSearchActivityTest extends TanrabadEspressoTestBase {
     @Test
     public void searchPlaceNotExistInDatabaseShouldFoundTextNoResultsFound() {
         onView(withHint(R.string.search_place_by_name_hint))
-                .perform(replaceText("บางป่า"));
+                .perform(replaceText("บางป่า"))
+                .perform(ViewActions.pressImeActionButton());
 
         textDisplayed(R.string.place_name_not_found);
     }
@@ -56,7 +59,8 @@ public class PlaceSearchActivityTest extends TanrabadEspressoTestBase {
     @Test
     public void searchPlaceExistInDatabaseShouldFoundThisPlace() {
         onView(withHint(R.string.search_place_by_name_hint))
-                .perform(replaceText("โต้"));
+                .perform(replaceText("โต้"))
+                .perform(ViewActions.pressImeActionButton());
 
         textDisplayed("หมู่บ้านพาลาซเซตโต้");
     }

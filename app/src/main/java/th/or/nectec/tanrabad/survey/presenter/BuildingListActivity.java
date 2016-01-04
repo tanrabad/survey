@@ -63,6 +63,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     private Place place;
     private EmptyLayoutView emptyLayoutView;
     private SurveyBuildingChooser surveyBuildingChooser = new SurveyBuildingChooser(new StubUserRepository(), InMemoryPlaceRepository.getInstance(), InMemoryBuildingRepository.getInstance(), InMemorySurveyRepository.getInstance(), this);
+    private SearchView buildingSearchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,7 +127,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     }
 
     private void setupSearchView() {
-        SearchView buildingSearchView = (SearchView) findViewById(R.id.building_search);
+        buildingSearchView = (SearchView) findViewById(R.id.building_search);
         buildingSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String searchString) {
@@ -176,12 +177,16 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         emptyLayoutView.setVisibility(View.VISIBLE);
         TextView buildingCountView = (TextView) findViewById(R.id.building_count);
         buildingCountView.setVisibility(View.GONE);
+        editBuildingButton.setVisibility(View.GONE);
+        buildingSearchView.setVisibility(View.GONE);
         buildingAdapter.clearData();
     }
 
     @Override
     public void displayAllSurveyBuildingList(List<BuildingWithSurveyStatus> buildingsWithSurveyStatuses) {
         emptyLayoutView.setVisibility(View.GONE);
+        editBuildingButton.setVisibility(View.VISIBLE);
+        buildingSearchView.setVisibility(View.VISIBLE);
         buildingAdapter.updateData(buildingsWithSurveyStatuses);
         buildingList.setAdapter(buildingAdapter);
         TextView buildingCountView = (TextView) findViewById(R.id.building_count);

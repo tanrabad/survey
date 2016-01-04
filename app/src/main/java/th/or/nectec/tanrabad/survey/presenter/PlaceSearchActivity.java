@@ -36,7 +36,7 @@ public class PlaceSearchActivity extends TanrabadActivity implements SearchView.
     private ListView searchHistoryListView;
     private SimpleCursorAdapter searchHistoryAdapter;
     private RecyclerView placeListView;
-    private TextView emptyText;
+    private TextView emptyText, clearSearchHistory;
 
     public static void open(Activity activity) {
         Intent intent = new Intent(activity, PlaceSearchActivity.class);
@@ -48,19 +48,23 @@ public class PlaceSearchActivity extends TanrabadActivity implements SearchView.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_search);
         emptyText = (TextView) findViewById(R.id.place_name_notfound);
+        setupClearSearchHistoryButton();
         setupHomeButton();
         setupSearchHistoryList();
         querySuggestion(null);
         setupPlaceList();
     }
 
-    private void setupSearchHistoryList() {
-        searchHistoryAdapter = new SimpleCursorAdapter(this,
-                R.layout.list_item_search_history, null,
-                new String[]{SearchManager.SUGGEST_COLUMN_TEXT_1}, new int[]{R.id.text_item},
-                SimpleCursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
-        searchHistoryListView = (ListView) findViewById(R.id.place_search_history_list);
-        searchHistoryListView.setAdapter(searchHistoryAdapter);
+    private void setupClearSearchHistoryButton() {
+        clearSearchHistory = (TextView) findViewById(R.id.clear_search_history);
+        clearSearchHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                suggestions.clearHistory();
+                querySuggestion(null);
+                clearSearchHistory.setVisibility(View.GONE);
+            }
+        });
     }
 
     private void querySuggestion(String queryString) {
@@ -73,6 +77,20 @@ public class PlaceSearchActivity extends TanrabadActivity implements SearchView.
                 searchView.setQuery(selectedItem.getString(selectedItem.getColumnIndex(SearchManager.SUGGEST_COLUMN_TEXT_1)), true);
             }
         });
+        if (recentQuery.getCount() > 0) {
+            clearSearchHistory.setVisibility(View.VISIBLE);
+        } else {
+            clearSearchHistory.setVisibility(View.GONE);
+        }
+    }
+
+    private void setupSearchHistoryList() {
+        searchHistoryAdapter = new SimpleCursorAdapter(this,
+                R.layout.list_item_search_history, null,
+                new String[]{SearchManager.SUGGEST_COLUMN_TEXT_1}, new int[]{R.id.text_item},
+                SimpleCursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+        searchHistoryListView = (ListView) findViewById(R.id.place_search_history_list);
+        searchHistoryListView.setAdapter(searchHistoryAdapter);
     }
 
     private void setupPlaceList() {
@@ -126,15 +144,17 @@ public class PlaceSearchActivity extends TanrabadActivity implements SearchView.
         placeChooser.searchByName(query);
         suggestions.saveRecentQuery(query, null);
         searchHistoryListView.setVisibility(View.GONE);
+        clearSearchHistory.setVisibility(View.GONE);
         return true;
     }
 
     @Override
     public boolean onQueryTextChange(String query) {
         searchHistoryListView.setVisibility(View.VISIBLE);
+        clearSearchHistory.setVisibility(View.VISIBLE);
         placeListView.setVisibility(View.GONE);
-        querySuggestion(query);
         emptyText.setVisibility(View.GONE);
+        querySuggestion(query);
         return true;
     }
 
@@ -143,6 +163,7 @@ public class PlaceSearchActivity extends TanrabadActivity implements SearchView.
         placeAdapter.updateData(places);
         placeListView.setVisibility(View.VISIBLE);
         emptyText.setVisibility(View.GONE);
+        clearSearchHistory.setVisibility(View.GONE);
     }
 
     @Override

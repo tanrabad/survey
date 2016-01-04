@@ -17,7 +17,6 @@
 
 package th.or.nectec.tanrabad.survey.validator;
 
-import android.text.TextUtils;
 
 import java.util.List;
 
@@ -26,34 +25,43 @@ import th.or.nectec.tanrabad.domain.place.PlaceValidator;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
 
+
 public class SavePlaceValidator implements PlaceValidator {
     private PlaceRepository placeRepository;
 
     @Override
     public boolean validate(Place place) {
 
-        if (TextUtils.isEmpty(place.getName())) {
-            throw new ValidatorException(R.string.please_define_place_name);
+        if (place.getName() == null || place.getName().isEmpty()) {
+            throw new EmptyNameException(R.string.please_define_place_name);
         }
 
         if (place.getAddress() == null) {
-            throw new ValidatorException(R.string.please_define_place_address);
+            throw new NullAddressException(R.string.please_define_place_address);
         }
 
         if (place.getLocation() == null) {
-            throw new ValidatorException(R.string.please_define_place_location);
+            throw new NullLocationException(R.string.please_define_place_location);
         }
 
         List<Place> places = placeRepository.findPlaces();
         if (places != null) {
             for (Place eachPlace : places) {
-                if (eachPlace.getName().equals(place.getName()) && eachPlace.getType() == place.getType()) {
+                if (isSamePlaceName(place, eachPlace) && eachPlace.getType() == place.getType() && isSamePlaceAddress(place, eachPlace)) {
                     throw new ValidatorException(R.string.cant_save_same_place_name);
                 }
             }
         }
 
         return true;
+    }
+
+    private boolean isSamePlaceAddress(Place place, Place comparePlace) {
+        return comparePlace.getAddress().equals(place.getAddress());
+    }
+
+    private boolean isSamePlaceName(Place place, Place comparePlace) {
+        return comparePlace.getName().equals(place.getName());
     }
 
     @Override

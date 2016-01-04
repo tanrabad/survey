@@ -33,21 +33,22 @@ public class UpdatePlaceValidator implements PlaceValidator {
     public boolean validate(Place place) {
 
         if (TextUtils.isEmpty(place.getName())) {
-            throw new ValidatorException(R.string.please_define_place_name);
+            throw new EmptyNameException(R.string.please_define_place_name);
         }
 
         if (place.getAddress() == null) {
-            throw new ValidatorException(R.string.please_define_place_address);
+            throw new NullAddressException(R.string.please_define_place_address);
         }
 
         if (place.getLocation() == null) {
-            throw new ValidatorException(R.string.please_define_place_location);
+            throw new NullLocationException(R.string.please_define_place_location);
+
         }
 
         List<Place> places = placeRepository.findPlaces();
         if (places != null) {
             for (Place eachPlace : places) {
-                if (eachPlace.getName().equals(place.getName()) && !eachPlace.getId().equals(place.getId())) {
+                if (!eachPlace.getId().equals(place.getId()) && eachPlace.getName().equals(place.getName()) && eachPlace.getAddress().equals(place.getAddress())) {
                     throw new ValidatorException(R.string.cant_save_same_place_name);
                 }
             }

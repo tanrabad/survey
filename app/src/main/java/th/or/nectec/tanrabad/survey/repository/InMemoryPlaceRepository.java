@@ -60,8 +60,8 @@ public class InMemoryPlaceRepository implements PlaceRepository {
         thammasatHospital = new Place(generateUUID("32UAW"), "ธรรมศาสตร์");
         Address address = new Address();
         address.setAddressCode("130202");
-        address.setSubdistrict("คลองหลวง");
-        address.setDistrict("คลองสอง");
+        address.setSubdistrict("คลองสอง");
+        address.setDistrict("คลองหลวง");
         address.setProvince("ปทุมธานี");
         thammasatHospital.setAddress(address);
         thammasatHospital.setType(Place.TYPE_HOSPITAL);

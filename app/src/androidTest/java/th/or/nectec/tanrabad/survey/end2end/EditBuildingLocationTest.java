@@ -66,7 +66,7 @@ public class EditBuildingLocationTest extends TanrabadEspressoTestBase {
     }
 
     @Test
-    public void touchEditLocationThenSaveShouldNotFoundPromptCanNotSaveLocation() throws Exception {
+    public void touchEditLocationThenSaveShouldNotFoundPromptCanNotSaveLocation() {
         onView(withId(R.id.add_marker))
                 .perform(click());
         onView(withText(R.string.save_location))

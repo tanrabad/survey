@@ -40,7 +40,7 @@
     <color name="header_place_in_db">#343467</color>
     <color name="header_building">#5284a3</color>
     <color name="header_survey">#028490</color>
-    <color name="header_survey_building_history">#ababab</color>
+    <color name="header_survey_building_history">#989898</color>
 
     <color name="water_blue">#1B7FDD</color>
 </resources>

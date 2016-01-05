@@ -48,7 +48,8 @@
             android:layout_below="@id/place_name"
             android:textColor="@color/white"
             android:textIsSelectable="false"
-            tools:text="สำรวจ 100 อาคาร  พบลูกน้ำ 20 อาคาร"/>
+            tools:text="สำรวจ 100 อาคาร  พบลูกน้ำ 20 อาคาร"
+            android:visibility="gone"/>
     </RelativeLayout>
 
 

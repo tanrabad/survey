@@ -19,15 +19,18 @@
 buildscript {
     repositories {
         maven { url 'https://maven.fabric.io/public' }
+        jcenter()
     }
 
     dependencies {
         classpath 'io.fabric.tools:gradle:1.20.1'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
     }
 }
 
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
+apply plugin: 'com.neenbedankt.android-apt'
 apply from: '../gradle/versionGenerator.gradle'
 
 repositories {
@@ -102,6 +105,8 @@ android {
 }
 
 dependencies {
+    apt 'com.bluelinelabs:logansquare-compiler:' + rootProject.ext.loganSquareVersion
+
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':domain')
     compile project(':entity')
@@ -113,12 +118,14 @@ dependencies {
     compile('com.google.maps.android:android-maps-utils:' + rootProject.ext.androidMapUtilsVersion) {
         exclude(group: 'com.google.android.gms')
     }
+
     compile 'com.bartoszlipinski.recyclerviewheader:library:1.2.0'
+    compile 'com.bluelinelabs:logansquare:' + rootProject.ext.loganSquareVersion
     compile('com.crashlytics.sdk.android:answers:1.3.3@aar') { transitive = true; }
     compile('com.crashlytics.sdk.android:crashlytics:2.5.2@aar') { transitive = true; }
     compile 'com.squareup.okhttp:okhttp:' + rootProject.ext.okHttpVersion
     compile 'joda-time:joda-time:' + rootProject.ext.jodaTimeVersion
-    compile 'th.or.nectec.android:thai-widget:' + rootProject.ext.thaiWidgetVersion;
+    compile 'th.or.nectec.android:thai-widget:' + rootProject.ext.thaiWidgetVersion
     compile 'uk.co.chrisjenx:calligraphy:' + rootProject.ext.calligraphyVersion
 
     testCompile 'junit:junit:' + rootProject.ext.junitVersion
@@ -132,4 +139,5 @@ dependencies {
     androidTestCompile 'com.android.support.test.espresso:espresso-intents:' + rootProject.ext.espressoVersion
     androidTestCompile 'com.android.support.test:runner:' + rootProject.ext.runnerVersion
     androidTestCompile 'com.android.support.test:rules:' + rootProject.ext.rulesVersion
+    androidTestCompile 'com.google.code.gson:gson:' + rootProject.ext.gsonVersion
 }

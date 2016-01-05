@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -177,7 +177,7 @@ public class InMemoryBuildingRepository implements BuildingRepository {
     }
 
     @Override
-    public void updateOrInsert(Building[] buildings) {
+    public void updateOrInsert(List<Building> buildings) {
         for (Building building : buildings) {
             try {
                 update(building);

@@ -22,8 +22,6 @@ import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.survey.presenter.job.service.RestService;
 import th.or.nectec.tanrabad.survey.presenter.job.service.StubBuildingRestService;
 
-import java.util.List;
-
 public class BuildingUpdateJob implements Job {
 
     public static final int ID = 293711;
@@ -42,8 +40,6 @@ public class BuildingUpdateJob implements Job {
     @Override
     public void execute() throws JobException {
         RestService<Building> service = new StubBuildingRestService();
-        List<Building> buildingList = service.getUpdate();
-        Building[] buildingArray = buildingList.toArray(new Building[buildingList.size()]);
-        buildingRepository.updateOrInsert(buildingArray);
+        buildingRepository.updateOrInsert(service.getUpdate());
     }
 }

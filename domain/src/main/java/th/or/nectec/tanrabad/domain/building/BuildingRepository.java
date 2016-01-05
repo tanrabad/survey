@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -33,7 +33,7 @@ public interface BuildingRepository {
 
     boolean update(Building building);
 
-    void updateOrInsert(Building[] buildings);
+    void updateOrInsert(List<Building> buildings);
 
     List<Building> searchBuildingInPlaceByName(UUID placeUUID, String buildingName);
 }

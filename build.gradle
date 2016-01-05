@@ -51,6 +51,7 @@ ext {
 
     junitVersion = "4.12"
     jMockVersion = "2.8.1"
+    jacksonVersion = "2.6.0"
     mockitoVersion = "1.10.19"
     runnerVersion = "0.4.1"
     rulesVersion = "0.4.1"

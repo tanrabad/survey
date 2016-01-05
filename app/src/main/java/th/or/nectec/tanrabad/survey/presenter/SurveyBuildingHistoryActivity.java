@@ -27,6 +27,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
@@ -56,7 +57,7 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
     public static final String USER_NAME_ARG = "username_arg";
 
     private TextView placeName;
-    private Button surveyMoreBuildingButton;
+    private ImageButton surveyMoreBuildingButton;
 
     private SurveyBuildingHistoryAdapter surveyBuildingHistoryAdapter;
     private Place place;
@@ -83,7 +84,7 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
 
     private void setupView() {
         placeName = (TextView) findViewById(R.id.place_name);
-        surveyMoreBuildingButton = (Button) findViewById(R.id.survey_more_building_button);
+        surveyMoreBuildingButton = (ImageButton) findViewById(R.id.survey_more_building_button);
     }
 
     private void showPlaceInfo() {

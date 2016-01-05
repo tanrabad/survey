@@ -101,7 +101,7 @@
 
     </android.support.design.widget.CoordinatorLayout>
 
-    <Button
+    <ImageButton
         android:id="@+id/survey_more_building_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -110,5 +110,8 @@
         android:layout_marginEnd="@dimen/screen_horizontal_margin"
         android:layout_marginRight="@dimen/screen_horizontal_margin"
         android:text="@string/survey_more_building_button_text"
-        android:textSize="@dimen/text_title"/>
+        android:src="@drawable/bg_survey_more_building"
+        android:background="@color/transparent"
+        android:contentDescription="@null"
+    />
 </merge>

@@ -69,7 +69,7 @@ public class BuildingRestServiceTest extends WireMockTestBase {
         stubFor(get(urlEqualTo(BUILDING))
                 .willReturn(aResponse()
                         .withStatus(304)
-                        .withBody("ssssssASDFASF")));
+                        .withBody("")));
 
         BuildingRestService restService = new BuildingRestService(
                 localHost(),

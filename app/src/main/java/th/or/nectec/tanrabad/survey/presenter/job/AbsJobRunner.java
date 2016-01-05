@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,7 +30,7 @@ public abstract class AbsJobRunner implements JobRunner {
     int jobErrorCount = 0;
 
     @Override
-    public AbsJobRunner addJob(Job job) {
+    public JobRunner addJob(Job job) {
         jobList.add(job);
         return this;
     }
@@ -70,8 +70,7 @@ public abstract class AbsJobRunner implements JobRunner {
 
     abstract protected void onRunFinish();
 
-
-    private enum UpdateMode {
+    private enum JobStatus {
         START, DONE, ERROR
     }
 
@@ -80,13 +79,13 @@ public abstract class AbsJobRunner implements JobRunner {
         @Override
         protected Void doInBackground(Job... jobs) {
             for (Job job : jobs) {
-                publishProgress(UpdateMode.START, job);
+                publishProgress(JobStatus.START, job);
                 try {
                     job.execute();
                 } catch (JobException jEx) {
-                    publishProgress(UpdateMode.ERROR, job, jEx);
+                    publishProgress(JobStatus.ERROR, job, jEx);
                 }
-                publishProgress(UpdateMode.DONE, job);
+                publishProgress(JobStatus.DONE, job);
             }
             return null;
         }
@@ -100,9 +99,9 @@ public abstract class AbsJobRunner implements JobRunner {
         @Override
         protected void onProgressUpdate(Object... jobs) {
             super.onProgressUpdate(jobs);
-            UpdateMode mode = (UpdateMode) jobs[0];
+            JobStatus status = (JobStatus) jobs[0];
             Job job = (Job) jobs[1];
-            switch (mode) {
+            switch (status) {
                 case START:
                     onJobStart(job);
                     break;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -41,12 +41,10 @@ public class OkHttpTest extends WireMockTestBase {
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withBody("[]")));
-
         Request build = new Request.Builder()
                 .get()
                 .url(HTTP_LOCALHOST_8089 + "/success")
                 .build();
-
         Response res = client.newCall(build).execute();
 
         assertEquals(200, res.code());
@@ -63,7 +61,6 @@ public class OkHttpTest extends WireMockTestBase {
                         .withHeader(LAST_UPDATE, "Sat, 29 Oct 1994 19:43:31 GMT")
                         .withHeader(CONTENT_LENGTH, "0")
                         .withBody("")));
-
         Request build = new Request.Builder()
                 .get()
                 .url(HTTP_LOCALHOST_8089 + "/unmodified")
@@ -85,12 +82,10 @@ public class OkHttpTest extends WireMockTestBase {
                         .withStatus(400)
                         .withHeader(CONTENT_LENGTH, "0")
                         .withBody("")));
-
         Request build = new Request.Builder()
                 .get()
                 .url(HTTP_LOCALHOST_8089 + "/error")
                 .build();
-
         Response res = client.newCall(build).execute();
 
         assertEquals(400, res.code());

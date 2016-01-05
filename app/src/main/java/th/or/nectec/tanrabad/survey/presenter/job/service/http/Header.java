@@ -15,10 +15,8 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey.presenter.job.service;
+package th.or.nectec.tanrabad.survey.presenter.job.service.http;
 
-public class Status {
-    public static final int SUCCESS = 200;
-    public static final int NOT_MODIFIED = 304;
-    public static final int NOT_FOUND = 404;
+public class Header {
+    public static final String IF_MODIFIED_SINCE = "if-Modified-Since";
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey.presenter.job.service;
+package th.or.nectec.tanrabad.survey.presenter.job.service.http;
 
-public class Tambon {
-
-    String code;
-    String name;
+public class Status {
+    public static final int SUCCESS = 200;
+    public static final int NOT_MODIFIED = 304;
+    public static final int NOT_FOUND = 404;
 }

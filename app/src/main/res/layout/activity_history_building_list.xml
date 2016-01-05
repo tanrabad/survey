@@ -28,9 +28,10 @@
 
         <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/header_height"
+                android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
-                android:contentDescription="@null"/>
+                android:contentDescription="@null"
+                android:src="@drawable/header_history_survey"/>
 
         <TextView
                 android:id="@+id/place_name"

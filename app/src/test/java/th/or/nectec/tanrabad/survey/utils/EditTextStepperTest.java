@@ -24,20 +24,20 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RobolectricGradleTestRunner;
+import th.or.nectec.tanrabad.survey.RobolectricTestBase;
 
 import static org.junit.Assert.assertEquals;
 
-@RunWith(RobolectricTestRunner.class)
-public class EditTextStepperTest {
+@RunWith(RobolectricGradleTestRunner.class)
+public class EditTextStepperTest extends RobolectricTestBase {
 
-    private Activity activity = Robolectric.buildActivity(Activity.class).create().get();
     private EditText editText;
     private EditTextStepper editTextStepper;
 
     @Before
     public void setUp() throws Exception {
-        editText = new EditText(activity);
+        editText = new EditText(getContext());
         editText.setInputType(InputType.TYPE_CLASS_NUMBER);
 
         editTextStepper = new EditTextStepper(editText);
@@ -78,7 +78,7 @@ public class EditTextStepperTest {
 
     @Test(expected = EditTextStepper.NotSupportEditTextInputTypeException.class)
     public void testSupportOnlyNumberClassInputType() {
-        new EditTextStepper(new EditText(activity));
+        new EditTextStepper(new EditText(getContext()));
     }
 
     @Test(expected = NullPointerException.class)

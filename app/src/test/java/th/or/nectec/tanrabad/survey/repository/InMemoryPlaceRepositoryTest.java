@@ -74,8 +74,6 @@ public class InMemoryPlaceRepositoryTest {
     @Test
     public void testFindPlaceByName() throws Exception {
         List<Place> searchPlace = placeRepository.findByName("๑");
-
-        System.out.println(searchPlace.toString());
         assertTrue(searchPlace.size() == 1);
         assertTrue(searchPlace.contains(racha1School));
 

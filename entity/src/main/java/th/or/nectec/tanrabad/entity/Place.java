@@ -37,6 +37,7 @@ public class Place implements LocationEntity {
     private int subType;
     private Location location;
     private Address address;
+    private User updateBy;
 
     public Place(UUID id, String name) {
         this.id = id;
@@ -94,6 +95,14 @@ public class Place implements LocationEntity {
         this.address = address;
     }
 
+    public User getUpdateBy() {
+        return updateBy;
+    }
+
+    public void setUpdateBy(User updateBy) {
+        this.updateBy = updateBy;
+    }
+
     @Override
     public int hashCode() {
         int result = id.hashCode();
@@ -116,7 +125,6 @@ public class Place implements LocationEntity {
         if (!id.equals(place.id)) return false;
         if (!name.equals(place.name)) return false;
         return !(location != null ? !location.equals(place.location) : place.location != null);
-
     }
 
     @Override

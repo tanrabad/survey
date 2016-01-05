@@ -18,12 +18,10 @@
 package th.or.nectec.tanrabad.entity;
 
 
-import com.google.gson.annotations.SerializedName;
 import org.joda.time.DateTime;
 
 public class Entity {
 
-    @SerializedName("update_timestamp")
     private String updateTimestamp;
 
     public DateTime getUpdateTimestamp() {

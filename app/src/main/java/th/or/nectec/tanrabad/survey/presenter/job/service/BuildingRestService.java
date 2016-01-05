@@ -17,15 +17,12 @@
 
 package th.or.nectec.tanrabad.survey.presenter.job.service;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import th.or.nectec.tanrabad.entity.Building;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,9 +78,7 @@ public class BuildingRestService implements RestService<Building> {
     }
 
     private List<Building> toJson(String responseBody) {
-        Gson gson = new Gson();
-        Type listType = new TypeToken<List<Building>>() {}.getType();
-        return gson.fromJson(responseBody, listType);
+        return new ArrayList<>();
     }
 
     public String buildingUrl() {

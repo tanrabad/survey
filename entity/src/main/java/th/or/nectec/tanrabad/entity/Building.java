@@ -17,16 +17,12 @@
 
 package th.or.nectec.tanrabad.entity;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.UUID;
 
 public class Building extends Entity implements LocationEntity {
 
-    @SerializedName("building_id")
     private UUID id;
     private String name;
-    @SerializedName("place_id")
     private UUID placeId;
     private Place place;
     private Location location;
@@ -45,15 +41,12 @@ public class Building extends Entity implements LocationEntity {
         return placeId;
     }
 
-    public void setPlaceId(UUID placeId) {
-        this.placeId = placeId;
-    }
-
     public Place getPlace() {
         return place;
     }
 
     public void setPlace(Place place) {
+        this.placeId = place.getId();
         this.place = place;
     }
 

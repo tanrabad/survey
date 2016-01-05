@@ -15,20 +15,20 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.entity;
+package th.or.nectec.tanrabad.survey.utils;
 
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 
-public class Resource {
+public class ResourceFile {
 
-    public static String readFile(String fileName) {
-        return new Resource().readFromFile(fileName);
+    public static String read(String fileName) {
+        return new ResourceFile().readStringFromFile(fileName);
     }
 
-    private String readFromFile(String filename) {
+    private String readStringFromFile(String filename) {
         try {
             String result = "";
             BufferedReader br = new BufferedReader(new FileReader(getResourceFile(filename)));

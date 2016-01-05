@@ -25,7 +25,6 @@ targetCompatibility = rootProject.ext.javaTargetCompatibility
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'joda-time:joda-time:' + rootProject.ext.jodaTimeVersion
-    compile 'com.google.code.gson:gson:' + rootProject.ext.gsonVersion
 
     testCompile 'junit:junit:' + rootProject.ext.junitVersion
 }

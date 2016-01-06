@@ -137,7 +137,7 @@ public class PlaceRestServiceTest extends WireMockTestBase {
                 localHost(),
                 new LastUpdatePreference(),
                 userRepository);
-        assertEquals(localHost() + PLACE, restService.buildingUrl());
+        assertEquals(localHost() + PLACE, restService.placeUrl());
 
     }
 }

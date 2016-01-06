@@ -18,10 +18,7 @@
 package th.or.nectec.tanrabad.survey.presenter.job.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
-import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
-
 import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Building;
@@ -33,17 +30,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BuildingRestService implements RestService<Building> {
-
-    public static final String BASE_API = "http://tanrabad.igridproject.info/v1";
-    private final OkHttpClient client = new OkHttpClient();
+public class BuildingRestService extends BaseRestService<Building> {
 
     LastUpdate lastUpdate;
+    String apiBaseUrl;
     private PlaceRepository placeRepository;
     private UserRepository userRepository;
-    String apiBaseUrl;
 
-    public BuildingRestService(){
+    public BuildingRestService() {
         this(BASE_API, new LastUpdatePreference(), InMemoryPlaceRepository.getInstance(), new StubUserRepository());
     }
 
@@ -54,25 +48,7 @@ public class BuildingRestService implements RestService<Building> {
         this.userRepository = userRepository;
     }
 
-    @Override
-    public List<Building> getUpdate() {
-        try {
-            Request request = makeRequest();
-            Response response = client.newCall(request).execute();
-
-            if (isNotModified(response))
-                return new ArrayList<>();
-            if (isNotSuccess(response))
-                throw new RestServiceException();
-
-            return toJson(response.body().string());
-
-        } catch (IOException io) {
-            throw new RestServiceException();
-        }
-    }
-
-    private Request makeRequest() {
+    protected Request makeRequest() {
         return new Request.Builder()
                 .get()
                 .url(buildingUrl())
@@ -80,19 +56,15 @@ public class BuildingRestService implements RestService<Building> {
                 .build();
     }
 
-    private boolean isNotModified(Response response) {
-        return response.code() == Status.NOT_MODIFIED;
+    protected String buildingUrl() {
+        return apiBaseUrl + getPath();
     }
 
-    private boolean isNotSuccess(Response response) {
-        return !response.isSuccessful();
-    }
-
-    private List<Building> toJson(String responseBody) {
+    protected List<Building> toJson(String responseBody) {
         ArrayList<Building> buildings = new ArrayList<>();
         try {
             List<JsonBuilding> jsonBuildings = LoganSquare.parseList(responseBody, JsonBuilding.class);
-            for(JsonBuilding eachJsonBuilding : jsonBuildings){
+            for (JsonBuilding eachJsonBuilding : jsonBuildings) {
                 buildings.add(eachJsonBuilding.getEntity(placeRepository, userRepository));
             }
         } catch (IOException e) {
@@ -101,12 +73,7 @@ public class BuildingRestService implements RestService<Building> {
         return buildings;
     }
 
-    public String buildingUrl() {
-        return apiBaseUrl + getPath();
-    }
-
-    private String getPath() {
+    protected String getPath() {
         return "/building";
     }
-
 }

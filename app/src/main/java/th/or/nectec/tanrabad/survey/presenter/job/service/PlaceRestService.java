@@ -18,9 +18,7 @@
 package th.or.nectec.tanrabad.survey.presenter.job.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
-import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.presenter.job.service.jsonentity.JsonPlace;
@@ -30,13 +28,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlaceRestService implements RestService<Place> {
-
-    public static final String BASE_API = "http://tanrabad.igridproject.info/v1";
-    private final OkHttpClient client = new OkHttpClient();
+public class PlaceRestService extends BaseRestService<Place> {
 
     LastUpdate lastUpdate;
-    String apiBaseUrl;
     private UserRepository userRepository;
 
     public PlaceRestService() {
@@ -49,49 +43,19 @@ public class PlaceRestService implements RestService<Place> {
         this.userRepository = userRepository;
     }
 
-    @Override
-    public List<Place> getUpdate() {
-        try {
-            Request request = makeRequest();
-            Response response = client.newCall(request).execute();
-
-            if (isNotModified(response))
-                return new ArrayList<>();
-            if (isNotSuccess(response))
-                throw new RestServiceException();
-
-            return toJson(response.body().string());
-
-        } catch (IOException io) {
-            throw new RestServiceException();
-        }
-    }
-
-    private Request makeRequest() {
+    protected Request makeRequest() {
         return new Request.Builder()
                 .get()
-                .url(buildingUrl())
+                .url(placeUrl())
                 .header(Header.IF_MODIFIED_SINCE, lastUpdate.get().toDateTimeISO().toString())
                 .build();
     }
 
-    public String buildingUrl() {
+    public String placeUrl() {
         return apiBaseUrl + getPath();
     }
 
-    private String getPath() {
-        return "/place";
-    }
-
-    private boolean isNotModified(Response response) {
-        return response.code() == Status.NOT_MODIFIED;
-    }
-
-    private boolean isNotSuccess(Response response) {
-        return !response.isSuccessful();
-    }
-
-    private List<Place> toJson(String responseBody) {
+    protected List<Place> toJson(String responseBody) {
         ArrayList<Place> buildings = new ArrayList<>();
         try {
             List<JsonPlace> jsonBuildings = LoganSquare.parseList(responseBody, JsonPlace.class);
@@ -104,4 +68,7 @@ public class PlaceRestService implements RestService<Place> {
         return buildings;
     }
 
+    protected String getPath() {
+        return "/place";
+    }
 }

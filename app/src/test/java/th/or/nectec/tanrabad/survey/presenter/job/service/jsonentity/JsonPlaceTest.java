@@ -2,7 +2,6 @@ package th.or.nectec.tanrabad.survey.presenter.job.service.jsonentity;
 
 import com.bluelinelabs.logansquare.LoganSquare;
 import com.google.gson.Gson;
-import com.google.gson.JsonParser;
 import org.junit.Test;
 import org.mockito.Mockito;
 import th.or.nectec.tanrabad.domain.UserRepository;
@@ -23,10 +22,7 @@ public class JsonPlaceTest {
             "  \"place_subtype_id\": 3," +
             "  \"place_name\": \"รพ.สต.ตำบลนาทราย\"," +
             "  \"tambon_code\": \"510403\"," +
-            "  \"location\":{" +
-            "    \"latitude\":39.745675," +
-            "    \"longitude\":-73.150055" +
-            "   }," +
+            "  \"location\":{ \"type\": \"Point\", \"coordinates\": [-73.150055, 39.745675]}," +
             "  \"update_by\":\"dcp-user\"" +
             "}";
 
@@ -34,16 +30,16 @@ public class JsonPlaceTest {
 
     @Test
     public void testParseToJsonString() throws Exception {
-        com.google.gson.JsonObject jsonObject = (com.google.gson.JsonObject) new JsonParser().parse(rawPlaceString);
         JsonPlace jsonPlace = LoganSquare.parse(rawPlaceString, JsonPlace.class);
 
-        assertEquals(jsonPlace.placeID, UUID.fromString(jsonObject.get("place_id").getAsString()));
-        assertEquals(jsonPlace.placeTypeID, jsonObject.get("place_type_id").getAsInt());
-        assertEquals(jsonPlace.placeSubtypeID, jsonObject.get("place_subtype_id").getAsInt());
-        assertEquals(jsonPlace.placeName, jsonObject.get("place_name").getAsString());
-        assertEquals(jsonPlace.tambonCode, jsonObject.get("tambon_code").getAsString());
-        assertEquals(jsonPlace.location.toString(), jsonObject.get("location").getAsJsonObject().toString());
-        assertEquals(jsonPlace.updateBy, jsonObject.get("update_by").getAsString());
+        assertEquals("b7a9d934-04fc-a22e-0539-6c17504f732e", jsonPlace.placeID.toString());
+        assertEquals(4, jsonPlace.placeTypeID);
+        assertEquals(3, jsonPlace.placeSubtypeID);
+        assertEquals("รพ.สต.ตำบลนาทราย", jsonPlace.placeName);
+        assertEquals("510403", jsonPlace.tambonCode);
+        assertEquals(39.745675, jsonPlace.location.getLatitude(), 0);
+        assertEquals(-73.150055, jsonPlace.location.getLongitude(), 0);
+        assertEquals("dcp-user", jsonPlace.updateBy);
     }
 
     @Test
@@ -57,13 +53,14 @@ public class JsonPlaceTest {
 
         JsonPlace jsonPlace = JsonPlace.parse(placeData);
 
-        assertEquals(jsonPlace.placeID, UUID.nameUUIDFromBytes("123".getBytes()));
-        assertEquals(jsonPlace.placeTypeID, Place.TYPE_WORSHIP);
-        assertEquals(jsonPlace.placeSubtypeID, Place.SUBTYPE_TEMPLE);
-        assertEquals(jsonPlace.placeName, "วัดป่า");
-        assertEquals(jsonPlace.tambonCode, stubAddress().getAddressCode());
-        assertEquals(jsonPlace.location.toString(), gson.toJson(stubLocation()));
-        assertEquals(jsonPlace.updateBy, stubUser().getUsername());
+        assertEquals(UUID.nameUUIDFromBytes("123".getBytes()), jsonPlace.placeID);
+        assertEquals(Place.TYPE_WORSHIP, jsonPlace.placeTypeID);
+        assertEquals(Place.SUBTYPE_TEMPLE, jsonPlace.placeSubtypeID);
+        assertEquals("วัดป่า", jsonPlace.placeName);
+        assertEquals(stubAddress().getAddressCode(), jsonPlace.tambonCode);
+        assertEquals(stubLocation().getLatitude(), jsonPlace.location.getLatitude(), 0);
+        assertEquals(stubLocation().getLongitude(), jsonPlace.location.getLongitude(), 0);
+        assertEquals(stubUser().getUsername(), jsonPlace.updateBy);
     }
 
     private Address stubAddress() {

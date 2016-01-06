@@ -43,7 +43,7 @@ public class JsonPlace {
     public String provinceName;
 
     @JsonField
-    public JsonLocation location;
+    public GeoJsonPoint location;
 
     @JsonField(name = "update_by")
     public String updateBy;
@@ -55,7 +55,7 @@ public class JsonPlace {
         jsonPlace.placeName = place.getName();
         jsonPlace.placeTypeID = place.getType();
         jsonPlace.placeSubtypeID = place.getSubType();
-        jsonPlace.location = JsonLocation.parse(place.getLocation());
+        jsonPlace.location = GeoJsonPoint.parse(place.getLocation());
         jsonPlace.tambonCode = place.getAddress().getAddressCode();
         jsonPlace.updateBy = place.getUpdateBy().getUsername();
         return jsonPlace;

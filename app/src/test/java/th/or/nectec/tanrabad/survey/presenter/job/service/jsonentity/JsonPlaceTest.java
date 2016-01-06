@@ -3,17 +3,15 @@ package th.or.nectec.tanrabad.survey.presenter.job.service.jsonentity;
 import com.bluelinelabs.logansquare.LoganSquare;
 import com.google.gson.Gson;
 import com.google.gson.JsonParser;
-
 import org.junit.Test;
 import org.mockito.Mockito;
-
-import java.util.UUID;
-
 import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.entity.utils.Address;
+
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 
@@ -23,7 +21,7 @@ public class JsonPlaceTest {
             "  \"place_id\": \"b7a9d934-04fc-a22e-0539-6c17504f732e\"," +
             "  \"place_type_id\": 4," +
             "  \"place_subtype_id\": 3," +
-            "  \"place_namet\": \"รพ.สต.ตำบลนาทราย\"," +
+            "  \"place_name\": \"รพ.สต.ตำบลนาทราย\"," +
             "  \"tambon_code\": \"510403\"," +
             "  \"location\":{" +
             "    \"latitude\":39.745675," +
@@ -42,7 +40,7 @@ public class JsonPlaceTest {
         assertEquals(jsonPlace.placeID, UUID.fromString(jsonObject.get("place_id").getAsString()));
         assertEquals(jsonPlace.placeTypeID, jsonObject.get("place_type_id").getAsInt());
         assertEquals(jsonPlace.placeSubtypeID, jsonObject.get("place_subtype_id").getAsInt());
-        assertEquals(jsonPlace.placeName, jsonObject.get("place_namet").getAsString());
+        assertEquals(jsonPlace.placeName, jsonObject.get("place_name").getAsString());
         assertEquals(jsonPlace.tambonCode, jsonObject.get("tambon_code").getAsString());
         assertEquals(jsonPlace.location.toString(), jsonObject.get("location").getAsJsonObject().toString());
         assertEquals(jsonPlace.updateBy, jsonObject.get("update_by").getAsString());

@@ -21,6 +21,8 @@ import com.bluelinelabs.logansquare.LoganSquare;
 import com.squareup.okhttp.Request;
 import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.survey.presenter.job.service.http.Header;
+import th.or.nectec.tanrabad.survey.presenter.job.service.http.Status;
 import th.or.nectec.tanrabad.survey.presenter.job.service.jsonentity.JsonPlace;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 

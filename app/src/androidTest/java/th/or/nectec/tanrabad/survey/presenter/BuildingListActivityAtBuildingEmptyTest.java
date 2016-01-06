@@ -21,6 +21,7 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -38,8 +39,10 @@ import java.util.UUID;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtra;
+import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 @RunWith(AndroidJUnit4.class)
@@ -73,5 +76,13 @@ public class BuildingListActivityAtBuildingEmptyTest extends TanrabadEspressoTes
                 hasComponent(new ComponentName(mActivity, BuildingFormActivity.class)),
                 hasExtra(BuildingFormActivity.PLACE_UUID_ARG, UUID.nameUUIDFromBytes("67UIP".getBytes()).toString())
         ));
+    }
+
+    @Test
+    public void openPlaceAtEmptyBuildingShouldNotFoundEditBuildingAndBuildingSearchButton() {
+        onView(withId(R.id.edit_building))
+                .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+        onView(withId(R.id.building_search))
+                .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
     }
 }

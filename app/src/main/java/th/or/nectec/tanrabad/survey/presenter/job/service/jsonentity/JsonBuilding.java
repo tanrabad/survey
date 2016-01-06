@@ -2,13 +2,12 @@ package th.or.nectec.tanrabad.survey.presenter.job.service.jsonentity;
 
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
-
-import java.util.UUID;
-
 import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Location;
+
+import java.util.UUID;
 
 @JsonObject
 public class JsonBuilding {
@@ -26,7 +25,7 @@ public class JsonBuilding {
     public String buildingName;
 
     @JsonField
-    public JsonLocation location;
+    public GeoJsonPoint location;
 
     @JsonField(name = "update_by")
     public String updateBy;
@@ -37,7 +36,7 @@ public class JsonBuilding {
         jsonBuilding.placeID = building.getPlace().getId();
         jsonBuilding.buildingName = building.getName();
         jsonBuilding.placeTypeID = building.getPlace().getType();
-        jsonBuilding.location = JsonLocation.parse(building.getLocation());
+        jsonBuilding.location = GeoJsonPoint.parse(building.getLocation());
         jsonBuilding.updateBy = building.getUpdateBy().getUsername();
         return jsonBuilding;
     }

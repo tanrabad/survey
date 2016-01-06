@@ -1,22 +1,18 @@
 package th.or.nectec.tanrabad.survey.presenter.job.service.jsonentity;
 
 import android.support.annotation.NonNull;
-
 import com.bluelinelabs.logansquare.LoganSquare;
 import com.google.gson.Gson;
-import com.google.gson.JsonParser;
-
 import org.junit.Test;
 import org.mockito.Mockito;
-
-import java.util.UUID;
-
 import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
+
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 
@@ -27,7 +23,7 @@ public class JsonBuildingTest {
             "\"place_id\":\"5cf5665b-5642-10fb-a3a0-5e612a842584\"," +
             "\"place_type_id\":4," +
             "\"name\":\"อาคาร 1\"," +
-            "\"location\":{\"latitude\":39.745673,\"longitude\":-73.15005}," +
+            "\"location\":{ \"type\": \"Point\", \"coordinates\": [-73.15005, 39.745673]}," +
             "\"update_by\":\"dcp-user\"" +
             "}";
 
@@ -35,15 +31,15 @@ public class JsonBuildingTest {
 
     @Test
     public void testParseToJsonString() throws Exception {
-        com.google.gson.JsonObject jsonObject = (com.google.gson.JsonObject) new JsonParser().parse(rawBuildingString);
         JsonBuilding jsonBuilding = LoganSquare.parse(rawBuildingString, JsonBuilding.class);
 
-        assertEquals(jsonBuilding.buildingID, UUID.fromString(jsonObject.get("building_id").getAsString()));
-        assertEquals(jsonBuilding.placeID, UUID.fromString(jsonObject.get("place_id").getAsString()));
-        assertEquals(jsonBuilding.placeTypeID, jsonObject.get("place_type_id").getAsInt());
-        assertEquals(jsonBuilding.buildingName, jsonObject.get("name").getAsString());
-        assertEquals(jsonBuilding.location.toString(), jsonObject.get("location").getAsJsonObject().toString());
-        assertEquals(jsonBuilding.updateBy, jsonObject.get("update_by").getAsString());
+        assertEquals("5cf5665b-5642-10fb-a3a0-5e612a842583", jsonBuilding.buildingID.toString());
+        assertEquals("5cf5665b-5642-10fb-a3a0-5e612a842584", jsonBuilding.placeID.toString());
+        assertEquals(4, jsonBuilding.placeTypeID);
+        assertEquals("อาคาร 1", jsonBuilding.buildingName);
+        assertEquals(39.745673, jsonBuilding.location.getLatitude(), 0);
+        assertEquals(-73.15005, jsonBuilding.location.getLongitude(), 0);
+        assertEquals(jsonBuilding.updateBy, jsonBuilding.updateBy);
     }
 
     @Test
@@ -55,11 +51,12 @@ public class JsonBuildingTest {
 
         JsonBuilding jsonBuilding = JsonBuilding.parse(buildingData);
 
-        assertEquals(jsonBuilding.buildingID, UUID.nameUUIDFromBytes("123".getBytes()));
-        assertEquals(jsonBuilding.placeID, stubPlace().getId());
-        assertEquals(jsonBuilding.placeTypeID, Place.TYPE_HOSPITAL);
-        assertEquals(jsonBuilding.buildingName, "อาคาร 2");
-        assertEquals(jsonBuilding.location.toString(), gson.toJson(stubLocation()));
+        assertEquals(UUID.nameUUIDFromBytes("123".getBytes()), jsonBuilding.buildingID);
+        assertEquals(stubPlace().getId(), jsonBuilding.placeID);
+        assertEquals(Place.TYPE_HOSPITAL, jsonBuilding.placeTypeID);
+        assertEquals("อาคาร 2", jsonBuilding.buildingName);
+        assertEquals(39.745673, jsonBuilding.location.getLatitude(), 0);
+        assertEquals(-73.15005, jsonBuilding.location.getLongitude(), 0);
         assertEquals(jsonBuilding.updateBy, stubUser().getUsername());
     }
 

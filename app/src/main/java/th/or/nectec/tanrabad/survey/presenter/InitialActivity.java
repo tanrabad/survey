@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,10 +20,7 @@ package th.or.nectec.tanrabad.survey.presenter;
 import android.os.Bundle;
 import android.widget.TextView;
 import th.or.nectec.tanrabad.survey.R;
-import th.or.nectec.tanrabad.survey.presenter.job.AbsJobRunner;
-import th.or.nectec.tanrabad.survey.presenter.job.BuildingUpdateJob;
-import th.or.nectec.tanrabad.survey.presenter.job.InMemoryInitializeJob;
-import th.or.nectec.tanrabad.survey.presenter.job.Job;
+import th.or.nectec.tanrabad.survey.presenter.job.*;
 import th.or.nectec.tanrabad.survey.repository.InMemoryBuildingRepository;
 
 public class InitialActivity extends TanrabadActivity {
@@ -38,6 +35,7 @@ public class InitialActivity extends TanrabadActivity {
         loadingText = (TextView) findViewById(R.id.loading);
 
         new InitialJobRunner()
+                .addJob(new CreateDatabaseJob(this))
                 .addJob(new MockJob(1))
                 .addJob(new InMemoryInitializeJob())
                 .addJob(new MockJob(2))
@@ -53,6 +51,9 @@ public class InitialActivity extends TanrabadActivity {
                 break;
             case BuildingUpdateJob.ID:
                 loadingText.setText("ตรวจสอบคุณภาพอาคาร");
+                break;
+            case CreateDatabaseJob.ID:
+                loadingText.setText("กำลังสร้างฐานข้อมูลชั่วคราว");
                 break;
             case 1:
                 loadingText.setText("กำลังจะนอน");

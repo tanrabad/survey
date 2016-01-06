@@ -2,13 +2,12 @@ package th.or.nectec.tanrabad.survey.presenter.job.service.jsonentity;
 
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
-
-import java.util.UUID;
-
 import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.utils.Address;
+
+import java.util.UUID;
 
 @JsonObject
 public class JsonPlace {
@@ -22,11 +21,26 @@ public class JsonPlace {
     @JsonField(name = "place_subtype_id")
     public int placeSubtypeID;
 
-    @JsonField(name = "place_namet")
+    @JsonField(name = "place_name")
     public String placeName;
 
     @JsonField(name = "tambon_code")
     public String tambonCode;
+
+    @JsonField(name = "tambon_name")
+    public String tambonName;
+
+    @JsonField(name = "amphur_code")
+    public String amphurCode;
+
+    @JsonField(name = "amphur_name")
+    public String amphurName;
+
+    @JsonField(name = "province_code")
+    public String provinceCode;
+
+    @JsonField(name = "province_name")
+    public String provinceName;
 
     @JsonField
     public JsonLocation location;
@@ -51,12 +65,19 @@ public class JsonPlace {
         Place place = new Place(placeID, placeName);
         place.setType(placeTypeID);
         place.setSubType(placeSubtypeID);
-        Address address = new Address();
-        address.setAddressCode(tambonCode);
-        place.setAddress(address);
-        Location location = new Location(this.location.latitude, this.location.longitude);
+        place.setAddress(getAddress());
+        Location location = this.location == null ? null : this.location.getEntity();
         place.setLocation(location);
         place.setUpdateBy(userRepository.findUserByName(updateBy));
         return place;
+    }
+
+    private Address getAddress() {
+        Address address = new Address();
+        address.setAddressCode(tambonCode);
+        address.setProvince(provinceName);
+        address.setDistrict(amphurName);
+        address.setSubdistrict(tambonName);
+        return address;
     }
 }

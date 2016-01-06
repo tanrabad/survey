@@ -21,6 +21,10 @@ public class JsonLocation {
         return jsonLocation;
     }
 
+    public Location getEntity(){
+        return new Location(latitude,longitude);
+    }
+
     @Override
     public String toString() {
         return "{\"latitude\":" + latitude + ",\"longitude\":" + longitude + '}';

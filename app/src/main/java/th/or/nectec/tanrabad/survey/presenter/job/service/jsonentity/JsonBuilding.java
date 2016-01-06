@@ -45,7 +45,7 @@ public class JsonBuilding {
     public Building getEntity(PlaceRepository placeRepository, UserRepository userRepository) {
         Building building = new Building(buildingID, buildingName);
         building.setPlace(placeRepository.findPlaceByUUID(placeID));
-        Location location = new Location(this.location.latitude, this.location.longitude);
+        Location location = this.location==null ? null : this.location.getEntity();
         building.setLocation(location);
         building.setUpdateBy(userRepository.findUserByName(updateBy));
         return building;

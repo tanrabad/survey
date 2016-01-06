@@ -17,10 +17,17 @@
 
 package th.or.nectec.tanrabad.survey.presenter.job.service;
 
+import com.bluelinelabs.logansquare.LoganSquare;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
+
+import th.or.nectec.tanrabad.domain.UserRepository;
+import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Building;
+import th.or.nectec.tanrabad.survey.presenter.job.service.jsonentity.JsonBuilding;
+import th.or.nectec.tanrabad.survey.repository.InMemoryPlaceRepository;
+import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,15 +39,19 @@ public class BuildingRestService implements RestService<Building> {
     private final OkHttpClient client = new OkHttpClient();
 
     LastUpdate lastUpdate;
+    private PlaceRepository placeRepository;
+    private UserRepository userRepository;
     String apiBaseUrl;
 
     public BuildingRestService(){
-        this(BASE_API, new LastUpdatePreference());
+        this(BASE_API, new LastUpdatePreference(), InMemoryPlaceRepository.getInstance(), new StubUserRepository());
     }
 
-    public BuildingRestService(String apiBaseUrl, LastUpdate lastUpdate) {
+    public BuildingRestService(String apiBaseUrl, LastUpdate lastUpdate, PlaceRepository placeRepository, UserRepository userRepository) {
         this.apiBaseUrl = apiBaseUrl;
         this.lastUpdate = lastUpdate;
+        this.placeRepository = placeRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -78,7 +89,16 @@ public class BuildingRestService implements RestService<Building> {
     }
 
     private List<Building> toJson(String responseBody) {
-        return new ArrayList<>();
+        ArrayList<Building> buildings = new ArrayList<>();
+        try {
+            List<JsonBuilding> jsonBuildings = LoganSquare.parseList(responseBody, JsonBuilding.class);
+            for(JsonBuilding eachJsonBuilding : jsonBuildings){
+                buildings.add(eachJsonBuilding.getEntity(placeRepository, userRepository));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return buildings;
     }
 
     public String buildingUrl() {

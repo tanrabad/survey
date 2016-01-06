@@ -1,0 +1,19 @@
+[
+  {
+    "place_id": "b7a9d934-04fc-a22e-0539-6c17504f732e",
+    "place_code": "06087",
+    "place_type_id": 4,
+    "place_type_name": "โรงพยาบาล",
+    "place_subtype_id": 3,
+    "subtype_name": "รพ.สต./สาธารณสุขชุมชน",
+    "place_name": "รพ.สต.ตำบลนาทราย",
+    "tambon_code": "510403",
+    "tambon_name": "นาทราย",
+    "amphur_code": "5104",
+    "amphur_name": "ลี้",
+    "province_code": "51",
+    "province_name": "ลำพูน",
+    "location": null,
+    "update_timestamp": "2015-11-30T17:00:00.000Z"
+  }
+]

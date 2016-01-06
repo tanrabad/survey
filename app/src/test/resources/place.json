@@ -12,6 +12,6 @@
   "amphur_name": "ลี้",
   "province_code": "51",
   "province_name": "ลำพูน",
-  "boundary": null,
+  "location": null,
   "update_timestamp": "2015-11-30T17:00:00.000Z"
-},
+}

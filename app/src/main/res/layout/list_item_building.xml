@@ -27,7 +27,7 @@
         android:id="@+id/building_icon"
         style="@style/ListIcon"
         android:contentDescription="@string/building_icon"
-        tools:src="@mipmap/ic_building_home"/>
+        tools:src="@mipmap/ic_building_home_black"/>
 
     <TextView
         android:id="@+id/building_name"

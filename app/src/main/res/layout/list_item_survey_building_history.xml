@@ -27,7 +27,7 @@
             android:id="@+id/survey_building_icon"
             android:background="@drawable/bg_icon"
             android:contentDescription="@string/building_icon"
-            tools:src="@mipmap/ic_building_home"/>
+            tools:src="@mipmap/ic_building_home_black"/>
 
     <TextView
             android:id="@+id/survey_ci"

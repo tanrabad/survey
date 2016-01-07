@@ -146,7 +146,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     private void setupEmptyLayout() {
         emptyLayoutView = (EmptyLayoutView) findViewById(R.id.empty_layout);
         emptyLayoutView.setEmptyIcon(place.getType() == Place.TYPE_VILLAGE_COMMUNITY ?
-                R.mipmap.ic_building_home : R.mipmap.ic_building);
+                R.mipmap.ic_building_home_black : R.mipmap.ic_building);
         emptyLayoutView.setEmptyText(R.string.building_list_not_found);
         emptyLayoutView.setEmptyButtonText(R.string.add_building, new View.OnClickListener() {
             @Override

@@ -26,7 +26,7 @@ public class BuildingIconMapping {
         if (place.getType() == Place.TYPE_VILLAGE_COMMUNITY) {
             return R.mipmap.ic_building_home_black;
         } else {
-            return R.mipmap.ic_building;
+            return R.mipmap.ic_building_black;
         }
     }
 }

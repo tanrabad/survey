@@ -11,7 +11,7 @@ public class ContainerIconMapping {
     public ContainerIconMapping() {
         containerIconMapper.put(1, R.mipmap.ic_container_earthen_jar);
         containerIconMapper.put(2, R.mipmap.ic_container_bottle);
-        containerIconMapper.put(3, R.mipmap.ic_container_glass);
+        containerIconMapper.put(3, R.mipmap.ic_container_vase);
         containerIconMapper.put(4, R.mipmap.ic_container_ant_tray);
         containerIconMapper.put(5, R.mipmap.ic_container_ornament);
         containerIconMapper.put(6, R.mipmap.ic_container_lotus);

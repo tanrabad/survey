@@ -19,15 +19,10 @@ package th.or.nectec.tanrabad.survey.presenter.job.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
 import com.squareup.okhttp.Request;
-<<<<<<< ded3f256f8141819b5ac8c777b351c62f9531572
-=======
-import com.squareup.okhttp.Response;
->>>>>>> Refactor 1
 import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.survey.presenter.job.service.http.Header;
-import th.or.nectec.tanrabad.survey.presenter.job.service.http.Status;
 import th.or.nectec.tanrabad.survey.presenter.job.service.jsonentity.JsonBuilding;
 import th.or.nectec.tanrabad.survey.repository.InMemoryPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;

@@ -64,21 +64,16 @@ public class SurveyLiteDatabase extends SQLiteOpenHelper {
     private void readAndExecuteSQLScript(SQLiteDatabase db, @RawRes Integer sqlScriptResId) {
         db.beginTransaction();
         try {
-            InputStream is = context.getResources().openRawResource(sqlScriptResId);
-            InputStreamReader isr = new InputStreamReader(is);
-            BufferedReader reader = new BufferedReader(isr);
+            RawReader raw = new RawReader(sqlScriptResId);
 
-            executeSQLScript(db, reader);
+            executeSQLScript(db, raw.getReader());
             db.setTransactionSuccessful();
 
-            reader.close();
-            isr.close();
-            is.close();
+            raw.close();
         } catch (IOException e) {
             throw new RuntimeException("Unable to read SQL script", e);
         } finally {
             db.endTransaction();
-
         }
     }
 
@@ -93,6 +88,34 @@ public class SurveyLiteDatabase extends SQLiteOpenHelper {
                 db.execSQL(statement.toString());
                 statement = new StringBuilder();
             }
+        }
+    }
+
+    private class RawReader {
+        private Integer sqlScriptResId;
+        private InputStream is;
+        private InputStreamReader isr;
+        private BufferedReader reader;
+
+        public RawReader(Integer sqlScriptResId) {
+            this.sqlScriptResId = sqlScriptResId;
+        }
+
+        public BufferedReader getReader() {
+            invoke();
+            return reader;
+        }
+
+        private void invoke() {
+            is = context.getResources().openRawResource(sqlScriptResId);
+            isr = new InputStreamReader(is);
+            reader = new BufferedReader(isr);
+        }
+
+        public void close() throws IOException {
+            reader.close();
+            is.close();
+            isr.close();
         }
     }
 }

@@ -21,13 +21,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
-import android.support.annotation.RawRes;
 import th.or.nectec.tanrabad.survey.R;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 public class SurveyLiteDatabase extends SQLiteOpenHelper {
 
@@ -53,7 +47,7 @@ public class SurveyLiteDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        readAndExecuteSQLScript(db, R.raw.create);
+        SqlScript.readAndExecute(context, db, R.raw.create);
     }
 
     @Override
@@ -61,61 +55,4 @@ public class SurveyLiteDatabase extends SQLiteOpenHelper {
 
     }
 
-    private void readAndExecuteSQLScript(SQLiteDatabase db, @RawRes Integer sqlScriptResId) {
-        db.beginTransaction();
-        try {
-            RawReader raw = new RawReader(sqlScriptResId);
-
-            executeSQLScript(db, raw.getReader());
-            db.setTransactionSuccessful();
-
-            raw.close();
-        } catch (IOException e) {
-            throw new RuntimeException("Unable to read SQL script", e);
-        } finally {
-            db.endTransaction();
-        }
-    }
-
-    private void executeSQLScript(SQLiteDatabase db, BufferedReader reader)
-            throws IOException {
-        String line;
-        StringBuilder statement = new StringBuilder();
-        while ((line = reader.readLine()) != null) {
-            statement.append(line);
-            statement.append("\n");
-            if (line.endsWith(";")) {
-                db.execSQL(statement.toString());
-                statement = new StringBuilder();
-            }
-        }
-    }
-
-    private class RawReader {
-        private Integer sqlScriptResId;
-        private InputStream is;
-        private InputStreamReader isr;
-        private BufferedReader reader;
-
-        public RawReader(Integer sqlScriptResId) {
-            this.sqlScriptResId = sqlScriptResId;
-        }
-
-        public BufferedReader getReader() {
-            invoke();
-            return reader;
-        }
-
-        private void invoke() {
-            is = context.getResources().openRawResource(sqlScriptResId);
-            isr = new InputStreamReader(is);
-            reader = new BufferedReader(isr);
-        }
-
-        public void close() throws IOException {
-            reader.close();
-            is.close();
-            isr.close();
-        }
-    }
 }

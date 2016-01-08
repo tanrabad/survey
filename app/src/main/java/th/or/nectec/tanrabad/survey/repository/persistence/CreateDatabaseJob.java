@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey.presenter.job;
+package th.or.nectec.tanrabad.survey.repository.persistence;
 
 
 import android.content.Context;
-import th.or.nectec.tanrabad.survey.repository.persistence.SurveyLiteDatabase;
+import th.or.nectec.tanrabad.survey.presenter.job.Job;
+import th.or.nectec.tanrabad.survey.presenter.job.JobException;
 
 public class CreateDatabaseJob implements Job {
 

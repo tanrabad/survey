@@ -16,70 +16,85 @@
   ~ limitations under the License.
   -->
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:orientation="vertical"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:layout_gravity="center_horizontal"
-             android:background="@color/white">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white">
 
     <ImageView
             android:layout_width="match_parent"
-            android:scaleType="fitXY"
             android:layout_height="wrap_content"
+            android:scaleType="fitXY"
             android:id="@+id/loginBgBlue"
             android:src="@drawable/bg_blue"/>
 
-    <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/logoTabrabad"
-            android:src="@drawable/logo_tanrabad"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignRight="@id/loginBgBlue"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
             android:text="version 1.0"
             android:id="@+id/textVersion"
-            android:layout_gravity="right|top"
-            android:textColor="#ffffff" android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"/>
+            android:textColor="#ffffff"/>
+
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/logoTabrabad"
+            android:src="@drawable/logo_tanrabad"/>
 
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:paddingTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/textVersion"
+            android:layout_marginTop="300dp"
             android:text="ทันระบาดสำรวจ"
             android:textSize="@dimen/text_headline"
-            android:textColor="#ffffff"
-            android:layout_marginTop="320dp"/>
+            android:textColor="#ffffff"/>
 
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:paddingTop="10dp"
-            android:text="ลืมรหัสผ่าน?"
-            android:textSize="@dimen/text_subhead"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/textVersion"
+            android:layout_marginTop="360dp"
+            android:text="ไม่พบชื่อผู้ใช้และรหัสผ่านที่ตรงกัน"
+            android:textSize="20dp"
             android:textColor="#ffffff"
-            android:layout_marginTop="400dp"
+            android:textStyle="normal"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/textVersion"
+            android:layout_marginTop="390dp"
+            android:text="ลืมรหัสผ่าน?"
+            android:textSize="20dp"
+            android:textColor="#ffffff"
             android:textStyle="normal"/>
 
     <EditText
             android:layout_width="450dp"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/textVersion"
+            android:layout_marginTop="450dp"
             android:padding="15dip"
-            android:layout_marginTop="500dp"
-            android:layout_gravity="center_horizontal"
             android:background="@drawable/rounded_edit_text"
             android:hint="ชื่อผู้ใช้งาน"/>
 
     <EditText
             android:layout_width="450dp"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/textVersion"
+            android:layout_marginTop="520dp"
             android:padding="15dip"
-            android:layout_marginTop="570dp"
-            android:layout_gravity="center_horizontal"
             android:background="@drawable/rounded_edit_text"
             android:hint="รหัสผ่าน"/>
 
@@ -87,9 +102,10 @@
             android:id="@+id/button1"
             android:layout_width="450dp"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/textVersion"
+            android:layout_marginTop="590dp"
             android:padding="10dp"
-            android:layout_marginTop="650dp"
-            android:layout_gravity="center_horizontal"
             android:textColor="#ffffff"
             android:background="@drawable/rounded_button"
             android:textSize="30dp"
@@ -99,18 +115,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_gravity="center_horizontal"
+            android:layout_below="@+id/textVersion"
+            android:layout_marginTop="630dp"
             android:gravity="center"
-            android:paddingTop="20dp"
-            android:layout_marginTop="700dp">
+            android:paddingTop="30dp">
 
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="ทดลองใช้งาน"
                 android:textSize="@dimen/text_body"
-                android:textColor="#848484"
-                android:textStyle="normal"/>
+                android:textColor="#848484"/>
 
         <TextView
                 android:layout_width="wrap_content"
@@ -118,8 +133,7 @@
                 android:paddingLeft="10dp"
                 android:text="|"
                 android:textSize="@dimen/text_body"
-                android:textColor="#848484"
-                android:textStyle="normal"/>
+                android:textColor="#848484"/>
 
         <TextView
                 android:layout_width="wrap_content"
@@ -127,10 +141,14 @@
                 android:paddingLeft="10dp"
                 android:text="สมัครสมาชิก"
                 android:textSize="@dimen/text_body"
-                android:textColor="#848484"
-                android:textStyle="normal"/>
+                android:textColor="#848484"/>
 
     </LinearLayout>
 
+    <ImageView android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_alignParentBottom="true"
+               android:scaleType="fitXY"
+               android:src="@drawable/powered_by_nectec"/>
 
-</FrameLayout>
+</RelativeLayout>

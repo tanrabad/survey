@@ -26,7 +26,7 @@
 
     <ImageView
             style="@style/ListIcon"
-            tools:src="@mipmap/ic_container_pot_saucer.png"
+            tools:src="@mipmap/ic_container_pot_saucer"
             android:id="@+id/container_icon"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/list_padding_left"

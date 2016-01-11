@@ -19,7 +19,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@color/white">
 
     <ImageView
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:scaleType="fitXY"
             android:id="@+id/loginBgBlue"
-            android:src="@drawable/bg_blue"/>
+            android:src="@drawable/bg_blue_login_page"/>
 
     <TextView
             android:layout_width="wrap_content"
@@ -42,6 +42,7 @@
     <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
             android:layout_centerHorizontal="true"
             android:id="@+id/logoTabrabad"
             android:src="@drawable/logo_tanrabad"/>
@@ -50,8 +51,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/textVersion"
-            android:layout_marginTop="300dp"
+            android:layout_below="@+id/logoTabrabad"
+            android:layout_marginTop="30dp"
             android:text="ทันระบาดสำรวจ"
             android:textSize="@dimen/text_headline"
             android:textColor="#ffffff"/>
@@ -60,8 +61,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/textVersion"
-            android:layout_marginTop="360dp"
+            android:layout_below="@+id/logoTabrabad"
+            android:layout_marginTop="90dp"
             android:text="ไม่พบชื่อผู้ใช้และรหัสผ่านที่ตรงกัน"
             android:textSize="20dp"
             android:textColor="#ffffff"
@@ -71,8 +72,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/textVersion"
-            android:layout_marginTop="390dp"
+            android:layout_below="@+id/logoTabrabad"
+            android:layout_marginTop="120dp"
             android:text="ลืมรหัสผ่าน?"
             android:textSize="20dp"
             android:textColor="#ffffff"
@@ -82,8 +83,8 @@
             android:layout_width="450dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/textVersion"
-            android:layout_marginTop="450dp"
+            android:layout_below="@+id/logoTabrabad"
+            android:layout_marginTop="190dp"
             android:padding="15dip"
             android:background="@drawable/rounded_edit_text"
             android:hint="ชื่อผู้ใช้งาน"/>
@@ -92,19 +93,19 @@
             android:layout_width="450dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/textVersion"
-            android:layout_marginTop="520dp"
+            android:layout_below="@+id/logoTabrabad"
+            android:layout_marginTop="260dp"
             android:padding="15dip"
             android:background="@drawable/rounded_edit_text"
             android:hint="รหัสผ่าน"/>
 
     <Button
-            android:id="@+id/button1"
+            android:id="@+id/login_button"
             android:layout_width="450dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/textVersion"
-            android:layout_marginTop="590dp"
+            android:layout_below="@+id/logoTabrabad"
+            android:layout_marginTop="330dp"
             android:padding="10dp"
             android:textColor="#ffffff"
             android:background="@drawable/rounded_button"
@@ -115,8 +116,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_below="@+id/textVersion"
-            android:layout_marginTop="630dp"
+            android:layout_below="@+id/logoTabrabad"
+            android:layout_marginTop="370dp"
             android:gravity="center"
             android:paddingTop="30dp">
 

@@ -17,6 +17,7 @@
 
 <resources>
     <string name="app_name">ทันระบาด</string>
+    <string name="app_name_2">ทันระบาดสำรวจ</string>
     <string name="title_activity_survey">สำรวจ</string>
     <string name="title_activity_edit_survey">แก้ไขสำรวจ</string>
     <string name="save">บันทึก</string>
@@ -140,5 +141,14 @@
     <string name="edit">แก้ไข</string>
     <string name="please_wait">กรุณารอสักครู่&#8230;</string>
     <string name="clear_search_history">ล้างประวัติการค้นหา</string>
+    <string name="register">สมัครสมาชิก</string>
+    <string name="trial">ทดลองใช้งาน</string>
+    <string name="login">เข้าสู่ระบบ</string>
+    <string name="version">version 1.0</string>
+    <string name="username_and_password_do_not_match">ไม่พบชื่อผู้ใช้และรหัสผ่านที่ตรงกัน</string>
+    <string name="forgot_password">ลืมรหัสผ่าน?</string>
+    <string name="password">รหัสผ่าน</string>
+    <string name="username">ชื่อผู้ใช้งาน</string>
+    <string name="vertical_bar">|</string>
 
 </resources>

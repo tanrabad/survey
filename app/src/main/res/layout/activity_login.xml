@@ -27,7 +27,8 @@
             android:layout_height="wrap_content"
             android:scaleType="fitXY"
             android:id="@+id/loginBgBlue"
-            android:src="@drawable/bg_blue_login_page"/>
+            android:src="@drawable/bg_blue_login_page"
+            android:contentDescription="@null"/>
 
     <TextView
             android:layout_width="wrap_content"
@@ -35,8 +36,7 @@
             android:layout_alignRight="@id/loginBgBlue"
             android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
-            android:text="version 1.0"
-            android:id="@+id/textVersion"
+            android:text="@string/version"
             android:textColor="#ffffff"/>
 
     <ImageView
@@ -53,7 +53,7 @@
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/logoTabrabad"
             android:layout_marginTop="30dp"
-            android:text="ทันระบาดสำรวจ"
+            android:text="@string/app_name_2"
             android:textSize="@dimen/text_headline"
             android:textColor="#ffffff"/>
 
@@ -63,8 +63,8 @@
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/logoTabrabad"
             android:layout_marginTop="90dp"
-            android:text="ไม่พบชื่อผู้ใช้และรหัสผ่านที่ตรงกัน"
-            android:textSize="20dp"
+            android:text="@string/username_and_password_do_not_match"
+            android:textSize="20sp"
             android:textColor="#ffffff"
             android:textStyle="normal"/>
 
@@ -74,8 +74,8 @@
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/logoTabrabad"
             android:layout_marginTop="120dp"
-            android:text="ลืมรหัสผ่าน?"
-            android:textSize="20dp"
+            android:text="@string/forgot_password"
+            android:textSize="20sp"
             android:textColor="#ffffff"
             android:textStyle="normal"/>
 
@@ -87,7 +87,7 @@
             android:layout_marginTop="190dp"
             android:padding="15dip"
             android:background="@drawable/rounded_edit_text"
-            android:hint="ชื่อผู้ใช้งาน"/>
+            android:hint="@string/username"/>
 
     <EditText
             android:layout_width="450dp"
@@ -97,7 +97,7 @@
             android:layout_marginTop="260dp"
             android:padding="15dip"
             android:background="@drawable/rounded_edit_text"
-            android:hint="รหัสผ่าน"/>
+            android:hint="@string/password"/>
 
     <Button
             android:id="@+id/login_button"
@@ -109,8 +109,8 @@
             android:padding="10dp"
             android:textColor="#ffffff"
             android:background="@drawable/rounded_button"
-            android:textSize="30dp"
-            android:text="เข้าสู่ระบบ"/>
+            android:textSize="30sp"
+            android:text="@string/login"/>
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -124,7 +124,7 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ทดลองใช้งาน"
+                android:text="@string/trial"
                 android:textSize="@dimen/text_body"
                 android:textColor="#848484"/>
 
@@ -132,7 +132,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
-                android:text="|"
+                android:text="@string/vertical_bar"
                 android:textSize="@dimen/text_body"
                 android:textColor="#848484"/>
 
@@ -140,16 +140,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
-                android:text="สมัครสมาชิก"
+                android:text="@string/register"
                 android:textSize="@dimen/text_body"
                 android:textColor="#848484"/>
 
     </LinearLayout>
 
-    <ImageView android:layout_width="match_parent"
+    <ImageView android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:layout_alignParentBottom="true"
                android:scaleType="fitXY"
-               android:src="@drawable/powered_by_nectec"/>
+               android:src="@drawable/powered_by_nectec"
+               android:contentDescription="@null"/>
 
 </RelativeLayout>

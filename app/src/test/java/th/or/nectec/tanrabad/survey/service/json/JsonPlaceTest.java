@@ -1,4 +1,4 @@
-package th.or.nectec.tanrabad.survey.service.jsonentity;
+package th.or.nectec.tanrabad.survey.service.json;
 
 import com.bluelinelabs.logansquare.LoganSquare;
 import com.google.gson.Gson;

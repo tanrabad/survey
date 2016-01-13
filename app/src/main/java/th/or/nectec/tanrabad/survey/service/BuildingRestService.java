@@ -24,7 +24,7 @@ import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.service.http.Header;
-import th.or.nectec.tanrabad.survey.service.jsonentity.JsonBuilding;
+import th.or.nectec.tanrabad.survey.service.json.JsonBuilding;
 import th.or.nectec.tanrabad.survey.repository.InMemoryPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 

@@ -1,4 +1,4 @@
-package th.or.nectec.tanrabad.survey.service.jsonentity;
+package th.or.nectec.tanrabad.survey.service.json;
 
 import android.support.annotation.NonNull;
 import com.bluelinelabs.logansquare.LoganSquare;

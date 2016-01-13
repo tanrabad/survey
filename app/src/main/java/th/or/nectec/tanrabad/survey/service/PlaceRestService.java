@@ -23,7 +23,7 @@ import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.service.http.Header;
-import th.or.nectec.tanrabad.survey.service.jsonentity.JsonPlace;
+import th.or.nectec.tanrabad.survey.service.json.JsonPlace;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 
 import java.io.IOException;

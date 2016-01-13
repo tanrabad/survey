@@ -22,7 +22,7 @@ import com.squareup.okhttp.Request;
 import th.or.nectec.tanrabad.entity.District;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.service.http.Header;
-import th.or.nectec.tanrabad.survey.service.jsonentity.JsonAmphur;
+import th.or.nectec.tanrabad.survey.service.json.JsonAmphur;
 
 import java.io.IOException;
 import java.util.ArrayList;

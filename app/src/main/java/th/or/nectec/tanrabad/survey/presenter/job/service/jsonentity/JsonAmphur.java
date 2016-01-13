@@ -16,9 +16,6 @@ public class JsonAmphur {
     @JsonField(name = "province_code")
     public String provinceCode;
 
-    @JsonField(name = "province_name")
-    public String provinceName;
-
     @JsonField
     public GeoJsonMultipolygon boundary;
 
@@ -26,7 +23,6 @@ public class JsonAmphur {
         District district = new District();
         district.setName(amphurName);
         district.setCode(amphurCode);
-        district.setProvinceName(provinceName);
         district.setProvinceCode(provinceCode);
         district.setBoundary(boundary.getEntities());
         return district;

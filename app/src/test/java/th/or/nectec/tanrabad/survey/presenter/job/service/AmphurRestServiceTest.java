@@ -20,7 +20,6 @@ package th.or.nectec.tanrabad.survey.presenter.job.service;
 import org.junit.Ignore;
 import org.junit.Test;
 import th.or.nectec.tanrabad.entity.District;
-import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.survey.WireMockTestBase;
 import th.or.nectec.tanrabad.survey.utils.ResourceFile;
 
@@ -84,10 +83,7 @@ public class AmphurRestServiceTest extends WireMockTestBase {
         assertEquals("1202", district.getCode());
         assertEquals("บางกรวย", district.getName());
         assertEquals("12", district.getProvinceCode());
-        assertEquals("นนทบุรี", district.getProvinceName());
-        assertEquals(new Location(13.8358835573344, 100.426092280359), district.getBoundary().get(0).getBoundary().get(0));
-        assertEquals(new Location(13.8328855111975, 100.428855074237), district.getBoundary().get(0).getBoundary().get(1));
-        assertEquals(new Location(13.8279769668251, 100.439485944792), district.getBoundary().get(0).getBoundary().get(2));
+        assertEquals(true, district.getBoundary().get(0) != null);
     }
 
     @Test
@@ -105,29 +101,20 @@ public class AmphurRestServiceTest extends WireMockTestBase {
         assertEquals("1202", districtHead.getCode());
         assertEquals("บางกรวย", districtHead.getName());
         assertEquals("12", districtHead.getProvinceCode());
-        assertEquals("นนทบุรี", districtHead.getProvinceName());
-        assertEquals(new Location(13.8358835573344, 100.426092280359), districtHead.getBoundary().get(0).getBoundary().get(0));
-        assertEquals(new Location(13.8328855111975, 100.428855074237), districtHead.getBoundary().get(0).getBoundary().get(1));
-        assertEquals(new Location(13.8279769668251, 100.439485944792), districtHead.getBoundary().get(0).getBoundary().get(2));
+        assertEquals(true, districtHead.getBoundary().get(0) != null);
 
 
         District districtMiddle = districtList.get(2);
         assertEquals("1204", districtMiddle.getCode());
         assertEquals("บางบัวทอง", districtMiddle.getName());
         assertEquals("12", districtMiddle.getProvinceCode());
-        assertEquals("นนทบุรี", districtMiddle.getProvinceName());
-        assertEquals(new Location(13.9847082843713, 100.396942845676), districtMiddle.getBoundary().get(0).getBoundary().get(0));
-        assertEquals(new Location(13.9831409292112, 100.403034873068), districtMiddle.getBoundary().get(0).getBoundary().get(1));
-        assertEquals(new Location(13.9853077593442, 100.409743725234), districtMiddle.getBoundary().get(0).getBoundary().get(2));
+        assertEquals(true, districtMiddle.getBoundary().get(0) != null);
 
         District districtTail = districtList.get(5);
         assertEquals("1201", districtTail.getCode());
         assertEquals("เมืองนนทบุรี", districtTail.getName());
         assertEquals("12", districtTail.getProvinceCode());
-        assertEquals("นนทบุรี", districtTail.getProvinceName());
-        assertEquals(new Location(13.8947189372409, 100.499333246907), districtTail.getBoundary().get(0).getBoundary().get(0));
-        assertEquals(new Location(13.8912485098046, 100.505650335683), districtTail.getBoundary().get(0).getBoundary().get(1));
-        assertEquals(new Location(13.8801882939396, 100.5466445234), districtTail.getBoundary().get(0).getBoundary().get(2));
+        assertEquals(true, districtTail.getBoundary().get(0) != null);
     }
 
     @Test

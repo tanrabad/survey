@@ -8,7 +8,6 @@ public class District {
     private String code;
     private String name;
     private String provinceCode;
-    private String provinceName;
     private List<Polygon> boundary;
 
     public String getCode() {
@@ -35,14 +34,6 @@ public class District {
         this.provinceCode = provinceCode;
     }
 
-    public String getProvinceName() {
-        return provinceName;
-    }
-
-    public void setProvinceName(String provinceName) {
-        this.provinceName = provinceName;
-    }
-
     public List<Polygon> getBoundary() {
         return boundary;
     }
@@ -56,7 +47,6 @@ public class District {
         int result = code != null ? code.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (provinceCode != null ? provinceCode.hashCode() : 0);
-        result = 31 * result + (provinceName != null ? provinceName.hashCode() : 0);
         result = 31 * result + (boundary != null ? boundary.hashCode() : 0);
         return result;
     }
@@ -71,8 +61,6 @@ public class District {
         if (code != null ? !code.equals(district.code) : district.code != null) return false;
         if (name != null ? !name.equals(district.name) : district.name != null) return false;
         if (provinceCode != null ? !provinceCode.equals(district.provinceCode) : district.provinceCode != null)
-            return false;
-        if (provinceName != null ? !provinceName.equals(district.provinceName) : district.provinceName != null)
             return false;
         return boundary != null ? boundary.equals(district.boundary) : district.boundary == null;
 

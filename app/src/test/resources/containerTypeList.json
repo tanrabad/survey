@@ -1,0 +1,46 @@
+[
+  {
+    "container_type_id": 0,
+    "container_type_name": "ไม่ระบุ"
+  },
+  {
+    "container_type_id": 1,
+    "container_type_name": "น้ำใช้"
+  },
+  {
+    "container_type_id": 2,
+    "container_type_name": "น้ำดื่ม"
+  },
+  {
+    "container_type_id": 3,
+    "container_type_name": "แจกัน"
+  },
+  {
+    "container_type_id": 4,
+    "container_type_name": "ที่รองกันมด"
+  },
+  {
+    "container_type_id": 5,
+    "container_type_name": "จานรองกระถาง"
+  },
+  {
+    "container_type_id": 6,
+    "container_type_name": "อ่างบัว/ไม้น้ำ"
+  },
+  {
+    "container_type_id": 7,
+    "container_type_name": "ยางรถยนต์เก่า"
+  },
+  {
+    "container_type_id": 8,
+    "container_type_name": "กากใบพืช"
+  },
+  {
+    "container_type_id": 9,
+    "container_type_name": "ภาชนะที่ไม่ใช้"
+  },
+  {
+    "container_type_id": 10,
+    "container_type_name": "อื่นๆ(ที่ไม่ใช้ประโยชน์)"
+  }
+]

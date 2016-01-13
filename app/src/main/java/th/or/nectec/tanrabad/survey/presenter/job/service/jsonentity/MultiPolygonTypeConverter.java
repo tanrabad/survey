@@ -66,6 +66,9 @@ public class MultiPolygonTypeConverter implements TypeConverter<List<JsonPolygon
 
     private List<Location>[] getHoles(ArrayList<List<Location>> polygon) {
         int holeSize = polygon.size() - 1;
+        if (holeSize == 0)
+            return null;
+
         List<Location>[] holes = new ArrayList[holeSize];
         for (int position = 0; position < holeSize; position++) {
             holes[position] = polygon.get(position + 1);

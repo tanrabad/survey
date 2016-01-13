@@ -28,9 +28,7 @@ public class Polygon {
         Polygon polygon = (Polygon) o;
 
         if (!boundary.equals(polygon.boundary)) return false;
-        // Probably incorrect - comparing Object[] arrays with Arrays.equals
         return Arrays.equals(holes, polygon.holes);
-
     }
 
     @Override

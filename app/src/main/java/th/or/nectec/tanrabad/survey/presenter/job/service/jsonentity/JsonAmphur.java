@@ -23,12 +23,12 @@ public class JsonAmphur {
     public GeoJsonMultipolygon boundary;
 
     public District getEntity() {
-        District subdistrict = new District();
-        subdistrict.setName(amphurName);
-        subdistrict.setCode(amphurCode);
-        subdistrict.setProvinceName(provinceName);
-        subdistrict.setProvinceCode(provinceCode);
-        subdistrict.setBoundary(boundary.getEntities());
-        return subdistrict;
+        District district = new District();
+        district.setName(amphurName);
+        district.setCode(amphurCode);
+        district.setProvinceName(provinceName);
+        district.setProvinceCode(provinceCode);
+        district.setBoundary(boundary.getEntities());
+        return district;
     }
 }

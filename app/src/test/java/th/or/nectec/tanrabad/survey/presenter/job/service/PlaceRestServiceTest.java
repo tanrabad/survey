@@ -17,13 +17,13 @@
 
 package th.or.nectec.tanrabad.survey.presenter.job.service;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.WireMockTestBase;
+import th.or.nectec.tanrabad.survey.presenter.job.service.http.Header;
 import th.or.nectec.tanrabad.survey.utils.ResourceFile;
 
 import java.util.List;
@@ -35,41 +35,34 @@ import static org.junit.Assert.assertEquals;
 
 public class PlaceRestServiceTest extends WireMockTestBase {
 
-    public static final String PLACE = "/place";
     UserRepository userRepository = Mockito.mock(UserRepository.class);
+    LastUpdate lastUpdate = Mockito.mock(LastUpdate.class);
 
-    @Test
-    @Ignore
-    public void testRequest() throws Exception {
-        PlaceRestService restService = new PlaceRestService();
-
-        assertEquals(0, restService.getUpdate().size());
-    }
 
     @Test(expected = RestServiceException.class)
     public void test404Response() throws Exception {
-        stubFor(get(urlEqualTo(PLACE))
+        stubFor(get(urlEqualTo(PlaceRestService.PATH))
                 .willReturn(aResponse()
                         .withStatus(404)
                         .withBody("")));
 
         PlaceRestService restService = new PlaceRestService(
                 localHost(),
-                new LastUpdatePreference(),
+                lastUpdate,
                 userRepository);
         restService.getUpdate();
     }
 
     @Test
     public void testNotModifiedResponse() throws Exception {
-        stubFor(get(urlEqualTo(PLACE))
+        stubFor(get(urlEqualTo(PlaceRestService.PATH))
                 .willReturn(aResponse()
                         .withStatus(304)
-                        .withBody("ssssssASDFASF")));
+                        .withBody("")));
 
         PlaceRestService restService = new PlaceRestService(
                 localHost(),
-                new LastUpdatePreference(),
+                lastUpdate,
                 userRepository);
         List<Place> buildings = restService.getUpdate();
         assertEquals(0, buildings.size());
@@ -78,13 +71,14 @@ public class PlaceRestServiceTest extends WireMockTestBase {
     @Test
     public void testSuccessResponse() throws Exception {
         Mockito.when(userRepository.findUserByName("dcp-user")).thenReturn(stubUser());
-        stubFor(get(urlEqualTo(PLACE))
+        stubFor(get(urlEqualTo(PlaceRestService.PATH))
                 .willReturn(aResponse()
                         .withStatus(200)
+                        .withHeader(Header.LAST_MODIFIED, "Mon, 30 Nov 2015 17:00:00 GMT")
                         .withBody(ResourceFile.read("placeList.json"))));
         PlaceRestService restService = new PlaceRestService(
                 localHost(),
-                new LastUpdatePreference(),
+                lastUpdate,
                 userRepository);
 
         List<Place> placeList = restService.getUpdate();
@@ -106,13 +100,14 @@ public class PlaceRestServiceTest extends WireMockTestBase {
     @Test
     public void testSuccessResponseMultipleItem() throws Exception {
         Mockito.when(userRepository.findUserByName("dcp-user")).thenReturn(stubUser());
-        stubFor(get(urlEqualTo(PLACE))
+        stubFor(get(urlEqualTo(PlaceRestService.PATH))
                 .willReturn(aResponse()
                         .withStatus(200)
+                        .withHeader(Header.LAST_MODIFIED, "Mon, 30 Nov 2015 17:00:00 GMT")
                         .withBody(ResourceFile.read("placeList10Item.json"))));
         PlaceRestService restService = new PlaceRestService(
                 localHost(),
-                new LastUpdatePreference(),
+                lastUpdate,
                 userRepository);
 
         List<Place> buildingList = restService.getUpdate();
@@ -135,9 +130,9 @@ public class PlaceRestServiceTest extends WireMockTestBase {
     public void testGetUrl() throws Exception {
         PlaceRestService restService = new PlaceRestService(
                 localHost(),
-                new LastUpdatePreference(),
+                lastUpdate,
                 userRepository);
-        assertEquals(localHost() + PLACE, restService.placeUrl());
+        assertEquals(localHost() + PlaceRestService.PATH, restService.placeUrl());
 
     }
 }

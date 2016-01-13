@@ -20,6 +20,10 @@ package th.or.nectec.tanrabad.survey.presenter.job.service;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import th.or.nectec.tanrabad.survey.presenter.job.service.http.Header;
 import th.or.nectec.tanrabad.survey.presenter.job.service.http.Status;
 
 import java.io.IOException;
@@ -29,8 +33,16 @@ import java.util.List;
 public abstract class BaseRestService<T> implements RestService<T> {
 
     public static final String BASE_API = "http://tanrabad.igridproject.info/v1";
+    protected static final DateTimeFormatter RFC1123_FORMATTER =
+            DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss 'GMT'");
     private final OkHttpClient client = new OkHttpClient();
-    String apiBaseUrl;
+    protected LastUpdate lastUpdate;
+    protected String baseApi;
+
+    public BaseRestService(String baseApi, LastUpdate lastUpdate) {
+        this.baseApi = baseApi;
+        this.lastUpdate = lastUpdate;
+    }
 
     @Override
     public List<T> getUpdate() {
@@ -43,11 +55,16 @@ public abstract class BaseRestService<T> implements RestService<T> {
             if (isNotSuccess(response))
                 throw new RestServiceException();
 
+            lastUpdate.save(getLastModified(response));
             return toJson(response.body().string());
 
         } catch (IOException io) {
             throw new RestServiceException();
         }
+    }
+
+    private DateTime getLastModified(Response response) {
+        return RFC1123_FORMATTER.parseDateTime(response.header(Header.LAST_MODIFIED));
     }
 
     public boolean isNotSuccess(Response response) {
@@ -61,6 +78,10 @@ public abstract class BaseRestService<T> implements RestService<T> {
     protected abstract Request makeRequest();
 
     protected abstract List<T> toJson(String responseBody);
+
+    protected String getLastUpdate() {
+        return RFC1123_FORMATTER.print(lastUpdate.get());
+    }
 
     protected abstract String getPath();
 }

@@ -20,11 +20,9 @@ package th.or.nectec.tanrabad.survey.presenter;
 import android.os.Bundle;
 import android.widget.TextView;
 import th.or.nectec.tanrabad.survey.R;
-import th.or.nectec.tanrabad.survey.presenter.job.AbsJobRunner;
-import th.or.nectec.tanrabad.survey.presenter.job.BuildingUpdateJob;
-import th.or.nectec.tanrabad.survey.presenter.job.InMemoryInitializeJob;
-import th.or.nectec.tanrabad.survey.presenter.job.Job;
+import th.or.nectec.tanrabad.survey.presenter.job.*;
 import th.or.nectec.tanrabad.survey.repository.InMemoryBuildingRepository;
+import th.or.nectec.tanrabad.survey.repository.InMemoryPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.persistence.CreateDatabaseJob;
 
 public class InitialActivity extends TanrabadActivity {
@@ -40,10 +38,8 @@ public class InitialActivity extends TanrabadActivity {
 
         new InitialJobRunner()
                 .addJob(new CreateDatabaseJob(this))
-                .addJob(new MockJob(1))
                 .addJob(new InMemoryInitializeJob())
-                .addJob(new MockJob(2))
-                .addJob(new MockJob(3))
+                .addJob(new PlaceUpdateJob(InMemoryPlaceRepository.getInstance()))
                 .addJob(new BuildingUpdateJob(InMemoryBuildingRepository.getInstance()))
                 .start();
     }

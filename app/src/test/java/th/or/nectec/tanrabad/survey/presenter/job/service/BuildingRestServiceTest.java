@@ -18,7 +18,8 @@
 package th.or.nectec.tanrabad.survey.presenter.job.service;
 
 import android.support.annotation.NonNull;
-import org.junit.Ignore;
+import org.joda.time.DateTime;
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import th.or.nectec.tanrabad.domain.UserRepository;
@@ -27,6 +28,7 @@ import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.WireMockTestBase;
+import th.or.nectec.tanrabad.survey.presenter.job.service.http.Header;
 import th.or.nectec.tanrabad.survey.utils.ResourceFile;
 
 import java.util.List;
@@ -41,13 +43,11 @@ public class BuildingRestServiceTest extends WireMockTestBase {
     public static final String BUILDING = "/building";
     UserRepository userRepository = Mockito.mock(UserRepository.class);
     PlaceRepository placeRepository = Mockito.mock(PlaceRepository.class);
+    LastUpdate lastUpdate = Mockito.mock(LastUpdate.class);
 
-    @Test
-    @Ignore
-    public void testRequest() throws Exception {
-        BuildingRestService restService = new BuildingRestService();
-
-        assertEquals(0, restService.getUpdate().size());
+    @Before
+    public void setUp() throws Exception {
+        Mockito.when(lastUpdate.get()).thenReturn(DateTime.now());
     }
 
     @Test(expected = RestServiceException.class)
@@ -59,7 +59,7 @@ public class BuildingRestServiceTest extends WireMockTestBase {
 
         BuildingRestService restService = new BuildingRestService(
                 localHost(),
-                new LastUpdatePreference(),
+                lastUpdate,
                 placeRepository, userRepository);
         restService.getUpdate();
     }
@@ -69,11 +69,11 @@ public class BuildingRestServiceTest extends WireMockTestBase {
         stubFor(get(urlEqualTo(BUILDING))
                 .willReturn(aResponse()
                         .withStatus(304)
-                        .withBody("")));
+                        .withBody("[]")));
 
         BuildingRestService restService = new BuildingRestService(
                 localHost(),
-                new LastUpdatePreference(),
+                lastUpdate,
                 placeRepository, userRepository);
         List<Building> buildings = restService.getUpdate();
         assertEquals(0, buildings.size());
@@ -86,10 +86,11 @@ public class BuildingRestServiceTest extends WireMockTestBase {
         stubFor(get(urlEqualTo(BUILDING))
                 .willReturn(aResponse()
                         .withStatus(200)
+                        .withHeader(Header.LAST_MODIFIED, "Mon, 30 Nov 2015 17:00:00 GMT")
                         .withBody(ResourceFile.read("buildingList.json"))));
         BuildingRestService restService = new BuildingRestService(
                 localHost(),
-                new LastUpdatePreference(),
+                lastUpdate,
                 placeRepository, userRepository);
 
         List<Building> buildingList = restService.getUpdate();
@@ -100,6 +101,21 @@ public class BuildingRestServiceTest extends WireMockTestBase {
         assertEquals(null, building.getLocation());
     }
 
+    private UUID uuid(String uuid) {
+        return UUID.fromString(uuid);
+    }
+
+    private User stubUser() {
+        return new User("dcp-user");
+    }
+
+    @NonNull
+    private Place stubPlace() {
+        Place place = new Place(UUID.fromString("b5f7b062-12f5-3402-ac88-0343733503bd"), "รพ.สต.ตำบลนาทราย");
+        place.setType(Place.TYPE_HOSPITAL);
+        return place;
+    }
+
     @Test
     public void testSuccessResponseMultipleItem() throws Exception {
         Mockito.when(userRepository.findUserByName("dcp-user")).thenReturn(stubUser());
@@ -107,10 +123,11 @@ public class BuildingRestServiceTest extends WireMockTestBase {
         stubFor(get(urlEqualTo(BUILDING))
                 .willReturn(aResponse()
                         .withStatus(200)
+                        .withHeader(Header.LAST_MODIFIED, "Mon, 30 Nov 2015 17:00:00 GMT")
                         .withBody(ResourceFile.read("buildingList10Item.json"))));
         BuildingRestService restService = new BuildingRestService(
                 localHost(),
-                new LastUpdatePreference(),
+                lastUpdate,
                 placeRepository, userRepository);
 
         List<Building> buildingList = restService.getUpdate();
@@ -129,28 +146,13 @@ public class BuildingRestServiceTest extends WireMockTestBase {
         assertEquals(null, building10.getLocation());
     }
 
-    private UUID uuid(String uuid) {
-        return UUID.fromString(uuid);
-    }
-
     @Test
     public void testGetUrl() throws Exception {
         BuildingRestService restService = new BuildingRestService(
                 localHost(),
-                new LastUpdatePreference(),
+                lastUpdate,
                 placeRepository, userRepository);
         assertEquals(localHost() + BUILDING, restService.buildingUrl());
 
-    }
-
-    private User stubUser() {
-        return new User("dcp-user");
-    }
-
-    @NonNull
-    private Place stubPlace() {
-        Place place = new Place(UUID.fromString("b5f7b062-12f5-3402-ac88-0343733503bd"), "รพ.สต.ตำบลนาทราย");
-        place.setType(Place.TYPE_HOSPITAL);
-        return place;
     }
 }

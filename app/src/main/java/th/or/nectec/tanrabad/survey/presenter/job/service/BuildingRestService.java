@@ -22,6 +22,7 @@ import com.squareup.okhttp.Request;
 import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Building;
+import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.presenter.job.service.http.Header;
 import th.or.nectec.tanrabad.survey.presenter.job.service.jsonentity.JsonBuilding;
 import th.or.nectec.tanrabad.survey.repository.InMemoryPlaceRepository;
@@ -33,34 +34,36 @@ import java.util.List;
 
 public class BuildingRestService extends BaseRestService<Building> {
 
+    public static final String PATH = "/building";
     LastUpdate lastUpdate;
-    String apiBaseUrl;
     private PlaceRepository placeRepository;
     private UserRepository userRepository;
 
     public BuildingRestService() {
-        this(BASE_API, new LastUpdatePreference(), InMemoryPlaceRepository.getInstance(), new StubUserRepository());
+        this(BASE_API, new LastUpdatePreference(TanrabadApp.getInstance(), PATH), InMemoryPlaceRepository.getInstance(), new StubUserRepository());
     }
 
     public BuildingRestService(String apiBaseUrl, LastUpdate lastUpdate, PlaceRepository placeRepository, UserRepository userRepository) {
-        this.apiBaseUrl = apiBaseUrl;
+        super(apiBaseUrl, lastUpdate);
         this.lastUpdate = lastUpdate;
         this.placeRepository = placeRepository;
         this.userRepository = userRepository;
     }
 
+    @Override
     protected Request makeRequest() {
         return new Request.Builder()
                 .get()
-                .url(apiBaseUrl + "/building")
-                .header(Header.IF_MODIFIED_SINCE, lastUpdate.get().toDateTimeISO().toString())
+                .url(buildingUrl())
+                .header(Header.IF_MODIFIED_SINCE, getLastUpdate())
                 .build();
     }
 
     protected String buildingUrl() {
-        return apiBaseUrl + getPath();
+        return baseApi + getPath();
     }
 
+    @Override
     protected List<Building> toJson(String responseBody) {
         ArrayList<Building> buildings = new ArrayList<>();
         try {
@@ -75,7 +78,8 @@ public class BuildingRestService extends BaseRestService<Building> {
         return buildings;
     }
 
+    @Override
     protected String getPath() {
-        return "/building";
+        return PATH;
     }
 }

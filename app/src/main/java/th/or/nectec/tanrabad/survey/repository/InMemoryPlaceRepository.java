@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,19 +19,14 @@ package th.or.nectec.tanrabad.survey.repository;
 
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceRepositoryException;
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.LocationEntity;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.utils.Address;
+
+import java.util.*;
 
 
 public class InMemoryPlaceRepository implements PlaceRepository {
@@ -205,6 +200,17 @@ public class InMemoryPlaceRepository implements PlaceRepository {
                 filterPlaces.add(eachPlace);
         }
         return filterPlaces.isEmpty() ? null : filterPlaces;
+    }
+
+    @Override
+    public void updateOrInsert(List<Place> update) {
+        for(Place place : update){
+            try{
+                update(place);
+            }catch (PlaceRepositoryException pre){
+                save(place);
+            }
+        }
     }
 
     private void trim(Location insideMaximumLocation, Location outsideMaximumLocation, List<LocationEntity> filterPlaces) {

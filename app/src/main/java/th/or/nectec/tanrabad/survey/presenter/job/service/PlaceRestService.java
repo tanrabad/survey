@@ -21,8 +21,8 @@ import com.bluelinelabs.logansquare.LoganSquare;
 import com.squareup.okhttp.Request;
 import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.presenter.job.service.http.Header;
-import th.or.nectec.tanrabad.survey.presenter.job.service.http.Status;
 import th.or.nectec.tanrabad.survey.presenter.job.service.jsonentity.JsonPlace;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 
@@ -32,45 +32,47 @@ import java.util.List;
 
 public class PlaceRestService extends BaseRestService<Place> {
 
-    LastUpdate lastUpdate;
+    public static final String PATH = "/place";
     private UserRepository userRepository;
 
     public PlaceRestService() {
-        this(BASE_API, new LastUpdatePreference(), new StubUserRepository());
+        this(BASE_API, new LastUpdatePreference(TanrabadApp.getInstance(), PATH), new StubUserRepository());
     }
 
     public PlaceRestService(String apiBaseUrl, LastUpdate lastUpdate, UserRepository userRepository) {
-        this.apiBaseUrl = apiBaseUrl;
-        this.lastUpdate = lastUpdate;
+        super(apiBaseUrl, lastUpdate);
         this.userRepository = userRepository;
     }
 
+    @Override
     protected Request makeRequest() {
         return new Request.Builder()
                 .get()
                 .url(placeUrl())
-                .header(Header.IF_MODIFIED_SINCE, lastUpdate.get().toDateTimeISO().toString())
+                .header(Header.IF_MODIFIED_SINCE, getLastUpdate())
                 .build();
     }
 
     public String placeUrl() {
-        return apiBaseUrl + getPath();
+        return baseApi + getPath();
     }
 
+    @Override
     protected List<Place> toJson(String responseBody) {
-        ArrayList<Place> buildings = new ArrayList<>();
+        ArrayList<Place> places = new ArrayList<>();
         try {
-            List<JsonPlace> jsonBuildings = LoganSquare.parseList(responseBody, JsonPlace.class);
-            for (JsonPlace eachJsonBuilding : jsonBuildings) {
-                buildings.add(eachJsonBuilding.getEntity(userRepository));
+            List<JsonPlace> jsonPlaces = LoganSquare.parseList(responseBody, JsonPlace.class);
+            for (JsonPlace eachJsonPlace : jsonPlaces) {
+                places.add(eachJsonPlace.getEntity(userRepository));
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return buildings;
+        return places;
     }
 
+    @Override
     protected String getPath() {
-        return "/place";
+        return PATH;
     }
 }

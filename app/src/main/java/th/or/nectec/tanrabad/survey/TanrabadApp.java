@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,6 +18,7 @@
 package th.or.nectec.tanrabad.survey;
 
 import android.app.Application;
+import android.content.Context;
 import th.or.nectec.tanrabad.survey.utils.tool.ActionLogger;
 import th.or.nectec.tanrabad.survey.utils.tool.CrashLogger;
 import th.or.nectec.tanrabad.survey.utils.tool.FabricTools;
@@ -27,6 +28,7 @@ public class TanrabadApp extends Application {
 
     private static CrashLogger crashLogger;
     private static ActionLogger actionLogger;
+    private static TanrabadApp instance;
 
     public static ActionLogger action() {
         return actionLogger;
@@ -36,9 +38,14 @@ public class TanrabadApp extends Application {
         return crashLogger;
     }
 
+    public static Context getInstance() {
+        return instance;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
+        instance = this;
         setupAnalysisTools();
         setupDefaultFont();
     }

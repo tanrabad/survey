@@ -17,18 +17,42 @@
 
 package th.or.nectec.tanrabad.survey.presenter.job.service;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 
 public class LastUpdatePreference implements LastUpdate {
+
+    public static final String PREF_NAME = "Last-Update";
+    public static final String DEFAULT_DATETIME = "Tue, 01 Dec 2014 17:00:00 GMT";
+    private static final DateTimeFormatter RFC1123_FORMATTER =
+            DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss 'GMT'");
+    private final Context context;
+    private final String path;
+
+    public LastUpdatePreference(Context context, String path) {
+        this.context = context;
+        this.path = path;
+    }
+
     @Override
     public void save(DateTime dateTime) {
+        SharedPreferences.Editor spEditor = getSharedPreferences().edit();
+        spEditor.putString(path, RFC1123_FORMATTER.print(dateTime));
+        spEditor.apply();
+    }
 
+    private SharedPreferences getSharedPreferences() {
+        return context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
     }
 
     @Override
     public DateTime get() {
-        return DateTime.now().minusYears(1);
+        String text = getSharedPreferences().getString(path, DEFAULT_DATETIME);
+        return RFC1123_FORMATTER.parseDateTime(text);
     }
 
 }

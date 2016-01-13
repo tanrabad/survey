@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,12 +17,12 @@
 
 package th.or.nectec.tanrabad.domain.place;
 
-import java.util.List;
-import java.util.UUID;
-
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.LocationEntity;
 import th.or.nectec.tanrabad.entity.Place;
+
+import java.util.List;
+import java.util.UUID;
 
 public interface PlaceRepository {
 
@@ -41,4 +41,6 @@ public interface PlaceRepository {
     List<LocationEntity> findTrimmedInBoundaryLocation(Location insideMinimumLocation, Location outsideMinimumLocation, Location insideMaximumLocation, Location outsideMaximumLocation);
 
     List<Place> findByName(String placeName);
+
+    void updateOrInsert(List<Place> update);
 }

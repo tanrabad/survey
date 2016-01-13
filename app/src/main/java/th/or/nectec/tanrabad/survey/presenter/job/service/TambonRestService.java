@@ -20,6 +20,7 @@ package th.or.nectec.tanrabad.survey.presenter.job.service;
 import com.bluelinelabs.logansquare.LoganSquare;
 import com.squareup.okhttp.Request;
 import th.or.nectec.tanrabad.entity.Subdistrict;
+import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.presenter.job.service.http.Header;
 import th.or.nectec.tanrabad.survey.presenter.job.service.jsonentity.JsonTambon;
 
@@ -29,15 +30,15 @@ import java.util.List;
 
 public class TambonRestService extends BaseRestService<Subdistrict> {
 
+    public static final String PATH = "/tambon";
     LastUpdate lastUpdate;
 
     public TambonRestService() {
-        this(BASE_API, new LastUpdatePreference());
+        this(BASE_API, new LastUpdatePreference(TanrabadApp.getInstance(), PATH));
     }
 
     public TambonRestService(String apiBaseUrl, LastUpdate lastUpdate) {
-        this.apiBaseUrl = apiBaseUrl;
-        this.lastUpdate = lastUpdate;
+        super(apiBaseUrl, lastUpdate);
     }
 
     protected Request makeRequest() {
@@ -49,7 +50,7 @@ public class TambonRestService extends BaseRestService<Subdistrict> {
     }
 
     public String tambonUrl() {
-        return apiBaseUrl + getPath();
+        return baseApi + getPath();
     }
 
     protected List<Subdistrict> toJson(String responseBody) {
@@ -66,6 +67,6 @@ public class TambonRestService extends BaseRestService<Subdistrict> {
     }
 
     protected String getPath() {
-        return "/tambon";
+        return PATH;
     }
 }

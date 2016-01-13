@@ -20,6 +20,7 @@ package th.or.nectec.tanrabad.survey.presenter.job.service;
 import com.bluelinelabs.logansquare.LoganSquare;
 import com.squareup.okhttp.Request;
 import th.or.nectec.tanrabad.entity.Province;
+import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.presenter.job.service.http.Header;
 import th.or.nectec.tanrabad.survey.presenter.job.service.jsonentity.JsonProvince;
 
@@ -29,15 +30,15 @@ import java.util.List;
 
 public class ProvinceRestService extends BaseRestService<Province> {
 
+    public static final String PATH = "/province";
     LastUpdate lastUpdate;
 
     public ProvinceRestService() {
-        this(BASE_API, new LastUpdatePreference());
+        this(BASE_API, new LastUpdatePreference(TanrabadApp.getInstance(), PATH ));
     }
 
     public ProvinceRestService(String apiBaseUrl, LastUpdate lastUpdate) {
-        this.apiBaseUrl = apiBaseUrl;
-        this.lastUpdate = lastUpdate;
+        super(apiBaseUrl, lastUpdate);
     }
 
     @Override
@@ -50,7 +51,7 @@ public class ProvinceRestService extends BaseRestService<Province> {
     }
 
     public String provinceUrl() {
-        return apiBaseUrl + getPath();
+        return baseApi + getPath();
     }
 
     @Override
@@ -69,6 +70,6 @@ public class ProvinceRestService extends BaseRestService<Province> {
 
     @Override
     protected String getPath() {
-        return "/province";
+        return PATH;
     }
 }

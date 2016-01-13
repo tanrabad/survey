@@ -20,6 +20,7 @@ package th.or.nectec.tanrabad.survey.presenter.job.service;
 import com.bluelinelabs.logansquare.LoganSquare;
 import com.squareup.okhttp.Request;
 import th.or.nectec.tanrabad.entity.District;
+import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.presenter.job.service.http.Header;
 import th.or.nectec.tanrabad.survey.presenter.job.service.jsonentity.JsonAmphur;
 
@@ -29,15 +30,15 @@ import java.util.List;
 
 public class AmphurRestService extends BaseRestService<District> {
 
+    public static final String PATH = "/amphur";
     LastUpdate lastUpdate;
 
     public AmphurRestService() {
-        this(BASE_API, new LastUpdatePreference());
+        this(BASE_API, new LastUpdatePreference(TanrabadApp.getInstance(), PATH ));
     }
 
     public AmphurRestService(String apiBaseUrl, LastUpdate lastUpdate) {
-        this.apiBaseUrl = apiBaseUrl;
-        this.lastUpdate = lastUpdate;
+        super(apiBaseUrl, lastUpdate);
     }
 
     protected Request makeRequest() {
@@ -49,7 +50,7 @@ public class AmphurRestService extends BaseRestService<District> {
     }
 
     public String amphurUrl() {
-        return apiBaseUrl + getPath();
+        return baseApi + getPath();
     }
 
     protected List<District> toJson(String responseBody) {
@@ -66,6 +67,6 @@ public class AmphurRestService extends BaseRestService<District> {
     }
 
     protected String getPath() {
-        return "/amphur";
+        return PATH;
     }
 }

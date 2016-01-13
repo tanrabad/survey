@@ -20,6 +20,7 @@ package th.or.nectec.tanrabad.survey.presenter.job.service;
 import com.bluelinelabs.logansquare.LoganSquare;
 import com.squareup.okhttp.Request;
 import th.or.nectec.tanrabad.entity.ContainerType;
+import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.presenter.job.service.http.Header;
 import th.or.nectec.tanrabad.survey.presenter.job.service.jsonentity.JsonContainerType;
 
@@ -29,15 +30,15 @@ import java.util.List;
 
 public class ContainerTypeRestService extends BaseRestService<ContainerType> {
 
+    public static final String PATH = "/containertype";
     LastUpdate lastUpdate;
 
     public ContainerTypeRestService() {
-        this(BASE_API, new LastUpdatePreference());
+        this(BASE_API, new LastUpdatePreference(TanrabadApp.getInstance(), PATH));
     }
 
     public ContainerTypeRestService(String apiBaseUrl, LastUpdate lastUpdate) {
-        this.apiBaseUrl = apiBaseUrl;
-        this.lastUpdate = lastUpdate;
+        super(apiBaseUrl, lastUpdate);
     }
 
     @Override
@@ -50,7 +51,7 @@ public class ContainerTypeRestService extends BaseRestService<ContainerType> {
     }
 
     public String provinceUrl() {
-        return apiBaseUrl + getPath();
+        return baseApi + getPath();
     }
 
     @Override
@@ -69,6 +70,6 @@ public class ContainerTypeRestService extends BaseRestService<ContainerType> {
 
     @Override
     protected String getPath() {
-        return "/containertype";
+        return PATH;
     }
 }

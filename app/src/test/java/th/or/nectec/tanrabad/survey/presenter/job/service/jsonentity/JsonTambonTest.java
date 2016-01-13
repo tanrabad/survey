@@ -19,9 +19,6 @@ public class JsonTambonTest {
         assertEquals("840212", jsonTambon.tambonCode);
         assertEquals("ทุ่งรัง", jsonTambon.tambonName);
         assertEquals("8402", jsonTambon.amphurCode);
-        assertEquals("กาญจนดิษฐ์", jsonTambon.amphurName);
-        assertEquals("84", jsonTambon.provinceCode);
-        assertEquals("สุราษฎร์ธานี", jsonTambon.provinceName);
     }
 
     @Test
@@ -31,10 +28,7 @@ public class JsonTambonTest {
 
         assertEquals("840212", subdistrict.getCode());
         assertEquals("ทุ่งรัง", subdistrict.getName());
-        assertEquals("8402", subdistrict.getAmphurCode());
-        assertEquals("กาญจนดิษฐ์", subdistrict.getAmphurName());
-        assertEquals("84", subdistrict.getProvinceCode());
-        assertEquals("สุราษฎร์ธานี", subdistrict.getProvinceName());
+        assertEquals("8402", subdistrict.getDistrictCode());
         assertEquals(stubTambonPolygon(), subdistrict.getBoundary().get(0));
     }
 

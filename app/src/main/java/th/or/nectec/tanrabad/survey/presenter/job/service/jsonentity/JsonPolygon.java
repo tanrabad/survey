@@ -24,7 +24,7 @@ public class JsonPolygon {
     }
 
     public int getHolesCount() {
-        return holes.length;
+        return holes == null ? 0 : holes.length;
     }
 
     public List<Location>[] getAllHoles() {

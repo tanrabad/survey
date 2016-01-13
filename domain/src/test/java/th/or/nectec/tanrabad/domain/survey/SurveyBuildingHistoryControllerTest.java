@@ -22,17 +22,16 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
 import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.User;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class SurveyBuildingHistoryControllerTest {
 
@@ -69,7 +68,7 @@ public class SurveyBuildingHistoryControllerTest {
         building1.setPlace(place);
 
         final List<Survey> surveys = new ArrayList<>();
-        Survey survey1 = new Survey(user, building1);
+        Survey survey1 = new Survey(UUID.randomUUID(), user, building1);
         surveys.add(survey1);
 
         context.checking(new Expectations() {

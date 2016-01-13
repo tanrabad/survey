@@ -22,6 +22,7 @@ import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Survey;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 
@@ -32,10 +33,10 @@ public class KeyContainerTest {
     public void testFindOfOneSurvey() throws Exception {
         Survey survey = new Survey.Builder().setBuilding(Building.withName("1"))
                 .setResident(4)
-                .addIndoorDetail(ContainerTypeStub.น้ำดื่ม, 4, 2)
-                .addIndoorDetail(ContainerTypeStub.ที่รองกันมด, 4, 4)
-                .addIndoorDetail(ContainerTypeStub.จานรองกระถาง, 10, 5)
-                .addOutdoorDetail(ContainerTypeStub.ภาชนะที่ไม่ใช้, 3, 3)
+                .addIndoorDetail(UUID.randomUUID(), ContainerTypeStub.น้ำดื่ม, 4, 2)
+                .addIndoorDetail(UUID.randomUUID(), ContainerTypeStub.ที่รองกันมด, 4, 4)
+                .addIndoorDetail(UUID.randomUUID(), ContainerTypeStub.จานรองกระถาง, 10, 5)
+                .addOutdoorDetail(UUID.randomUUID(), ContainerTypeStub.ภาชนะที่ไม่ใช้, 3, 3)
                 .build();
         KeyContainer keyContainer = new KeyContainer(survey);
         keyContainer.calculate();
@@ -53,29 +54,29 @@ public class KeyContainerTest {
     public void testFindOfThreeSurvey() throws Exception {
         Survey survey = new Survey.Builder().setBuilding(Building.withName("1"))
                 .setResident(4)
-                .addIndoorDetail(ContainerTypeStub.น้ำดื่ม, 4, 4)
-                .addIndoorDetail(ContainerTypeStub.ที่รองกันมด, 4, 4)
-                .addIndoorDetail(ContainerTypeStub.แจกัน, 5, 5)
+                .addIndoorDetail(UUID.randomUUID(), ContainerTypeStub.น้ำดื่ม, 4, 4)
+                .addIndoorDetail(UUID.randomUUID(), ContainerTypeStub.ที่รองกันมด, 4, 4)
+                .addIndoorDetail(UUID.randomUUID(), ContainerTypeStub.แจกัน, 5, 5)
 
-                .addOutdoorDetail(ContainerTypeStub.อ่างบัว_ไม้น้ำ, 6, 6)
-                .addOutdoorDetail(ContainerTypeStub.น้ำใช้, 3, 3)
+                .addOutdoorDetail(UUID.randomUUID(), ContainerTypeStub.อ่างบัว_ไม้น้ำ, 6, 6)
+                .addOutdoorDetail(UUID.randomUUID(), ContainerTypeStub.น้ำใช้, 3, 3)
                 .build();
         Survey survey2 = new Survey.Builder().setBuilding(Building.withName("1"))
                 .setResident(1)
-                .addIndoorDetail(ContainerTypeStub.น้ำดื่ม, 10, 10)
-                .addIndoorDetail(ContainerTypeStub.ที่รองกันมด, 4, 4)
-                .addIndoorDetail(ContainerTypeStub.แจกัน, 10, 10)
+                .addIndoorDetail(UUID.randomUUID(), ContainerTypeStub.น้ำดื่ม, 10, 10)
+                .addIndoorDetail(UUID.randomUUID(), ContainerTypeStub.ที่รองกันมด, 4, 4)
+                .addIndoorDetail(UUID.randomUUID(), ContainerTypeStub.แจกัน, 10, 10)
 
-                .addOutdoorDetail(ContainerTypeStub.ยางรถยนต์เก่า, 8, 8)
-                .addOutdoorDetail(ContainerTypeStub.ภาชนะที่ไม่ใช้, 3, 3)
+                .addOutdoorDetail(UUID.randomUUID(), ContainerTypeStub.ยางรถยนต์เก่า, 8, 8)
+                .addOutdoorDetail(UUID.randomUUID(), ContainerTypeStub.ภาชนะที่ไม่ใช้, 3, 3)
                 .build();
         Survey survey3 = new Survey.Builder().setBuilding(Building.withName("1"))
                 .setResident(5)
-                .addIndoorDetail(ContainerTypeStub.น้ำดื่ม, 2, 2)
-                .addIndoorDetail(ContainerTypeStub.น้ำใช้, 13, 13)
+                .addIndoorDetail(UUID.randomUUID(), ContainerTypeStub.น้ำดื่ม, 2, 2)
+                .addIndoorDetail(UUID.randomUUID(), ContainerTypeStub.น้ำใช้, 13, 13)
 
-                .addOutdoorDetail(ContainerTypeStub.จานรองกระถาง, 8, 8)
-                .addOutdoorDetail(ContainerTypeStub.กากใบพืช, 2, 2)
+                .addOutdoorDetail(UUID.randomUUID(), ContainerTypeStub.จานรองกระถาง, 8, 8)
+                .addOutdoorDetail(UUID.randomUUID(), ContainerTypeStub.กากใบพืช, 2, 2)
                 .build();
 
         ArrayList<Survey> surveys = new ArrayList<>();

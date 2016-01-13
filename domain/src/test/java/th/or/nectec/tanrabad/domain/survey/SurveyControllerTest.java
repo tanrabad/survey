@@ -59,7 +59,7 @@ public class SurveyControllerTest {
     @Test
     public void testLoadSurveySuccess() throws Exception {
 
-        final Survey surveys = new Survey(user, building);
+        final Survey surveys = new Survey(UUID.randomUUID(), user, building);
 
         context.checking(new Expectations() {
             {

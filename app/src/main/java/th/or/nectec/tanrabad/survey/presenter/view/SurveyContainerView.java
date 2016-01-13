@@ -34,7 +34,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import th.or.nectec.tanrabad.entity.ContainerType;
 import th.or.nectec.tanrabad.entity.SurveyDetail;
+import th.or.nectec.tanrabad.entity.utils.UUIDv1;
 import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.utils.MacAddressUtils;
 
 public class SurveyContainerView extends LinearLayout {
     private ContainerType containerType;
@@ -101,12 +103,6 @@ public class SurveyContainerView extends LinearLayout {
         }
     }
 
-    private void decreaseFoundWhenTotalLessThanFound() {
-        if (getTotalValue() < getFoundValue()) {
-            foundContainerView.setText(String.valueOf(getTotalValue()));
-        }
-    }
-
     private int getFoundValue() {
         String foundStr = foundContainerView.getText().toString();
         return TextUtils.isEmpty(foundStr) ? 0 : Integer.valueOf(foundStr);
@@ -115,6 +111,12 @@ public class SurveyContainerView extends LinearLayout {
     private int getTotalValue() {
         String totalStr = totalContainerView.getText().toString();
         return TextUtils.isEmpty(totalStr) ? 0 : Integer.valueOf(totalStr);
+    }
+
+    private void decreaseFoundWhenTotalLessThanFound() {
+        if (getTotalValue() < getFoundValue()) {
+            foundContainerView.setText(String.valueOf(getTotalValue()));
+        }
     }
 
     public SurveyContainerView(Context context, AttributeSet attrs) {
@@ -133,7 +135,8 @@ public class SurveyContainerView extends LinearLayout {
     }
 
     public SurveyDetail getSurveyDetail() {
-        return new SurveyDetail(containerType, getTotalValue(), getFoundValue());
+        return new SurveyDetail(UUIDv1.generate(MacAddressUtils.getMacAddress(getContext())),
+                containerType, getTotalValue(), getFoundValue());
     }
 
     public void setSurveyDetail(SurveyDetail surveyDetail) {

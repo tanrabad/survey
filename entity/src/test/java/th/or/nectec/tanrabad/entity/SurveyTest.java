@@ -23,6 +23,7 @@ import org.junit.runners.JUnit4;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 
@@ -32,7 +33,7 @@ public class SurveyTest {
     private final User user1 = User.fromUsername("Tom50");
     private final Building building1 = Building.withName("โรงเรียนเซนต์เมรี่");
     private final int resident = 2250;
-    private final Survey survey1 = new Survey(user1, building1);
+    private final Survey survey1 = new Survey(UUID.randomUUID(), user1, building1);
     private final ContainerType น้ำใช้ = new ContainerType(1, "น้ำใช้");
     private final ContainerType น้ำดื่ม = new ContainerType(2, "น้ำดื่ม");
     private Location location = new Location(14.078606, 100.603120);
@@ -64,10 +65,10 @@ public class SurveyTest {
     @Test
     public void testIsFoundLarvaeMustFalse() throws Exception {
         List<SurveyDetail> indoor2 = new ArrayList<>();
-        indoor2.add(SurveyDetail.fromResult(น้ำใช้, 2, 0));
+        indoor2.add(new SurveyDetail(UUID.randomUUID(), น้ำใช้, 2, 0));
 
         List<SurveyDetail> outdoor2 = new ArrayList<>();
-        outdoor2.add(SurveyDetail.fromResult(น้ำใช้, 5, 0));
+        outdoor2.add(new SurveyDetail(UUID.randomUUID(), น้ำใช้, 5, 0));
         survey1.setIndoorDetail(indoor2);
         survey1.setOutdoorDetail(outdoor2);
 
@@ -77,7 +78,7 @@ public class SurveyTest {
     @Test
     public void testIsFoundLarvaeMustTrue() throws Exception {
         List<SurveyDetail> indoor2 = new ArrayList<>();
-        indoor2.add(SurveyDetail.fromResult(น้ำใช้, 2, 2));
+        indoor2.add(new SurveyDetail(UUID.randomUUID(), น้ำใช้, 2, 2));
 
         survey1.setIndoorDetail(indoor2);
 
@@ -87,11 +88,11 @@ public class SurveyTest {
     @Test
     public void testIsFoundLarvaeMustTrue2() throws Exception {
         List<SurveyDetail> indoor2 = new ArrayList<>();
-        indoor2.add(SurveyDetail.fromResult(น้ำใช้, 2, 2));
+        indoor2.add(new SurveyDetail(UUID.randomUUID(), น้ำใช้, 2, 2));
 
         List<SurveyDetail> outdoor2 = new ArrayList<>();
-        outdoor2.add(SurveyDetail.fromResult(น้ำใช้, 5, 0));
-        outdoor2.add(SurveyDetail.fromResult(น้ำดื่ม, 5, 2));
+        outdoor2.add(new SurveyDetail(UUID.randomUUID(), น้ำใช้, 5, 0));
+        outdoor2.add(new SurveyDetail(UUID.randomUUID(), น้ำดื่ม, 5, 2));
 
         survey1.setIndoorDetail(indoor2);
         survey1.setOutdoorDetail(outdoor2);

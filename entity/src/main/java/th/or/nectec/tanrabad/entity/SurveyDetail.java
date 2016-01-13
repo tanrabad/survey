@@ -17,14 +17,17 @@
 
 package th.or.nectec.tanrabad.entity;
 
+import java.util.UUID;
 
 public class SurveyDetail implements Comparable {
     private final ContainerType containerType;
     private int totalContainer;
     private int foundLarvaContainer;
+    private UUID surveyDetailID;
 
-    public SurveyDetail(ContainerType containerType, int totalContainer, int foundLarvaContainer) {
+    public SurveyDetail(UUID surveyDetailID, ContainerType containerType, int totalContainer, int foundLarvaContainer) {
         this.containerType = containerType;
+        this.surveyDetailID = surveyDetailID;
         setContainerCount(totalContainer, foundLarvaContainer);
     }
 
@@ -33,10 +36,6 @@ public class SurveyDetail implements Comparable {
             throw new ContainerFoundLarvaOverTotalException();
         this.totalContainer = total;
         this.foundLarvaContainer = found;
-    }
-
-    public static SurveyDetail fromResult(ContainerType containerType, int total, int found) {
-        return new SurveyDetail(containerType, total, found);
     }
 
     public ContainerType getContainerType() {
@@ -94,6 +93,10 @@ public class SurveyDetail implements Comparable {
         else
             return 0;
 
+    }
+
+    public UUID getId() {
+        return surveyDetailID;
     }
 
     public class ContainerFoundLarvaOverTotalException extends RuntimeException {

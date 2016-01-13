@@ -22,21 +22,25 @@ import th.or.nectec.tanrabad.entity.ContainerType;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.User;
 
+import java.util.UUID;
+
 public class SurveyStub {
 
 
     public static final User SURVEYOR = User.fromUsername("surveyor");
+    private static String macAddress = "aa:bb:cc:dd:ee:ff";
 
     public static Survey withoutLarvae(Building building) {
-        return new Survey.Builder(SURVEYOR).setBuilding(building).addIndoorDetail(ContainerTypeStub.น้ำใช้, 20, 0).build();
+        return new Survey.Builder(UUID.randomUUID(), SURVEYOR).setBuilding(building)
+                .addIndoorDetail(UUID.randomUUID(), ContainerTypeStub.น้ำใช้, 20, 0).build();
 
     }
 
     public static Survey withLarvae(Building building) {
-        return new Survey.Builder(SURVEYOR)
+        return new Survey.Builder(UUID.randomUUID(), SURVEYOR)
                 .setBuilding(building)
-                .addIndoorDetail(ContainerTypeStub.แจกัน, 5, 2)
-                .addOutdoorDetail(ContainerTypeStub.กากใบพืช, 10, 2)
+                .addIndoorDetail(UUID.randomUUID(), ContainerTypeStub.แจกัน, 5, 2)
+                .addOutdoorDetail(UUID.randomUUID(), ContainerTypeStub.กากใบพืช, 10, 2)
                 .build();
     }
 
@@ -45,17 +49,17 @@ public class SurveyStub {
     }
 
     public static Survey withResult(ContainerType containerType, int total, int foundLarvae) {
-        return new Survey.Builder(SURVEYOR)
+        return new Survey.Builder(UUID.randomUUID(), SURVEYOR)
                 .setBuilding(Building.withName("1"))
-                .addIndoorDetail(containerType, total, foundLarvae)
+                .addIndoorDetail(UUID.randomUUID(), containerType, total, foundLarvae)
                 .build();
     }
 
     public static Survey withIndoorOutdoorResult(int indoorTotal, int indoorFound, int outdoorTotal, int outdoorFound) {
-        return new Survey.Builder(SURVEYOR)
+        return new Survey.Builder(UUID.randomUUID(), SURVEYOR)
                 .setBuilding(Building.withName("1"))
-                .addIndoorDetail(ContainerTypeStub.น้ำใช้, indoorTotal, indoorFound)
-                .addOutdoorDetail(ContainerTypeStub.อ่างบัว_ไม้น้ำ, outdoorTotal, outdoorFound)
+                .addIndoorDetail(UUID.randomUUID(), ContainerTypeStub.น้ำใช้, indoorTotal, indoorFound)
+                .addOutdoorDetail(UUID.randomUUID(), ContainerTypeStub.อ่างบัว_ไม้น้ำ, outdoorTotal, outdoorFound)
                 .build();
     }
 }

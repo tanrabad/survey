@@ -22,11 +22,6 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
 import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.domain.survey.SurveyBuildingChooser;
@@ -35,6 +30,10 @@ import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.User;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class BuildingWithSurveyStatusChooserTest {
 
@@ -91,7 +90,7 @@ public class BuildingWithSurveyStatusChooserTest {
         buildings.add(building3);
 
         final List<Survey> surveyBuildings = new ArrayList<>();
-        surveyBuildings.add(new Survey(user, building2));
+        surveyBuildings.add(new Survey(UUID.randomUUID(), user, building2));
 
         final List<BuildingWithSurveyStatus> buildingsWithSurveyStatuses = new ArrayList<>();
         buildingsWithSurveyStatuses.add(new BuildingWithSurveyStatus(building1, false));

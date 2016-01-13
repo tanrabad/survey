@@ -22,6 +22,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.util.UUID;
+
 @RunWith(JUnit4.class)
 public class SurveyDetailTest {
 
@@ -29,13 +31,13 @@ public class SurveyDetailTest {
 
     @Test(expected = SurveyDetail.ContainerFoundLarvaOverTotalException.class)
     public void ContainerFoundLarvaMoreThanTotalMustThrowException() throws Exception {
-        new SurveyDetail(น้ำใช้, 2, 10);
+        new SurveyDetail(UUID.randomUUID(), น้ำใช้, 2, 10);
     }
 
     @Test
     public void testIsFoundLarvae() throws Exception {
-        Assert.assertEquals(false, SurveyDetail.fromResult(น้ำใช้, 10, 0).isFoundLarva());
-        Assert.assertEquals(true, SurveyDetail.fromResult(น้ำใช้, 10, 3).isFoundLarva());
-        Assert.assertEquals(true, SurveyDetail.fromResult(น้ำใช้, 10, 10).isFoundLarva());
+        Assert.assertEquals(false, new SurveyDetail(UUID.randomUUID(), น้ำใช้, 10, 0).isFoundLarva());
+        Assert.assertEquals(true, new SurveyDetail(UUID.randomUUID(), น้ำใช้, 10, 3).isFoundLarva());
+        Assert.assertEquals(true, new SurveyDetail(UUID.randomUUID(), น้ำใช้, 10, 10).isFoundLarva());
     }
 }

@@ -23,13 +23,14 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 
 @RunWith(JUnit4.class)
 
 public class SurveyIndoorOutdoorDetailTest {
-    private final Survey survey1 = new Survey(User.fromUsername("Janie09")
+    private final Survey survey1 = new Survey(UUID.randomUUID(), User.fromUsername("Janie09")
             , Building.withName("โรงพยาบาลเซนต์เมรี่"));
 
     @Test
@@ -38,25 +39,25 @@ public class SurveyIndoorOutdoorDetailTest {
         assertEquals(surveyDetails1(), survey1.getIndoorDetail());
     }
 
-    @Test
-    public void testSetThenGetOutdoorDetail() {
-        survey1.setOutdoorDetail(surveyDetails1());
-        assertEquals(surveyDetails1(), survey1.getOutdoorDetail());
-    }
-
     private ArrayList<SurveyDetail> surveyDetails1() {
         ContainerType containerType1 = new ContainerType(1, "น้ำใช้");
         ContainerType containerType2 = new ContainerType(8, "กากใบพืช");
         ContainerType containerType3 = new ContainerType(7, "ยางรถยนต์เก่า");
 
-        SurveyDetail detail1 = new SurveyDetail(containerType1, 5, 1);
-        SurveyDetail detail2 = new SurveyDetail(containerType2, 4, 0);
-        SurveyDetail detail3 = new SurveyDetail(containerType3, 4, 2);
+        SurveyDetail detail1 = new SurveyDetail(UUID.randomUUID(), containerType1, 5, 1);
+        SurveyDetail detail2 = new SurveyDetail(UUID.randomUUID(), containerType2, 4, 0);
+        SurveyDetail detail3 = new SurveyDetail(UUID.randomUUID(), containerType3, 4, 2);
 
         ArrayList<SurveyDetail> detailArrayList = new ArrayList<>();
         detailArrayList.add(detail1);
         detailArrayList.add(detail2);
         detailArrayList.add(detail3);
         return detailArrayList;
+    }
+
+    @Test
+    public void testSetThenGetOutdoorDetail() {
+        survey1.setOutdoorDetail(surveyDetails1());
+        assertEquals(surveyDetails1(), survey1.getOutdoorDetail());
     }
 }

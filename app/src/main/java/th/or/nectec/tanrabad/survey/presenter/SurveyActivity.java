@@ -31,25 +31,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import th.or.nectec.tanrabad.domain.survey.ContainerController;
-import th.or.nectec.tanrabad.domain.survey.ContainerPresenter;
-import th.or.nectec.tanrabad.domain.survey.SurveyController;
-import th.or.nectec.tanrabad.domain.survey.SurveyPresenter;
-import th.or.nectec.tanrabad.domain.survey.SurveyRepository;
-import th.or.nectec.tanrabad.domain.survey.SurveySavePresenter;
-import th.or.nectec.tanrabad.domain.survey.SurveySaver;
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.ContainerType;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.Survey;
-import th.or.nectec.tanrabad.entity.SurveyDetail;
-import th.or.nectec.tanrabad.entity.User;
+import th.or.nectec.tanrabad.domain.survey.*;
+import th.or.nectec.tanrabad.entity.*;
+import th.or.nectec.tanrabad.entity.utils.UUIDv1;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.presenter.view.SurveyContainerView;
@@ -59,12 +43,18 @@ import th.or.nectec.tanrabad.survey.repository.InMemoryContainerTypeRepository;
 import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.EditTextStepper;
+import th.or.nectec.tanrabad.survey.utils.MacAddressUtils;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 import th.or.nectec.tanrabad.survey.validator.SaveSurveyValidator;
 import th.or.nectec.tanrabad.survey.validator.ValidatorException;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class SurveyActivity extends TanrabadActivity implements ContainerPresenter, SurveyPresenter, SurveySavePresenter {
 
@@ -138,7 +128,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     @Override
     public void onNewSurvey(Building building, User user) {
-        survey = new Survey(user, building);
+        survey = new Survey(UUIDv1.generate(MacAddressUtils.getMacAddress(this)), user, building);
         survey.startSurvey();
 
         setBuildingInfo();

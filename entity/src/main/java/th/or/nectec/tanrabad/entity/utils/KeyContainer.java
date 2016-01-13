@@ -82,7 +82,7 @@ public class KeyContainer {
         indoorKey = new ArrayList<>();
         while (indoorItr.hasNext()) {
             Map.Entry<ContainerType,Integer> containerTypeIntegerEntry = indoorItr.next();
-            indoorKey.add(new SurveyDetail(containerTypeIntegerEntry.getKey(), containerTypeIntegerEntry.getValue(), containerTypeIntegerEntry.getValue()));
+            indoorKey.add(new SurveyDetail(UUID.randomUUID(), containerTypeIntegerEntry.getKey(), containerTypeIntegerEntry.getValue(), containerTypeIntegerEntry.getValue()));
         }
         Collections.sort(indoorKey);
 
@@ -91,7 +91,7 @@ public class KeyContainer {
         while (outdoorItr.hasNext()) {
 
             Map.Entry<ContainerType,Integer> containerTypeIntegerEntry = outdoorItr.next();
-            outdoorKey.add(new SurveyDetail(containerTypeIntegerEntry.getKey(), containerTypeIntegerEntry.getValue(), containerTypeIntegerEntry.getValue()));
+            outdoorKey.add(new SurveyDetail(UUID.randomUUID(), containerTypeIntegerEntry.getKey(), containerTypeIntegerEntry.getValue(), containerTypeIntegerEntry.getValue()));
         }
         Collections.sort(outdoorKey);
     }

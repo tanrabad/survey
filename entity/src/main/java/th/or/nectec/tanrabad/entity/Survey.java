@@ -21,6 +21,7 @@ import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Survey implements LocationEntity, Comparable<Survey> {
     private User user;
@@ -31,8 +32,10 @@ public class Survey implements LocationEntity, Comparable<Survey> {
     private DateTime startTimestamp;
     private DateTime finishTimestamp;
     private Location location;
+    private UUID surveyUUID;
 
-    public Survey(User user, Building surveyBuilding) {
+    public Survey(UUID surveyID, User user, Building surveyBuilding) {
+        this.surveyUUID = surveyID;
         this.user = user;
         this.surveyBuilding = surveyBuilding;
     }
@@ -164,6 +167,10 @@ public class Survey implements LocationEntity, Comparable<Survey> {
         this.finishTimestamp = finishTimestamp;
     }
 
+    public UUID getId() {
+        return surveyUUID;
+    }
+
     public static class Builder {
 
         public static final Building DEFAULT_BUILDING = Building.withName("default");
@@ -172,13 +179,19 @@ public class Survey implements LocationEntity, Comparable<Survey> {
         private List<SurveyDetail> outdoor = new ArrayList<>();
         private int resident = 0;
         private User surveyor = TESTER;
+        private UUID surveyID;
+        private String macAddress;
         private Building building = DEFAULT_BUILDING;
+        private Location location;
+        private DateTime startTimeStamp;
+        private DateTime finishTimeStamp;
 
         public Builder() {
-            this(TESTER);
+            this(UUID.randomUUID(), TESTER);
         }
 
-        public Builder(User surveyor) {
+        public Builder(UUID surveyID, User surveyor) {
+            this.surveyID = surveyID;
             this.surveyor = surveyor;
         }
 
@@ -192,23 +205,40 @@ public class Survey implements LocationEntity, Comparable<Survey> {
             return this;
         }
 
-        public Builder addIndoorDetail(ContainerType containerType, int total, int foundLarvae) {
-            indoor.add(SurveyDetail.fromResult(containerType, total, foundLarvae));
+        public Builder addIndoorDetail(UUID surveyDetailID, ContainerType containerType, int total, int foundLarvae) {
+            indoor.add(new SurveyDetail(surveyDetailID, containerType, total, foundLarvae));
             return this;
         }
 
-        public Builder addOutdoorDetail(ContainerType containerType, int total, int foundLarvae) {
-            outdoor.add(SurveyDetail.fromResult(containerType, total, foundLarvae));
+        public Builder addOutdoorDetail(UUID surveyDetailID, ContainerType containerType, int total, int foundLarvae) {
+            outdoor.add(new SurveyDetail(surveyDetailID, containerType, total, foundLarvae));
             return this;
         }
 
         public Survey build() {
-            Survey survey = new Survey(surveyor, building);
+            Survey survey = new Survey(surveyID, surveyor, building);
             survey.setResidentCount(resident);
             survey.setIndoorDetail(indoor);
             survey.setOutdoorDetail(outdoor);
+            survey.setLocation(location);
+            survey.setStartTimestamp(startTimeStamp);
+            survey.setFinishTimestamp(finishTimeStamp);
             return survey;
         }
 
+        public Builder setLocation(Location location) {
+            this.location = location;
+            return this;
+        }
+
+        public Builder setStartTimeStamp(DateTime startTimeStamp) {
+            this.startTimeStamp = startTimeStamp;
+            return this;
+        }
+
+        public Builder setFinishTimeStamp(DateTime finishTimeStamp) {
+            this.finishTimeStamp = finishTimeStamp;
+            return this;
+        }
     }
 }

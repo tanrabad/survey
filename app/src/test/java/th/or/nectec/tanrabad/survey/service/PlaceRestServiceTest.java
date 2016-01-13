@@ -125,14 +125,4 @@ public class PlaceRestServiceTest extends WireMockTestBase {
         assertEquals("รพ.สต.บ้านห้วยใส", place10.getName());
         assertEquals(null, place10.getLocation());
     }
-
-    @Test
-    public void testGetUrl() throws Exception {
-        PlaceRestService restService = new PlaceRestService(
-                localHost(),
-                lastUpdate,
-                userRepository);
-        assertEquals(localHost() + PlaceRestService.PATH, restService.placeUrl());
-
-    }
 }

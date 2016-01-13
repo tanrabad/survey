@@ -45,19 +45,6 @@ public class PlaceRestService extends BaseRestService<Place> {
     }
 
     @Override
-    protected Request makeRequest() {
-        return new Request.Builder()
-                .get()
-                .url(placeUrl())
-                .header(Header.IF_MODIFIED_SINCE, getLastUpdate())
-                .build();
-    }
-
-    public String placeUrl() {
-        return baseApi + getPath();
-    }
-
-    @Override
     protected List<Place> toJson(String responseBody) {
         ArrayList<Place> places = new ArrayList<>();
         try {

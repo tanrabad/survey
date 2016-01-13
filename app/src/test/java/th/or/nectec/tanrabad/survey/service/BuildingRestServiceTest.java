@@ -146,13 +146,4 @@ public class BuildingRestServiceTest extends WireMockTestBase {
         assertEquals(null, building10.getLocation());
     }
 
-    @Test
-    public void testGetUrl() throws Exception {
-        BuildingRestService restService = new BuildingRestService(
-                localHost(),
-                lastUpdate,
-                placeRepository, userRepository);
-        assertEquals(localHost() + BUILDING, restService.buildingUrl());
-
-    }
 }

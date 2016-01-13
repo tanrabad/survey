@@ -31,7 +31,6 @@ import java.util.List;
 public class TambonRestService extends BaseRestService<Subdistrict> {
 
     public static final String PATH = "/tambon";
-    LastUpdate lastUpdate;
 
     public TambonRestService() {
         this(BASE_API, new LastUpdatePreference(TanrabadApp.getInstance(), PATH));
@@ -39,18 +38,6 @@ public class TambonRestService extends BaseRestService<Subdistrict> {
 
     public TambonRestService(String apiBaseUrl, LastUpdate lastUpdate) {
         super(apiBaseUrl, lastUpdate);
-    }
-
-    protected Request makeRequest() {
-        return new Request.Builder()
-                .get()
-                .url(tambonUrl())
-                .header(Header.IF_MODIFIED_SINCE, lastUpdate.get().toDateTimeISO().toString())
-                .build();
-    }
-
-    public String tambonUrl() {
-        return baseApi + getPath();
     }
 
     protected List<Subdistrict> toJson(String responseBody) {

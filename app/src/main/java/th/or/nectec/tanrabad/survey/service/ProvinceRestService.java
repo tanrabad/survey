@@ -31,7 +31,6 @@ import java.util.List;
 public class ProvinceRestService extends BaseRestService<Province> {
 
     public static final String PATH = "/province";
-    LastUpdate lastUpdate;
 
     public ProvinceRestService() {
         this(BASE_API, new LastUpdatePreference(TanrabadApp.getInstance(), PATH ));
@@ -39,19 +38,6 @@ public class ProvinceRestService extends BaseRestService<Province> {
 
     public ProvinceRestService(String apiBaseUrl, LastUpdate lastUpdate) {
         super(apiBaseUrl, lastUpdate);
-    }
-
-    @Override
-    protected Request makeRequest() {
-        return new Request.Builder()
-                .get()
-                .url(provinceUrl())
-                .header(Header.IF_MODIFIED_SINCE, lastUpdate.get().toDateTimeISO().toString())
-                .build();
-    }
-
-    public String provinceUrl() {
-        return baseApi + getPath();
     }
 
     @Override

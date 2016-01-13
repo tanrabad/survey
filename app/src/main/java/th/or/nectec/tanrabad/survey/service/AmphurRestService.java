@@ -31,7 +31,6 @@ import java.util.List;
 public class AmphurRestService extends BaseRestService<District> {
 
     public static final String PATH = "/amphur";
-    LastUpdate lastUpdate;
 
     public AmphurRestService() {
         this(BASE_API, new LastUpdatePreference(TanrabadApp.getInstance(), PATH ));
@@ -39,18 +38,6 @@ public class AmphurRestService extends BaseRestService<District> {
 
     public AmphurRestService(String apiBaseUrl, LastUpdate lastUpdate) {
         super(apiBaseUrl, lastUpdate);
-    }
-
-    protected Request makeRequest() {
-        return new Request.Builder()
-                .get()
-                .url(amphurUrl())
-                .header(Header.IF_MODIFIED_SINCE, lastUpdate.get().toDateTimeISO().toString())
-                .build();
-    }
-
-    public String amphurUrl() {
-        return baseApi + getPath();
     }
 
     protected List<District> toJson(String responseBody) {

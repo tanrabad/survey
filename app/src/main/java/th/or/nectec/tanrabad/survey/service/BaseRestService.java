@@ -75,7 +75,13 @@ public abstract class BaseRestService<T> implements RestService<T> {
         return response.code() == Status.NOT_MODIFIED;
     }
 
-    protected abstract Request makeRequest();
+    protected final Request makeRequest(){
+        return new Request.Builder()
+                .get()
+                .url(baseApi + getPath())
+                .header(Header.IF_MODIFIED_SINCE, getLastUpdate())
+                .build();
+    }
 
     protected abstract List<T> toJson(String responseBody);
 

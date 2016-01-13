@@ -31,7 +31,6 @@ import java.util.List;
 public class ContainerTypeRestService extends BaseRestService<ContainerType> {
 
     public static final String PATH = "/containertype";
-    LastUpdate lastUpdate;
 
     public ContainerTypeRestService() {
         this(BASE_API, new LastUpdatePreference(TanrabadApp.getInstance(), PATH));
@@ -39,19 +38,6 @@ public class ContainerTypeRestService extends BaseRestService<ContainerType> {
 
     public ContainerTypeRestService(String apiBaseUrl, LastUpdate lastUpdate) {
         super(apiBaseUrl, lastUpdate);
-    }
-
-    @Override
-    protected Request makeRequest() {
-        return new Request.Builder()
-                .get()
-                .url(provinceUrl())
-                .header(Header.IF_MODIFIED_SINCE, lastUpdate.get().toDateTimeISO().toString())
-                .build();
-    }
-
-    public String provinceUrl() {
-        return baseApi + getPath();
     }
 
     @Override

@@ -35,7 +35,6 @@ import java.util.List;
 public class BuildingRestService extends BaseRestService<Building> {
 
     public static final String PATH = "/building";
-    LastUpdate lastUpdate;
     private PlaceRepository placeRepository;
     private UserRepository userRepository;
 
@@ -45,22 +44,8 @@ public class BuildingRestService extends BaseRestService<Building> {
 
     public BuildingRestService(String apiBaseUrl, LastUpdate lastUpdate, PlaceRepository placeRepository, UserRepository userRepository) {
         super(apiBaseUrl, lastUpdate);
-        this.lastUpdate = lastUpdate;
         this.placeRepository = placeRepository;
         this.userRepository = userRepository;
-    }
-
-    @Override
-    protected Request makeRequest() {
-        return new Request.Builder()
-                .get()
-                .url(buildingUrl())
-                .header(Header.IF_MODIFIED_SINCE, getLastUpdate())
-                .build();
-    }
-
-    protected String buildingUrl() {
-        return baseApi + getPath();
     }
 
     @Override

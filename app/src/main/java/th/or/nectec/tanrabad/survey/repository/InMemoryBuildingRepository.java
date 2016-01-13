@@ -181,7 +181,7 @@ public class InMemoryBuildingRepository implements BuildingRepository {
         for (Building building : buildings) {
             try {
                 update(building);
-            } catch (IndexOutOfBoundsException iob) {
+            } catch (BuildingRepositoryException iob) {
                 save(building);
             }
         }

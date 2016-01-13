@@ -17,7 +17,9 @@
 
 package th.or.nectec.tanrabad.survey.presenter;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import th.or.nectec.tanrabad.survey.R;
 
@@ -28,6 +30,25 @@ public class LoginActivity extends TanrabadActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Button buttonLogin = (Button) findViewById(R.id.login_button);
+        View logo = findViewById(R.id.logoTabrabad);
+        findViewById(R.id.login_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openMainActivity();
+                finish();
+            }
+        });
     }
+
+    private void openMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    private void openInitialActivity() {
+        Intent intent = new Intent(this, InitialActivity.class);
+        startActivity(intent);
+    }
+
+
 }

@@ -1,0 +1,27 @@
+{
+  "survey_id": "6af5225b-5642-10fb-a3a0-4e000a842583",
+  "building_id": "5cf5665b-5642-10fb-a3a0-5e612a842583",
+  "person_count": 5,
+  "location": {
+    "type": "Point",
+    "coordinates": [-73.150055,39.745675]
+  },
+  "surveyor": "dcp-user",
+  "create_timestamp": "2015-12-01 13:26:17",
+  "details": [
+    {
+      "survey_detail_id": "6af5225b-5642-10fb-a3a0-4e000a8425600",
+      "container_location_id": 1,
+      "container_type": 1,
+      "container_count": 24,
+      "container_have_larvae": 10
+    },
+    {
+      "survey_detail_id": "6af5225b-5642-10fb-a3a0-4e000a8425602",
+      "container_location_id": 2,
+      "container_type": 1,
+      "container_count": 13,
+      "container_have_larvae": 0
+    }
+  ]
+}

@@ -19,8 +19,8 @@ package th.or.nectec.tanrabad.survey.presenter.job;
 
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.survey.presenter.job.service.PlaceRestService;
-import th.or.nectec.tanrabad.survey.presenter.job.service.RestService;
+import th.or.nectec.tanrabad.survey.service.PlaceRestService;
+import th.or.nectec.tanrabad.survey.service.RestService;
 
 public class PlaceUpdateJob implements Job {
 

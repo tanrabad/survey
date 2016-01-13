@@ -19,8 +19,8 @@ package th.or.nectec.tanrabad.survey.presenter.job;
 
 import th.or.nectec.tanrabad.domain.building.BuildingRepository;
 import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.survey.presenter.job.service.RestService;
-import th.or.nectec.tanrabad.survey.presenter.job.service.StubBuildingRestService;
+import th.or.nectec.tanrabad.survey.service.RestService;
+import th.or.nectec.tanrabad.survey.service.StubBuildingRestService;
 
 public class BuildingUpdateJob implements Job {
 

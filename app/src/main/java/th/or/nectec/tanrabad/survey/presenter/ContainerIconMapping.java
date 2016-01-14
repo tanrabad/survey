@@ -1,9 +1,9 @@
 package th.or.nectec.tanrabad.survey.presenter;
 
-import java.util.HashMap;
-
 import th.or.nectec.tanrabad.entity.ContainerType;
 import th.or.nectec.tanrabad.survey.R;
+
+import java.util.HashMap;
 
 public class ContainerIconMapping {
     HashMap<Integer, Integer> containerIconMapper = new HashMap<>();
@@ -22,6 +22,8 @@ public class ContainerIconMapping {
     }
 
     public int getContainerIcon(ContainerType containerType) {
+        if (!containerIconMapper.containsKey(containerType.getId()))
+            return R.mipmap.ic_building_home_black;
         return containerIconMapper.get(containerType.getId());
     }
 }

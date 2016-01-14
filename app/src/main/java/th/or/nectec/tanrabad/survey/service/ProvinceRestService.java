@@ -18,10 +18,8 @@
 package th.or.nectec.tanrabad.survey.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
-import com.squareup.okhttp.Request;
 import th.or.nectec.tanrabad.entity.Province;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
-import th.or.nectec.tanrabad.survey.service.http.Header;
 import th.or.nectec.tanrabad.survey.service.json.JsonProvince;
 
 import java.io.IOException;
@@ -30,7 +28,7 @@ import java.util.List;
 
 public class ProvinceRestService extends BaseRestService<Province> {
 
-    public static final String PATH = "/province";
+    public static final String PATH = "/province?geostd=4326";
 
     public ProvinceRestService() {
         this(BASE_API, new LastUpdatePreference(TanrabadApp.getInstance(), PATH ));

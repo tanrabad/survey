@@ -18,10 +18,8 @@
 package th.or.nectec.tanrabad.survey.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
-import com.squareup.okhttp.Request;
 import th.or.nectec.tanrabad.entity.Subdistrict;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
-import th.or.nectec.tanrabad.survey.service.http.Header;
 import th.or.nectec.tanrabad.survey.service.json.JsonTambon;
 
 import java.io.IOException;
@@ -30,7 +28,7 @@ import java.util.List;
 
 public class TambonRestService extends BaseRestService<Subdistrict> {
 
-    public static final String PATH = "/tambon";
+    public static final String PATH = "/tambon?geostd=4326";
 
     public TambonRestService() {
         this(BASE_API, new LastUpdatePreference(TanrabadApp.getInstance(), PATH));

@@ -18,15 +18,13 @@
 package th.or.nectec.tanrabad.survey.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
-import com.squareup.okhttp.Request;
 import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
-import th.or.nectec.tanrabad.survey.service.http.Header;
-import th.or.nectec.tanrabad.survey.service.json.JsonBuilding;
 import th.or.nectec.tanrabad.survey.repository.InMemoryPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
+import th.or.nectec.tanrabad.survey.service.json.JsonBuilding;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,7 +32,7 @@ import java.util.List;
 
 public class BuildingRestService extends BaseRestService<Building> {
 
-    public static final String PATH = "/building";
+    public static final String PATH = "/building?geostd=4326";
     private PlaceRepository placeRepository;
     private UserRepository userRepository;
 

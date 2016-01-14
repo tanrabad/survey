@@ -18,10 +18,8 @@
 package th.or.nectec.tanrabad.survey.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
-import com.squareup.okhttp.Request;
 import th.or.nectec.tanrabad.entity.District;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
-import th.or.nectec.tanrabad.survey.service.http.Header;
 import th.or.nectec.tanrabad.survey.service.json.JsonAmphur;
 
 import java.io.IOException;
@@ -30,7 +28,7 @@ import java.util.List;
 
 public class AmphurRestService extends BaseRestService<District> {
 
-    public static final String PATH = "/amphur";
+    public static final String PATH = "/amphur?geostd=4326";
 
     public AmphurRestService() {
         this(BASE_API, new LastUpdatePreference(TanrabadApp.getInstance(), PATH ));

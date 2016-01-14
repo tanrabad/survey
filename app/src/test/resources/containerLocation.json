@@ -1,0 +1,10 @@
+[
+  {
+    "container_location_id": 1,
+    "container_location_name": "ภายในอาคาร"
+  },
+  {
+    "container_location_id": 2,
+    "container_location_name": "ภายนอกอาคาร"
+  }
+]

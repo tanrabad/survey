@@ -13,9 +13,6 @@ public class JsonContainerType {
     @JsonField(name = "container_type_name")
     public String containerTypeName;
 
-    @JsonField
-    public GeoJsonMultipolygon boundary;
-
     public ContainerType getEntity() {
         return new ContainerType(containerTypeID, containerTypeName);
     }

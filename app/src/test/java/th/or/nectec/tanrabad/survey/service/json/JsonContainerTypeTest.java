@@ -18,7 +18,7 @@ public class JsonContainerTypeTest {
     }
 
     @Test
-    public void testParseToProvinceEntity() throws Exception {
+    public void testParseToContainerTypeEntity() throws Exception {
         JsonContainerType jsonContainerType = LoganSquare.parse(containerTypeJson, JsonContainerType.class);
         ContainerType containerType = jsonContainerType.getEntity();
         assertEquals(1, containerType.getId());

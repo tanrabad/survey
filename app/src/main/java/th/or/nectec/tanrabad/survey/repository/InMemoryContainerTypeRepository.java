@@ -17,11 +17,11 @@
 
 package th.or.nectec.tanrabad.survey.repository;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import th.or.nectec.tanrabad.domain.survey.ContainerTypeRepository;
 import th.or.nectec.tanrabad.entity.ContainerType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class InMemoryContainerTypeRepository implements ContainerTypeRepository {
 
@@ -31,7 +31,7 @@ public class InMemoryContainerTypeRepository implements ContainerTypeRepository 
 
     private InMemoryContainerTypeRepository() {
         containerTypes = new ArrayList<>();
-        containerTypes.add(new ContainerType(1, "น้ำใช้"));
+/*        containerTypes.add(new ContainerType(1, "น้ำใช้"));
         containerTypes.add(new ContainerType(2, "น้ำดื่ม"));
         containerTypes.add(new ContainerType(3, "แจกัน"));
         containerTypes.add(new ContainerType(4, "ที่รองกันมด"));
@@ -40,7 +40,7 @@ public class InMemoryContainerTypeRepository implements ContainerTypeRepository 
         containerTypes.add(new ContainerType(7, "ยางรถยนต์เก่า"));
         containerTypes.add(new ContainerType(8, "กากใบพืช"));
         containerTypes.add(new ContainerType(9, "ภาชนะที่ไม่ใช้"));
-        containerTypes.add(new ContainerType(10, "อื่นๆ (ที่ใช้ประโยชน์)"));
+        containerTypes.add(new ContainerType(10, "อื่นๆ (ที่ใช้ประโยชน์)"));*/
     }
 
     public static InMemoryContainerTypeRepository getInstance() {
@@ -52,5 +52,28 @@ public class InMemoryContainerTypeRepository implements ContainerTypeRepository 
     @Override
     public List<ContainerType> find() {
         return containerTypes;
+    }
+
+    @Override
+    public void updateOrInsert(List<ContainerType> updateList) {
+        for (ContainerType containerType : updateList) {
+            try {
+                update(containerType);
+            } catch (ContainerTypeRepositoryException pre) {
+                save(containerType);
+            }
+        }
+    }
+
+    private void save(ContainerType containerType) {
+        containerTypes.add(containerType);
+    }
+
+    private void update(ContainerType containerType) {
+        if (!containerTypes.contains(containerType)) {
+            throw new ContainerTypeRepositoryException();
+        } else {
+            containerTypes.set(containerTypes.indexOf(containerType), containerType);
+        }
     }
 }

@@ -24,4 +24,6 @@ import java.util.List;
 public interface ContainerTypeRepository {
 
     List<ContainerType> find();
+
+    void updateOrInsert(List<ContainerType> updateList);
 }

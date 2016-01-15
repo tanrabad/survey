@@ -37,8 +37,12 @@ public class PlaceIconMapping {
 
     public static int getPlaceIcon(Place place) {
         if (place.getType() == Place.TYPE_WORSHIP) {
+            if (!PLACE_ICON_MAP.containsKey(place.getSubType()))
+                return R.mipmap.ic_place_temple;
             return PLACE_ICON_MAP.get(place.getSubType());
         } else {
+            if (!PLACE_ICON_MAP.containsKey(place.getType()))
+                return R.mipmap.ic_place;
             return PLACE_ICON_MAP.get(place.getType());
         }
     }

@@ -21,4 +21,6 @@ import java.util.List;
 
 public interface RestService <T> {
     List<T> getUpdate();
+
+    boolean hasNextRequest();
 }

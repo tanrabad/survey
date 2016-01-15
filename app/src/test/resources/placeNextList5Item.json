@@ -1,0 +1,117 @@
+[
+  {
+    "place_id": "fca36988-1626-cf9b-e185-aa51a9d284cd",
+    "place_code": "05909",
+    "place_type_id": 4,
+    "place_type_name": "โรงพยาบาล",
+    "place_subtype_id": 3,
+    "subtype_name": "รพ.สต./สาธารณสุขชุมชน",
+    "place_name": "รพ.สต.บ้านหนองฮ่าง ตำบลแม่คะ",
+    "tambon_code": "500910",
+    "tambon_name": "แม่คะ",
+    "amphur_code": "5009",
+    "amphur_name": "ฝาง",
+    "province_code": "50",
+    "province_name": "เชียงใหม่",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        99.198928,
+        19.845668
+      ]
+    },
+    "update_timestamp": "2015-11-30T17:00:00.000Z"
+  },
+  {
+    "place_id": "b41787ba-5ee6-7328-5343-4561958a5458",
+    "place_code": "03707",
+    "place_type_id": 4,
+    "place_type_name": "โรงพยาบาล",
+    "place_subtype_id": 3,
+    "subtype_name": "รพ.สต./สาธารณสุขชุมชน",
+    "place_name": "รพ.สต.บ้านหนองฮาง ตำบลหนองฮาง",
+    "tambon_code": "341410",
+    "tambon_name": "หนองฮาง",
+    "amphur_code": "3414",
+    "amphur_name": "ม่วงสามสิบ",
+    "province_code": "34",
+    "province_name": "อุบลราชธานี",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        104.64592646908,
+        15.5047301315848
+      ]
+    },
+    "update_timestamp": "2015-11-30T17:00:00.000Z"
+  },
+  {
+    "place_id": "2a00018f-c0be-5daa-880a-67c727e1ca5c",
+    "place_code": "03510",
+    "place_type_id": 4,
+    "place_type_name": "โรงพยาบาล",
+    "place_subtype_id": 3,
+    "subtype_name": "รพ.สต./สาธารณสุขชุมชน",
+    "place_name": "รพ.สต.บ้านหนองฮาง ตำบลหนองฮาง",
+    "tambon_code": "331904",
+    "tambon_name": "หนองฮาง",
+    "amphur_code": "3319",
+    "amphur_name": "เบญจลักษ์",
+    "province_code": "33",
+    "province_name": "ศรีสะเกษ",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        104.61116903891,
+        14.7849412626138
+      ]
+    },
+    "update_timestamp": "2015-11-30T17:00:00.000Z"
+  },
+  {
+    "place_id": "a0b0a473-6422-f789-7663-fc68073b78bb",
+    "place_code": "07538",
+    "place_type_id": 4,
+    "place_type_name": "โรงพยาบาล",
+    "place_subtype_id": 3,
+    "subtype_name": "รพ.สต./สาธารณสุขชุมชน",
+    "place_name": "รพ.สต.บ้านหนองอ้อ",
+    "tambon_code": "650407",
+    "tambon_name": "ชุมแสงสงคราม",
+    "amphur_code": "6504",
+    "amphur_name": "บางระกำ",
+    "province_code": "65",
+    "province_name": "พิษณุโลก",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        100.00615193,
+        16.763697792
+      ]
+    },
+    "update_timestamp": "2015-11-30T17:00:00.000Z"
+  },
+  {
+    "place_id": "648e41e1-2ccd-00f2-f065-ba111c384c5b",
+    "place_code": "04633",
+    "place_type_id": 4,
+    "place_type_name": "โรงพยาบาล",
+    "place_subtype_id": 3,
+    "subtype_name": "รพ.สต./สาธารณสุขชุมชน",
+    "place_name": "รพ.สต.บ้านหลวง ต.นาพู่",
+    "tambon_code": "411903",
+    "tambon_name": "นาพู่",
+    "amphur_code": "4119",
+    "amphur_name": "เพ็ญ",
+    "province_code": "41",
+    "province_name": "อุดรธานี",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        102.755400339956,
+        17.6048028519667
+      ]
+    },
+    "update_timestamp": "2015-11-30T17:00:00.000Z"
+  }
+]

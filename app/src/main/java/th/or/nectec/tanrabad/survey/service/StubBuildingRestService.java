@@ -54,4 +54,9 @@ public class StubBuildingRestService implements RestService<Building> {
     public List<Building> getUpdate() {
         return buildings;
     }
+
+    @Override
+    public boolean hasNextRequest() {
+        return false;
+    }
 }

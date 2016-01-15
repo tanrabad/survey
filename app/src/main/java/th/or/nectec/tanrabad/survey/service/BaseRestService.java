@@ -38,6 +38,7 @@ public abstract class BaseRestService<T> implements RestService<T> {
     private final OkHttpClient client = new OkHttpClient();
     protected LastUpdate lastUpdate;
     protected String baseApi;
+    private String nextUrl = "";
 
     public BaseRestService(String baseApi, LastUpdate lastUpdate) {
         this.baseApi = baseApi;
@@ -50,16 +51,34 @@ public abstract class BaseRestService<T> implements RestService<T> {
             Request request = makeRequest();
             Response response = client.newCall(request).execute();
 
+            getNextRequest(response);
+
             if (isNotModified(response))
                 return new ArrayList<>();
             if (isNotSuccess(response))
                 throw new RestServiceException();
+            if (!hasNextRequest())
+                lastUpdate.save(getLastModified(response));
 
-            lastUpdate.save(getLastModified(response));
             return toJson(response.body().string());
 
         } catch (IOException io) {
             throw new RestServiceException();
+        }
+    }
+
+    @Override
+    public boolean hasNextRequest() {
+        return nextUrl != null;
+    }
+
+    private void getNextRequest(Response response) {
+        String linkHeader = response.headers().get("Link");
+        if (linkHeader != null && !linkHeader.isEmpty()) {
+            PageLinks pageLinks = new PageLinks(linkHeader);
+            nextUrl = pageLinks.getNext().replace(baseApi + getPath(), "");
+        } else {
+            nextUrl = null;
         }
     }
 
@@ -75,19 +94,19 @@ public abstract class BaseRestService<T> implements RestService<T> {
         return response.code() == Status.NOT_MODIFIED;
     }
 
-    protected final Request makeRequest(){
+    protected final Request makeRequest() {
         return new Request.Builder()
                 .get()
-                .url(baseApi + getPath())
+                .url(baseApi + getPath() + nextUrl)
                 .header(Header.IF_MODIFIED_SINCE, getLastUpdate())
                 .build();
     }
-
-    protected abstract List<T> toJson(String responseBody);
 
     protected String getLastUpdate() {
         return RFC1123_FORMATTER.print(lastUpdate.get());
     }
 
     protected abstract String getPath();
+
+    protected abstract List<T> toJson(String responseBody);
 }

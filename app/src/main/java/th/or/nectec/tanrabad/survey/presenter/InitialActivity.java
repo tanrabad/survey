@@ -51,6 +51,9 @@ public class InitialActivity extends TanrabadActivity {
             case InMemoryInitializeJob.ID:
                 loadingText.setText("หาลูกน้ำมาให้สำรวจ");
                 break;
+            case PlaceUpdateJob.ID:
+                loadingText.setText("ดึงข้อมูลสถานที่");
+                break;
             case BuildingUpdateJob.ID:
                 loadingText.setText("ตรวจสอบคุณภาพอาคาร");
                 break;

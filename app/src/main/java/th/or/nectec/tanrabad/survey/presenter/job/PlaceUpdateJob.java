@@ -22,9 +22,11 @@ import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.service.PlaceRestService;
 import th.or.nectec.tanrabad.survey.service.RestService;
 
+import java.util.ArrayList;
+
 public class PlaceUpdateJob implements Job {
 
-    public static final int ID = 293711;
+    public static final int ID = 293789;
 
     private final PlaceRepository placeRepository;
 
@@ -40,6 +42,12 @@ public class PlaceUpdateJob implements Job {
     @Override
     public void execute() throws JobException {
         RestService<Place> service = new PlaceRestService();
-        placeRepository.updateOrInsert(service.getUpdate());
+        ArrayList<Place> placeArrayList = new ArrayList<>();
+
+        do {
+            placeArrayList.addAll(service.getUpdate());
+        } while (service.hasNextRequest());
+
+        placeRepository.updateOrInsert(placeArrayList);
     }
 }

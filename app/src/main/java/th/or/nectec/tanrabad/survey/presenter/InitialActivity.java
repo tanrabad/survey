@@ -24,6 +24,7 @@ import th.or.nectec.tanrabad.survey.presenter.job.*;
 import th.or.nectec.tanrabad.survey.repository.InMemoryBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.InMemoryContainerTypeRepository;
 import th.or.nectec.tanrabad.survey.repository.InMemoryPlaceRepository;
+import th.or.nectec.tanrabad.survey.repository.InMemorySubdistrictRepository;
 import th.or.nectec.tanrabad.survey.repository.persistence.CreateDatabaseJob;
 
 public class InitialActivity extends TanrabadActivity {
@@ -43,6 +44,7 @@ public class InitialActivity extends TanrabadActivity {
                 .addJob(new PlaceUpdateJob(InMemoryPlaceRepository.getInstance()))
                 .addJob(new BuildingUpdateJob(InMemoryBuildingRepository.getInstance()))
                 .addJob(new ContainerTypeUpdateJob(InMemoryContainerTypeRepository.getInstance()))
+                .addJob(new SubdistrictUpdateJob(InMemorySubdistrictRepository.getInstance()))
                 .start();
     }
 
@@ -59,6 +61,9 @@ public class InitialActivity extends TanrabadActivity {
                 break;
             case ContainerTypeUpdateJob.ID:
                 loadingText.setText("ดึงประเภทภาชนะมา");
+                break;
+            case SubdistrictUpdateJob.ID:
+                loadingText.setText("กำลังดึงข้อมูลตำบล");
                 break;
             case CreateDatabaseJob.ID:
                 loadingText.setText("กำลังสร้างฐานข้อมูลชั่วคราว");

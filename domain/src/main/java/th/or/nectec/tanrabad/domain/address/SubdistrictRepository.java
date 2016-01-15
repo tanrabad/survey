@@ -22,9 +22,9 @@ import th.or.nectec.tanrabad.entity.Subdistrict;
 import java.util.List;
 
 public interface SubdistrictRepository {
-    List<Subdistrict> findByDistrictCode(String districtID);
+    List<Subdistrict> findByDistrictCode(String districtCode);
 
-    Subdistrict findById(String subdistrictID);
+    Subdistrict findByCode(String subdistrictCode);
 
     boolean save(Subdistrict subdistrict);
 

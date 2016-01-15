@@ -20,19 +20,19 @@ public class InMemorySubdistrictRepository implements SubdistrictRepository {
     }
 
     @Override
-    public List<Subdistrict> findByDistrictCode(String districtID) {
+    public List<Subdistrict> findByDistrictCode(String districtCode) {
         ArrayList<Subdistrict> subdistrictsInsideDistrict = new ArrayList<>();
         for (Subdistrict eachSubdistrict : subdistricts) {
-            if (eachSubdistrict.getDistrictCode().equals(districtID))
+            if (eachSubdistrict.getDistrictCode().equals(districtCode))
                 subdistrictsInsideDistrict.add(eachSubdistrict);
         }
         return subdistrictsInsideDistrict;
     }
 
     @Override
-    public Subdistrict findById(String subdistrictID) {
+    public Subdistrict findByCode(String subdistrictCode) {
         for (Subdistrict eachSubdistrict : subdistricts) {
-            if (eachSubdistrict.getCode().equals(subdistrictID))
+            if (eachSubdistrict.getCode().equals(subdistrictCode))
                 return eachSubdistrict;
         }
         return null;

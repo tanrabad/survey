@@ -42,7 +42,6 @@ import static org.junit.Assert.assertEquals;
 
 public class BuildingRestServiceTest extends WireMockTestBase {
 
-    public static final String BUILDING = "/building";
     UserRepository userRepository = Mockito.mock(UserRepository.class);
     PlaceRepository placeRepository = Mockito.mock(PlaceRepository.class);
     LastUpdate lastUpdate = Mockito.mock(LastUpdate.class);
@@ -54,7 +53,7 @@ public class BuildingRestServiceTest extends WireMockTestBase {
 
     @Test(expected = RestServiceException.class)
     public void test404Response() throws Exception {
-        stubFor(get(urlEqualTo(BUILDING))
+        stubFor(get(urlEqualTo(BuildingRestService.PATH))
                 .willReturn(aResponse()
                         .withStatus(404)
                         .withBody("")));
@@ -68,7 +67,7 @@ public class BuildingRestServiceTest extends WireMockTestBase {
 
     @Test
     public void testNotModifiedResponse() throws Exception {
-        stubFor(get(urlEqualTo(BUILDING))
+        stubFor(get(urlEqualTo(BuildingRestService.PATH))
                 .willReturn(aResponse()
                         .withStatus(304)
                         .withBody("[]")));
@@ -85,7 +84,7 @@ public class BuildingRestServiceTest extends WireMockTestBase {
     public void testSuccessResponse() throws Exception {
         Mockito.when(userRepository.findUserByName("dcp-user")).thenReturn(stubUser());
         Mockito.when(placeRepository.findPlaceByUUID(uuid("b5f7b062-12f5-3402-ac88-0343733503bd"))).thenReturn(stubPlace());
-        stubFor(get(urlEqualTo(BUILDING))
+        stubFor(get(urlEqualTo(BuildingRestService.PATH))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader(Header.LAST_MODIFIED, "Mon, 30 Nov 2015 17:00:00 GMT")
@@ -127,7 +126,7 @@ public class BuildingRestServiceTest extends WireMockTestBase {
     public void testSuccessResponseMultipleItem() throws Exception {
         Mockito.when(userRepository.findUserByName("dcp-user")).thenReturn(stubUser());
         Mockito.when(placeRepository.findPlaceByUUID(uuid("b5f7b062-12f5-3402-ac88-0343733503bd"))).thenReturn(stubPlace());
-        stubFor(get(urlEqualTo(BUILDING))
+        stubFor(get(urlEqualTo(BuildingRestService.PATH))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader(Header.LAST_MODIFIED, "Mon, 30 Nov 2015 17:00:00 GMT")

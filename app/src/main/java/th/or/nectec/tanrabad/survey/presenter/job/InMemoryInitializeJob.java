@@ -17,10 +17,7 @@
 
 package th.or.nectec.tanrabad.survey.presenter.job;
 
-import th.or.nectec.tanrabad.survey.repository.InMemoryBuildingRepository;
-import th.or.nectec.tanrabad.survey.repository.InMemoryContainerTypeRepository;
-import th.or.nectec.tanrabad.survey.repository.InMemoryPlaceRepository;
-import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
+import th.or.nectec.tanrabad.survey.repository.*;
 
 public class InMemoryInitializeJob implements Job {
 
@@ -37,5 +34,8 @@ public class InMemoryInitializeJob implements Job {
         InMemoryBuildingRepository.getInstance();
         InMemoryContainerTypeRepository.getInstance();
         InMemorySurveyRepository.getInstance();
+        InMemorySubdistrictRepository.getInstance();
+        InMemoryDistrictRepository.getInstance();
+        InMemoryProvinceRepository.getInstance();
     }
 }

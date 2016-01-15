@@ -21,12 +21,12 @@ public class InMemoryDistrictRepository implements DistrictRepository {
 
     @Override
     public List<District> findByProvinceCode(String provinceCode) {
-        ArrayList<District> subdistrictsInsideDistrict = new ArrayList<>();
+        ArrayList<District> districtsInsideProvince = new ArrayList<>();
         for (District eachDistrict : districts) {
             if (eachDistrict.getProvinceCode().equals(provinceCode))
-                subdistrictsInsideDistrict.add(eachDistrict);
+                districtsInsideProvince.add(eachDistrict);
         }
-        return subdistrictsInsideDistrict;
+        return districtsInsideProvince;
     }
 
     @Override

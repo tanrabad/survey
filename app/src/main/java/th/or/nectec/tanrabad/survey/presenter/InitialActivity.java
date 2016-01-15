@@ -21,10 +21,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.job.*;
-import th.or.nectec.tanrabad.survey.repository.InMemoryBuildingRepository;
-import th.or.nectec.tanrabad.survey.repository.InMemoryContainerTypeRepository;
-import th.or.nectec.tanrabad.survey.repository.InMemoryPlaceRepository;
-import th.or.nectec.tanrabad.survey.repository.InMemorySubdistrictRepository;
+import th.or.nectec.tanrabad.survey.repository.*;
 import th.or.nectec.tanrabad.survey.repository.persistence.CreateDatabaseJob;
 
 public class InitialActivity extends TanrabadActivity {
@@ -45,6 +42,8 @@ public class InitialActivity extends TanrabadActivity {
                 .addJob(new BuildingUpdateJob(InMemoryBuildingRepository.getInstance()))
                 .addJob(new ContainerTypeUpdateJob(InMemoryContainerTypeRepository.getInstance()))
                 .addJob(new SubdistrictUpdateJob(InMemorySubdistrictRepository.getInstance()))
+                .addJob(new DistrictUpdateJob(InMemoryDistrictRepository.getInstance()))
+                .addJob(new ProvinceUpdateJob(InMemoryProvinceRepository.getInstance()))
                 .start();
     }
 
@@ -64,6 +63,12 @@ public class InitialActivity extends TanrabadActivity {
                 break;
             case SubdistrictUpdateJob.ID:
                 loadingText.setText("กำลังดึงข้อมูลตำบล");
+                break;
+            case DistrictUpdateJob.ID:
+                loadingText.setText("กำลังดึงข้อมูลอำเภอ");
+                break;
+            case ProvinceUpdateJob.ID:
+                loadingText.setText("กำลังดึงข้อมูลจังหวัด");
                 break;
             case CreateDatabaseJob.ID:
                 loadingText.setText("กำลังสร้างฐานข้อมูลชั่วคราว");

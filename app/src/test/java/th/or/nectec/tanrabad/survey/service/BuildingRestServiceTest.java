@@ -19,6 +19,8 @@ package th.or.nectec.tanrabad.survey.service;
 
 import android.support.annotation.NonNull;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -95,11 +97,16 @@ public class BuildingRestServiceTest extends WireMockTestBase {
 
         List<Building> buildingList = restService.getUpdate();
         Building building = buildingList.get(0);
+
         assertEquals(1, buildingList.size());
         assertEquals(uuid("b7a9d934-04fc-a22e-0539-6c17504f732e"), building.getId());
         assertEquals("อาคาร 1", building.getName());
         assertEquals(null, building.getLocation());
+        Mockito.verify(lastUpdate).save(RFC1123_FORMATTER.parseDateTime("Mon, 30 Nov 2015 17:00:00 GMT"));
     }
+
+    protected static final DateTimeFormatter RFC1123_FORMATTER =
+            DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss 'GMT'");
 
     private UUID uuid(String uuid) {
         return UUID.fromString(uuid);
@@ -131,6 +138,7 @@ public class BuildingRestServiceTest extends WireMockTestBase {
                 placeRepository, userRepository);
 
         List<Building> buildingList = restService.getUpdate();
+
         assertEquals(10, buildingList.size());
         Building building1 = buildingList.get(0);
         assertEquals(uuid("b7a9d934-04fc-a22e-0539-6c17504f732e"), building1.getId());
@@ -144,6 +152,7 @@ public class BuildingRestServiceTest extends WireMockTestBase {
         assertEquals(uuid("b7a9d934-04fc-a22e-0539-6c17504f7318"), building10.getId());
         assertEquals("อาคาร 10", building10.getName());
         assertEquals(null, building10.getLocation());
+        Mockito.verify(lastUpdate).save(RFC1123_FORMATTER.parseDateTime("Mon, 30 Nov 2015 17:00:00 GMT"));
     }
 
 }

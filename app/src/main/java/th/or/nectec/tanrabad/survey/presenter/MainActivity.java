@@ -96,6 +96,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
         startAnimation(R.id.larvae, R.anim.larvae);
         startAnimation(R.id.water_shadow, R.anim.water_shadow);
         startAnimation(R.id.larvae_deep, R.anim.larvae_deep);
+        startAnimation(R.id.start_survey_hint, R.anim.scale_in);
     }
 
     private void startAnimation(@IdRes int viewId, @AnimRes int animId) {

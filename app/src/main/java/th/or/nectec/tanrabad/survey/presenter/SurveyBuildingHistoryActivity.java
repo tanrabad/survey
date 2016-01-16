@@ -25,8 +25,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -85,6 +86,12 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
     private void setupView() {
         placeName = (TextView) findViewById(R.id.place_name);
         surveyMoreBuildingButton = (ImageButton) findViewById(R.id.survey_more_building_button);
+        startSurveyMoreBuildingButtonAnimation();
+    }
+
+    private void startSurveyMoreBuildingButtonAnimation() {
+        Animation moreBuildingAnim = AnimationUtils.loadAnimation(this, R.anim.survey_more_building_button);
+        surveyMoreBuildingButton.startAnimation(moreBuildingAnim);
     }
 
     private void showPlaceInfo() {

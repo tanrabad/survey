@@ -32,7 +32,7 @@ public class InMemoryContainerTypeRepository implements ContainerTypeRepository 
 
     private InMemoryContainerTypeRepository() {
         containerTypes = new ArrayList<>();
-/*        containerTypes.add(new ContainerType(1, "น้ำใช้"));
+        containerTypes.add(new ContainerType(1, "น้ำใช้"));
         containerTypes.add(new ContainerType(2, "น้ำดื่ม"));
         containerTypes.add(new ContainerType(3, "แจกัน"));
         containerTypes.add(new ContainerType(4, "ที่รองกันมด"));
@@ -41,7 +41,7 @@ public class InMemoryContainerTypeRepository implements ContainerTypeRepository 
         containerTypes.add(new ContainerType(7, "ยางรถยนต์เก่า"));
         containerTypes.add(new ContainerType(8, "กากใบพืช"));
         containerTypes.add(new ContainerType(9, "ภาชนะที่ไม่ใช้"));
-        containerTypes.add(new ContainerType(10, "อื่นๆ (ที่ใช้ประโยชน์)"));*/
+        containerTypes.add(new ContainerType(10, "อื่นๆ (ที่ใช้ประโยชน์)"));
     }
 
     public static InMemoryContainerTypeRepository getInstance() {

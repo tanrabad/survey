@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2015 NECTEC
+  ~ Copyright (c) 2016 NECTEC
   ~   National Electronics and Computer Technology Center, Thailand
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,12 +17,12 @@
   -->
 
 <set xmlns:android="http://schemas.android.com/apk/res/android"
-     android:startOffset="1250"
-     android:interpolator="@android:anim/linear_interpolator">
-    <alpha
-            android:fromAlpha="0"
-            android:toAlpha="1"
+     android:startOffset="750">
+    <translate
+            android:fromXDelta="100%"
+            android:toXDelta="0%"
+            android:fromYDelta="0%"
+            android:toYDelta="0%"
             android:duration="@android:integer/config_longAnimTime"/>
-
 
 </set>

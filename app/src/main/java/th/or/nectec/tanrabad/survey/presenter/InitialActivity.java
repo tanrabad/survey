@@ -17,6 +17,7 @@
 
 package th.or.nectec.tanrabad.survey.presenter;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 import th.or.nectec.tanrabad.survey.R;
@@ -86,7 +87,8 @@ public class InitialActivity extends TanrabadActivity {
     }
 
     private void openMainActivityThenFinish() {
-        MainActivity.open(InitialActivity.this);
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
         finish();
     }
 

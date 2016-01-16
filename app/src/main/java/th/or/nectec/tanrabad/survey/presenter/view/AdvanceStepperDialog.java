@@ -78,7 +78,7 @@ public class AdvanceStepperDialog extends Dialog implements View.OnClickListener
 
         findViewById(R.id.delete).setOnClickListener(this);
         findViewById(R.id.plus).setOnClickListener(this);
-        findViewById(R.id.subtration).setOnClickListener(this);
+        findViewById(R.id.subtraction).setOnClickListener(this);
         findViewById(R.id.submit).setOnClickListener(this);
     }
 
@@ -123,7 +123,7 @@ public class AdvanceStepperDialog extends Dialog implements View.OnClickListener
             case R.id.plus:
                 updateOperator(Operator.ADDITION);
                 break;
-            case R.id.subtration:
+            case R.id.subtraction:
                 updateOperator(Operator.SUBTRACTION);
                 break;
             case R.id.delete:

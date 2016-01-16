@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,6 +28,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -45,6 +46,13 @@ public class SurveyContainerView extends LinearLayout {
     private EditText totalContainerView;
     private EditText foundContainerView;
     private ImageView containerIconView;
+    private OnLongClickListener showAdvanceStepperDialog = new OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View view) {
+            new AdvanceStepperDialog(getContext(), (TextView) view).show();
+            return true;
+        }
+    };
 
     public SurveyContainerView(Context context) {
         super(context);
@@ -59,8 +67,9 @@ public class SurveyContainerView extends LinearLayout {
 
     private void initInstances() {
         containerTypeView = (TextView) findViewById(R.id.container_type);
-        foundContainerView = (EditText) findViewById(R.id.found_larvae_container);
         containerIconView = (ImageView) findViewById(R.id.container_icon);
+        foundContainerView = (EditText) findViewById(R.id.found_larvae_container);
+        foundContainerView.setOnLongClickListener(showAdvanceStepperDialog);
         foundContainerView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -77,8 +86,8 @@ public class SurveyContainerView extends LinearLayout {
 
             }
         });
-
         totalContainerView = (EditText) findViewById(R.id.total_container);
+        totalContainerView.setOnLongClickListener(showAdvanceStepperDialog);
         totalContainerView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

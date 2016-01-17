@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -36,6 +36,7 @@ import th.or.nectec.tanrabad.entity.*;
 import th.or.nectec.tanrabad.entity.utils.UUIDv1;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
+import th.or.nectec.tanrabad.survey.presenter.view.AdvanceStepperDialog;
 import th.or.nectec.tanrabad.survey.presenter.view.SurveyContainerView;
 import th.or.nectec.tanrabad.survey.presenter.view.TorchButton;
 import th.or.nectec.tanrabad.survey.repository.InMemoryBuildingRepository;
@@ -96,7 +97,13 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         indoorContainerLayout = (LinearLayout) findViewById(R.id.indoor_container);
         outdoorContainerLayout = (LinearLayout) findViewById(R.id.outdoor_container);
         residentCountView = (EditText) findViewById(R.id.resident_count);
-
+        residentCountView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                new AdvanceStepperDialog(SurveyActivity.this, (TextView) view).show();
+                return true;
+            }
+        });
     }
 
     private void showContainerList() {

@@ -35,7 +35,7 @@ public class AdvanceStepperDialog extends Dialog implements View.OnClickListener
     private int operand2nd = 0;
     private Operator operator = Operator.ADDITION;
 
-    protected AdvanceStepperDialog(Context context, TextView callerView) {
+    public AdvanceStepperDialog(Context context, TextView callerView) {
         super(context);
         this.callerView = callerView;
     }
@@ -78,8 +78,8 @@ public class AdvanceStepperDialog extends Dialog implements View.OnClickListener
 
         findViewById(R.id.delete).setOnClickListener(this);
         findViewById(R.id.plus).setOnClickListener(this);
-        findViewById(R.id.subtraction).setOnClickListener(this);
-        findViewById(R.id.submit).setOnClickListener(this);
+        findViewById(R.id.minus).setOnClickListener(this);
+        findViewById(R.id.enter).setOnClickListener(this);
     }
 
     private void updateOperator(Operator operator) {
@@ -123,13 +123,13 @@ public class AdvanceStepperDialog extends Dialog implements View.OnClickListener
             case R.id.plus:
                 updateOperator(Operator.ADDITION);
                 break;
-            case R.id.subtraction:
+            case R.id.minus:
                 updateOperator(Operator.SUBTRACTION);
                 break;
             case R.id.delete:
                 deleteSecondOperand();
                 break;
-            case R.id.submit:
+            case R.id.enter:
                 setResultToCallerView();
                 dismiss();
                 break;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +18,6 @@
 package th.or.nectec.tanrabad.survey.utils.android;
 
 import android.content.Context;
-import th.or.nectec.tanrabad.survey.TanrabadApp;
 
 public class DPCalculator {
 
@@ -38,5 +37,9 @@ public class DPCalculator {
 
     public int toPX(int dp) {
         return (int) (dp * context.getResources().getDisplayMetrics().density + 0.5f);
+    }
+
+    public int toDP(int px) {
+        return (int) (px / (context.getResources().getDisplayMetrics().densityDpi / 160f));
     }
 }

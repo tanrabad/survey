@@ -1,15 +1,30 @@
+/*
+ * Copyright (c) 2016 NECTEC
+ *   National Electronics and Computer Technology Center, Thailand
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package th.or.nectec.tanrabad.survey.presenter.maps;
 
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
-
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.utils.MapUtils;
 
@@ -51,7 +66,7 @@ public class MapMarkerFragment extends BaseMapFragment implements MapMarkerInter
             moveToLocation(targetLocation);
         } else {
             Location lastLocation = getLastLocation();
-            if (lastLocation != null) {
+            if (lastLocation != null && marker == null) {
                 targetLocation = LocationUtils.convertLocationToLatLng(lastLocation);
                 marker = addDraggableMarker(targetLocation);
                 moveToLocation(targetLocation);
@@ -68,8 +83,11 @@ public class MapMarkerFragment extends BaseMapFragment implements MapMarkerInter
         markerOptions.draggable(draggable);
         markerOptions.icon(MapUtils.getIconBitmapDescriptor(getActivity(), color));
         markerOptions.position(position);
-        return googleMap.addMarker(markerOptions);
+        Marker pinnedMarker = googleMap.addMarker(markerOptions);
+        new MarkerDropInAnimator(this, pinnedMarker).start();
+        return pinnedMarker;
     }
+
 
     @Override
     public void onMapLongClick(LatLng latLng) {
@@ -80,7 +98,6 @@ public class MapMarkerFragment extends BaseMapFragment implements MapMarkerInter
     public void removeMarkedLocation() {
         if (marker == null)
             return;
-
         marker.remove();
         marker = null;
     }

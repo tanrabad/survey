@@ -17,13 +17,12 @@
 
 package th.or.nectec.tanrabad.survey.repository.persistence;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
-import org.junit.Ignore;
+import org.joda.time.DateTime;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,6 +30,8 @@ import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
+
+import java.util.UUID;
 
 import static org.junit.Assert.*;
 
@@ -40,21 +41,21 @@ public class DbBuildngRepositoryTest {
     @Rule
     public SurveyDbTestRule dbTestRule = new SurveyDbTestRule();
 
-    @Ignore
     @Test
     public void testSave() throws Exception {
-        Place place = Place.withName("National Science Park");
-        User updateBy = User.fromUsername("blaze");
+        Place place = new Place(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"), "หมู่บ้านทดสอบ");
+        User updateBy = User.fromUsername("dpc-user");
         Building building = Building.withName("No. 1/1");
         building.setPlace(place);
         building.setLocation(new Location(10.200000f, 100.100000f));
         building.setUpdateBy(updateBy);
+        building.setUpdateTimestamp(new DateTime().toString());
         Context context = InstrumentationRegistry.getTargetContext();
-        DbBuildngRepository dbBuildngRepository = new DbBuildngRepository(context);
+        DbBuildingRepository dbBuildngRepository = new DbBuildingRepository(context);
         boolean success = dbBuildngRepository.save(building);
 
         SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
-        Cursor cursor = db.query(DbBuildngRepository.TABLE_NAME,
+        Cursor cursor = db.query(DbBuildingRepository.TABLE_NAME,
                 BuildingColumn.wildcard(),
                 BuildingColumn.ID + "=?",
                 new String[]{building.getId().toString()},

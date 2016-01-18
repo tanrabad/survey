@@ -3,7 +3,6 @@ INSERT INTO
 VALUES
   ("12", "นนทบุรี");
 
-
 INSERT INTO
   district (district_code, name, province_code)
 VALUES
@@ -69,3 +68,28 @@ VALUES
   ("120408", "บางรักพัฒนา", "1204"),
   ("120204", "บางขนุน", "1202"),
   ("120205", "บางขุนกอง", "1202");
+
+INSERT INTO
+  organization (org_id, name, subdistrict_code, health_region_code)
+VALUES
+  ("100", "กรมควบคุมโรค", "120105", "1");
+
+INSERT INTO
+  user_profile (username, org_id)
+VALUES
+  ("dpc-user", "100");
+
+INSERT INTO
+  place_type (type_id, name)
+VALUES
+  ("1", "ชุมชน");
+
+INSERT INTO
+  place_subtype (subtype_id, name, type_id)
+VALUES
+  ("1", "ชุมชนเมือง", "1");
+
+INSERT INTO
+  place (place_id, subtype_id, name, subdistrict_code, update_by, update_time)
+VALUES
+  ("abc01db8-7207-8a65-152f-ad208cb99b5e", "1", "หมู่บ้านทดสอบ", "120202", "dpc-user", "2016-01-13 12:32:12");

@@ -31,14 +31,14 @@ import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
 import java.util.List;
 import java.util.UUID;
 
-public class DbBuildngRepository implements BuildingRepository {
+public class DbBuildingRepository implements BuildingRepository {
 
     public static final String TABLE_NAME = "building";
     public static final int ERROR_INSERT_ID = -1;
     private final Context context;
 
 
-    public DbBuildngRepository(Context context) {
+    public DbBuildingRepository(Context context) {
         this.context = context;
     }
 
@@ -88,6 +88,7 @@ public class DbBuildngRepository implements BuildingRepository {
         values.put(BuildingColumn.LONGITUDE, building.getLocation().getLongitude());
         values.put(BuildingColumn.SYNC_STATUS, 0);
         values.put(BuildingColumn.UPDATE_BY, building.getUpdateBy().getUsername());
+        values.put(BuildingColumn.UPDATE_TIME, building.getUpdateTimestamp().toString());
         return values;
     }
 

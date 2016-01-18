@@ -26,9 +26,10 @@ public class BuildingColumn {
     public static final String UPDATE_BY = "update_by";
     public static final String SYNC_STATUS = "sync_status";
     public static final String PLACE_ID = "place_id";
+    public static final String UPDATE_TIME = "update_time";
 
 
     public static String[] wildcard() {
-        return new String[]{ID, NAME, PLACE_ID, LATITUDE, LONGITUDE, UPDATE_BY, SYNC_STATUS};
+        return new String[]{ID, NAME, PLACE_ID, LATITUDE, LONGITUDE, UPDATE_BY, UPDATE_TIME, SYNC_STATUS};
     }
 }

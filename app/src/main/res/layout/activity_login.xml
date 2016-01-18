@@ -108,7 +108,7 @@
             android:layout_height="fill_parent"
             android:orientation="vertical"
             android:gravity="bottom"
-            android:layout_marginLeft="5sp">
+            android:layout_marginLeft="@dimen/screen_horizontal_margin">
 
         <TextView
                 android:layout_width="wrap_content"
@@ -117,8 +117,9 @@
                 android:text="@string/powered_by"/>
 
         <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/space_between_content"
+                android:layout_width="125dp"
+                android:layout_height="39dp"
                 android:src="@drawable/logo_nectec"
                 android:contentDescription="@null"/>
 
@@ -127,13 +128,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5sp"
                 android:textSize="15sp"
-                android:text="@string/copyright"/>
-
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:text="@string/version_at_powered_by"/>
+                android:text="@string/copyright"
+                android:layout_marginBottom="@dimen/screen_vertical_margin"/>
 
     </LinearLayout>
 

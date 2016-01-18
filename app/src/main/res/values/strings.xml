@@ -144,9 +144,8 @@
     <string name="version">version 1.0</string>
     <string name="powered_by">Powered by</string>
     <string name="copyright">Copyright © 2015 NECTEC - National Electronics and Computers Technology Center.Code
-        released under The Apache License,
+        released under The Apache License, Version 2.0. Image and document released under Creative Common
     </string>
-    <string name="version_at_powered_by">Version 2.0. Image released under Creative Common</string>
     <string name="authentication">ยืนยันตัวตน</string>
 
 </resources>

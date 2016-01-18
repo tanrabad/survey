@@ -125,7 +125,7 @@ public class InMemoryPlaceRepository implements PlaceRepository {
     }
 
     @Override
-    public List<Place> findPlacesWithPlaceFilter(int placeType) {
+    public List<Place> findPlacesWithPlaceTypeFilter(int placeType) {
         ArrayList<Place> filterPlaces = new ArrayList<>();
         for (Place eachPlace : placesMap.values()) {
             if (eachPlace.getType() == placeType)

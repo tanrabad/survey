@@ -30,7 +30,7 @@ public interface PlaceRepository {
 
     Place findPlaceByUUID(UUID placeUUID);
 
-    List<Place> findPlacesWithPlaceFilter(int typeVillageCommunity);
+    List<Place> findPlacesWithPlaceTypeFilter(int placeType);
 
     boolean save(Place place);
 

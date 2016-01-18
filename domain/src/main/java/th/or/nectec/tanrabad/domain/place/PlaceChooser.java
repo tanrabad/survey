@@ -17,9 +17,9 @@
 
 package th.or.nectec.tanrabad.domain.place;
 
-import java.util.List;
-
 import th.or.nectec.tanrabad.entity.Place;
+
+import java.util.List;
 
 public class PlaceChooser {
 
@@ -40,8 +40,8 @@ public class PlaceChooser {
         }
     }
 
-    public void getPlaceListWithPlaceFilter(int buildingType) {
-        List<Place> places = this.placeRepository.findPlacesWithPlaceFilter(buildingType);
+    public void getPlaceListWithPlaceTypeFilter(int placeType) {
+        List<Place> places = this.placeRepository.findPlacesWithPlaceTypeFilter(placeType);
         if (places == null) {
             placeListPresenter.displayPlaceNotFound();
         } else {

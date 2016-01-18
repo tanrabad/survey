@@ -22,11 +22,10 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import th.or.nectec.tanrabad.entity.Place;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import th.or.nectec.tanrabad.entity.Place;
 
 public class PlaceChooseTest {
 
@@ -91,14 +90,14 @@ public class PlaceChooseTest {
 
         context.checking(new Expectations() {
             {
-                oneOf(placeRepository).findPlacesWithPlaceFilter(Place.TYPE_VILLAGE_COMMUNITY);
+                oneOf(placeRepository).findPlacesWithPlaceTypeFilter(Place.TYPE_VILLAGE_COMMUNITY);
                 will(returnValue(filterPlace));
                 oneOf(placeListPresenter).displayPlaceList(filterPlace);
             }
         });
 
         PlaceChooser chooser = new PlaceChooser(placeRepository, placeListPresenter);
-        chooser.getPlaceListWithPlaceFilter(Place.TYPE_VILLAGE_COMMUNITY);
+        chooser.getPlaceListWithPlaceTypeFilter(Place.TYPE_VILLAGE_COMMUNITY);
     }
 
     @Test

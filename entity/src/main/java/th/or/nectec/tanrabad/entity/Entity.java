@@ -22,13 +22,13 @@ import org.joda.time.DateTime;
 
 public class Entity {
 
-    private String updateTimestamp;
+    private DateTime updateTimestamp;
 
     public DateTime getUpdateTimestamp() {
-        return DateTime.parse(updateTimestamp);
+        return updateTimestamp;
     }
 
     public void setUpdateTimestamp(String updateTimestamp) {
-        this.updateTimestamp = updateTimestamp;
+        this.updateTimestamp = DateTime.parse(updateTimestamp);
     }
 }

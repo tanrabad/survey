@@ -47,8 +47,9 @@
 
     <ImageView
             android:id="@+id/larvae"
-            android:layout_width="600dp"
-            android:layout_height="1024dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="300dp"
             android:contentDescription="@null"
             android:src="@drawable/larvae_main"
             app:layout_anchor="@id/root"

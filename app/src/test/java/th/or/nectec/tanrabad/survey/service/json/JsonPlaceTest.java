@@ -2,6 +2,8 @@ package th.or.nectec.tanrabad.survey.service.json;
 
 import com.bluelinelabs.logansquare.LoganSquare;
 import com.google.gson.Gson;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.junit.Test;
 import org.mockito.Mockito;
 import th.or.nectec.tanrabad.domain.UserRepository;
@@ -23,8 +25,8 @@ public class JsonPlaceTest {
             "  \"place_name\": \"รพ.สต.ตำบลนาทราย\"," +
             "  \"tambon_code\": \"510403\"," +
             "  \"location\":{ \"type\": \"Point\", \"coordinates\": [-73.150055, 39.745675]}," +
-            "  \"update_by\":\"dcp-user\"" +
-            "}";
+            "  \"update_by\":\"dcp-user\"," +
+            "  \"update_timestamp\": \"2015-12-24T05:05:19.626Z\"}";
 
     private Gson gson = new Gson();
 
@@ -50,6 +52,8 @@ public class JsonPlaceTest {
         placeData.setAddress(stubAddress());
         placeData.setLocation(stubLocation());
         placeData.setUpdateBy(stubUser());
+        DateTime updateTime = DateTime.now();
+        placeData.setUpdateTimestamp(updateTime.toString());
 
         JsonPlace jsonPlace = JsonPlace.parse(placeData);
 
@@ -61,6 +65,7 @@ public class JsonPlaceTest {
         assertEquals(stubLocation().getLatitude(), jsonPlace.location.getLatitude(), 0);
         assertEquals(stubLocation().getLongitude(), jsonPlace.location.getLongitude(), 0);
         assertEquals(stubUser().getUsername(), jsonPlace.updateBy);
+        assertEquals(updateTime.withZone(DateTimeZone.UTC), DateTime.parse(jsonPlace.updateTime));
     }
 
     private Address stubAddress() {
@@ -87,6 +92,7 @@ public class JsonPlaceTest {
         placeData.setAddress(stubAddress());
         placeData.setLocation(stubLocation());
         placeData.setUpdateBy(stubUser());
+        placeData.setUpdateTimestamp(DateTime.now().toString());
         JsonPlace jsonPlace = LoganSquare.parse(rawPlaceString, JsonPlace.class);
         Place parsedPlace = jsonPlace.getEntity(userRepository);
 

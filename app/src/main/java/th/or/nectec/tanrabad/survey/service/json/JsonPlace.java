@@ -2,6 +2,7 @@ package th.or.nectec.tanrabad.survey.service.json;
 
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
+import org.joda.time.DateTimeZone;
 import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.Place;
@@ -48,6 +49,9 @@ public class JsonPlace {
     @JsonField(name = "update_by")
     public String updateBy;
 
+    @JsonField(name = "update_timestamp")
+    public String updateTime;
+
 
     public static JsonPlace parse(Place place) {
         JsonPlace jsonPlace = new JsonPlace();
@@ -58,6 +62,7 @@ public class JsonPlace {
         jsonPlace.location = GeoJsonPoint.parse(place.getLocation());
         jsonPlace.tambonCode = place.getAddress().getAddressCode();
         jsonPlace.updateBy = place.getUpdateBy().getUsername();
+        jsonPlace.updateTime = place.getUpdateTimestamp().withZone(DateTimeZone.UTC).toString();
         return jsonPlace;
     }
 
@@ -69,6 +74,7 @@ public class JsonPlace {
         Location location = this.location == null ? null : this.location.getEntity();
         place.setLocation(location);
         place.setUpdateBy(userRepository.findUserByName(updateBy));
+        place.setUpdateTimestamp(updateTime);
         return place;
     }
 

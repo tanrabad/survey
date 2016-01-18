@@ -17,11 +17,11 @@
 
 package th.or.nectec.tanrabad.entity;
 
-import java.util.UUID;
-
 import th.or.nectec.tanrabad.entity.utils.Address;
 
-public class Place implements LocationEntity {
+import java.util.UUID;
+
+public class Place extends Entity implements LocationEntity {
     public static final int TYPE_VILLAGE_COMMUNITY = 1;
     public static final int TYPE_WORSHIP = 2;
     public static final int SUBTYPE_TEMPLE = 21;

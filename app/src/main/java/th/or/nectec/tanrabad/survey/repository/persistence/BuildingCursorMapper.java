@@ -35,6 +35,7 @@ class BuildingCursorMapper implements CursorMapper<Building> {
     private int latIndex;
     private int lngIndex;
     private int updateByIndex;
+    private int updateTimeIndex;
     private int placeId;
 
     public BuildingCursorMapper(Cursor cursor, UserRepository userRepository, PlaceRepository placeRepository) {
@@ -51,6 +52,7 @@ class BuildingCursorMapper implements CursorMapper<Building> {
         lngIndex = cursor.getColumnIndex(BuildingColumn.LONGITUDE);
         placeId = cursor.getColumnIndex(BuildingColumn.PLACE_ID);
         updateByIndex = cursor.getColumnIndex(BuildingColumn.UPDATE_BY);
+        updateTimeIndex = cursor.getColumnIndex(BuildingColumn.UPDATE_TIME);
     }
 
     @Override
@@ -60,6 +62,7 @@ class BuildingCursorMapper implements CursorMapper<Building> {
         building.setLocation(new Location(cursor.getDouble(latIndex), cursor.getDouble(lngIndex)));
         building.setUpdateBy(userRepository.findUserByName(cursor.getString(updateByIndex)));
         building.setPlace(placeRepository.findPlaceByUUID(UUID.fromString(cursor.getString(placeId))));
+        building.setUpdateTimestamp(cursor.getString(updateTimeIndex));
         return building;
     }
 

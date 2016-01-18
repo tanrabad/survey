@@ -23,6 +23,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,10 +34,10 @@ import th.or.nectec.tanrabad.entity.User;
 
 import java.util.UUID;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
-public class DbBuildngRepositoryTest {
+public class DbBuildingRepositoryTest {
 
     @Rule
     public SurveyDbTestRule dbTestRule = new SurveyDbTestRule();
@@ -49,7 +50,8 @@ public class DbBuildngRepositoryTest {
         building.setPlace(place);
         building.setLocation(new Location(10.200000f, 100.100000f));
         building.setUpdateBy(updateBy);
-        building.setUpdateTimestamp(new DateTime().toString());
+        DateTime updateTime = DateTime.now();
+        building.setUpdateTimestamp(updateTime.toString());
         Context context = InstrumentationRegistry.getTargetContext();
         DbBuildingRepository dbBuildngRepository = new DbBuildingRepository(context);
         boolean success = dbBuildngRepository.save(building);
@@ -68,7 +70,41 @@ public class DbBuildngRepositoryTest {
         assertEquals(building.getName(), cursor.getString(cursor.getColumnIndex(BuildingColumn.NAME)));
         assertEquals(place.getId().toString(), cursor.getString(cursor.getColumnIndex(BuildingColumn.PLACE_ID)));
         assertEquals(updateBy.getUsername(), cursor.getString(cursor.getColumnIndex(BuildingColumn.UPDATE_BY)));
+        assertEquals(updateTime.withZone(DateTimeZone.UTC), DateTime.parse(cursor.getString(cursor.getColumnIndex(BuildingColumn.UPDATE_TIME))));
 
+        cursor.close();
+    }
+
+
+    @Test
+    public void testUpdate() throws Exception {
+        Place place = new Place(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"), "หมู่บ้านทดสอบ");
+        User updateBy = User.fromUsername("dpc-user");
+        Building building = new Building(UUID.fromString("00001db8-7207-8a65-152f-ad208cb99b01"), "2aa");
+        building.setPlace(place);
+        building.setLocation(new Location(10.200000f, 100.100000f));
+        building.setUpdateBy(updateBy);
+        DateTime updateTime = DateTime.now();
+        building.setUpdateTimestamp(updateTime.toString());
+        Context context = InstrumentationRegistry.getTargetContext();
+        DbBuildingRepository dbBuildngRepository = new DbBuildingRepository(context);
+        boolean success = dbBuildngRepository.update(building);
+
+        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        Cursor cursor = db.query(DbBuildingRepository.TABLE_NAME,
+                BuildingColumn.wildcard(),
+                BuildingColumn.ID + "=?",
+                new String[]{building.getId().toString()},
+                null, null, null);
+
+        assertEquals(true, success);
+        assertEquals(true, cursor.moveToFirst());
+        assertEquals(1, cursor.getCount());
+        assertEquals(building.getId().toString(), cursor.getString(cursor.getColumnIndex(BuildingColumn.ID)));
+        assertEquals(building.getName(), cursor.getString(cursor.getColumnIndex(BuildingColumn.NAME)));
+        assertEquals(place.getId().toString(), cursor.getString(cursor.getColumnIndex(BuildingColumn.PLACE_ID)));
+        assertEquals(updateBy.getUsername(), cursor.getString(cursor.getColumnIndex(BuildingColumn.UPDATE_BY)));
+        assertEquals(updateTime.withZone(DateTimeZone.UTC), DateTime.parse(cursor.getString(cursor.getColumnIndex(BuildingColumn.UPDATE_TIME))));
         cursor.close();
     }
 }

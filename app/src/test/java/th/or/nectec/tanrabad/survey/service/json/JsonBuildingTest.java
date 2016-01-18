@@ -2,7 +2,6 @@ package th.or.nectec.tanrabad.survey.service.json;
 
 import android.support.annotation.NonNull;
 import com.bluelinelabs.logansquare.LoganSquare;
-import com.google.gson.Gson;
 import org.junit.Test;
 import org.mockito.Mockito;
 import th.or.nectec.tanrabad.domain.UserRepository;
@@ -24,10 +23,8 @@ public class JsonBuildingTest {
             "\"place_type_id\":4," +
             "\"name\":\"อาคาร 1\"," +
             "\"location\":{ \"type\": \"Point\", \"coordinates\": [-73.15005, 39.745673]}," +
-            "\"update_by\":\"dcp-user\"" +
-            "}";
-
-    private Gson gson = new Gson();
+            "\"update_by\":\"dcp-user\"," +
+            "\"update_timestamp\": \"2015-12-24T05:05:19.626Z\"}";
 
     @Test
     public void testParseToJsonString() throws Exception {
@@ -48,6 +45,7 @@ public class JsonBuildingTest {
         buildingData.setPlace(stubPlace());
         buildingData.setLocation(stubLocation());
         buildingData.setUpdateBy(stubUser());
+        buildingData.setUpdateTimestamp("2015-11-30T17:00:00.000Z");
 
         JsonBuilding jsonBuilding = JsonBuilding.parse(buildingData);
 
@@ -58,6 +56,7 @@ public class JsonBuildingTest {
         assertEquals(39.745673, jsonBuilding.location.getLatitude(), 0);
         assertEquals(-73.15005, jsonBuilding.location.getLongitude(), 0);
         assertEquals(jsonBuilding.updateBy, stubUser().getUsername());
+        assertEquals("2015-11-30T17:00:00.000Z", jsonBuilding.updateTime);
     }
 
     @NonNull

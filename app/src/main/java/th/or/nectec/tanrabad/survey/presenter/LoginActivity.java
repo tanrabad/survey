@@ -30,8 +30,8 @@ public class LoginActivity extends TanrabadActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        View logo = findViewById(R.id.logoTabrabad);
-        findViewById(R.id.login_button).setOnClickListener(new View.OnClickListener() {
+        View logo = findViewById(R.id.logo_tabrabad);
+        findViewById(R.id.authentication_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openMainActivity();

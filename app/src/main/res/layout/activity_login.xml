@@ -28,14 +28,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="fitXY"
-            android:id="@+id/loginBgBlue"
+            android:id="@+id/bg_blue"
             android:src="@drawable/bg_blue_login_page"
             android:contentDescription="@null"/>
 
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignRight="@id/loginBgBlue"
+            android:layout_alignRight="@id/bg_blue"
             android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
             android:gravity="right"
@@ -48,106 +48,59 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:layout_centerHorizontal="true"
-            android:id="@+id/logoTabrabad"
+            android:id="@+id/logo_tabrabad"
             android:src="@drawable/logo_tanrabad"/>
-
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/logoTabrabad"
-            android:layout_marginTop="30dp"
-            android:text="@string/app_name_2"
-            android:textSize="@dimen/text_headline"
-            android:textColor="#ffffff"/>
-
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/logoTabrabad"
-            android:layout_marginTop="90dp"
-            android:text="@string/username_and_password_do_not_match"
-            android:textSize="20sp"
-            android:textColor="#ffffff"
-            android:textStyle="normal"/>
-
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/logoTabrabad"
-            android:layout_marginTop="120dp"
-            android:text="@string/forgot_password"
-            android:textSize="20sp"
-            android:textColor="#ffffff"
-            android:textStyle="normal"/>
-
-    <EditText
-            android:layout_width="450dp"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/logoTabrabad"
-            android:layout_marginTop="190dp"
-            android:padding="15dip"
-            android:background="@drawable/rounded_edit_text"
-            android:hint="@string/username"/>
-
-    <EditText
-            android:layout_width="450dp"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/logoTabrabad"
-            android:layout_marginTop="260dp"
-            android:padding="15dip"
-            android:background="@drawable/rounded_edit_text"
-            android:hint="@string/password"/>
-
-    <Button
-            android:id="@+id/login_button"
-            android:layout_width="450dp"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/logoTabrabad"
-            android:layout_marginTop="330dp"
-            android:padding="10dp"
-            android:textColor="#ffffff"
-            android:background="@drawable/rounded_button"
-            android:textSize="30sp"
-            android:text="@string/login"/>
 
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_below="@+id/logoTabrabad"
-            android:layout_marginTop="370dp"
             android:gravity="center"
-            android:paddingTop="30dp">
+            android:layout_marginTop="30dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/logo_tabrabad">
 
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:textSize="@dimen/text_headline"
+                android:textColor="#ffffff"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/survey"
+                android:textSize="@dimen/text_title"
+                android:textColor="#ffffff"/>
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                  android:gravity="center"
+                  android:layout_marginTop="220dp"
+                  android:layout_centerHorizontal="true"
+                  android:layout_below="@+id/logo_tabrabad">
+
+        <Button
+                android:id="@+id/authentication_button"
+                android:layout_width="450dp"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:textColor="#ffffff"
+                android:background="@drawable/rounded_button"
+                android:textSize="@dimen/text_title"
+                android:text="@string/authentication"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:text="@string/trial"
                 android:textSize="@dimen/text_body"
                 android:textColor="#848484"/>
-
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:text="@string/vertical_bar"
-                android:textSize="@dimen/text_body"
-                android:textColor="#848484"/>
-
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:text="@string/register"
-                android:textSize="@dimen/text_body"
-                android:textColor="#848484"/>
-
     </LinearLayout>
 
     <LinearLayout

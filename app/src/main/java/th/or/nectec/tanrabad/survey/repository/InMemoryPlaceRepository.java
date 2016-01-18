@@ -214,8 +214,8 @@ public class InMemoryPlaceRepository implements PlaceRepository {
     }
 
     private void trim(Location insideMaximumLocation, Location outsideMaximumLocation, List<LocationEntity> filterPlaces) {
-        List<LocationEntity> trimmedNorthEast = findInBoundaryLocation(insideMaximumLocation,outsideMaximumLocation);
-        filterPlaces.removeAll(trimmedNorthEast);
+        List<LocationEntity> trimmedLocation = findInBoundaryLocation(insideMaximumLocation, outsideMaximumLocation);
+        filterPlaces.removeAll(trimmedLocation);
     }
 
     private boolean isLessThanOrEqualMaximumLocation(Location maximumLocation, Location location) {

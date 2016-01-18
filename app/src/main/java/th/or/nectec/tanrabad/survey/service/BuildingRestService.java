@@ -47,7 +47,7 @@ public class BuildingRestService extends BaseRestService<Building> {
     }
 
     @Override
-    protected List<Building> toJson(String responseBody) {
+    protected List<Building> jsonToEntityList(String responseBody) {
         ArrayList<Building> buildings = new ArrayList<>();
         try {
             List<JsonBuilding> jsonBuildings = LoganSquare.parseList(responseBody, JsonBuilding.class);

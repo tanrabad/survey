@@ -41,7 +41,7 @@ public class ContainerTypeRestService extends BaseRestService<ContainerType> {
     }
 
     @Override
-    protected List<ContainerType> toJson(String responseBody) {
+    protected List<ContainerType> jsonToEntityList(String responseBody) {
         ArrayList<ContainerType> provinceList = new ArrayList<>();
         try {
             List<JsonContainerType> jsonContainerTypeList = LoganSquare.parseList(responseBody, JsonContainerType.class);

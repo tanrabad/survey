@@ -38,7 +38,7 @@ public class TambonRestService extends BaseRestService<Subdistrict> {
         super(apiBaseUrl, lastUpdate);
     }
 
-    protected List<Subdistrict> toJson(String responseBody) {
+    protected List<Subdistrict> jsonToEntityList(String responseBody) {
         ArrayList<Subdistrict> subdistrictList = new ArrayList<>();
         try {
             List<JsonTambon> jsonTambonList = LoganSquare.parseList(responseBody, JsonTambon.class);

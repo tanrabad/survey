@@ -38,7 +38,7 @@ public class AmphurRestService extends BaseRestService<District> {
         super(apiBaseUrl, lastUpdate);
     }
 
-    protected List<District> toJson(String responseBody) {
+    protected List<District> jsonToEntityList(String responseBody) {
         ArrayList<District> subdistrictList = new ArrayList<>();
         try {
             List<JsonAmphur> jsonAmphurList = LoganSquare.parseList(responseBody, JsonAmphur.class);

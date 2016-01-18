@@ -39,7 +39,7 @@ public class ProvinceRestService extends BaseRestService<Province> {
     }
 
     @Override
-    protected List<Province> toJson(String responseBody) {
+    protected List<Province> jsonToEntityList(String responseBody) {
         ArrayList<Province> provinceList = new ArrayList<>();
         try {
             List<JsonProvince> jsonProvinceList = LoganSquare.parseList(responseBody, JsonProvince.class);

@@ -60,7 +60,7 @@ public abstract class BaseRestService<T> implements RestService<T> {
             if (!hasNextRequest())
                 lastUpdate.save(getLastModified(response));
 
-            return toJson(response.body().string());
+            return jsonToEntityList(response.body().string());
 
         } catch (IOException io) {
             throw new RestServiceException();
@@ -108,5 +108,5 @@ public abstract class BaseRestService<T> implements RestService<T> {
 
     protected abstract String getPath();
 
-    protected abstract List<T> toJson(String responseBody);
+    protected abstract List<T> jsonToEntityList(String responseBody);
 }

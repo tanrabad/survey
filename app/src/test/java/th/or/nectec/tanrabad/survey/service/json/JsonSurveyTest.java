@@ -43,7 +43,7 @@ public class JsonSurveyTest {
 
         JsonSurvey jsonSurvey = JsonSurvey.parse(survey);
         assertEquals("{\"building_id\":\"5cf5665b-5642-10fb-a3a0-5e612a842583\"," +
-                "\"create_timestamp\":\"2015-01-11 10:00:00\",\"" +
+                "\"create_timestamp\":\"2015-01-11T03:00:00.000Z\",\"" +
                 "details\":" +
                 "[{\"container_count\":10,\"container_have_larvae\":5," +
                 "\"container_location_id\":1,\"container_type\":1," +

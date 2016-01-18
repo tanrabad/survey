@@ -2,6 +2,7 @@ package th.or.nectec.tanrabad.survey.service.json;
 
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
+import org.joda.time.DateTimeZone;
 import th.or.nectec.tanrabad.entity.Survey;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class JsonSurvey {
     public String surveyor;
     @JsonField
     public List<JsonSurveyDetail> details;
+
     @JsonField(name = "create_timestamp")
     String createTimestamp;
 
@@ -35,7 +37,7 @@ public class JsonSurvey {
         jsonSurvey.buildingID = survey.getSurveyBuilding().getId();
         jsonSurvey.details = JsonSurveyDetail.parseList(survey.getIndoorDetail(), survey.getOutdoorDetail());
         jsonSurvey.location = GeoJsonPoint.parse(survey.getLocation());
-        jsonSurvey.createTimestamp = survey.getStartTimestamp().toString("yyyy-MM-dd HH:mm:ss");
+        jsonSurvey.createTimestamp = survey.getStartTimestamp().withZone(DateTimeZone.UTC).toString();
         return jsonSurvey;
     }
 }

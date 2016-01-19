@@ -8,6 +8,7 @@ import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.utils.Address;
 import th.or.nectec.tanrabad.survey.repository.persistence.PlaceTypeMapper;
+import th.or.nectec.tanrabad.survey.utils.time.ThaiDateTimeConverter;
 
 import java.util.UUID;
 
@@ -76,7 +77,7 @@ public class JsonPlace {
         Location location = this.location == null ? null : this.location.getEntity();
         place.setLocation(location);
         place.setUpdateBy(userRepository.findUserByName(updateBy));
-        place.setUpdateTimestamp(updateTime);
+        place.setUpdateTimestamp(ThaiDateTimeConverter.convert(updateTime).toString());
         return place;
     }
 

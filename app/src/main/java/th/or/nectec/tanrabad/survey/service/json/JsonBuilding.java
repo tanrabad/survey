@@ -7,6 +7,7 @@ import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Location;
+import th.or.nectec.tanrabad.survey.utils.time.ThaiDateTimeConverter;
 
 import java.util.UUID;
 
@@ -52,7 +53,7 @@ public class JsonBuilding {
         Location location = this.location==null ? null : this.location.getEntity();
         building.setLocation(location);
         building.setUpdateBy(userRepository.findUserByName(updateBy));
-        building.setUpdateTimestamp(updateTime);
+        building.setUpdateTimestamp(ThaiDateTimeConverter.convert(updateTime).toString());
         return building;
     }
 }

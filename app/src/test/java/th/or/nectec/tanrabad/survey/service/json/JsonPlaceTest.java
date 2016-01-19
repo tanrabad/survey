@@ -76,7 +76,7 @@ public class JsonPlaceTest {
         assertEquals(stubLocation().getLatitude(), jsonPlace.location.getLatitude(), 0);
         assertEquals(stubLocation().getLongitude(), jsonPlace.location.getLongitude(), 0);
         assertEquals(stubUser().getUsername(), jsonPlace.updateBy);
-        assertEquals(updateTime.withZone(DateTimeZone.UTC), DateTime.parse(jsonPlace.updateTime));
+        assertEquals(updateTime.withZone(DateTimeZone.UTC).toString(), jsonPlace.updateTime);
     }
 
     private Address stubAddress() {
@@ -106,8 +106,8 @@ public class JsonPlaceTest {
         placeData.setUpdateTimestamp(DateTime.now().toString());
         JsonPlace jsonPlace = LoganSquare.parse(rawPlaceString, JsonPlace.class);
         Place parsedPlace = jsonPlace.getEntity(userRepository);
-
         assertEquals(parsedPlace, placeData);
+        assertEquals(12, parsedPlace.getUpdateTimestamp().getHourOfDay());
     }
 
     @Test

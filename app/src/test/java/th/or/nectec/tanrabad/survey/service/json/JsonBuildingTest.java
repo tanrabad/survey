@@ -88,5 +88,6 @@ public class JsonBuildingTest {
         Building parsedBuilding = jsonBuilding.getEntity(placeRepository, userRepository);
 
         assertEquals(parsedBuilding, buildingData);
+        assertEquals(12, parsedBuilding.getUpdateTimestamp().getHourOfDay());
     }
 }

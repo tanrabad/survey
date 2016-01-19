@@ -42,12 +42,8 @@ public class PlaceUpdateJob implements Job {
     @Override
     public void execute() throws JobException {
         RestService<Place> service = new PlaceRestService();
-        ArrayList<Place> placeArrayList = new ArrayList<>();
-
         do {
-            placeArrayList.addAll(service.getUpdate());
+            placeRepository.updateOrInsert(service.getUpdate());
         } while (service.hasNextRequest());
-
-        placeRepository.updateOrInsert(placeArrayList);
     }
 }

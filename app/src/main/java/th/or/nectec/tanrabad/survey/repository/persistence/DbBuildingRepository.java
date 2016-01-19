@@ -75,11 +75,15 @@ public class DbBuildingRepository implements BuildingRepository {
         values.put(BuildingColumn.ID, building.getId().toString());
         values.put(BuildingColumn.NAME, building.getName());
         values.put(BuildingColumn.PLACE_ID, building.getPlaceId().toString());
-        values.put(BuildingColumn.LATITUDE, building.getLocation().getLatitude());
-        values.put(BuildingColumn.LONGITUDE, building.getLocation().getLongitude());
-        values.put(BuildingColumn.SYNC_STATUS, 0);
-        values.put(BuildingColumn.UPDATE_BY, building.getUpdateBy().getUsername());
+        if(building.getLocation() != null) {
+            values.put(BuildingColumn.LATITUDE, building.getLocation().getLatitude());
+            values.put(BuildingColumn.LONGITUDE, building.getLocation().getLongitude());
+        }
+        if(building.getUpdateBy() != null) {
+            values.put(BuildingColumn.UPDATE_BY, building.getUpdateBy().getUsername());
+        }
         values.put(BuildingColumn.UPDATE_TIME, building.getUpdateTimestamp().toString());
+        values.put(BuildingColumn.SYNC_STATUS, SyncStatus.NOT_SYNC);
         return values;
     }
 

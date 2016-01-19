@@ -37,7 +37,7 @@ public class BuildingRepoBroker implements BuildingRepository
         this.cache = cache;
     }
 
-    public BuildingRepoBroker getInstance() {
+    public static BuildingRepoBroker getInstance() {
         if (instance == null) {
             instance = new BuildingRepoBroker(InMemoryBuildingRepository.getInstance(),
                     new DbBuildingRepository(TanrabadApp.getInstance()));

@@ -86,14 +86,20 @@ public class DbPlaceRepository implements PlaceRepository {
 
     @Override
     public boolean save(Place place) {
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getWritableDatabase();
-        return db.insert(TABLE_NAME, null, buildingContentValues(place)) != ERROR_INSERT_ID;
+        return saveByContentValues(new SurveyLiteDatabase(context).getWritableDatabase(), placeContentValues(place));
+    }
+
+    private boolean saveByContentValues(SQLiteDatabase db, ContentValues place){
+        return db.insert(TABLE_NAME, null, place) != ERROR_INSERT_ID;
     }
 
     @Override
     public boolean update(Place place) {
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getWritableDatabase();
-        return db.update(TABLE_NAME, buildingContentValues(place), PlaceColumn.ID + "=?", new String[]{place.getId().toString()}) > 0;
+        return updateByContentValues(new SurveyLiteDatabase(context).getWritableDatabase(), placeContentValues(place));
+    }
+
+    private boolean updateByContentValues(SQLiteDatabase db, ContentValues place) {
+        return db.update(TABLE_NAME, place, PlaceColumn.ID + "=?", new String[]{place.getAsString(PlaceColumn.ID)}) > 0;
     }
 
     @Override
@@ -144,24 +150,35 @@ public class DbPlaceRepository implements PlaceRepository {
 
     @Override
     public void updateOrInsert(List<Place> buildings) {
+        SQLiteDatabase db = new SurveyLiteDatabase(context).getWritableDatabase();
+        db.beginTransaction();
         for (Place building : buildings) {
-            boolean updated = update(building);
+            ContentValues values = placeContentValues(building);
+            values.put(PlaceColumn.SYNC_STATUS, SyncStatus.SYNCED);
+            boolean updated = updateByContentValues(db, values);
             if (!updated)
-                save(building);
+                saveByContentValues(db, values);
         }
+        db.setTransactionSuccessful();
+        db.endTransaction();
+        db.close();
     }
 
-    private ContentValues buildingContentValues(Place place) {
+    private ContentValues placeContentValues(Place place) {
         ContentValues values = new ContentValues();
         values.put(PlaceColumn.ID, place.getId().toString());
         values.put(PlaceColumn.NAME, place.getName());
         values.put(PlaceColumn.SUBTYPE_ID, place.getSubType());
         values.put(PlaceColumn.SUBDISTRICT_CODE, place.getAddress().getAddressCode());
-        values.put(PlaceColumn.LATITUDE, place.getLocation().getLatitude());
-        values.put(PlaceColumn.LONGITUDE, place.getLocation().getLongitude());
-        values.put(PlaceColumn.SYNC_STATUS, 0);
-        values.put(PlaceColumn.UPDATE_BY, place.getUpdateBy().getUsername());
+        if(place.getLocation() != null) {
+            values.put(PlaceColumn.LATITUDE, place.getLocation().getLatitude());
+            values.put(PlaceColumn.LONGITUDE, place.getLocation().getLongitude());
+        }
+        if(place.getUpdateBy() != null) {
+            values.put(PlaceColumn.UPDATE_BY, place.getUpdateBy().getUsername());
+        }
         values.put(PlaceColumn.UPDATE_TIME, place.getUpdateTimestamp().toString());
+        values.put(PlaceColumn.SYNC_STATUS, SyncStatus.NOT_SYNC);
         return values;
     }
 

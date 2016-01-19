@@ -39,12 +39,12 @@ public class InitialActivity extends TanrabadActivity {
         new InitialJobRunner()
                 .addJob(new CreateDatabaseJob(this))
                 .addJob(new InMemoryInitializeJob())
-                .addJob(new PlaceUpdateJob(InMemoryPlaceRepository.getInstance()))
-                .addJob(new BuildingUpdateJob(InMemoryBuildingRepository.getInstance()))
-                .addJob(new ContainerTypeUpdateJob(InMemoryContainerTypeRepository.getInstance()))
-                .addJob(new SubdistrictUpdateJob(InMemorySubdistrictRepository.getInstance()))
-                .addJob(new DistrictUpdateJob(InMemoryDistrictRepository.getInstance()))
                 .addJob(new ProvinceUpdateJob(InMemoryProvinceRepository.getInstance()))
+                .addJob(new DistrictUpdateJob(InMemoryDistrictRepository.getInstance()))
+                .addJob(new SubdistrictUpdateJob(InMemorySubdistrictRepository.getInstance()))
+                .addJob(new PlaceUpdateJob(PlaceRepoBroker.getInstance()))
+                .addJob(new BuildingUpdateJob(BuildingRepoBroker.getInstance()))
+                .addJob(new ContainerTypeUpdateJob(InMemoryContainerTypeRepository.getInstance()))
                 .start();
     }
 
@@ -74,12 +74,6 @@ public class InitialActivity extends TanrabadActivity {
             case CreateDatabaseJob.ID:
                 loadingText.setText("กำลังสร้างฐานข้อมูลชั่วคราว");
                 break;
-            case 1:
-                loadingText.setText("กำลังจะนอน");
-                break;
-            case 2:
-                loadingText.setText("ง่วงสัสแล้วนะ");
-                break;
             default:
                 loadingText.setText("ยังไงหละนี้");
                 break;
@@ -92,31 +86,7 @@ public class InitialActivity extends TanrabadActivity {
         finish();
     }
 
-    public static class MockJob implements Job {
-
-        private int id;
-
-        public MockJob(int id) {
-            this.id = id;
-        }
-
-        @Override
-        public int id() {
-            return id;
-        }
-
-        @Override
-        public void execute() {
-            try {
-                Thread.sleep(2500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     public class InitialJobRunner extends AbsJobRunner {
-
         @Override
         protected void onJobStart(Job startingJob) {
             updateLoadingText(startingJob);

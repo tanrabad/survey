@@ -7,6 +7,7 @@ import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.utils.Address;
+import th.or.nectec.tanrabad.survey.repository.persistence.PlaceTypeMapper;
 
 import java.util.UUID;
 
@@ -69,7 +70,8 @@ public class JsonPlace {
     public Place getEntity(UserRepository userRepository) {
         Place place = new Place(placeID, placeName);
         place.setType(placeTypeID);
-        place.setSubType(placeSubtypeID == 0 ? placeTypeID : placeSubtypeID);
+        place.setSubType(placeSubtypeID == 0 ?
+                PlaceTypeMapper.getInstance().getDefaultPlaceTyoe(placeTypeID) : placeSubtypeID);
         place.setAddress(getAddress());
         Location location = this.location == null ? null : this.location.getEntity();
         place.setLocation(location);

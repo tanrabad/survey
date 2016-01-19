@@ -11,6 +11,7 @@ import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.entity.utils.Address;
+import th.or.nectec.tanrabad.survey.repository.persistence.PlaceTypeMapper;
 
 import java.util.UUID;
 
@@ -115,7 +116,7 @@ public class JsonPlaceTest {
         Mockito.when(userRepository.findUserByName("dcp-user")).thenReturn(stubUser());
         Place placeData = new Place(UUID.fromString("b7a9d934-04fc-a22e-0539-6c17504f732e"), "รพ.สต.ตำบลนาทราย");
         placeData.setType(Place.TYPE_HOSPITAL);
-        placeData.setSubType(Place.TYPE_HOSPITAL);
+        placeData.setSubType(PlaceTypeMapper.โรงพยาบาลทั่วไป);
         placeData.setAddress(stubAddress());
         placeData.setLocation(stubLocation());
         placeData.setUpdateBy(stubUser());

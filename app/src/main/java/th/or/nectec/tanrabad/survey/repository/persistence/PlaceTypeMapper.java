@@ -53,4 +53,21 @@ public class PlaceTypeMapper {
     public int findBySubType(int subtypeID) {
         return placeSubTypeMapping.get(subtypeID, subtypeID);
     }
+
+    public int getDefaultPlaceTyoe(int placeTypeID) {
+        switch (placeTypeID) {
+            case Place.TYPE_VILLAGE_COMMUNITY:
+                return ชุมชนพักอาศัย;
+            case Place.TYPE_WORSHIP:
+                return วัด;
+            case Place.TYPE_SCHOOL:
+                return โรงเรียน;
+            case Place.TYPE_HOSPITAL:
+                return โรงพยาบาลทั่วไป;
+            case Place.TYPE_FACTORY:
+                return โรงงาน;
+            default:
+                return -1;
+        }
+    }
 }

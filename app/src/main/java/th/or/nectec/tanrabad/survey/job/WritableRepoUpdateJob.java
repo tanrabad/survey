@@ -17,19 +17,18 @@
 
 package th.or.nectec.tanrabad.survey.job;
 
-import th.or.nectec.tanrabad.domain.place.PlaceRepository;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.survey.service.PlaceRestService;
+import th.or.nectec.tanrabad.domain.WritableRepository;
 import th.or.nectec.tanrabad.survey.service.RestService;
 
-public class PlaceUpdateJob implements Job {
+public class WritableRepoUpdateJob<T> implements Job {
 
-    public static final int ID = 293789;
+    public static final int ID = 192384;
+    WritableRepository<T> writableRepository;
+    RestService<T> restService;
 
-    private final PlaceRepository placeRepository;
-
-    public PlaceUpdateJob(PlaceRepository placeRepository) {
-        this.placeRepository = placeRepository;
+    public WritableRepoUpdateJob(RestService<T> restService, WritableRepository<T> writableRepository) {
+        this.restService = restService;
+        this.writableRepository = writableRepository;
     }
 
     @Override
@@ -39,9 +38,8 @@ public class PlaceUpdateJob implements Job {
 
     @Override
     public void execute() throws JobException {
-        RestService<Place> service = new PlaceRestService();
         do {
-            placeRepository.updateOrInsert(service.getUpdate());
-        } while (service.hasNextRequest());
+            writableRepository.updateOrInsert(restService.getUpdate());
+        } while (restService.hasNextRequest());
     }
 }

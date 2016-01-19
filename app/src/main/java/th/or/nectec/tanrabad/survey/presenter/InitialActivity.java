@@ -20,13 +20,20 @@ package th.or.nectec.tanrabad.survey.presenter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+import th.or.nectec.tanrabad.entity.*;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.job.*;
 import th.or.nectec.tanrabad.survey.repository.*;
 import th.or.nectec.tanrabad.survey.repository.persistence.CreateDatabaseJob;
+import th.or.nectec.tanrabad.survey.service.*;
 
 public class InitialActivity extends TanrabadActivity {
 
+    WritableRepoUpdateJob<Place> placeUpdateJob = new WritableRepoUpdateJob<>(new PlaceRestService(), PlaceRepoBroker.getInstance());
+    WritableRepoUpdateJob<Building> buildingUpdateJob = new WritableRepoUpdateJob<>(new BuildingRestService(), BuildingRepoBroker.getInstance());
+    WritableRepoUpdateJob<Subdistrict> subDistrictUpdateJob = new WritableRepoUpdateJob<>(new TambonRestService(), InMemorySubdistrictRepository.getInstance());
+    WritableRepoUpdateJob<District> districtUpdateJob = new WritableRepoUpdateJob<>(new AmphurRestService(), InMemoryDistrictRepository.getInstance());
+    WritableRepoUpdateJob<Province> provinceUpdateJob = new WritableRepoUpdateJob<>(new ProvinceRestService(), InMemoryProvinceRepository.getInstance());
     private TextView loadingText;
 
     @Override
@@ -39,11 +46,11 @@ public class InitialActivity extends TanrabadActivity {
         new InitialJobRunner()
                 .addJob(new CreateDatabaseJob(this))
                 .addJob(new InMemoryInitializeJob())
-                .addJob(new ProvinceUpdateJob(InMemoryProvinceRepository.getInstance()))
-                .addJob(new DistrictUpdateJob(InMemoryDistrictRepository.getInstance()))
-                .addJob(new SubdistrictUpdateJob(InMemorySubdistrictRepository.getInstance()))
-                .addJob(new PlaceUpdateJob(PlaceRepoBroker.getInstance()))
-                .addJob(new BuildingUpdateJob(BuildingRepoBroker.getInstance()))
+                .addJob(provinceUpdateJob)
+                .addJob(districtUpdateJob)
+                .addJob(subDistrictUpdateJob)
+                .addJob(placeUpdateJob)
+                .addJob(buildingUpdateJob)
                 .addJob(new ContainerTypeUpdateJob(InMemoryContainerTypeRepository.getInstance()))
                 .start();
     }
@@ -53,31 +60,32 @@ public class InitialActivity extends TanrabadActivity {
             case InMemoryInitializeJob.ID:
                 loadingText.setText("หาลูกน้ำมาให้สำรวจ");
                 break;
-            case PlaceUpdateJob.ID:
-                loadingText.setText("ดึงข้อมูลสถานที่");
-                break;
-            case BuildingUpdateJob.ID:
-                loadingText.setText("ตรวจสอบคุณภาพอาคาร");
-                break;
             case ContainerTypeUpdateJob.ID:
                 loadingText.setText("ดึงประเภทภาชนะมา");
                 break;
-            case SubdistrictUpdateJob.ID:
-                loadingText.setText("กำลังดึงข้อมูลตำบล");
-                break;
-            case DistrictUpdateJob.ID:
-                loadingText.setText("กำลังดึงข้อมูลอำเภอ");
-                break;
-            case ProvinceUpdateJob.ID:
-                loadingText.setText("กำลังดึงข้อมูลจังหวัด");
-                break;
             case CreateDatabaseJob.ID:
                 loadingText.setText("กำลังสร้างฐานข้อมูลชั่วคราว");
+                break;
+            case WritableRepoUpdateJob.ID:
+                updateLoadingTextByWritableJobInstance(startingJob);
                 break;
             default:
                 loadingText.setText("ยังไงหละนี้");
                 break;
         }
+    }
+
+    private void updateLoadingTextByWritableJobInstance(Job startingJob) {
+        if (startingJob.equals(provinceUpdateJob))
+            loadingText.setText("จังหวัด");
+        else if (startingJob.equals(districtUpdateJob))
+            loadingText.setText("อำเภอ");
+        else if (startingJob.equals(subDistrictUpdateJob))
+            loadingText.setText("ตำบล");
+        else if (startingJob.equals(placeUpdateJob))
+            loadingText.setText("สถานที่");
+        else if (startingJob.equals(buildingUpdateJob))
+            loadingText.setText("อาคาร");
     }
 
     private void openMainActivityThenFinish() {

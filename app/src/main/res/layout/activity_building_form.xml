@@ -38,29 +38,6 @@
             app:popupTheme="@style/AppTheme.AppBarOverlay"
             app:theme="@style/AppTheme.AppBarOverlay"/>
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/header_survey"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:contentDescription="@null"
-                android:src="@drawable/header_larvae_survey"/>
-
-            <TextView
-                android:id="@+id/place_name"
-                style="@style/TextViewTanrabad.Header.Right"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:textColor="@color/white"
-                android:textIsSelectable="false"
-                tools:text="หมู่ที่ 1 บ้านบางไผ่"/>
-        </FrameLayout>
 
     </android.support.design.widget.AppBarLayout>
 
@@ -71,6 +48,12 @@
         android:onClick="onRootViewClick"
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <TextView
+                android:id="@+id/place_name"
+                style="@style/TextViewTanrabad.Header.Left"
+                android:textIsSelectable="false"
+                tools:text="หมู่ที่ 1 บ้านบางไผ่"/>
 
 
         <TextView

@@ -17,18 +17,13 @@
 
 package th.or.nectec.tanrabad.domain.address;
 
+import th.or.nectec.tanrabad.domain.WritableRepository;
 import th.or.nectec.tanrabad.entity.Province;
 
 import java.util.List;
 
-public interface ProvinceRepository {
+public interface ProvinceRepository extends WritableRepository<Province> {
     List<Province> find();
 
     Province findByCode(String provinceCode);
-
-    boolean save(Province province);
-
-    boolean update(Province province);
-
-    void updateOrInsert(List<Province> province);
 }

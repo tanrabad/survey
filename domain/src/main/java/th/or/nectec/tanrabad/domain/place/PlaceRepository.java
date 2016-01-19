@@ -17,12 +17,13 @@
 
 package th.or.nectec.tanrabad.domain.place;
 
+import th.or.nectec.tanrabad.domain.WritableRepository;
 import th.or.nectec.tanrabad.entity.Place;
 
 import java.util.List;
 import java.util.UUID;
 
-public interface PlaceRepository {
+public interface PlaceRepository extends WritableRepository<Place> {
 
     List<Place> find();
 
@@ -31,10 +32,4 @@ public interface PlaceRepository {
     List<Place> findByPlaceType(int placeType);
 
     List<Place> findByName(String placeName);
-
-    boolean save(Place place);
-
-    boolean update(Place place);
-
-    void updateOrInsert(List<Place> update);
 }

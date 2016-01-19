@@ -17,22 +17,16 @@
 
 package th.or.nectec.tanrabad.domain.building;
 
+import th.or.nectec.tanrabad.domain.WritableRepository;
 import th.or.nectec.tanrabad.entity.Building;
 
 import java.util.List;
 import java.util.UUID;
 
-public interface BuildingRepository {
+public interface BuildingRepository extends WritableRepository<Building> {
     List<Building> findByPlaceUUID(UUID placeUuid);
 
     List<Building> findByPlaceUUIDAndBuildingName(UUID placeUUID, String buildingName);
 
     Building findByUUID(UUID uuid);
-
-    boolean save(Building building);
-
-    boolean update(Building building);
-
-    void updateOrInsert(List<Building> buildings);
-
 }

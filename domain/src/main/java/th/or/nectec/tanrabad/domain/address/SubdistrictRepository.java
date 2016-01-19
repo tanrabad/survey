@@ -17,18 +17,13 @@
 
 package th.or.nectec.tanrabad.domain.address;
 
+import th.or.nectec.tanrabad.domain.WritableRepository;
 import th.or.nectec.tanrabad.entity.Subdistrict;
 
 import java.util.List;
 
-public interface SubdistrictRepository {
+public interface SubdistrictRepository extends WritableRepository<Subdistrict> {
     List<Subdistrict> findByDistrictCode(String districtCode);
 
     Subdistrict findByCode(String subdistrictCode);
-
-    boolean save(Subdistrict subdistrict);
-
-    boolean update(Subdistrict subdistrict);
-
-    void updateOrInsert(List<Subdistrict> subdistrict);
 }

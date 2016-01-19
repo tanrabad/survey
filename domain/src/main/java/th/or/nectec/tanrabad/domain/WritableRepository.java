@@ -15,15 +15,14 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.domain.address;
-
-import th.or.nectec.tanrabad.domain.WritableRepository;
-import th.or.nectec.tanrabad.entity.District;
+package th.or.nectec.tanrabad.domain;
 
 import java.util.List;
 
-public interface DistrictRepository extends WritableRepository<District> {
-    List<District> findByProvinceCode(String provinceCode);
+public interface WritableRepository<T> {
+    boolean save(T t);
 
-    District findByCode(String districtCode);
+    boolean update(T t);
+
+    void updateOrInsert(List<T> tList);
 }

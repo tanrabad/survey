@@ -82,7 +82,11 @@ VALUES
 INSERT INTO
   place_type (type_id, name)
 VALUES
-  ("1", "ชุมชน");
+  ("1", "หมู่บ้าน/ชุมชน"),
+  ("2", "ศาสนสถาน"),
+  ("3", "สถานศึกษา"),
+  ("4", "โรงพยาบาล"),
+  ("5", "โรงงาน");
 
 INSERT INTO
   place_subtype (subtype_id, name, type_id)

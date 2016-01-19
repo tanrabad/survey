@@ -19,8 +19,8 @@ package th.or.nectec.tanrabad.survey.repository.persistence;
 
 
 import android.content.Context;
-import th.or.nectec.tanrabad.survey.presenter.job.Job;
-import th.or.nectec.tanrabad.survey.presenter.job.JobException;
+import th.or.nectec.tanrabad.survey.job.Job;
+import th.or.nectec.tanrabad.survey.job.JobException;
 
 public class CreateDatabaseJob implements Job {
 

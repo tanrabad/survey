@@ -15,23 +15,21 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey.presenter.job;
+package th.or.nectec.tanrabad.survey.job;
 
-import th.or.nectec.tanrabad.domain.address.ProvinceRepository;
-import th.or.nectec.tanrabad.entity.Province;
-import th.or.nectec.tanrabad.survey.service.ProvinceRestService;
+import th.or.nectec.tanrabad.domain.survey.ContainerTypeRepository;
+import th.or.nectec.tanrabad.entity.ContainerType;
+import th.or.nectec.tanrabad.survey.service.ContainerTypeRestService;
 import th.or.nectec.tanrabad.survey.service.RestService;
 
-import java.util.ArrayList;
+public class ContainerTypeUpdateJob implements Job {
 
-public class ProvinceUpdateJob implements Job {
+    public static final int ID = 748990;
 
-    public static final int ID = 100003;
+    private final ContainerTypeRepository containerTypeRepository;
 
-    private final ProvinceRepository provinceRepository;
-
-    public ProvinceUpdateJob(ProvinceRepository provinceRepository) {
-        this.provinceRepository = provinceRepository;
+    public ContainerTypeUpdateJob(ContainerTypeRepository containerTypeRepository) {
+        this.containerTypeRepository = containerTypeRepository;
     }
 
     @Override
@@ -41,13 +39,7 @@ public class ProvinceUpdateJob implements Job {
 
     @Override
     public void execute() throws JobException {
-        RestService<Province> service = new ProvinceRestService();
-        ArrayList<Province> provinceArrayList = new ArrayList<>();
-
-        do {
-            provinceArrayList.addAll(service.getUpdate());
-        } while (service.hasNextRequest());
-
-        provinceRepository.updateOrInsert(provinceArrayList);
+        RestService<ContainerType> service = new ContainerTypeRestService();
+        containerTypeRepository.updateOrInsert(service.getUpdate());
     }
 }

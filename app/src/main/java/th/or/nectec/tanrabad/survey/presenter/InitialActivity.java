@@ -21,7 +21,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 import th.or.nectec.tanrabad.survey.R;
-import th.or.nectec.tanrabad.survey.presenter.job.*;
+import th.or.nectec.tanrabad.survey.job.*;
 import th.or.nectec.tanrabad.survey.repository.*;
 import th.or.nectec.tanrabad.survey.repository.persistence.CreateDatabaseJob;
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey.presenter.job;
+package th.or.nectec.tanrabad.survey.job;
 
 import android.os.AsyncTask;
 

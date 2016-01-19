@@ -15,21 +15,21 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey.presenter.job;
+package th.or.nectec.tanrabad.survey.job;
 
-import th.or.nectec.tanrabad.domain.survey.ContainerTypeRepository;
-import th.or.nectec.tanrabad.entity.ContainerType;
-import th.or.nectec.tanrabad.survey.service.ContainerTypeRestService;
+import th.or.nectec.tanrabad.domain.place.PlaceRepository;
+import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.survey.service.PlaceRestService;
 import th.or.nectec.tanrabad.survey.service.RestService;
 
-public class ContainerTypeUpdateJob implements Job {
+public class PlaceUpdateJob implements Job {
 
-    public static final int ID = 748990;
+    public static final int ID = 293789;
 
-    private final ContainerTypeRepository containerTypeRepository;
+    private final PlaceRepository placeRepository;
 
-    public ContainerTypeUpdateJob(ContainerTypeRepository containerTypeRepository) {
-        this.containerTypeRepository = containerTypeRepository;
+    public PlaceUpdateJob(PlaceRepository placeRepository) {
+        this.placeRepository = placeRepository;
     }
 
     @Override
@@ -39,7 +39,9 @@ public class ContainerTypeUpdateJob implements Job {
 
     @Override
     public void execute() throws JobException {
-        RestService<ContainerType> service = new ContainerTypeRestService();
-        containerTypeRepository.updateOrInsert(service.getUpdate());
+        RestService<Place> service = new PlaceRestService();
+        do {
+            placeRepository.updateOrInsert(service.getUpdate());
+        } while (service.hasNextRequest());
     }
 }

@@ -15,23 +15,23 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey.presenter.job;
+package th.or.nectec.tanrabad.survey.job;
 
-import th.or.nectec.tanrabad.domain.address.DistrictRepository;
-import th.or.nectec.tanrabad.entity.District;
-import th.or.nectec.tanrabad.survey.service.AmphurRestService;
+import th.or.nectec.tanrabad.domain.address.ProvinceRepository;
+import th.or.nectec.tanrabad.entity.Province;
+import th.or.nectec.tanrabad.survey.service.ProvinceRestService;
 import th.or.nectec.tanrabad.survey.service.RestService;
 
 import java.util.ArrayList;
 
-public class DistrictUpdateJob implements Job {
+public class ProvinceUpdateJob implements Job {
 
-    public static final int ID = 100002;
+    public static final int ID = 100003;
 
-    private final DistrictRepository districtRepository;
+    private final ProvinceRepository provinceRepository;
 
-    public DistrictUpdateJob(DistrictRepository districtRepository) {
-        this.districtRepository = districtRepository;
+    public ProvinceUpdateJob(ProvinceRepository provinceRepository) {
+        this.provinceRepository = provinceRepository;
     }
 
     @Override
@@ -41,13 +41,13 @@ public class DistrictUpdateJob implements Job {
 
     @Override
     public void execute() throws JobException {
-        RestService<District> service = new AmphurRestService();
-        ArrayList<District> districtArrayList = new ArrayList<>();
+        RestService<Province> service = new ProvinceRestService();
+        ArrayList<Province> provinceArrayList = new ArrayList<>();
 
         do {
-            districtArrayList.addAll(service.getUpdate());
+            provinceArrayList.addAll(service.getUpdate());
         } while (service.hasNextRequest());
 
-        districtRepository.updateOrInsert(districtArrayList);
+        provinceRepository.updateOrInsert(provinceArrayList);
     }
 }

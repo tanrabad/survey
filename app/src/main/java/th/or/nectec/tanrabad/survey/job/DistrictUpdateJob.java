@@ -15,23 +15,23 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey.presenter.job;
+package th.or.nectec.tanrabad.survey.job;
 
-import th.or.nectec.tanrabad.domain.place.PlaceRepository;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.survey.service.PlaceRestService;
+import th.or.nectec.tanrabad.domain.address.DistrictRepository;
+import th.or.nectec.tanrabad.entity.District;
+import th.or.nectec.tanrabad.survey.service.AmphurRestService;
 import th.or.nectec.tanrabad.survey.service.RestService;
 
 import java.util.ArrayList;
 
-public class PlaceUpdateJob implements Job {
+public class DistrictUpdateJob implements Job {
 
-    public static final int ID = 293789;
+    public static final int ID = 100002;
 
-    private final PlaceRepository placeRepository;
+    private final DistrictRepository districtRepository;
 
-    public PlaceUpdateJob(PlaceRepository placeRepository) {
-        this.placeRepository = placeRepository;
+    public DistrictUpdateJob(DistrictRepository districtRepository) {
+        this.districtRepository = districtRepository;
     }
 
     @Override
@@ -41,9 +41,13 @@ public class PlaceUpdateJob implements Job {
 
     @Override
     public void execute() throws JobException {
-        RestService<Place> service = new PlaceRestService();
+        RestService<District> service = new AmphurRestService();
+        ArrayList<District> districtArrayList = new ArrayList<>();
+
         do {
-            placeRepository.updateOrInsert(service.getUpdate());
+            districtArrayList.addAll(service.getUpdate());
         } while (service.hasNextRequest());
+
+        districtRepository.updateOrInsert(districtArrayList);
     }
 }

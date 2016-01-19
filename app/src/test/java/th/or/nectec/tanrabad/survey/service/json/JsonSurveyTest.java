@@ -20,7 +20,7 @@ public class JsonSurveyTest {
         assertEquals(5, jsonSurvey.personCount);
         assertEquals(39.745675, jsonSurvey.location.getLatitude(), 0);
         assertEquals(-73.150055, jsonSurvey.location.getLongitude(), 0);
-        assertEquals("2015-12-01 13:26:17", jsonSurvey.createTimestamp);
+        assertEquals("2015-01-11T03:00:00.000Z", jsonSurvey.createTimestamp);
         assertEquals("dcp-user", jsonSurvey.surveyor);
 
         assertEquals(1, jsonSurvey.details.get(0).containerLocationID);
@@ -36,8 +36,8 @@ public class JsonSurveyTest {
                 .addOutdoorDetail(UUID.fromString("772c4938-b917-11e5-a0c5-aabbccddeeff"), new ContainerType(2, "น้ำดื่ม"), 7, 5)
                 .setBuilding(stubBuilding())
                 .setLocation(stubLocation())
-                .setStartTimeStamp(new DateTime(2015, 1, 11, 10, 0, 0))
-                .setFinishTimeStamp(new DateTime(2015, 1, 11, 10, 5, 0))
+                .setStartTimeStamp(DateTime.parse("2015-01-11T10:00:00.000+07:00"))
+                .setFinishTimeStamp(DateTime.parse("2015-01-11T10:00:00.000+07:00"))
                 .setResident(5)
                 .build();
 

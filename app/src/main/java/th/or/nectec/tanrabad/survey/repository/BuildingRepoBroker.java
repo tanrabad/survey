@@ -28,27 +28,26 @@ import java.util.UUID;
 
 public class BuildingRepoBroker implements BuildingRepository
 {
-    BuildingRepository cache = InMemoryBuildingRepository.getInstance();
-    BuildingRepository database = new DbBuildingRepository(TanrabadApp.getInstance());
+    private static BuildingRepoBroker instance;
+    private BuildingRepository cache;
+    private BuildingRepository database;
 
-    @Override
-    public List<Building> findBuildingInPlace(UUID placeUuid) {
-        List<Building> buildings = cache.findBuildingInPlace(placeUuid);
-        if(buildings == null || buildings.isEmpty()) {
-            buildings = database.findBuildingInPlace(placeUuid);
-            cache.updateOrInsert(buildings);
+    protected BuildingRepoBroker(BuildingRepository database, BuildingRepository cache) {
+        this.database = database;
+        this.cache = cache;
+    }
+
+    public BuildingRepoBroker getInstance() {
+        if (instance == null) {
+            instance = new BuildingRepoBroker(InMemoryBuildingRepository.getInstance(),
+                    new DbBuildingRepository(TanrabadApp.getInstance()));
         }
-        return  buildings;
+        return instance;
     }
 
     @Override
-    public Building findBuildingByName(String buildingName) {
-        Building building = cache.findBuildingByName(buildingName);
-        if(building == null){
-            building = database.findBuildingByName(buildingName);
-            cache.save(building);
-        }
-        return building;
+    public List<Building> findBuildingInPlace(UUID placeUuid) {
+        return database.findBuildingInPlace(placeUuid);
     }
 
     @Override
@@ -85,11 +84,6 @@ public class BuildingRepoBroker implements BuildingRepository
 
     @Override
     public List<Building> searchBuildingInPlaceByName(UUID placeUUID, String buildingName) {
-        List<Building> buildings = cache.searchBuildingInPlaceByName(placeUUID, buildingName);
-        if(buildings == null || buildings.isEmpty()) {
-            buildings = database.searchBuildingInPlaceByName(placeUUID, buildingName);
-            cache.updateOrInsert(buildings);
-        }
-        return buildings;
+        return database.searchBuildingInPlaceByName(placeUUID, buildingName);
     }
 }

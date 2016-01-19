@@ -50,15 +50,6 @@ public class DbBuildingRepository implements BuildingRepository {
         return new CursorList<>(buildingCursor, getMapper(buildingCursor));
     }
 
-
-    @Override
-    public Building findBuildingByName(String buildingName) {
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
-        Cursor cursor = db.query(TABLE_NAME, BuildingColumn.wildcard(),
-                BuildingColumn.NAME + "=?", new String[]{buildingName}, null, null, null);
-        return getBuilding(cursor);
-    }
-
     @Override
     public Building findBuildingByUUID(UUID uuid) {
         SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();

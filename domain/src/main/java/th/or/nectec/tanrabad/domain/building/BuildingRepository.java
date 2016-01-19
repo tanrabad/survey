@@ -25,8 +25,6 @@ import java.util.UUID;
 public interface BuildingRepository {
     List<Building> findBuildingInPlace(UUID placeUuid);
 
-    Building findBuildingByName(String buildingName);
-
     Building findBuildingByUUID(UUID uuid);
 
     boolean save(Building building);

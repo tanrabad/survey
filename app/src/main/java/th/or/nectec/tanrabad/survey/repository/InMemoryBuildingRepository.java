@@ -139,16 +139,6 @@ public class InMemoryBuildingRepository implements BuildingRepository {
     }
 
     @Override
-    public Building findBuildingByName(String buildingName) {
-        for (Building eachBuilding : buildingMap.values()) {
-            if (eachBuilding.getName().equals(buildingName)) {
-                return eachBuilding;
-            }
-        }
-        return null;
-    }
-
-    @Override
     public Building findBuildingByUUID(UUID buildingUUID) {
         for (Building eachBuilding : buildingMap.values()) {
             if (eachBuilding.getId().equals(buildingUUID)) {

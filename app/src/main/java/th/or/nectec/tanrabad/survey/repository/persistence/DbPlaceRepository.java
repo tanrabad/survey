@@ -94,7 +94,7 @@ public class DbPlaceRepository implements PlaceRepository {
     @Override
     public boolean update(Place place) {
         SQLiteDatabase db = new SurveyLiteDatabase(context).getWritableDatabase();
-        return db.update(TABLE_NAME, buildingContentValues(place), BuildingColumn.ID + "=?", new String[]{place.getId().toString()}) > 0;
+        return db.update(TABLE_NAME, buildingContentValues(place), PlaceColumn.ID + "=?", new String[]{place.getId().toString()}) > 0;
     }
 
     @Override

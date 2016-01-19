@@ -61,7 +61,9 @@ class PlaceCursorMapper implements CursorMapper<Place> {
         UUID uuid = UUID.fromString(cursor.getString(idIndex));
         Place place = new Place(uuid, cursor.getString(nameIndex));
         place.setAddress(addressRepository.findBySubdistrictCode(cursor.getString(subdistrictCodeIndex)));
-        place.setSubType(cursor.getInt(subtypeIndex));
+        int subtypeID = cursor.getInt(subtypeIndex);
+        place.setType(PlaceTypeMapper.getInstance().findBySubType(subtypeID));
+        place.setSubType(cursor.getInt(subtypeID));
         place.setLocation(new Location(cursor.getDouble(latIndex), cursor.getDouble(lngIndex)));
         place.setUpdateBy(userRepository.findUserByName(cursor.getString(updateByIndex)));
         place.setUpdateTimestamp(cursor.getString(updateTimeIndex));

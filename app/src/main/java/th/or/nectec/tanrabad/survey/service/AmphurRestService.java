@@ -38,20 +38,20 @@ public class AmphurRestService extends BaseRestService<District> {
         super(apiBaseUrl, lastUpdate);
     }
 
+    protected String getPath() {
+        return PATH;
+    }
+
     protected List<District> jsonToEntityList(String responseBody) {
-        ArrayList<District> subdistrictList = new ArrayList<>();
+        ArrayList<District> districtList = new ArrayList<>();
         try {
             List<JsonAmphur> jsonAmphurList = LoganSquare.parseList(responseBody, JsonAmphur.class);
             for (JsonAmphur eachJsonAmphur : jsonAmphurList) {
-                subdistrictList.add(eachJsonAmphur.getEntity());
+                districtList.add(eachJsonAmphur.getEntity());
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return subdistrictList;
-    }
-
-    protected String getPath() {
-        return PATH;
+        return districtList;
     }
 }

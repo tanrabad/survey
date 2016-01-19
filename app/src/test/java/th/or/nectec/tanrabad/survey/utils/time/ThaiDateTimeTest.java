@@ -1,0 +1,20 @@
+package th.or.nectec.tanrabad.survey.utils.time;
+
+import org.junit.Test;
+
+import static junit.framework.Assert.assertEquals;
+
+
+public class ThaiDateTimeTest {
+    @Test
+    public void testParseFromUTCtoICT() throws Exception {
+        String utcTime = "2015-01-11T03:00:00.000Z";
+        assertEquals("2015-01-11T10:00:00.000+07:00", ThaiDateTime.parse(utcTime).toString());
+    }
+
+    @Test
+    public void testParseFromICTtoICT() throws Exception {
+        String ictTime = "2015-01-11T10:00:00.000+07:00";
+        assertEquals("2015-01-11T10:00:00.000+07:00", ThaiDateTime.parse(ictTime).toString());
+    }
+}

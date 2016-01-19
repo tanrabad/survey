@@ -65,9 +65,8 @@ public class Place extends Entity implements LocationEntity {
         return type;
     }
 
-    public Place setType(int type) {
+    public void setType(int type) {
         this.type = type;
-        return null;
     }
 
     public int getSubType() {

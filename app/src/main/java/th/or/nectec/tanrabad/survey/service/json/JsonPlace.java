@@ -69,7 +69,7 @@ public class JsonPlace {
     public Place getEntity(UserRepository userRepository) {
         Place place = new Place(placeID, placeName);
         place.setType(placeTypeID);
-        place.setSubType(placeSubtypeID);
+        place.setSubType(placeSubtypeID == 0 ? placeTypeID : placeSubtypeID);
         place.setAddress(getAddress());
         Location location = this.location == null ? null : this.location.getEntity();
         place.setLocation(location);

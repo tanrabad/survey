@@ -21,7 +21,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import org.joda.time.DateTimeZone;
 import th.or.nectec.tanrabad.domain.building.BuildingRepository;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.survey.repository.InMemoryPlaceRepository;
@@ -89,7 +88,7 @@ public class DbBuildingRepository implements BuildingRepository {
         values.put(BuildingColumn.LONGITUDE, building.getLocation().getLongitude());
         values.put(BuildingColumn.SYNC_STATUS, 0);
         values.put(BuildingColumn.UPDATE_BY, building.getUpdateBy().getUsername());
-        values.put(BuildingColumn.UPDATE_TIME, building.getUpdateTimestamp().withZone(DateTimeZone.UTC).toString());
+        values.put(BuildingColumn.UPDATE_TIME, building.getUpdateTimestamp().toString());
         return values;
     }
 

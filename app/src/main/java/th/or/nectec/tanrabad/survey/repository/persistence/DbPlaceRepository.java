@@ -21,7 +21,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import org.joda.time.DateTimeZone;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.LocationEntity;
@@ -162,7 +161,7 @@ public class DbPlaceRepository implements PlaceRepository {
         values.put(PlaceColumn.LONGITUDE, place.getLocation().getLongitude());
         values.put(PlaceColumn.SYNC_STATUS, 0);
         values.put(PlaceColumn.UPDATE_BY, place.getUpdateBy().getUsername());
-        values.put(PlaceColumn.UPDATE_TIME, place.getUpdateTimestamp().withZone(DateTimeZone.UTC).toString());
+        values.put(PlaceColumn.UPDATE_TIME, place.getUpdateTimestamp().toString());
         return values;
     }
 

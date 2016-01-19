@@ -23,7 +23,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,6 +30,7 @@ import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
+import th.or.nectec.tanrabad.survey.utils.time.ThaiDateTimeConverter;
 
 import java.util.UUID;
 
@@ -70,8 +70,7 @@ public class DbBuildingRepositoryTest {
         assertEquals(building.getName(), cursor.getString(cursor.getColumnIndex(BuildingColumn.NAME)));
         assertEquals(place.getId().toString(), cursor.getString(cursor.getColumnIndex(BuildingColumn.PLACE_ID)));
         assertEquals(updateBy.getUsername(), cursor.getString(cursor.getColumnIndex(BuildingColumn.UPDATE_BY)));
-        assertEquals(updateTime.withZone(DateTimeZone.UTC), DateTime.parse(cursor.getString(cursor.getColumnIndex(BuildingColumn.UPDATE_TIME))));
-
+        assertEquals(updateTime, ThaiDateTimeConverter.convert(cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_TIME))));
         cursor.close();
     }
 
@@ -104,7 +103,7 @@ public class DbBuildingRepositoryTest {
         assertEquals(building.getName(), cursor.getString(cursor.getColumnIndex(BuildingColumn.NAME)));
         assertEquals(place.getId().toString(), cursor.getString(cursor.getColumnIndex(BuildingColumn.PLACE_ID)));
         assertEquals(updateBy.getUsername(), cursor.getString(cursor.getColumnIndex(BuildingColumn.UPDATE_BY)));
-        assertEquals(updateTime.withZone(DateTimeZone.UTC), DateTime.parse(cursor.getString(cursor.getColumnIndex(BuildingColumn.UPDATE_TIME))));
+        assertEquals(updateTime, ThaiDateTimeConverter.convert(cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_TIME))));
         cursor.close();
     }
 }

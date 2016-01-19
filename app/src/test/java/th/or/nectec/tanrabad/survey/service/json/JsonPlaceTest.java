@@ -28,6 +28,16 @@ public class JsonPlaceTest {
             "  \"update_by\":\"dcp-user\"," +
             "  \"update_timestamp\": \"2015-12-24T05:05:19.626Z\"}";
 
+    private static final String rawPlaceStringWithNullSubtype = "{" +
+            "  \"place_id\": \"b7a9d934-04fc-a22e-0539-6c17504f732e\"," +
+            "  \"place_type_id\": 4," +
+            "  \"place_subtype_id\": null," +
+            "  \"place_name\": \"รพ.สต.ตำบลนาทราย\"," +
+            "  \"tambon_code\": \"510403\"," +
+            "  \"location\":{ \"type\": \"Point\", \"coordinates\": [-73.150055, 39.745675]}," +
+            "  \"update_by\":\"dcp-user\"," +
+            "  \"update_timestamp\": \"2015-12-24T05:05:19.626Z\"}";
+
     private Gson gson = new Gson();
 
     @Test
@@ -94,6 +104,23 @@ public class JsonPlaceTest {
         placeData.setUpdateBy(stubUser());
         placeData.setUpdateTimestamp(DateTime.now().toString());
         JsonPlace jsonPlace = LoganSquare.parse(rawPlaceString, JsonPlace.class);
+        Place parsedPlace = jsonPlace.getEntity(userRepository);
+
+        assertEquals(parsedPlace, placeData);
+    }
+
+    @Test
+    public void testParseJsonStringWithNullPlaceSubtypeToPlaceEntity() throws Exception {
+        UserRepository userRepository = Mockito.mock(UserRepository.class);
+        Mockito.when(userRepository.findUserByName("dcp-user")).thenReturn(stubUser());
+        Place placeData = new Place(UUID.fromString("b7a9d934-04fc-a22e-0539-6c17504f732e"), "รพ.สต.ตำบลนาทราย");
+        placeData.setType(Place.TYPE_HOSPITAL);
+        placeData.setSubType(Place.TYPE_HOSPITAL);
+        placeData.setAddress(stubAddress());
+        placeData.setLocation(stubLocation());
+        placeData.setUpdateBy(stubUser());
+        placeData.setUpdateTimestamp(DateTime.now().toString());
+        JsonPlace jsonPlace = LoganSquare.parse(rawPlaceStringWithNullSubtype, JsonPlace.class);
         Place parsedPlace = jsonPlace.getEntity(userRepository);
 
         assertEquals(parsedPlace, placeData);

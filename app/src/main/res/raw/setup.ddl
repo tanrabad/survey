@@ -87,12 +87,12 @@ VALUES
 INSERT INTO
   place_subtype (subtype_id, name, type_id)
 VALUES
-  ("1", "ชุมชนเมือง", "1");
+  ("10", "ชุมชนแออัด", "1");
 
 INSERT INTO
   place (place_id, subtype_id, name, subdistrict_code, update_by, update_time)
 VALUES
-  ("abc01db8-7207-8a65-152f-ad208cb99b5e", "1", "หมู่บ้านทดสอบ", "120202", "dpc-user", "2016-01-13 12:32:12");
+  ("abc01db8-7207-8a65-152f-ad208cb99b5e", "10", "หมู่บ้านทดสอบ", "120202", "dpc-user", "2016-01-13 12:32:12");
 
 INSERT INTO
   building (building_id, place_id, name, update_by, update_time)

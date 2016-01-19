@@ -48,7 +48,7 @@ public class DbPlaceRepositoryTest {
         DateTime updateTime = DateTime.now();
         Place place = new Place(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5f"), "หมู่บ้านทดสอบ");
         place.setAddress(stubAddress());
-        place.setSubType(Place.TYPE_VILLAGE_COMMUNITY);
+        place.setSubType(PlaceTypeMapper.ชุมชนแออัด);
         place.setType(Place.TYPE_VILLAGE_COMMUNITY);
         place.setLocation(new Location(10.200000f, 100.100000f));
         place.setUpdateBy(updateBy);
@@ -69,8 +69,8 @@ public class DbPlaceRepositoryTest {
         assertEquals(1, cursor.getCount());
         assertEquals(place.getId().toString(), cursor.getString(cursor.getColumnIndex(PlaceColumn.ID)));
         assertEquals(place.getName(), cursor.getString(cursor.getColumnIndex(PlaceColumn.NAME)));
-        assertEquals(place.getType(), cursor.getInt(cursor.getColumnIndex(PlaceColumn.SUBTYPE_ID)));
-        assertEquals(place.getSubType(), PlaceTypeMapper.getInstance().findBySubType(cursor.getInt(cursor.getColumnIndex(PlaceColumn.SUBTYPE_ID))));
+        assertEquals(place.getType(), PlaceTypeMapper.getInstance().findBySubType(cursor.getInt(cursor.getColumnIndex(PlaceColumn.SUBTYPE_ID))));
+        assertEquals(place.getSubType(), cursor.getInt(cursor.getColumnIndex(PlaceColumn.SUBTYPE_ID)));
         assertEquals(updateBy.getUsername(), cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_BY)));
         assertEquals(updateTime.withZone(DateTimeZone.UTC), DateTime.parse(cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_TIME))));
 
@@ -92,7 +92,7 @@ public class DbPlaceRepositoryTest {
         DateTime updateTime = DateTime.now();
         Place place = new Place(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"), "หมู่บ้านทดสอบ");
         place.setAddress(stubAddress());
-        place.setSubType(Place.TYPE_VILLAGE_COMMUNITY);
+        place.setSubType(PlaceTypeMapper.ชุมชนแออัด);
         place.setType(Place.TYPE_VILLAGE_COMMUNITY);
         place.setLocation(new Location(10.200000f, 100.100000f));
         place.setUpdateBy(updateBy);
@@ -113,8 +113,8 @@ public class DbPlaceRepositoryTest {
         assertEquals(1, cursor.getCount());
         assertEquals(place.getId().toString(), cursor.getString(cursor.getColumnIndex(PlaceColumn.ID)));
         assertEquals(place.getName(), cursor.getString(cursor.getColumnIndex(PlaceColumn.NAME)));
-        assertEquals(place.getType(), cursor.getInt(cursor.getColumnIndex(PlaceColumn.SUBTYPE_ID)));
-        assertEquals(place.getSubType(), PlaceTypeMapper.getInstance().findBySubType(cursor.getInt(cursor.getColumnIndex(PlaceColumn.SUBTYPE_ID))));
+        assertEquals(place.getType(), PlaceTypeMapper.getInstance().findBySubType(cursor.getInt(cursor.getColumnIndex(PlaceColumn.SUBTYPE_ID))));
+        assertEquals(place.getSubType(), cursor.getInt(cursor.getColumnIndex(PlaceColumn.SUBTYPE_ID)));
         assertEquals(updateBy.getUsername(), cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_BY)));
         assertEquals(updateTime.withZone(DateTimeZone.UTC), DateTime.parse(cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_TIME))));
         cursor.close();

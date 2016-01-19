@@ -37,20 +37,6 @@
             app:popupTheme="@style/AppTheme.AppBarOverlay"
             app:theme="@style/AppTheme.AppBarOverlay"/>
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/header_survey"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:contentDescription="@null"
-                android:src="@drawable/header_larvae_survey"/>
-        </FrameLayout>
-
     </android.support.design.widget.AppBarLayout>
 
 

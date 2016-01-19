@@ -23,9 +23,11 @@ import java.util.List;
 import java.util.UUID;
 
 public interface BuildingRepository {
-    List<Building> findBuildingInPlace(UUID placeUuid);
+    List<Building> findByPlaceUUID(UUID placeUuid);
 
-    Building findBuildingByUUID(UUID uuid);
+    List<Building> findByPlaceUUIDAndBuildingName(UUID placeUUID, String buildingName);
+
+    Building findByUUID(UUID uuid);
 
     boolean save(Building building);
 
@@ -33,5 +35,4 @@ public interface BuildingRepository {
 
     void updateOrInsert(List<Building> buildings);
 
-    List<Building> searchBuildingInPlaceByName(UUID placeUUID, String buildingName);
 }

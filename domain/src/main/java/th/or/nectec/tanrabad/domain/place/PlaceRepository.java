@@ -17,8 +17,6 @@
 
 package th.or.nectec.tanrabad.domain.place;
 
-import th.or.nectec.tanrabad.entity.Location;
-import th.or.nectec.tanrabad.entity.LocationEntity;
 import th.or.nectec.tanrabad.entity.Place;
 
 import java.util.List;
@@ -26,21 +24,17 @@ import java.util.UUID;
 
 public interface PlaceRepository {
 
-    List<Place> findPlaces();
+    List<Place> find();
 
-    Place findPlaceByUUID(UUID placeUUID);
+    Place findByUUID(UUID placeUUID);
 
-    List<Place> findPlacesWithPlaceTypeFilter(int placeType);
+    List<Place> findByPlaceType(int placeType);
+
+    List<Place> findByName(String placeName);
 
     boolean save(Place place);
 
     boolean update(Place place);
-
-    List<LocationEntity> findInBoundaryLocation(Location minimumLocation, Location maximumLocation);
-
-    List<LocationEntity> findTrimmedInBoundaryLocation(Location insideMinimumLocation, Location outsideMinimumLocation, Location insideMaximumLocation, Location outsideMaximumLocation);
-
-    List<Place> findByName(String placeName);
 
     void updateOrInsert(List<Place> update);
 }

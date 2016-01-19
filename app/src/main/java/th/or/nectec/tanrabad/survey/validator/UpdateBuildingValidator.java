@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,14 +18,13 @@
 package th.or.nectec.tanrabad.survey.validator;
 
 import android.text.TextUtils;
-
-import java.util.List;
-
 import th.or.nectec.tanrabad.domain.building.BuildingRepository;
 import th.or.nectec.tanrabad.domain.building.BuildingValidator;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
+
+import java.util.List;
 
 public class UpdateBuildingValidator implements BuildingValidator {
     private BuildingRepository buildingRepository;
@@ -43,7 +42,7 @@ public class UpdateBuildingValidator implements BuildingValidator {
             throw new ValidatorException(R.string.please_define_building_location);
         }
 
-        List<Building> buildingInPlace = buildingRepository.findBuildingInPlace(building.getPlace().getId());
+        List<Building> buildingInPlace = buildingRepository.findByPlaceUUID(building.getPlace().getId());
         if (buildingInPlace != null) {
             for (Building eachBuilding : buildingInPlace) {
                 if (eachBuilding.getName().equals(building.getName()) && !eachBuilding.getId().equals(building.getId())) {

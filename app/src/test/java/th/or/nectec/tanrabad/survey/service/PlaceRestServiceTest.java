@@ -72,7 +72,7 @@ public class PlaceRestServiceTest extends WireMockTestBase {
 
     @Test
     public void testSuccessResponse() throws Exception {
-        Mockito.when(userRepository.findUserByName("dcp-user")).thenReturn(stubUser());
+        Mockito.when(userRepository.findByUsername("dcp-user")).thenReturn(stubUser());
         stubFor(get(urlEqualTo(PlaceRestService.PATH))
                 .willReturn(aResponse()
                         .withStatus(200)
@@ -101,7 +101,7 @@ public class PlaceRestServiceTest extends WireMockTestBase {
 
     @Test
     public void testSuccessResponseMultipleItem() throws Exception {
-        Mockito.when(userRepository.findUserByName("dcp-user")).thenReturn(stubUser());
+        Mockito.when(userRepository.findByUsername("dcp-user")).thenReturn(stubUser());
         stubFor(get(urlEqualTo(PlaceRestService.PATH))
                 .willReturn(aResponse()
                         .withStatus(200)
@@ -130,7 +130,7 @@ public class PlaceRestServiceTest extends WireMockTestBase {
 
     @Test
     public void testSuccessResponseWithNextPage() throws Exception {
-        Mockito.when(userRepository.findUserByName("dcp-user")).thenReturn(stubUser());
+        Mockito.when(userRepository.findByUsername("dcp-user")).thenReturn(stubUser());
         stubFor(get(urlEqualTo(PlaceRestService.PATH))
                 .willReturn(aResponse()
                         .withStatus(200)

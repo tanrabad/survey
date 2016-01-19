@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -63,9 +63,9 @@ public class SurveyControllerTest {
 
         context.checking(new Expectations() {
             {
-                allowing(buildingRepository).findBuildingByUUID(with(UUID.fromString(buildingUUID)));
+                allowing(buildingRepository).findByUUID(with(UUID.fromString(buildingUUID)));
                 will(returnValue(building));
-                allowing(userRepository).findUserByName(with(username));
+                allowing(userRepository).findByUsername(with(username));
                 will(returnValue(user));
                 allowing(surveyRepository).findByBuildingAndUserIn7Day(with(building), with(user));
                 will(returnValue(surveys));
@@ -81,9 +81,9 @@ public class SurveyControllerTest {
     public void testStartNewSurvey() throws Exception {
         context.checking(new Expectations() {
             {
-                allowing(buildingRepository).findBuildingByUUID(with(UUID.fromString(buildingUUID)));
+                allowing(buildingRepository).findByUUID(with(UUID.fromString(buildingUUID)));
                 will(returnValue(building));
-                allowing(userRepository).findUserByName(with(username));
+                allowing(userRepository).findByUsername(with(username));
                 will(returnValue(user));
                 allowing(surveyRepository).findByBuildingAndUserIn7Day(with(building), with(user));
                 will(returnValue(null));
@@ -100,7 +100,7 @@ public class SurveyControllerTest {
         final String notExistUsername = "chncs24";
         context.checking(new Expectations() {
             {
-                allowing(userRepository).findUserByName(with(notExistUsername));
+                allowing(userRepository).findByUsername(with(notExistUsername));
                 will(returnValue(null));
                 never(buildingRepository);
                 never(surveyRepository);
@@ -117,9 +117,9 @@ public class SurveyControllerTest {
         final UUID notExistBuildingUUID = UUID.nameUUIDFromBytes("2xyk".getBytes());
         context.checking(new Expectations() {
             {
-                allowing(userRepository).findUserByName(with(username));
+                allowing(userRepository).findByUsername(with(username));
                 will(returnValue(user));
-                allowing(buildingRepository).findBuildingByUUID(with(notExistBuildingUUID));
+                allowing(buildingRepository).findByUUID(with(notExistBuildingUUID));
                 will(returnValue(null));
                 never(surveyRepository);
                 oneOf(surveyPresenter).alertBuildingNotFound();

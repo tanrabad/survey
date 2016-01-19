@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,10 +22,9 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import th.or.nectec.tanrabad.entity.Place;
 
 import java.util.UUID;
-
-import th.or.nectec.tanrabad.entity.Place;
 
 public class PlaceControllerTest {
     public final String placeName = "New York";
@@ -51,7 +50,7 @@ public class PlaceControllerTest {
     public void testFoundPlace() throws Exception {
         context.checking(new Expectations() {
             {
-                allowing(placeRepository).findPlaceByUUID(placeUUID);
+                allowing(placeRepository).findByUUID(placeUUID);
                 will(returnValue(place));
                 oneOf(placePresenter).displayPlace(place);
             }
@@ -64,7 +63,7 @@ public class PlaceControllerTest {
     public void testNotFoundPlace() throws Exception {
         context.checking(new Expectations() {
             {
-                allowing(placeRepository).findPlaceByUUID(placeUUID);
+                allowing(placeRepository).findByUUID(placeUUID);
                 will(returnValue(null));
                 oneOf(placePresenter).alertPlaceNotFound();
             }

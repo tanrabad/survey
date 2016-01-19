@@ -127,7 +127,7 @@ public class InMemoryBuildingRepository implements BuildingRepository {
     }
 
     @Override
-    public List<Building> findBuildingInPlace(UUID placeUuid) {
+    public List<Building> findByPlaceUUID(UUID placeUuid) {
 
         ArrayList<Building> newBuildingList = new ArrayList<>();
         for (Building eachBuilding : buildingMap.values()) {
@@ -139,7 +139,18 @@ public class InMemoryBuildingRepository implements BuildingRepository {
     }
 
     @Override
-    public Building findBuildingByUUID(UUID buildingUUID) {
+    public List<Building> findByPlaceUUIDAndBuildingName(UUID placeUUID, String buildingName) {
+        ArrayList<Building> newBuildingList = new ArrayList<>();
+        for (Building eachBuilding : buildingMap.values()) {
+            if (eachBuilding.getPlace().getId().equals(placeUUID) && eachBuilding.getName().contains(buildingName)) {
+                newBuildingList.add(eachBuilding);
+            }
+        }
+        return newBuildingList.isEmpty() ? null : newBuildingList;
+    }
+
+    @Override
+    public Building findByUUID(UUID buildingUUID) {
         for (Building eachBuilding : buildingMap.values()) {
             if (eachBuilding.getId().equals(buildingUUID)) {
                 return eachBuilding;
@@ -175,16 +186,5 @@ public class InMemoryBuildingRepository implements BuildingRepository {
                 save(building);
             }
         }
-    }
-
-    @Override
-    public List<Building> searchBuildingInPlaceByName(UUID placeUUID, String buildingName) {
-        ArrayList<Building> newBuildingList = new ArrayList<>();
-        for (Building eachBuilding : buildingMap.values()) {
-            if (eachBuilding.getPlace().getId().equals(placeUUID) && eachBuilding.getName().contains(buildingName)) {
-                newBuildingList.add(eachBuilding);
-            }
-        }
-        return newBuildingList.isEmpty() ? null : newBuildingList;
     }
 }

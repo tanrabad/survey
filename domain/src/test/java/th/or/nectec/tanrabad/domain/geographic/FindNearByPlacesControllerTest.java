@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,7 +22,6 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.LocationEntity;
 import th.or.nectec.tanrabad.entity.Place;
@@ -37,7 +36,7 @@ public class FindNearByPlacesControllerTest {
     double currentLongitude = -74.0444;
     Location currentLocation;
     double distanceInKm = 100;
-    private PlaceRepository placeRepository;
+    private LocationRepository locationRepository;
     private NearbyPlacePresenter nearbyPlacePresenter;
     private FilterBoundaryCalculator filterBoundaryCalculate;
     private CoordinateLocationCalculator coordinateLocationCalculate;
@@ -45,7 +44,7 @@ public class FindNearByPlacesControllerTest {
 
     @Before
     public void setUp() {
-        placeRepository = context.mock(PlaceRepository.class);
+        locationRepository = context.mock(LocationRepository.class);
         nearbyPlacePresenter = context.mock(NearbyPlacePresenter.class);
         filterBoundaryCalculate = context.mock(FilterBoundaryCalculator.class);
         coordinateLocationCalculate = context.mock(CoordinateLocationCalculator.class);
@@ -180,7 +179,7 @@ public class FindNearByPlacesControllerTest {
                 will(returnValue(minimumLocation));
                 oneOf(filterBoundaryCalculate).getMaxLocation(with(currentLocation), with(distanceInKm));
                 will(returnValue(maximumLocation));
-                oneOf(placeRepository).findInBoundaryLocation(minimumLocation, maximumLocation);
+                oneOf(locationRepository).findInBoundaryLocation(minimumLocation, maximumLocation);
                 will(returnValue(placesFilter));
                 oneOf(distanceSorter).sort(placesFilter);
                 oneOf(nearbyPlacePresenter).displayNearByPlaces(placesFilter);*/
@@ -193,7 +192,7 @@ public class FindNearByPlacesControllerTest {
                 will(returnValue(insideMinimumLocation));
                 oneOf(coordinateLocationCalculate).getNewMaxLocation(with(currentLocation), with(distanceInKm));
                 will(returnValue(insideMaximumLocation));
-                oneOf(placeRepository).findTrimmedInBoundaryLocation(insideMinimumLocation,
+                oneOf(locationRepository).findTrimmedInBoundaryLocation(insideMinimumLocation,
                         outsideMinimumLocation,
                         insideMaximumLocation,
                         outsideMaximumLocation);
@@ -204,7 +203,7 @@ public class FindNearByPlacesControllerTest {
         });
         FindNearByPlacesController locationBoundaryController = new FindNearByPlacesController(filterBoundaryCalculate,
                 coordinateLocationCalculate,
-                placeRepository,
+                locationRepository,
                 distanceSorter,
                 nearbyPlacePresenter);
         locationBoundaryController.findNearByPlace(currentLocation, distanceInKm);
@@ -239,7 +238,7 @@ public class FindNearByPlacesControllerTest {
                 will(returnValue(insideMinimumLocation));
                 oneOf(coordinateLocationCalculate).getNewMaxLocation(with(currentLocation), with(distanceInKm));
                 will(returnValue(insideMaximumLocation));
-                oneOf(placeRepository).findTrimmedInBoundaryLocation(insideMinimumLocation,
+                oneOf(locationRepository).findTrimmedInBoundaryLocation(insideMinimumLocation,
                         outsideMinimumLocation,
                         insideMaximumLocation,
                         outsideMaximumLocation);
@@ -249,7 +248,7 @@ public class FindNearByPlacesControllerTest {
         });
         FindNearByPlacesController locationBoundaryController = new FindNearByPlacesController(filterBoundaryCalculate,
                 coordinateLocationCalculate,
-                placeRepository,
+                locationRepository,
                 distanceSorter,
                 nearbyPlacePresenter);
         locationBoundaryController.findNearByPlace(currentLocation, distanceInKm);

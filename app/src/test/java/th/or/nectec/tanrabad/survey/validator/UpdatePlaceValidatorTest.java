@@ -1,15 +1,31 @@
+/*
+ * Copyright (c) 2016 NECTEC
+ *   National Electronics and Computer Technology Center, Thailand
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package th.or.nectec.tanrabad.survey.validator;
 
 import org.junit.Test;
 import org.mockito.Mockito;
-
-import java.util.ArrayList;
-import java.util.UUID;
-
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.utils.Address;
+
+import java.util.ArrayList;
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 
@@ -52,7 +68,7 @@ public class UpdatePlaceValidatorTest {
     @Test(expected = ValidatorException.class)
     public void testSamePlaceNameAndPlaceTypeAndPlaceAddressException() throws Exception {
         PlaceRepository placeRepository = Mockito.mock(PlaceRepository.class);
-        Mockito.when(placeRepository.findPlaces()).thenReturn(stubPlacesList());
+        Mockito.when(placeRepository.find()).thenReturn(stubPlacesList());
 
         UpdatePlaceValidator savePlaceValidator = new UpdatePlaceValidator();
         savePlaceValidator.setPlaceRepository(placeRepository);
@@ -62,7 +78,7 @@ public class UpdatePlaceValidatorTest {
     @Test
     public void testPlaceNameNotSame() throws Exception {
         PlaceRepository placeRepository = Mockito.mock(PlaceRepository.class);
-        Mockito.when(placeRepository.findPlaces()).thenReturn(stubPlacesList());
+        Mockito.when(placeRepository.find()).thenReturn(stubPlacesList());
         Place place = new Place(UUID.randomUUID(), "ทดสอบ123");
         place.setAddress(stubAddress());
         place.setLocation(stubLocation());
@@ -103,7 +119,7 @@ public class UpdatePlaceValidatorTest {
     @Test
     public void testSameNameAndTypeDifferentAddressCanSave() throws Exception {
         PlaceRepository placeRepository = Mockito.mock(PlaceRepository.class);
-        Mockito.when(placeRepository.findPlaces()).thenReturn(stubPlacesList());
+        Mockito.when(placeRepository.find()).thenReturn(stubPlacesList());
         Place place = new Place(UUID.randomUUID(), "ทดสอบ123");
         place.setAddress(new Address());
         place.setLocation(stubLocation());
@@ -116,7 +132,7 @@ public class UpdatePlaceValidatorTest {
     @Test
     public void testSameNameAndAddressDifferentTypeCanSave() throws Exception {
         PlaceRepository placeRepository = Mockito.mock(PlaceRepository.class);
-        Mockito.when(placeRepository.findPlaces()).thenReturn(stubPlacesList());
+        Mockito.when(placeRepository.find()).thenReturn(stubPlacesList());
         Place place = stubPlace();
         place.setType(Place.TYPE_FACTORY);
         UpdatePlaceValidator savePlaceValidator = new UpdatePlaceValidator();
@@ -128,7 +144,7 @@ public class UpdatePlaceValidatorTest {
     @Test
     public void testDifferenceNameAndTypeAndSameAddressCanSave() throws Exception {
         PlaceRepository placeRepository = Mockito.mock(PlaceRepository.class);
-        Mockito.when(placeRepository.findPlaces()).thenReturn(stubPlacesList());
+        Mockito.when(placeRepository.find()).thenReturn(stubPlacesList());
         Place place = stubPlace();
         place.setName("ทดสอบ789");
         place.setType(Place.TYPE_SCHOOL);
@@ -141,7 +157,7 @@ public class UpdatePlaceValidatorTest {
     @Test
     public void testSameTypeAndAddressAndDifferenceNameCanSave() throws Exception {
         PlaceRepository placeRepository = Mockito.mock(PlaceRepository.class);
-        Mockito.when(placeRepository.findPlaces()).thenReturn(stubPlacesList());
+        Mockito.when(placeRepository.find()).thenReturn(stubPlacesList());
         Place place = stubPlace();
         place.setName("ทดสอบ234");
         UpdatePlaceValidator savePlaceValidator = new UpdatePlaceValidator();
@@ -153,7 +169,7 @@ public class UpdatePlaceValidatorTest {
     @Test
     public void testSameNameDifferentAddressAndTypeCanSave() throws Exception {
         PlaceRepository placeRepository = Mockito.mock(PlaceRepository.class);
-        Mockito.when(placeRepository.findPlaces()).thenReturn(stubPlacesList());
+        Mockito.when(placeRepository.find()).thenReturn(stubPlacesList());
         Place place = stubPlace();
         place.setAddress(new Address());
         place.setType(Place.TYPE_SCHOOL);
@@ -166,7 +182,7 @@ public class UpdatePlaceValidatorTest {
     @Test
     public void testSameNameAndTypeAndDifferenceAddressCanSave() throws Exception {
         PlaceRepository placeRepository = Mockito.mock(PlaceRepository.class);
-        Mockito.when(placeRepository.findPlaces()).thenReturn(stubPlacesList());
+        Mockito.when(placeRepository.find()).thenReturn(stubPlacesList());
         Place place = stubPlace();
         place.setAddress(new Address());
         UpdatePlaceValidator savePlaceValidator = new UpdatePlaceValidator();
@@ -178,7 +194,7 @@ public class UpdatePlaceValidatorTest {
     @Test
     public void testSameAndDifferenceNameAndAddressCanSave() throws Exception {
         PlaceRepository placeRepository = Mockito.mock(PlaceRepository.class);
-        Mockito.when(placeRepository.findPlaces()).thenReturn(stubPlacesList());
+        Mockito.when(placeRepository.find()).thenReturn(stubPlacesList());
         Place place = stubPlace();
         place.setName("ทดสอบ345");
         place.setAddress(new Address());
@@ -191,7 +207,7 @@ public class UpdatePlaceValidatorTest {
     @Test
     public void testSameNameAndAddressAndDifferenceSubTypeOfWorshipCanSave() throws Exception {
         PlaceRepository placeRepository = Mockito.mock(PlaceRepository.class);
-        Mockito.when(placeRepository.findPlaces()).thenReturn(stubPlacesList());
+        Mockito.when(placeRepository.find()).thenReturn(stubPlacesList());
         Place place = stubPlaceWorship();
         place.setSubType(Place.SUBTYPE_CHURCH);
         SavePlaceValidator savePlaceValidator = new SavePlaceValidator();

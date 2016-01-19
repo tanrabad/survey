@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -99,13 +99,13 @@ public class BuildingWithSurveyStatusChooserTest {
 
         context.checking(new Expectations() {
             {
-                allowing(placeRepository).findPlaceByUUID(with(UUID.fromString(placeUUID)));
+                allowing(placeRepository).findByUUID(with(UUID.fromString(placeUUID)));
                 will(returnValue(place));
 
-                allowing(userRepository).findUserByName(with(username));
+                allowing(userRepository).findByUsername(with(username));
                 will(returnValue(user));
 
-                allowing(buildingRepository).findBuildingInPlace(with(place.getId()));
+                allowing(buildingRepository).findByPlaceUUID(with(place.getId()));
                 will(returnValue(buildings));
 
                 allowing(surveyRepository).findByPlaceAndUserIn7Days(with(place), with(user));
@@ -133,13 +133,13 @@ public class BuildingWithSurveyStatusChooserTest {
 
         context.checking(new Expectations() {
             {
-                allowing(placeRepository).findPlaceByUUID(with(UUID.fromString(placeUUID)));
+                allowing(placeRepository).findByUUID(with(UUID.fromString(placeUUID)));
                 will(returnValue(place));
 
-                allowing(userRepository).findUserByName(with(username));
+                allowing(userRepository).findByUsername(with(username));
                 will(returnValue(user));
 
-                allowing(buildingRepository).searchBuildingInPlaceByName(with(place.getId()), with(searchBuildingName));
+                allowing(buildingRepository).findByPlaceUUIDAndBuildingName(with(place.getId()), with(searchBuildingName));
                 will(returnValue(queryBuildings));
 
                 allowing(surveyRepository).findByPlaceAndUserIn7Days(with(place), with(user));
@@ -169,13 +169,13 @@ public class BuildingWithSurveyStatusChooserTest {
 
         context.checking(new Expectations() {
             {
-                allowing(placeRepository).findPlaceByUUID(with(UUID.fromString(placeUUID)));
+                allowing(placeRepository).findByUUID(with(UUID.fromString(placeUUID)));
                 will(returnValue(place));
 
-                allowing(userRepository).findUserByName(with(username));
+                allowing(userRepository).findByUsername(with(username));
                 will(returnValue(user));
 
-                allowing(buildingRepository).findBuildingInPlace(with(place.getId()));
+                allowing(buildingRepository).findByPlaceUUID(with(place.getId()));
                 will(returnValue(buildings));
 
                 allowing(surveyRepository).findByPlaceAndUserIn7Days(with(place), with(user));
@@ -193,13 +193,13 @@ public class BuildingWithSurveyStatusChooserTest {
     public void testAlertNoBuildingFound() throws Exception {
         context.checking(new Expectations() {
             {
-                allowing(userRepository).findUserByName(with(username));
+                allowing(userRepository).findByUsername(with(username));
                 will(returnValue(user));
 
-                allowing(placeRepository).findPlaceByUUID(with(UUID.fromString(placeUUID)));
+                allowing(placeRepository).findByUUID(with(UUID.fromString(placeUUID)));
                 will(returnValue(place));
 
-                allowing(buildingRepository).findBuildingInPlace(with(place.getId()));
+                allowing(buildingRepository).findByPlaceUUID(with(place.getId()));
                 will(returnValue(null));
 
                 never(surveyRepository);
@@ -218,7 +218,7 @@ public class BuildingWithSurveyStatusChooserTest {
 
         context.checking(new Expectations() {
             {
-                allowing(userRepository).findUserByName(with(username));
+                allowing(userRepository).findByUsername(with(username));
                 will(returnValue(null));
                 oneOf(buildingWithSurveyStatusListPresenter).alertUserNotFound();
             }
@@ -232,10 +232,10 @@ public class BuildingWithSurveyStatusChooserTest {
 
         context.checking(new Expectations() {
             {
-                allowing(userRepository).findUserByName(with(username));
+                allowing(userRepository).findByUsername(with(username));
                 will(returnValue(user));
 
-                allowing(placeRepository).findPlaceByUUID(with(UUID.fromString(placeUUID)));
+                allowing(placeRepository).findByUUID(with(UUID.fromString(placeUUID)));
                 will(returnValue(null));
                 oneOf(buildingWithSurveyStatusListPresenter).alertPlaceNotFound();
             }

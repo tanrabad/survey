@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -32,7 +32,7 @@ public class PlaceChooser {
     }
 
     public void getPlaceList() {
-        List<Place> places = this.placeRepository.findPlaces();
+        List<Place> places = this.placeRepository.find();
         if (places == null) {
             placeListPresenter.displayPlaceNotFound();
         } else {
@@ -41,7 +41,7 @@ public class PlaceChooser {
     }
 
     public void getPlaceListWithPlaceTypeFilter(int placeType) {
-        List<Place> places = this.placeRepository.findPlacesWithPlaceTypeFilter(placeType);
+        List<Place> places = this.placeRepository.findByPlaceType(placeType);
         if (places == null) {
             placeListPresenter.displayPlaceNotFound();
         } else {

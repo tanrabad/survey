@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,12 +17,12 @@
 
 package th.or.nectec.tanrabad.domain.place;
 
-import java.util.ArrayList;
-
 import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.domain.survey.SurveyRepository;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
+
+import java.util.ArrayList;
 
 public class PlaceWithSurveyHistoryChooser {
     private UserRepository userRepository;
@@ -39,7 +39,7 @@ public class PlaceWithSurveyHistoryChooser {
     }
 
     public void showSurveyPlaceList(String username) {
-        User user = userRepository.findUserByName(username);
+        User user = userRepository.findByUsername(username);
         if(user==null){
             placeWithSurveyStatusChooserPresenter.alertUserNotFound();
             return;

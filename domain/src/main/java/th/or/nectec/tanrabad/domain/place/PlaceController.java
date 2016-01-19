@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,9 +17,9 @@
 
 package th.or.nectec.tanrabad.domain.place;
 
-import java.util.UUID;
-
 import th.or.nectec.tanrabad.entity.Place;
+
+import java.util.UUID;
 
 public class PlaceController {
 
@@ -32,7 +32,7 @@ public class PlaceController {
     }
 
     public void showPlace(UUID placeUUID) {
-        Place placeByUUID = placeRepository.findPlaceByUUID(placeUUID);
+        Place placeByUUID = placeRepository.findByUUID(placeUUID);
         if (placeByUUID == null) {
             placePresenter.alertPlaceNotFound();
         } else {

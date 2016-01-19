@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -73,10 +73,10 @@ public class SurveyBuildingHistoryControllerTest {
 
         context.checking(new Expectations() {
             {
-                allowing(placeRepository).findPlaceByUUID(with(UUID.fromString(placeUUID)));
+                allowing(placeRepository).findByUUID(with(UUID.fromString(placeUUID)));
                 will(returnValue(place));
 
-                allowing(userRepository).findUserByName(with(username));
+                allowing(userRepository).findByUsername(with(username));
                 will(returnValue(user));
 
                 allowing(SurveyBuildingHistoryControllerTest.this.surveyRepository).findByPlaceAndUserIn7Days(with(place), with(user));
@@ -93,11 +93,11 @@ public class SurveyBuildingHistoryControllerTest {
 
         context.checking(new Expectations() {
             {
-                allowing(placeRepository).findPlaceByUUID(with(UUID.fromString(placeUUID)));
+                allowing(placeRepository).findByUUID(with(UUID.fromString(placeUUID)));
                 will(returnValue(null));
                 oneOf(surveyBuildingPresenter).alertPlaceNotFound();
 
-                allowing(userRepository).findUserByName(with(username));
+                allowing(userRepository).findByUsername(with(username));
                 will(returnValue(user));
             }
         });
@@ -110,7 +110,7 @@ public class SurveyBuildingHistoryControllerTest {
 
         context.checking(new Expectations() {
             {
-                allowing(userRepository).findUserByName(with(username));
+                allowing(userRepository).findByUsername(with(username));
                 will(returnValue(null));
                 oneOf(surveyBuildingPresenter).alertUserNotFound();
             }

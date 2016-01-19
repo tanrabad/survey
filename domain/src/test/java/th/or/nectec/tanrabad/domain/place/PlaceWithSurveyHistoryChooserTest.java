@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,13 +22,12 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
-import java.util.ArrayList;
-
 import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.domain.survey.SurveyRepository;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
+
+import java.util.ArrayList;
 
 public class PlaceWithSurveyHistoryChooserTest {
 
@@ -59,7 +58,7 @@ public class PlaceWithSurveyHistoryChooserTest {
 
         context.checking(new Expectations() {
             {
-                oneOf(userRepository).findUserByName(with(username));
+                oneOf(userRepository).findByUsername(with(username));
                 will(returnValue(with(user)));
                 oneOf(surveyRepository).findByUserIn7Days(with(user));
                 will(returnValue(surveyPlace));
@@ -75,7 +74,7 @@ public class PlaceWithSurveyHistoryChooserTest {
     public void testDisplaySurveyPlaceNotFound() throws Exception {
         context.checking(new Expectations() {
             {
-                oneOf(userRepository).findUserByName(with(username));
+                oneOf(userRepository).findByUsername(with(username));
                 will(returnValue(user));
                 oneOf(surveyRepository).findByUserIn7Days(with(user));
                 will(returnValue(null));
@@ -91,7 +90,7 @@ public class PlaceWithSurveyHistoryChooserTest {
     public void testAlertUserNotFound() throws Exception {
         context.checking(new Expectations() {
             {
-                oneOf(userRepository).findUserByName(with(username));
+                oneOf(userRepository).findByUsername(with(username));
                 will(returnValue(null));
                 oneOf(placeWithSurveyHistoryListPresenter).alertUserNotFound();
             }

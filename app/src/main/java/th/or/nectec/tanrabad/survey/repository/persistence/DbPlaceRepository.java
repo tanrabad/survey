@@ -22,15 +22,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
-import th.or.nectec.tanrabad.entity.Location;
-import th.or.nectec.tanrabad.entity.LocationEntity;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.repository.InMemoryAddressRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorList;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -46,7 +43,7 @@ public class DbPlaceRepository implements PlaceRepository {
     }
 
     @Override
-    public List<Place> findPlaces() {
+    public List<Place> find() {
         SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
         Cursor placeCursor = db.query(TABLE_NAME, PlaceColumn.wildcard(),
                 null, null, null, null, null);
@@ -54,7 +51,7 @@ public class DbPlaceRepository implements PlaceRepository {
     }
 
     @Override
-    public Place findPlaceByUUID(UUID placeUUID) {
+    public Place findByUUID(UUID placeUUID) {
         SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
         Cursor placeCursor = db.query(TABLE_NAME, PlaceColumn.wildcard(),
                 PlaceColumn.ID + "=?", new String[]{placeUUID.toString()}, null, null, null);
@@ -72,15 +69,19 @@ public class DbPlaceRepository implements PlaceRepository {
         }
     }
 
-    private CursorMapper<Place> getMapper(Cursor cursor) {
-        return new PlaceCursorMapper(cursor, new StubUserRepository(), InMemoryAddressRepository.getInstance());
-    }
-
     @Override
-    public List<Place> findPlacesWithPlaceTypeFilter(int placeType) {
+    public List<Place> findByPlaceType(int placeType) {
         SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
         Cursor placeCursor = db.query(TABLE_NAME + "INNER JOIN place_subtype using(place_id)", PlaceColumn.wildcard(),
                 PlaceColumn.TYPE_ID + "=?", new String[]{String.valueOf(placeType)}, null, null, null);
+        return new CursorList<>(placeCursor, getMapper(placeCursor));
+    }
+
+    @Override
+    public List<Place> findByName(String placeName) {
+        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        Cursor placeCursor = db.query(TABLE_NAME, PlaceColumn.wildcard(),
+                PlaceColumn.NAME + "=?", new String[]{placeName}, null, null, null);
         return new CursorList<>(placeCursor, getMapper(placeCursor));
     }
 
@@ -100,52 +101,6 @@ public class DbPlaceRepository implements PlaceRepository {
 
     private boolean updateByContentValues(SQLiteDatabase db, ContentValues place) {
         return db.update(TABLE_NAME, place, PlaceColumn.ID + "=?", new String[]{place.getAsString(PlaceColumn.ID)}) > 0;
-    }
-
-    @Override
-    public List<LocationEntity> findInBoundaryLocation(Location minimumLocation, Location maximumLocation) {
-        ArrayList<LocationEntity> filterPlaces = new ArrayList<>();
-        for (LocationEntity eachPlace : findPlaces()) {
-            final Location location = eachPlace.getLocation();
-            if (isLessThanOrEqualMaximumLocation(minimumLocation, location) && isMoreThanOrEqualMinimumLocation(maximumLocation, location))
-                filterPlaces.add(eachPlace);
-        }
-        return filterPlaces.isEmpty() ? null : filterPlaces;
-    }
-
-    @Override
-    public List<LocationEntity> findTrimmedInBoundaryLocation(Location insideMinimumLocation, Location outsideMinimumLocation,
-                                                              Location insideMaximumLocation, Location outsideMaximumLocation) {
-        List<LocationEntity> filterPlaces = findInBoundaryLocation(outsideMinimumLocation, outsideMaximumLocation);
-        for (int i = 0; i < 4; i++) {
-            switch (i) {
-                case 0:
-                    trim(insideMaximumLocation, outsideMaximumLocation, filterPlaces);
-                    break;
-                case 1:
-                    Location topLeftSouthEastMiniBoundary = new Location(insideMaximumLocation.getLatitude(), insideMinimumLocation.getLongitude());
-                    Location bottomRightSouthEastMiniBoundary = new Location(outsideMaximumLocation.getLatitude(), outsideMinimumLocation.getLongitude());
-                    trim(topLeftSouthEastMiniBoundary, bottomRightSouthEastMiniBoundary, filterPlaces);
-                    break;
-                case 2:
-                    trim(outsideMinimumLocation, insideMinimumLocation, filterPlaces);
-                    break;
-                case 3:
-                    Location topLeftNorthWestMiniBoundary = new Location(outsideMinimumLocation.getLatitude(), outsideMaximumLocation.getLongitude());
-                    Location bottomRightNorthWestMiniBoundary = new Location(insideMinimumLocation.getLatitude(), insideMaximumLocation.getLongitude());
-                    trim(topLeftNorthWestMiniBoundary, bottomRightNorthWestMiniBoundary, filterPlaces);
-                    break;
-            }
-        }
-        return filterPlaces.isEmpty() ? null : filterPlaces;
-    }
-
-    @Override
-    public List<Place> findByName(String placeName) {
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
-        Cursor placeCursor = db.query(TABLE_NAME, PlaceColumn.wildcard(),
-                PlaceColumn.NAME + "=?", new String[]{placeName}, null, null, null);
-        return new CursorList<>(placeCursor, getMapper(placeCursor));
     }
 
     @Override
@@ -182,16 +137,7 @@ public class DbPlaceRepository implements PlaceRepository {
         return values;
     }
 
-    private void trim(Location insideMaximumLocation, Location outsideMaximumLocation, List<LocationEntity> filterPlaces) {
-        List<LocationEntity> trimmedLocation = findInBoundaryLocation(insideMaximumLocation, outsideMaximumLocation);
-        filterPlaces.removeAll(trimmedLocation);
-    }
-
-    private boolean isLessThanOrEqualMaximumLocation(Location maximumLocation, Location location) {
-        return location.getLatitude() <= maximumLocation.getLatitude() && location.getLongitude() <= maximumLocation.getLongitude();
-    }
-
-    private boolean isMoreThanOrEqualMinimumLocation(Location minimumLocation, Location location) {
-        return location.getLatitude() >= minimumLocation.getLatitude() && location.getLongitude() >= minimumLocation.getLongitude();
+    private CursorMapper<Place> getMapper(Cursor cursor) {
+        return new PlaceCursorMapper(cursor, new StubUserRepository(), InMemoryAddressRepository.getInstance());
     }
 }

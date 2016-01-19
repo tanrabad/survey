@@ -46,15 +46,20 @@ public class BuildingRepoBroker implements BuildingRepository
     }
 
     @Override
-    public List<Building> findBuildingInPlace(UUID placeUuid) {
-        return database.findBuildingInPlace(placeUuid);
+    public List<Building> findByPlaceUUID(UUID placeUuid) {
+        return database.findByPlaceUUID(placeUuid);
     }
 
     @Override
-    public Building findBuildingByUUID(UUID uuid) {
-        Building building = cache.findBuildingByUUID(uuid);
+    public List<Building> findByPlaceUUIDAndBuildingName(UUID placeUUID, String buildingName) {
+        return database.findByPlaceUUIDAndBuildingName(placeUUID, buildingName);
+    }
+
+    @Override
+    public Building findByUUID(UUID uuid) {
+        Building building = cache.findByUUID(uuid);
         if(building == null){
-            building = database.findBuildingByUUID(uuid);
+            building = database.findByUUID(uuid);
             cache.save(building);
         }
         return building;
@@ -80,10 +85,5 @@ public class BuildingRepoBroker implements BuildingRepository
     public void updateOrInsert(List<Building> buildings) {
         database.updateOrInsert(buildings);
         cache.updateOrInsert(buildings);
-    }
-
-    @Override
-    public List<Building> searchBuildingInPlaceByName(UUID placeUUID, String buildingName) {
-        return database.searchBuildingInPlaceByName(placeUUID, buildingName);
     }
 }

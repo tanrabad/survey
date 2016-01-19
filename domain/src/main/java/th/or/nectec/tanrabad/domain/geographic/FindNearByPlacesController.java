@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +17,6 @@
 
 package th.or.nectec.tanrabad.domain.geographic;
 
-import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.LocationEntity;
 
@@ -26,44 +25,29 @@ import java.util.List;
 public class FindNearByPlacesController {
     private FilterBoundaryCalculator filterBoundaryCalculator;
     private CoordinateLocationCalculator coordinateLocationCalculate;
-    private PlaceRepository placeRepository;
+    private LocationRepository locationRepository;
     private DistanceSorter distanceSorter;
     private NearbyPlacePresenter nearbyPlacePresenter;
 
     public FindNearByPlacesController(FilterBoundaryCalculator filterBoundaryCalculator,
-                                      CoordinateLocationCalculator coordinateLocationCalculate, PlaceRepository placeRepository,
+                                      CoordinateLocationCalculator coordinateLocationCalculate, LocationRepository locationRepository,
                                       DistanceSorter distanceSorter,
                                       NearbyPlacePresenter nearbyPlacePresenter) {
         this.filterBoundaryCalculator = filterBoundaryCalculator;
         this.coordinateLocationCalculate = coordinateLocationCalculate;
-        this.placeRepository = placeRepository;
+        this.locationRepository = locationRepository;
         this.distanceSorter = distanceSorter;
         this.nearbyPlacePresenter = nearbyPlacePresenter;
     }
 
     public void findNearByPlace(Location currentLocation, double distanceInKm) {
-/*        Location minimumLocation = filterBoundaryCalculator.getMinLocation(currentLocation, distanceInKm);
-        Location maximumLocation = filterBoundaryCalculator.getMaxLocation(currentLocation, distanceInKm);
-
-        Location newMinimumLocation = coordinateLocationCalculate.getNewMinLocation(currentLocation,distanceInKm);
-        Location newMaximumLocation = coordinateLocationCalculate.getNewMaxLocation(currentLocation, distanceInKm);
-
-        List<LocationEntity> placeFiltered = placeRepository.findInBoundaryLocation(minimumLocation, maximumLocation);
-
-        if (placeFiltered == null) {
-            nearbyPlacePresenter.displayPlaceNotFound();
-        } else {
-            distanceSorter.sort(placeFiltered);
-            nearbyPlacePresenter.displayNearByPlaces(placeFiltered);
-        }*/
-
         Location outsideMinimumLocation = filterBoundaryCalculator.getMinLocation(currentLocation, distanceInKm);
         Location outsideMaximumLocation = filterBoundaryCalculator.getMaxLocation(currentLocation, distanceInKm);
 
         Location insideMinimumLocation = coordinateLocationCalculate.getNewMinLocation(currentLocation, distanceInKm);
         Location insideMaximumLocation = coordinateLocationCalculate.getNewMaxLocation(currentLocation, distanceInKm);
 
-        List<LocationEntity> placeFiltered = placeRepository.findTrimmedInBoundaryLocation(insideMinimumLocation, outsideMinimumLocation, insideMaximumLocation, outsideMaximumLocation);
+        List<LocationEntity> placeFiltered = locationRepository.findTrimmedInBoundaryLocation(insideMinimumLocation, outsideMinimumLocation, insideMaximumLocation, outsideMaximumLocation);
 
         if (placeFiltered == null) {
             nearbyPlacePresenter.displayPlaceNotFound();

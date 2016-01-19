@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -57,9 +57,9 @@ public class InMemoryBuildingRepositoryTest {
 
     @Test
     public void testFindBuildingByUUID() throws Exception {
-        assertEquals(towerA, buildingRepo.findBuildingByUUID(towerA.getId()));
-        assertEquals(towerB, buildingRepo.findBuildingByUUID(towerB.getId()));
-        assertEquals(null, buildingRepo.findBuildingByUUID(UUID.randomUUID()));
+        assertEquals(towerA, buildingRepo.findByUUID(towerA.getId()));
+        assertEquals(towerB, buildingRepo.findByUUID(towerB.getId()));
+        assertEquals(null, buildingRepo.findByUUID(UUID.randomUUID()));
     }
 
     @Test
@@ -69,7 +69,7 @@ public class InMemoryBuildingRepositoryTest {
 
         buildingRepo.update(towerANewName);
 
-        assertEquals(towerANewName, buildingRepo.findBuildingByUUID(towerA.getId()));
+        assertEquals(towerANewName, buildingRepo.findByUUID(towerA.getId()));
     }
 
     @Test(expected = BuildingRepositoryException.class)
@@ -79,7 +79,7 @@ public class InMemoryBuildingRepositoryTest {
 
     @Test
     public void testFindBuildingInPlace() throws Exception {
-        List<Building> buildingInPlace = buildingRepo.findBuildingInPlace(NationalPark.getId());
+        List<Building> buildingInPlace = buildingRepo.findByPlaceUUID(NationalPark.getId());
 
         assertTrue(buildingInPlace.size() == 2);
         assertTrue(buildingInPlace.contains(towerA));
@@ -88,12 +88,12 @@ public class InMemoryBuildingRepositoryTest {
 
     @Test
     public void testFindBuildingInPlaceByName() throws Exception {
-        List<Building> buildingInPlace = buildingRepo.searchBuildingInPlaceByName(NationalPark.getId(), "A");
+        List<Building> buildingInPlace = buildingRepo.findByPlaceUUIDAndBuildingName(NationalPark.getId(), "A");
 
         assertTrue(buildingInPlace.size() == 1);
         assertTrue(buildingInPlace.contains(towerA));
 
-        List<Building> emptyBuildingList = buildingRepo.searchBuildingInPlaceByName(NationalPark.getId(), "C");
+        List<Building> emptyBuildingList = buildingRepo.findByPlaceUUIDAndBuildingName(NationalPark.getId(), "C");
 
         assertTrue(emptyBuildingList == null);
     }

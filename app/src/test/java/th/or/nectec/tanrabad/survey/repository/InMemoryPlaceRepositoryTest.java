@@ -1,7 +1,5 @@
-package th.or.nectec.tanrabad.survey.repository;
-
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,14 +15,15 @@ package th.or.nectec.tanrabad.survey.repository;
  * limitations under the License.
  */
 
+package th.or.nectec.tanrabad.survey.repository;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
+import th.or.nectec.tanrabad.domain.place.PlaceRepositoryException;
+import th.or.nectec.tanrabad.entity.Place;
 
 import java.util.List;
 import java.util.UUID;
-
-import th.or.nectec.tanrabad.domain.place.PlaceRepositoryException;
-import th.or.nectec.tanrabad.entity.Place;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -54,16 +53,16 @@ public class InMemoryPlaceRepositoryTest {
 
     @Test
     public void testFindPlaceByUUID() throws Exception {
-        assertEquals(tuHospital, placeRepository.findPlaceByUUID(tuHospital.getId()));
-        assertEquals(racha1School, placeRepository.findPlaceByUUID(racha1School.getId()));
-        assertEquals(null, placeRepository.findPlaceByUUID(UUID.randomUUID()));
+        assertEquals(tuHospital, placeRepository.findByUUID(tuHospital.getId()));
+        assertEquals(racha1School, placeRepository.findByUUID(racha1School.getId()));
+        assertEquals(null, placeRepository.findByUUID(UUID.randomUUID()));
     }
 
     @Test
     public void testUpdate() throws Exception {
         Place racha1NewName = new Place(racha1School.getId(), "โรงเรียนบางปะอิน");
         placeRepository.update(racha1NewName);
-        assertEquals(racha1NewName, placeRepository.findPlaceByUUID(racha1School.getId()));
+        assertEquals(racha1NewName, placeRepository.findByUUID(racha1School.getId()));
     }
 
     @Test(expected = PlaceRepositoryException.class)

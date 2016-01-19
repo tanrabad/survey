@@ -18,8 +18,6 @@
 package th.or.nectec.tanrabad.survey.repository;
 
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
-import th.or.nectec.tanrabad.entity.Location;
-import th.or.nectec.tanrabad.entity.LocationEntity;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.repository.persistence.DbPlaceRepository;
@@ -47,23 +45,28 @@ public class PlaceRepoBroker implements PlaceRepository {
     }
 
     @Override
-    public List<Place> findPlaces() {
-        return persistence.findPlaces();
+    public List<Place> find() {
+        return persistence.find();
     }
 
     @Override
-    public Place findPlaceByUUID(UUID placeUUID) {
-        Place place = cache.findPlaceByUUID(placeUUID);
+    public Place findByUUID(UUID placeUUID) {
+        Place place = cache.findByUUID(placeUUID);
         if (place == null) {
-            place = persistence.findPlaceByUUID(placeUUID);
+            place = persistence.findByUUID(placeUUID);
             cache.save(place);
         }
         return place;
     }
 
     @Override
-    public List<Place> findPlacesWithPlaceTypeFilter(int placeType) {
-        return persistence.findPlacesWithPlaceTypeFilter(placeType);
+    public List<Place> findByPlaceType(int placeType) {
+        return persistence.findByPlaceType(placeType);
+    }
+
+    @Override
+    public List<Place> findByName(String placeName) {
+        return persistence.findByName(placeName);
     }
 
     @Override
@@ -82,21 +85,6 @@ public class PlaceRepoBroker implements PlaceRepository {
             cache.update(place);
         }
         return success;
-    }
-
-    @Override
-    public List<LocationEntity> findInBoundaryLocation(Location minimumLocation, Location maximumLocation) {
-        return persistence.findInBoundaryLocation(minimumLocation, maximumLocation);
-    }
-
-    @Override
-    public List<LocationEntity> findTrimmedInBoundaryLocation(Location insideMinimumLocation, Location outsideMinimumLocation, Location insideMaximumLocation, Location outsideMaximumLocation) {
-        return persistence.findTrimmedInBoundaryLocation(insideMinimumLocation, outsideMinimumLocation, insideMaximumLocation, outsideMaximumLocation);
-    }
-
-    @Override
-    public List<Place> findByName(String placeName) {
-        return persistence.findByName(placeName);
     }
 
     @Override

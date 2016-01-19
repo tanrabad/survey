@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,12 +17,12 @@
 
 package th.or.nectec.tanrabad.survey.validator;
 
-import java.util.List;
-
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceValidator;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
+
+import java.util.List;
 
 public class UpdatePlaceValidator implements PlaceValidator {
     private PlaceRepository placeRepository;
@@ -43,7 +43,7 @@ public class UpdatePlaceValidator implements PlaceValidator {
 
         }
 
-        List<Place> places = placeRepository.findPlaces();
+        List<Place> places = placeRepository.find();
         if (places != null) {
             for (Place eachPlace : places) {
                 if (!eachPlace.getId().equals(place.getId()) && isSamePlaceName(place, eachPlace)

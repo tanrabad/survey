@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -52,7 +52,7 @@ public class BuildingControllerTest {
 
         context.checking(new Expectations() {
             {
-                allowing(buildingRepository).findBuildingByUUID(buildingUUID);
+                allowing(buildingRepository).findByUUID(buildingUUID);
                 will(returnValue(building));
                 oneOf(buildingPresenter).displayBuilding(building);
             }
@@ -67,7 +67,7 @@ public class BuildingControllerTest {
 
         context.checking(new Expectations() {
             {
-                allowing(buildingRepository).findBuildingByUUID(buildingUUID);
+                allowing(buildingRepository).findByUUID(buildingUUID);
                 will(returnValue(null));
                 oneOf(buildingPresenter).alertBuildingNotFound();
             }

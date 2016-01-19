@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -48,7 +48,7 @@ public class PlaceChooseTest {
 
         context.checking(new Expectations() {
             {
-                oneOf(placeRepository).findPlaces();
+                oneOf(placeRepository).find();
                 will(returnValue(places));
                 oneOf(placeListPresenter).displayPlaceList(places);
             }
@@ -90,7 +90,7 @@ public class PlaceChooseTest {
 
         context.checking(new Expectations() {
             {
-                oneOf(placeRepository).findPlacesWithPlaceTypeFilter(Place.TYPE_VILLAGE_COMMUNITY);
+                oneOf(placeRepository).findByPlaceType(Place.TYPE_VILLAGE_COMMUNITY);
                 will(returnValue(filterPlace));
                 oneOf(placeListPresenter).displayPlaceList(filterPlace);
             }
@@ -104,7 +104,7 @@ public class PlaceChooseTest {
     public void testPlaceListNotFound() throws Exception {
         context.checking(new Expectations() {
             {
-                oneOf(placeRepository).findPlaces();
+                oneOf(placeRepository).find();
                 will(returnValue(null));
                 oneOf(placeListPresenter).displayPlaceNotFound();
             }

@@ -42,6 +42,8 @@ import static org.junit.Assert.assertEquals;
 
 public class BuildingRestServiceTest extends WireMockTestBase {
 
+    protected static final DateTimeFormatter RFC1123_FORMATTER =
+            DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss 'GMT'");
     UserRepository userRepository = Mockito.mock(UserRepository.class);
     PlaceRepository placeRepository = Mockito.mock(PlaceRepository.class);
     LastUpdate lastUpdate = Mockito.mock(LastUpdate.class);
@@ -82,8 +84,8 @@ public class BuildingRestServiceTest extends WireMockTestBase {
 
     @Test
     public void testSuccessResponse() throws Exception {
-        Mockito.when(userRepository.findUserByName("dcp-user")).thenReturn(stubUser());
-        Mockito.when(placeRepository.findPlaceByUUID(uuid("b5f7b062-12f5-3402-ac88-0343733503bd"))).thenReturn(stubPlace());
+        Mockito.when(userRepository.findByUsername("dcp-user")).thenReturn(stubUser());
+        Mockito.when(placeRepository.findByUUID(uuid("b5f7b062-12f5-3402-ac88-0343733503bd"))).thenReturn(stubPlace());
         stubFor(get(urlEqualTo(BuildingRestService.PATH))
                 .willReturn(aResponse()
                         .withStatus(200)
@@ -104,9 +106,6 @@ public class BuildingRestServiceTest extends WireMockTestBase {
         Mockito.verify(lastUpdate).save(RFC1123_FORMATTER.parseDateTime("Mon, 30 Nov 2015 17:00:00 GMT"));
     }
 
-    protected static final DateTimeFormatter RFC1123_FORMATTER =
-            DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss 'GMT'");
-
     private UUID uuid(String uuid) {
         return UUID.fromString(uuid);
     }
@@ -124,8 +123,8 @@ public class BuildingRestServiceTest extends WireMockTestBase {
 
     @Test
     public void testSuccessResponseMultipleItem() throws Exception {
-        Mockito.when(userRepository.findUserByName("dcp-user")).thenReturn(stubUser());
-        Mockito.when(placeRepository.findPlaceByUUID(uuid("b5f7b062-12f5-3402-ac88-0343733503bd"))).thenReturn(stubPlace());
+        Mockito.when(userRepository.findByUsername("dcp-user")).thenReturn(stubUser());
+        Mockito.when(placeRepository.findByUUID(uuid("b5f7b062-12f5-3402-ac88-0343733503bd"))).thenReturn(stubPlace());
         stubFor(get(urlEqualTo(BuildingRestService.PATH))
                 .willReturn(aResponse()
                         .withStatus(200)

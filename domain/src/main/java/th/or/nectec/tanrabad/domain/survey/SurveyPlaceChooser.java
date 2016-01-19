@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -43,13 +43,13 @@ public class SurveyPlaceChooser {
     }
 
     public void displaySurveyBuildingOf(String username) {
-        User user = userRepository.findUserByName(username);
+        User user = userRepository.findByUsername(username);
         if (user == null) {
             surveyPlacePresenter.alertUserNotFound();
             return;
         }
 
-        List<Place> places = placeRepository.findPlaces();
+        List<Place> places = placeRepository.find();
         if (places == null) {
             surveyPlacePresenter.displayPlacesNotfound();
             return;
@@ -68,13 +68,13 @@ public class SurveyPlaceChooser {
     }
 
     public void getPlaceListWithPlaceFilter(int selectedID, String username) {
-        User user = userRepository.findUserByName(username);
+        User user = userRepository.findByUsername(username);
         if (user == null) {
             surveyPlacePresenter.alertUserNotFound();
             return;
         }
 
-        List<Place> places = placeRepository.findPlacesWithPlaceTypeFilter(selectedID);
+        List<Place> places = placeRepository.findByPlaceType(selectedID);
         if (places == null) {
             surveyPlacePresenter.displayPlacesNotfound();
             return;

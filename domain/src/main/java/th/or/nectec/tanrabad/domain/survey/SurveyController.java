@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -55,7 +55,7 @@ public class SurveyController {
     }
 
     private User checkUserExist(String username) {
-        User user = userRepository.findUserByName(username);
+        User user = userRepository.findByUsername(username);
         if (user == null) {
             surveyPresenter.alertUserNotFound();
             return null;
@@ -64,7 +64,7 @@ public class SurveyController {
     }
 
     private Building checkBuildingExist(String buildingUUID) {
-        Building building = buildingRepository.findBuildingByUUID(UUID.fromString(buildingUUID));
+        Building building = buildingRepository.findByUUID(UUID.fromString(buildingUUID));
         if (building == null) {
             surveyPresenter.alertBuildingNotFound();
             return null;

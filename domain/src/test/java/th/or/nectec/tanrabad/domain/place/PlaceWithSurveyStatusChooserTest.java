@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,15 +22,14 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.domain.survey.SurveyPlaceChooser;
 import th.or.nectec.tanrabad.domain.survey.SurveyRepository;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlaceWithSurveyStatusChooserTest {
 
@@ -78,10 +77,10 @@ public class PlaceWithSurveyStatusChooserTest {
 
         context.checking(new Expectations() {
             {
-                allowing(userRepository).findUserByName(with(username));
+                allowing(userRepository).findByUsername(with(username));
                 will(returnValue(user));
 
-                allowing(placeRepository).findPlaces();
+                allowing(placeRepository).find();
                 will(returnValue(places));
 
                 allowing(surveyRepository).findByUserIn7Days(with(user));
@@ -109,10 +108,10 @@ public class PlaceWithSurveyStatusChooserTest {
 
         context.checking(new Expectations() {
             {
-                allowing(userRepository).findUserByName(with(username));
+                allowing(userRepository).findByUsername(with(username));
                 will(returnValue(user));
 
-                allowing(placeRepository).findPlaces();
+                allowing(placeRepository).find();
                 will(returnValue(places));
 
                 allowing(surveyRepository).findByUserIn7Days(with(user));
@@ -130,10 +129,10 @@ public class PlaceWithSurveyStatusChooserTest {
 
         context.checking(new Expectations() {
             {
-                allowing(userRepository).findUserByName(with(username));
+                allowing(userRepository).findByUsername(with(username));
                 will(returnValue(user));
 
-                allowing(placeRepository).findPlaces();
+                allowing(placeRepository).find();
                 will(returnValue(null));
 
                 oneOf(placeWithSurveyStatusListPresenter).displayPlacesNotfound();
@@ -152,7 +151,7 @@ public class PlaceWithSurveyStatusChooserTest {
 
         context.checking(new Expectations() {
             {
-                allowing(userRepository).findUserByName(with(username));
+                allowing(userRepository).findByUsername(with(username));
                 will(returnValue(null));
                 oneOf(placeWithSurveyStatusListPresenter).alertUserNotFound();
             }

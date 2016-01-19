@@ -15,10 +15,17 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.domain;
+package th.or.nectec.tanrabad.domain.geographic;
 
-import th.or.nectec.tanrabad.entity.User;
+import th.or.nectec.tanrabad.entity.Location;
+import th.or.nectec.tanrabad.entity.LocationEntity;
 
-public interface UserRepository {
-    User findByUsername(String userName);
+import java.util.List;
+
+public interface LocationRepository {
+
+    List<LocationEntity> findInBoundaryLocation(Location minimumLocation, Location maximumLocation);
+
+    List<LocationEntity> findTrimmedInBoundaryLocation(Location insideMinimumLocation, Location outsideMinimumLocation, Location insideMaximumLocation, Location outsideMaximumLocation);
+
 }

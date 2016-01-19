@@ -43,7 +43,7 @@ public class DbBuildingRepository implements BuildingRepository {
     }
 
     @Override
-    public List<Building> findBuildingInPlace(UUID placeUuid) {
+    public List<Building> findByPlaceUUID(UUID placeUuid) {
         SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
         Cursor buildingCursor = db.query(TABLE_NAME, BuildingColumn.wildcard(),
                 BuildingColumn.PLACE_ID + "=?", new String[]{placeUuid.toString()}, null, null, null);
@@ -51,7 +51,15 @@ public class DbBuildingRepository implements BuildingRepository {
     }
 
     @Override
-    public Building findBuildingByUUID(UUID uuid) {
+    public List<Building> findByPlaceUUIDAndBuildingName(UUID placeUUID, String buildingName) {
+        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        Cursor cursor = db.query(TABLE_NAME, BuildingColumn.wildcard(),
+                BuildingColumn.PLACE_ID + "=? AND " + BuildingColumn.NAME + " LIKE '%?%'", new String[]{placeUUID.toString(), buildingName}, null, null, null);
+        return new CursorList<>(cursor, getMapper(cursor));
+    }
+
+    @Override
+    public Building findByUUID(UUID uuid) {
         SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
         Cursor cursor = db.query(TABLE_NAME, BuildingColumn.wildcard(),
                 BuildingColumn.ID + "=?", new String[]{uuid.toString()}, null, null, null);
@@ -94,14 +102,6 @@ public class DbBuildingRepository implements BuildingRepository {
             if (!updated)
                 save(building);
         }
-    }
-
-    @Override
-    public List<Building> searchBuildingInPlaceByName(UUID placeUUID, String buildingName) {
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
-        Cursor cursor = db.query(TABLE_NAME, BuildingColumn.wildcard(),
-                BuildingColumn.PLACE_ID + "=? AND " + BuildingColumn.NAME + " LIKE '%?%'", new String[]{placeUUID.toString(), buildingName}, null, null, null);
-        return new CursorList<>(cursor, getMapper(cursor));
     }
 
     private Building getBuilding(Cursor cursor) {

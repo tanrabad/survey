@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -31,7 +31,7 @@ public class BuildingController {
     }
 
     public void showBuilding(UUID buildingUUID) {
-        Building buildingByUUID = buildingRepository.findBuildingByUUID(buildingUUID);
+        Building buildingByUUID = buildingRepository.findByUUID(buildingUUID);
         if (buildingByUUID == null) {
             buildingPresenter.alertBuildingNotFound();
         } else {

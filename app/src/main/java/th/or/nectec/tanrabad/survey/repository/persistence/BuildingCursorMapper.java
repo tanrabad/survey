@@ -60,8 +60,8 @@ class BuildingCursorMapper implements CursorMapper<Building> {
         UUID uuid = UUID.fromString(cursor.getString(idIndex));
         Building building = new Building(uuid, cursor.getString(nameIndex));
         building.setLocation(new Location(cursor.getDouble(latIndex), cursor.getDouble(lngIndex)));
-        building.setUpdateBy(userRepository.findUserByName(cursor.getString(updateByIndex)));
-        building.setPlace(placeRepository.findPlaceByUUID(UUID.fromString(cursor.getString(placeId))));
+        building.setUpdateBy(userRepository.findByUsername(cursor.getString(updateByIndex)));
+        building.setPlace(placeRepository.findByUUID(UUID.fromString(cursor.getString(placeId))));
         building.setUpdateTimestamp(cursor.getString(updateTimeIndex));
         return building;
     }

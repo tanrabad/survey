@@ -19,6 +19,7 @@ package th.or.nectec.tanrabad.survey.repository;
 
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import th.or.nectec.tanrabad.domain.geographic.LocationRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceRepositoryException;
 import th.or.nectec.tanrabad.entity.Location;
@@ -29,7 +30,7 @@ import th.or.nectec.tanrabad.entity.utils.Address;
 import java.util.*;
 
 
-public class InMemoryPlaceRepository implements PlaceRepository {
+public class InMemoryPlaceRepository implements PlaceRepository, LocationRepository {
 
     public static InMemoryPlaceRepository instance;
     private final Place palazzettoVillage;
@@ -110,12 +111,12 @@ public class InMemoryPlaceRepository implements PlaceRepository {
     }
 
     @Override
-    public List<Place> findPlaces() {
+    public List<Place> find() {
         return new ArrayList<>(placesMap.values());
     }
 
     @Override
-    public Place findPlaceByUUID(UUID placeUUID) {
+    public Place findByUUID(UUID placeUUID) {
         for (Place eachPlace : placesMap.values()) {
             if (eachPlace.getId().equals(placeUUID)) {
                 return eachPlace;
@@ -125,10 +126,23 @@ public class InMemoryPlaceRepository implements PlaceRepository {
     }
 
     @Override
-    public List<Place> findPlacesWithPlaceTypeFilter(int placeType) {
+    public List<Place> findByPlaceType(int placeType) {
         ArrayList<Place> filterPlaces = new ArrayList<>();
         for (Place eachPlace : placesMap.values()) {
             if (eachPlace.getType() == placeType)
+                filterPlaces.add(eachPlace);
+        }
+        return filterPlaces.isEmpty() ? null : filterPlaces;
+    }
+
+    @Override
+    public List<Place> findByName(String placeName) {
+        if (TextUtils.isEmpty(placeName))
+            return null;
+
+        ArrayList<Place> filterPlaces = new ArrayList<>();
+        for (Place eachPlace : placesMap.values()) {
+            if (eachPlace.getName().contains(placeName))
                 filterPlaces.add(eachPlace);
         }
         return filterPlaces.isEmpty() ? null : filterPlaces;
@@ -164,6 +178,17 @@ public class InMemoryPlaceRepository implements PlaceRepository {
     }
 
     @Override
+    public void updateOrInsert(List<Place> update) {
+        for (Place place : update) {
+            try {
+                update(place);
+            } catch (PlaceRepositoryException pre) {
+                save(place);
+            }
+        }
+    }
+
+    @Override
     public List<LocationEntity> findTrimmedInBoundaryLocation(Location insideMinimumLocation, Location outsideMinimumLocation, Location insideMaximumLocation, Location outsideMaximumLocation) {
         List<LocationEntity> filterPlaces = findInBoundaryLocation(outsideMinimumLocation, outsideMaximumLocation);
         for (int i = 0; i < 4; i++) {
@@ -189,29 +214,6 @@ public class InMemoryPlaceRepository implements PlaceRepository {
         return filterPlaces.isEmpty() ? null : filterPlaces;
     }
 
-    @Override
-    public List<Place> findByName(String placeName) {
-        if (TextUtils.isEmpty(placeName))
-            return null;
-
-        ArrayList<Place> filterPlaces = new ArrayList<>();
-        for (Place eachPlace : placesMap.values()) {
-            if (eachPlace.getName().contains(placeName))
-                filterPlaces.add(eachPlace);
-        }
-        return filterPlaces.isEmpty() ? null : filterPlaces;
-    }
-
-    @Override
-    public void updateOrInsert(List<Place> update) {
-        for(Place place : update){
-            try{
-                update(place);
-            }catch (PlaceRepositoryException pre){
-                save(place);
-            }
-        }
-    }
 
     private void trim(Location insideMaximumLocation, Location outsideMaximumLocation, List<LocationEntity> filterPlaces) {
         List<LocationEntity> trimmedLocation = findInBoundaryLocation(insideMaximumLocation, outsideMaximumLocation);

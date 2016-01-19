@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,14 +17,14 @@
 
 package th.or.nectec.tanrabad.domain.survey;
 
-import java.util.List;
-import java.util.UUID;
-
 import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.User;
+
+import java.util.List;
+import java.util.UUID;
 
 public class SurveyBuildingHistoryController {
     private UserRepository userRepository;
@@ -57,7 +57,7 @@ public class SurveyBuildingHistoryController {
     }
 
     private User checkUserExist(String username) {
-        User user = userRepository.findUserByName(username);
+        User user = userRepository.findByUsername(username);
         if (user == null) {
 
             surveyBuildingPresenter.alertUserNotFound();
@@ -67,7 +67,7 @@ public class SurveyBuildingHistoryController {
     }
 
     private Place checkPlaceExist(String placeUUID) {
-        Place place = placeRepository.findPlaceByUUID(UUID.fromString(placeUUID));
+        Place place = placeRepository.findByUUID(UUID.fromString(placeUUID));
         if (place == null) {
 
             surveyBuildingPresenter.alertPlaceNotFound();

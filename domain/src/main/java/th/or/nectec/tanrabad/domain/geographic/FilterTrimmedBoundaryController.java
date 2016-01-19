@@ -1,24 +1,40 @@
+/*
+ * Copyright (c) 2016 NECTEC
+ *   National Electronics and Computer Technology Center, Thailand
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package th.or.nectec.tanrabad.domain.geographic;
 
-import java.util.List;
-
-import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.LocationEntity;
 
+import java.util.List;
+
 public class FilterTrimmedBoundaryController {
     private FilterBoundaryCalculator filterBoundaryCalculator;
-    private PlaceRepository placeRepository;
+    private LocationRepository placeRepository;
     private NearbyPlacePresenter nearbyPlacePresenter;
     private CoordinateLocationCalculator coordinateLocationCalculate;
 
     public FilterTrimmedBoundaryController(FilterBoundaryCalculator filterBoundaryCalculator,
                                            CoordinateLocationCalculator coordinateLocationCalculate,
-                                           PlaceRepository placeRepository,
+                                           LocationRepository locationRepository,
                                            NearbyPlacePresenter nearbyPlacePresenter) {
         this.filterBoundaryCalculator = filterBoundaryCalculator;
         this.coordinateLocationCalculate = coordinateLocationCalculate;
-        this.placeRepository = placeRepository;
+        this.placeRepository = locationRepository;
         this.nearbyPlacePresenter = nearbyPlacePresenter;
     }
 

@@ -1,3 +1,20 @@
+/*
+ * Copyright (c) 2016 NECTEC
+ *   National Electronics and Computer Technology Center, Thailand
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package th.or.nectec.tanrabad.domain.geographic;
 
 import org.jmock.Expectations;
@@ -5,14 +22,11 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.LocationEntity;
 import th.or.nectec.tanrabad.entity.Place;
+
+import java.util.ArrayList;
 
 public class FilterTrimmedBoundaryControllerTest {
 
@@ -23,14 +37,14 @@ public class FilterTrimmedBoundaryControllerTest {
     final Location currentLocation = new Location(currentLatitude, currentLongitude);
     double distanceInKm = 100;
 
-    private PlaceRepository placeRepository;
+    private LocationRepository locationRepository;
     private NearbyPlacePresenter nearbyPlacePresenter;
     private FilterBoundaryCalculator filterBoundaryCalculate;
     private CoordinateLocationCalculator coordinateLocationCalculate;
 
     @Before
     public void setUp() {
-        placeRepository = context.mock(PlaceRepository.class);
+        locationRepository = context.mock(LocationRepository.class);
         nearbyPlacePresenter = context.mock(NearbyPlacePresenter.class);
         filterBoundaryCalculate = context.mock(FilterBoundaryCalculator.class);
         coordinateLocationCalculate = context.mock(CoordinateLocationCalculator.class);
@@ -126,13 +140,13 @@ public class FilterTrimmedBoundaryControllerTest {
                 will(returnValue(outsideMaximumLocation));
                 oneOf(coordinateLocationCalculate).getNewMaxLocation(with(currentLocation), with(distanceInKm));
                 will(returnValue(insideMaximumLocation));
-                oneOf(placeRepository).findTrimmedInBoundaryLocation(insideMinimumLocation, outsideMinimumLocation, insideMaximumLocation, outsideMaximumLocation);
+                oneOf(locationRepository).findTrimmedInBoundaryLocation(insideMinimumLocation, outsideMinimumLocation, insideMaximumLocation, outsideMaximumLocation);
                 will(returnValue(locationEntities));
                 oneOf(nearbyPlacePresenter).displayNearByPlaces(locationEntities);
             }
         });
         FilterTrimmedBoundaryController filterTrimmedBoundaryController = new FilterTrimmedBoundaryController(filterBoundaryCalculate, coordinateLocationCalculate,
-                placeRepository,
+                locationRepository,
                 nearbyPlacePresenter);
         filterTrimmedBoundaryController.findNearByFilterTrimmedBoundary(currentLocation, distanceInKm);
     }
@@ -166,13 +180,13 @@ public class FilterTrimmedBoundaryControllerTest {
                 will(returnValue(outsideMaximumLocation));
                 oneOf(coordinateLocationCalculate).getNewMaxLocation(with(currentLocation), with(distanceInKm));
                 will(returnValue(insideMaximumLocation));
-                oneOf(placeRepository).findTrimmedInBoundaryLocation(insideMinimumLocation, outsideMinimumLocation, insideMaximumLocation, outsideMaximumLocation);
+                oneOf(locationRepository).findTrimmedInBoundaryLocation(insideMinimumLocation, outsideMinimumLocation, insideMaximumLocation, outsideMaximumLocation);
                 will(returnValue(null));
                 oneOf(nearbyPlacePresenter).displayPlaceNotFound();
             }
         });
         FilterTrimmedBoundaryController filterTrimmedBoundaryController = new FilterTrimmedBoundaryController(filterBoundaryCalculate, coordinateLocationCalculate,
-                placeRepository,
+                locationRepository,
                 nearbyPlacePresenter);
         filterTrimmedBoundaryController.findNearByFilterTrimmedBoundary(currentLocation, distanceInKm);
     }

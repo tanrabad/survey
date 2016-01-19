@@ -1,3 +1,20 @@
+/*
+ * Copyright (c) 2016 NECTEC
+ *   National Electronics and Computer Technology Center, Thailand
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package th.or.nectec.tanrabad.survey.service.json;
 
 import android.support.annotation.NonNull;
@@ -77,9 +94,9 @@ public class JsonBuildingTest {
     @Test
     public void testParseJsonStringToBuildingEntity() throws Exception {
         UserRepository userRepository = Mockito.mock(UserRepository.class);
-        Mockito.when(userRepository.findUserByName("dcp-user")).thenReturn(stubUser());
+        Mockito.when(userRepository.findByUsername("dcp-user")).thenReturn(stubUser());
         PlaceRepository placeRepository = Mockito.mock(PlaceRepository.class);
-        Mockito.when(placeRepository.findPlaceByUUID(stubPlace().getId())).thenReturn(stubPlace());
+        Mockito.when(placeRepository.findByUUID(stubPlace().getId())).thenReturn(stubPlace());
         Building buildingData = new Building(UUID.fromString("5cf5665b-5642-10fb-a3a0-5e612a842583"), "อาคาร 1");
         buildingData.setPlace(stubPlace());
         buildingData.setLocation(stubLocation());

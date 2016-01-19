@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -50,7 +50,7 @@ public class BuildingChooserTest {
                 List<Building> buildings = new ArrayList<>();
                 buildings.add(Building.withName("214/43"));
 
-                allowing(buildingRepository).findBuildingInPlace(placeUuid);
+                allowing(buildingRepository).findByPlaceUUID(placeUuid);
                 will(returnValue(buildings));
 
                 oneOf(presenter).displayBuildingsList(buildings);
@@ -64,7 +64,7 @@ public class BuildingChooserTest {
     public void notFoundBuilding() {
         context.checking(new Expectations() {
             {
-                allowing(buildingRepository).findBuildingInPlace(placeUuid);
+                allowing(buildingRepository).findByPlaceUUID(placeUuid);
                 will(returnValue(null));
 
                 oneOf(presenter).alertBuildingsNotFound();

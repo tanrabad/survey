@@ -8,8 +8,7 @@ CREATE TABLE building (
   sync_status INTEGER(10) DEFAULT 0 NOT NULL,
   update_by   VARCHAR(128) NOT NULL,
   PRIMARY KEY (building_id),
-  FOREIGN KEY (place_id) REFERENCES place (place_id) ON UPDATE CASCADE,
-  FOREIGN KEY (update_by) REFERENCES user_profile (username) ON UPDATE CASCADE
+  FOREIGN KEY (place_id) REFERENCES place (place_id) ON UPDATE CASCADE
 );
 CREATE TABLE container_location (
   container_location_id INTEGER     NOT NULL PRIMARY KEY,
@@ -32,8 +31,7 @@ CREATE TABLE organization (
   name               VARCHAR(128) NOT NULL,
   address            TEXT,
   subdistrict_code   VARCHAR(6)   NOT NULL,
-  health_region_code VARCHAR(6)   NOT NULL,
-  FOREIGN KEY (subdistrict_code) REFERENCES subdistrict (subdistrict_code)
+  health_region_code VARCHAR(6)   NOT NULL
 );
 CREATE TABLE place (
   place_id         VARCHAR(36)  NOT NULL,
@@ -47,8 +45,7 @@ CREATE TABLE place (
   update_by        VARCHAR(128) NOT NULL,
   PRIMARY KEY (place_id),
   FOREIGN KEY (subtype_id) REFERENCES place_subtype (subtype_id) ON UPDATE CASCADE,
-  FOREIGN KEY (subdistrict_code) REFERENCES subdistrict (subdistrict_code) ON UPDATE CASCADE,
-  FOREIGN KEY (update_by) REFERENCES user_profile (username) ON UPDATE CASCADE
+  FOREIGN KEY (subdistrict_code) REFERENCES subdistrict (subdistrict_code) ON UPDATE CASCADE
 );
 CREATE TABLE place_subtype (
   subtype_id INTEGER      NOT NULL PRIMARY KEY,
@@ -129,4 +126,3 @@ CREATE INDEX survey_surveyor
 ON survey (surveyor);
 CREATE INDEX survey_detail_survey_id
 ON survey_detail (survey_id);
-

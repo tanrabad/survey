@@ -23,6 +23,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import org.joda.time.DateTime;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,6 +46,31 @@ public class DbPlaceRepositoryTest {
 
     @Rule
     public SurveyDbTestRule dbTestRule = new SurveyDbTestRule();
+    private AddressRepository addressRepository;
+    private UserRepository userRepository;
+
+    @Before
+    public void setup() {
+        addressRepository = Mockito.mock(AddressRepository.class);
+        Address address = stubAddress();
+        Mockito.when(addressRepository.findBySubdistrictCode("120202")).thenReturn(address);
+        User user = stubUser();
+        userRepository = Mockito.mock(UserRepository.class);
+        Mockito.when(userRepository.findByUsername("dpc-user")).thenReturn(user);
+    }
+
+    public Address stubAddress() {
+        Address address = new Address();
+        address.setAddressCode("120202");
+        address.setSubdistrict("บางกรวย");
+        address.setDistrict("บางกรวย");
+        address.setProvince("นนทบุรี");
+        return address;
+    }
+
+    private User stubUser() {
+        return User.fromUsername("dpc-user");
+    }
 
     @Test
     public void testSave() throws Exception {
@@ -79,19 +105,6 @@ public class DbPlaceRepositoryTest {
         assertEquals(updateTime, ThaiDateTimeConverter.convert(cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_TIME))));
 
         cursor.close();
-    }
-
-    public Address stubAddress() {
-        Address address = new Address();
-        address.setAddressCode("120202");
-        address.setSubdistrict("บางกรวย");
-        address.setDistrict("บางกรวย");
-        address.setProvince("นนทบุรี");
-        return address;
-    }
-
-    private User stubUser() {
-        return User.fromUsername("dpc-user");
     }
 
     @Test
@@ -131,12 +144,6 @@ public class DbPlaceRepositoryTest {
     @Test
     public void testFindByUUID() throws Exception {
         Context context = InstrumentationRegistry.getTargetContext();
-        AddressRepository addressRepository = Mockito.mock(AddressRepository.class);
-        Address address = stubAddress();
-        Mockito.when(addressRepository.findBySubdistrictCode("120202")).thenReturn(address);
-        User user = stubUser();
-        UserRepository userRepository = Mockito.mock(UserRepository.class);
-        Mockito.when(userRepository.findByUsername("dpc-user")).thenReturn(user);
         DbPlaceRepository dbPlaceRepository = new DbPlaceRepository(context, addressRepository, userRepository);
 
         Place place = dbPlaceRepository.findByUUID(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"));
@@ -150,12 +157,6 @@ public class DbPlaceRepositoryTest {
     @Test
     public void testFindByPlaceType() throws Exception {
         Context context = InstrumentationRegistry.getTargetContext();
-        AddressRepository addressRepository = Mockito.mock(AddressRepository.class);
-        Address address = stubAddress();
-        Mockito.when(addressRepository.findBySubdistrictCode("120202")).thenReturn(address);
-        User user = stubUser();
-        UserRepository userRepository = Mockito.mock(UserRepository.class);
-        Mockito.when(userRepository.findByUsername("dpc-user")).thenReturn(user);
         DbPlaceRepository dbPlaceRepository = new DbPlaceRepository(context, addressRepository, userRepository);
 
         List<Place> placeList = dbPlaceRepository.findByPlaceType(Place.TYPE_VILLAGE_COMMUNITY);
@@ -171,12 +172,6 @@ public class DbPlaceRepositoryTest {
     @Test
     public void testFindAllPlace() throws Exception {
         Context context = InstrumentationRegistry.getTargetContext();
-        AddressRepository addressRepository = Mockito.mock(AddressRepository.class);
-        Address address = stubAddress();
-        Mockito.when(addressRepository.findBySubdistrictCode("120202")).thenReturn(address);
-        User user = stubUser();
-        UserRepository userRepository = Mockito.mock(UserRepository.class);
-        Mockito.when(userRepository.findByUsername("dpc-user")).thenReturn(user);
         DbPlaceRepository dbPlaceRepository = new DbPlaceRepository(context, addressRepository, userRepository);
 
         List<Place> placeList = dbPlaceRepository.find();

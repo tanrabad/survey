@@ -117,4 +117,4 @@ VALUES
 INSERT INTO
   building (building_id, place_id, name, update_by, update_time)
 VALUES
-  ("00001db8-7207-8a65-152f-ad208cb99b01", "abc01db8-7207-8a65-152f-ad208cb99b5e", "55442", "dpc-user", "2015-12-24T05:05:19.626Z");
+  ("00001db8-7207-8a65-152f-ad208cb99b01", "abc01db8-7207-8a65-152f-ad208cb99b5e", "23/2", "dpc-user", "2015-12-24T05:05:19.626Z");

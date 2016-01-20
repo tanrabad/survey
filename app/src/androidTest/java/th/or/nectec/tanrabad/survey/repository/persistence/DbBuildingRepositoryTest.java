@@ -26,12 +26,16 @@ import org.joda.time.DateTime;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import th.or.nectec.tanrabad.domain.UserRepository;
+import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.utils.time.ThaiDateTimeConverter;
 
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
@@ -45,7 +49,7 @@ public class DbBuildingRepositoryTest {
     @Test
     public void testSave() throws Exception {
         Place place = new Place(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"), "หมู่บ้านทดสอบ");
-        User updateBy = User.fromUsername("dpc-user");
+        User updateBy = stubUser();
         Building building = Building.withName("No. 1/1");
         building.setPlace(place);
         building.setLocation(new Location(10.200000f, 100.100000f));
@@ -74,11 +78,14 @@ public class DbBuildingRepositoryTest {
         cursor.close();
     }
 
+    private User stubUser() {
+        return User.fromUsername("dpc-user");
+    }
 
     @Test
     public void testUpdate() throws Exception {
         Place place = new Place(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"), "หมู่บ้านทดสอบ");
-        User updateBy = User.fromUsername("dpc-user");
+        User updateBy = stubUser();
         Building building = new Building(UUID.fromString("00001db8-7207-8a65-152f-ad208cb99b01"), "2aa");
         building.setPlace(place);
         building.setLocation(new Location(10.200000f, 100.100000f));
@@ -105,5 +112,69 @@ public class DbBuildingRepositoryTest {
         assertEquals(updateBy.getUsername(), cursor.getString(cursor.getColumnIndex(BuildingColumn.UPDATE_BY)));
         assertEquals(updateTime, ThaiDateTimeConverter.convert(cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_TIME))));
         cursor.close();
+    }
+
+    @Test
+    public void testFindByPlaceUUID() throws Exception {
+        Place place = new Place(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"), "หมู่บ้านทดสอบ");
+        PlaceRepository placeRepository = Mockito.mock(PlaceRepository.class);
+        Mockito.when(placeRepository.findByUUID(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"))).thenReturn(place);
+        User user = stubUser();
+        UserRepository userRepository = Mockito.mock(UserRepository.class);
+        Mockito.when(userRepository.findByUsername("dpc-user")).thenReturn(user);
+        Context context = InstrumentationRegistry.getTargetContext();
+        DbBuildingRepository dbBuildingRepository = new DbBuildingRepository(context, userRepository, placeRepository);
+
+        List<Building> buildingList = dbBuildingRepository.findByPlaceUUID(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"));
+        Building building = buildingList.get(0);
+
+        assertEquals(1, buildingList.size());
+        assertEquals("00001db8-7207-8a65-152f-ad208cb99b01", building.getId().toString());
+        assertEquals("23/2", building.getName());
+        assertEquals(place.getId(), building.getPlace().getId());
+        assertEquals("dpc-user", building.getUpdateBy().getUsername());
+        assertEquals("2015-12-24T12:05:19.626+7.00", building.getUpdateTimestamp().toString());
+    }
+
+    @Test
+    public void testFindByPlaceUUIDAndBuildingName() throws Exception {
+        Place place = new Place(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"), "หมู่บ้านทดสอบ");
+        PlaceRepository placeRepository = Mockito.mock(PlaceRepository.class);
+        Mockito.when(placeRepository.findByUUID(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"))).thenReturn(place);
+        User user = stubUser();
+        UserRepository userRepository = Mockito.mock(UserRepository.class);
+        Mockito.when(userRepository.findByUsername("dpc-user")).thenReturn(user);
+        Context context = InstrumentationRegistry.getTargetContext();
+        DbBuildingRepository dbBuildingRepository = new DbBuildingRepository(context, userRepository, placeRepository);
+
+        List<Building> buildingList = dbBuildingRepository.findByPlaceUUIDAndBuildingName(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"), "2");
+        Building building = buildingList.get(0);
+
+        assertEquals(1, buildingList.size());
+        assertEquals("00001db8-7207-8a65-152f-ad208cb99b01", building.getId().toString());
+        assertEquals("23/2", building.getName());
+        assertEquals(place.getId(), building.getPlace().getId());
+        assertEquals("dpc-user", building.getUpdateBy().getUsername());
+        assertEquals("2015-12-24T12:05:19.626+7.00", building.getUpdateTimestamp().toString());
+    }
+
+    @Test
+    public void testFindByBuildingUUID() throws Exception {
+        Place place = new Place(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"), "หมู่บ้านทดสอบ");
+        PlaceRepository placeRepository = Mockito.mock(PlaceRepository.class);
+        Mockito.when(placeRepository.findByUUID(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"))).thenReturn(place);
+        User user = stubUser();
+        UserRepository userRepository = Mockito.mock(UserRepository.class);
+        Mockito.when(userRepository.findByUsername("dpc-user")).thenReturn(user);
+        Context context = InstrumentationRegistry.getTargetContext();
+        DbBuildingRepository dbBuildingRepository = new DbBuildingRepository(context, userRepository, placeRepository);
+
+        Building building = dbBuildingRepository.findByUUID(UUID.fromString("00001db8-7207-8a65-152f-ad208cb99b01"));
+
+        assertEquals("00001db8-7207-8a65-152f-ad208cb99b01", building.getId().toString());
+        assertEquals("23/2", building.getName());
+        assertEquals(place.getId(), building.getPlace().getId());
+        assertEquals("dpc-user", building.getUpdateBy().getUsername());
+        assertEquals("2015-12-24T12:05:19.626+7.00", building.getUpdateTimestamp().toString());
     }
 }

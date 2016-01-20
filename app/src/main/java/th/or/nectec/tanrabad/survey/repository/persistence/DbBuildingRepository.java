@@ -21,7 +21,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.domain.building.BuildingRepository;
+import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.survey.repository.InMemoryPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
@@ -36,10 +38,20 @@ public class DbBuildingRepository implements BuildingRepository {
     public static final String TABLE_NAME = "building";
     public static final int ERROR_INSERT_ID = -1;
     private final Context context;
+    private UserRepository userRepository;
+    private PlaceRepository placeRepository;
 
 
     public DbBuildingRepository(Context context) {
         this.context = context;
+        this.userRepository = new StubUserRepository();
+        this.placeRepository = InMemoryPlaceRepository.getInstance();
+    }
+
+    public DbBuildingRepository(Context context, UserRepository userRepository, PlaceRepository placeRepository) {
+        this.context = context;
+        this.userRepository = userRepository;
+        this.placeRepository = placeRepository;
     }
 
     @Override
@@ -66,11 +78,27 @@ public class DbBuildingRepository implements BuildingRepository {
         return getBuilding(cursor);
     }
 
+    private Building getBuilding(Cursor cursor) {
+        if (cursor.moveToFirst()) {
+            Building building = getMapper(cursor).map(cursor);
+            cursor.close();
+            return building;
+        } else {
+            cursor.close();
+            return null;
+        }
+    }
+
+    private CursorMapper<Building> getMapper(Cursor cursor) {
+        return new BuildingCursorMapper(cursor, userRepository, placeRepository);
+    }
+
     @Override
     public boolean save(Building building) {
         SQLiteDatabase db = new SurveyLiteDatabase(context).getWritableDatabase();
         return db.insert(TABLE_NAME, null, buildingContentValues(building)) != ERROR_INSERT_ID;
     }
+
 
     @Override
     public boolean update(Building building) {
@@ -104,20 +132,7 @@ public class DbBuildingRepository implements BuildingRepository {
         }
     }
 
-    private Building getBuilding(Cursor cursor) {
-        if (cursor.moveToFirst()) {
-            Building building = getMapper(cursor).map(cursor);
-            cursor.close();
-            return building;
-        } else {
-            cursor.close();
-            return null;
-        }
-    }
 
-    private CursorMapper<Building> getMapper(Cursor cursor) {
-        return new BuildingCursorMapper(cursor, new StubUserRepository(), InMemoryPlaceRepository.getInstance());
-    }
 
 
 }

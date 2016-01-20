@@ -66,7 +66,7 @@ public class DbBuildingRepository implements BuildingRepository {
     public List<Building> findByPlaceUUIDAndBuildingName(UUID placeUUID, String buildingName) {
         SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
         Cursor cursor = db.query(TABLE_NAME, BuildingColumn.wildcard(),
-                BuildingColumn.PLACE_ID + "=? AND " + BuildingColumn.NAME + " LIKE '%?%'", new String[]{placeUUID.toString(), buildingName}, null, null, null);
+                BuildingColumn.PLACE_ID + "=? AND " + BuildingColumn.NAME + " LIKE ?", new String[]{placeUUID.toString(), "%" + buildingName + "%"}, null, null, null);
         return new CursorList<>(cursor, getMapper(cursor));
     }
 
@@ -131,8 +131,4 @@ public class DbBuildingRepository implements BuildingRepository {
                 save(building);
         }
     }
-
-
-
-
 }

@@ -140,6 +140,15 @@ dependencies {
     androidTestCompile 'com.android.support.test.espresso:espresso-intents:' + rootProject.ext.espressoVersion
     androidTestCompile 'com.android.support.test:runner:' + rootProject.ext.runnerVersion
     androidTestCompile 'com.android.support.test:rules:' + rootProject.ext.rulesVersion
+    androidTestCompile 'org.mockito:mockito-core:' + rootProject.ext.mockitoVersion
+    def dexmakerVersion = 1.2
+    def dexmakerPackage = dexmakerVersion <= 1.2 ? "com.google.dexmaker" : "com.crittercism.dexmaker";
+    androidTestCompile "${dexmakerPackage}:dexmaker:${dexmakerVersion}"
+    androidTestCompile("${dexmakerPackage}:dexmaker-mockito:${dexmakerVersion}") {
+        exclude module: 'hamcrest-core'
+        exclude module: 'objenesis'
+        exclude module: 'mockito-core'
+    }
 }
 
 configurations.all { resolutionStrategy.force "com.fasterxml.jackson.core:jackson-core:"+ rootProject.ext.jacksonVersion }

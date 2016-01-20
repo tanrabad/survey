@@ -21,6 +21,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import th.or.nectec.tanrabad.domain.UserRepository;
+import th.or.nectec.tanrabad.domain.address.AddressRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.repository.InMemoryAddressRepository;
@@ -36,10 +38,20 @@ public class DbPlaceRepository implements PlaceRepository {
     public static final String TABLE_NAME = "place";
     public static final int ERROR_INSERT_ID = -1;
     private final Context context;
+    private AddressRepository addressRepository;
+    private UserRepository userRepository;
 
 
     public DbPlaceRepository(Context context) {
         this.context = context;
+        this.addressRepository = InMemoryAddressRepository.getInstance();
+        this.userRepository = new StubUserRepository();
+    }
+
+    public DbPlaceRepository(Context context, AddressRepository addressRepository, UserRepository userRepository) {
+        this.context = context;
+        this.addressRepository = addressRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -72,7 +84,10 @@ public class DbPlaceRepository implements PlaceRepository {
     @Override
     public List<Place> findByPlaceType(int placeType) {
         SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
-        Cursor placeCursor = db.query(TABLE_NAME + "INNER JOIN place_subtype using(place_id)", PlaceColumn.wildcard(),
+        String[] placeColumn = new String[]{PlaceColumn.ID, TABLE_NAME + "." + PlaceColumn.NAME, PlaceColumn.SUBTYPE_ID,
+                PlaceColumn.SUBDISTRICT_CODE, PlaceColumn.LATITUDE, PlaceColumn.LONGITUDE,
+                PlaceColumn.UPDATE_BY, PlaceColumn.UPDATE_TIME, PlaceColumn.SYNC_STATUS};
+        Cursor placeCursor = db.query(TABLE_NAME + " INNER JOIN place_subtype using(subtype_id)", placeColumn,
                 PlaceColumn.TYPE_ID + "=?", new String[]{String.valueOf(placeType)}, null, null, null);
         return new CursorList<>(placeCursor, getMapper(placeCursor));
     }
@@ -83,6 +98,10 @@ public class DbPlaceRepository implements PlaceRepository {
         Cursor placeCursor = db.query(TABLE_NAME, PlaceColumn.wildcard(),
                 PlaceColumn.NAME + "=?", new String[]{placeName}, null, null, null);
         return new CursorList<>(placeCursor, getMapper(placeCursor));
+    }
+
+    private CursorMapper<Place> getMapper(Cursor cursor) {
+        return new PlaceCursorMapper(cursor, userRepository, addressRepository);
     }
 
     @Override
@@ -135,9 +154,5 @@ public class DbPlaceRepository implements PlaceRepository {
         values.put(PlaceColumn.UPDATE_TIME, place.getUpdateTimestamp().toString());
         values.put(PlaceColumn.SYNC_STATUS, SyncStatus.NOT_SYNC);
         return values;
-    }
-
-    private CursorMapper<Place> getMapper(Cursor cursor) {
-        return new PlaceCursorMapper(cursor, new StubUserRepository(), InMemoryAddressRepository.getInstance());
     }
 }

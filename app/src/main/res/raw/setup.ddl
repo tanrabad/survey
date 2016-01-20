@@ -112,9 +112,9 @@ VALUES
 INSERT INTO
   place (place_id, subtype_id, name, subdistrict_code, update_by, update_time)
 VALUES
-  ("abc01db8-7207-8a65-152f-ad208cb99b5e", "10", "หมู่บ้านทดสอบ", "120202", "dpc-user", "2016-01-13 12:32:12");
+  ("abc01db8-7207-8a65-152f-ad208cb99b5e", "10", "หมู่บ้านทดสอบ", "120202", "dpc-user", "2015-12-24T05:05:19.626Z");
 
 INSERT INTO
   building (building_id, place_id, name, update_by, update_time)
 VALUES
-  ("00001db8-7207-8a65-152f-ad208cb99b01", "abc01db8-7207-8a65-152f-ad208cb99b5e", "55442", "dpc-user", "2016-01-13 12:32:12");
+  ("00001db8-7207-8a65-152f-ad208cb99b01", "abc01db8-7207-8a65-152f-ad208cb99b5e", "55442", "dpc-user", "2015-12-24T05:05:19.626Z");

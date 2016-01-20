@@ -26,12 +26,16 @@ import org.joda.time.DateTime;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import th.or.nectec.tanrabad.domain.UserRepository;
+import th.or.nectec.tanrabad.domain.address.AddressRepository;
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.entity.utils.Address;
 import th.or.nectec.tanrabad.survey.utils.time.ThaiDateTimeConverter;
 
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
@@ -44,7 +48,7 @@ public class DbPlaceRepositoryTest {
 
     @Test
     public void testSave() throws Exception {
-        User updateBy = User.fromUsername("dpc-user");
+        User updateBy = stubUser();
         DateTime updateTime = DateTime.now();
         Place place = new Place(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5f"), "หมู่บ้านทดสอบ");
         place.setAddress(stubAddress());
@@ -79,16 +83,20 @@ public class DbPlaceRepositoryTest {
 
     public Address stubAddress() {
         Address address = new Address();
-        address.setAddressCode("120105");
-        address.setSubdistrict("ท่าทราย");
-        address.setDistrict("เมืองนนทบุรี");
+        address.setAddressCode("120202");
+        address.setSubdistrict("บางกรวย");
+        address.setDistrict("บางกรวย");
         address.setProvince("นนทบุรี");
         return address;
     }
 
+    private User stubUser() {
+        return User.fromUsername("dpc-user");
+    }
+
     @Test
     public void testUpdate() throws Exception {
-        User updateBy = User.fromUsername("dpc-user");
+        User updateBy = stubUser();
         DateTime updateTime = DateTime.now();
         Place place = new Place(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"), "หมู่บ้านทดสอบ");
         place.setAddress(stubAddress());
@@ -118,5 +126,66 @@ public class DbPlaceRepositoryTest {
         assertEquals(updateBy.getUsername(), cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_BY)));
         assertEquals(updateTime, ThaiDateTimeConverter.convert(cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_TIME))));
         cursor.close();
+    }
+
+    @Test
+    public void testFindByUUID() throws Exception {
+        Context context = InstrumentationRegistry.getTargetContext();
+        AddressRepository addressRepository = Mockito.mock(AddressRepository.class);
+        Address address = stubAddress();
+        Mockito.when(addressRepository.findBySubdistrictCode("120202")).thenReturn(address);
+        User user = stubUser();
+        UserRepository userRepository = Mockito.mock(UserRepository.class);
+        Mockito.when(userRepository.findByUsername("dpc-user")).thenReturn(user);
+        DbPlaceRepository dbPlaceRepository = new DbPlaceRepository(context, addressRepository, userRepository);
+
+        Place place = dbPlaceRepository.findByUUID(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"));
+
+        assertEquals("abc01db8-7207-8a65-152f-ad208cb99b5e", place.getId().toString());
+        assertEquals("หมู่บ้านทดสอบ", place.getName());
+        assertEquals("120202", place.getAddress().getAddressCode());
+        assertEquals("dpc-user", place.getUpdateBy().getUsername());
+    }
+
+    @Test
+    public void testFindByPlaceType() throws Exception {
+        Context context = InstrumentationRegistry.getTargetContext();
+        AddressRepository addressRepository = Mockito.mock(AddressRepository.class);
+        Address address = stubAddress();
+        Mockito.when(addressRepository.findBySubdistrictCode("120202")).thenReturn(address);
+        User user = stubUser();
+        UserRepository userRepository = Mockito.mock(UserRepository.class);
+        Mockito.when(userRepository.findByUsername("dpc-user")).thenReturn(user);
+        DbPlaceRepository dbPlaceRepository = new DbPlaceRepository(context, addressRepository, userRepository);
+
+        List<Place> placeList = dbPlaceRepository.findByPlaceType(Place.TYPE_VILLAGE_COMMUNITY);
+        Place place = placeList.get(0);
+
+        assertEquals(1, placeList.size());
+        assertEquals("abc01db8-7207-8a65-152f-ad208cb99b5e", place.getId().toString());
+        assertEquals("หมู่บ้านทดสอบ", place.getName());
+        assertEquals("120202", place.getAddress().getAddressCode());
+        assertEquals("dpc-user", place.getUpdateBy().getUsername());
+    }
+
+    @Test
+    public void testFindAllPlace() throws Exception {
+        Context context = InstrumentationRegistry.getTargetContext();
+        AddressRepository addressRepository = Mockito.mock(AddressRepository.class);
+        Address address = stubAddress();
+        Mockito.when(addressRepository.findBySubdistrictCode("120202")).thenReturn(address);
+        User user = stubUser();
+        UserRepository userRepository = Mockito.mock(UserRepository.class);
+        Mockito.when(userRepository.findByUsername("dpc-user")).thenReturn(user);
+        DbPlaceRepository dbPlaceRepository = new DbPlaceRepository(context, addressRepository, userRepository);
+
+        List<Place> placeList = dbPlaceRepository.find();
+        Place place = placeList.get(0);
+
+        assertEquals(1, placeList.size());
+        assertEquals("abc01db8-7207-8a65-152f-ad208cb99b5e", place.getId().toString());
+        assertEquals("หมู่บ้านทดสอบ", place.getName());
+        assertEquals("120202", place.getAddress().getAddressCode());
+        assertEquals("dpc-user", place.getUpdateBy().getUsername());
     }
 }

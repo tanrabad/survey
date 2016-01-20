@@ -32,7 +32,7 @@ import java.util.List;
 
 public class BuildingRestService extends BaseRestService<Building> {
 
-    public static final String PATH = "/building?geostd=4326";
+    public static final String PATH = "/building?geostd=4326&hr_code=dpc-04";
     private PlaceRepository placeRepository;
     private UserRepository userRepository;
 
@@ -44,6 +44,11 @@ public class BuildingRestService extends BaseRestService<Building> {
         super(apiBaseUrl, lastUpdate);
         this.placeRepository = placeRepository;
         this.userRepository = userRepository;
+    }
+
+    @Override
+    protected String getPath() {
+        return PATH;
     }
 
     @Override
@@ -59,10 +64,5 @@ public class BuildingRestService extends BaseRestService<Building> {
 
         }
         return buildings;
-    }
-
-    @Override
-    protected String getPath() {
-        return PATH;
     }
 }

@@ -28,7 +28,7 @@ import java.util.List;
 
 public class ProvinceRestService extends BaseRestService<Province> {
 
-    public static final String PATH = "/province?geostd=4326";
+    public static final String PATH = "/province?geostd=4326&hr_code=dpc-04";
 
     public ProvinceRestService() {
         this(BASE_API, new LastUpdatePreference(TanrabadApp.getInstance(), PATH ));
@@ -36,6 +36,11 @@ public class ProvinceRestService extends BaseRestService<Province> {
 
     public ProvinceRestService(String apiBaseUrl, LastUpdate lastUpdate) {
         super(apiBaseUrl, lastUpdate);
+    }
+
+    @Override
+    protected String getPath() {
+        return PATH;
     }
 
     @Override
@@ -50,10 +55,5 @@ public class ProvinceRestService extends BaseRestService<Province> {
             e.printStackTrace();
         }
         return provinceList;
-    }
-
-    @Override
-    protected String getPath() {
-        return PATH;
     }
 }

@@ -30,7 +30,7 @@ import java.util.List;
 
 public class PlaceRestService extends BaseRestService<Place> {
 
-    public static final String PATH = "/place?geostd=4326";
+    public static final String PATH = "/place?geostd=4326&hr_code=dpc-04";
     private UserRepository userRepository;
 
     public PlaceRestService() {
@@ -40,6 +40,11 @@ public class PlaceRestService extends BaseRestService<Place> {
     public PlaceRestService(String apiBaseUrl, LastUpdate lastUpdate, UserRepository userRepository) {
         super(apiBaseUrl, lastUpdate);
         this.userRepository = userRepository;
+    }
+
+    @Override
+    protected String getPath() {
+        return PATH;
     }
 
     @Override
@@ -54,10 +59,5 @@ public class PlaceRestService extends BaseRestService<Place> {
             e.printStackTrace();
         }
         return places;
-    }
-
-    @Override
-    protected String getPath() {
-        return PATH;
     }
 }

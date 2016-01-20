@@ -28,7 +28,7 @@ import java.util.List;
 
 public class TambonRestService extends BaseRestService<Subdistrict> {
 
-    public static final String PATH = "/tambon?geostd=4326";
+    public static final String PATH = "/tambon?geostd=4326&hr_code=dpc-04";
 
     public TambonRestService() {
         this(BASE_API, new LastUpdatePreference(TanrabadApp.getInstance(), PATH));
@@ -36,6 +36,10 @@ public class TambonRestService extends BaseRestService<Subdistrict> {
 
     public TambonRestService(String apiBaseUrl, LastUpdate lastUpdate) {
         super(apiBaseUrl, lastUpdate);
+    }
+
+    protected String getPath() {
+        return PATH;
     }
 
     protected List<Subdistrict> jsonToEntityList(String responseBody) {
@@ -49,9 +53,5 @@ public class TambonRestService extends BaseRestService<Subdistrict> {
             e.printStackTrace();
         }
         return subdistrictList;
-    }
-
-    protected String getPath() {
-        return PATH;
     }
 }

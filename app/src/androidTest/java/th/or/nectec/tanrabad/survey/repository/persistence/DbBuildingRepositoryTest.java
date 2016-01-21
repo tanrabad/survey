@@ -144,7 +144,7 @@ public class DbBuildingRepositoryTest {
         assertEquals("00001db8-7207-8a65-152f-ad208cb99b01", building.getId().toString());
         assertEquals("23/2", building.getName());
         assertEquals(place.getId(), building.getPlace().getId());
-        assertEquals("dpc-user", building.getUpdateBy().getUsername());
+        assertEquals("dpc-user", building.getUpdateBy());
         assertEquals("2015-12-24T12:05:19.626+07:00", building.getUpdateTimestamp().toString());
     }
 
@@ -161,7 +161,7 @@ public class DbBuildingRepositoryTest {
         assertEquals("00001db8-7207-8a65-152f-ad208cb99b01", building.getId().toString());
         assertEquals("23/2", building.getName());
         assertEquals(place.getId(), building.getPlace().getId());
-        assertEquals("dpc-user", building.getUpdateBy().getUsername());
+        assertEquals("dpc-user", building.getUpdateBy());
         assertEquals("2015-12-24T12:05:19.626+07:00", building.getUpdateTimestamp().toString());
     }
 
@@ -176,7 +176,7 @@ public class DbBuildingRepositoryTest {
         assertEquals("00001db8-7207-8a65-152f-ad208cb99b01", building.getId().toString());
         assertEquals("23/2", building.getName());
         assertEquals(place.getId(), building.getPlace().getId());
-        assertEquals("dpc-user", building.getUpdateBy().getUsername());
+        assertEquals("dpc-user", building.getUpdateBy());
         assertEquals("2015-12-24T12:05:19.626+07:00", building.getUpdateTimestamp().toString());
     }
 }

@@ -26,7 +26,7 @@ public class Building extends Entity implements LocationEntity {
     private UUID placeId;
     private Place place;
     private Location location;
-    private User updateBy;
+    private String updateBy;
 
     public Building(UUID id, String name) {
         this.id = id;
@@ -72,11 +72,15 @@ public class Building extends Entity implements LocationEntity {
         return id;
     }
 
-    public User getUpdateBy() {
+    public String getUpdateBy() {
         return updateBy;
     }
 
     public void setUpdateBy(User updateBy) {
+        this.updateBy = updateBy.getUsername();
+    }
+
+    public void setUpdateBy(String updateBy) {
         this.updateBy = updateBy;
     }
 

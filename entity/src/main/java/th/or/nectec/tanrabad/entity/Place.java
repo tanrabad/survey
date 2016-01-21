@@ -37,7 +37,7 @@ public class Place extends Entity implements LocationEntity {
     private int subType;
     private Location location;
     private Address address;
-    private User updateBy;
+    private String updateBy;
 
     public Place(UUID id, String name) {
         this.id = id;
@@ -94,11 +94,15 @@ public class Place extends Entity implements LocationEntity {
         this.address = address;
     }
 
-    public User getUpdateBy() {
+    public String getUpdateBy() {
         return updateBy;
     }
 
     public void setUpdateBy(User updateBy) {
+        this.updateBy = updateBy.getUsername();
+    }
+
+    public void setUpdateBy(String updateBy) {
         this.updateBy = updateBy;
     }
 

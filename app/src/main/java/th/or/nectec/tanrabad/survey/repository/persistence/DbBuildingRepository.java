@@ -116,7 +116,7 @@ public class DbBuildingRepository implements BuildingRepository {
             values.put(BuildingColumn.LONGITUDE, building.getLocation().getLongitude());
         }
         if(building.getUpdateBy() != null) {
-            values.put(BuildingColumn.UPDATE_BY, building.getUpdateBy().getUsername());
+            values.put(BuildingColumn.UPDATE_BY, building.getUpdateBy());
         }
         values.put(BuildingColumn.UPDATE_TIME, building.getUpdateTimestamp().toString());
         values.put(BuildingColumn.SYNC_STATUS, SyncStatus.NOT_SYNC);

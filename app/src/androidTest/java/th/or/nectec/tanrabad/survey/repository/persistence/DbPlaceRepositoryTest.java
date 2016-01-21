@@ -151,7 +151,7 @@ public class DbPlaceRepositoryTest {
         assertEquals("abc01db8-7207-8a65-152f-ad208cb99b5e", place.getId().toString());
         assertEquals("หมู่บ้านทดสอบ", place.getName());
         assertEquals("120202", place.getAddress().getAddressCode());
-        assertEquals("dpc-user", place.getUpdateBy().getUsername());
+        assertEquals("dpc-user", place.getUpdateBy());
     }
 
     @Test
@@ -166,7 +166,7 @@ public class DbPlaceRepositoryTest {
         assertEquals("abc01db8-7207-8a65-152f-ad208cb99b5e", place.getId().toString());
         assertEquals("หมู่บ้านทดสอบ", place.getName());
         assertEquals("120202", place.getAddress().getAddressCode());
-        assertEquals("dpc-user", place.getUpdateBy().getUsername());
+        assertEquals("dpc-user", place.getUpdateBy());
     }
 
     @Test
@@ -181,6 +181,6 @@ public class DbPlaceRepositoryTest {
         assertEquals("abc01db8-7207-8a65-152f-ad208cb99b5e", place.getId().toString());
         assertEquals("หมู่บ้านทดสอบ", place.getName());
         assertEquals("120202", place.getAddress().getAddressCode());
-        assertEquals("dpc-user", place.getUpdateBy().getUsername());
+        assertEquals("dpc-user", place.getUpdateBy());
     }
 }

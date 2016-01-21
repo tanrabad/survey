@@ -149,7 +149,7 @@ public class DbPlaceRepository implements PlaceRepository {
             values.put(PlaceColumn.LONGITUDE, place.getLocation().getLongitude());
         }
         if(place.getUpdateBy() != null) {
-            values.put(PlaceColumn.UPDATE_BY, place.getUpdateBy().getUsername());
+            values.put(PlaceColumn.UPDATE_BY, place.getUpdateBy());
         }
         values.put(PlaceColumn.UPDATE_TIME, place.getUpdateTimestamp().toString());
         values.put(PlaceColumn.SYNC_STATUS, SyncStatus.NOT_SYNC);

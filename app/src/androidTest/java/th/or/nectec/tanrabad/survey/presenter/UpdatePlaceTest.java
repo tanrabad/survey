@@ -69,7 +69,7 @@ public class UpdatePlaceTest extends TanrabadEspressoTestBase {
                 .perform(replaceText("อนุบาลชมพู"));
         onView(withId(R.id.address_select))
                 .perform(click());
-        onView(withText("คลองห้า"))
+        onView(withText("บางสีทอง"))
                 .perform(click());
         onView(withText("โรงพยาบาล"))
                 .perform(click());

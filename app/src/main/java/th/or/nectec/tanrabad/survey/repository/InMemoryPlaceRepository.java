@@ -55,10 +55,10 @@ public class InMemoryPlaceRepository implements PlaceRepository, LocationReposit
         bangkokHospital.setType(Place.TYPE_HOSPITAL);
         thammasatHospital = new Place(generateUUID("32UAW"), "ธรรมศาสตร์");
         Address address = new Address();
-        address.setAddressCode("130202");
-        address.setSubdistrict("คลองสอง");
-        address.setDistrict("คลองหลวง");
-        address.setProvince("ปทุมธานี");
+        address.setAddressCode("120202");
+        address.setSubdistrict("บางกรวย");
+        address.setDistrict("บางกรวย");
+        address.setProvince("นนทบุรี");
         thammasatHospital.setAddress(address);
         thammasatHospital.setType(Place.TYPE_HOSPITAL);
         watpaphukon = new Place(generateUUID("3def"), "วัดป่าภูก้อน");

@@ -66,11 +66,11 @@ public class PlaceFormActivityDoSaveDataTest extends TanrabadEspressoTestBase {
                 .perform(click());
         onView(withText("ภาคกลาง"))
                 .perform(click());
-        onView(withText("ปทุมธานี"))
+        onView(withText("นนทบุรี"))
                 .perform(click());
-        onView(withText("คลองหลวง"))
+        onView(withText("บางกรวย"))
                 .perform(click());
-        onView(withText("คลองสอง"))
+        onView(withText("บางกรวย"))
                 .perform(click());
         onView(withId(R.id.add_marker))
                 .perform(click());
@@ -100,13 +100,13 @@ public class PlaceFormActivityDoSaveDataTest extends TanrabadEspressoTestBase {
 
         onView(withId(R.id.address_select))
                 .perform(click());
-        onView(withText("ภาคตะวันออก"))
+        onView(withText("ภาคกลาง"))
                 .perform(click());
-        onView(withText("ชลบุรี"))
+        onView(withText("นนทบุรี"))
                 .perform(click());
-        onView(withText("บ้านบึง"))
+        onView(withText("ปากเกร็ด"))
                 .perform(click());
-        onView(withText("บ้านบึง"))
+        onView(withText("ปากเกร็ด"))
                 .perform(click());
 
         onView(withId(R.id.save))

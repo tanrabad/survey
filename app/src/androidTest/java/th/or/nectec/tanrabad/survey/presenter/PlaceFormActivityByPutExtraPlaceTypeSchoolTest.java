@@ -118,11 +118,11 @@ public class PlaceFormActivityByPutExtraPlaceTypeSchoolTest extends TanrabadEspr
                 .perform(click());
         onView(withText("ภาคกลาง"))
                 .perform(click());
-        onView(withText("ปทุมธานี"))
+        onView(withText("นนทบุรี"))
                 .perform(click());
-        onView(withText("คลองหลวง"))
+        onView(withText("บางกรวย"))
                 .perform(click());
-        onView(withText("คลองสอง"))
+        onView(withText("บางกรวย"))
                 .perform(click());
         onView(withText("โรงเรียน"))
                 .perform(click());

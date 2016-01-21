@@ -44,66 +44,21 @@ public class BuildingRestServiceTest extends WireMockTestBase {
 
     protected static final DateTimeFormatter RFC1123_FORMATTER =
             DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss 'GMT'");
-    UserRepository userRepository = Mockito.mock(UserRepository.class);
-    PlaceRepository placeRepository = Mockito.mock(PlaceRepository.class);
-    LastUpdate lastUpdate = Mockito.mock(LastUpdate.class);
+    private UserRepository userRepository = Mockito.mock(UserRepository.class);
+    private PlaceRepository placeRepository = Mockito.mock(PlaceRepository.class);
+    private LastUpdate lastUpdate = Mockito.mock(LastUpdate.class);
+    private BuildingRestService restService;
 
     @Before
     public void setUp() throws Exception {
         Mockito.when(lastUpdate.get()).thenReturn(DateTime.now());
-    }
-
-    @Test(expected = RestServiceException.class)
-    public void test404Response() throws Exception {
-        stubFor(get(urlEqualTo(BuildingRestService.PATH))
-                .willReturn(aResponse()
-                        .withStatus(404)
-                        .withBody("")));
-
-        BuildingRestService restService = new BuildingRestService(
-                localHost(),
-                lastUpdate,
-                placeRepository, userRepository);
-        restService.getUpdate();
-    }
-
-    @Test
-    public void testNotModifiedResponse() throws Exception {
-        stubFor(get(urlEqualTo(BuildingRestService.PATH))
-                .willReturn(aResponse()
-                        .withStatus(304)
-                        .withBody("[]")));
-
-        BuildingRestService restService = new BuildingRestService(
-                localHost(),
-                lastUpdate,
-                placeRepository, userRepository);
-        List<Building> buildings = restService.getUpdate();
-        assertEquals(0, buildings.size());
-    }
-
-    @Test
-    public void testSuccessResponse() throws Exception {
         Mockito.when(userRepository.findByUsername("dcp-user")).thenReturn(stubUser());
         Mockito.when(placeRepository.findByUUID(uuid("b5f7b062-12f5-3402-ac88-0343733503bd"))).thenReturn(stubPlace());
-        stubFor(get(urlEqualTo(BuildingRestService.PATH))
-                .willReturn(aResponse()
-                        .withStatus(200)
-                        .withHeader(Header.LAST_MODIFIED, "Mon, 30 Nov 2015 17:00:00 GMT")
-                        .withBody(ResourceFile.read("buildingList.json"))));
-        BuildingRestService restService = new BuildingRestService(
+
+        restService = new BuildingRestService(
                 localHost(),
                 lastUpdate,
                 placeRepository, userRepository);
-
-        List<Building> buildingList = restService.getUpdate();
-        Building building = buildingList.get(0);
-
-        assertEquals(1, buildingList.size());
-        assertEquals(uuid("b7a9d934-04fc-a22e-0539-6c17504f732e"), building.getId());
-        assertEquals("อาคาร 1", building.getName());
-        assertEquals(null, building.getLocation());
-        Mockito.verify(lastUpdate).save(RFC1123_FORMATTER.parseDateTime("Mon, 30 Nov 2015 17:00:00 GMT"));
     }
 
     private UUID uuid(String uuid) {
@@ -121,19 +76,53 @@ public class BuildingRestServiceTest extends WireMockTestBase {
         return place;
     }
 
+    @Test(expected = RestServiceException.class)
+    public void test404Response() throws Exception {
+        stubFor(get(urlEqualTo(BuildingRestService.PATH))
+                .willReturn(aResponse()
+                        .withStatus(404)
+                        .withBody("")));
+
+        restService.getUpdate();
+    }
+
+    @Test
+    public void testNotModifiedResponse() throws Exception {
+        stubFor(get(urlEqualTo(BuildingRestService.PATH))
+                .willReturn(aResponse()
+                        .withStatus(304)
+                        .withBody("[]")));
+
+        List<Building> buildings = restService.getUpdate();
+
+        assertEquals(0, buildings.size());
+    }
+
+    @Test
+    public void testSuccessResponse() throws Exception {
+        stubFor(get(urlEqualTo(BuildingRestService.PATH))
+                .willReturn(aResponse()
+                        .withStatus(200)
+                        .withHeader(Header.LAST_MODIFIED, "Mon, 30 Nov 2015 17:00:00 GMT")
+                        .withBody(ResourceFile.read("buildingList.json"))));
+
+        List<Building> buildingList = restService.getUpdate();
+
+        Building building = buildingList.get(0);
+        assertEquals(1, buildingList.size());
+        assertEquals(uuid("b7a9d934-04fc-a22e-0539-6c17504f732e"), building.getId());
+        assertEquals("อาคาร 1", building.getName());
+        assertEquals(null, building.getLocation());
+        Mockito.verify(lastUpdate).save(RFC1123_FORMATTER.parseDateTime("Mon, 30 Nov 2015 17:00:00 GMT"));
+    }
+
     @Test
     public void testSuccessResponseMultipleItem() throws Exception {
-        Mockito.when(userRepository.findByUsername("dcp-user")).thenReturn(stubUser());
-        Mockito.when(placeRepository.findByUUID(uuid("b5f7b062-12f5-3402-ac88-0343733503bd"))).thenReturn(stubPlace());
         stubFor(get(urlEqualTo(BuildingRestService.PATH))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader(Header.LAST_MODIFIED, "Mon, 30 Nov 2015 17:00:00 GMT")
                         .withBody(ResourceFile.read("buildingList10Item.json"))));
-        BuildingRestService restService = new BuildingRestService(
-                localHost(),
-                lastUpdate,
-                placeRepository, userRepository);
 
         List<Building> buildingList = restService.getUpdate();
 
@@ -153,4 +142,17 @@ public class BuildingRestServiceTest extends WireMockTestBase {
         Mockito.verify(lastUpdate).save(RFC1123_FORMATTER.parseDateTime("Mon, 30 Nov 2015 17:00:00 GMT"));
     }
 
+    @Test
+    public void testWithoutIfModifiedSinceHeader() throws Exception {
+        Mockito.when(lastUpdate.get()).thenReturn(null);
+        stubFor(get(urlEqualTo(BuildingRestService.PATH))
+                .willReturn(aResponse()
+                        .withStatus(200)
+                        .withHeader(Header.LAST_MODIFIED, "Mon, 30 Nov 2015 17:00:00 GMT")
+                        .withBody(ResourceFile.read("buildingList10Item.json"))));
+
+        restService.getUpdate();
+
+        verify(getRequestedFor(urlEqualTo(BuildingRestService.PATH)).withoutHeader(Header.IF_MODIFIED_SINCE));
+    }
 }

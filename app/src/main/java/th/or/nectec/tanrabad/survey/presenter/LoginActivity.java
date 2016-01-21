@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,7 +20,6 @@ package th.or.nectec.tanrabad.survey.presenter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import th.or.nectec.tanrabad.survey.R;
 
 public class LoginActivity extends TanrabadActivity {
@@ -34,19 +33,19 @@ public class LoginActivity extends TanrabadActivity {
         findViewById(R.id.authentication_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openMainActivity();
+                openInitialActivity();
                 finish();
             }
         });
     }
 
-    private void openMainActivity() {
-        Intent intent = new Intent(this, MainActivity.class);
+    private void openInitialActivity() {
+        Intent intent = new Intent(this, InitialActivity.class);
         startActivity(intent);
     }
 
-    private void openInitialActivity() {
-        Intent intent = new Intent(this, InitialActivity.class);
+    private void openMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 

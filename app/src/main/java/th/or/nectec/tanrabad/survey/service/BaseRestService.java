@@ -95,15 +95,17 @@ public abstract class BaseRestService<T> implements RestService<T> {
     }
 
     protected final Request makeRequest() {
-        return new Request.Builder()
+        Request.Builder requestBuilder = new Request.Builder()
                 .get()
-                .url(baseApi + getPath() + nextUrl)
-                .header(Header.IF_MODIFIED_SINCE, getLastUpdate())
-                .build();
+                .url(baseApi + getPath() + nextUrl);
+        headerIfModifiedSince(requestBuilder);
+        return requestBuilder.build();
     }
 
-    protected String getLastUpdate() {
-        return RFC1123_FORMATTER.print(lastUpdate.get());
+    private void headerIfModifiedSince(Request.Builder requestBuilder) {
+        DateTime lastUpdate = this.lastUpdate.get();
+        if (lastUpdate != null)
+            requestBuilder.addHeader(Header.IF_MODIFIED_SINCE, RFC1123_FORMATTER.print(lastUpdate));
     }
 
     protected abstract String getPath();

@@ -26,8 +26,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 public class LastUpdatePreference implements LastUpdate {
 
-    public static final String PREF_NAME = "Last-Update";
-    public static final String DEFAULT_DATETIME = "Tue, 01 Dec 2014 17:00:00 GMT";
+    public static final String PREF_NAME = "api-last-update";
     private static final DateTimeFormatter RFC1123_FORMATTER =
             DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss 'GMT'");
     private final Context context;
@@ -51,8 +50,9 @@ public class LastUpdatePreference implements LastUpdate {
 
     @Override
     public DateTime get() {
-        String text = getSharedPreferences().getString(path, DEFAULT_DATETIME);
-        return RFC1123_FORMATTER.parseDateTime(text);
+        String text = getSharedPreferences().getString(path, null);
+        return text != null ? RFC1123_FORMATTER.parseDateTime(text) : null;
+
     }
 
 }

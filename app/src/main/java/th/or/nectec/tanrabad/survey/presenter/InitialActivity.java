@@ -55,6 +55,7 @@ public class InitialActivity extends TanrabadActivity {
                 .addJob(provinceUpdateJob)
                 .addJob(districtUpdateJob)
                 .addJob(subDistrictUpdateJob)
+                .addJob(new PlaceTypeUpdateJob(this))
                 .addJob(placeUpdateJob)
                 .addJob(buildingUpdateJob)
                 .addJob(new ContainerTypeUpdateJob(InMemoryContainerTypeRepository.getInstance()))
@@ -68,6 +69,9 @@ public class InitialActivity extends TanrabadActivity {
                 break;
             case ContainerTypeUpdateJob.ID:
                 loadingText.setText("ดึงประเภทภาชนะมา");
+                break;
+            case PlaceTypeUpdateJob.ID:
+                loadingText.setText("ดึงประเภทอาคารมา");
                 break;
             case CreateDatabaseJob.ID:
                 loadingText.setText("กำลังสร้างฐานข้อมูลชั่วคราว");

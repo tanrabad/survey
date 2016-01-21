@@ -66,15 +66,17 @@ public class InMemoryContainerTypeRepository implements ContainerTypeRepository 
         }
     }
 
-    private void save(ContainerType containerType) {
+    public boolean save(ContainerType containerType) {
         containerTypes.add(containerType);
+        return true;
     }
 
-    private void update(ContainerType containerType) {
+    public boolean update(ContainerType containerType) {
         if (!containerTypes.contains(containerType)) {
             throw new ContainerTypeRepositoryException();
         } else {
             containerTypes.set(containerTypes.indexOf(containerType), containerType);
         }
+        return true;
     }
 }

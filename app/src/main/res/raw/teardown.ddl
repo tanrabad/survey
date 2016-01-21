@@ -1,3 +1,5 @@
+DELETE FROM container_type;
+DELETE FROM container_location;
 DELETE FROM building;
 DELETE FROM place;
 DELETE FROM place_subtype;

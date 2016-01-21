@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,16 +15,14 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.domain.survey;
+package th.or.nectec.tanrabad.survey.repository.persistence;
 
-import th.or.nectec.tanrabad.domain.WritableRepository;
-import th.or.nectec.tanrabad.entity.ContainerType;
+public class ContainerTypeColumn {
 
-import java.util.List;
+    public static final String ID = "container_type_id";
+    public static final String NAME = "name";
 
-public interface ContainerTypeRepository extends WritableRepository<ContainerType> {
-
-    List<ContainerType> find();
-
-    void updateOrInsert(List<ContainerType> updateList);
+    public static String[] wildcard() {
+        return new String[]{ID, NAME};
+    }
 }

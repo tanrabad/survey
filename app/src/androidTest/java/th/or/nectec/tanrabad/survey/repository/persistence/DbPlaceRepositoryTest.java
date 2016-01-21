@@ -162,7 +162,7 @@ public class DbPlaceRepositoryTest {
         List<Place> placeList = dbPlaceRepository.findByPlaceType(Place.TYPE_VILLAGE_COMMUNITY);
         Place place = placeList.get(0);
 
-        assertEquals(1, placeList.size());
+        assertEquals(3, placeList.size());
         assertEquals("abc01db8-7207-8a65-152f-ad208cb99b5e", place.getId().toString());
         assertEquals("หมู่บ้านทดสอบ", place.getName());
         assertEquals("120202", place.getAddress().getAddressCode());
@@ -177,7 +177,7 @@ public class DbPlaceRepositoryTest {
         List<Place> placeList = dbPlaceRepository.find();
         Place place = placeList.get(0);
 
-        assertEquals(1, placeList.size());
+        assertEquals(10, placeList.size());
         assertEquals("abc01db8-7207-8a65-152f-ad208cb99b5e", place.getId().toString());
         assertEquals("หมู่บ้านทดสอบ", place.getName());
         assertEquals("120202", place.getAddress().getAddressCode());

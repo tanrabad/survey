@@ -24,6 +24,7 @@ import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Location;
+import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.utils.time.ThaiDateTimeConverter;
 
 import java.util.UUID;
@@ -46,8 +47,8 @@ public class JsonBuilding {
     @JsonField
     public GeoJsonPoint location;
 
-    @JsonField(name = "update_by")
-    public String updateBy;
+    @JsonField(name = "updated_by")
+    public String updatedBy;
 
     @JsonField(name = "update_timestamp")
     public String updateTime;
@@ -59,7 +60,7 @@ public class JsonBuilding {
         jsonBuilding.buildingName = building.getName();
         jsonBuilding.placeTypeID = building.getPlace().getType();
         jsonBuilding.location = GeoJsonPoint.parse(building.getLocation());
-        jsonBuilding.updateBy = building.getUpdateBy().getUsername();
+        jsonBuilding.updatedBy = building.getUpdateBy().getUsername();
         jsonBuilding.updateTime = building.getUpdateTimestamp().withZone(DateTimeZone.UTC).toString();
         return jsonBuilding;
     }
@@ -69,7 +70,7 @@ public class JsonBuilding {
         building.setPlace(placeRepository.findByUUID(placeID));
         Location location = this.location==null ? null : this.location.getEntity();
         building.setLocation(location);
-        building.setUpdateBy(userRepository.findByUsername(updateBy));
+        building.setUpdateBy(new User(updatedBy));
         building.setUpdateTimestamp(ThaiDateTimeConverter.convert(updateTime).toString());
         return building;
     }

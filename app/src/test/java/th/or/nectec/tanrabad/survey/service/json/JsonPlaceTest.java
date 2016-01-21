@@ -43,7 +43,7 @@ public class JsonPlaceTest {
             "  \"place_name\": \"รพ.สต.ตำบลนาทราย\"," +
             "  \"tambon_code\": \"510403\"," +
             "  \"location\":{ \"type\": \"Point\", \"coordinates\": [-73.150055, 39.745675]}," +
-            "  \"update_by\":\"dcp-user\"," +
+            "  \"updated_by\":\"dcp-user\"," +
             "  \"update_timestamp\": \"2015-12-24T05:05:19.626Z\"}";
 
     private static final String rawPlaceStringWithNullSubtype = "{" +
@@ -53,7 +53,7 @@ public class JsonPlaceTest {
             "  \"place_name\": \"รพ.สต.ตำบลนาทราย\"," +
             "  \"tambon_code\": \"510403\"," +
             "  \"location\":{ \"type\": \"Point\", \"coordinates\": [-73.150055, 39.745675]}," +
-            "  \"update_by\":\"dcp-user\"," +
+            "  \"updated_by\":\"dcp-user\"," +
             "  \"update_timestamp\": \"2015-12-24T05:05:19.626Z\"}";
 
     private Gson gson = new Gson();
@@ -69,7 +69,7 @@ public class JsonPlaceTest {
         assertEquals("510403", jsonPlace.tambonCode);
         assertEquals(39.745675, jsonPlace.location.getLatitude(), 0);
         assertEquals(-73.150055, jsonPlace.location.getLongitude(), 0);
-        assertEquals("dcp-user", jsonPlace.updateBy);
+        assertEquals("dcp-user", jsonPlace.updatedBy);
     }
 
     @Test
@@ -92,7 +92,7 @@ public class JsonPlaceTest {
         assertEquals(stubAddress().getAddressCode(), jsonPlace.tambonCode);
         assertEquals(stubLocation().getLatitude(), jsonPlace.location.getLatitude(), 0);
         assertEquals(stubLocation().getLongitude(), jsonPlace.location.getLongitude(), 0);
-        assertEquals(stubUser().getUsername(), jsonPlace.updateBy);
+        assertEquals(stubUser().getUsername(), jsonPlace.updatedBy);
         assertEquals(updateTime.withZone(DateTimeZone.UTC).toString(), jsonPlace.updateTime);
     }
 

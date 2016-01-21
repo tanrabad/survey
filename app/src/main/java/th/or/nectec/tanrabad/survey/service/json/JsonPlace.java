@@ -65,8 +65,8 @@ public class JsonPlace {
     @JsonField
     public GeoJsonPoint location;
 
-    @JsonField(name = "update_by")
-    public String updateBy;
+    @JsonField(name = "updated_by")
+    public String updatedBy;
 
     @JsonField(name = "update_timestamp")
     public String updateTime;
@@ -80,7 +80,7 @@ public class JsonPlace {
         jsonPlace.placeSubtypeID = place.getSubType();
         jsonPlace.location = GeoJsonPoint.parse(place.getLocation());
         jsonPlace.tambonCode = place.getAddress().getAddressCode();
-        jsonPlace.updateBy = place.getUpdateBy().getUsername();
+        jsonPlace.updatedBy = place.getUpdateBy().getUsername();
         jsonPlace.updateTime = place.getUpdateTimestamp().withZone(DateTimeZone.UTC).toString();
         return jsonPlace;
     }
@@ -93,7 +93,7 @@ public class JsonPlace {
         place.setAddress(getAddress());
         Location location = this.location == null ? null : this.location.getEntity();
         place.setLocation(location);
-        place.setUpdateBy(userRepository.findByUsername(updateBy));
+        place.setUpdateBy(userRepository.findByUsername(updatedBy));
         place.setUpdateTimestamp(ThaiDateTimeConverter.convert(updateTime).toString());
         return place;
     }

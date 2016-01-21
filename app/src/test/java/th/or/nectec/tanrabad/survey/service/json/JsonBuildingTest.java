@@ -40,7 +40,7 @@ public class JsonBuildingTest {
             "\"place_type_id\":4," +
             "\"name\":\"อาคาร 1\"," +
             "\"location\":{ \"type\": \"Point\", \"coordinates\": [-73.15005, 39.745673]}," +
-            "\"update_by\":\"dcp-user\"," +
+            "\"updated_by\":\"dcp-user\"," +
             "\"update_timestamp\": \"2015-12-24T05:05:19.626Z\"}";
 
     @Test
@@ -53,7 +53,7 @@ public class JsonBuildingTest {
         assertEquals("อาคาร 1", jsonBuilding.buildingName);
         assertEquals(39.745673, jsonBuilding.location.getLatitude(), 0);
         assertEquals(-73.15005, jsonBuilding.location.getLongitude(), 0);
-        assertEquals(jsonBuilding.updateBy, jsonBuilding.updateBy);
+        assertEquals(jsonBuilding.updatedBy, jsonBuilding.updatedBy);
     }
 
     @Test
@@ -72,7 +72,7 @@ public class JsonBuildingTest {
         assertEquals("อาคาร 2", jsonBuilding.buildingName);
         assertEquals(39.745673, jsonBuilding.location.getLatitude(), 0);
         assertEquals(-73.15005, jsonBuilding.location.getLongitude(), 0);
-        assertEquals(jsonBuilding.updateBy, stubUser().getUsername());
+        assertEquals(jsonBuilding.updatedBy, stubUser().getUsername());
         assertEquals("2015-11-30T17:00:00.000Z", jsonBuilding.updateTime);
     }
 

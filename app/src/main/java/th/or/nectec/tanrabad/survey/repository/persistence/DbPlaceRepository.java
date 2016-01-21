@@ -72,9 +72,9 @@ public class DbPlaceRepository implements PlaceRepository {
 
     private Place getPlace(Cursor cursor) {
         if (cursor.moveToFirst()) {
-            Place building = getMapper(cursor).map(cursor);
+            Place place = getMapper(cursor).map(cursor);
             cursor.close();
-            return building;
+            return place;
         } else {
             cursor.close();
             return null;
@@ -123,11 +123,11 @@ public class DbPlaceRepository implements PlaceRepository {
     }
 
     @Override
-    public void updateOrInsert(List<Place> buildings) {
+    public void updateOrInsert(List<Place> updateList) {
         SQLiteDatabase db = new SurveyLiteDatabase(context).getWritableDatabase();
         db.beginTransaction();
-        for (Place building : buildings) {
-            ContentValues values = placeContentValues(building);
+        for (Place place : updateList) {
+            ContentValues values = placeContentValues(place);
             values.put(PlaceColumn.SYNC_STATUS, SyncStatus.SYNCED);
             boolean updated = updateByContentValues(db, values);
             if (!updated)

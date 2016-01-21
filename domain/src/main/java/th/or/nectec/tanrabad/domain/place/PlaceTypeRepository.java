@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,14 +15,16 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.domain.survey;
+package th.or.nectec.tanrabad.domain.place;
 
 import th.or.nectec.tanrabad.domain.WritableRepository;
-import th.or.nectec.tanrabad.entity.ContainerType;
+import th.or.nectec.tanrabad.entity.PlaceType;
 
 import java.util.List;
 
-public interface ContainerTypeRepository extends WritableRepository<ContainerType> {
+public interface PlaceTypeRepository extends WritableRepository<PlaceType> {
 
-    List<ContainerType> find();
+    List<PlaceType> find();
+
+    PlaceType findByID(int placeTypeID);
 }

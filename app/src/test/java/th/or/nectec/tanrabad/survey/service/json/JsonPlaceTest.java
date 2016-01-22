@@ -77,7 +77,7 @@ public class JsonPlaceTest {
         Place placeData = new Place(UUID.nameUUIDFromBytes("123".getBytes()), "วัดป่า");
         placeData.setType(Place.TYPE_WORSHIP);
         placeData.setSubType(Place.SUBTYPE_TEMPLE);
-        placeData.setAddress(stubAddress());
+        placeData.setSubdistrictCode("510403");
         placeData.setLocation(stubLocation());
         placeData.setUpdateBy(stubUser());
         DateTime updateTime = DateTime.now();
@@ -89,18 +89,13 @@ public class JsonPlaceTest {
         assertEquals(Place.TYPE_WORSHIP, jsonPlace.placeTypeID);
         assertEquals(Place.SUBTYPE_TEMPLE, jsonPlace.placeSubtypeID);
         assertEquals("วัดป่า", jsonPlace.placeName);
-        assertEquals(stubAddress().getAddressCode(), jsonPlace.tambonCode);
+        assertEquals("510403", jsonPlace.tambonCode);
         assertEquals(stubLocation().getLatitude(), jsonPlace.location.getLatitude(), 0);
         assertEquals(stubLocation().getLongitude(), jsonPlace.location.getLongitude(), 0);
         assertEquals(stubUser().getUsername(), jsonPlace.updatedBy);
         assertEquals(updateTime.withZone(DateTimeZone.UTC).toString(), jsonPlace.updateTime);
     }
 
-    private Address stubAddress() {
-        Address address = new Address();
-        address.setAddressCode("510403");
-        return address;
-    }
 
     private Location stubLocation() {
         return new Location(39.745675, -73.150055);
@@ -117,7 +112,7 @@ public class JsonPlaceTest {
         Place placeData = new Place(UUID.fromString("b7a9d934-04fc-a22e-0539-6c17504f732e"), "รพ.สต.ตำบลนาทราย");
         placeData.setType(Place.TYPE_HOSPITAL);
         placeData.setSubType(3);
-        placeData.setAddress(stubAddress());
+        placeData.setSubdistrictCode("510403");
         placeData.setLocation(stubLocation());
         placeData.setUpdateBy(stubUser());
         placeData.setUpdateTimestamp(DateTime.now().toString());
@@ -134,7 +129,7 @@ public class JsonPlaceTest {
         Place placeData = new Place(UUID.fromString("b7a9d934-04fc-a22e-0539-6c17504f732e"), "รพ.สต.ตำบลนาทราย");
         placeData.setType(Place.TYPE_HOSPITAL);
         placeData.setSubType(PlaceTypeMapper.โรงพยาบาลทั่วไป);
-        placeData.setAddress(stubAddress());
+        placeData.setSubdistrictCode("510403");
         placeData.setLocation(stubLocation());
         placeData.setUpdateBy(stubUser());
         placeData.setUpdateTimestamp(DateTime.now().toString());

@@ -51,18 +51,9 @@ public class SavePlaceValidatorTest {
     public void testLocationNull() throws Exception {
         SavePlaceValidator savePlaceValidator = new SavePlaceValidator();
         Place place = new Place(UUID.randomUUID(), "5555");
-        place.setAddress(stubAddress());
+        place.setSubdistrictCode("130202");
 
         savePlaceValidator.validate(place);
-    }
-
-    private Address stubAddress() {
-        Address address = new Address();
-        address.setAddressCode("130202");
-        address.setSubdistrict("คลองหลวง");
-        address.setDistrict("คลองสอง");
-        address.setProvince("ปทุมธานี");
-        return address;
     }
 
     @Test(expected = ValidatorException.class)
@@ -80,7 +71,7 @@ public class SavePlaceValidatorTest {
         PlaceRepository placeRepository = Mockito.mock(PlaceRepository.class);
         Mockito.when(placeRepository.find()).thenReturn(stubPlacesList());
         Place place = new Place(UUID.randomUUID(), "ทดสอบ123");
-        place.setAddress(stubAddress());
+        place.setSubdistrictCode("130202");
         place.setLocation(stubLocation());
         SavePlaceValidator savePlaceValidator = new SavePlaceValidator();
         savePlaceValidator.setPlaceRepository(placeRepository);
@@ -97,7 +88,7 @@ public class SavePlaceValidatorTest {
 
     private Place stubPlace() {
         Place testPlace = Place.withName("ทดสอบ");
-        testPlace.setAddress(stubAddress());
+        testPlace.setSubdistrictCode("130202");
         testPlace.setLocation(stubLocation());
         testPlace.setType(Place.TYPE_HOSPITAL);
         return testPlace;
@@ -109,7 +100,7 @@ public class SavePlaceValidatorTest {
 
     private Place stubPlaceWorship() {
         Place testPlace = Place.withName("วัดสาม");
-        testPlace.setAddress(stubAddress());
+        testPlace.setSubdistrictCode("130202");
         testPlace.setLocation(stubLocation());
         testPlace.setType(Place.TYPE_WORSHIP);
         testPlace.setSubType(Place.SUBTYPE_TEMPLE);
@@ -121,7 +112,7 @@ public class SavePlaceValidatorTest {
         PlaceRepository placeRepository = Mockito.mock(PlaceRepository.class);
         Mockito.when(placeRepository.find()).thenReturn(stubPlacesList());
         Place place = new Place(UUID.randomUUID(), "ทดสอบ123");
-        place.setAddress(new Address());
+        place.setSubdistrictCode("130243");
         place.setLocation(stubLocation());
         SavePlaceValidator savePlaceValidator = new SavePlaceValidator();
         savePlaceValidator.setPlaceRepository(placeRepository);
@@ -171,7 +162,7 @@ public class SavePlaceValidatorTest {
         PlaceRepository placeRepository = Mockito.mock(PlaceRepository.class);
         Mockito.when(placeRepository.find()).thenReturn(stubPlacesList());
         Place place = stubPlace();
-        place.setAddress(new Address());
+        place.setSubdistrictCode("130203");
         place.setType(Place.TYPE_SCHOOL);
         SavePlaceValidator savePlaceValidator = new SavePlaceValidator();
         savePlaceValidator.setPlaceRepository(placeRepository);
@@ -184,7 +175,7 @@ public class SavePlaceValidatorTest {
         PlaceRepository placeRepository = Mockito.mock(PlaceRepository.class);
         Mockito.when(placeRepository.find()).thenReturn(stubPlacesList());
         Place place = stubPlace();
-        place.setAddress(new Address());
+        place.setSubdistrictCode("130204");
         SavePlaceValidator savePlaceValidator = new SavePlaceValidator();
         savePlaceValidator.setPlaceRepository(placeRepository);
 
@@ -197,7 +188,7 @@ public class SavePlaceValidatorTest {
         Mockito.when(placeRepository.find()).thenReturn(stubPlacesList());
         Place place = stubPlace();
         place.setName("ทดสอบ345");
-        place.setAddress(new Address());
+        place.setSubdistrictCode("130204");
         SavePlaceValidator savePlaceValidator = new SavePlaceValidator();
         savePlaceValidator.setPlaceRepository(placeRepository);
 

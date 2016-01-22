@@ -25,7 +25,6 @@ import th.or.nectec.tanrabad.domain.place.PlaceRepositoryException;
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.LocationEntity;
 import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.utils.Address;
 
 import java.util.*;
 
@@ -54,17 +53,13 @@ public class InMemoryPlaceRepository implements PlaceRepository, LocationReposit
         bangkokHospital = new Place(generateUUID("2bcd"), "โรงพยาบาลกรุงเทพ");
         bangkokHospital.setType(Place.TYPE_HOSPITAL);
         thammasatHospital = new Place(generateUUID("32UAW"), "ธรรมศาสตร์");
-        Address address = new Address();
-        address.setAddressCode("120202");
-        address.setSubdistrict("บางกรวย");
-        address.setDistrict("บางกรวย");
-        address.setProvince("นนทบุรี");
-        thammasatHospital.setAddress(address);
+
+        thammasatHospital.setSubdistrictCode("120202");
         thammasatHospital.setType(Place.TYPE_HOSPITAL);
         watpaphukon = new Place(generateUUID("3def"), "วัดป่าภูก้อน");
         watpaphukon.setType(Place.TYPE_WORSHIP);
         watpaphukon.setSubType(Place.SUBTYPE_TEMPLE);
-        watpaphukon.setAddress(address);
+        watpaphukon.setSubdistrictCode("120202");
         saintMaryChurch = new Place(generateUUID("3xss"), "โบสถ์เซนต์เมรี่");
         saintMaryChurch.setType(Place.TYPE_WORSHIP);
         saintMaryChurch.setSubType(Place.SUBTYPE_CHURCH);

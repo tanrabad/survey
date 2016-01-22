@@ -17,8 +17,6 @@
 
 package th.or.nectec.tanrabad.entity;
 
-import th.or.nectec.tanrabad.entity.utils.Address;
-
 import java.util.UUID;
 
 public class Place extends Entity implements LocationEntity {
@@ -36,7 +34,7 @@ public class Place extends Entity implements LocationEntity {
     private int type;
     private int subType;
     private Location location;
-    private Address address;
+    private String subdistrictCode;
     private String updateBy;
 
     public Place(UUID id, String name) {
@@ -86,24 +84,24 @@ public class Place extends Entity implements LocationEntity {
         this.location = location;
     }
 
-    public Address getAddress() {
-        return address;
+    public String getSubdistrictCode() {
+        return subdistrictCode;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setSubdistrictCode(String subdistrictCode) {
+        this.subdistrictCode = subdistrictCode;
     }
 
     public String getUpdateBy() {
         return updateBy;
     }
 
-    public void setUpdateBy(User updateBy) {
-        this.updateBy = updateBy.getUsername();
-    }
-
     public void setUpdateBy(String updateBy) {
         this.updateBy = updateBy;
+    }
+
+    public void setUpdateBy(User updateBy) {
+        this.updateBy = updateBy.getUsername();
     }
 
     @Override
@@ -138,7 +136,7 @@ public class Place extends Entity implements LocationEntity {
                 ", type=" + type +
                 ", subType=" + subType +
                 ", location=" + location +
-                ", address=" + address +
+                ", subdistrictCode=" + subdistrictCode +
                 '}';
     }
 }

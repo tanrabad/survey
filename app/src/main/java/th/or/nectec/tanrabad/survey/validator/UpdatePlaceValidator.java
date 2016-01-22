@@ -34,7 +34,7 @@ public class UpdatePlaceValidator implements PlaceValidator {
             throw new EmptyNameException(R.string.please_define_place_name);
         }
 
-        if (place.getAddress() == null) {
+        if (place.getSubdistrictCode() == null || place.getSubdistrictCode().isEmpty()) {
             throw new NullAddressException(R.string.please_define_place_address);
         }
 
@@ -63,7 +63,7 @@ public class UpdatePlaceValidator implements PlaceValidator {
     }
 
     private boolean isSamePlaceAddress(Place place, Place comparePlace) {
-        return comparePlace.getAddress().equals(place.getAddress());
+        return comparePlace.getSubdistrictCode().equals(place.getSubdistrictCode());
     }
 
     private boolean isSamePlaceName(Place place, Place comparePlace) {

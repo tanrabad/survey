@@ -23,7 +23,6 @@ import org.joda.time.DateTimeZone;
 import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.utils.Address;
 import th.or.nectec.tanrabad.survey.repository.persistence.PlaceTypeMapper;
 import th.or.nectec.tanrabad.survey.utils.time.ThaiDateTimeConverter;
 
@@ -79,7 +78,7 @@ public class JsonPlace {
         jsonPlace.placeTypeID = place.getType();
         jsonPlace.placeSubtypeID = place.getSubType();
         jsonPlace.location = GeoJsonPoint.parse(place.getLocation());
-        jsonPlace.tambonCode = place.getAddress().getAddressCode();
+        jsonPlace.tambonCode = place.getSubdistrictCode();
         jsonPlace.updatedBy = place.getUpdateBy();
         jsonPlace.updateTime = place.getUpdateTimestamp().withZone(DateTimeZone.UTC).toString();
         return jsonPlace;
@@ -89,8 +88,8 @@ public class JsonPlace {
         Place place = new Place(placeID, placeName);
         place.setType(placeTypeID);
         place.setSubType(placeSubtypeID == 0 ?
-                PlaceTypeMapper.getInstance().getDefaultPlaceTyoe(placeTypeID) : placeSubtypeID);
-        place.setAddress(getAddress());
+                PlaceTypeMapper.getInstance().getDefaultPlaceType(placeTypeID) : placeSubtypeID);
+        place.setSubdistrictCode(tambonCode);
         Location location = this.location == null ? null : this.location.getEntity();
         place.setLocation(location);
         place.setUpdateBy(updatedBy);
@@ -98,12 +97,4 @@ public class JsonPlace {
         return place;
     }
 
-    private Address getAddress() {
-        Address address = new Address();
-        address.setAddressCode(tambonCode);
-        address.setProvince(provinceName);
-        address.setDistrict(amphurName);
-        address.setSubdistrict(tambonName);
-        return address;
-    }
 }

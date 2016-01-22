@@ -26,25 +26,12 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.TextView;
-
+import android.widget.*;
 import com.google.android.gms.maps.SupportMapFragment;
-
-import java.util.UUID;
-
 import th.or.nectec.android.widget.thai.address.AppCompatAddressPicker;
-import th.or.nectec.tanrabad.domain.place.PlaceController;
-import th.or.nectec.tanrabad.domain.place.PlacePresenter;
-import th.or.nectec.tanrabad.domain.place.PlaceRepository;
-import th.or.nectec.tanrabad.domain.place.PlaceSavePresenter;
-import th.or.nectec.tanrabad.domain.place.PlaceSaver;
+import th.or.nectec.tanrabad.domain.place.*;
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.utils.Address;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.maps.LiteMapFragment;
 import th.or.nectec.tanrabad.survey.presenter.maps.LocationUtils;
@@ -56,6 +43,8 @@ import th.or.nectec.tanrabad.survey.utils.android.TwiceBackPressed;
 import th.or.nectec.tanrabad.survey.validator.SavePlaceValidator;
 import th.or.nectec.tanrabad.survey.validator.UpdatePlaceValidator;
 import th.or.nectec.tanrabad.survey.validator.ValidatorException;
+
+import java.util.UUID;
 
 public class PlaceFormActivity extends TanrabadActivity implements View.OnClickListener, PlaceSavePresenter, PlacePresenter {
 
@@ -213,6 +202,16 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         }
     }
 
+    private void getPlaceFieldData() {
+        place.setName(placeNameView.getText().toString().trim());
+        int placeTypeID = ((PlaceType) placeTypeSelector.getSelectedItem()).id;
+        place.setType(placeTypeID);
+        if (placeTypeID == Place.TYPE_WORSHIP) {
+            place.setSubType(((PlaceType) placeSubtypeSelector.getSelectedItem()).id);
+        }
+        place.setSubdistrictCode(addressSelect.getAddress() == null ? null : addressSelect.getAddress().getSubdistrictCode());
+    }
+
     public void doUpdateData() {
         getPlaceFieldData();
         try {
@@ -221,29 +220,6 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         } catch (ValidatorException e) {
             Alert.highLevel().show(e.getMessageID());
         }
-    }
-
-    private void getPlaceFieldData() {
-        place.setName(placeNameView.getText().toString().trim());
-        int placeTypeID = ((PlaceType) placeTypeSelector.getSelectedItem()).id;
-        place.setType(placeTypeID);
-        if (placeTypeID == Place.TYPE_WORSHIP) {
-            place.setSubType(((PlaceType) placeSubtypeSelector.getSelectedItem()).id);
-        }
-
-        place.setAddress(getPlaceAddressFromField());
-    }
-
-    private Address getPlaceAddressFromField() {
-        if (addressSelect.getAddress() == null)
-            return null;
-
-        Address placeAddress = new Address();
-        placeAddress.setAddressCode(addressSelect.getAddress().getSubdistrictCode());
-        placeAddress.setSubdistrict(addressSelect.getAddress().getSubdistrict().getName());
-        placeAddress.setDistrict(addressSelect.getAddress().getDistrict().getName());
-        placeAddress.setProvince(addressSelect.getAddress().getProvince().getName());
-        return placeAddress;
     }
 
     @Override
@@ -315,8 +291,8 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         this.place = place;
         placeNameView.setText(place.getName());
 
-        if (place.getAddress() != null)
-            addressSelect.setAddressCode(place.getAddress().getAddressCode());
+        if (!TextUtils.isEmpty(place.getSubdistrictCode()))
+            addressSelect.setAddressCode(place.getSubdistrictCode());
 
         if (place.getLocation() != null)
             setupPreviewMapWithPosition(place.getLocation());

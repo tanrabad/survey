@@ -37,15 +37,13 @@ public class DbBuildingRepository implements BuildingRepository {
 
     public static final String TABLE_NAME = "building";
     public static final int ERROR_INSERT_ID = -1;
-    private final Context context;
+    private Context context;
     private UserRepository userRepository;
     private PlaceRepository placeRepository;
 
 
     public DbBuildingRepository(Context context) {
-        this.context = context;
-        this.userRepository = new StubUserRepository();
-        this.placeRepository = PlaceRepoBroker.getInstance();
+        this(context, new StubUserRepository(), PlaceRepoBroker.getInstance());
     }
 
     public DbBuildingRepository(Context context, UserRepository userRepository, PlaceRepository placeRepository) {

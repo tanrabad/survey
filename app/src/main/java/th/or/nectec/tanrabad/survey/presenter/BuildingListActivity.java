@@ -39,7 +39,7 @@ import th.or.nectec.tanrabad.domain.survey.SurveyBuildingChooser;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView;
-import th.or.nectec.tanrabad.survey.repository.InMemoryBuildingRepository;
+import th.or.nectec.tanrabad.survey.repository.BuildingRepoBroker;
 import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.PlaceRepoBroker;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
@@ -60,7 +60,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     private BuildingWithSurveyStatusAdapter buildingAdapter;
     private Place place;
     private EmptyLayoutView emptyLayoutView;
-    private SurveyBuildingChooser surveyBuildingChooser = new SurveyBuildingChooser(new StubUserRepository(), PlaceRepoBroker.getInstance(), InMemoryBuildingRepository.getInstance(), InMemorySurveyRepository.getInstance(), this);
+    private SurveyBuildingChooser surveyBuildingChooser = new SurveyBuildingChooser(new StubUserRepository(), PlaceRepoBroker.getInstance(), BuildingRepoBroker.getInstance(), InMemorySurveyRepository.getInstance(), this);
     private SearchView buildingSearchView;
 
     @Override

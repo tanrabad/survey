@@ -30,6 +30,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import com.google.android.gms.maps.SupportMapFragment;
+import org.joda.time.DateTime;
 import th.or.nectec.tanrabad.domain.building.BuildingController;
 import th.or.nectec.tanrabad.domain.building.BuildingPresenter;
 import th.or.nectec.tanrabad.domain.building.BuildingSavePresenter;
@@ -42,7 +43,7 @@ import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.maps.LiteMapFragment;
 import th.or.nectec.tanrabad.survey.presenter.maps.LocationUtils;
-import th.or.nectec.tanrabad.survey.repository.InMemoryBuildingRepository;
+import th.or.nectec.tanrabad.survey.repository.BuildingRepoBroker;
 import th.or.nectec.tanrabad.survey.repository.PlaceRepoBroker;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
@@ -67,7 +68,7 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
     private EditText buildingNameView;
     private FrameLayout addLocationBackground;
     private PlaceController placeController = new PlaceController(PlaceRepoBroker.getInstance(), this);
-    private BuildingController buildingController = new BuildingController(InMemoryBuildingRepository.getInstance(), this);
+    private BuildingController buildingController = new BuildingController(BuildingRepoBroker.getInstance(), this);
 
     private Place place;
     private Building building;
@@ -234,12 +235,14 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
     private void saveBuildingData() {
         building.setName(buildingNameView.getText().toString().trim());
         building.setPlace(place);
+        building.setUpdateTimestamp(DateTime.now().toString());
+        building.setUpdateBy("user"); //TODO: 22/1/2559 set user later.
         try {
             if (TextUtils.isEmpty(getBuildingUUID())) {
-                BuildingSaver buildingSaver = new BuildingSaver(InMemoryBuildingRepository.getInstance(), new SaveBuildingValidator(), this);
+                BuildingSaver buildingSaver = new BuildingSaver(BuildingRepoBroker.getInstance(), new SaveBuildingValidator(), this);
                 buildingSaver.save(building);
             } else {
-                BuildingSaver buildingSaver = new BuildingSaver(InMemoryBuildingRepository.getInstance(), new UpdateBuildingValidator(), this);
+                BuildingSaver buildingSaver = new BuildingSaver(BuildingRepoBroker.getInstance(), new UpdateBuildingValidator(), this);
                 buildingSaver.update(building);
             }
         } catch (ValidatorException e) {

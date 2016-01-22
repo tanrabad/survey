@@ -30,7 +30,6 @@ public class InMemoryInitializeJob implements Job {
 
     @Override
     public void execute() {
-        InMemoryBuildingRepository.getInstance();
         InMemoryContainerTypeRepository.getInstance();
         InMemorySurveyRepository.getInstance();
         InMemorySubdistrictRepository.getInstance();

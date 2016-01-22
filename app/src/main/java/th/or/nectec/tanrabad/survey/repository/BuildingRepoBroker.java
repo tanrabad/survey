@@ -32,9 +32,9 @@ public class BuildingRepoBroker implements BuildingRepository
     private BuildingRepository cache;
     private BuildingRepository database;
 
-    protected BuildingRepoBroker(BuildingRepository database, BuildingRepository cache) {
-        this.database = database;
+    protected BuildingRepoBroker(BuildingRepository cache, BuildingRepository database) {
         this.cache = cache;
+        this.database = database;
     }
 
     public static BuildingRepoBroker getInstance() {

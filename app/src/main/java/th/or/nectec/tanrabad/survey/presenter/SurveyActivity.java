@@ -39,7 +39,7 @@ import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.presenter.view.AdvanceStepperDialog;
 import th.or.nectec.tanrabad.survey.presenter.view.SurveyContainerView;
 import th.or.nectec.tanrabad.survey.presenter.view.TorchButton;
-import th.or.nectec.tanrabad.survey.repository.InMemoryBuildingRepository;
+import th.or.nectec.tanrabad.survey.repository.BuildingRepoBroker;
 import th.or.nectec.tanrabad.survey.repository.InMemoryContainerTypeRepository;
 import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
@@ -113,7 +113,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     private void initSurvey() {
         surveyRepository = InMemorySurveyRepository.getInstance();
-        SurveyController surveyController = new SurveyController(surveyRepository, InMemoryBuildingRepository.getInstance(), new StubUserRepository(), this);
+        SurveyController surveyController = new SurveyController(surveyRepository, BuildingRepoBroker.getInstance(), new StubUserRepository(), this);
 
         String buildingUUID = getIntent().getStringExtra(BUILDING_UUID_ARG);
         String username = getIntent().getStringExtra(USERNAME_ARG);

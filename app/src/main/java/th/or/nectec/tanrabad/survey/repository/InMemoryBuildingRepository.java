@@ -120,7 +120,7 @@ public class InMemoryBuildingRepository implements BuildingRepository {
         return UUID.nameUUIDFromBytes(input.getBytes());
     }
 
-    public static InMemoryBuildingRepository getInstance() {
+    protected static InMemoryBuildingRepository getInstance() {
         if (instance == null)
             instance = new InMemoryBuildingRepository();
         return instance;

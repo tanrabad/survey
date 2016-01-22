@@ -111,18 +111,12 @@
             android:text="@string/address"
             android:textIsSelectable="false"/>
 
-        <th.or.nectec.android.widget.thai.address.AppCompatAddressPicker
+        <th.or.nectec.tanrabad.survey.presenter.view.CustomRepoAddressView
             android:id="@+id/address_select"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/touch_to_define_address"/>
-
-        <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:hint="@string/touch_to_define_address"
-                android:id="@+id/address_button"/>
         <include layout="@layout/location_form"/>
+
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

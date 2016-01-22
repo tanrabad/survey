@@ -28,10 +28,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 import com.google.android.gms.maps.SupportMapFragment;
-import th.or.nectec.android.widget.thai.address.AppCompatAddressPicker;
-import th.or.nectec.android.widget.thai.OnAddressChangedListener;
-import th.or.nectec.android.widget.thai.address.AddressPickerDialog;
-import th.or.nectec.domain.thai.ThaiAddressPrinter;
+import th.or.nectec.android.widget.thai.address.AddressView;
 import th.or.nectec.tanrabad.domain.place.*;
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.Place;
@@ -40,8 +37,6 @@ import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.maps.LiteMapFragment;
 import th.or.nectec.tanrabad.survey.presenter.maps.LocationUtils;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
-import th.or.nectec.tanrabad.survey.repository.adapter.ThaiWidgetProvinceRepository;
-import th.or.nectec.tanrabad.survey.repository.persistence.DbProvinceRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.ResourceUtils;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
@@ -62,7 +57,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     PlaceRepository placeRepository = BrokerPlaceRepository.getInstance();
 
     private EditText placeNameView;
-    private AppCompatAddressPicker addressSelect;
+    private AddressView addressSelect;
     private AppCompatSpinner placeTypeSelector;
     private View placeSubtypeLayout;
     private TextView placeSubtypeLabel;
@@ -71,25 +66,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     private FrameLayout addLocationBackground;
     private Button addMarkerButton;
     private TwiceBackPressed twiceBackPressed;
-    private Button addressButton;
-    private Address placeAddress;
-    private OnAddressChangedListener onAddressChangedListener = new OnAddressChangedListener() {
-        @Override
-        public void onAddressChanged(th.or.nectec.entity.thai.Address address) {
-            Address internalTypeAddress = new Address();
-            internalTypeAddress.setAddressCode(address.getSubdistrictCode());
-            internalTypeAddress.setProvince(address.getProvince().getName());
-            internalTypeAddress.setDistrict(address.getDistrict().getName());
-            internalTypeAddress.setSubdistrict(address.getSubdistrict().getName());
-            placeAddress = internalTypeAddress;
-            updateAddressButtonText(placeAddress);
-        }
 
-        @Override
-        public void onAddressCanceled() {
-
-        }
-    };
 
     public static void startAdd(Activity activity, int placeTypeID) {
         Intent intent = new Intent(activity, PlaceFormActivity.class);
@@ -123,19 +100,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     private void setupViews() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         placeNameView = (EditText) findViewById(R.id.place_name);
-        addressSelect = (AppCompatAddressPicker) findViewById(R.id.address_select);
-        addressButton = (Button) findViewById(R.id.address_button);
-        addressButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AddressPickerDialog addressPickerDialog = new AddressPickerDialog(PlaceFormActivity.this, onAddressChangedListener);
-                addressPickerDialog.setRepository(new ThaiWidgetProvinceRepository(new DbProvinceRepository(PlaceFormActivity.this)));
-                if (placeAddress != null)
-                    addressPickerDialog.show(placeAddress.getAddressCode());
-                else
-                    addressPickerDialog.show();
-            }
-        });
+        addressSelect = (AddressView) findViewById(R.id.address_select);
         placeTypeSelector = (AppCompatSpinner) findViewById(R.id.place_type_selector);
         placeSubtypeLayout = findViewById(R.id.place_subtype_layout);
         placeSubtypeLabel = (TextView) findViewById(R.id.place_subtype_label);
@@ -260,6 +225,14 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     }
 
     private Address getPlaceAddressFromField() {
+        if (addressSelect.getAddress() == null)
+            return null;
+
+        Address placeAddress = new Address();
+        placeAddress.setAddressCode(addressSelect.getAddress().getSubdistrictCode());
+        placeAddress.setSubdistrict(addressSelect.getAddress().getSubdistrict().getName());
+        placeAddress.setDistrict(addressSelect.getAddress().getDistrict().getName());
+        placeAddress.setProvince(addressSelect.getAddress().getProvince().getName());
         return placeAddress;
     }
 
@@ -334,17 +307,12 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
 
         if (!TextUtils.isEmpty(place.getSubdistrictCode())){
             addressSelect.setAddressCode(place.getSubdistrictCode());
-            addressSelect.setAddress(address.getSubdistrict(), address.getDistrict(), address.getProvince());
         }
 
         if (place.getLocation() != null)
             setupPreviewMapWithPosition(place.getLocation());
     }
 
-    private void updateAddressButtonText(Address address) {
-        String addressString = ThaiAddressPrinter.buildShortAddress(address.getSubdistrict(), address.getDistrict(), address.getProvince());
-        addressButton.setText(addressString);
-    }
 
     @Override
     public void alertPlaceNotFound() {

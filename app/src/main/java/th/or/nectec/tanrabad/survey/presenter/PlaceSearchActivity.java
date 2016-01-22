@@ -13,23 +13,18 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
-
-import java.util.List;
-
+import android.widget.*;
 import th.or.nectec.tanrabad.domain.place.PlaceChooser;
 import th.or.nectec.tanrabad.domain.place.PlaceListPresenter;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
-import th.or.nectec.tanrabad.survey.repository.InMemoryPlaceRepository;
+import th.or.nectec.tanrabad.survey.repository.PlaceRepoBroker;
+
+import java.util.List;
 
 public class PlaceSearchActivity extends TanrabadActivity implements SearchView.OnQueryTextListener, PlaceListPresenter {
 
-    PlaceChooser placeChooser = new PlaceChooser(InMemoryPlaceRepository.getInstance(), this);
+    PlaceChooser placeChooser = new PlaceChooser(PlaceRepoBroker.getInstance(), this);
     private SearchRecentSuggestions suggestions;
     private PlaceAdapter placeAdapter;
     private SearchView searchView;

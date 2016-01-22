@@ -29,11 +29,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-
 import com.google.android.gms.maps.SupportMapFragment;
-
-import java.util.UUID;
-
 import th.or.nectec.tanrabad.domain.building.BuildingController;
 import th.or.nectec.tanrabad.domain.building.BuildingPresenter;
 import th.or.nectec.tanrabad.domain.building.BuildingSavePresenter;
@@ -47,13 +43,15 @@ import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.maps.LiteMapFragment;
 import th.or.nectec.tanrabad.survey.presenter.maps.LocationUtils;
 import th.or.nectec.tanrabad.survey.repository.InMemoryBuildingRepository;
-import th.or.nectec.tanrabad.survey.repository.InMemoryPlaceRepository;
+import th.or.nectec.tanrabad.survey.repository.PlaceRepoBroker;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
 import th.or.nectec.tanrabad.survey.utils.android.TwiceBackPressed;
 import th.or.nectec.tanrabad.survey.validator.SaveBuildingValidator;
 import th.or.nectec.tanrabad.survey.validator.UpdateBuildingValidator;
 import th.or.nectec.tanrabad.survey.validator.ValidatorException;
+
+import java.util.UUID;
 
 public class BuildingFormActivity extends TanrabadActivity implements PlacePresenter, BuildingPresenter, BuildingSavePresenter, View.OnClickListener {
 
@@ -68,7 +66,7 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
     private TextView buildingNameTitle;
     private EditText buildingNameView;
     private FrameLayout addLocationBackground;
-    private PlaceController placeController = new PlaceController(InMemoryPlaceRepository.getInstance(), this);
+    private PlaceController placeController = new PlaceController(PlaceRepoBroker.getInstance(), this);
     private BuildingController buildingController = new BuildingController(InMemoryBuildingRepository.getInstance(), this);
 
     private Place place;

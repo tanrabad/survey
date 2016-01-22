@@ -30,12 +30,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
-
-import java.util.List;
-import java.util.UUID;
-
 import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
 import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatusListPresenter;
 import th.or.nectec.tanrabad.domain.place.PlaceController;
@@ -45,12 +40,15 @@ import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView;
 import th.or.nectec.tanrabad.survey.repository.InMemoryBuildingRepository;
-import th.or.nectec.tanrabad.survey.repository.InMemoryPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
+import th.or.nectec.tanrabad.survey.repository.PlaceRepoBroker;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
+
+import java.util.List;
+import java.util.UUID;
 
 public class BuildingListActivity extends TanrabadActivity implements BuildingWithSurveyStatusListPresenter, PlacePresenter, ActionMode.Callback, View.OnClickListener {
 
@@ -62,7 +60,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     private BuildingWithSurveyStatusAdapter buildingAdapter;
     private Place place;
     private EmptyLayoutView emptyLayoutView;
-    private SurveyBuildingChooser surveyBuildingChooser = new SurveyBuildingChooser(new StubUserRepository(), InMemoryPlaceRepository.getInstance(), InMemoryBuildingRepository.getInstance(), InMemorySurveyRepository.getInstance(), this);
+    private SurveyBuildingChooser surveyBuildingChooser = new SurveyBuildingChooser(new StubUserRepository(), PlaceRepoBroker.getInstance(), InMemoryBuildingRepository.getInstance(), InMemorySurveyRepository.getInstance(), this);
     private SearchView buildingSearchView;
 
     @Override
@@ -90,7 +88,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     }
 
     private void showPlaceName() {
-        PlaceController placeController = new PlaceController(InMemoryPlaceRepository.getInstance(), this);
+        PlaceController placeController = new PlaceController(PlaceRepoBroker.getInstance(), this);
         placeController.showPlace(getPlaceUuidFromIntent());
     }
 

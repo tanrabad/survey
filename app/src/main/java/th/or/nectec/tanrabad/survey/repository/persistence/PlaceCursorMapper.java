@@ -62,7 +62,7 @@ class PlaceCursorMapper implements CursorMapper<Place> {
         place.setType(PlaceTypeMapper.getInstance().findBySubType(subtypeID));
         place.setSubType(subtypeID);
         place.setLocation(new Location(cursor.getDouble(latIndex), cursor.getDouble(lngIndex)));
-        place.setUpdateBy(userRepository.findByUsername(cursor.getString(updateByIndex)));
+        place.setUpdateBy(cursor.getString(updateByIndex));
         place.setUpdateTimestamp(cursor.getString(updateTimeIndex));
         return place;
     }

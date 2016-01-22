@@ -35,7 +35,7 @@ import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.maps.LiteMapFragment;
 import th.or.nectec.tanrabad.survey.presenter.maps.LocationUtils;
-import th.or.nectec.tanrabad.survey.repository.InMemoryPlaceRepository;
+import th.or.nectec.tanrabad.survey.repository.PlaceRepoBroker;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.ResourceUtils;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
@@ -53,7 +53,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
 
     public static final int ADD_PLACE_REQ_CODE = 30000;
     Place place;
-    PlaceRepository placeRepository = InMemoryPlaceRepository.getInstance();
+    PlaceRepository placeRepository = PlaceRepoBroker.getInstance();
 
     private EditText placeNameView;
     private AppCompatAddressPicker addressSelect;

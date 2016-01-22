@@ -91,7 +91,7 @@ public class DbPlaceRepository implements PlaceRepository {
     public List<Place> findByName(String placeName) {
         SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
         Cursor placeCursor = db.query(TABLE_NAME, PlaceColumn.wildcard(),
-                PlaceColumn.NAME + "=?", new String[]{placeName}, null, null, null);
+                PlaceColumn.NAME + " LIKE ?", new String[]{"%" + placeName + "%"}, null, null, null);
         return new CursorList<>(placeCursor, getMapper(placeCursor));
     }
 

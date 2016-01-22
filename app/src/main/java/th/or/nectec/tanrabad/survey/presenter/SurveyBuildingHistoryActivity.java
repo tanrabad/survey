@@ -30,12 +30,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
-
-import java.util.List;
-import java.util.UUID;
-
 import th.or.nectec.tanrabad.domain.place.PlaceController;
 import th.or.nectec.tanrabad.domain.place.PlacePresenter;
 import th.or.nectec.tanrabad.domain.survey.SurveyBuildingHistoryController;
@@ -45,12 +40,15 @@ import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.utils.HouseIndex;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView;
-import th.or.nectec.tanrabad.survey.repository.InMemoryPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
+import th.or.nectec.tanrabad.survey.repository.PlaceRepoBroker;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
+
+import java.util.List;
+import java.util.UUID;
 
 public class SurveyBuildingHistoryActivity extends TanrabadActivity implements SurveyBuildingPresenter, PlacePresenter {
 
@@ -95,7 +93,7 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
     }
 
     private void showPlaceInfo() {
-        PlaceController placeController = new PlaceController(InMemoryPlaceRepository.getInstance(), this);
+        PlaceController placeController = new PlaceController(PlaceRepoBroker.getInstance(), this);
         placeController.showPlace(UUID.fromString(getPlaceUuidFromIntent()));
     }
 
@@ -129,7 +127,7 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
 
     private void showSurveyBuildingHistoryList() {
         SurveyBuildingHistoryController surveyBuildingHistoryController = new SurveyBuildingHistoryController(new StubUserRepository(),
-                InMemoryPlaceRepository.getInstance(),
+                PlaceRepoBroker.getInstance(),
                 InMemorySurveyRepository.getInstance(),
                 this);
         surveyBuildingHistoryController.showSurveyBuildingOf(getPlaceUuidFromIntent(), getUsernameFromIntent());

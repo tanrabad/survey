@@ -86,7 +86,7 @@ public class InMemoryPlaceRepository implements PlaceRepository, LocationReposit
         return UUID.nameUUIDFromBytes(input.getBytes());
     }
 
-    public static InMemoryPlaceRepository getInstance() {
+    protected static InMemoryPlaceRepository getInstance() {
         if (instance == null) {
             instance = new InMemoryPlaceRepository();
         }

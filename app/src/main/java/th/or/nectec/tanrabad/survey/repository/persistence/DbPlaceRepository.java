@@ -22,10 +22,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import th.or.nectec.tanrabad.domain.UserRepository;
-import th.or.nectec.tanrabad.domain.address.AddressRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.survey.repository.InMemoryAddressRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorList;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
@@ -38,19 +36,16 @@ public class DbPlaceRepository implements PlaceRepository {
     public static final String TABLE_NAME = "place";
     public static final int ERROR_INSERT_ID = -1;
     private final Context context;
-    private AddressRepository addressRepository;
     private UserRepository userRepository;
 
 
     public DbPlaceRepository(Context context) {
         this.context = context;
-        this.addressRepository = InMemoryAddressRepository.getInstance();
         this.userRepository = new StubUserRepository();
     }
 
-    public DbPlaceRepository(Context context, AddressRepository addressRepository, UserRepository userRepository) {
+    public DbPlaceRepository(Context context, UserRepository userRepository) {
         this.context = context;
-        this.addressRepository = addressRepository;
         this.userRepository = userRepository;
     }
 
@@ -101,7 +96,7 @@ public class DbPlaceRepository implements PlaceRepository {
     }
 
     private CursorMapper<Place> getMapper(Cursor cursor) {
-        return new PlaceCursorMapper(cursor, userRepository, addressRepository);
+        return new PlaceCursorMapper(cursor, userRepository);
     }
 
     @Override
@@ -143,7 +138,7 @@ public class DbPlaceRepository implements PlaceRepository {
         values.put(PlaceColumn.ID, place.getId().toString());
         values.put(PlaceColumn.NAME, place.getName());
         values.put(PlaceColumn.SUBTYPE_ID, place.getSubType());
-        values.put(PlaceColumn.SUBDISTRICT_CODE, place.getAddress().getAddressCode());
+        values.put(PlaceColumn.SUBDISTRICT_CODE, place.getSubdistrictCode());
         if(place.getLocation() != null) {
             values.put(PlaceColumn.LATITUDE, place.getLocation().getLatitude());
             values.put(PlaceColumn.LONGITUDE, place.getLocation().getLongitude());

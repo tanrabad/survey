@@ -54,7 +54,7 @@ public class PlaceTypeMapper {
         return placeSubTypeMapping.get(subtypeID, subtypeID);
     }
 
-    public int getDefaultPlaceTyoe(int placeTypeID) {
+    public int getDefaultPlaceType(int placeTypeID) {
         switch (placeTypeID) {
             case Place.TYPE_VILLAGE_COMMUNITY:
                 return ชุมชนพักอาศัย;

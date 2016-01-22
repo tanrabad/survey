@@ -19,7 +19,6 @@ package th.or.nectec.tanrabad.survey.repository.persistence;
 
 import android.database.Cursor;
 import th.or.nectec.tanrabad.domain.UserRepository;
-import th.or.nectec.tanrabad.domain.address.AddressRepository;
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
@@ -29,7 +28,6 @@ import java.util.UUID;
 class PlaceCursorMapper implements CursorMapper<Place> {
 
     private final UserRepository userRepository;
-    private AddressRepository addressRepository;
     private int idIndex;
     private int nameIndex;
     private int subtypeIndex;
@@ -39,9 +37,8 @@ class PlaceCursorMapper implements CursorMapper<Place> {
     private int updateByIndex;
     private int updateTimeIndex;
 
-    public PlaceCursorMapper(Cursor cursor, UserRepository userRepository, AddressRepository addressRepository) {
+    public PlaceCursorMapper(Cursor cursor, UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.addressRepository = addressRepository;
         findColumnIndexOf(cursor);
     }
 
@@ -60,7 +57,7 @@ class PlaceCursorMapper implements CursorMapper<Place> {
     public Place map(Cursor cursor) {
         UUID uuid = UUID.fromString(cursor.getString(idIndex));
         Place place = new Place(uuid, cursor.getString(nameIndex));
-        place.setAddress(addressRepository.findBySubdistrictCode(cursor.getString(subdistrictCodeIndex)));
+        place.setSubdistrictCode(cursor.getString(subdistrictCodeIndex));
         int subtypeID = cursor.getInt(subtypeIndex);
         place.setType(PlaceTypeMapper.getInstance().findBySubType(subtypeID));
         place.setSubType(subtypeID);

@@ -33,7 +33,6 @@ import th.or.nectec.tanrabad.domain.address.AddressRepository;
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
-import th.or.nectec.tanrabad.entity.utils.Address;
 import th.or.nectec.tanrabad.survey.utils.time.ThaiDateTimeConverter;
 
 import java.util.List;
@@ -51,21 +50,9 @@ public class DbPlaceRepositoryTest {
 
     @Before
     public void setup() {
-        addressRepository = Mockito.mock(AddressRepository.class);
-        Address address = stubAddress();
-        Mockito.when(addressRepository.findBySubdistrictCode("120202")).thenReturn(address);
         User user = stubUser();
         userRepository = Mockito.mock(UserRepository.class);
         Mockito.when(userRepository.findByUsername("dpc-user")).thenReturn(user);
-    }
-
-    public Address stubAddress() {
-        Address address = new Address();
-        address.setAddressCode("120202");
-        address.setSubdistrict("บางกรวย");
-        address.setDistrict("บางกรวย");
-        address.setProvince("นนทบุรี");
-        return address;
     }
 
     private User stubUser() {
@@ -77,7 +64,7 @@ public class DbPlaceRepositoryTest {
         User updateBy = stubUser();
         DateTime updateTime = DateTime.now();
         Place place = new Place(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5f"), "หมู่บ้านทดสอบ");
-        place.setAddress(stubAddress());
+        place.setSubdistrictCode("120202");
         place.setSubType(PlaceTypeMapper.ชุมชนแออัด);
         place.setType(Place.TYPE_VILLAGE_COMMUNITY);
         place.setLocation(new Location(10.200000f, 100.100000f));
@@ -112,7 +99,7 @@ public class DbPlaceRepositoryTest {
         User updateBy = stubUser();
         DateTime updateTime = DateTime.now();
         Place place = new Place(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"), "หมู่บ้านทดสอบ");
-        place.setAddress(stubAddress());
+        place.setSubdistrictCode("120202");
         place.setSubType(PlaceTypeMapper.ชุมชนแออัด);
         place.setType(Place.TYPE_VILLAGE_COMMUNITY);
         place.setLocation(new Location(10.200000f, 100.100000f));
@@ -144,20 +131,20 @@ public class DbPlaceRepositoryTest {
     @Test
     public void testFindByUUID() throws Exception {
         Context context = InstrumentationRegistry.getTargetContext();
-        DbPlaceRepository dbPlaceRepository = new DbPlaceRepository(context, addressRepository, userRepository);
+        DbPlaceRepository dbPlaceRepository = new DbPlaceRepository(context, userRepository);
 
         Place place = dbPlaceRepository.findByUUID(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"));
 
         assertEquals("abc01db8-7207-8a65-152f-ad208cb99b5e", place.getId().toString());
         assertEquals("หมู่บ้านทดสอบ", place.getName());
-        assertEquals("120202", place.getAddress().getAddressCode());
+        assertEquals("120202", place.getSubdistrictCode());
         assertEquals("dpc-user", place.getUpdateBy());
     }
 
     @Test
     public void testFindByPlaceType() throws Exception {
         Context context = InstrumentationRegistry.getTargetContext();
-        DbPlaceRepository dbPlaceRepository = new DbPlaceRepository(context, addressRepository, userRepository);
+        DbPlaceRepository dbPlaceRepository = new DbPlaceRepository(context, userRepository);
 
         List<Place> placeList = dbPlaceRepository.findByPlaceType(Place.TYPE_VILLAGE_COMMUNITY);
         Place place = placeList.get(0);
@@ -165,14 +152,14 @@ public class DbPlaceRepositoryTest {
         assertEquals(3, placeList.size());
         assertEquals("abc01db8-7207-8a65-152f-ad208cb99b5e", place.getId().toString());
         assertEquals("หมู่บ้านทดสอบ", place.getName());
-        assertEquals("120202", place.getAddress().getAddressCode());
+        assertEquals("120202", place.getSubdistrictCode());
         assertEquals("dpc-user", place.getUpdateBy());
     }
 
     @Test
     public void testFindAllPlace() throws Exception {
         Context context = InstrumentationRegistry.getTargetContext();
-        DbPlaceRepository dbPlaceRepository = new DbPlaceRepository(context, addressRepository, userRepository);
+        DbPlaceRepository dbPlaceRepository = new DbPlaceRepository(context, userRepository);
 
         List<Place> placeList = dbPlaceRepository.find();
         Place place = placeList.get(0);
@@ -180,7 +167,7 @@ public class DbPlaceRepositoryTest {
         assertEquals(10, placeList.size());
         assertEquals("abc01db8-7207-8a65-152f-ad208cb99b5e", place.getId().toString());
         assertEquals("หมู่บ้านทดสอบ", place.getName());
-        assertEquals("120202", place.getAddress().getAddressCode());
+        assertEquals("120202", place.getSubdistrictCode());
         assertEquals("dpc-user", place.getUpdateBy());
     }
 }

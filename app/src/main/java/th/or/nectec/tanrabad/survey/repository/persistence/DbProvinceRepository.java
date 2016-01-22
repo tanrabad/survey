@@ -20,14 +20,18 @@ package th.or.nectec.tanrabad.survey.repository.persistence;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import th.or.nectec.tanrabad.domain.address.ProvinceRepository;
 import th.or.nectec.tanrabad.entity.Province;
+import th.or.nectec.tanrabad.survey.utils.collection.CursorList;
+import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
 
 import java.util.List;
 
 public class DbProvinceRepository implements ProvinceRepository {
 
+    public static final String TABLE_NAME = "province";
     private Context context;
 
     public DbProvinceRepository(Context context) {
@@ -36,11 +40,18 @@ public class DbProvinceRepository implements ProvinceRepository {
 
     @Override
     public List<Province> find() {
-        return null;
+        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        Cursor provinceCursor = db.query(TABLE_NAME, ProvinceColumn.WILDCARD, null, null, null, null, ProvinceColumn.CODE);
+        return new CursorList<>(provinceCursor, new ProvinceCursorMapper(provinceCursor));
     }
 
     @Override
     public Province findByCode(String provinceCode) {
+        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        Cursor provinceCursor = db.query(TABLE_NAME, ProvinceColumn.WILDCARD, ProvinceColumn.CODE + "=?", new String[]{provinceCode}, null, null, null);
+        if (provinceCursor.moveToFirst()) {
+            return new ProvinceCursorMapper(provinceCursor).map(provinceCursor);
+        }
         return null;
     }
 
@@ -70,11 +81,11 @@ public class DbProvinceRepository implements ProvinceRepository {
     }
 
     private boolean insertWithContentValue(SQLiteDatabase db, ContentValues cv) {
-        return db.insert("province", null, cv) != -1;
+        return db.insert(TABLE_NAME, null, cv) != -1;
     }
 
     private boolean updateWithContentValues(SQLiteDatabase db, ContentValues cv) {
-        return db.update("province", cv, "province_code=?", new String[]{cv.getAsString("province_code")}) > 0;
+        return db.update(TABLE_NAME, cv, "province_code=?", new String[]{cv.getAsString("province_code")}) > 0;
     }
 
     private ContentValues provinceContentValues(Province province) {
@@ -82,5 +93,34 @@ public class DbProvinceRepository implements ProvinceRepository {
         cv.put("province_code", province.getCode());
         cv.put("name", province.getName());
         return cv;
+    }
+
+    public static class ProvinceColumn {
+        public static final String CODE = "province_code";
+        public static final String NAME = "name";
+        public static final String BOUNDARY = "boundary";
+        public static final String[] WILDCARD = new String[]{CODE, NAME, BOUNDARY};
+    }
+
+    public static class ProvinceCursorMapper implements CursorMapper<Province> {
+
+        int codeIdx;
+        int nameIdx;
+        int boundaryIdx;
+
+        public ProvinceCursorMapper(Cursor cursor) {
+            codeIdx = cursor.getColumnIndex(ProvinceColumn.CODE);
+            nameIdx = cursor.getColumnIndex(ProvinceColumn.NAME);
+            boundaryIdx = cursor.getColumnIndex(ProvinceColumn.BOUNDARY);
+        }
+
+        @Override
+        public Province map(Cursor cursor) {
+            Province province = new Province();
+            province.setCode(cursor.getString(codeIdx));
+            province.setName(cursor.getString(nameIdx));
+            //TODO parse boundary text in db to BoundaryObject
+            return province;
+        }
     }
 }

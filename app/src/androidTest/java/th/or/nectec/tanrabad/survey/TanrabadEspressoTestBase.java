@@ -54,6 +54,11 @@ public class TanrabadEspressoTestBase {
                 .perform(click());
     }
 
+    protected void clickConfirmButton() {
+        onView(withText((R.string.confirm)))
+                .perform(click());
+    }
+
     protected void textDisplayed(String text) {
         onView(withText(text))
                 .check(matches(isDisplayed()));

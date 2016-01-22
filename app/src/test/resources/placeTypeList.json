@@ -1,0 +1,26 @@
+[
+  {
+    "place_type_id": 1,
+    "place_type_name": "หมู่บ้าน/ชุมชน"
+  },
+  {
+    "place_type_id": 2,
+    "place_type_name": "ศาสนสถาน"
+  },
+  {
+    "place_type_id": 3,
+    "place_type_name": "สถานศึกษา"
+  },
+  {
+    "place_type_id": 4,
+    "place_type_name": "โรงพยาบาล"
+  },
+  {
+    "place_type_id": 5,
+    "place_type_name": "โรงงาน"
+  },
+  {
+    "place_type_id": 6,
+    "place_type_name": "ที่พักชั่วคราว"
+  }
+]

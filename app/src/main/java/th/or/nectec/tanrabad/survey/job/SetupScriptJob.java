@@ -18,19 +18,20 @@
 package th.or.nectec.tanrabad.survey.job;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteOpenHelper;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.repository.persistence.SqlScript;
 import th.or.nectec.tanrabad.survey.repository.persistence.SurveyLiteDatabase;
 
-public class PlaceTypeUpdateJob implements Job {
+public class SetupScriptJob implements Job {
 
     public static final int ID = 748970;
-
+    private static final String PREF_NAME = "setup-script";
     private Context context;
     private SQLiteOpenHelper sqLiteOpenHelper;
 
-    public PlaceTypeUpdateJob(Context context) {
+    public SetupScriptJob(Context context) {
         this.context = context;
         this.sqLiteOpenHelper = new SurveyLiteDatabase(context);
     }
@@ -42,7 +43,21 @@ public class PlaceTypeUpdateJob implements Job {
 
     @Override
     public void execute() throws JobException {
-        SqlScript.readAndExecute(context, sqLiteOpenHelper.getWritableDatabase(), R.raw.setup);
-        sqLiteOpenHelper.close();
+        boolean requiredSetup = !getSharedPreferences().getBoolean("is_setup", false);
+        if (requiredSetup) {
+            updateStatus();
+            SqlScript.readAndExecute(context, sqLiteOpenHelper.getWritableDatabase(), R.raw.setup);
+            sqLiteOpenHelper.close();
+        }
+    }
+
+    private void updateStatus() {
+        SharedPreferences.Editor spEditor = getSharedPreferences().edit();
+        spEditor.putBoolean("is_setup", true);
+        spEditor.apply();
+    }
+
+    private SharedPreferences getSharedPreferences() {
+        return context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
     }
 }

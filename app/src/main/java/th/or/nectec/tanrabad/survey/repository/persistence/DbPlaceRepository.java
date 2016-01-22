@@ -54,7 +54,7 @@ public class DbPlaceRepository implements PlaceRepository {
         SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
         Cursor placeCursor = db.query(TABLE_NAME, PlaceColumn.wildcard(),
                 null, null, null, null, null);
-        return new CursorList<>(placeCursor, getMapper(placeCursor));
+        return getPlaceList(placeCursor);
     }
 
     @Override
@@ -84,7 +84,7 @@ public class DbPlaceRepository implements PlaceRepository {
                 PlaceColumn.UPDATE_BY, PlaceColumn.UPDATE_TIME, PlaceColumn.SYNC_STATUS};
         Cursor placeCursor = db.query(TABLE_NAME + " INNER JOIN place_subtype using(subtype_id)", placeColumn,
                 PlaceColumn.TYPE_ID + "=?", new String[]{String.valueOf(placeType)}, null, null, null);
-        return new CursorList<>(placeCursor, getMapper(placeCursor));
+        return getPlaceList(placeCursor);
     }
 
     @Override
@@ -92,7 +92,12 @@ public class DbPlaceRepository implements PlaceRepository {
         SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
         Cursor placeCursor = db.query(TABLE_NAME, PlaceColumn.wildcard(),
                 PlaceColumn.NAME + " LIKE ?", new String[]{"%" + placeName + "%"}, null, null, null);
-        return new CursorList<>(placeCursor, getMapper(placeCursor));
+        return getPlaceList(placeCursor);
+    }
+
+    private List<Place> getPlaceList(Cursor placeCursor) {
+        List<Place> placeList = new CursorList<>(placeCursor, getMapper(placeCursor));
+        return placeList.isEmpty() ? null : placeList;
     }
 
     private CursorMapper<Place> getMapper(Cursor cursor) {

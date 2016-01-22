@@ -57,7 +57,7 @@ public class DbBuildingRepository implements BuildingRepository {
         SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
         Cursor buildingCursor = db.query(TABLE_NAME, BuildingColumn.wildcard(),
                 BuildingColumn.PLACE_ID + "=?", new String[]{placeUuid.toString()}, null, null, null);
-        return new CursorList<>(buildingCursor, getMapper(buildingCursor));
+        return getBuildingList(buildingCursor);
     }
 
     @Override
@@ -65,7 +65,7 @@ public class DbBuildingRepository implements BuildingRepository {
         SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
         Cursor cursor = db.query(TABLE_NAME, BuildingColumn.wildcard(),
                 BuildingColumn.PLACE_ID + "=? AND " + BuildingColumn.NAME + " LIKE ?", new String[]{placeUUID.toString(), "%" + buildingName + "%"}, null, null, null);
-        return new CursorList<>(cursor, getMapper(cursor));
+        return getBuildingList(cursor);
     }
 
     @Override
@@ -85,6 +85,11 @@ public class DbBuildingRepository implements BuildingRepository {
             cursor.close();
             return null;
         }
+    }
+
+    private List<Building> getBuildingList(Cursor cursor) {
+        List<Building> buildingList = new CursorList<>(cursor, getMapper(cursor));
+        return buildingList.isEmpty() ? null : buildingList;
     }
 
     private CursorMapper<Building> getMapper(Cursor cursor) {

@@ -28,14 +28,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 import com.google.android.gms.maps.SupportMapFragment;
-import th.or.nectec.android.widget.thai.address.AddressView;
 import th.or.nectec.tanrabad.domain.place.*;
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.utils.Address;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.maps.LiteMapFragment;
 import th.or.nectec.tanrabad.survey.presenter.maps.LocationUtils;
+import th.or.nectec.tanrabad.survey.presenter.view.AddressPickerView;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.ResourceUtils;
@@ -57,7 +56,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     PlaceRepository placeRepository = BrokerPlaceRepository.getInstance();
 
     private EditText placeNameView;
-    private AddressView addressSelect;
+    private AddressPickerView addressSelect;
     private AppCompatSpinner placeTypeSelector;
     private View placeSubtypeLayout;
     private TextView placeSubtypeLabel;
@@ -100,7 +99,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     private void setupViews() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         placeNameView = (EditText) findViewById(R.id.place_name);
-        addressSelect = (AddressView) findViewById(R.id.address_select);
+        addressSelect = (AddressPickerView) findViewById(R.id.address_select);
         placeTypeSelector = (AppCompatSpinner) findViewById(R.id.place_type_selector);
         placeSubtypeLayout = findViewById(R.id.place_subtype_layout);
         placeSubtypeLabel = (TextView) findViewById(R.id.place_subtype_label);
@@ -211,7 +210,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         if (placeTypeID == Place.TYPE_WORSHIP) {
             place.setSubType(((PlaceType) placeSubtypeSelector.getSelectedItem()).id);
         }
-        place.setSubdistrictCode(addressSelect.getAddress() == null ? null : addressSelect.getAddress().getSubdistrictCode());
+        place.setSubdistrictCode(addressSelect.getSubdistrictCode());
     }
 
     public void doUpdateData() {
@@ -224,17 +223,6 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         }
     }
 
-    private Address getPlaceAddressFromField() {
-        if (addressSelect.getAddress() == null)
-            return null;
-
-        Address placeAddress = new Address();
-        placeAddress.setAddressCode(addressSelect.getAddress().getSubdistrictCode());
-        placeAddress.setSubdistrict(addressSelect.getAddress().getSubdistrict().getName());
-        placeAddress.setDistrict(addressSelect.getAddress().getDistrict().getName());
-        placeAddress.setProvince(addressSelect.getAddress().getProvince().getName());
-        return placeAddress;
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -306,7 +294,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         placeNameView.setText(place.getName());
 
         if (!TextUtils.isEmpty(place.getSubdistrictCode())){
-            addressSelect.setAddressCode(place.getSubdistrictCode());
+            addressSelect.setSubdistrictCode(place.getSubdistrictCode());
         }
 
         if (place.getLocation() != null)

@@ -24,6 +24,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import th.or.nectec.tanrabad.domain.address.ProvinceRepository;
 import th.or.nectec.tanrabad.entity.Province;
+import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorList;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
 
@@ -32,10 +33,17 @@ import java.util.List;
 public class DbProvinceRepository implements ProvinceRepository {
 
     public static final String TABLE_NAME = "province";
+    private static DbProvinceRepository instance;
     private Context context;
 
-    public DbProvinceRepository(Context context) {
+    private DbProvinceRepository(Context context) {
         this.context = context;
+    }
+
+    public static DbProvinceRepository getInstance() {
+        if (instance == null)
+            instance = new DbProvinceRepository(TanrabadApp.getInstance());
+        return instance;
     }
 
     @Override

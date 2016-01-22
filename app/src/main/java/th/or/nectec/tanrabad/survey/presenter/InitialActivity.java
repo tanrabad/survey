@@ -32,9 +32,9 @@ import th.or.nectec.tanrabad.survey.service.*;
 
 public class InitialActivity extends TanrabadActivity {
 
-    WritableRepoUpdateJob<Province> provinceUpdateJob = new WritableRepoUpdateJob<>(new ProvinceRestService(), new DbProvinceRepository(TanrabadApp.getInstance()));
-    WritableRepoUpdateJob<District> districtUpdateJob = new WritableRepoUpdateJob<>(new AmphurRestService(), new DbDistrictRepository(TanrabadApp.getInstance()));
-    WritableRepoUpdateJob<Subdistrict> subDistrictUpdateJob = new WritableRepoUpdateJob<>(new TambonRestService(), new DbSubdistrictRepository(TanrabadApp.getInstance()));
+    WritableRepoUpdateJob<Province> provinceUpdateJob = new WritableRepoUpdateJob<>(new ProvinceRestService(), DbProvinceRepository.getInstance());
+    WritableRepoUpdateJob<District> districtUpdateJob = new WritableRepoUpdateJob<>(new AmphurRestService(), DbDistrictRepository.getInstance());
+    WritableRepoUpdateJob<Subdistrict> subDistrictUpdateJob = new WritableRepoUpdateJob<>(new TambonRestService(), DbSubdistrictRepository.getInstance());
     WritableRepoUpdateJob<PlaceType> placeTypeUpdateJob = new WritableRepoUpdateJob<>(new PlaceTypeRestService(), new DbPlaceTypeRepository(TanrabadApp.getInstance()));
     WritableRepoUpdateJob<ContainerType> containerTypeUpdateJob = new WritableRepoUpdateJob<>(new ContainerTypeRestService(), new DbContainerTypeRepository(TanrabadApp.getInstance()));
     WritableRepoUpdateJob<Place> placeUpdateJob = new WritableRepoUpdateJob<>(new PlaceRestService(), BrokerPlaceRepository.getInstance());

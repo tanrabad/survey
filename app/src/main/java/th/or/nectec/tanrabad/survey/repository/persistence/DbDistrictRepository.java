@@ -22,15 +22,24 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import th.or.nectec.tanrabad.domain.address.DistrictRepository;
 import th.or.nectec.tanrabad.entity.District;
+import th.or.nectec.tanrabad.survey.TanrabadApp;
 
 import java.util.List;
 
 public class DbDistrictRepository implements DistrictRepository {
 
+    private static DbDistrictRepository instance;
     private Context context;
 
-    public DbDistrictRepository(Context context) {
+    private DbDistrictRepository(Context context) {
         this.context = context;
+    }
+
+    public static DbDistrictRepository getInstance() {
+        if (instance == null) {
+            instance = new DbDistrictRepository(TanrabadApp.getInstance());
+        }
+        return instance;
     }
 
     @Override

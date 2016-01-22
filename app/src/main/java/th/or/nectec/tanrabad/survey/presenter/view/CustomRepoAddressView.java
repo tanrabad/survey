@@ -26,35 +26,31 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import th.or.nectec.android.widget.thai.OnAddressChangedListener;
 import th.or.nectec.android.widget.thai.address.AddressPickerDialog;
-import th.or.nectec.android.widget.thai.address.AddressView;
 import th.or.nectec.domain.thai.ThaiAddressPrinter;
 import th.or.nectec.entity.thai.Address;
+import th.or.nectec.tanrabad.domain.address.AddressRepository;
+import th.or.nectec.tanrabad.survey.repository.InMemoryAddressRepository;
 import th.or.nectec.tanrabad.survey.repository.adapter.ThaiWidgetProvinceRepository;
 import th.or.nectec.tanrabad.survey.repository.persistence.DbProvinceRepository;
 
 
-public class CustomRepoAddressView extends AppCompatTextView implements AddressView {
+public class CustomRepoAddressView extends AppCompatTextView implements AddressPickerView {
 
     public static final int[] TINT_ATTRS = {android.R.attr.background};
     String addressCode;
     private Context context;
-    private OnAddressChangedListener onAddressChangedListener;
-    private Address selectedAddress;
-    private OnAddressChangedListener onDialgoAddressChangedListener = new OnAddressChangedListener() {
+    private OnAddressChangedListener onDialogAddressChangedListener = new OnAddressChangedListener() {
 
         @Override
         public void onAddressChanged(Address address) {
             setAddress(address);
-            if (onAddressChangedListener != null)
-                onAddressChangedListener.onAddressChanged(address);
         }
 
         @Override
         public void onAddressCanceled() {
-            if (onAddressChangedListener != null)
-                onAddressChangedListener.onAddressCanceled();
         }
     };
+    private AddressRepository addressRepository;
 
     public CustomRepoAddressView(Context context, AttributeSet attrs) {
         this(context, attrs, android.R.attr.spinnerStyle);
@@ -64,6 +60,7 @@ public class CustomRepoAddressView extends AppCompatTextView implements AddressV
         super(context, attrs, defStyleAttr);
         initTintManager(attrs, defStyleAttr);
         this.context = context;
+        addressRepository = InMemoryAddressRepository.getInstance();
     }
 
     private void initTintManager(AttributeSet attrs, int defStyleAttr) {
@@ -80,40 +77,35 @@ public class CustomRepoAddressView extends AppCompatTextView implements AddressV
         }
     }
 
-    @Override
-    public void setAddressCode(String addressCode) {
-        this.addressCode = addressCode;
-    }
-
-    @Override
-    public void setAddress(String s, String s1, String s2) {
-        setText(ThaiAddressPrinter.buildShortAddress(s, s1, s2));
-    }
-
-    @Override
-    public void setOnAddressChangedListener(OnAddressChangedListener onAddressChangedListener) {
-        this.onAddressChangedListener = onAddressChangedListener;
-    }
-
-    @Override
-    public Address getAddress() {
-        return selectedAddress;
-    }
-
     private void setAddress(Address address) {
-        selectedAddress = address;
         addressCode = address.getSubdistrictCode();
         setAddress(address.getSubdistrict().getName(), address.getDistrict().getName(), address.getProvince().getName());
     }
 
+    private void setAddress(String subdistrict, String district, String province) {
+        setText(ThaiAddressPrinter.buildShortAddress(subdistrict, district, province));
+    }
+
     @Override
     public boolean performClick() {
-        AddressPickerDialog dialog = new AddressPickerDialog(context, onDialgoAddressChangedListener);
-        dialog.setRepository(new ThaiWidgetProvinceRepository(new DbProvinceRepository(context)));
+        AddressPickerDialog dialog = new AddressPickerDialog(context, onDialogAddressChangedListener);
+        dialog.setRepository(new ThaiWidgetProvinceRepository(DbProvinceRepository.getInstance()));
         if (TextUtils.isEmpty(addressCode))
             dialog.show();
         else
             dialog.show(addressCode);
         return true;
+    }
+
+    @Override
+    public String getSubdistrictCode() {
+        return this.addressCode;
+    }
+
+    @Override
+    public void setSubdistrictCode(String subdistrictCode) {
+        th.or.nectec.tanrabad.entity.utils.Address address = addressRepository.findBySubdistrictCode(addressCode);
+        this.addressCode = address.getAddressCode();
+        setAddress(address.getSubdistrict(), address.getDistrict(), address.getProvince());
     }
 }

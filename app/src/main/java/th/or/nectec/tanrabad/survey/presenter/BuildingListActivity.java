@@ -39,9 +39,9 @@ import th.or.nectec.tanrabad.domain.survey.SurveyBuildingChooser;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView;
-import th.or.nectec.tanrabad.survey.repository.BuildingRepoBroker;
+import th.or.nectec.tanrabad.survey.repository.BrokerBuildingRepository;
+import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
-import th.or.nectec.tanrabad.survey.repository.PlaceRepoBroker;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
@@ -60,7 +60,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     private BuildingWithSurveyStatusAdapter buildingAdapter;
     private Place place;
     private EmptyLayoutView emptyLayoutView;
-    private SurveyBuildingChooser surveyBuildingChooser = new SurveyBuildingChooser(new StubUserRepository(), PlaceRepoBroker.getInstance(), BuildingRepoBroker.getInstance(), InMemorySurveyRepository.getInstance(), this);
+    private SurveyBuildingChooser surveyBuildingChooser = new SurveyBuildingChooser(new StubUserRepository(), BrokerPlaceRepository.getInstance(), BrokerBuildingRepository.getInstance(), InMemorySurveyRepository.getInstance(), this);
     private SearchView buildingSearchView;
 
     @Override
@@ -88,7 +88,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     }
 
     private void showPlaceName() {
-        PlaceController placeController = new PlaceController(PlaceRepoBroker.getInstance(), this);
+        PlaceController placeController = new PlaceController(BrokerPlaceRepository.getInstance(), this);
         placeController.showPlace(getPlaceUuidFromIntent());
     }
 

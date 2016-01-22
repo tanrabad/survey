@@ -32,7 +32,7 @@ import th.or.nectec.tanrabad.domain.place.PlaceListPresenter;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView;
-import th.or.nectec.tanrabad.survey.repository.PlaceRepoBroker;
+import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
@@ -43,7 +43,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
 
     private PlaceAdapter placeAdapter;
     private PlaceTypeAdapter placeTypeAdapter;
-    private PlaceChooser placeChooser = new PlaceChooser(PlaceRepoBroker.getInstance(), this);
+    private PlaceChooser placeChooser = new PlaceChooser(BrokerPlaceRepository.getInstance(), this);
     private TextView placeCountView;
     private RecyclerView placeListView;
     private AppCompatSpinner placeTypeFilterView;

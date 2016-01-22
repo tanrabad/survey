@@ -26,20 +26,20 @@ import th.or.nectec.tanrabad.survey.repository.persistence.DbBuildingRepository;
 import java.util.List;
 import java.util.UUID;
 
-public class BuildingRepoBroker implements BuildingRepository
+public class BrokerBuildingRepository implements BuildingRepository
 {
-    private static BuildingRepoBroker instance;
+    private static BrokerBuildingRepository instance;
     private BuildingRepository cache;
     private BuildingRepository database;
 
-    protected BuildingRepoBroker(BuildingRepository cache, BuildingRepository database) {
+    protected BrokerBuildingRepository(BuildingRepository cache, BuildingRepository database) {
         this.cache = cache;
         this.database = database;
     }
 
-    public static BuildingRepoBroker getInstance() {
+    public static BrokerBuildingRepository getInstance() {
         if (instance == null) {
-            instance = new BuildingRepoBroker(InMemoryBuildingRepository.getInstance(),
+            instance = new BrokerBuildingRepository(InMemoryBuildingRepository.getInstance(),
                     new DbBuildingRepository(TanrabadApp.getInstance()));
         }
         return instance;

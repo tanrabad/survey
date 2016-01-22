@@ -25,8 +25,8 @@ import th.or.nectec.tanrabad.entity.PlaceType;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.job.*;
-import th.or.nectec.tanrabad.survey.repository.BuildingRepoBroker;
-import th.or.nectec.tanrabad.survey.repository.PlaceRepoBroker;
+import th.or.nectec.tanrabad.survey.repository.BrokerBuildingRepository;
+import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.persistence.*;
 import th.or.nectec.tanrabad.survey.service.*;
 
@@ -37,8 +37,8 @@ public class InitialActivity extends TanrabadActivity {
     WritableRepoUpdateJob<Subdistrict> subDistrictUpdateJob = new WritableRepoUpdateJob<>(new TambonRestService(), new DbSubdistrictRepository(TanrabadApp.getInstance()));
     WritableRepoUpdateJob<PlaceType> placeTypeUpdateJob = new WritableRepoUpdateJob<>(new PlaceTypeRestService(), new DbPlaceTypeRepository(TanrabadApp.getInstance()));
     WritableRepoUpdateJob<ContainerType> containerTypeUpdateJob = new WritableRepoUpdateJob<>(new ContainerTypeRestService(), new DbContainerTypeRepository(TanrabadApp.getInstance()));
-    WritableRepoUpdateJob<Place> placeUpdateJob = new WritableRepoUpdateJob<>(new PlaceRestService(), PlaceRepoBroker.getInstance());
-    WritableRepoUpdateJob<Building> buildingUpdateJob = new WritableRepoUpdateJob<>(new BuildingRestService(), BuildingRepoBroker.getInstance());
+    WritableRepoUpdateJob<Place> placeUpdateJob = new WritableRepoUpdateJob<>(new PlaceRestService(), BrokerPlaceRepository.getInstance());
+    WritableRepoUpdateJob<Building> buildingUpdateJob = new WritableRepoUpdateJob<>(new BuildingRestService(), BrokerBuildingRepository.getInstance());
 
     private TextView loadingText;
 

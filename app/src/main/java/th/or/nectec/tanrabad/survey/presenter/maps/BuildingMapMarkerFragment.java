@@ -29,7 +29,7 @@ import com.google.maps.android.SphericalUtil;
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
-import th.or.nectec.tanrabad.survey.repository.PlaceRepoBroker;
+import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.utils.MapUtils;
 import th.or.nectec.tanrabad.survey.utils.android.ResourceUtils;
 
@@ -50,7 +50,7 @@ public class BuildingMapMarkerFragment extends MapMarkerFragment implements Goog
     }
 
     private void loadPlaceData(String placeUUID) {
-        place = PlaceRepoBroker.getInstance().findByUUID(UUID.fromString(placeUUID));
+        place = BrokerPlaceRepository.getInstance().findByUUID(UUID.fromString(placeUUID));
     }
 
     public static BuildingMapMarkerFragment newInstanceWithLocation(String placeUUID, Location buildingLocation) {

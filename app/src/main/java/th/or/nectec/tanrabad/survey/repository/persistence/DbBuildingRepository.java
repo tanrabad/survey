@@ -25,7 +25,7 @@ import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.domain.building.BuildingRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.survey.repository.PlaceRepoBroker;
+import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorList;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
@@ -43,7 +43,7 @@ public class DbBuildingRepository implements BuildingRepository {
 
 
     public DbBuildingRepository(Context context) {
-        this(context, new StubUserRepository(), PlaceRepoBroker.getInstance());
+        this(context, new StubUserRepository(), BrokerPlaceRepository.getInstance());
     }
 
     public DbBuildingRepository(Context context, UserRepository userRepository, PlaceRepository placeRepository) {

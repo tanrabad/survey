@@ -40,8 +40,8 @@ import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.utils.HouseIndex;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView;
+import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
-import th.or.nectec.tanrabad.survey.repository.PlaceRepoBroker;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
@@ -93,7 +93,7 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
     }
 
     private void showPlaceInfo() {
-        PlaceController placeController = new PlaceController(PlaceRepoBroker.getInstance(), this);
+        PlaceController placeController = new PlaceController(BrokerPlaceRepository.getInstance(), this);
         placeController.showPlace(UUID.fromString(getPlaceUuidFromIntent()));
     }
 
@@ -127,7 +127,7 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
 
     private void showSurveyBuildingHistoryList() {
         SurveyBuildingHistoryController surveyBuildingHistoryController = new SurveyBuildingHistoryController(new StubUserRepository(),
-                PlaceRepoBroker.getInstance(),
+                BrokerPlaceRepository.getInstance(),
                 InMemorySurveyRepository.getInstance(),
                 this);
         surveyBuildingHistoryController.showSurveyBuildingOf(getPlaceUuidFromIntent(), getUsernameFromIntent());

@@ -22,7 +22,7 @@ import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
-import th.or.nectec.tanrabad.survey.repository.PlaceRepoBroker;
+import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.service.json.JsonBuilding;
 
@@ -37,7 +37,7 @@ public class BuildingRestService extends BaseRestService<Building> {
     private UserRepository userRepository;
 
     public BuildingRestService() {
-        this(BASE_API, new LastUpdatePreference(TanrabadApp.getInstance(), PATH), PlaceRepoBroker.getInstance(), new StubUserRepository());
+        this(BASE_API, new LastUpdatePreference(TanrabadApp.getInstance(), PATH), BrokerPlaceRepository.getInstance(), new StubUserRepository());
     }
 
     public BuildingRestService(String apiBaseUrl, LastUpdate lastUpdate, PlaceRepository placeRepository, UserRepository userRepository) {

@@ -18,13 +18,13 @@ import th.or.nectec.tanrabad.domain.place.PlaceChooser;
 import th.or.nectec.tanrabad.domain.place.PlaceListPresenter;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
-import th.or.nectec.tanrabad.survey.repository.PlaceRepoBroker;
+import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 
 import java.util.List;
 
 public class PlaceSearchActivity extends TanrabadActivity implements SearchView.OnQueryTextListener, PlaceListPresenter {
 
-    PlaceChooser placeChooser = new PlaceChooser(PlaceRepoBroker.getInstance(), this);
+    PlaceChooser placeChooser = new PlaceChooser(BrokerPlaceRepository.getInstance(), this);
     private SearchRecentSuggestions suggestions;
     private PlaceAdapter placeAdapter;
     private SearchView searchView;

@@ -25,21 +25,21 @@ import th.or.nectec.tanrabad.survey.repository.persistence.DbPlaceRepository;
 import java.util.List;
 import java.util.UUID;
 
-public class PlaceRepoBroker implements PlaceRepository {
+public class BrokerPlaceRepository implements PlaceRepository {
 
-    private static PlaceRepoBroker instance;
+    private static BrokerPlaceRepository instance;
     private PlaceRepository cache;
     private PlaceRepository persistence;
 
 
-    protected PlaceRepoBroker(PlaceRepository cache, PlaceRepository persistence) {
+    protected BrokerPlaceRepository(PlaceRepository cache, PlaceRepository persistence) {
         this.cache = cache;
         this.persistence = persistence;
     }
 
-    public static PlaceRepoBroker getInstance() {
+    public static BrokerPlaceRepository getInstance() {
         if (instance == null)
-            instance = new PlaceRepoBroker(InMemoryPlaceRepository.getInstance(),
+            instance = new BrokerPlaceRepository(InMemoryPlaceRepository.getInstance(),
                     new DbPlaceRepository(TanrabadApp.getInstance()));
         return instance;
     }

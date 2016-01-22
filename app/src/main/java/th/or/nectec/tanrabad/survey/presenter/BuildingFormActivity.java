@@ -43,8 +43,8 @@ import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.maps.LiteMapFragment;
 import th.or.nectec.tanrabad.survey.presenter.maps.LocationUtils;
-import th.or.nectec.tanrabad.survey.repository.BuildingRepoBroker;
-import th.or.nectec.tanrabad.survey.repository.PlaceRepoBroker;
+import th.or.nectec.tanrabad.survey.repository.BrokerBuildingRepository;
+import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
 import th.or.nectec.tanrabad.survey.utils.android.TwiceBackPressed;
@@ -67,8 +67,8 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
     private TextView buildingNameTitle;
     private EditText buildingNameView;
     private FrameLayout addLocationBackground;
-    private PlaceController placeController = new PlaceController(PlaceRepoBroker.getInstance(), this);
-    private BuildingController buildingController = new BuildingController(BuildingRepoBroker.getInstance(), this);
+    private PlaceController placeController = new PlaceController(BrokerPlaceRepository.getInstance(), this);
+    private BuildingController buildingController = new BuildingController(BrokerBuildingRepository.getInstance(), this);
 
     private Place place;
     private Building building;
@@ -239,10 +239,10 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
         building.setUpdateBy("user"); //TODO: 22/1/2559 set user later.
         try {
             if (TextUtils.isEmpty(getBuildingUUID())) {
-                BuildingSaver buildingSaver = new BuildingSaver(BuildingRepoBroker.getInstance(), new SaveBuildingValidator(), this);
+                BuildingSaver buildingSaver = new BuildingSaver(BrokerBuildingRepository.getInstance(), new SaveBuildingValidator(), this);
                 buildingSaver.save(building);
             } else {
-                BuildingSaver buildingSaver = new BuildingSaver(BuildingRepoBroker.getInstance(), new UpdateBuildingValidator(), this);
+                BuildingSaver buildingSaver = new BuildingSaver(BrokerBuildingRepository.getInstance(), new UpdateBuildingValidator(), this);
                 buildingSaver.update(building);
             }
         } catch (ValidatorException e) {

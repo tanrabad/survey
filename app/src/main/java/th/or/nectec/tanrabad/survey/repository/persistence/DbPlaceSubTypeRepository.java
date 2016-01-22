@@ -31,10 +31,10 @@ public class DbPlaceSubTypeRepository implements PlaceSubTypeRepository {
     }
 
     @Override
-    public PlaceSubType findByID(int placeTypeID) {
+    public PlaceSubType findByID(int placeSubTypeID) {
         SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
         Cursor placeTypeCursor = db.query(TABLE_NAME, PlaceSubTypeColumn.wildcard(),
-                null, null, null, null, null);
+                PlaceSubTypeColumn.ID + " =?", new String[]{String.valueOf(placeSubTypeID)}, null, null, null);
         return getPlaceSubType(placeTypeCursor);
     }
 

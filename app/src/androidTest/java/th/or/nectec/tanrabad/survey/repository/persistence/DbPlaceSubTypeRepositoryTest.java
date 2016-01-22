@@ -99,9 +99,11 @@ public class DbPlaceSubTypeRepositoryTest {
     public void testFindByID() throws Exception {
         Context context = InstrumentationRegistry.getTargetContext();
         DbPlaceSubTypeRepository dbPlaceSubTypeRepository = new DbPlaceSubTypeRepository(context);
-        PlaceSubType placeSubType = dbPlaceSubTypeRepository.findByID(1);
-        assertEquals(1, placeSubType.getId());
-        assertEquals("สำนักงานสาธารณสุขจังหวัด", placeSubType.getName());
+        PlaceSubType placeSubType = dbPlaceSubTypeRepository.findByID(13);
+
+        assertEquals(13, placeSubType.getId());
+        assertEquals("วัด", placeSubType.getName());
+        assertEquals(2, placeSubType.getPlaceTypeId());
     }
 
     @Test

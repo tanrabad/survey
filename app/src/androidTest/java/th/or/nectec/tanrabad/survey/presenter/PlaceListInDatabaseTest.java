@@ -131,7 +131,7 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
 
         Intents.intended(Matchers.allOf(
                 hasComponent(new ComponentName(mActivity, BuildingListActivity.class)),
-                hasExtra(BuildingListActivity.PLACE_UUID_ARG, UUID.nameUUIDFromBytes("3xss".getBytes()).toString())
+                hasExtra(BuildingListActivity.PLACE_UUID_ARG, "febb0058-3007-41ae-91d8-de2c3160c935".toString())
         ));
     }
 

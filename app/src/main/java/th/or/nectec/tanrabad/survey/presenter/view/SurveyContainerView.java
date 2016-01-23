@@ -144,7 +144,7 @@ public class SurveyContainerView extends LinearLayout {
     }
 
     public SurveyDetail getSurveyDetail() {
-        return new SurveyDetail(UUIDUtils.generateV1(MacAddressUtils.getMacAddress(getContext())),
+        return new SurveyDetail(UUIDUtils.generateOrdered(MacAddressUtils.getMacAddress(getContext())),
                 containerType, getTotalValue(), getFoundValue());
     }
 

@@ -135,7 +135,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     @Override
     public void onNewSurvey(Building building, User user) {
-        survey = new Survey(UUIDUtils.generateV1(MacAddressUtils.getMacAddress(this)), user, building);
+        survey = new Survey(UUIDUtils.generateOrdered(MacAddressUtils.getMacAddress(this)), user, building);
         survey.startSurvey();
 
         setBuildingInfo();

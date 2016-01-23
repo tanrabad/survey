@@ -33,7 +33,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import th.or.nectec.tanrabad.domain.survey.*;
 import th.or.nectec.tanrabad.entity.*;
-import th.or.nectec.tanrabad.entity.utils.UUIDv1;
+import th.or.nectec.tanrabad.entity.utils.UUIDUtils;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.presenter.view.AdvanceStepperDialog;
@@ -135,7 +135,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     @Override
     public void onNewSurvey(Building building, User user) {
-        survey = new Survey(UUIDv1.generate(MacAddressUtils.getMacAddress(this)), user, building);
+        survey = new Survey(UUIDUtils.generateV1(MacAddressUtils.getMacAddress(this)), user, building);
         survey.startSurvey();
 
         setBuildingInfo();

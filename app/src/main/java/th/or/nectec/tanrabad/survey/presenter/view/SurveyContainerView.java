@@ -35,7 +35,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import th.or.nectec.tanrabad.entity.ContainerType;
 import th.or.nectec.tanrabad.entity.SurveyDetail;
-import th.or.nectec.tanrabad.entity.utils.UUIDv1;
+import th.or.nectec.tanrabad.entity.utils.UUIDUtils;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.utils.MacAddressUtils;
 
@@ -144,7 +144,7 @@ public class SurveyContainerView extends LinearLayout {
     }
 
     public SurveyDetail getSurveyDetail() {
-        return new SurveyDetail(UUIDv1.generate(MacAddressUtils.getMacAddress(getContext())),
+        return new SurveyDetail(UUIDUtils.generateV1(MacAddressUtils.getMacAddress(getContext())),
                 containerType, getTotalValue(), getFoundValue());
     }
 

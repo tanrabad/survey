@@ -46,7 +46,7 @@ ext {
     loganSquareVersion = "1.3.4"
     jodaTimeVersion = "2.9.1"
     calligraphyVersion = "2.1.0"
-    thaiWidgetVersion = "0.4.2"
+    thaiWidgetVersion = "0.4.3"
     gsonVersion = "2.4"
 
     junitVersion = "4.12"

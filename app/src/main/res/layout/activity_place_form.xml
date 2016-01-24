@@ -118,6 +118,7 @@
                 android:paddingLeft="4dp"
                 android:paddingRight="24dp"
                 android:paddingEnd="24dp"
+                android:hint="@string/touch_to_define_address"
                 android:id="@+id/address_select"/>
 
         <include layout="@layout/location_form"/>

@@ -17,36 +17,20 @@
 
 package th.or.nectec.tanrabad.survey.repository.adapter;
 
-import th.or.nectec.domain.thai.address.ProvinceRepository;
-import th.or.nectec.entity.thai.Province;
-import th.or.nectec.entity.thai.Region;
+
+import th.or.nectec.tanrabad.survey.repository.persistence.DbProvinceRepository;
+import th.or.nectec.thai.address.AddressRepository;
+import th.or.nectec.thai.address.Province;
+import th.or.nectec.thai.address.Region;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ThaiWidgetProvinceRepository implements ProvinceRepository {
-
-    th.or.nectec.tanrabad.domain.address.ProvinceRepository dbProvinceRepository;
-
-    public ThaiWidgetProvinceRepository(th.or.nectec.tanrabad.domain.address.ProvinceRepository dbProvinceRepository) {
-        this.dbProvinceRepository = dbProvinceRepository;
-    }
-
-    @Override
-    public List<Province> findByRegion(Region region) {
-        return null;
-    }
-
-    @Override
-    public Province findByProvinceCode(String provinceCode) {
-        th.or.nectec.tanrabad.entity.Province province = dbProvinceRepository.findByCode(provinceCode);
-
-        return province == null ? null : new Province(province.getCode(), province.getName(), Region.CENTER);
-    }
+public class ThaiWidgetProvinceRepository implements AddressRepository<Province> {
 
     @Override
     public List<Province> find() {
-        List<th.or.nectec.tanrabad.entity.Province> provinces = dbProvinceRepository.find();
+        List<th.or.nectec.tanrabad.entity.Province> provinces = DbProvinceRepository.getInstance().find();
         List<Province> thaiWidgetProvicnes = new ArrayList<>();
         for (th.or.nectec.tanrabad.entity.Province province : provinces) {
             Province widgetProvince = new Province(province.getCode(), province.getName(), Region.CENTER);
@@ -55,5 +39,13 @@ public class ThaiWidgetProvinceRepository implements ProvinceRepository {
         return thaiWidgetProvicnes;
     }
 
+    @Override
+    public List<Province> findByParentCode(String s) {
+        return null;
+    }
 
+    @Override
+    public Province findByCode(String s) {
+        return null;
+    }
 }

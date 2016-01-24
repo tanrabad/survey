@@ -72,6 +72,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/space_between_content"
+                    android:layout_marginStart="@dimen/space_between_content"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -111,11 +112,14 @@
             android:text="@string/address"
             android:textIsSelectable="false"/>
 
-        <th.or.nectec.tanrabad.survey.presenter.view.CustomRepoAddressView
-            android:id="@+id/address_select"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/touch_to_define_address"/>
+        <th.or.nectec.thai.widget.address.AddressPicker
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="4dp"
+                android:paddingRight="24dp"
+                android:paddingEnd="24dp"
+                android:id="@+id/address_select"/>
+
         <include layout="@layout/location_form"/>
 
     </LinearLayout>

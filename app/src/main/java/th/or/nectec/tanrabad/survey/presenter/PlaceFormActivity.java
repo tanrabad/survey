@@ -34,8 +34,8 @@ import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.maps.LiteMapFragment;
 import th.or.nectec.tanrabad.survey.presenter.maps.LocationUtils;
-import th.or.nectec.tanrabad.survey.presenter.view.AddressPickerView;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
+import th.or.nectec.tanrabad.survey.repository.adapter.ThaiWidgetProvinceRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.ResourceUtils;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
@@ -43,6 +43,8 @@ import th.or.nectec.tanrabad.survey.utils.android.TwiceBackPressed;
 import th.or.nectec.tanrabad.survey.validator.SavePlaceValidator;
 import th.or.nectec.tanrabad.survey.validator.UpdatePlaceValidator;
 import th.or.nectec.tanrabad.survey.validator.ValidatorException;
+import th.or.nectec.thai.widget.address.AddressPicker;
+import th.or.nectec.thai.widget.address.AddressPickerDialog;
 
 import java.util.UUID;
 
@@ -56,7 +58,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     PlaceRepository placeRepository = BrokerPlaceRepository.getInstance();
 
     private EditText placeNameView;
-    private AddressPickerView addressSelect;
+    private AddressPicker addressSelect;
     private AppCompatSpinner placeTypeSelector;
     private View placeSubtypeLayout;
     private TextView placeSubtypeLabel;
@@ -99,7 +101,9 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     private void setupViews() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         placeNameView = (EditText) findViewById(R.id.place_name);
-        addressSelect = (AddressPickerView) findViewById(R.id.address_select);
+        addressSelect = (AddressPicker) findViewById(R.id.address_select);
+        AddressPickerDialog popup = new AddressPickerDialog(this).setProvinceRepository(new ThaiWidgetProvinceRepository());
+        addressSelect.setPopup(popup);
         placeTypeSelector = (AppCompatSpinner) findViewById(R.id.place_type_selector);
         placeSubtypeLayout = findViewById(R.id.place_subtype_layout);
         placeSubtypeLabel = (TextView) findViewById(R.id.place_subtype_label);
@@ -210,7 +214,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         if (placeTypeID == Place.TYPE_WORSHIP) {
             place.setSubType(((PlaceType) placeSubtypeSelector.getSelectedItem()).id);
         }
-        place.setSubdistrictCode(addressSelect.getSubdistrictCode());
+        place.setSubdistrictCode(addressSelect.getAddress().getCode());
     }
 
     public void doUpdateData() {
@@ -294,7 +298,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         placeNameView.setText(place.getName());
 
         if (!TextUtils.isEmpty(place.getSubdistrictCode())){
-            addressSelect.setSubdistrictCode(place.getSubdistrictCode());
+            addressSelect.setAddressCode(place.getSubdistrictCode());
         }
 
         if (place.getLocation() != null)

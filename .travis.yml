@@ -8,6 +8,7 @@ cache:
   - $HOME/.gradle/wrapper/
 env:
   global:
+  - MALLOC_ARENA_MAX=2
   - ADB_INSTALL_TIMEOUT=10
   - TANRABAD_GOOGLE_DEBUG_KEY=XXXXX
   - TANRABAD_GOOGLE_RELEASE_KEY=XXXXX

@@ -22,13 +22,7 @@ import org.joda.time.DateTime;
 
 public class Entity {
 
-    public static final String ADD = "add";
-    public static final String CHANGED = "changed";
-    public static final String UNCHANGED = "unchanged";
-
     private DateTime updateTimestamp;
-
-    private String downloadFlag;
 
     public DateTime getUpdateTimestamp() {
         return updateTimestamp;
@@ -36,13 +30,5 @@ public class Entity {
 
     public void setUpdateTimestamp(String updateTimestamp) {
         this.updateTimestamp = DateTime.parse(updateTimestamp);
-    }
-
-    public String getDownloadFlag() {
-        return downloadFlag;
-    }
-
-    public void setDownloadFlag(String downloadFlag) {
-        this.downloadFlag = downloadFlag;
     }
 }

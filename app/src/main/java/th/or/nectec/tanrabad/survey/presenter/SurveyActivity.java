@@ -40,9 +40,9 @@ import th.or.nectec.tanrabad.survey.presenter.view.AdvanceStepperDialog;
 import th.or.nectec.tanrabad.survey.presenter.view.SurveyContainerView;
 import th.or.nectec.tanrabad.survey.presenter.view.TorchButton;
 import th.or.nectec.tanrabad.survey.repository.BrokerBuildingRepository;
-import th.or.nectec.tanrabad.survey.repository.InMemoryContainerTypeRepository;
 import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
+import th.or.nectec.tanrabad.survey.repository.persistence.DbContainerTypeRepository;
 import th.or.nectec.tanrabad.survey.utils.EditTextStepper;
 import th.or.nectec.tanrabad.survey.utils.MacAddressUtils;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
@@ -107,7 +107,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     }
 
     private void showContainerList() {
-        ContainerController containerController = new ContainerController(InMemoryContainerTypeRepository.getInstance(), this);
+        ContainerController containerController = new ContainerController(new DbContainerTypeRepository(this), this);
         containerController.showList();
     }
 

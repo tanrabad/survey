@@ -25,4 +25,6 @@ import java.util.List;
 public interface ContainerTypeRepository extends WritableRepository<ContainerType> {
 
     List<ContainerType> find();
+
+    ContainerType findByID(int containerTypeID);
 }

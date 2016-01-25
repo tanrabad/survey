@@ -17,12 +17,11 @@
 
 package th.or.nectec.tanrabad.domain.survey;
 
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.Survey;
-import th.or.nectec.tanrabad.entity.User;
+import th.or.nectec.tanrabad.entity.*;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public interface SurveyRepository {
     boolean save(Survey survey);
@@ -30,6 +29,8 @@ public interface SurveyRepository {
     Survey findByBuildingAndUserIn7Day(Building building, User user);
 
     ArrayList<Survey> findByPlaceAndUserIn7Days(Place place, User user);
+
+    List<SurveyDetail> getSurveyDetail(UUID surveyId, int containerLocationID);
 
     ArrayList<Place> findByUserIn7Days(User user);
 }

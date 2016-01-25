@@ -45,11 +45,8 @@ public class OrganizationTest {
     }
 
     @Test
-    public void testSetThenGetName() {
-        String hospitalName = "รพ.สต.บางแม่นาง";
-        organization.setName(hospitalName);
-
-        assertEquals(hospitalName, organization.getName());
+    public void testGetName() {
+        assertEquals(สำนักป้องกันควบคุมโรคที่_4, organization.getName());
     }
 
     @Test

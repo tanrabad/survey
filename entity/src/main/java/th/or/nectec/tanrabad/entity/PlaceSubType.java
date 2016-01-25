@@ -33,24 +33,12 @@ public class PlaceSubType extends Entity {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getPlaceTypeId() {
         return placeTypeId;
-    }
-
-    public void setPlaceTypeId(int placeTypeId) {
-        this.placeTypeId = placeTypeId;
     }
 
     @Override
@@ -71,7 +59,6 @@ public class PlaceSubType extends Entity {
         if (id != that.id) return false;
         if (placeTypeId != that.placeTypeId) return false;
         return name.equals(that.name);
-
     }
 
     @Override

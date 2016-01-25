@@ -40,10 +40,6 @@ public class Organization {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getAreaLevelId() {
         return areaLevelId;
     }

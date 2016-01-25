@@ -1,0 +1,138 @@
+[
+  {
+    "place_subtype_id": 1,
+    "place_subtype_name": "สำนักงานสาธารณสุขจังหวัด",
+    "place_type_id": 4,
+    "place_type_name": "โรงพยาบาล",
+    "active": true,
+    "update_timestamp": "2015-11-30T17:00:00.000Z"
+  },
+  {
+    "place_subtype_id": 2,
+    "place_subtype_name": "สำนักงานสาธารณสุขอำเภอ",
+    "place_type_id": 4,
+    "place_type_name": "โรงพยาบาล",
+    "active": true,
+    "update_timestamp": "2015-11-30T17:00:00.000Z"
+  },
+  {
+    "place_subtype_id": 3,
+    "place_subtype_name": "รพ.สต./สาธารณสุขชุมชน",
+    "place_type_id": 4,
+    "place_type_name": "โรงพยาบาล",
+    "active": true,
+    "update_timestamp": "2015-11-30T17:00:00.000Z"
+  },
+  {
+    "place_subtype_id": 4,
+    "place_subtype_name": "โรงพยาบาลศูนย์/โรงพยาบาลทั่วไป",
+    "place_type_id": 4,
+    "place_type_name": "โรงพยาบาล",
+    "active": true,
+    "update_timestamp": "2015-11-30T17:00:00.000Z"
+  },
+  {
+    "place_subtype_id": 5,
+    "place_subtype_name": "โรงพยาบาลชุมชน",
+    "place_type_id": 4,
+    "place_type_name": "โรงพยาบาล",
+    "active": true,
+    "update_timestamp": "2015-11-30T17:00:00.000Z"
+  },
+  {
+    "place_subtype_id": 6,
+    "place_subtype_name": "โรงพยาบาลอื่นสังกัด สธ./โรงพยาบาลสังกัดกระทรวงอื่น",
+    "place_type_id": 4,
+    "place_type_name": "โรงพยาบาล",
+    "active": true,
+    "update_timestamp": "2015-11-30T17:00:00.000Z"
+  },
+  {
+    "place_subtype_id": 7,
+    "place_subtype_name": "โรงพยาบาลเอกชน",
+    "place_type_id": 4,
+    "place_type_name": "โรงพยาบาล",
+    "active": true,
+    "update_timestamp": "2015-11-30T17:00:00.000Z"
+  },
+  {
+    "place_subtype_id": 8,
+    "place_subtype_name": "ศูนย์สุขภาพชุมชน/บริการสาธารณสุข",
+    "place_type_id": 4,
+    "place_type_name": "โรงพยาบาล",
+    "active": true,
+    "update_timestamp": "2015-11-30T17:00:00.000Z"
+  },
+  {
+    "place_subtype_id": 9,
+    "place_subtype_name": "ศูนย์วิชาการ",
+    "place_type_id": 4,
+    "place_type_name": "โรงพยาบาล",
+    "active": true,
+    "update_timestamp": "2015-11-30T17:00:00.000Z"
+  },
+  {
+    "place_subtype_id": 10,
+    "place_subtype_name": "ชุมชนแออัด",
+    "place_type_id": 1,
+    "place_type_name": "หมู่บ้าน/ชุมชน",
+    "active": true,
+    "update_timestamp": "2015-11-30T17:00:00.000Z"
+  },
+  {
+    "place_subtype_id": 11,
+    "place_subtype_name": "ชุมชนพักอาศัย",
+    "place_type_id": 1,
+    "place_type_name": "หมู่บ้าน/ชุมชน",
+    "active": true,
+    "update_timestamp": "2015-11-30T17:00:00.000Z"
+  },
+  {
+    "place_subtype_id": 12,
+    "place_subtype_name": "ชุมชนพาณิชย์",
+    "place_type_id": 1,
+    "place_type_name": "หมู่บ้าน/ชุมชน",
+    "active": true,
+    "update_timestamp": "2015-11-30T17:00:00.000Z"
+  },
+  {
+    "place_subtype_id": 13,
+    "place_subtype_name": "วัด",
+    "place_type_id": 2,
+    "place_type_name": "ศาสนสถาน",
+    "active": true,
+    "update_timestamp": "2015-12-01T17:00:00.000Z"
+  },
+  {
+    "place_subtype_id": 14,
+    "place_subtype_name": "โบสถ์",
+    "place_type_id": 2,
+    "place_type_name": "ศาสนสถาน",
+    "active": true,
+    "update_timestamp": "2015-11-30T17:00:00.000Z"
+  },
+  {
+    "place_subtype_id": 15,
+    "place_subtype_name": "มัสยิด/สุเหร่า",
+    "place_type_id": 2,
+    "place_type_name": "ศาสนสถาน",
+    "active": true,
+    "update_timestamp": "2015-11-30T17:00:00.000Z"
+  },
+  {
+    "place_subtype_id": 16,
+    "place_subtype_name": "โรงเรียน",
+    "place_type_id": 3,
+    "place_type_name": "สถานศึกษา",
+    "active": true,
+    "update_timestamp": "2015-11-30T17:00:00.000Z"
+  },
+  {
+    "place_subtype_id": 17,
+    "place_subtype_name": "โรงงาน",
+    "place_type_id": 5,
+    "place_type_name": "โรงงาน",
+    "active": true,
+    "update_timestamp": "2015-11-30T17:00:00.000Z"
+  }
+]

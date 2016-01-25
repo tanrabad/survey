@@ -73,7 +73,7 @@ public class UpdatePlaceTest extends TanrabadEspressoTestBase {
                 .perform(click());
         onView(withText("โรงพยาบาล"))
                 .perform(click());
-        onView(withText("โรงเรียน"))
+        onView(withText("สถานศึกษา"))
                 .perform(click());
 
         onView(withId(R.id.save))

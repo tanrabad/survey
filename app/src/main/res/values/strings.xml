@@ -69,7 +69,7 @@
     <!--place type-->
     <string name="village_community">หมู่บ้าน/ชุมชน</string>
     <string name="worship">ศาสนสถาน</string>
-    <string name="school">โรงเรียน</string>
+    <string name="school">สถานศึกษา</string>
     <string name="hospital">โรงพยาบาล</string>
     <string name="factory">โรงงาน</string>
     <string name="not_define_place_type">ทั้งหมด</string>

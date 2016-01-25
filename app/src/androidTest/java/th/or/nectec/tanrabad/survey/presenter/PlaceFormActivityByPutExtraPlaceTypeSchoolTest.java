@@ -58,7 +58,7 @@ public class PlaceFormActivityByPutExtraPlaceTypeSchoolTest extends TanrabadEspr
 
     @Test
     public void openAddPlacePageByPutExtraPlaceTypeSchoolShouldPlaceTypeSelectorEqualsTypeSchool() {
-        onView(withText("โรงเรียน"))
+        onView(withText("สถานศึกษา"))
                 .check(matches(isDisplayed()));
     }
 
@@ -120,7 +120,7 @@ public class PlaceFormActivityByPutExtraPlaceTypeSchoolTest extends TanrabadEspr
                 .perform(click());
         onView(withText("บางกรวย"))
                 .perform(click());
-        onView(withText("โรงเรียน"))
+        onView(withText("สถานศึกษา"))
                 .perform(click());
         onView(withText("ศาสนสถาน"))
                 .perform(click());

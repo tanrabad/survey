@@ -62,7 +62,7 @@ public class UpdatePlaceTest extends TanrabadEspressoTestBase {
     }
 
     @Test
-    public void editPlaceNameAddressTypePlaceDefineLocationThenSaveShouldNotFoundCanNotSave() {
+    public void editPlaceNameAddressTypePlaceThenSaveShouldNotFoundCanNotSave() {
         onView(withId(R.id.place_name))
                 .check(matches(withText("ธรรมศาสตร์")));
         onView(withId(R.id.place_name))
@@ -74,10 +74,6 @@ public class UpdatePlaceTest extends TanrabadEspressoTestBase {
         onView(withText("โรงพยาบาล"))
                 .perform(click());
         onView(withText("โรงเรียน"))
-                .perform(click());
-        onView(withId(R.id.add_marker))
-                .perform(click());
-        onView(withId(R.id.save_marker_menu))
                 .perform(click());
 
         onView(withId(R.id.save))

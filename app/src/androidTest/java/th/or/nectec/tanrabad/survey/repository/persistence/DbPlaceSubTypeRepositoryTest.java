@@ -37,13 +37,14 @@ public class DbPlaceSubTypeRepositoryTest {
     @Rule
     public SurveyDbTestRule dbTestRule = new SurveyDbTestRule();
 
+    Context context = InstrumentationRegistry.getTargetContext();
+    DbPlaceSubTypeRepository dbPlaceSubTypeRepository = new DbPlaceSubTypeRepository(context);
+    SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+
     @Test
     public void testSave() throws Exception {
-        Context context = InstrumentationRegistry.getTargetContext();
-        DbPlaceSubTypeRepository dbPlaceSubTypeRepository = new DbPlaceSubTypeRepository(context);
         boolean success = dbPlaceSubTypeRepository.save(new PlaceSubType(0, "ไม่ระบุ", 1));
 
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
         Cursor cursor = db.query(DbPlaceSubTypeRepository.TABLE_NAME,
                 PlaceSubTypeColumn.wildcard(),
                 PlaceSubTypeColumn.ID + "=?",
@@ -60,11 +61,8 @@ public class DbPlaceSubTypeRepositoryTest {
 
     @Test
     public void testUpdate() throws Exception {
-        Context context = InstrumentationRegistry.getTargetContext();
-        DbPlaceSubTypeRepository dbPlaceSubTypeRepository = new DbPlaceSubTypeRepository(context);
         boolean success = dbPlaceSubTypeRepository.update(new PlaceSubType(1, "สำนักงานสาธารณสุขจังหวัด555", 4));
 
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
         Cursor cursor = db.query(DbPlaceSubTypeRepository.TABLE_NAME,
                 PlaceSubTypeColumn.wildcard(),
                 PlaceSubTypeColumn.ID + "=?",
@@ -82,8 +80,6 @@ public class DbPlaceSubTypeRepositoryTest {
 
     @Test
     public void testFindAllPlaceType() throws Exception {
-        Context context = InstrumentationRegistry.getTargetContext();
-        DbPlaceSubTypeRepository dbPlaceSubTypeRepository = new DbPlaceSubTypeRepository(context);
         List<PlaceSubType> placeSubTypeList = dbPlaceSubTypeRepository.find();
 
         assertEquals(17, placeSubTypeList.size());
@@ -97,8 +93,6 @@ public class DbPlaceSubTypeRepositoryTest {
 
     @Test
     public void testFindByID() throws Exception {
-        Context context = InstrumentationRegistry.getTargetContext();
-        DbPlaceSubTypeRepository dbPlaceSubTypeRepository = new DbPlaceSubTypeRepository(context);
         PlaceSubType placeSubType = dbPlaceSubTypeRepository.findByID(13);
 
         assertEquals(13, placeSubType.getId());
@@ -107,9 +101,7 @@ public class DbPlaceSubTypeRepositoryTest {
     }
 
     @Test
-    public void testFindByPlaceID() throws Exception {
-        Context context = InstrumentationRegistry.getTargetContext();
-        DbPlaceSubTypeRepository dbPlaceSubTypeRepository = new DbPlaceSubTypeRepository(context);
+    public void testFindByPlaceTypeID() throws Exception {
         List<PlaceSubType> placeSubTypeList = dbPlaceSubTypeRepository.findByPlaceTypeID(4);
 
         assertEquals(9, placeSubTypeList.size());

@@ -53,7 +53,7 @@ public class BuildingFormActivityTest extends TanrabadEspressoTestBase {
     @Before
     public void setUp() {
         Intent intent = new Intent();
-        intent.putExtra("place_uuid_arg", UUID.nameUUIDFromBytes("1abc".getBytes()).toString());
+        intent.putExtra("place_uuid_arg", "935b9aeb-6522-461e-994f-f9e9006c4a33".toString());
         mActivity = mActivityTestRule.launchActivity(intent);
     }
 

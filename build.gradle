@@ -66,3 +66,5 @@ ext {
 task testBeforePush(dependsOn: [':entity:test', ':domain:test', ':app:test', ':app:build']) {
     description 'Run all process like on CI-Server'
 }
+
+task fullTest(dependsOn: ['testBeforePush', ':app:connectedCheck'])

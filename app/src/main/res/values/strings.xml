@@ -109,10 +109,7 @@
     <string name="format_building_count">%1$d อาคาร</string>
     <string name="place_name">ชื่อสถานที่</string>
     <string name="address">ที่อยู่</string>
-    <string name="temple">วัด</string>
-    <string name="church">โบสถ์</string>
-    <string name="mosque">มัสยิด</string>
-    <string name="place_worship_type">ประเภทศาสนสถาน</string>
+    <string name="place_subtype_label">ประเภท%1$s</string>
     <string name="please_define_place_name">กรุณาระบุชื่อสถานที่</string>
     <string name="please_define_place_location">กรุณาระบุพิกัดของสถานที่</string>
     <string name="please_define_place_address">กรุณาระบุที่อยู่ของสถานที่</string>

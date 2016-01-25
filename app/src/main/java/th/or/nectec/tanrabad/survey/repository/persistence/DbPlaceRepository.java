@@ -81,7 +81,7 @@ public class DbPlaceRepository implements PlaceRepository {
         SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
         String[] placeColumn = new String[]{PlaceColumn.ID, TABLE_NAME + "." + PlaceColumn.NAME, PlaceColumn.SUBTYPE_ID,
                 PlaceColumn.SUBDISTRICT_CODE, PlaceColumn.LATITUDE, PlaceColumn.LONGITUDE,
-                PlaceColumn.UPDATE_BY, PlaceColumn.UPDATE_TIME, PlaceColumn.SYNC_STATUS};
+                PlaceColumn.UPDATE_BY, PlaceColumn.UPDATE_TIME, PlaceColumn.CHANGED_STATUS};
         Cursor placeCursor = db.query(TABLE_NAME + " INNER JOIN place_subtype using(subtype_id)", placeColumn,
                 PlaceColumn.TYPE_ID + "=?", new String[]{String.valueOf(placeType)}, null, null, null);
         return getPlaceList(placeCursor);
@@ -106,7 +106,9 @@ public class DbPlaceRepository implements PlaceRepository {
 
     @Override
     public boolean save(Place place) {
-        return saveByContentValues(new SurveyLiteDatabase(context).getWritableDatabase(), placeContentValues(place));
+        ContentValues values = placeContentValues(place);
+        values.put(PlaceColumn.CHANGED_STATUS, ChangedStatus.ADD);
+        return saveByContentValues(new SurveyLiteDatabase(context).getWritableDatabase(), values);
     }
 
     private boolean saveByContentValues(SQLiteDatabase db, ContentValues place){
@@ -115,7 +117,10 @@ public class DbPlaceRepository implements PlaceRepository {
 
     @Override
     public boolean update(Place place) {
-        return updateByContentValues(new SurveyLiteDatabase(context).getWritableDatabase(), placeContentValues(place));
+        ContentValues values = placeContentValues(place);
+        //TODO ต้องทำส่วนตรวจสอบสถานะในกรณีข้อมูลเดิมมี flag เป็น ADD หลังจากปรับปรุงข้อมูลไปแล้ว ก็ยังต้องเป็น ADD เหมือนเดิม
+        values.put(PlaceColumn.CHANGED_STATUS, ChangedStatus.CHANGED);
+        return updateByContentValues(new SurveyLiteDatabase(context).getWritableDatabase(), values);
     }
 
     private boolean updateByContentValues(SQLiteDatabase db, ContentValues place) {
@@ -128,7 +133,7 @@ public class DbPlaceRepository implements PlaceRepository {
         db.beginTransaction();
         for (Place place : updateList) {
             ContentValues values = placeContentValues(place);
-            values.put(PlaceColumn.SYNC_STATUS, SyncStatus.SYNCED);
+            values.put(PlaceColumn.CHANGED_STATUS, ChangedStatus.UNCHANGED);
             boolean updated = updateByContentValues(db, values);
             if (!updated)
                 saveByContentValues(db, values);
@@ -152,7 +157,6 @@ public class DbPlaceRepository implements PlaceRepository {
             values.put(PlaceColumn.UPDATE_BY, place.getUpdateBy());
         }
         values.put(PlaceColumn.UPDATE_TIME, place.getUpdateTimestamp().toString());
-        values.put(PlaceColumn.SYNC_STATUS, SyncStatus.NOT_SYNC);
         return values;
     }
 }

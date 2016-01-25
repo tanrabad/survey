@@ -24,12 +24,12 @@ public class BuildingColumn {
     public static final String LATITUDE = "latitude";
     public static final String LONGITUDE = "longitude";
     public static final String UPDATE_BY = "update_by";
-    public static final String SYNC_STATUS = "sync_status";
     public static final String PLACE_ID = "place_id";
     public static final String UPDATE_TIME = "update_time";
+    public static final String CHANGED_STATUS = "changed_status";
 
 
     public static String[] wildcard() {
-        return new String[]{ID, NAME, PLACE_ID, LATITUDE, LONGITUDE, UPDATE_BY, UPDATE_TIME, SYNC_STATUS};
+        return new String[]{ID, NAME, PLACE_ID, LATITUDE, LONGITUDE, UPDATE_BY, UPDATE_TIME, CHANGED_STATUS};
     }
 }

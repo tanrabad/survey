@@ -98,15 +98,41 @@ public class DbBuildingRepository implements BuildingRepository {
 
     @Override
     public boolean save(Building building) {
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getWritableDatabase();
-        return db.insert(TABLE_NAME, null, buildingContentValues(building)) != ERROR_INSERT_ID;
+        ContentValues values = buildingContentValues(building);
+        values.put(PlaceColumn.CHANGED_STATUS, ChangedStatus.ADD);
+        return saveByContentValues(new SurveyLiteDatabase(context).getWritableDatabase(), values);
     }
 
+    private boolean saveByContentValues(SQLiteDatabase db, ContentValues building) {
+        return db.insert(TABLE_NAME, null, building) != ERROR_INSERT_ID;
+    }
 
     @Override
     public boolean update(Building building) {
+        ContentValues values = buildingContentValues(building);
+        //TODO ต้องทำส่วนตรวจสอบสถานะในกรณีข้อมูลเดิมมี flag เป็น ADD หลังจากปรับปรุงข้อมูลไปแล้ว ก็ยังต้องเป็น ADD เหมือนเดิม
+        values.put(PlaceColumn.CHANGED_STATUS, ChangedStatus.CHANGED);
+        return updateByContentValues(new SurveyLiteDatabase(context).getWritableDatabase(), values);
+    }
+
+    private boolean updateByContentValues(SQLiteDatabase db, ContentValues place) {
+        return db.update(TABLE_NAME, place, BuildingColumn.ID + "=?", new String[]{place.getAsString(BuildingColumn.ID)}) > 0;
+    }
+
+    @Override
+    public void updateOrInsert(List<Building> buildings) {
         SQLiteDatabase db = new SurveyLiteDatabase(context).getWritableDatabase();
-        return db.update(TABLE_NAME, buildingContentValues(building), BuildingColumn.ID + "=?", new String[]{building.getId().toString()}) > 0;
+        db.beginTransaction();
+        for (Building building : buildings) {
+            ContentValues values = buildingContentValues(building);
+            values.put(PlaceColumn.CHANGED_STATUS, ChangedStatus.UNCHANGED);
+            boolean updated = updateByContentValues(db, values);
+            if (!updated)
+                saveByContentValues(db, values);
+        }
+        db.setTransactionSuccessful();
+        db.endTransaction();
+        db.close();
     }
 
     private ContentValues buildingContentValues(Building building) {
@@ -122,16 +148,6 @@ public class DbBuildingRepository implements BuildingRepository {
             values.put(BuildingColumn.UPDATE_BY, building.getUpdateBy());
         }
         values.put(BuildingColumn.UPDATE_TIME, building.getUpdateTimestamp().toString());
-        values.put(BuildingColumn.SYNC_STATUS, SyncStatus.NOT_SYNC);
         return values;
-    }
-
-    @Override
-    public void updateOrInsert(List<Building> buildings) {
-        for (Building building : buildings) {
-            boolean updated = update(building);
-            if (!updated)
-                save(building);
-        }
     }
 }

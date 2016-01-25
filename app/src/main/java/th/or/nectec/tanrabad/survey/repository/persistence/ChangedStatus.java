@@ -17,8 +17,8 @@
 
 package th.or.nectec.tanrabad.survey.repository.persistence;
 
-public class SyncStatus {
-
-    public static final int SYNCED = 1;
-    public static final int NOT_SYNC = 0;
+public class ChangedStatus {
+    public static final int UNCHANGED = 0;
+    public static final int ADD = 1;
+    public static final int CHANGED = 2;
 }

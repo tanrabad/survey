@@ -29,12 +29,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import th.or.nectec.tanrabad.domain.UserRepository;
-import th.or.nectec.tanrabad.domain.address.AddressRepository;
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.utils.time.ThaiDateTimeConverter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -45,7 +45,6 @@ public class DbPlaceRepositoryTest {
 
     @Rule
     public SurveyDbTestRule dbTestRule = new SurveyDbTestRule();
-    private AddressRepository addressRepository;
     private UserRepository userRepository;
 
     @Before
@@ -91,6 +90,42 @@ public class DbPlaceRepositoryTest {
         assertEquals(updateBy.getUsername(), cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_BY)));
         assertEquals(updateTime, ThaiDateTimeConverter.convert(cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_TIME))));
 
+        cursor.close();
+    }
+
+    @Test
+    public void testInsertOrUpdate() throws Exception {
+        User updateBy = stubUser();
+        DateTime updateTime = DateTime.now();
+        Place place = new Place(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5f"), "หมู่บ้านทดสอบ");
+        place.setSubdistrictCode("120202");
+        place.setSubType(PlaceTypeMapper.ชุมชนแออัด);
+        place.setType(Place.TYPE_VILLAGE_COMMUNITY);
+        place.setLocation(new Location(10.200000f, 100.100000f));
+        place.setUpdateBy(updateBy);
+        place.setUpdateTimestamp(updateTime.toString());
+        Context context = InstrumentationRegistry.getTargetContext();
+        DbPlaceRepository dbPlaceRepository = new DbPlaceRepository(context);
+        ArrayList<Place> places = new ArrayList<>();
+        places.add(place);
+        dbPlaceRepository.updateOrInsert(places);
+
+        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        Cursor cursor = db.query(DbPlaceRepository.TABLE_NAME,
+                PlaceColumn.wildcard(),
+                PlaceColumn.ID + "=?",
+                new String[]{place.getId().toString()},
+                null, null, null);
+
+        assertEquals(true, cursor.moveToFirst());
+        assertEquals(1, cursor.getCount());
+        assertEquals(place.getId().toString(), cursor.getString(cursor.getColumnIndex(PlaceColumn.ID)));
+        assertEquals(place.getName(), cursor.getString(cursor.getColumnIndex(PlaceColumn.NAME)));
+        assertEquals(place.getType(), PlaceTypeMapper.getInstance().findBySubType(cursor.getInt(cursor.getColumnIndex(PlaceColumn.SUBTYPE_ID))));
+        assertEquals(place.getSubType(), cursor.getInt(cursor.getColumnIndex(PlaceColumn.SUBTYPE_ID)));
+        assertEquals(updateBy.getUsername(), cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_BY)));
+        assertEquals(updateTime, ThaiDateTimeConverter.convert(cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_TIME))));
+        assertEquals(ChangedStatus.UNCHANGED, cursor.getInt(cursor.getColumnIndex(PlaceColumn.CHANGED_STATUS)));
         cursor.close();
     }
 

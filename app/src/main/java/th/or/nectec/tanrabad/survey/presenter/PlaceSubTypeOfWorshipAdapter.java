@@ -23,11 +23,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.PlaceType;
+import th.or.nectec.tanrabad.survey.R;
 
 import java.util.ArrayList;
-
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.survey.R;
 
 public class PlaceSubTypeOfWorshipAdapter extends BaseAdapter {
 
@@ -59,7 +59,7 @@ public class PlaceSubTypeOfWorshipAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int i) {
-        return placeTypes.get(i).id;
+        return placeTypes.get(i).getId();
     }
 
     @Override
@@ -76,7 +76,7 @@ public class PlaceSubTypeOfWorshipAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) view.getTag();
         }
-        holder.nameView.setText(placeTypes.get(i).name);
+        holder.nameView.setText(placeTypes.get(i).getName());
         view.setTag(holder);
 
         return view;
@@ -84,7 +84,7 @@ public class PlaceSubTypeOfWorshipAdapter extends BaseAdapter {
 
     public int getPosition(int subtypeID) {
         for (PlaceType eachPlaceType : placeTypes) {
-            if (eachPlaceType.id == subtypeID) {
+            if (eachPlaceType.getId() == subtypeID) {
                 return placeTypes.indexOf(eachPlaceType);
             }
         }

@@ -31,6 +31,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import th.or.nectec.tanrabad.domain.place.*;
 import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.PlaceType;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.maps.LiteMapFragment;
 import th.or.nectec.tanrabad.survey.presenter.maps.LocationUtils;
@@ -136,7 +137,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         placeTypeSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (placeAdapter.getItem(i).id == Place.TYPE_WORSHIP) {
+                if (placeAdapter.getItem(i).getId() == Place.TYPE_WORSHIP) {
                     placeSubtypeLayout.setVisibility(View.VISIBLE);
                     setupWorshipPlaceSubtypeSpinner();
                 } else {
@@ -209,10 +210,10 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
 
     private void getPlaceFieldData() {
         place.setName(placeNameView.getText().toString().trim());
-        int placeTypeID = ((PlaceType) placeTypeSelector.getSelectedItem()).id;
+        int placeTypeID = ((PlaceType) placeTypeSelector.getSelectedItem()).getId();
         place.setType(placeTypeID);
         if (placeTypeID == Place.TYPE_WORSHIP) {
-            place.setSubType(((PlaceType) placeSubtypeSelector.getSelectedItem()).id);
+            place.setSubType(((PlaceType) placeSubtypeSelector.getSelectedItem()).getId());
         }
         place.setSubdistrictCode(addressSelect.getAddress().getCode());
     }

@@ -99,11 +99,12 @@
             android:text="@string/place_name"/>
 
         <EditText
-            android:id="@+id/place_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/touch_to_type_place_name"
-            android:inputType="text"/>
+                android:id="@+id/place_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/touch_to_type_place_name"
+                android:textSize="@dimen/text_title"
+                android:inputType="text"/>
 
         <TextView
             style="@style/TextViewTanrabad.Label"

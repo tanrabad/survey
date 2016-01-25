@@ -17,7 +17,9 @@
 
 package th.or.nectec.tanrabad.entity.lookup;
 
-public class ContainerType {
+import static java.lang.Integer.compare;
+
+public class ContainerType implements Comparable<ContainerType> {
 
     private final int id;
     private String name;
@@ -29,10 +31,6 @@ public class ContainerType {
 
     public String getName() {
         return name;
-    }
-
-    public int getId() {
-        return id;
     }
 
     @Override
@@ -51,10 +49,19 @@ public class ContainerType {
     }
 
     @Override
+    public int compareTo(ContainerType o) {
+        return compare(this.id, o.getId());
+    }
+
+    @Override
     public String toString() {
         return "ContainerType{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    public int getId() {
+        return id;
     }
 }

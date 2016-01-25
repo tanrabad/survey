@@ -21,27 +21,16 @@ import th.or.nectec.tanrabad.domain.survey.ContainerTypeRepository;
 import th.or.nectec.tanrabad.domain.survey.ContainerTypeRepositoryException;
 import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class InMemoryContainerTypeRepository implements ContainerTypeRepository {
 
 
     private static InMemoryContainerTypeRepository instance;
-    private ArrayList<ContainerType> containerTypes;
+    private Map<Integer, ContainerType> containerTypes;
 
     private InMemoryContainerTypeRepository() {
-        containerTypes = new ArrayList<>();
-        containerTypes.add(new ContainerType(1, "น้ำใช้"));
-        containerTypes.add(new ContainerType(2, "น้ำดื่ม"));
-        containerTypes.add(new ContainerType(3, "แจกัน"));
-        containerTypes.add(new ContainerType(4, "ที่รองกันมด"));
-        containerTypes.add(new ContainerType(5, "จานรองกระถาง"));
-        containerTypes.add(new ContainerType(6, "อ่างบัว/ไม้น้ำ"));
-        containerTypes.add(new ContainerType(7, "ยางรถยนต์เก่า"));
-        containerTypes.add(new ContainerType(8, "กากใบพืช"));
-        containerTypes.add(new ContainerType(9, "ภาชนะที่ไม่ใช้"));
-        containerTypes.add(new ContainerType(10, "อื่นๆ (ที่ใช้ประโยชน์)"));
+        containerTypes = new HashMap<>();
     }
 
     public static InMemoryContainerTypeRepository getInstance() {
@@ -52,7 +41,9 @@ public class InMemoryContainerTypeRepository implements ContainerTypeRepository 
 
     @Override
     public List<ContainerType> find() {
-        return containerTypes;
+        ArrayList<ContainerType> queryContainerType = new ArrayList<>(containerTypes.values());
+        Collections.sort(queryContainerType);
+        return queryContainerType;
     }
 
     @Override
@@ -67,15 +58,15 @@ public class InMemoryContainerTypeRepository implements ContainerTypeRepository 
     }
 
     public boolean save(ContainerType containerType) {
-        containerTypes.add(containerType);
+        containerTypes.put(containerType.getId(), containerType);
         return true;
     }
 
     public boolean update(ContainerType containerType) {
-        if (!containerTypes.contains(containerType)) {
+        if (!containerTypes.containsKey(containerType.getId())) {
             throw new ContainerTypeRepositoryException();
         } else {
-            containerTypes.set(containerTypes.indexOf(containerType), containerType);
+            containerTypes.put(containerType.getId(), containerType);
         }
         return true;
     }

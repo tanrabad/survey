@@ -18,7 +18,7 @@
 package th.or.nectec.tanrabad.domain.place;
 
 import th.or.nectec.tanrabad.domain.WritableRepository;
-import th.or.nectec.tanrabad.entity.PlaceType;
+import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 
 import java.util.List;
 

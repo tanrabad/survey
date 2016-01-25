@@ -22,7 +22,11 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import th.or.nectec.tanrabad.entity.*;
+import th.or.nectec.tanrabad.entity.Building;
+import th.or.nectec.tanrabad.entity.Survey;
+import th.or.nectec.tanrabad.entity.SurveyDetail;
+import th.or.nectec.tanrabad.entity.User;
+import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 
 import java.util.ArrayList;
 import java.util.UUID;

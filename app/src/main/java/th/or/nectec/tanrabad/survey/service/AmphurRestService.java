@@ -18,7 +18,7 @@
 package th.or.nectec.tanrabad.survey.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
-import th.or.nectec.tanrabad.entity.District;
+import th.or.nectec.tanrabad.entity.lookup.District;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.service.json.JsonAmphur;
 

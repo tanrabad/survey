@@ -3,11 +3,10 @@ package th.or.nectec.tanrabad.domain.geographic;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import th.or.nectec.tanrabad.entity.field.Location;
 
 import java.util.Arrays;
 import java.util.Collection;
-
-import th.or.nectec.tanrabad.entity.Location;
 
 import static org.junit.Assert.assertEquals;
 
@@ -21,6 +20,15 @@ public class EllipsoidDistanceWithDummyTest {
     Location startLocation = new Location(40.6892, -74.0444);
 
     boolean testExpectResult;
+    private Location destinationLocation;
+    private double distanceBetweenPoint;
+    private boolean expectValue;
+
+    public EllipsoidDistanceWithDummyTest(Location destinationLocation, double distanceBetweenPoint, boolean expectValue) {
+        this.destinationLocation = destinationLocation;
+        this.distanceBetweenPoint = distanceBetweenPoint;
+        this.expectValue = expectValue;
+    }
 
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
@@ -93,10 +101,6 @@ public class EllipsoidDistanceWithDummyTest {
         });
     }
 
-    private Location destinationLocation;
-    private double distanceBetweenPoint;
-    private boolean expectValue;
-
     @Test
     public void testDistanceCalculateEllipsoid() throws Exception {
         //Location destinationLocation = new Location(39.7802, -74.9453);
@@ -109,11 +113,5 @@ public class EllipsoidDistanceWithDummyTest {
         final boolean expectResult = ellipsoidDistance.calculate(startLocation, destinationLocation) <= 100;
 
         assertEquals(expectResult, expectValue);
-    }
-
-    public EllipsoidDistanceWithDummyTest(Location destinationLocation, double distanceBetweenPoint, boolean expectValue) {
-        this.destinationLocation = destinationLocation;
-        this.distanceBetweenPoint = distanceBetweenPoint;
-        this.expectValue = expectValue;
     }
 }

@@ -2,7 +2,7 @@ package th.or.nectec.tanrabad.survey.service.json;
 
 import com.bluelinelabs.logansquare.LoganSquare;
 import org.junit.Test;
-import th.or.nectec.tanrabad.entity.Location;
+import th.or.nectec.tanrabad.entity.field.Location;
 
 import static org.junit.Assert.assertEquals;
 

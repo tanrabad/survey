@@ -18,6 +18,8 @@
 package th.or.nectec.tanrabad.entity;
 
 import org.joda.time.DateTime;
+import th.or.nectec.tanrabad.entity.field.Location;
+import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 
 import java.util.ArrayList;
 import java.util.List;

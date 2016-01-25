@@ -2,7 +2,7 @@ package th.or.nectec.tanrabad.survey.service.json;
 
 import com.bluelinelabs.logansquare.LoganSquare;
 import org.junit.Test;
-import th.or.nectec.tanrabad.entity.ContainerLocation;
+import th.or.nectec.tanrabad.entity.lookup.ContainerLocation;
 import th.or.nectec.tanrabad.survey.utils.ResourceFile;
 
 import java.util.List;

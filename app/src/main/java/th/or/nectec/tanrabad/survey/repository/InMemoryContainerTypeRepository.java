@@ -19,7 +19,7 @@ package th.or.nectec.tanrabad.survey.repository;
 
 import th.or.nectec.tanrabad.domain.survey.ContainerTypeRepository;
 import th.or.nectec.tanrabad.domain.survey.ContainerTypeRepositoryException;
-import th.or.nectec.tanrabad.entity.ContainerType;
+import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 
 import java.util.ArrayList;
 import java.util.List;

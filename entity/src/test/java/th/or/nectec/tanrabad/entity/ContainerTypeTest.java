@@ -18,6 +18,7 @@
 package th.or.nectec.tanrabad.entity;
 
 import org.junit.Test;
+import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;

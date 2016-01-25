@@ -24,8 +24,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-
-import th.or.nectec.tanrabad.entity.Location;
+import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.maps.LocationUtils;
 import th.or.nectec.tanrabad.survey.presenter.maps.MapMarkerFragment;

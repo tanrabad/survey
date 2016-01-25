@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import th.or.nectec.tanrabad.domain.survey.ContainerTypeRepository;
-import th.or.nectec.tanrabad.entity.ContainerType;
+import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorList;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
 
@@ -30,6 +30,20 @@ public class DbContainerTypeRepository implements ContainerTypeRepository {
         return new CursorList<>(containerTypeCursor, getMapper(containerTypeCursor));
     }
 
+    private CursorMapper<ContainerType> getMapper(Cursor cursor) {
+        return new ContainerTypeCursorMapper(cursor);
+    }
+
+    @Override
+    public boolean save(ContainerType containerType) {
+        return saveByContentValues(new SurveyLiteDatabase(context).getWritableDatabase(), containerTypeContentValues(containerType));
+    }
+
+    @Override
+    public boolean update(ContainerType containerType) {
+        return updateByContentValues(new SurveyLiteDatabase(context).getWritableDatabase(), containerTypeContentValues(containerType));
+    }
+
     @Override
     public void updateOrInsert(List<ContainerType> updateList) {
         SQLiteDatabase db = new SurveyLiteDatabase(context).getWritableDatabase();
@@ -45,12 +59,12 @@ public class DbContainerTypeRepository implements ContainerTypeRepository {
         db.close();
     }
 
-    private boolean saveByContentValues(SQLiteDatabase db, ContentValues containerType) {
-        return db.insert(TABLE_NAME, null, containerType) != ERROR_INSERT_ID;
-    }
-
     private boolean updateByContentValues(SQLiteDatabase db, ContentValues containerType) {
         return db.update(TABLE_NAME, containerType, ContainerTypeColumn.ID + "=?", new String[]{containerType.getAsString(ContainerTypeColumn.ID)}) > 0;
+    }
+
+    private boolean saveByContentValues(SQLiteDatabase db, ContentValues containerType) {
+        return db.insert(TABLE_NAME, null, containerType) != ERROR_INSERT_ID;
     }
 
     private ContentValues containerTypeContentValues(ContainerType containerType) {
@@ -58,19 +72,5 @@ public class DbContainerTypeRepository implements ContainerTypeRepository {
         values.put(ContainerTypeColumn.ID, containerType.getId());
         values.put(ContainerTypeColumn.NAME, containerType.getName());
         return values;
-    }
-
-    private CursorMapper<ContainerType> getMapper(Cursor cursor) {
-        return new ContainerTypeCursorMapper(cursor);
-    }
-
-    @Override
-    public boolean save(ContainerType containerType) {
-        return saveByContentValues(new SurveyLiteDatabase(context).getWritableDatabase(), containerTypeContentValues(containerType));
-    }
-
-    @Override
-    public boolean update(ContainerType containerType) {
-        return updateByContentValues(new SurveyLiteDatabase(context).getWritableDatabase(), containerTypeContentValues(containerType));
     }
 }

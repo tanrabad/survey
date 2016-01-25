@@ -18,7 +18,7 @@
 package th.or.nectec.tanrabad.domain.survey;
 
 import th.or.nectec.tanrabad.domain.WritableRepository;
-import th.or.nectec.tanrabad.entity.ContainerType;
+import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 
 import java.util.List;
 

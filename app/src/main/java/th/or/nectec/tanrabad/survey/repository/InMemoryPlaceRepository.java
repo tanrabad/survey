@@ -22,9 +22,9 @@ import android.text.TextUtils;
 import th.or.nectec.tanrabad.domain.geographic.LocationRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceRepositoryException;
-import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.LocationEntity;
 import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.field.Location;
 
 import java.util.*;
 

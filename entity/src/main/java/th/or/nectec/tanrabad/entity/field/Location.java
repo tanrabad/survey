@@ -15,37 +15,34 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.entity;
+package th.or.nectec.tanrabad.entity.field;
 
-public class PlaceSubType extends Entity {
+public class Location {
+    double latitude;
+    double longitude;
 
-    private int id;
-    private String name;
-    private int placeTypeId;
-
-    public PlaceSubType(int id, String name, int placeTypeId) {
-        this.id = id;
-        this.name = name;
-        this.placeTypeId = placeTypeId;
+    public Location(double latitude, double longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
-    public int getId() {
-        return id;
+    public double getLatitude() {
+        return latitude;
     }
 
-    public String getName() {
-        return name;
+    public double getLongitude() {
+        return longitude;
     }
 
-    public int getPlaceTypeId() {
-        return placeTypeId;
-    }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + name.hashCode();
-        result = 31 * result + placeTypeId;
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(latitude);
+        result = (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(longitude);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
 
@@ -54,19 +51,18 @@ public class PlaceSubType extends Entity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        PlaceSubType that = (PlaceSubType) o;
+        Location location = (Location) o;
 
-        if (id != that.id) return false;
-        if (placeTypeId != that.placeTypeId) return false;
-        return name.equals(that.name);
+        if (Double.compare(location.latitude, latitude) != 0) return false;
+        return Double.compare(location.longitude, longitude) == 0;
+
     }
 
     @Override
     public String toString() {
-        return "PlaceSubType{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", placeTypeId=" + placeTypeId +
+        return "Location{" +
+                "latitude=" + latitude +
+                ", longitude=" + longitude +
                 '}';
     }
 }

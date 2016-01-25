@@ -5,7 +5,7 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import th.or.nectec.tanrabad.entity.Subdistrict;
+import th.or.nectec.tanrabad.entity.lookup.Subdistrict;
 
 import java.util.ArrayList;
 import java.util.List;

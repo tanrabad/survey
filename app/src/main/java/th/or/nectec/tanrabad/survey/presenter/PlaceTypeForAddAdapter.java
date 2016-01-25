@@ -23,7 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import th.or.nectec.tanrabad.entity.PlaceType;
+import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.repository.persistence.DbPlaceTypeRepository;
 

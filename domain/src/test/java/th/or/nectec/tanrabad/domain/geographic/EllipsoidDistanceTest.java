@@ -18,13 +18,7 @@
 package th.or.nectec.tanrabad.domain.geographic;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-
-import java.util.Arrays;
-import java.util.Collection;
-
-import th.or.nectec.tanrabad.entity.Location;
+import th.or.nectec.tanrabad.entity.field.Location;
 
 import static org.junit.Assert.assertEquals;
 

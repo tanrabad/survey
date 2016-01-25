@@ -17,7 +17,7 @@
 
 package th.or.nectec.tanrabad.domain.geographic;
 
-import th.or.nectec.tanrabad.entity.Location;
+import th.or.nectec.tanrabad.entity.field.Location;
 
 public class CoordinateLocationCalculate implements CoordinateLocationCalculator {
 

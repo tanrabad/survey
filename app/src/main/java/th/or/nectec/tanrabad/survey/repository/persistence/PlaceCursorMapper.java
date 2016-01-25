@@ -19,8 +19,8 @@ package th.or.nectec.tanrabad.survey.repository.persistence;
 
 import android.database.Cursor;
 import th.or.nectec.tanrabad.domain.UserRepository;
-import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
 
 import java.util.UUID;

@@ -17,7 +17,7 @@
 
 package th.or.nectec.tanrabad.domain.geographic;
 
-import th.or.nectec.tanrabad.entity.Location;
+import th.or.nectec.tanrabad.entity.field.Location;
 
 public class EllipsoidDistance implements DistanceCalculator {
     private double a = 6378.137, b = 6356.752314, f = 0.003039;

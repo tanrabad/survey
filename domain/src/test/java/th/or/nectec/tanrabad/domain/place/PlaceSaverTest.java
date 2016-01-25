@@ -22,8 +22,8 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.field.Location;
 
 import java.util.UUID;
 

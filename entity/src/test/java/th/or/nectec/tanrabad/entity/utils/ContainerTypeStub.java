@@ -17,7 +17,7 @@
 
 package th.or.nectec.tanrabad.entity.utils;
 
-import th.or.nectec.tanrabad.entity.ContainerType;
+import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 
 public class ContainerTypeStub {
 

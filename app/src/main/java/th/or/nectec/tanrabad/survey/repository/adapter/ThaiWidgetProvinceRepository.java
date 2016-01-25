@@ -30,9 +30,9 @@ public class ThaiWidgetProvinceRepository implements AddressRepository<Province>
 
     @Override
     public List<Province> find() {
-        List<th.or.nectec.tanrabad.entity.Province> provinces = DbProvinceRepository.getInstance().find();
+        List<th.or.nectec.tanrabad.entity.lookup.Province> provinces = DbProvinceRepository.getInstance().find();
         List<Province> thaiWidgetProvicnes = new ArrayList<>();
-        for (th.or.nectec.tanrabad.entity.Province province : provinces) {
+        for (th.or.nectec.tanrabad.entity.lookup.Province province : provinces) {
             Province widgetProvince = new Province(province.getCode(), province.getName(), Region.CENTER);
             thaiWidgetProvicnes.add(widgetProvince);
         }

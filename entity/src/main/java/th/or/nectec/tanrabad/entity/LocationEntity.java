@@ -17,6 +17,8 @@
 
 package th.or.nectec.tanrabad.entity;
 
+import th.or.nectec.tanrabad.entity.field.Location;
+
 public interface LocationEntity {
 
     Location getLocation();

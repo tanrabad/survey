@@ -24,10 +24,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-
-import java.text.DecimalFormat;
-
-import th.or.nectec.tanrabad.entity.Location;
+import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.maps.BuildingMapMarkerFragment;
 import th.or.nectec.tanrabad.survey.presenter.maps.LocationUtils;
@@ -35,6 +32,8 @@ import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.TwiceBackPressed;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
+
+import java.text.DecimalFormat;
 
 public class BuildingMapMarkerActivity extends TanrabadActivity implements View.OnClickListener {
 

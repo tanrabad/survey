@@ -33,7 +33,7 @@ public class MapMarkerFragment extends BaseMapFragment implements MapMarkerInter
     public static final String FRAGMENT_TAG = "map_marker_fragment";
 
     Marker marker;
-    private th.or.nectec.tanrabad.entity.Location markedLocation;
+    private th.or.nectec.tanrabad.entity.field.Location markedLocation;
 
     public static MapMarkerFragment newInstance() {
         MapMarkerFragment mapMarkerFragment = new MapMarkerFragment();
@@ -41,7 +41,7 @@ public class MapMarkerFragment extends BaseMapFragment implements MapMarkerInter
         return mapMarkerFragment;
     }
 
-    public static MapMarkerFragment newInstanceWithLocation(th.or.nectec.tanrabad.entity.Location buildingLocation) {
+    public static MapMarkerFragment newInstanceWithLocation(th.or.nectec.tanrabad.entity.field.Location buildingLocation) {
         MapMarkerFragment mapMarkerFragment = new MapMarkerFragment();
         mapMarkerFragment.setMoveToMyLocation(false);
         mapMarkerFragment.setMarkedLocation(buildingLocation);
@@ -117,12 +117,12 @@ public class MapMarkerFragment extends BaseMapFragment implements MapMarkerInter
         getMap().getUiSettings().setScrollGesturesEnabled(true);
     }
 
-    public th.or.nectec.tanrabad.entity.Location getMarkedLocation() {
-        return marker == null ? null : new th.or.nectec.tanrabad.entity.Location(marker.getPosition().latitude, marker.getPosition().longitude);
+    public th.or.nectec.tanrabad.entity.field.Location getMarkedLocation() {
+        return marker == null ? null : new th.or.nectec.tanrabad.entity.field.Location(marker.getPosition().latitude, marker.getPosition().longitude);
     }
 
     @Override
-    public void setMarkedLocation(th.or.nectec.tanrabad.entity.Location location) {
+    public void setMarkedLocation(th.or.nectec.tanrabad.entity.field.Location location) {
         markedLocation = location;
     }
 }

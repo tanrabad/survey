@@ -2,8 +2,7 @@ package th.or.nectec.tanrabad.survey.presenter.maps;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
-
-import th.or.nectec.tanrabad.entity.Location;
+import th.or.nectec.tanrabad.entity.field.Location;
 
 
 public class LocationUtils {

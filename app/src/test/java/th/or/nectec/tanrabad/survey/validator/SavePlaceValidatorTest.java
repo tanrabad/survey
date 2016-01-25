@@ -20,9 +20,8 @@ package th.or.nectec.tanrabad.survey.validator;
 import org.junit.Test;
 import org.mockito.Mockito;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
-import th.or.nectec.tanrabad.entity.Location;
+import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.utils.Address;
 
 import java.util.ArrayList;
 import java.util.UUID;

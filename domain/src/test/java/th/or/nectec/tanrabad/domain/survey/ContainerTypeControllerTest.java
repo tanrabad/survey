@@ -21,7 +21,7 @@ import org.jmock.Expectations;
 import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Rule;
 import org.junit.Test;
-import th.or.nectec.tanrabad.entity.ContainerType;
+import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 
 import java.util.ArrayList;
 

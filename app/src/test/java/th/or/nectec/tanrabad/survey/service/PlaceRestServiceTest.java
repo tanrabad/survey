@@ -20,7 +20,7 @@ package th.or.nectec.tanrabad.survey.service;
 import org.junit.Test;
 import org.mockito.Mockito;
 import th.or.nectec.tanrabad.domain.UserRepository;
-import th.or.nectec.tanrabad.entity.Location;
+import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.WireMockTestBase;

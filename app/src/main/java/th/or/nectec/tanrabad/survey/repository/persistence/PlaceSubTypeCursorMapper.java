@@ -1,7 +1,7 @@
 package th.or.nectec.tanrabad.survey.repository.persistence;
 
 import android.database.Cursor;
-import th.or.nectec.tanrabad.entity.PlaceSubType;
+import th.or.nectec.tanrabad.entity.lookup.PlaceSubType;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
 
 public class PlaceSubTypeCursorMapper implements CursorMapper<PlaceSubType> {

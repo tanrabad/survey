@@ -18,10 +18,8 @@
 package th.or.nectec.tanrabad.survey.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
-import com.squareup.okhttp.Request;
-import th.or.nectec.tanrabad.entity.ContainerType;
+import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
-import th.or.nectec.tanrabad.survey.service.http.Header;
 import th.or.nectec.tanrabad.survey.service.json.JsonContainerType;
 
 import java.io.IOException;
@@ -41,6 +39,11 @@ public class ContainerTypeRestService extends BaseRestService<ContainerType> {
     }
 
     @Override
+    protected String getPath() {
+        return PATH;
+    }
+
+    @Override
     protected List<ContainerType> jsonToEntityList(String responseBody) {
         ArrayList<ContainerType> provinceList = new ArrayList<>();
         try {
@@ -52,10 +55,5 @@ public class ContainerTypeRestService extends BaseRestService<ContainerType> {
             e.printStackTrace();
         }
         return provinceList;
-    }
-
-    @Override
-    protected String getPath() {
-        return PATH;
     }
 }

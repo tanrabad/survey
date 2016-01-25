@@ -24,10 +24,9 @@ import org.joda.time.DateTimeZone;
 import org.junit.Test;
 import org.mockito.Mockito;
 import th.or.nectec.tanrabad.domain.UserRepository;
-import th.or.nectec.tanrabad.entity.Location;
+import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
-import th.or.nectec.tanrabad.entity.utils.Address;
 import th.or.nectec.tanrabad.survey.repository.persistence.PlaceTypeMapper;
 
 import java.util.UUID;

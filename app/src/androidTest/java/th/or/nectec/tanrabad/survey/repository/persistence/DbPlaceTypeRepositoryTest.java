@@ -25,7 +25,7 @@ import android.support.test.runner.AndroidJUnit4;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import th.or.nectec.tanrabad.entity.PlaceType;
+import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 
 import java.util.List;
 

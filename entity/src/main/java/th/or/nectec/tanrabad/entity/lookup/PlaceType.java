@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015  NECTEC
+ * Copyright (c) 2015 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,46 +15,47 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.entity;
+package th.or.nectec.tanrabad.entity.lookup;
 
-public class ContainerType {
+import th.or.nectec.tanrabad.entity.Entity;
 
-    private final int id;
+public class PlaceType extends Entity {
+
+    private int id;
     private String name;
 
-    public ContainerType(int id, String name) {
+    public PlaceType(int id, String name) {
         this.id = id;
         this.name = name;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public int getId() {
         return id;
     }
 
-    @Override
-    public String toString() {
-        return "ContainerType{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+    public String getName() {
+        return name;
     }
 
-    @Override
-    public boolean equals(Object other) {
-        if (this == other) return true;
-        if (!(other instanceof ContainerType)) return false;
-        ContainerType that = (ContainerType) other;
-        return id == that.id && name.equals(that.name);
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + name.hashCode();
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PlaceType placeType = (PlaceType) o;
+
+        if (id != placeType.id) return false;
+        return name != null ? name.equals(placeType.name) : placeType.name == null;
     }
 }

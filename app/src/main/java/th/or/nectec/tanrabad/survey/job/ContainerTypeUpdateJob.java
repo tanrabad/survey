@@ -18,7 +18,7 @@
 package th.or.nectec.tanrabad.survey.job;
 
 import th.or.nectec.tanrabad.domain.survey.ContainerTypeRepository;
-import th.or.nectec.tanrabad.entity.ContainerType;
+import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 import th.or.nectec.tanrabad.survey.service.ContainerTypeRestService;
 import th.or.nectec.tanrabad.survey.service.RestService;
 

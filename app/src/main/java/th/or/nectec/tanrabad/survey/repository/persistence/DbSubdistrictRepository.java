@@ -21,7 +21,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import th.or.nectec.tanrabad.domain.address.SubdistrictRepository;
-import th.or.nectec.tanrabad.entity.Subdistrict;
+import th.or.nectec.tanrabad.entity.lookup.Subdistrict;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 
 import java.util.List;

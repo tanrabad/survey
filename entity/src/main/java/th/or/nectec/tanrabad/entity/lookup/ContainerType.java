@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.entity;
+package th.or.nectec.tanrabad.entity.lookup;
 
-public class ContainerLocation {
+public class ContainerType {
 
     private final int id;
     private String name;
 
-    public ContainerLocation(int id, String name) {
+    public ContainerType(int id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -45,14 +45,14 @@ public class ContainerLocation {
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        if (!(other instanceof ContainerLocation)) return false;
-        ContainerLocation that = (ContainerLocation) other;
+        if (!(other instanceof ContainerType)) return false;
+        ContainerType that = (ContainerType) other;
         return id == that.id && name.equals(that.name);
     }
 
     @Override
     public String toString() {
-        return "ContainerLocation{" +
+        return "ContainerType{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';

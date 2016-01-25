@@ -1,12 +1,14 @@
-package th.or.nectec.tanrabad.entity;
 
+
+package th.or.nectec.tanrabad.entity.lookup;
+
+import th.or.nectec.tanrabad.entity.field.Polygon;
 
 import java.util.List;
 
-public class Subdistrict {
+public class Province {
     private String code;
     private String name;
-    private String districtCode;
     private List<Polygon> boundary;
 
     public String getCode() {
@@ -25,14 +27,6 @@ public class Subdistrict {
         this.name = name;
     }
 
-    public String getDistrictCode() {
-        return districtCode;
-    }
-
-    public void setDistrictCode(String districtCode) {
-        this.districtCode = districtCode;
-    }
-
     public List<Polygon> getBoundary() {
         return boundary;
     }
@@ -45,7 +39,6 @@ public class Subdistrict {
     public int hashCode() {
         int result = code != null ? code.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (districtCode != null ? districtCode.hashCode() : 0);
         result = 31 * result + (boundary != null ? boundary.hashCode() : 0);
         return result;
     }
@@ -55,11 +48,12 @@ public class Subdistrict {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Subdistrict that = (Subdistrict) o;
+        Province province = (Province) o;
 
-        if (code != null ? !code.equals(that.code) : that.code != null) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (districtCode != null ? !districtCode.equals(that.districtCode) : that.districtCode != null) return false;
-        return boundary != null ? boundary.equals(that.boundary) : that.boundary == null;
+        if (code != null ? !code.equals(province.code) : province.code != null) return false;
+        if (name != null ? !name.equals(province.name) : province.name != null) return false;
+        return boundary != null ? boundary.equals(province.boundary) : province.boundary == null;
+
     }
 }
+

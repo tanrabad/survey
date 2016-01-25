@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import th.or.nectec.tanrabad.domain.place.PlaceTypeRepository;
-import th.or.nectec.tanrabad.entity.PlaceType;
+import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorList;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
 
@@ -78,12 +78,12 @@ public class DbPlaceTypeRepository implements PlaceTypeRepository {
         db.close();
     }
 
-    private boolean saveByContentValues(SQLiteDatabase db, ContentValues placeType) {
-        return db.insert(TABLE_NAME, null, placeType) != ERROR_INSERT_ID;
-    }
-
     private boolean updateByContentValues(SQLiteDatabase db, ContentValues placeType) {
         return db.update(TABLE_NAME, placeType, PlaceTypeColumn.ID + "=?", new String[]{placeType.getAsString(PlaceTypeColumn.ID)}) > 0;
+    }
+
+    private boolean saveByContentValues(SQLiteDatabase db, ContentValues placeType) {
+        return db.insert(TABLE_NAME, null, placeType) != ERROR_INSERT_ID;
     }
 
     private ContentValues placeTypeContentValues(PlaceType placeType) {

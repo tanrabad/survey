@@ -29,9 +29,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import th.or.nectec.tanrabad.domain.UserRepository;
-import th.or.nectec.tanrabad.entity.Location;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
+import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.survey.utils.time.ThaiDateTimeConverter;
 
 import java.util.ArrayList;

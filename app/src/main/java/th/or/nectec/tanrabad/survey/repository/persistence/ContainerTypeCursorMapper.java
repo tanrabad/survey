@@ -1,7 +1,7 @@
 package th.or.nectec.tanrabad.survey.repository.persistence;
 
 import android.database.Cursor;
-import th.or.nectec.tanrabad.entity.ContainerType;
+import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
 
 public class ContainerTypeCursorMapper implements CursorMapper<ContainerType> {

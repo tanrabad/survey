@@ -4,13 +4,12 @@ package th.or.nectec.tanrabad.domain.geographic;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-
-import static org.junit.Assert.assertEquals;
+import th.or.nectec.tanrabad.entity.field.Location;
 
 import java.util.Arrays;
 import java.util.Collection;
 
-import th.or.nectec.tanrabad.entity.Location;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
 public class SphereDistanceWithDummyTest {
@@ -22,6 +21,15 @@ public class SphereDistanceWithDummyTest {
     Location startLocation = new Location(40.6892, -74.0444);
 
     boolean testExpectResult;
+    private Location destinationLocation;
+    private double distanceBetweenPoint;
+    private boolean expectValue;
+
+    public SphereDistanceWithDummyTest(Location destinationLocation, double distanceBetweenPoint, boolean expectValue) {
+        this.destinationLocation = destinationLocation;
+        this.distanceBetweenPoint = distanceBetweenPoint;
+        this.expectValue = expectValue;
+    }
 
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
@@ -94,10 +102,6 @@ public class SphereDistanceWithDummyTest {
         });
     }
 
-    private Location destinationLocation;
-    private double distanceBetweenPoint;
-    private boolean expectValue;
-
     @Test
     public void testDistanceCalculateSphere() throws Exception {
 
@@ -109,11 +113,5 @@ public class SphereDistanceWithDummyTest {
         final boolean expectResult = sphereDistance.calculate(startLocation, destinationLocation) <= 100;
 
         assertEquals(expectResult, expectValue);
-    }
-
-    public SphereDistanceWithDummyTest(Location destinationLocation, double distanceBetweenPoint, boolean expectValue) {
-        this.destinationLocation = destinationLocation;
-        this.distanceBetweenPoint = distanceBetweenPoint;
-        this.expectValue = expectValue;
     }
 }

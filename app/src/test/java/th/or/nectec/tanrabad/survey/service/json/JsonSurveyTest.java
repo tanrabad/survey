@@ -4,6 +4,8 @@ import com.bluelinelabs.logansquare.LoganSquare;
 import org.joda.time.DateTime;
 import org.junit.Test;
 import th.or.nectec.tanrabad.entity.*;
+import th.or.nectec.tanrabad.entity.field.Location;
+import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 import th.or.nectec.tanrabad.survey.utils.ResourceFile;
 
 import java.util.UUID;

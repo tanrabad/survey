@@ -2,7 +2,7 @@ package th.or.nectec.tanrabad.survey.repository;
 
 import th.or.nectec.tanrabad.domain.address.ProvinceRepository;
 import th.or.nectec.tanrabad.domain.address.ProvinceRepositoryException;
-import th.or.nectec.tanrabad.entity.Province;
+import th.or.nectec.tanrabad.entity.lookup.Province;
 
 import java.util.ArrayList;
 import java.util.List;

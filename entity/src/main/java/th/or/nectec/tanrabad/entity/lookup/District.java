@@ -1,12 +1,15 @@
 
 
-package th.or.nectec.tanrabad.entity;
+package th.or.nectec.tanrabad.entity.lookup;
+
+import th.or.nectec.tanrabad.entity.field.Polygon;
 
 import java.util.List;
 
-public class Province {
+public class District {
     private String code;
     private String name;
+    private String provinceCode;
     private List<Polygon> boundary;
 
     public String getCode() {
@@ -25,6 +28,14 @@ public class Province {
         this.name = name;
     }
 
+    public String getProvinceCode() {
+        return provinceCode;
+    }
+
+    public void setProvinceCode(String provinceCode) {
+        this.provinceCode = provinceCode;
+    }
+
     public List<Polygon> getBoundary() {
         return boundary;
     }
@@ -37,6 +48,7 @@ public class Province {
     public int hashCode() {
         int result = code != null ? code.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (provinceCode != null ? provinceCode.hashCode() : 0);
         result = 31 * result + (boundary != null ? boundary.hashCode() : 0);
         return result;
     }
@@ -46,11 +58,13 @@ public class Province {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Province province = (Province) o;
+        District district = (District) o;
 
-        if (code != null ? !code.equals(province.code) : province.code != null) return false;
-        if (name != null ? !name.equals(province.name) : province.name != null) return false;
-        return boundary != null ? boundary.equals(province.boundary) : province.boundary == null;
+        if (code != null ? !code.equals(district.code) : district.code != null) return false;
+        if (name != null ? !name.equals(district.name) : district.name != null) return false;
+        if (provinceCode != null ? !provinceCode.equals(district.provinceCode) : district.provinceCode != null)
+            return false;
+        return boundary != null ? boundary.equals(district.boundary) : district.boundary == null;
 
     }
 }

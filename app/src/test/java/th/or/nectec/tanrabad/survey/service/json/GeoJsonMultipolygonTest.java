@@ -2,8 +2,8 @@ package th.or.nectec.tanrabad.survey.service.json;
 
 import com.bluelinelabs.logansquare.LoganSquare;
 import org.junit.Test;
-import th.or.nectec.tanrabad.entity.Location;
-import th.or.nectec.tanrabad.entity.Polygon;
+import th.or.nectec.tanrabad.entity.field.Location;
+import th.or.nectec.tanrabad.entity.field.Polygon;
 import th.or.nectec.tanrabad.survey.utils.ResourceFile;
 
 import java.util.ArrayList;

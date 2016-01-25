@@ -20,7 +20,7 @@ package th.or.nectec.tanrabad.survey.repository;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import th.or.nectec.tanrabad.domain.place.PlaceTypeRepositoryException;
-import th.or.nectec.tanrabad.entity.PlaceType;
+import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 
 import java.util.List;
 

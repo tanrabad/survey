@@ -1,13 +1,14 @@
+package th.or.nectec.tanrabad.entity.lookup;
 
 
-package th.or.nectec.tanrabad.entity;
+import th.or.nectec.tanrabad.entity.field.Polygon;
 
 import java.util.List;
 
-public class District {
+public class Subdistrict {
     private String code;
     private String name;
-    private String provinceCode;
+    private String districtCode;
     private List<Polygon> boundary;
 
     public String getCode() {
@@ -26,12 +27,12 @@ public class District {
         this.name = name;
     }
 
-    public String getProvinceCode() {
-        return provinceCode;
+    public String getDistrictCode() {
+        return districtCode;
     }
 
-    public void setProvinceCode(String provinceCode) {
-        this.provinceCode = provinceCode;
+    public void setDistrictCode(String districtCode) {
+        this.districtCode = districtCode;
     }
 
     public List<Polygon> getBoundary() {
@@ -46,7 +47,7 @@ public class District {
     public int hashCode() {
         int result = code != null ? code.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (provinceCode != null ? provinceCode.hashCode() : 0);
+        result = 31 * result + (districtCode != null ? districtCode.hashCode() : 0);
         result = 31 * result + (boundary != null ? boundary.hashCode() : 0);
         return result;
     }
@@ -56,14 +57,11 @@ public class District {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        District district = (District) o;
+        Subdistrict that = (Subdistrict) o;
 
-        if (code != null ? !code.equals(district.code) : district.code != null) return false;
-        if (name != null ? !name.equals(district.name) : district.name != null) return false;
-        if (provinceCode != null ? !provinceCode.equals(district.provinceCode) : district.provinceCode != null)
-            return false;
-        return boundary != null ? boundary.equals(district.boundary) : district.boundary == null;
-
+        if (code != null ? !code.equals(that.code) : that.code != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (districtCode != null ? !districtCode.equals(that.districtCode) : that.districtCode != null) return false;
+        return boundary != null ? boundary.equals(that.boundary) : that.boundary == null;
     }
 }
-

@@ -18,7 +18,7 @@
 package th.or.nectec.tanrabad.domain.geographic;
 
 import org.junit.Test;
-import th.or.nectec.tanrabad.entity.Location;
+import th.or.nectec.tanrabad.entity.field.Location;
 
 import static org.junit.Assert.assertEquals;
 

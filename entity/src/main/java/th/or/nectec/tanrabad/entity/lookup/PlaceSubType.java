@@ -15,16 +15,20 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.entity;
+package th.or.nectec.tanrabad.entity.lookup;
 
-public class PlaceType extends Entity {
+import th.or.nectec.tanrabad.entity.Entity;
+
+public class PlaceSubType extends Entity {
 
     private int id;
     private String name;
+    private int placeTypeId;
 
-    public PlaceType(int id, String name) {
+    public PlaceSubType(int id, String name, int placeTypeId) {
         this.id = id;
         this.name = name;
+        this.placeTypeId = placeTypeId;
     }
 
     public int getId() {
@@ -35,14 +39,15 @@ public class PlaceType extends Entity {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public int getPlaceTypeId() {
+        return placeTypeId;
     }
 
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + name.hashCode();
+        result = 31 * result + placeTypeId;
         return result;
     }
 
@@ -51,9 +56,19 @@ public class PlaceType extends Entity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        PlaceType placeType = (PlaceType) o;
+        PlaceSubType that = (PlaceSubType) o;
 
-        if (id != placeType.id) return false;
-        return name != null ? name.equals(placeType.name) : placeType.name == null;
+        if (id != that.id) return false;
+        if (placeTypeId != that.placeTypeId) return false;
+        return name.equals(that.name);
+    }
+
+    @Override
+    public String toString() {
+        return "PlaceSubType{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", placeTypeId=" + placeTypeId +
+                '}';
     }
 }

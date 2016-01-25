@@ -18,9 +18,9 @@
 package th.or.nectec.tanrabad.entity.utils;
 
 import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.ContainerType;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.User;
+import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 
 import java.util.UUID;
 

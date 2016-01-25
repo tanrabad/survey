@@ -17,6 +17,8 @@
 
 package th.or.nectec.tanrabad.entity;
 
+import th.or.nectec.tanrabad.entity.lookup.ContainerType;
+
 import java.util.UUID;
 
 public class SurveyDetail implements Comparable {

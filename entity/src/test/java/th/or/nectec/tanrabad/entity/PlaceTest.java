@@ -20,6 +20,7 @@ package th.or.nectec.tanrabad.entity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import th.or.nectec.tanrabad.entity.field.Location;
 
 import java.util.UUID;
 

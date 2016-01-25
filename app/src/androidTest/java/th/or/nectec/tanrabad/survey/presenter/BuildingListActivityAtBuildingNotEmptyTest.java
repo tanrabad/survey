@@ -58,7 +58,7 @@ public class BuildingListActivityAtBuildingNotEmptyTest extends TanrabadEspresso
     @Before
     public void setUp() {
         Intent intent = new Intent();
-        intent.putExtra("place_uuid_arg", UUID.nameUUIDFromBytes("2bcd".getBytes()).toString());
+        intent.putExtra("place_uuid_arg", "e1088db2-1670-4a0b-a907-af12df6bb258".toString());
         mActivity = mActivityTestRule.launchActivity(intent);
     }
 
@@ -80,7 +80,7 @@ public class BuildingListActivityAtBuildingNotEmptyTest extends TanrabadEspresso
 
         Intents.intended(Matchers.allOf(
                 hasComponent(new ComponentName(mActivity, BuildingFormActivity.class)),
-                hasExtra(BuildingFormActivity.PLACE_UUID_ARG, UUID.nameUUIDFromBytes("2bcd".getBytes()).toString())
+                hasExtra(BuildingFormActivity.PLACE_UUID_ARG, "e1088db2-1670-4a0b-a907-af12df6bb258".toString())
         ));
     }
 
@@ -91,7 +91,7 @@ public class BuildingListActivityAtBuildingNotEmptyTest extends TanrabadEspresso
 
         Intents.intended(Matchers.allOf(
                 hasComponent(new ComponentName(mActivity, SurveyActivity.class)),
-                hasExtra(SurveyActivity.BUILDING_UUID_ARG, UUID.nameUUIDFromBytes("2opj".getBytes()).toString())
+                hasExtra(SurveyActivity.BUILDING_UUID_ARG, "7e6de397-33cb-4958-9192-ed9d762f6337".toString())
         ));
     }
     

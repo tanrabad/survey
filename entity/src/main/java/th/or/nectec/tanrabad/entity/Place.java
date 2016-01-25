@@ -22,9 +22,9 @@ import java.util.UUID;
 public class Place extends Entity implements LocationEntity {
     public static final int TYPE_VILLAGE_COMMUNITY = 1;
     public static final int TYPE_WORSHIP = 2;
-    public static final int SUBTYPE_TEMPLE = 21;
-    public static final int SUBTYPE_CHURCH = 22;
-    public static final int SUBTYPE_MOSQUE = 23;
+    public static final int SUBTYPE_TEMPLE = 13;
+    public static final int SUBTYPE_CHURCH = 14;
+    public static final int SUBTYPE_MOSQUE = 15;
     public static final int TYPE_SCHOOL = 3;
     public static final int TYPE_HOSPITAL = 4;
     public static final int TYPE_FACTORY = 5;

@@ -23,43 +23,37 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.PlaceType;
+import th.or.nectec.tanrabad.entity.PlaceSubType;
 import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.repository.persistence.DbPlaceSubTypeRepository;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class PlaceSubTypeOfWorshipAdapter extends BaseAdapter {
+public class PlaceSubTypeAdapter extends BaseAdapter {
 
     Context context;
 
-    ArrayList<PlaceType> placeTypes = new ArrayList<>();
+    List<PlaceSubType> placeSubTypes = new ArrayList<>();
 
-    public PlaceSubTypeOfWorshipAdapter(Context context) {
+    public PlaceSubTypeAdapter(Context context, int placeTypeID) {
         this.context = context;
-
-        ArrayList<PlaceType> placeTypes = new ArrayList<>();
-        placeTypes.add(new PlaceType(Place.SUBTYPE_TEMPLE, context.getString(R.string.temple)));
-        placeTypes.add(new PlaceType(Place.SUBTYPE_CHURCH, context.getString(R.string.church)));
-        placeTypes.add(new PlaceType(Place.SUBTYPE_MOSQUE, context.getString(R.string.mosque)));
-
-        this.placeTypes.addAll(placeTypes);
+        placeSubTypes = new DbPlaceSubTypeRepository(context).findByPlaceTypeID(placeTypeID);
     }
 
     @Override
     public int getCount() {
-        return placeTypes.size();
+        return placeSubTypes.size();
     }
 
     @Override
-    public PlaceType getItem(int i) {
-
-        return placeTypes.get(i);
+    public PlaceSubType getItem(int i) {
+        return placeSubTypes.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return placeTypes.get(i).getId();
+        return placeSubTypes.get(i).getId();
     }
 
     @Override
@@ -76,16 +70,16 @@ public class PlaceSubTypeOfWorshipAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) view.getTag();
         }
-        holder.nameView.setText(placeTypes.get(i).getName());
+        holder.nameView.setText(placeSubTypes.get(i).getName());
         view.setTag(holder);
 
         return view;
     }
 
     public int getPosition(int subtypeID) {
-        for (PlaceType eachPlaceType : placeTypes) {
-            if (eachPlaceType.getId() == subtypeID) {
-                return placeTypes.indexOf(eachPlaceType);
+        for (PlaceSubType placeSubType : placeSubTypes) {
+            if (placeSubType.getId() == subtypeID) {
+                return placeSubTypes.indexOf(placeSubType);
             }
         }
         return -1;

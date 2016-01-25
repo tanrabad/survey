@@ -125,6 +125,7 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.5.2@aar') { transitive = true; }
     compile ('com.squareup.okhttp:okhttp:' + rootProject.ext.okHttpVersion)
     compile 'joda-time:joda-time:' + rootProject.ext.jodaTimeVersion
+    compile 'net.frakbot:jumpingbeans:' + rootProject.ext.jumpingbeansVersion
     compile 'th.or.nectec.android:thai-widget:' + rootProject.ext.thaiWidgetVersion
     compile 'uk.co.chrisjenx:calligraphy:' + rootProject.ext.calligraphyVersion
 

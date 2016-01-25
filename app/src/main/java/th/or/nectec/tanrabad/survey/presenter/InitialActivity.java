@@ -20,8 +20,8 @@ package th.or.nectec.tanrabad.survey.presenter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+import net.frakbot.jumpingbeans.JumpingBeans;
 import th.or.nectec.tanrabad.entity.*;
-import th.or.nectec.tanrabad.entity.PlaceType;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.job.*;
@@ -42,14 +42,14 @@ public class InitialActivity extends TanrabadActivity {
     WritableRepoUpdateJob<Building> buildingUpdateJob = new WritableRepoUpdateJob<>(new BuildingRestService(), BrokerBuildingRepository.getInstance());
 
     private TextView loadingText;
+    private JumpingBeans pleaseWaitBeans;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial);
-
         loadingText = (TextView) findViewById(R.id.loading);
-
+        startPleaseWaitBeansJump();
         new InitialJobRunner()
                 .addJob(new CreateDatabaseJob(this))
                 .addJob(new InMemoryInitializeJob())
@@ -63,6 +63,13 @@ public class InitialActivity extends TanrabadActivity {
                 .addJob(placeUpdateJob)
                 .addJob(buildingUpdateJob)
                 .start();
+    }
+
+
+    private void startPleaseWaitBeansJump() {
+        pleaseWaitBeans = JumpingBeans.with((TextView) findViewById(R.id.please_wait))
+                .appendJumpingDots()
+                .build();
     }
 
     public void updateLoadingText(Job startingJob) {
@@ -118,6 +125,7 @@ public class InitialActivity extends TanrabadActivity {
 
         @Override
         protected void onRunFinish() {
+            pleaseWaitBeans.stopJumping();
             openMainActivityThenFinish();
         }
     }

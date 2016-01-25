@@ -45,6 +45,7 @@ ext {
     androidMapUtilsVersion = '0.4'
     loganSquareVersion = "1.3.4"
     jodaTimeVersion = "2.9.1"
+    jumpingbeansVersion = "1.3.0"
     calligraphyVersion = "2.1.0"
     thaiWidgetVersion = "0.4.3"
     gsonVersion = "2.4"

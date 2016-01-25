@@ -64,8 +64,6 @@ public class PlaceFormActivityDoSaveDataTest extends TanrabadEspressoTestBase {
                 .perform(replaceText("ธรรมศาสตร์"));
         onView(withId(R.id.address_select))
                 .perform(click());
-        onView(withText("ภาคกลาง"))
-                .perform(click());
         onView(withText("นนทบุรี"))
                 .perform(click());
         onView(withText("บางกรวย"))
@@ -79,7 +77,7 @@ public class PlaceFormActivityDoSaveDataTest extends TanrabadEspressoTestBase {
 
         onView(withText("โรงพยาบาล"))
                 .perform(click());
-        onView(withText("โรงเรียน"))
+        onView(withText("สถานศึกษา"))
                 .perform(click());
 
         onView(withId(R.id.save))
@@ -99,8 +97,6 @@ public class PlaceFormActivityDoSaveDataTest extends TanrabadEspressoTestBase {
                 .perform(click());
 
         onView(withId(R.id.address_select))
-                .perform(click());
-        onView(withText("ภาคกลาง"))
                 .perform(click());
         onView(withText("นนทบุรี"))
                 .perform(click());

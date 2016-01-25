@@ -57,13 +57,11 @@ public class PlaceRefreshTest extends TanrabadEspressoTestBase {
                 .perform(replaceText("สามเสน"));
         onView(withId(R.id.address_select))
                 .perform(click());
-        onView(withText("ภาคกลาง"))
+        onView(withText("นนทบุรี"))
                 .perform(click());
-        onView(withText("ปทุมธานี"))
+        onView(withText("ปากเกร็ด"))
                 .perform(click());
-        onView(withText("คลองหลวง"))
-                .perform(click());
-        onView(withText("คลองสอง"))
+        onView(withText("ปากเกร็ด"))
                 .perform(click());
         onView(withId(R.id.add_marker))
                 .perform(click());

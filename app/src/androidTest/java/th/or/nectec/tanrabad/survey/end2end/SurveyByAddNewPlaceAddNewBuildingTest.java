@@ -59,13 +59,11 @@ public class SurveyByAddNewPlaceAddNewBuildingTest extends TanrabadEspressoTestB
                 .perform(replaceText("เนคเทค"));
         onView(withId(R.id.address_select))
                 .perform(click());
-        onView(withText("ภาคกลาง"))
+        onView(withText("นนทบุรี"))
                 .perform(click());
-        onView(withText("ปทุมธานี"))
+        onView(withText("ปากเกร็ด"))
                 .perform(click());
-        onView(withText("คลองหลวง"))
-                .perform(click());
-        onView(withText("คลองสอง"))
+        onView(withText("ปากเกร็ด"))
                 .perform(click());
         onView(withText("ศาสนสถาน"))
                 .perform(click());

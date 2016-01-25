@@ -56,7 +56,7 @@ public class UpdatePlaceTest extends TanrabadEspressoTestBase {
     @Before
     public void setUp() {
         Intent intent = new Intent();
-        intent.putExtra("place_uuid_arg", UUID.nameUUIDFromBytes("32UAW".getBytes()).toString());
+        intent.putExtra("place_uuid_arg", "37ebde70-aa49-4c06-b102-53a022d46370".toString());
         intent.putExtra("place_category_id_arg", Place.TYPE_HOSPITAL);
         mActivity = mActivityTestRule.launchActivity(intent);
     }

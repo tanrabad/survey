@@ -176,7 +176,6 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         TextView buildingCountView = (TextView) findViewById(R.id.building_count);
         buildingCountView.setVisibility(View.GONE);
         editBuildingButton.setVisibility(View.GONE);
-        buildingSearchView.setVisibility(View.GONE);
         buildingAdapter.clearData();
     }
 

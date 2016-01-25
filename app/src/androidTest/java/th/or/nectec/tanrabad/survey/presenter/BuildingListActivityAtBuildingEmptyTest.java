@@ -79,10 +79,8 @@ public class BuildingListActivityAtBuildingEmptyTest extends TanrabadEspressoTes
     }
 
     @Test
-    public void openPlaceAtEmptyBuildingShouldNotFoundEditBuildingAndBuildingSearchButton() {
+    public void openPlaceAtEmptyBuildingShouldNotFoundButtonEditBuilding() {
         onView(withId(R.id.edit_building))
-                .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
-        onView(withId(R.id.building_search))
                 .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
     }
 }

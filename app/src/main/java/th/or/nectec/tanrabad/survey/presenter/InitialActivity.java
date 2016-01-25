@@ -36,6 +36,7 @@ public class InitialActivity extends TanrabadActivity {
     WritableRepoUpdateJob<District> districtUpdateJob = new WritableRepoUpdateJob<>(new AmphurRestService(), DbDistrictRepository.getInstance());
     WritableRepoUpdateJob<Subdistrict> subDistrictUpdateJob = new WritableRepoUpdateJob<>(new TambonRestService(), DbSubdistrictRepository.getInstance());
     WritableRepoUpdateJob<PlaceType> placeTypeUpdateJob = new WritableRepoUpdateJob<>(new PlaceTypeRestService(), new DbPlaceTypeRepository(TanrabadApp.getInstance()));
+    WritableRepoUpdateJob<PlaceSubType> placeSubTypeUpdateJob = new WritableRepoUpdateJob<>(new PlaceSubTypeRestService(), new DbPlaceSubTypeRepository(TanrabadApp.getInstance()));
     WritableRepoUpdateJob<ContainerType> containerTypeUpdateJob = new WritableRepoUpdateJob<>(new ContainerTypeRestService(), new DbContainerTypeRepository(TanrabadApp.getInstance()));
     WritableRepoUpdateJob<Place> placeUpdateJob = new WritableRepoUpdateJob<>(new PlaceRestService(), BrokerPlaceRepository.getInstance());
     WritableRepoUpdateJob<Building> buildingUpdateJob = new WritableRepoUpdateJob<>(new BuildingRestService(), BrokerBuildingRepository.getInstance());
@@ -52,12 +53,13 @@ public class InitialActivity extends TanrabadActivity {
         new InitialJobRunner()
                 .addJob(new CreateDatabaseJob(this))
                 .addJob(new InMemoryInitializeJob())
+                .addJob(new SetupScriptJob(this))
                 .addJob(containerTypeUpdateJob)
                 .addJob(provinceUpdateJob)
                 .addJob(districtUpdateJob)
                 .addJob(subDistrictUpdateJob)
                 .addJob(placeTypeUpdateJob)
-                .addJob(new SetupScriptJob(this))
+                .addJob(placeSubTypeUpdateJob)
                 .addJob(placeUpdateJob)
                 .addJob(buildingUpdateJob)
                 .start();
@@ -92,6 +94,8 @@ public class InitialActivity extends TanrabadActivity {
             loadingText.setText("ตำบล");
         else if (startingJob.equals(placeTypeUpdateJob))
             loadingText.setText("ประเภทสถานที่");
+        else if (startingJob.equals(placeSubTypeUpdateJob))
+            loadingText.setText("ประเภทย่อยสถานที่");
         else if (startingJob.equals(placeUpdateJob))
             loadingText.setText("สถานที่");
         else if (startingJob.equals(buildingUpdateJob))

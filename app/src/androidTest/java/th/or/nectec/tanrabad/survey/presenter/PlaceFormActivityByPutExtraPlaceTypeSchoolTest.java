@@ -86,13 +86,11 @@ public class PlaceFormActivityByPutExtraPlaceTypeSchoolTest extends TanrabadEspr
                 .perform(replaceText("โรงเรียนอนุบาลเนคเทค"));
         onView(withId(R.id.address_select))
                 .perform(click());
-        onView(withText("ภาคกลาง"))
+        onView(withText("นนทบุรี"))
                 .perform(click());
-        onView(withText("ปทุมธานี"))
+        onView(withText("บางกรวย"))
                 .perform(click());
-        onView(withText("คลองหลวง"))
-                .perform(click());
-        onView(withText("คลองสอง"))
+        onView(withText("บางกรวย"))
                 .perform(click());
         onView(withId(R.id.save))
                 .perform(click());
@@ -115,8 +113,6 @@ public class PlaceFormActivityByPutExtraPlaceTypeSchoolTest extends TanrabadEspr
         onView(withId(R.id.place_name))
                 .perform(replaceText(" วัดป่าภูก้อน "));
         onView(withId(R.id.address_select))
-                .perform(click());
-        onView(withText("ภาคกลาง"))
                 .perform(click());
         onView(withText("นนทบุรี"))
                 .perform(click());

@@ -17,12 +17,13 @@
 
 package th.or.nectec.tanrabad.survey.service;
 
+import org.joda.time.DateTime;
 import org.junit.Test;
 import org.mockito.Mockito;
 import th.or.nectec.tanrabad.domain.UserRepository;
-import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
+import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.survey.WireMockTestBase;
 import th.or.nectec.tanrabad.survey.service.http.Header;
 import th.or.nectec.tanrabad.survey.utils.ResourceFile;
@@ -169,5 +170,53 @@ public class PlaceRestServiceTest extends WireMockTestBase {
         assertEquals(uuid("648e41e1-2ccd-00f2-f065-ba111c384c5b"), place15.getId());
         assertEquals("รพ.สต.บ้านหลวง ต.นาพู่", place15.getName());
         assertEquals(new Location(17.6048028519667, 102.755400339956), place15.getLocation());
+    }
+
+    @Test
+    public void testPostData() throws Exception {
+        stubFor(post((urlEqualTo(PlaceRestService.PATH)))
+                .willReturn(aResponse()
+                        .withStatus(201)));
+
+        Place place = Place.withName("555");
+        place.setLocation(new Location(1, 1));
+        place.setUpdateTimestamp(DateTime.now().toString());
+
+        AbsUploadRestService<Place> restService = new PlaceRestService(localHost(), lastUpdate, userRepository);
+        boolean uploadStatus = restService.postData(place);
+
+        assertEquals(true, uploadStatus);
+        verify(postRequestedFor(urlPathMatching("/place")).withHeader("Content-Type", equalTo("application/json; charset=utf-8"))
+                .withHeader("User-Agent", equalTo("tanrabad-survey-app")));
+    }
+
+    @Test(expected = RestServiceException.class)
+    public void testPostData404() throws Exception {
+        stubFor(post((urlEqualTo(PlaceRestService.PATH)))
+                .willReturn(aResponse()
+                        .withStatus(404)));
+
+        Place place = Place.withName("555");
+        place.setLocation(new Location(1, 1));
+        place.setUpdateTimestamp(DateTime.now().toString());
+
+        AbsUploadRestService<Place> restService = new PlaceRestService(localHost(), lastUpdate, userRepository);
+        restService.postData(place);
+
+    }
+
+    @Test(expected = ErrorResponseException.class)
+    public void testResponseError() throws Exception {
+        stubFor(post((urlEqualTo(PlaceRestService.PATH)))
+                .willReturn(aResponse()
+                        .withBody(ResourceFile.read("errorResponses.json")).withStatus(400))
+        );
+
+        Place place = Place.withName("555");
+        place.setLocation(new Location(1, 1));
+        place.setUpdateTimestamp(DateTime.now().toString());
+
+        AbsUploadRestService<Place> restService = new PlaceRestService(localHost(), lastUpdate, userRepository);
+        restService.postData(place);
     }
 }

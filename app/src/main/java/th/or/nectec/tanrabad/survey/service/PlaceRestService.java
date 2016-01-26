@@ -28,7 +28,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlaceRestService extends BaseRestService<Place> {
+public class PlaceRestService extends AbsUploadRestService<Place> {
 
     public static final String PATH = "/place?geostd=4326&hr_code=dpc-04";
     private UserRepository userRepository;
@@ -59,5 +59,15 @@ public class PlaceRestService extends BaseRestService<Place> {
             e.printStackTrace();
         }
         return places;
+    }
+
+    @Override
+    protected String entityToJsonString(Place data) {
+        try {
+            return LoganSquare.serialize(JsonPlace.parse(data));
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RestServiceException();
+        }
     }
 }

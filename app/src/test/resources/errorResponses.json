@@ -1,0 +1,7 @@
+{
+  "response": "ERROR",
+  "message": {
+    "type": "SQL ERROR",
+    "detail": "Key (place_id)=(b7a9d934-04fc-a22e-0539-6c17504f7111) already exists."
+  }
+}

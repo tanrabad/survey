@@ -35,7 +35,7 @@ public abstract class BaseRestService<T> implements RestService<T> {
     public static final String BASE_API = "http://tanrabad.igridproject.info/v1";
     protected static final DateTimeFormatter RFC1123_FORMATTER =
             DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss 'GMT'");
-    private final OkHttpClient client = new OkHttpClient();
+    protected final OkHttpClient client = new OkHttpClient();
     protected LastUpdate lastUpdate;
     protected String baseApi;
     private String nextUrl = "";

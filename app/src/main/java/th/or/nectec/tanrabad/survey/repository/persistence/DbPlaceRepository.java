@@ -24,6 +24,7 @@ import android.database.sqlite.SQLiteDatabase;
 import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.survey.repository.ChangedRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorList;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
@@ -31,7 +32,7 @@ import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
 import java.util.List;
 import java.util.UUID;
 
-public class DbPlaceRepository implements PlaceRepository {
+public class DbPlaceRepository implements PlaceRepository, ChangedRepository<Place> {
 
     public static final String TABLE_NAME = "place";
     public static final int ERROR_INSERT_ID = -1;
@@ -170,5 +171,19 @@ public class DbPlaceRepository implements PlaceRepository {
         }
         values.put(PlaceColumn.UPDATE_TIME, place.getUpdateTimestamp().toString());
         return values;
+    }
+
+    @Override
+    public List<Place> getAdd() {
+        Cursor placeCursor = new SurveyLiteDatabase(context).getReadableDatabase().query(TABLE_NAME, PlaceColumn.wildcard(),
+                PlaceColumn.CHANGED_STATUS + "=?", new String[]{String.valueOf(ChangedStatus.ADD)}, null, null, null);
+        return getPlaceList(placeCursor);
+    }
+
+    @Override
+    public List<Place> getChanged() {
+        Cursor placeCursor = new SurveyLiteDatabase(context).getReadableDatabase().query(TABLE_NAME, PlaceColumn.wildcard(),
+                PlaceColumn.CHANGED_STATUS + "=?", new String[]{String.valueOf(ChangedStatus.CHANGED)}, null, null, null);
+        return getPlaceList(placeCursor);
     }
 }

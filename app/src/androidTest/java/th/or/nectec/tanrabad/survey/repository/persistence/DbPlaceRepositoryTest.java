@@ -89,7 +89,7 @@ public class DbPlaceRepositoryTest {
         assertEquals(place.getSubType(), cursor.getInt(cursor.getColumnIndex(PlaceColumn.SUBTYPE_ID)));
         assertEquals(updateBy.getUsername(), cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_BY)));
         assertEquals(updateTime, ThaiDateTimeConverter.convert(cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_TIME))));
-
+        assertEquals(ChangedStatus.ADD, cursor.getInt(cursor.getColumnIndex(PlaceColumn.CHANGED_STATUS)));
         cursor.close();
     }
 
@@ -160,6 +160,44 @@ public class DbPlaceRepositoryTest {
         assertEquals(place.getSubType(), cursor.getInt(cursor.getColumnIndex(PlaceColumn.SUBTYPE_ID)));
         assertEquals(updateBy.getUsername(), cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_BY)));
         assertEquals(updateTime, ThaiDateTimeConverter.convert(cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_TIME))));
+        assertEquals(ChangedStatus.CHANGED, cursor.getInt(cursor.getColumnIndex(PlaceColumn.CHANGED_STATUS)));
+        cursor.close();
+    }
+
+    @Test
+    public void testSaveAndUpdate() throws Exception {
+        User updateBy = stubUser();
+        DateTime updateTime = DateTime.now();
+        Place place = new Place(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5f"), "หมู่บ้านทดสอบ");
+        place.setSubdistrictCode("120202");
+        place.setSubType(PlaceTypeMapper.ชุมชนแออัด);
+        place.setType(Place.TYPE_VILLAGE_COMMUNITY);
+        place.setLocation(new Location(10.200000f, 100.100000f));
+        place.setUpdateBy(updateBy);
+        place.setUpdateTimestamp(updateTime.toString());
+        Context context = InstrumentationRegistry.getTargetContext();
+        DbPlaceRepository dbPlaceRepository = new DbPlaceRepository(context);
+        dbPlaceRepository.save(place);
+        place.setName("หมู่บ้านทดสอบบบบบ");
+        boolean success = dbPlaceRepository.update(place);
+
+        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        Cursor cursor = db.query(DbPlaceRepository.TABLE_NAME,
+                PlaceColumn.wildcard(),
+                PlaceColumn.ID + "=?",
+                new String[]{place.getId().toString()},
+                null, null, null);
+
+        assertEquals(true, success);
+        assertEquals(true, cursor.moveToFirst());
+        assertEquals(1, cursor.getCount());
+        assertEquals(place.getId().toString(), cursor.getString(cursor.getColumnIndex(PlaceColumn.ID)));
+        assertEquals(place.getName(), cursor.getString(cursor.getColumnIndex(PlaceColumn.NAME)));
+        assertEquals(place.getType(), PlaceTypeMapper.getInstance().findBySubType(cursor.getInt(cursor.getColumnIndex(PlaceColumn.SUBTYPE_ID))));
+        assertEquals(place.getSubType(), cursor.getInt(cursor.getColumnIndex(PlaceColumn.SUBTYPE_ID)));
+        assertEquals(updateBy.getUsername(), cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_BY)));
+        assertEquals(updateTime, ThaiDateTimeConverter.convert(cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_TIME))));
+        assertEquals(ChangedStatus.ADD, cursor.getInt(cursor.getColumnIndex(PlaceColumn.CHANGED_STATUS)));
         cursor.close();
     }
 

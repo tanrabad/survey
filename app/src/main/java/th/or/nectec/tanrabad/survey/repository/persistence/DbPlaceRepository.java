@@ -111,16 +111,28 @@ public class DbPlaceRepository implements PlaceRepository {
         return saveByContentValues(new SurveyLiteDatabase(context).getWritableDatabase(), values);
     }
 
-    private boolean saveByContentValues(SQLiteDatabase db, ContentValues place){
+    private boolean saveByContentValues(SQLiteDatabase db, ContentValues place) {
         return db.insert(TABLE_NAME, null, place) != ERROR_INSERT_ID;
     }
 
     @Override
     public boolean update(Place place) {
         ContentValues values = placeContentValues(place);
-        //TODO ต้องทำส่วนตรวจสอบสถานะในกรณีข้อมูลเดิมมี flag เป็น ADD หลังจากปรับปรุงข้อมูลไปแล้ว ก็ยังต้องเป็น ADD เหมือนเดิม
-        values.put(PlaceColumn.CHANGED_STATUS, ChangedStatus.CHANGED);
+        values.put(PlaceColumn.CHANGED_STATUS, getAddOrChangedStatus(place));
         return updateByContentValues(new SurveyLiteDatabase(context).getWritableDatabase(), values);
+    }
+
+    private int getAddOrChangedStatus(Place place) {
+        Cursor placeCursor = new SurveyLiteDatabase(context).getReadableDatabase().query(TABLE_NAME, new String[]{PlaceColumn.CHANGED_STATUS},
+                PlaceColumn.ID + "=?", new String[]{place.getId().toString()}, null, null, null);
+        if (placeCursor.moveToNext()) {
+            if (placeCursor.getInt(0) == ChangedStatus.ADD)
+                return ChangedStatus.ADD;
+            else
+                return ChangedStatus.CHANGED;
+        }
+        placeCursor.close();
+        return ChangedStatus.CHANGED;
     }
 
     private boolean updateByContentValues(SQLiteDatabase db, ContentValues place) {
@@ -149,11 +161,11 @@ public class DbPlaceRepository implements PlaceRepository {
         values.put(PlaceColumn.NAME, place.getName());
         values.put(PlaceColumn.SUBTYPE_ID, place.getSubType());
         values.put(PlaceColumn.SUBDISTRICT_CODE, place.getSubdistrictCode());
-        if(place.getLocation() != null) {
+        if (place.getLocation() != null) {
             values.put(PlaceColumn.LATITUDE, place.getLocation().getLatitude());
             values.put(PlaceColumn.LONGITUDE, place.getLocation().getLongitude());
         }
-        if(place.getUpdateBy() != null) {
+        if (place.getUpdateBy() != null) {
             values.put(PlaceColumn.UPDATE_BY, place.getUpdateBy());
         }
         values.put(PlaceColumn.UPDATE_TIME, place.getUpdateTimestamp().toString());

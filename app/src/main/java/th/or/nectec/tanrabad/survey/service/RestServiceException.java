@@ -17,5 +17,31 @@
 
 package th.or.nectec.tanrabad.survey.service;
 
+import com.bluelinelabs.logansquare.LoganSquare;
+import com.squareup.okhttp.Response;
+
+import java.io.IOException;
+
 public class RestServiceException extends RuntimeException {
+
+    public RestServiceException(Response response) {
+        super("request not success [" + response.code() + "] toString=" + response.toString());
+    }
+
+    public RestServiceException(Throwable throwable) {
+        super(throwable);
+    }
+
+    public static class ErrorResponseException extends RestServiceException {
+        private ErrorResponse errorResponse;
+
+        public ErrorResponseException(Response response) throws IOException {
+            super(response);
+            errorResponse = LoganSquare.parse(response.body().string(), ErrorResponse.class);
+        }
+
+        public ErrorResponse getErrorResponse() {
+            return errorResponse;
+        }
+    }
 }

@@ -17,7 +17,6 @@
 
 package th.or.nectec.tanrabad.survey.service;
 
-import com.bluelinelabs.logansquare.LoganSquare;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
@@ -27,7 +26,7 @@ import th.or.nectec.tanrabad.survey.service.http.Status;
 
 import java.io.IOException;
 
-public abstract class AbsUploadRestService<T> extends BaseRestService implements UploadRestService<T> {
+public abstract class AbsUploadRestService <T> extends AbsRestService implements UploadRestService<T> {
 
     public static final String TANRABAD_SURVEY_APP = "tanrabad-survey-app";
     public static final MediaType JSON_MEDIA_TYPE = MediaType.parse("application/json");
@@ -42,12 +41,12 @@ public abstract class AbsUploadRestService<T> extends BaseRestService implements
             Request request = getPostRequest(data);
             Response response = client.newCall(request).execute();
             if (response.code() == Status.BAD_REQUEST)
-                throw new ErrorResponseException(LoganSquare.parse(response.body().string(), ErrorResponse.class));
+                throw new RestServiceException.ErrorResponseException(response);
             if (isNotSuccess(response))
-                throw new RestServiceException();
+                throw new RestServiceException(response);
             return response.code() == Status.CREATED;
-        } catch (IOException e) {
-            throw new RestServiceException();
+        } catch (IOException io) {
+            throw new RestServiceException(io);
         }
     }
 

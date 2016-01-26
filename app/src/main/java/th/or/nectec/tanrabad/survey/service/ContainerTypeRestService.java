@@ -26,7 +26,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContainerTypeRestService extends BaseRestService<ContainerType> {
+public class ContainerTypeRestService extends AbsRestService<ContainerType> {
 
     public static final String PATH = "/containertype";
 

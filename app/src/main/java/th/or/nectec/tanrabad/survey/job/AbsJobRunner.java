@@ -58,7 +58,7 @@ public abstract class AbsJobRunner implements JobRunner {
         return jobErrorCount;
     }
 
-    protected void onJobError(Job errorJob, JobException exception) {
+    protected void onJobError(Job errorJob, Throwable exception) {
         jobErrorCount++;
     }
 
@@ -82,7 +82,7 @@ public abstract class AbsJobRunner implements JobRunner {
                 publishProgress(JobStatus.START, job);
                 try {
                     job.execute();
-                } catch (JobException jEx) {
+                } catch (Exception jEx) {
                     publishProgress(JobStatus.ERROR, job, jEx);
                 }
                 publishProgress(JobStatus.DONE, job);
@@ -109,7 +109,7 @@ public abstract class AbsJobRunner implements JobRunner {
                     onJobDone(job);
                     break;
                 case ERROR:
-                    onJobError(job, (JobException) jobs[1]);
+                    onJobError(job, (Throwable) jobs[1]);
                     break;
             }
         }

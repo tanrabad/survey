@@ -55,8 +55,8 @@ public class PlaceRestService extends AbsUploadRestService<Place> {
             for (JsonPlace eachJsonPlace : jsonPlaces) {
                 places.add(eachJsonPlace.getEntity(userRepository));
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException io) {
+            throw new RestServiceException(io);
         }
         return places;
     }
@@ -65,9 +65,8 @@ public class PlaceRestService extends AbsUploadRestService<Place> {
     protected String entityToJsonString(Place data) {
         try {
             return LoganSquare.serialize(JsonPlace.parse(data));
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RestServiceException();
+        } catch (IOException io) {
+            throw new RestServiceException(io);
         }
     }
 }

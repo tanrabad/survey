@@ -42,7 +42,7 @@ public class SetupScriptJob implements Job {
     }
 
     @Override
-    public void execute() throws JobException {
+    public void execute() {
         boolean requiredSetup = !getSharedPreferences().getBoolean("is_setup", false);
         if (requiredSetup) {
             updateStatus();

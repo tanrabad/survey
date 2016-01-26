@@ -204,7 +204,7 @@ public class PlaceRestServiceTest extends WireMockTestBase {
         restService.postData(stubPlace());
     }
 
-    @Test(expected = ErrorResponseException.class)
+    @Test(expected = RestServiceException.ErrorResponseException.class)
     public void testResponseError() throws Exception {
         stubFor(post((urlEqualTo(PlaceRestService.PATH)))
                 .willReturn(aResponse()

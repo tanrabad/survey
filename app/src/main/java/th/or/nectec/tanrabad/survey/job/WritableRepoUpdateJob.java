@@ -20,7 +20,7 @@ package th.or.nectec.tanrabad.survey.job;
 import th.or.nectec.tanrabad.domain.WritableRepository;
 import th.or.nectec.tanrabad.survey.service.RestService;
 
-public class WritableRepoUpdateJob<T> implements Job {
+public class WritableRepoUpdateJob <T> implements Job {
 
     public static final int ID = 192384;
     WritableRepository<T> writableRepository;
@@ -37,7 +37,7 @@ public class WritableRepoUpdateJob<T> implements Job {
     }
 
     @Override
-    public void execute() throws JobException {
+    public void execute() {
         do {
             writableRepository.updateOrInsert(restService.getUpdate());
         } while (restService.hasNextRequest());

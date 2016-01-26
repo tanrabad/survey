@@ -30,7 +30,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BaseRestService<T> implements RestService<T> {
+public abstract class AbsRestService <T> implements RestService<T> {
 
     public static final String BASE_API = "http://tanrabad.igridproject.info/v1";
     protected static final DateTimeFormatter RFC1123_FORMATTER =
@@ -40,7 +40,7 @@ public abstract class BaseRestService<T> implements RestService<T> {
     protected String baseApi;
     private String nextUrl = "";
 
-    public BaseRestService(String baseApi, LastUpdate lastUpdate) {
+    public AbsRestService(String baseApi, LastUpdate lastUpdate) {
         this.baseApi = baseApi;
         this.lastUpdate = lastUpdate;
     }
@@ -56,14 +56,14 @@ public abstract class BaseRestService<T> implements RestService<T> {
             if (isNotModified(response))
                 return new ArrayList<>();
             if (isNotSuccess(response))
-                throw new RestServiceException();
+                throw new RestServiceException(response);
             if (!hasNextRequest())
                 lastUpdate.save(getLastModified(response));
 
             return jsonToEntityList(response.body().string());
 
         } catch (IOException io) {
-            throw new RestServiceException();
+            throw new RestServiceException(io);
         }
     }
 

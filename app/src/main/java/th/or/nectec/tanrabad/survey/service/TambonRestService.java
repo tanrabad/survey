@@ -26,7 +26,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TambonRestService extends BaseRestService<Subdistrict> {
+public class TambonRestService extends AbsRestService<Subdistrict> {
 
     public static final String PATH = "/tambon?geostd=4326&hr_code=dpc-04";
 

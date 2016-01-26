@@ -26,7 +26,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProvinceRestService extends BaseRestService<Province> {
+public class ProvinceRestService extends AbsRestService<Province> {
 
     public static final String PATH = "/province?geostd=4326&hr_code=dpc-04";
 

@@ -26,7 +26,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AmphurRestService extends BaseRestService<District> {
+public class AmphurRestService extends AbsRestService<District> {
 
     public static final String PATH = "/amphur?geostd=4326&hr_code=dpc-04";
 

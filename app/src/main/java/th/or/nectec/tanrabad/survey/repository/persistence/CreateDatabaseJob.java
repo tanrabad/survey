@@ -20,7 +20,6 @@ package th.or.nectec.tanrabad.survey.repository.persistence;
 
 import android.content.Context;
 import th.or.nectec.tanrabad.survey.job.Job;
-import th.or.nectec.tanrabad.survey.job.JobException;
 
 public class CreateDatabaseJob implements Job {
 
@@ -37,7 +36,7 @@ public class CreateDatabaseJob implements Job {
     }
 
     @Override
-    public void execute() throws JobException {
+    public void execute() {
         createDatabaseIfNotExist();
     }
 

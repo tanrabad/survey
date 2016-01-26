@@ -26,7 +26,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlaceSubTypeRestService extends BaseRestService<PlaceSubType> {
+public class PlaceSubTypeRestService extends AbsRestService<PlaceSubType> {
 
     public static final String PATH = "/placesubtype";
 

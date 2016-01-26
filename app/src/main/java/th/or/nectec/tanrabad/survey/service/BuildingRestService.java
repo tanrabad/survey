@@ -17,7 +17,6 @@
 
 package th.or.nectec.tanrabad.survey.service;
 
-import android.util.Log;
 import com.bluelinelabs.logansquare.LoganSquare;
 import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
@@ -70,7 +69,6 @@ public class BuildingRestService extends AbsUploadRestService<Building> {
     @Override
     protected String entityToJsonString(Building data) {
         try {
-            Log.v("building", LoganSquare.serialize(JsonBuilding.parse(data)));
             return LoganSquare.serialize(JsonBuilding.parse(data));
         } catch (IOException e) {
             throw new RestServiceException();

@@ -26,6 +26,7 @@ import th.or.nectec.tanrabad.domain.building.BuildingRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
+import th.or.nectec.tanrabad.survey.repository.ChangedRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorList;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
@@ -33,7 +34,7 @@ import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
 import java.util.List;
 import java.util.UUID;
 
-public class DbBuildingRepository implements BuildingRepository {
+public class DbBuildingRepository implements BuildingRepository, ChangedRepository<Building> {
 
     public static final String TABLE_NAME = "building";
     public static final int ERROR_INSERT_ID = -1;
@@ -152,14 +153,43 @@ public class DbBuildingRepository implements BuildingRepository {
         values.put(BuildingColumn.ID, building.getId().toString());
         values.put(BuildingColumn.NAME, building.getName());
         values.put(BuildingColumn.PLACE_ID, building.getPlaceId().toString());
-        if(building.getLocation() != null) {
+        if (building.getLocation() != null) {
             values.put(BuildingColumn.LATITUDE, building.getLocation().getLatitude());
             values.put(BuildingColumn.LONGITUDE, building.getLocation().getLongitude());
         }
-        if(building.getUpdateBy() != null) {
+        if (building.getUpdateBy() != null) {
             values.put(BuildingColumn.UPDATE_BY, building.getUpdateBy());
         }
         values.put(BuildingColumn.UPDATE_TIME, building.getUpdateTimestamp().toString());
         return values;
+    }
+
+    @Override
+    public List<Building> getAdd() {
+        Cursor buildingCursor = new SurveyLiteDatabase(context).getReadableDatabase().query(TABLE_NAME, BuildingColumn.wildcard(),
+                BuildingColumn.CHANGED_STATUS + "=?", new String[]{String.valueOf(ChangedStatus.CHANGED)}, null, null, null);
+        return getBuildingList(buildingCursor);
+    }
+
+    @Override
+    public List<Building> getChanged() {
+        Cursor buildingCursor = new SurveyLiteDatabase(context).getReadableDatabase().query(TABLE_NAME, BuildingColumn.wildcard(),
+                BuildingColumn.CHANGED_STATUS + "=?", new String[]{String.valueOf(ChangedStatus.CHANGED)}, null, null, null);
+        return getBuildingList(buildingCursor);
+    }
+
+    @Override
+    public boolean markUnchanged(Building data) {
+        ContentValues values = new ContentValues();
+        values.put(BuildingColumn.ID, data.getId().toString());
+        values.put(BuildingColumn.CHANGED_STATUS, ChangedStatus.UNCHANGED);
+        return updateByContentValues(values);
+    }
+
+    private boolean updateByContentValues(ContentValues place) {
+        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        boolean isSuccess = updateByContentValues(db, place);
+        db.close();
+        return isSuccess;
     }
 }

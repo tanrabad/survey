@@ -178,16 +178,20 @@ public class PlaceRestServiceTest extends WireMockTestBase {
                 .willReturn(aResponse()
                         .withStatus(201)));
 
+        AbsUploadRestService<Place> restService = new PlaceRestService(localHost(), lastUpdate, userRepository);
+        boolean uploadStatus = restService.postData(stubPlace());
+
+        assertEquals(true, uploadStatus);
+        verify(postRequestedFor(urlPathMatching("/place"))
+                .withHeader(Header.CONTENT_TYPE, equalTo("application/json; charset=utf-8"))
+                .withHeader(Header.USER_AGENT, equalTo("tanrabad-survey-app")));
+    }
+
+    private Place stubPlace() {
         Place place = Place.withName("555");
         place.setLocation(new Location(1, 1));
         place.setUpdateTimestamp(DateTime.now().toString());
-
-        AbsUploadRestService<Place> restService = new PlaceRestService(localHost(), lastUpdate, userRepository);
-        boolean uploadStatus = restService.postData(place);
-
-        assertEquals(true, uploadStatus);
-        verify(postRequestedFor(urlPathMatching("/place")).withHeader("Content-Type", equalTo("application/json; charset=utf-8"))
-                .withHeader("User-Agent", equalTo("tanrabad-survey-app")));
+        return place;
     }
 
     @Test(expected = RestServiceException.class)
@@ -196,13 +200,8 @@ public class PlaceRestServiceTest extends WireMockTestBase {
                 .willReturn(aResponse()
                         .withStatus(404)));
 
-        Place place = Place.withName("555");
-        place.setLocation(new Location(1, 1));
-        place.setUpdateTimestamp(DateTime.now().toString());
-
         AbsUploadRestService<Place> restService = new PlaceRestService(localHost(), lastUpdate, userRepository);
-        restService.postData(place);
-
+        restService.postData(stubPlace());
     }
 
     @Test(expected = ErrorResponseException.class)
@@ -212,11 +211,7 @@ public class PlaceRestServiceTest extends WireMockTestBase {
                         .withBody(ResourceFile.read("errorResponses.json")).withStatus(400))
         );
 
-        Place place = Place.withName("555");
-        place.setLocation(new Location(1, 1));
-        place.setUpdateTimestamp(DateTime.now().toString());
-
         AbsUploadRestService<Place> restService = new PlaceRestService(localHost(), lastUpdate, userRepository);
-        restService.postData(place);
+        restService.postData(stubPlace());
     }
 }

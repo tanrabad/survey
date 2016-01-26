@@ -35,11 +35,17 @@ import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.entity.lookup.PlaceSubType;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.job.AbsJobRunner;
+import th.or.nectec.tanrabad.survey.job.Job;
+import th.or.nectec.tanrabad.survey.job.PostDataJob;
 import th.or.nectec.tanrabad.survey.presenter.maps.LiteMapFragment;
 import th.or.nectec.tanrabad.survey.presenter.maps.LocationUtils;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.adapter.ThaiWidgetProvinceRepository;
+import th.or.nectec.tanrabad.survey.repository.persistence.DbPlaceRepository;
+import th.or.nectec.tanrabad.survey.service.PlaceRestService;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
+import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
 import th.or.nectec.tanrabad.survey.utils.android.ResourceUtils;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
 import th.or.nectec.tanrabad.survey.utils.android.TwiceBackPressed;
@@ -268,9 +274,17 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
 
     @Override
     public void displaySaveSuccess() {
+        if (InternetConnection.isAvailable(this))
+            doPostData();
         setResult(RESULT_OK);
         finish();
         SurveyBuildingHistoryActivity.openBuildingSurveyHistoryActivity(PlaceFormActivity.this, place, "sara");
+    }
+
+    private void doPostData() {
+        PlacePostJobRunner placePostJobRunner = new PlacePostJobRunner();
+        placePostJobRunner.addJob(new PostDataJob<>(new DbPlaceRepository(this), new PlaceRestService()));
+        placePostJobRunner.start();
     }
 
     @Override
@@ -302,7 +316,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         this.place = place;
         placeNameView.setText(place.getName());
 
-        if (!TextUtils.isEmpty(place.getSubdistrictCode())){
+        if (!TextUtils.isEmpty(place.getSubdistrictCode())) {
             addressSelect.setAddressCode(place.getSubdistrictCode());
         }
 
@@ -316,6 +330,19 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         this.place = Place.withName(null);
     }
 
+    public class PlacePostJobRunner extends AbsJobRunner {
+
+        @Override
+        protected void onJobStart(Job startingJob) {
+
+        }
+
+        @Override
+        protected void onRunFinish() {
+            Toast.makeText(PlaceFormActivity.this, "UPLOADED", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -327,4 +354,6 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
                 break;
         }
     }
+
+
 }

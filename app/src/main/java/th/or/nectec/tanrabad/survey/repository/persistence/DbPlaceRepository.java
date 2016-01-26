@@ -186,4 +186,20 @@ public class DbPlaceRepository implements PlaceRepository, ChangedRepository<Pla
                 PlaceColumn.CHANGED_STATUS + "=?", new String[]{String.valueOf(ChangedStatus.CHANGED)}, null, null, null);
         return getPlaceList(placeCursor);
     }
+
+    @Override
+    public boolean markUnchanged(Place data) {
+        ContentValues values = new ContentValues();
+        values.put(PlaceColumn.ID, data.getId().toString());
+        values.put(PlaceColumn.CHANGED_STATUS, ChangedStatus.UNCHANGED);
+        return updateByContentValues(values);
+
+    }
+
+    private boolean updateByContentValues(ContentValues place) {
+        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        boolean isSuccess = updateByContentValues(db, place);
+        db.close();
+        return isSuccess;
+    }
 }

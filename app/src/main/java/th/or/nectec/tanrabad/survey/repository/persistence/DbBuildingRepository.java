@@ -110,13 +110,25 @@ public class DbBuildingRepository implements BuildingRepository {
     @Override
     public boolean update(Building building) {
         ContentValues values = buildingContentValues(building);
-        //TODO ต้องทำส่วนตรวจสอบสถานะในกรณีข้อมูลเดิมมี flag เป็น ADD หลังจากปรับปรุงข้อมูลไปแล้ว ก็ยังต้องเป็น ADD เหมือนเดิม
-        values.put(PlaceColumn.CHANGED_STATUS, ChangedStatus.CHANGED);
+        values.put(PlaceColumn.CHANGED_STATUS, getAddOrChangedStatus(building));
         return updateByContentValues(new SurveyLiteDatabase(context).getWritableDatabase(), values);
     }
 
     private boolean updateByContentValues(SQLiteDatabase db, ContentValues place) {
         return db.update(TABLE_NAME, place, BuildingColumn.ID + "=?", new String[]{place.getAsString(BuildingColumn.ID)}) > 0;
+    }
+
+    private int getAddOrChangedStatus(Building building) {
+        Cursor placeCursor = new SurveyLiteDatabase(context).getReadableDatabase().query(TABLE_NAME, new String[]{BuildingColumn.CHANGED_STATUS},
+                BuildingColumn.ID + "=?", new String[]{building.getId().toString()}, null, null, null);
+        if (placeCursor.moveToNext()) {
+            if (placeCursor.getInt(0) == ChangedStatus.ADD)
+                return ChangedStatus.ADD;
+            else
+                return ChangedStatus.CHANGED;
+        }
+        placeCursor.close();
+        return ChangedStatus.CHANGED;
     }
 
     @Override

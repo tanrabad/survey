@@ -96,6 +96,7 @@ public class DbBuildingRepositoryTest {
         assertEquals(place.getId().toString(), cursor.getString(cursor.getColumnIndex(BuildingColumn.PLACE_ID)));
         assertEquals(updateBy.getUsername(), cursor.getString(cursor.getColumnIndex(BuildingColumn.UPDATE_BY)));
         assertEquals(updateTime, ThaiDateTimeConverter.convert(cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_TIME))));
+        assertEquals(ChangedStatus.ADD, cursor.getInt(cursor.getColumnIndex(PlaceColumn.CHANGED_STATUS)));
         cursor.close();
     }
 
@@ -128,6 +129,42 @@ public class DbBuildingRepositoryTest {
         assertEquals(place.getId().toString(), cursor.getString(cursor.getColumnIndex(BuildingColumn.PLACE_ID)));
         assertEquals(updateBy.getUsername(), cursor.getString(cursor.getColumnIndex(BuildingColumn.UPDATE_BY)));
         assertEquals(updateTime, ThaiDateTimeConverter.convert(cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_TIME))));
+        assertEquals(ChangedStatus.CHANGED, cursor.getInt(cursor.getColumnIndex(PlaceColumn.CHANGED_STATUS)));
+        cursor.close();
+    }
+
+    @Test
+    public void testSaveAndUpdate() throws Exception {
+        Place place = stubPlace();
+        User updateBy = stubUser();
+        Building building = Building.withName("No. 1/1");
+        building.setPlace(place);
+        building.setLocation(new Location(10.200000f, 100.100000f));
+        building.setUpdateBy(updateBy);
+        DateTime updateTime = DateTime.now();
+        building.setUpdateTimestamp(updateTime.toString());
+        Context context = InstrumentationRegistry.getTargetContext();
+        DbBuildingRepository dbBuildngRepository = new DbBuildingRepository(context);
+        dbBuildngRepository.save(building);
+        building.setName("No. 1/2");
+        boolean success = dbBuildngRepository.update(building);
+
+        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        Cursor cursor = db.query(DbBuildingRepository.TABLE_NAME,
+                BuildingColumn.wildcard(),
+                BuildingColumn.ID + "=?",
+                new String[]{building.getId().toString()},
+                null, null, null);
+
+        assertEquals(true, success);
+        assertEquals(true, cursor.moveToFirst());
+        assertEquals(1, cursor.getCount());
+        assertEquals(building.getId().toString(), cursor.getString(cursor.getColumnIndex(BuildingColumn.ID)));
+        assertEquals(building.getName(), cursor.getString(cursor.getColumnIndex(BuildingColumn.NAME)));
+        assertEquals(place.getId().toString(), cursor.getString(cursor.getColumnIndex(BuildingColumn.PLACE_ID)));
+        assertEquals(updateBy.getUsername(), cursor.getString(cursor.getColumnIndex(BuildingColumn.UPDATE_BY)));
+        assertEquals(updateTime, ThaiDateTimeConverter.convert(cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_TIME))));
+        assertEquals(ChangedStatus.ADD, cursor.getInt(cursor.getColumnIndex(PlaceColumn.CHANGED_STATUS)));
         cursor.close();
     }
 

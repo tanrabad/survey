@@ -24,9 +24,9 @@ import org.mockito.Mockito;
 import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
+import th.or.nectec.tanrabad.entity.field.Location;
 
 import java.util.UUID;
 
@@ -68,12 +68,13 @@ public class JsonBuildingTest {
 
         assertEquals(UUID.nameUUIDFromBytes("123".getBytes()), jsonBuilding.buildingID);
         assertEquals(stubPlace().getId(), jsonBuilding.placeID);
-        assertEquals(Place.TYPE_HOSPITAL, jsonBuilding.placeTypeID);
+        assertEquals(stubPlace().getType(), jsonBuilding.placeTypeID);
         assertEquals("อาคาร 2", jsonBuilding.buildingName);
         assertEquals(39.745673, jsonBuilding.location.getLatitude(), 0);
         assertEquals(-73.15005, jsonBuilding.location.getLongitude(), 0);
         assertEquals(jsonBuilding.updatedBy, stubUser().getUsername());
         assertEquals("2015-11-30T17:00:00.000Z", jsonBuilding.updateTime);
+        //assertEquals("", LoganSquare.serialize(jsonBuilding));
     }
 
     @NonNull

@@ -167,7 +167,7 @@ public class DbBuildingRepository implements BuildingRepository, ChangedReposito
     @Override
     public List<Building> getAdd() {
         Cursor buildingCursor = new SurveyLiteDatabase(context).getReadableDatabase().query(TABLE_NAME, BuildingColumn.wildcard(),
-                BuildingColumn.CHANGED_STATUS + "=?", new String[]{String.valueOf(ChangedStatus.CHANGED)}, null, null, null);
+                BuildingColumn.CHANGED_STATUS + "=?", new String[]{String.valueOf(ChangedStatus.ADD)}, null, null, null);
         return getBuildingList(buildingCursor);
     }
 

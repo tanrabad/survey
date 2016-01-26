@@ -17,6 +17,7 @@
 
 package th.or.nectec.tanrabad.survey.service;
 
+import android.util.Log;
 import com.bluelinelabs.logansquare.LoganSquare;
 import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
@@ -30,7 +31,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BuildingRestService extends BaseRestService<Building> {
+public class BuildingRestService extends AbsUploadRestService<Building> {
 
     public static final String PATH = "/building?geostd=4326&hr_code=dpc-04";
     private PlaceRepository placeRepository;
@@ -64,5 +65,15 @@ public class BuildingRestService extends BaseRestService<Building> {
 
         }
         return buildings;
+    }
+
+    @Override
+    protected String entityToJsonString(Building data) {
+        try {
+            Log.v("building", LoganSquare.serialize(JsonBuilding.parse(data)));
+            return LoganSquare.serialize(JsonBuilding.parse(data));
+        } catch (IOException e) {
+            throw new RestServiceException();
+        }
     }
 }

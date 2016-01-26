@@ -23,6 +23,8 @@ public class PostDataJob<T> implements Job {
     @Override
     public void execute() throws JobException {
         List<T> addList = changedRepository.getAdd();
+        if (addList == null)
+            return;
         for (T eachData : addList) {
             if (uploadRestService.postData(eachData))
                 changedRepository.markUnchanged(eachData);

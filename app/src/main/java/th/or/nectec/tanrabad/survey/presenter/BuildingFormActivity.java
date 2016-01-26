@@ -25,10 +25,7 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.TextView;
+import android.widget.*;
 import com.google.android.gms.maps.SupportMapFragment;
 import org.joda.time.DateTime;
 import th.or.nectec.tanrabad.domain.building.BuildingController;
@@ -41,10 +38,17 @@ import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.job.AbsJobRunner;
+import th.or.nectec.tanrabad.survey.job.Job;
+import th.or.nectec.tanrabad.survey.job.PostDataJob;
 import th.or.nectec.tanrabad.survey.presenter.maps.LiteMapFragment;
 import th.or.nectec.tanrabad.survey.presenter.maps.LocationUtils;
 import th.or.nectec.tanrabad.survey.repository.BrokerBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
+import th.or.nectec.tanrabad.survey.repository.persistence.DbBuildingRepository;
+import th.or.nectec.tanrabad.survey.repository.persistence.DbPlaceRepository;
+import th.or.nectec.tanrabad.survey.service.BuildingRestService;
+import th.or.nectec.tanrabad.survey.service.PlaceRestService;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
 import th.or.nectec.tanrabad.survey.utils.android.TwiceBackPressed;
@@ -236,7 +240,7 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
         building.setName(buildingNameView.getText().toString().trim());
         building.setPlace(place);
         building.setUpdateTimestamp(DateTime.now().toString());
-        building.setUpdateBy("user"); //TODO: 22/1/2559 set user later.
+        building.setUpdateBy("dpc-user"); //TODO: 22/1/2559 set user later.
         try {
             if (TextUtils.isEmpty(getBuildingUUID())) {
                 BuildingSaver buildingSaver = new BuildingSaver(BrokerBuildingRepository.getInstance(), new SaveBuildingValidator(), this);
@@ -252,9 +256,17 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
 
     @Override
     public void displaySaveSuccess() {
+        doPostData();
         setResult(RESULT_OK);
         finish();
         SurveyActivity.open(BuildingFormActivity.this, building);
+    }
+
+    private void doPostData() {
+        BuildingPostJobRunner buildingPostJobRunner = new BuildingPostJobRunner();
+        buildingPostJobRunner.addJob(new PostDataJob<>(new DbPlaceRepository(this), new PlaceRestService()));
+        buildingPostJobRunner.addJob(new PostDataJob<>(new DbBuildingRepository(this), new BuildingRestService()));
+        buildingPostJobRunner.start();
     }
 
     @Override
@@ -275,5 +287,17 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
 
     public void onRootViewClick(View view) {
         SoftKeyboard.hideOn(this);
+    }
+
+    public class BuildingPostJobRunner extends AbsJobRunner {
+
+        @Override
+        protected void onJobStart(Job startingJob) {
+        }
+
+        @Override
+        protected void onRunFinish() {
+            Toast.makeText(BuildingFormActivity.this, "UPLOADED", Toast.LENGTH_SHORT).show();
+        }
     }
 }

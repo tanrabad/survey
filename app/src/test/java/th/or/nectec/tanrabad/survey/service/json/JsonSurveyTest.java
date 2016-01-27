@@ -3,7 +3,9 @@ package th.or.nectec.tanrabad.survey.service.json;
 import com.bluelinelabs.logansquare.LoganSquare;
 import org.joda.time.DateTime;
 import org.junit.Test;
-import th.or.nectec.tanrabad.entity.*;
+import th.or.nectec.tanrabad.entity.Building;
+import th.or.nectec.tanrabad.entity.Survey;
+import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 import th.or.nectec.tanrabad.survey.utils.ResourceFile;
@@ -54,7 +56,8 @@ public class JsonSurveyTest {
                 "\"container_location_id\":2,\"container_type\":2,\"" +
                 "survey_detail_id\":\"772c4938-b917-11e5-a0c5-aabbccddeeff\"}]," +
                 "\"location\":{\"coordinates\":[-73.150055,39.745675],\"type\":\"Point\"}," +
-                "\"person_count\":0,\"survey_id\":\"1619f46f-6a70-4049-82ec-69dad861a5c6\"}", LoganSquare.serialize(jsonSurvey));
+                "\"person_count\":0,\"survey_id\":\"1619f46f-6a70-4049-82ec-69dad861a5c6\"," +
+                "\"surveyor\":\"dcp-user\"}", LoganSquare.serialize(jsonSurvey));
     }
 
     private Building stubBuilding() {

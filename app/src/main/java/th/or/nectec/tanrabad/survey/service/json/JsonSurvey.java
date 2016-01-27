@@ -25,6 +25,7 @@ public class JsonSurvey {
 
     @JsonField
     public String surveyor;
+
     @JsonField
     public List<JsonSurveyDetail> details;
 
@@ -37,6 +38,7 @@ public class JsonSurvey {
         jsonSurvey.buildingID = survey.getSurveyBuilding().getId();
         jsonSurvey.details = JsonSurveyDetail.parseList(survey.getIndoorDetail(), survey.getOutdoorDetail());
         jsonSurvey.location = GeoJsonPoint.parse(survey.getLocation());
+        jsonSurvey.surveyor = survey.getUser().getUsername();
         jsonSurvey.createTimestamp = survey.getStartTimestamp().withZone(DateTimeZone.UTC).toString();
         return jsonSurvey;
     }

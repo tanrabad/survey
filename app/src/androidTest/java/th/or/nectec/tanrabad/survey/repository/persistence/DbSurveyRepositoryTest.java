@@ -75,7 +75,7 @@ public class DbSurveyRepositoryTest {
         assertEquals(true, surveyQuery.moveToFirst());
         assertEquals(true, isSuccess);
         assertEquals(surveyID().toString(), surveyQuery.getString(surveyQuery.getColumnIndex(SurveyColumn.ID)));
-        assertEquals(100f, surveyQuery.getDouble(surveyQuery.getColumnIndex(SurveyColumn.LATITUDE)), 0);
+        assertEquals(80f, surveyQuery.getDouble(surveyQuery.getColumnIndex(SurveyColumn.LATITUDE)), 0);
         assertEquals(12f, surveyQuery.getDouble(surveyQuery.getColumnIndex(SurveyColumn.LONGITUDE)), 0);
         assertEquals("dpc-user", surveyQuery.getString(surveyQuery.getColumnIndex(SurveyColumn.SURVEYOR)));
         assertEquals(15, surveyQuery.getInt(surveyQuery.getColumnIndex(SurveyColumn.PERSON_COUNT)));
@@ -87,7 +87,7 @@ public class DbSurveyRepositoryTest {
 
     private Survey getSurvey() {
         Survey survey = new Survey(surveyID(), stubUser(), stubBuilding());
-        survey.setLocation(new Location(100, 12));
+        survey.setLocation(new Location(80, 12));
         survey.setResidentCount(15);
         SurveyDetail surveyDetail1 = new SurveyDetail(UUID.randomUUID(), getWater(), 3, 2);
         SurveyDetail surveyDetail2 = new SurveyDetail(UUID.randomUUID(), getDrinkingWater(), 4, 2);

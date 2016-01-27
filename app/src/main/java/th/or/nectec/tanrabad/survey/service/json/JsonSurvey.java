@@ -36,6 +36,7 @@ public class JsonSurvey {
         JsonSurvey jsonSurvey = new JsonSurvey();
         jsonSurvey.surveyID = survey.getId();
         jsonSurvey.buildingID = survey.getSurveyBuilding().getId();
+        jsonSurvey.personCount = survey.getResidentCount();
         jsonSurvey.details = JsonSurveyDetail.parseList(survey.getIndoorDetail(), survey.getOutdoorDetail());
         jsonSurvey.location = GeoJsonPoint.parse(survey.getLocation());
         jsonSurvey.surveyor = survey.getUser().getUsername();

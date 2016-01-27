@@ -56,7 +56,7 @@ public class JsonSurveyTest {
                 "\"container_location_id\":2,\"container_type\":2,\"" +
                 "survey_detail_id\":\"772c4938-b917-11e5-a0c5-aabbccddeeff\"}]," +
                 "\"location\":{\"coordinates\":[-73.150055,39.745675],\"type\":\"Point\"}," +
-                "\"person_count\":0,\"survey_id\":\"1619f46f-6a70-4049-82ec-69dad861a5c6\"," +
+                "\"person_count\":5,\"survey_id\":\"1619f46f-6a70-4049-82ec-69dad861a5c6\"," +
                 "\"surveyor\":\"dcp-user\"}", LoganSquare.serialize(jsonSurvey));
     }
 

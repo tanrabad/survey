@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +17,9 @@
 
 package th.or.nectec.tanrabad.entity;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import th.or.nectec.tanrabad.entity.field.Location;
 
 import static org.junit.Assert.assertEquals;
@@ -28,6 +30,8 @@ public class LocationTest {
     private static final double DELTA = 0.0001;
     private static final double latitude1 = 14.078606;
     private static final double longitude1 = 100.603120;
+    @Rule
+    public final ExpectedException exception = ExpectedException.none();
     private final Location location = new Location(latitude1, longitude1);
 
     @Test
@@ -49,7 +53,7 @@ public class LocationTest {
 
     @Test
     public void locationWithDifferentLongitudeMustNotEquals() {
-        Location anotherLocation = new Location(latitude1, 200.603120);
+        Location anotherLocation = new Location(latitude1, 179.603120);
 
         assertNotEquals(location, anotherLocation);
     }
@@ -59,5 +63,29 @@ public class LocationTest {
         Location sameLocation = new Location(latitude1, longitude1);
 
         assertEquals(location, sameLocation);
+    }
+
+    @Test
+    public void testOutOfRangeLatitude() throws Exception {
+        new Location(89, 0);
+        new Location(90, 0);
+        new Location(-89, 0);
+        new Location(-90, 0);
+
+        exception.expect(IllegalArgumentException.class);
+        new Location(-90.1, 0);
+    }
+
+    @Test
+    public void testOutOfRangeLongitude() throws Exception {
+        new Location(0, 179);
+        new Location(0, 180);
+        new Location(0, -179);
+        new Location(0, -180);
+
+        exception.expect(IllegalArgumentException.class);
+        new Location(0, 180.1f);
+
+
     }
 }

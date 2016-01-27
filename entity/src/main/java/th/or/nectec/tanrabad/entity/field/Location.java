@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,18 +22,29 @@ public class Location {
     double longitude;
 
     public Location(double latitude, double longitude) {
-        this.latitude = latitude;
-        this.longitude = longitude;
+        setLatitude(latitude);
+        setLongitude(longitude);
     }
 
     public double getLatitude() {
         return latitude;
     }
 
+    protected void setLatitude(double latitude) {
+        if (latitude < -90f || latitude > 90f)
+            throw new IllegalArgumentException("-90 <= Latitude <= 90, Your values is " + latitude);
+        this.latitude = latitude;
+    }
+
     public double getLongitude() {
         return longitude;
     }
 
+    protected void setLongitude(double longitude) {
+        if (longitude < -180f || longitude > 180f)
+            throw new IllegalArgumentException("-180 <= longitude <= 180, Your value is " + longitude);
+        this.longitude = longitude;
+    }
 
     @Override
     public int hashCode() {

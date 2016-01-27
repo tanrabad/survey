@@ -187,7 +187,7 @@ public class PlaceRestServiceTest extends WireMockTestBase {
                         .withStatus(201)));
 
         Place testPlace = stubPlace();
-        boolean uploadStatus = restService.postData(testPlace);
+        boolean uploadStatus = restService.post(testPlace);
 
         assertEquals(true, uploadStatus);
         verify(postRequestedFor(urlPathMatching(PATH))
@@ -214,7 +214,7 @@ public class PlaceRestServiceTest extends WireMockTestBase {
                 .willReturn(aResponse()
                         .withStatus(404)));
 
-        restService.postData(stubPlace());
+        restService.post(stubPlace());
     }
 
     @Test(expected = RestServiceException.ErrorResponseException.class)
@@ -224,7 +224,7 @@ public class PlaceRestServiceTest extends WireMockTestBase {
                         .withBody(ResourceFile.read("errorResponses.json")).withStatus(400))
         );
 
-        restService.postData(stubPlace());
+        restService.post(stubPlace());
     }
 
     @Test
@@ -234,7 +234,7 @@ public class PlaceRestServiceTest extends WireMockTestBase {
                 .willReturn(aResponse()
                         .withStatus(200)));
 
-        boolean success = restService.put(place.getId().toString(), place);
+        boolean success = restService.put(place);
 
         assertEquals(true, success);
         verify(putRequestedFor(urlEqualTo(PATH + "/" + place.getId().toString()))
@@ -250,6 +250,6 @@ public class PlaceRestServiceTest extends WireMockTestBase {
                 .willReturn(aResponse()
                         .withStatus(409)));
 
-        restService.put(place.getId().toString(), place);
+        restService.put(place);
     }
 }

@@ -37,7 +37,7 @@ public abstract class AbsUploadRestService <T> extends AbsRestService implements
     }
 
     @Override
-    public boolean postData(T data) {
+    public boolean post(T data) {
         try {
             Request request = buildPostRequest(data);
             Response response = client.newCall(request).execute();

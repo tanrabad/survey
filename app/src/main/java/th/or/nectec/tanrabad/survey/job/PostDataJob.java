@@ -44,7 +44,7 @@ public class PostDataJob <T> implements Job {
         if (addList == null)
             return;
         for (T eachData : addList) {
-            if (uploadRestService.postData(eachData))
+            if (uploadRestService.post(eachData))
                 changedRepository.markUnchanged(eachData);
         }
     }

@@ -18,7 +18,7 @@
 package th.or.nectec.tanrabad.survey.service;
 
 public interface UploadRestService<T> {
-    boolean postData(T data);
+    boolean post(T data);
 
     boolean put(T data);
 }

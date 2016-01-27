@@ -42,16 +42,11 @@ public class AmphurRestService extends AbsRestService<District> {
         return PATH;
     }
 
-    protected List<District> jsonToEntityList(String responseBody) {
+    protected List<District> jsonToEntityList(String responseBody) throws IOException {
         ArrayList<District> districtList = new ArrayList<>();
-        try {
-            List<JsonAmphur> jsonAmphurList = LoganSquare.parseList(responseBody, JsonAmphur.class);
-            for (JsonAmphur eachJsonAmphur : jsonAmphurList) {
-                districtList.add(eachJsonAmphur.getEntity());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        List<JsonAmphur> jsonAmphurList = LoganSquare.parseList(responseBody, JsonAmphur.class);
+        for (JsonAmphur eachJsonAmphur : jsonAmphurList)
+            districtList.add(eachJsonAmphur.getEntity());
         return districtList;
     }
 }

@@ -57,17 +57,11 @@ public class BuildingRestService extends AbsUploadRestService<Building> {
     }
 
     @Override
-    protected List<Building> jsonToEntityList(String responseBody) {
+    protected List<Building> jsonToEntityList(String responseBody) throws IOException {
         ArrayList<Building> buildings = new ArrayList<>();
-        try {
-            List<JsonBuilding> jsonBuildings = LoganSquare.parseList(responseBody, JsonBuilding.class);
-            for (JsonBuilding eachJsonBuilding : jsonBuildings) {
-                buildings.add(eachJsonBuilding.getEntity(placeRepository, userRepository));
-            }
-        } catch (IOException io) {
-            throw new RestServiceException(io);
-
-        }
+        List<JsonBuilding> jsonBuildings = LoganSquare.parseList(responseBody, JsonBuilding.class);
+        for (JsonBuilding eachJsonBuilding : jsonBuildings)
+            buildings.add(eachJsonBuilding.getEntity(placeRepository, userRepository));
         return buildings;
     }
 

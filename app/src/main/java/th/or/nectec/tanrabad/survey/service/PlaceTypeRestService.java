@@ -44,16 +44,11 @@ public class PlaceTypeRestService extends AbsRestService<PlaceType> {
     }
 
     @Override
-    protected List<PlaceType> jsonToEntityList(String responseBody) {
+    protected List<PlaceType> jsonToEntityList(String responseBody) throws IOException {
         ArrayList<PlaceType> placeTypes = new ArrayList<>();
-        try {
-            List<JsonPlaceType> jsonPlaceTypes = LoganSquare.parseList(responseBody, JsonPlaceType.class);
-            for (JsonPlaceType jsonPlaceType : jsonPlaceTypes) {
-                placeTypes.add(jsonPlaceType.getEntity());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        List<JsonPlaceType> jsonPlaceTypes = LoganSquare.parseList(responseBody, JsonPlaceType.class);
+        for (JsonPlaceType jsonPlaceType : jsonPlaceTypes)
+            placeTypes.add(jsonPlaceType.getEntity());
         return placeTypes;
     }
 }

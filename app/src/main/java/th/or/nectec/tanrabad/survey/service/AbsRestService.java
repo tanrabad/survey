@@ -117,5 +117,5 @@ public abstract class AbsRestService <T> implements RestService<T> {
             requestBuilder.addHeader(IF_MODIFIED_SINCE, lastUpdate);
     }
 
-    protected abstract List<T> jsonToEntityList(String responseBody);
+    protected abstract List<T> jsonToEntityList(String responseBody) throws IOException;
 }

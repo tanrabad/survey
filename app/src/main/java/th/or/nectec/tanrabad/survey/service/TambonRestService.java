@@ -42,16 +42,11 @@ public class TambonRestService extends AbsRestService<Subdistrict> {
         return PATH;
     }
 
-    protected List<Subdistrict> jsonToEntityList(String responseBody) {
+    protected List<Subdistrict> jsonToEntityList(String responseBody) throws IOException {
         ArrayList<Subdistrict> subdistrictList = new ArrayList<>();
-        try {
-            List<JsonTambon> jsonTambonList = LoganSquare.parseList(responseBody, JsonTambon.class);
-            for (JsonTambon eachJsonTambon : jsonTambonList) {
-                subdistrictList.add(eachJsonTambon.getEntity());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        List<JsonTambon> jsonTambonList = LoganSquare.parseList(responseBody, JsonTambon.class);
+        for (JsonTambon eachJsonTambon : jsonTambonList)
+            subdistrictList.add(eachJsonTambon.getEntity());
         return subdistrictList;
     }
 }

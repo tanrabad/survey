@@ -53,16 +53,11 @@ public class PlaceRestService extends AbsUploadRestService<Place> {
     }
 
     @Override
-    protected List<Place> jsonToEntityList(String responseBody) {
+    protected List<Place> jsonToEntityList(String responseBody) throws IOException {
         ArrayList<Place> places = new ArrayList<>();
-        try {
-            List<JsonPlace> jsonPlaces = LoganSquare.parseList(responseBody, JsonPlace.class);
-            for (JsonPlace eachJsonPlace : jsonPlaces) {
-                places.add(eachJsonPlace.getEntity(userRepository));
-            }
-        } catch (IOException io) {
-            throw new RestServiceException(io);
-        }
+        List<JsonPlace> jsonPlaces = LoganSquare.parseList(responseBody, JsonPlace.class);
+        for (JsonPlace eachJsonPlace : jsonPlaces)
+            places.add(eachJsonPlace.getEntity(userRepository));
         return places;
     }
 

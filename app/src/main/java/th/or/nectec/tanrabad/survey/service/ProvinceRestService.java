@@ -44,16 +44,11 @@ public class ProvinceRestService extends AbsRestService<Province> {
     }
 
     @Override
-    protected List<Province> jsonToEntityList(String responseBody) {
+    protected List<Province> jsonToEntityList(String responseBody) throws IOException {
         ArrayList<Province> provinceList = new ArrayList<>();
-        try {
-            List<JsonProvince> jsonProvinceList = LoganSquare.parseList(responseBody, JsonProvince.class);
-            for (JsonProvince eachJsonProvince : jsonProvinceList) {
-                provinceList.add(eachJsonProvince.getEntity());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        List<JsonProvince> jsonProvinceList = LoganSquare.parseList(responseBody, JsonProvince.class);
+        for (JsonProvince eachJsonProvince : jsonProvinceList)
+            provinceList.add(eachJsonProvince.getEntity());
         return provinceList;
     }
 }

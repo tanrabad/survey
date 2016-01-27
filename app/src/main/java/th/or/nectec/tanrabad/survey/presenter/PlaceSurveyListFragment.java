@@ -38,7 +38,7 @@ import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class PlaceSurveyListFragment extends Fragment implements PlaceWithSurveyHistoryListPresenter, AdapterView.OnItemClickListener {
 
@@ -103,7 +103,7 @@ public class PlaceSurveyListFragment extends Fragment implements PlaceWithSurvey
     }
 
     @Override
-    public void displaySurveyPlaceList(ArrayList<Place> surveyPlace) {
+    public void displaySurveyPlaceList(List<Place> surveyPlace) {
         emptyLayoutView.setVisibility(View.GONE);
         placeAdapter.updateData(surveyPlace);
         placeCountView.setText(getString(R.string.format_place_count, surveyPlace.size()));

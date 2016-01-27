@@ -17,13 +17,13 @@
 
 package th.or.nectec.tanrabad.survey.repository;
 
+import th.or.nectec.tanrabad.domain.place.PlaceRepositoryException;
 import th.or.nectec.tanrabad.domain.survey.SurveyRepository;
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.Survey;
-import th.or.nectec.tanrabad.entity.User;
+import th.or.nectec.tanrabad.entity.*;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class InMemorySurveyRepository implements SurveyRepository {
 
@@ -41,17 +41,6 @@ public class InMemorySurveyRepository implements SurveyRepository {
     }
 
     @Override
-    public boolean save(Survey survey) {
-        if (surveys.contains(survey)) {
-            surveys.set(surveys.indexOf(survey), survey);
-        } else {
-            surveys.add(survey);
-        }
-
-        return true;
-    }
-
-    @Override
     public Survey findByBuildingAndUserIn7Day(Building building, User user) {
         for (Survey eachSurvey : surveys) {
             if (eachSurvey.getSurveyBuilding().equals(building) && eachSurvey.getUser().equals(user)) {
@@ -62,7 +51,7 @@ public class InMemorySurveyRepository implements SurveyRepository {
     }
 
     @Override
-    public ArrayList<Survey> findByPlaceAndUserIn7Days(Place place, User user) {
+    public List<Survey> findByPlaceAndUserIn7Days(Place place, User user) {
         ArrayList<Survey> surveyBuilding = new ArrayList<>();
         for (Survey eachSurvey : surveys) {
             if (eachSurvey.getSurveyBuilding().getPlace().equals(place) && eachSurvey.getUser().equals(user)) {
@@ -73,16 +62,51 @@ public class InMemorySurveyRepository implements SurveyRepository {
     }
 
     @Override
-    public ArrayList<Place> findByUserIn7Days(User user) {
+    public boolean save(Survey survey) {
+        surveys.add(survey);
+        return true;
+    }
+
+    @Override
+    public List<SurveyDetail> findSurveyDetail(UUID surveyId, int containerLocationID) {
+        return null;
+    }
+
+    @Override
+    public List<Place> findByUserIn7Days(User user) {
         ArrayList<Place> surveyPlaces = new ArrayList<>();
         for (Survey eachSurvey : surveys) {
             if (eachSurvey.getUser().equals(user)) {
                 Building surveyBuilding = eachSurvey.getSurveyBuilding();
-                if(!surveyPlaces.contains(surveyBuilding.getPlace())){
+                if (!surveyPlaces.contains(surveyBuilding.getPlace())) {
                     surveyPlaces.add(surveyBuilding.getPlace());
                 }
             }
         }
         return surveyPlaces.isEmpty() ? null : surveyPlaces;
     }
+
+    @Override
+    public boolean update(Survey survey) {
+        if (surveys.contains(survey)) {
+            surveys.set(surveys.indexOf(survey), survey);
+        }
+        return true;
+    }
+
+
+    @Override
+    public void updateOrInsert(List<Survey> surveys) {
+        for (Survey survey : surveys) {
+            try {
+                update(survey);
+            } catch (PlaceRepositoryException pre) {
+                save(survey);
+            }
+        }
+    }
+
+
+
+
 }

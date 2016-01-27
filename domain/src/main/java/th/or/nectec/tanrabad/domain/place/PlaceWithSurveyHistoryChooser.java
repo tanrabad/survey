@@ -22,7 +22,7 @@ import th.or.nectec.tanrabad.domain.survey.SurveyRepository;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class PlaceWithSurveyHistoryChooser {
     private UserRepository userRepository;
@@ -45,7 +45,7 @@ public class PlaceWithSurveyHistoryChooser {
             return;
         }
 
-        ArrayList<Place> surveyPlaces = surveyRepository.findByUserIn7Days(user);
+        List<Place> surveyPlaces = surveyRepository.findByUserIn7Days(user);
 
         if(surveyPlaces!=null){
             placeWithSurveyStatusChooserPresenter.displaySurveyPlaceList(surveyPlaces);

@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class Survey implements LocationEntity, Comparable<Survey> {
+public class Survey extends Entity implements LocationEntity, Comparable<Survey> {
     private User user;
     private Building surveyBuilding;
     private int residentCount;

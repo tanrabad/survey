@@ -18,12 +18,9 @@
 package th.or.nectec.tanrabad.survey.repository.persistence;
 
 import android.database.Cursor;
-import org.joda.time.DateTime;
-import th.or.nectec.tanrabad.domain.UserRepository;
-import th.or.nectec.tanrabad.domain.building.BuildingRepository;
 import th.or.nectec.tanrabad.domain.survey.ContainerTypeRepository;
-import th.or.nectec.tanrabad.domain.survey.SurveyRepository;
-import th.or.nectec.tanrabad.entity.*;
+import th.or.nectec.tanrabad.entity.SurveyDetail;
+import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
 
 import java.util.UUID;
@@ -54,6 +51,6 @@ class SurveyDetailCursorMapper implements CursorMapper<SurveyDetail> {
         ContainerType containerType = containerTypeRepository.findByID(cursor.getInt(containerTypeIDIndex));
         int totalContainer = cursor.getInt(containerCountIndex);
         int larvaFoundContainer = cursor.getInt(containerHaveLarvaIndex);
-        return new SurveyDetail(surveyDetailID, containerType, totalContainer, larvaFoundContainer);;
+        return new SurveyDetail(surveyDetailID, containerType, totalContainer, larvaFoundContainer);
     }
 }

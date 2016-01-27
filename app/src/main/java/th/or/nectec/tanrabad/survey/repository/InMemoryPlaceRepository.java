@@ -42,7 +42,6 @@ public class InMemoryPlaceRepository implements PlaceRepository, LocationReposit
     private final Place thammasatHospital;
     private final Place golfView;
 
-    //ArrayList<Place> places = new ArrayList<>();
     Map<UUID, Place> placesMap = new HashMap<>();
 
     private InMemoryPlaceRepository() {

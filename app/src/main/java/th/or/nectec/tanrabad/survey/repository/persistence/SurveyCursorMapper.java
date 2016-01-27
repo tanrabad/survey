@@ -18,17 +18,16 @@
 package th.or.nectec.tanrabad.survey.repository.persistence;
 
 import android.database.Cursor;
-import android.database.sqlite.SQLiteOpenHelper;
 import org.joda.time.DateTime;
 import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.domain.building.BuildingRepository;
-import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.domain.survey.SurveyRepository;
-import th.or.nectec.tanrabad.entity.*;
+import th.or.nectec.tanrabad.entity.Building;
+import th.or.nectec.tanrabad.entity.Survey;
+import th.or.nectec.tanrabad.entity.User;
+import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 class SurveyCursorMapper implements CursorMapper<Survey> {
@@ -66,13 +65,13 @@ class SurveyCursorMapper implements CursorMapper<Survey> {
     @Override
     public Survey map(Cursor cursor) {
         UUID surveyID = UUID.fromString(cursor.getString(idIndex));
-        User user = new User(cursor.getString(surveyorIndex));
+        User user = userRepository.findByUsername(cursor.getString(surveyorIndex));
         Building building = buildingRepository.findByUUID(UUID.fromString(cursor.getString(buildingIdIndex)));
         Survey survey = new Survey(surveyID, user, building);
         survey.setLocation(new Location(cursor.getDouble(latIndex), cursor.getDouble(lngIndex)));
         survey.setResidentCount(cursor.getInt(personCountIndex));
-        survey.setIndoorDetail(surveyRepository.getSurveyDetail(surveyID, 1));
-        survey.setOutdoorDetail(surveyRepository.getSurveyDetail(surveyID, 2));
+        survey.setIndoorDetail(surveyRepository.findSurveyDetail(surveyID, 1));
+        survey.setOutdoorDetail(surveyRepository.findSurveyDetail(surveyID, 2));
         survey.setStartTimestamp(new DateTime(cursor.getString(createTimeIndex)));
         survey.setFinishTimestamp(new DateTime(cursor.getString(updateTimeIndex)));
         return survey;

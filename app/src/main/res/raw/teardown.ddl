@@ -1,3 +1,5 @@
+DELETE FROM survey_detail;
+DELETE FROM survey;
 DELETE FROM container_type;
 DELETE FROM container_location;
 DELETE FROM building;

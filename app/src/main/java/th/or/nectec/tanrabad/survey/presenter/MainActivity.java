@@ -17,7 +17,6 @@
 
 package th.or.nectec.tanrabad.survey.presenter;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.AnimRes;
@@ -39,7 +38,7 @@ import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends TanrabadActivity implements View.OnClickListener, PlaceWithSurveyHistoryListPresenter, AdapterView.OnItemClickListener {
 
@@ -124,7 +123,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
     }
 
     @Override
-    public void displaySurveyPlaceList(ArrayList<Place> surveyPlace) {
+    public void displaySurveyPlaceList(List<Place> surveyPlace) {
         placeAdapter.updateData(surveyPlace);
         cardView.setVisibility(View.VISIBLE);
     }

@@ -54,6 +54,11 @@ public class BrokerContainerTypeRepository implements ContainerTypeRepository {
     }
 
     @Override
+    public ContainerType findByID(int containerTypeID) {
+        return persistence.findByID(containerTypeID);
+    }
+
+    @Override
     public boolean save(ContainerType containerType) {
         boolean success = persistence.save(containerType);
         if (success) {

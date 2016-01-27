@@ -27,9 +27,10 @@ public class SurveyColumn {
     public static final String LONGITUDE = "longitude";
     public static final String CREATE_TIME = "create_time";
     public static final String UPDATE_TIME = "update_time";
+    public static final String CHANGED_STATUS = "changed_status";
 
 
     public static String[] wildcard() {
-        return new String[]{ID, BUILDING_ID, PERSON_COUNT, SURVEYOR, LATITUDE, LONGITUDE, CREATE_TIME, UPDATE_TIME};
+        return new String[]{ID, BUILDING_ID, PERSON_COUNT, SURVEYOR, LATITUDE, LONGITUDE, CREATE_TIME, UPDATE_TIME, CHANGED_STATUS};
     }
 }

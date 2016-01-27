@@ -30,6 +30,25 @@ public class DbContainerTypeRepository implements ContainerTypeRepository {
         return new CursorList<>(containerTypeCursor, getMapper(containerTypeCursor));
     }
 
+    @Override
+    public ContainerType findByID(int containerTypeID) {
+        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        Cursor containerTypeCursor = db.query(TABLE_NAME, ContainerTypeColumn.wildcard(),
+                null, null, null, null, ContainerTypeColumn.ID);
+        return getContainerType(containerTypeCursor);
+    }
+
+    private ContainerType getContainerType(Cursor cursor) {
+        if (cursor.moveToFirst()) {
+            ContainerType place = getMapper(cursor).map(cursor);
+            cursor.close();
+            return place;
+        } else {
+            cursor.close();
+            return null;
+        }
+    }
+
     private CursorMapper<ContainerType> getMapper(Cursor cursor) {
         return new ContainerTypeCursorMapper(cursor);
     }

@@ -47,6 +47,11 @@ public class InMemoryContainerTypeRepository implements ContainerTypeRepository 
     }
 
     @Override
+    public ContainerType findByID(int containerTypeID) {
+        return containerTypes.get(containerTypeID);
+    }
+
+    @Override
     public void updateOrInsert(List<ContainerType> updateList) {
         for (ContainerType containerType : updateList) {
             try {

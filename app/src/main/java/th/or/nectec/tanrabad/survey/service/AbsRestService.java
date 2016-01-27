@@ -56,7 +56,6 @@ public abstract class AbsRestService <T> implements RestService<T> {
                 serviceLastUpdate.save(response.header(LAST_MODIFIED));
 
             return jsonToEntityList(response.body().string());
-
         } catch (IOException io) {
             io.printStackTrace();
             throw new RestServiceException(io);
@@ -89,7 +88,9 @@ public abstract class AbsRestService <T> implements RestService<T> {
     protected final Request makeRequest() {
         Request.Builder requestBuilder = new Request.Builder()
                 .get()
-                .url(getUrl());
+                .url(getUrl())
+                .addHeader(ACCEPT, "application/json")
+                .addHeader(ACCEPT_CHARSET, "utf-8");
         headerIfModifiedSince(requestBuilder);
         return requestBuilder.build();
     }

@@ -31,11 +31,11 @@ public class ProvinceRestService extends AbsRestService<Province> {
     public static final String PATH = "/province?geostd=4326&hr_code=dpc-04";
 
     public ProvinceRestService() {
-        this(BASE_API, new LastUpdatePreference(TanrabadApp.getInstance(), PATH ));
+        this(BASE_API, new ServiceLastUpdatePreference(TanrabadApp.getInstance(), PATH));
     }
 
-    public ProvinceRestService(String apiBaseUrl, LastUpdate lastUpdate) {
-        super(apiBaseUrl, lastUpdate);
+    public ProvinceRestService(String apiBaseUrl, ServiceLastUpdate serviceLastUpdate) {
+        super(apiBaseUrl, serviceLastUpdate);
     }
 
     @Override

@@ -25,13 +25,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 
-public class LastUpdatePreferenceTest {
+public class ServiceLastUpdatePreferenceTest {
 
 
     @Test
     public void testSaveThenGet() throws Exception {
         DateTime saveDateTime = DateTime.parse("2016-01-27T03:59:11.000Z");
-        LastUpdatePreference lastUpdatePreference = new LastUpdatePreference(InstrumentationRegistry.getTargetContext(), "test");
+        ServiceLastUpdatePreference lastUpdatePreference = new ServiceLastUpdatePreference(InstrumentationRegistry.getTargetContext(), "test");
 
         lastUpdatePreference.save(saveDateTime);
         DateTime lastUpdate = lastUpdatePreference.get();

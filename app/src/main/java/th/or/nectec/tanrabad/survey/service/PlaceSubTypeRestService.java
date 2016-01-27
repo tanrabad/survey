@@ -31,11 +31,11 @@ public class PlaceSubTypeRestService extends AbsRestService<PlaceSubType> {
     public static final String PATH = "/placesubtype";
 
     public PlaceSubTypeRestService() {
-        this(BASE_API, new LastUpdatePreference(TanrabadApp.getInstance(), PATH));
+        this(BASE_API, new ServiceLastUpdatePreference(TanrabadApp.getInstance(), PATH));
     }
 
-    public PlaceSubTypeRestService(String apiBaseUrl, LastUpdate lastUpdate) {
-        super(apiBaseUrl, lastUpdate);
+    public PlaceSubTypeRestService(String apiBaseUrl, ServiceLastUpdate serviceLastUpdate) {
+        super(apiBaseUrl, serviceLastUpdate);
     }
 
     @Override

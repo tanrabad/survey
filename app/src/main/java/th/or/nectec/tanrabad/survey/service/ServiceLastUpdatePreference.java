@@ -24,7 +24,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 
-public class LastUpdatePreference implements LastUpdate {
+public class ServiceLastUpdatePreference implements ServiceLastUpdate {
 
     public static final String PREF_NAME = "api-last-update";
     private static final DateTimeFormatter RFC1123_FORMATTER =
@@ -32,7 +32,7 @@ public class LastUpdatePreference implements LastUpdate {
     private final Context context;
     private final String path;
 
-    public LastUpdatePreference(Context context, String path) {
+    public ServiceLastUpdatePreference(Context context, String path) {
         this.context = context;
         this.path = path;
     }

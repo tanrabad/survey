@@ -39,7 +39,7 @@ import static org.junit.Assert.assertEquals;
 public class PlaceRestServiceTest extends WireMockTestBase {
 
     UserRepository userRepository = Mockito.mock(UserRepository.class);
-    LastUpdate lastUpdate = Mockito.mock(LastUpdate.class);
+    ServiceLastUpdate lastUpdate = Mockito.mock(ServiceLastUpdate.class);
 
 
     @Test(expected = RestServiceException.class)

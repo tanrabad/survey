@@ -31,11 +31,11 @@ public class TambonRestService extends AbsRestService<Subdistrict> {
     public static final String PATH = "/tambon?geostd=4326&hr_code=dpc-04";
 
     public TambonRestService() {
-        this(BASE_API, new LastUpdatePreference(TanrabadApp.getInstance(), PATH));
+        this(BASE_API, new ServiceLastUpdatePreference(TanrabadApp.getInstance(), PATH));
     }
 
-    public TambonRestService(String apiBaseUrl, LastUpdate lastUpdate) {
-        super(apiBaseUrl, lastUpdate);
+    public TambonRestService(String apiBaseUrl, ServiceLastUpdate serviceLastUpdate) {
+        super(apiBaseUrl, serviceLastUpdate);
     }
 
     protected String getPath() {

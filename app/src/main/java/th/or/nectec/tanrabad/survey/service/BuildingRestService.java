@@ -37,11 +37,11 @@ public class BuildingRestService extends AbsUploadRestService<Building> {
     private UserRepository userRepository;
 
     public BuildingRestService() {
-        this(BASE_API, new LastUpdatePreference(TanrabadApp.getInstance(), PATH), BrokerPlaceRepository.getInstance(), new StubUserRepository());
+        this(BASE_API, new ServiceLastUpdatePreference(TanrabadApp.getInstance(), PATH), BrokerPlaceRepository.getInstance(), new StubUserRepository());
     }
 
-    public BuildingRestService(String apiBaseUrl, LastUpdate lastUpdate, PlaceRepository placeRepository, UserRepository userRepository) {
-        super(apiBaseUrl, lastUpdate);
+    public BuildingRestService(String apiBaseUrl, ServiceLastUpdate serviceLastUpdate, PlaceRepository placeRepository, UserRepository userRepository) {
+        super(apiBaseUrl, serviceLastUpdate);
         this.placeRepository = placeRepository;
         this.userRepository = userRepository;
     }

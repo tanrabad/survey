@@ -34,11 +34,11 @@ public class PlaceRestService extends AbsUploadRestService<Place> {
     private UserRepository userRepository;
 
     public PlaceRestService() {
-        this(BASE_API, new LastUpdatePreference(TanrabadApp.getInstance(), PATH), new StubUserRepository());
+        this(BASE_API, new ServiceLastUpdatePreference(TanrabadApp.getInstance(), PATH), new StubUserRepository());
     }
 
-    public PlaceRestService(String apiBaseUrl, LastUpdate lastUpdate, UserRepository userRepository) {
-        super(apiBaseUrl, lastUpdate);
+    public PlaceRestService(String apiBaseUrl, ServiceLastUpdate serviceLastUpdate, UserRepository userRepository) {
+        super(apiBaseUrl, serviceLastUpdate);
         this.userRepository = userRepository;
     }
 

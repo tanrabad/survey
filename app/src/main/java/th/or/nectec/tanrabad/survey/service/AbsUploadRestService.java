@@ -31,8 +31,8 @@ public abstract class AbsUploadRestService <T> extends AbsRestService implements
     public static final String TANRABAD_SURVEY_APP = "tanrabad-survey-app";
     public static final MediaType JSON_MEDIA_TYPE = MediaType.parse("application/json");
 
-    public AbsUploadRestService(String baseApi, LastUpdate lastUpdate) {
-        super(baseApi, lastUpdate);
+    public AbsUploadRestService(String baseApi, ServiceLastUpdate serviceLastUpdate) {
+        super(baseApi, serviceLastUpdate);
     }
 
     @Override

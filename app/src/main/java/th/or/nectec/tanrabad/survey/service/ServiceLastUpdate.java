@@ -19,7 +19,7 @@ package th.or.nectec.tanrabad.survey.service;
 
 import org.joda.time.DateTime;
 
-public interface LastUpdate {
+public interface ServiceLastUpdate {
 
     void save(DateTime dateTime);
 

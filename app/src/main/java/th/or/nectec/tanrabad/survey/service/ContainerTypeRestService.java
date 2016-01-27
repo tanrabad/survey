@@ -31,11 +31,11 @@ public class ContainerTypeRestService extends AbsRestService<ContainerType> {
     public static final String PATH = "/containertype";
 
     public ContainerTypeRestService() {
-        this(BASE_API, new LastUpdatePreference(TanrabadApp.getInstance(), PATH));
+        this(BASE_API, new ServiceLastUpdatePreference(TanrabadApp.getInstance(), PATH));
     }
 
-    public ContainerTypeRestService(String apiBaseUrl, LastUpdate lastUpdate) {
-        super(apiBaseUrl, lastUpdate);
+    public ContainerTypeRestService(String apiBaseUrl, ServiceLastUpdate serviceLastUpdate) {
+        super(apiBaseUrl, serviceLastUpdate);
     }
 
     @Override

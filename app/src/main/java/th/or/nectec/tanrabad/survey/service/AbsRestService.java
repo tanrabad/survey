@@ -36,13 +36,13 @@ public abstract class AbsRestService <T> implements RestService<T> {
     protected static final DateTimeFormatter RFC1123_FORMATTER =
             DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss 'GMT'");
     protected final OkHttpClient client = new OkHttpClient();
-    protected LastUpdate lastUpdate;
+    protected ServiceLastUpdate serviceLastUpdate;
     protected String baseApi;
     private String nextUrl = "";
 
-    public AbsRestService(String baseApi, LastUpdate lastUpdate) {
+    public AbsRestService(String baseApi, ServiceLastUpdate serviceLastUpdate) {
         this.baseApi = baseApi;
-        this.lastUpdate = lastUpdate;
+        this.serviceLastUpdate = serviceLastUpdate;
     }
 
     @Override
@@ -58,7 +58,7 @@ public abstract class AbsRestService <T> implements RestService<T> {
             if (isNotSuccess(response))
                 throw new RestServiceException(response);
             if (!hasNextRequest())
-                lastUpdate.save(getLastModified(response));
+                serviceLastUpdate.save(getLastModified(response));
 
             return jsonToEntityList(response.body().string());
 
@@ -103,7 +103,7 @@ public abstract class AbsRestService <T> implements RestService<T> {
     }
 
     private void headerIfModifiedSince(Request.Builder requestBuilder) {
-        DateTime lastUpdate = this.lastUpdate.get();
+        DateTime lastUpdate = this.serviceLastUpdate.get();
         if (lastUpdate != null)
             requestBuilder.addHeader(Header.IF_MODIFIED_SINCE, RFC1123_FORMATTER.print(lastUpdate));
     }

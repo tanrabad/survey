@@ -44,10 +44,11 @@ public class BuildingRestServiceTest extends WireMockTestBase {
 
     protected static final DateTimeFormatter RFC1123_FORMATTER =
             DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss 'GMT'");
-    private UserRepository userRepository = Mockito.mock(UserRepository.class);
-    private PlaceRepository placeRepository = Mockito.mock(PlaceRepository.class);
-    private LastUpdate lastUpdate = Mockito.mock(LastUpdate.class);
-    private BuildingRestService restService;
+
+    UserRepository userRepository = Mockito.mock(UserRepository.class);
+    PlaceRepository placeRepository = Mockito.mock(PlaceRepository.class);
+    ServiceLastUpdate lastUpdate = Mockito.mock(ServiceLastUpdate.class);
+    BuildingRestService restService;
 
     @Before
     public void setUp() throws Exception {

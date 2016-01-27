@@ -31,11 +31,11 @@ public class AmphurRestService extends AbsRestService<District> {
     public static final String PATH = "/amphur?geostd=4326&hr_code=dpc-04";
 
     public AmphurRestService() {
-        this(BASE_API, new LastUpdatePreference(TanrabadApp.getInstance(), PATH ));
+        this(BASE_API, new ServiceLastUpdatePreference(TanrabadApp.getInstance(), PATH));
     }
 
-    public AmphurRestService(String apiBaseUrl, LastUpdate lastUpdate) {
-        super(apiBaseUrl, lastUpdate);
+    public AmphurRestService(String apiBaseUrl, ServiceLastUpdate serviceLastUpdate) {
+        super(apiBaseUrl, serviceLastUpdate);
     }
 
     protected String getPath() {

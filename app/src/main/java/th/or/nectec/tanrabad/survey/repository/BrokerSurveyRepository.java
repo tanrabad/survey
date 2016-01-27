@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public class BrokerSurveyRepository implements SurveyRepository {
 
-    public static BrokerSurveyRepository instance;
+    private static BrokerSurveyRepository instance;
     private SurveyRepository cache;
     private SurveyRepository persistent;
 
@@ -20,10 +20,8 @@ public class BrokerSurveyRepository implements SurveyRepository {
     }
 
     public static BrokerSurveyRepository getInstance() {
-        if (instance == null) {
+        if (instance == null)
             instance = new BrokerSurveyRepository(InMemorySurveyRepository.getInstance(), new DbSurveyRepository(TanrabadApp.getInstance()));
-        }
-
         return instance;
     }
 

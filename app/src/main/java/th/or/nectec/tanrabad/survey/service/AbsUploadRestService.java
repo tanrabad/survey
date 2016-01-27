@@ -62,9 +62,9 @@ public abstract class AbsUploadRestService <T> extends AbsRestService implements
     protected abstract String entityToJsonString(T data);
 
     @Override
-    public boolean put(String dataId, T data) {
+    public boolean put(T data) {
         try {
-            Request request = buildPutRequest(dataId, data);
+            Request request = buildPutRequest(data);
             Response response = client.newCall(request).execute();
             if (isNotSuccess(response))
                 throw new RestServiceException(response);
@@ -74,10 +74,12 @@ public abstract class AbsUploadRestService <T> extends AbsRestService implements
         }
     }
 
-    private Request buildPutRequest(String dataId, T data) {
+    private Request buildPutRequest(T data) {
         return new Request.Builder().put(RequestBody.create(JSON_MEDIA_TYPE, entityToJsonString(data)))
                 .addHeader(USER_AGENT, TRB_USER_AGENT)
-                .url(baseApi + getPath() + "/" + dataId)
+                .url(baseApi + getPath() + "/" + getId(data))
                 .build();
     }
+
+    protected abstract String getId(T data);
 }

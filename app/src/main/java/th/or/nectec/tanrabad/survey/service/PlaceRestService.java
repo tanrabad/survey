@@ -69,4 +69,9 @@ public class PlaceRestService extends AbsUploadRestService<Place> {
             throw new RestServiceException(io);
         }
     }
+
+    @Override
+    protected String getId(Place data) {
+        return data.getId().toString();
+    }
 }

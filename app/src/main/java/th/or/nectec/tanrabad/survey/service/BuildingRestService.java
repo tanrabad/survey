@@ -73,4 +73,9 @@ public class BuildingRestService extends AbsUploadRestService<Building> {
             throw new RestServiceException(io);
         }
     }
+
+    @Override
+    protected String getId(Building data) {
+        return data.getId().toString();
+    }
 }

@@ -49,6 +49,7 @@ import th.or.nectec.tanrabad.survey.repository.persistence.DbBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.persistence.DbPlaceRepository;
 import th.or.nectec.tanrabad.survey.service.BuildingRestService;
 import th.or.nectec.tanrabad.survey.service.PlaceRestService;
+import th.or.nectec.tanrabad.survey.utils.SnackToast;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
 import th.or.nectec.tanrabad.survey.utils.android.TwiceBackPressed;
@@ -297,7 +298,7 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
 
         @Override
         protected void onRunFinish() {
-            Toast.makeText(BuildingFormActivity.this, "UPLOADED", Toast.LENGTH_SHORT).show();
+            SnackToast.make(BuildingFormActivity.this, "อัพโหลดข้อมูลสำเร็จ", Toast.LENGTH_LONG).show();
         }
     }
 }

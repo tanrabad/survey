@@ -19,16 +19,11 @@ package th.or.nectec.tanrabad.survey.service;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 
 public class ServiceLastUpdatePreference implements ServiceLastUpdate {
 
     public static final String PREF_NAME = "api-last-update";
-    private static final DateTimeFormatter RFC1123_FORMATTER =
-            DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss 'GMT'");
     private final Context context;
     private final String path;
 
@@ -38,9 +33,9 @@ public class ServiceLastUpdatePreference implements ServiceLastUpdate {
     }
 
     @Override
-    public void save(DateTime dateTime) {
+    public void save(String dateTime) {
         SharedPreferences.Editor spEditor = getSharedPreferences().edit();
-        spEditor.putString(path, RFC1123_FORMATTER.print(dateTime));
+        spEditor.putString(path, dateTime);
         spEditor.apply();
     }
 
@@ -49,9 +44,8 @@ public class ServiceLastUpdatePreference implements ServiceLastUpdate {
     }
 
     @Override
-    public DateTime get() {
-        String text = getSharedPreferences().getString(path, null);
-        return text != null ? RFC1123_FORMATTER.parseDateTime(text) : null;
+    public String get() {
+        return getSharedPreferences().getString(path, null);
 
     }
 

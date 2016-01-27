@@ -20,6 +20,8 @@ package th.or.nectec.tanrabad.survey.job;
 import th.or.nectec.tanrabad.domain.WritableRepository;
 import th.or.nectec.tanrabad.survey.service.RestService;
 
+import java.util.List;
+
 public class WritableRepoUpdateJob <T> implements Job {
 
     public static final int ID = 192384;
@@ -39,7 +41,9 @@ public class WritableRepoUpdateJob <T> implements Job {
     @Override
     public void execute() {
         do {
-            writableRepository.updateOrInsert(restService.getUpdate());
+            List<T> update = restService.getUpdate();
+            if (!update.isEmpty())
+                writableRepository.updateOrInsert(update);
         } while (restService.hasNextRequest());
     }
 }

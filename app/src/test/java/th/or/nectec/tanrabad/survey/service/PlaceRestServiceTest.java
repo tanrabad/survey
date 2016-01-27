@@ -18,6 +18,9 @@
 package th.or.nectec.tanrabad.survey.service;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import th.or.nectec.tanrabad.domain.UserRepository;
@@ -38,9 +41,14 @@ import static org.junit.Assert.assertEquals;
 
 public class PlaceRestServiceTest extends WireMockTestBase {
 
+    public static final String MON_30_NOV_2015_17_00_00_GMT = "Mon, 30 Nov 2015 17:00:00 GMT";
     UserRepository userRepository = Mockito.mock(UserRepository.class);
     ServiceLastUpdate lastUpdate = Mockito.mock(ServiceLastUpdate.class);
 
+    @Before
+    public void setUp() throws Exception {
+        Mockito.when(userRepository.findByUsername("dcp-user")).thenReturn(stubUser());
+    }
 
     @Test(expected = RestServiceException.class)
     public void test404Response() throws Exception {
@@ -58,6 +66,7 @@ public class PlaceRestServiceTest extends WireMockTestBase {
 
     @Test
     public void testNotModifiedResponse() throws Exception {
+        Mockito.when(lastUpdate.get()).thenReturn(MON_30_NOV_2015_17_00_00_GMT);
         stubFor(get(urlEqualTo(PlaceRestService.PATH))
                 .willReturn(aResponse()
                         .withStatus(304)
@@ -68,16 +77,18 @@ public class PlaceRestServiceTest extends WireMockTestBase {
                 lastUpdate,
                 userRepository);
         List<Place> buildings = restService.getUpdate();
+
         assertEquals(0, buildings.size());
+        verify(getRequestedFor(urlEqualTo(PlaceRestService.PATH))
+                .withHeader(Header.IF_MODIFIED_SINCE, equalTo(MON_30_NOV_2015_17_00_00_GMT)));
     }
 
     @Test
     public void testSuccessResponse() throws Exception {
-        Mockito.when(userRepository.findByUsername("dcp-user")).thenReturn(stubUser());
         stubFor(get(urlEqualTo(PlaceRestService.PATH))
                 .willReturn(aResponse()
                         .withStatus(200)
-                        .withHeader(Header.LAST_MODIFIED, "Mon, 30 Nov 2015 17:00:00 GMT")
+                        .withHeader(Header.LAST_MODIFIED, MON_30_NOV_2015_17_00_00_GMT)
                         .withBody(ResourceFile.read("placeList.json"))));
         PlaceRestService restService = new PlaceRestService(
                 localHost(),
@@ -86,10 +97,12 @@ public class PlaceRestServiceTest extends WireMockTestBase {
 
         List<Place> placeList = restService.getUpdate();
         Place place = placeList.get(0);
+
         assertEquals(1, placeList.size());
         assertEquals(uuid("b7a9d934-04fc-a22e-0539-6c17504f732e"), place.getId());
         assertEquals("รพ.สต.ตำบลนาทราย", place.getName());
         assertEquals(null, place.getLocation());
+        Mockito.verify(lastUpdate).save(MON_30_NOV_2015_17_00_00_GMT);
     }
 
     private UUID uuid(String uuid) {
@@ -102,18 +115,18 @@ public class PlaceRestServiceTest extends WireMockTestBase {
 
     @Test
     public void testSuccessResponseMultipleItem() throws Exception {
-        Mockito.when(userRepository.findByUsername("dcp-user")).thenReturn(stubUser());
         stubFor(get(urlEqualTo(PlaceRestService.PATH))
                 .willReturn(aResponse()
                         .withStatus(200)
-                        .withHeader(Header.LAST_MODIFIED, "Mon, 30 Nov 2015 17:00:00 GMT")
+                        .withHeader(Header.LAST_MODIFIED, MON_30_NOV_2015_17_00_00_GMT)
                         .withBody(ResourceFile.read("placeList10Item.json"))));
+
         PlaceRestService restService = new PlaceRestService(
                 localHost(),
                 lastUpdate,
                 userRepository);
-
         List<Place> buildingList = restService.getUpdate();
+
         assertEquals(10, buildingList.size());
         Place place1 = buildingList.get(0);
         assertEquals(uuid("b7a9d934-04fc-a22e-0539-6c17504f732e"), place1.getId());
@@ -131,11 +144,10 @@ public class PlaceRestServiceTest extends WireMockTestBase {
 
     @Test
     public void testSuccessResponseWithNextPage() throws Exception {
-        Mockito.when(userRepository.findByUsername("dcp-user")).thenReturn(stubUser());
         stubFor(get(urlEqualTo(PlaceRestService.PATH))
                 .willReturn(aResponse()
                         .withStatus(200)
-                        .withHeader(Header.LAST_MODIFIED, "Mon, 30 Nov 2015 17:00:00 GMT")
+                        .withHeader(Header.LAST_MODIFIED, MON_30_NOV_2015_17_00_00_GMT)
                         .withHeader(Header.LINK,
                                 "<" + localHost() + PlaceRestService.PATH + "&page=2&per_page=10>; rel=\"next\"," +
                                         "<" + localHost() + PlaceRestService.PATH + "&page=2&per_page=10>; rel=\"last\"")
@@ -143,7 +155,7 @@ public class PlaceRestServiceTest extends WireMockTestBase {
         stubFor(get(urlEqualTo(PlaceRestService.PATH + "&page=2&per_page=10"))
                 .willReturn(aResponse()
                         .withStatus(200)
-                        .withHeader(Header.LAST_MODIFIED, "Mon, 30 Nov 2015 17:00:00 GMT")
+                        .withHeader(Header.LAST_MODIFIED, MON_30_NOV_2015_17_00_00_GMT)
                         .withBody(ResourceFile.read("placeNextList5Item.json"))));
 
 
@@ -152,7 +164,6 @@ public class PlaceRestServiceTest extends WireMockTestBase {
                 lastUpdate,
                 userRepository);
         ArrayList<Place> placeArrayList = new ArrayList<>();
-
         do {
             placeArrayList.addAll(service.getUpdate());
         } while (service.hasNextRequest());
@@ -170,6 +181,7 @@ public class PlaceRestServiceTest extends WireMockTestBase {
         assertEquals(uuid("648e41e1-2ccd-00f2-f065-ba111c384c5b"), place15.getId());
         assertEquals("รพ.สต.บ้านหลวง ต.นาพู่", place15.getName());
         assertEquals(new Location(17.6048028519667, 102.755400339956), place15.getLocation());
+        Mockito.verify(lastUpdate).save(MON_30_NOV_2015_17_00_00_GMT);
     }
 
     @Test
@@ -214,4 +226,5 @@ public class PlaceRestServiceTest extends WireMockTestBase {
         AbsUploadRestService<Place> restService = new PlaceRestService(localHost(), lastUpdate, userRepository);
         restService.postData(stubPlace());
     }
+
 }

@@ -20,21 +20,17 @@ package th.or.nectec.tanrabad.survey.service;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-import th.or.nectec.tanrabad.survey.service.http.Header;
 import th.or.nectec.tanrabad.survey.service.http.Status;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static th.or.nectec.tanrabad.survey.service.http.Header.*;
+
 public abstract class AbsRestService <T> implements RestService<T> {
 
     public static final String BASE_API = "http://tanrabad.igridproject.info/v1";
-    protected static final DateTimeFormatter RFC1123_FORMATTER =
-            DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss 'GMT'");
     protected final OkHttpClient client = new OkHttpClient();
     protected ServiceLastUpdate serviceLastUpdate;
     protected String baseApi;
@@ -50,7 +46,6 @@ public abstract class AbsRestService <T> implements RestService<T> {
         try {
             Request request = makeRequest();
             Response response = client.newCall(request).execute();
-
             getNextRequest(response);
 
             if (isNotModified(response))
@@ -58,11 +53,12 @@ public abstract class AbsRestService <T> implements RestService<T> {
             if (isNotSuccess(response))
                 throw new RestServiceException(response);
             if (!hasNextRequest())
-                serviceLastUpdate.save(getLastModified(response));
+                serviceLastUpdate.save(response.header(LAST_MODIFIED));
 
             return jsonToEntityList(response.body().string());
 
         } catch (IOException io) {
+            io.printStackTrace();
             throw new RestServiceException(io);
         }
     }
@@ -73,17 +69,13 @@ public abstract class AbsRestService <T> implements RestService<T> {
     }
 
     private void getNextRequest(Response response) {
-        String linkHeader = response.headers().get("Link");
+        String linkHeader = response.header(LINK);
         if (linkHeader != null && !linkHeader.isEmpty()) {
             PageLinks pageLinks = new PageLinks(linkHeader);
             nextUrl = pageLinks.getNext().replace(baseApi + getPath(), "");
         } else {
             nextUrl = null;
         }
-    }
-
-    private DateTime getLastModified(Response response) {
-        return RFC1123_FORMATTER.parseDateTime(response.header(Header.LAST_MODIFIED));
     }
 
     public boolean isNotSuccess(Response response) {
@@ -103,9 +95,9 @@ public abstract class AbsRestService <T> implements RestService<T> {
     }
 
     private void headerIfModifiedSince(Request.Builder requestBuilder) {
-        DateTime lastUpdate = this.serviceLastUpdate.get();
+        String lastUpdate = this.serviceLastUpdate.get();
         if (lastUpdate != null)
-            requestBuilder.addHeader(Header.IF_MODIFIED_SINCE, RFC1123_FORMATTER.print(lastUpdate));
+            requestBuilder.addHeader(IF_MODIFIED_SINCE, lastUpdate);
     }
 
     protected abstract String getPath();

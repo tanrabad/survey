@@ -44,6 +44,7 @@ public class BuildingRestServiceTest extends WireMockTestBase {
 
     protected static final DateTimeFormatter RFC1123_FORMATTER =
             DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss 'GMT'");
+    public static final String MON_30_NOV_2015_17_00_00_GMT = "Mon, 30 Nov 2015 17:00:00 GMT";
 
     UserRepository userRepository = Mockito.mock(UserRepository.class);
     PlaceRepository placeRepository = Mockito.mock(PlaceRepository.class);
@@ -52,7 +53,7 @@ public class BuildingRestServiceTest extends WireMockTestBase {
 
     @Before
     public void setUp() throws Exception {
-        Mockito.when(lastUpdate.get()).thenReturn(DateTime.now());
+        Mockito.when(lastUpdate.get()).thenReturn(PlaceRestServiceTest.MON_30_NOV_2015_17_00_00_GMT);
         Mockito.when(userRepository.findByUsername("dcp-user")).thenReturn(stubUser());
         Mockito.when(placeRepository.findByUUID(uuid("b5f7b062-12f5-3402-ac88-0343733503bd"))).thenReturn(stubPlace());
 
@@ -104,7 +105,7 @@ public class BuildingRestServiceTest extends WireMockTestBase {
         stubFor(get(urlEqualTo(BuildingRestService.PATH))
                 .willReturn(aResponse()
                         .withStatus(200)
-                        .withHeader(Header.LAST_MODIFIED, "Mon, 30 Nov 2015 17:00:00 GMT")
+                        .withHeader(Header.LAST_MODIFIED, MON_30_NOV_2015_17_00_00_GMT)
                         .withBody(ResourceFile.read("buildingList.json"))));
 
         List<Building> buildingList = restService.getUpdate();
@@ -114,7 +115,7 @@ public class BuildingRestServiceTest extends WireMockTestBase {
         assertEquals(uuid("b7a9d934-04fc-a22e-0539-6c17504f732e"), building.getId());
         assertEquals("อาคาร 1", building.getName());
         assertEquals(null, building.getLocation());
-        Mockito.verify(lastUpdate).save(RFC1123_FORMATTER.parseDateTime("Mon, 30 Nov 2015 17:00:00 GMT"));
+        Mockito.verify(lastUpdate).save(MON_30_NOV_2015_17_00_00_GMT);
     }
 
     @Test
@@ -122,7 +123,7 @@ public class BuildingRestServiceTest extends WireMockTestBase {
         stubFor(get(urlEqualTo(BuildingRestService.PATH))
                 .willReturn(aResponse()
                         .withStatus(200)
-                        .withHeader(Header.LAST_MODIFIED, "Mon, 30 Nov 2015 17:00:00 GMT")
+                        .withHeader(Header.LAST_MODIFIED, MON_30_NOV_2015_17_00_00_GMT)
                         .withBody(ResourceFile.read("buildingList10Item.json"))));
 
         List<Building> buildingList = restService.getUpdate();
@@ -140,7 +141,7 @@ public class BuildingRestServiceTest extends WireMockTestBase {
         assertEquals(uuid("b7a9d934-04fc-a22e-0539-6c17504f7318"), building10.getId());
         assertEquals("อาคาร 10", building10.getName());
         assertEquals(null, building10.getLocation());
-        Mockito.verify(lastUpdate).save(RFC1123_FORMATTER.parseDateTime("Mon, 30 Nov 2015 17:00:00 GMT"));
+        Mockito.verify(lastUpdate).save(MON_30_NOV_2015_17_00_00_GMT);
     }
 
     @Test
@@ -149,7 +150,7 @@ public class BuildingRestServiceTest extends WireMockTestBase {
         stubFor(get(urlEqualTo(BuildingRestService.PATH))
                 .willReturn(aResponse()
                         .withStatus(200)
-                        .withHeader(Header.LAST_MODIFIED, "Mon, 30 Nov 2015 17:00:00 GMT")
+                        .withHeader(Header.LAST_MODIFIED, MON_30_NOV_2015_17_00_00_GMT)
                         .withBody(ResourceFile.read("buildingList10Item.json"))));
 
         restService.getUpdate();

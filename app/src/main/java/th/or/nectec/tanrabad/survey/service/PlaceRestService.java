@@ -30,7 +30,7 @@ import java.util.List;
 
 public class PlaceRestService extends AbsUploadRestService<Place> {
 
-    public static final String PATH = "/place?geostd=4326&hr_code=dpc-04";
+    public static final String PATH = "/place";
     private UserRepository userRepository;
 
     public PlaceRestService() {
@@ -40,6 +40,11 @@ public class PlaceRestService extends AbsUploadRestService<Place> {
     public PlaceRestService(String apiBaseUrl, ServiceLastUpdate serviceLastUpdate, UserRepository userRepository) {
         super(apiBaseUrl, serviceLastUpdate);
         this.userRepository = userRepository;
+    }
+
+    @Override
+    public String getDefaultParams() {
+        return "geostd=4326&hr_code=dpc-04";
     }
 
     @Override

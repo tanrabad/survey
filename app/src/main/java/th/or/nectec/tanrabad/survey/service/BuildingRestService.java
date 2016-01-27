@@ -32,7 +32,7 @@ import java.util.List;
 
 public class BuildingRestService extends AbsUploadRestService<Building> {
 
-    public static final String PATH = "/building?geostd=4326&hr_code=dpc-04";
+    public static final String PATH = "/building";
     private PlaceRepository placeRepository;
     private UserRepository userRepository;
 
@@ -44,6 +44,11 @@ public class BuildingRestService extends AbsUploadRestService<Building> {
         super(apiBaseUrl, serviceLastUpdate);
         this.placeRepository = placeRepository;
         this.userRepository = userRepository;
+    }
+
+    @Override
+    public String getDefaultParams() {
+        return "geostd=4326&hr_code=dpc-04";
     }
 
     @Override

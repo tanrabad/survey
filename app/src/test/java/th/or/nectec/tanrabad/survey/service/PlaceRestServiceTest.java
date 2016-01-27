@@ -17,9 +17,8 @@
 
 package th.or.nectec.tanrabad.survey.service;
 
+import com.bluelinelabs.logansquare.LoganSquare;
 import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -29,6 +28,7 @@ import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.survey.WireMockTestBase;
 import th.or.nectec.tanrabad.survey.service.http.Header;
+import th.or.nectec.tanrabad.survey.service.json.JsonPlace;
 import th.or.nectec.tanrabad.survey.utils.ResourceFile;
 
 import java.util.ArrayList;
@@ -44,56 +44,59 @@ public class PlaceRestServiceTest extends WireMockTestBase {
     public static final String MON_30_NOV_2015_17_00_00_GMT = "Mon, 30 Nov 2015 17:00:00 GMT";
     UserRepository userRepository = Mockito.mock(UserRepository.class);
     ServiceLastUpdate lastUpdate = Mockito.mock(ServiceLastUpdate.class);
+    private PlaceRestService restService;
 
     @Before
     public void setUp() throws Exception {
         Mockito.when(userRepository.findByUsername("dcp-user")).thenReturn(stubUser());
+        restService = new PlaceRestService(
+                localHost(),
+                lastUpdate,
+                userRepository);
+    }
+
+    private User stubUser() {
+        return new User("dcp-user");
+    }
+
+    @Test
+    public void testGetUrl() throws Exception {
+        assertEquals(localHost() + restService.getPath() + "?" + restService.getDefaultParams(), restService.getUrl());
+
     }
 
     @Test(expected = RestServiceException.class)
     public void test404Response() throws Exception {
-        stubFor(get(urlEqualTo(PlaceRestService.PATH))
+        stubFor(get(urlPathEqualTo(PlaceRestService.PATH))
                 .willReturn(aResponse()
                         .withStatus(404)
                         .withBody("")));
 
-        PlaceRestService restService = new PlaceRestService(
-                localHost(),
-                lastUpdate,
-                userRepository);
         restService.getUpdate();
     }
 
     @Test
     public void testNotModifiedResponse() throws Exception {
         Mockito.when(lastUpdate.get()).thenReturn(MON_30_NOV_2015_17_00_00_GMT);
-        stubFor(get(urlEqualTo(PlaceRestService.PATH))
+        stubFor(get(urlPathEqualTo(PlaceRestService.PATH))
                 .willReturn(aResponse()
                         .withStatus(304)
                         .withBody("")));
 
-        PlaceRestService restService = new PlaceRestService(
-                localHost(),
-                lastUpdate,
-                userRepository);
         List<Place> buildings = restService.getUpdate();
 
         assertEquals(0, buildings.size());
-        verify(getRequestedFor(urlEqualTo(PlaceRestService.PATH))
+        verify(getRequestedFor(urlPathEqualTo(PlaceRestService.PATH))
                 .withHeader(Header.IF_MODIFIED_SINCE, equalTo(MON_30_NOV_2015_17_00_00_GMT)));
     }
 
     @Test
     public void testSuccessResponse() throws Exception {
-        stubFor(get(urlEqualTo(PlaceRestService.PATH))
+        stubFor(get(urlPathEqualTo(PlaceRestService.PATH))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader(Header.LAST_MODIFIED, MON_30_NOV_2015_17_00_00_GMT)
                         .withBody(ResourceFile.read("placeList.json"))));
-        PlaceRestService restService = new PlaceRestService(
-                localHost(),
-                lastUpdate,
-                userRepository);
 
         List<Place> placeList = restService.getUpdate();
         Place place = placeList.get(0);
@@ -103,28 +106,22 @@ public class PlaceRestServiceTest extends WireMockTestBase {
         assertEquals("รพ.สต.ตำบลนาทราย", place.getName());
         assertEquals(null, place.getLocation());
         Mockito.verify(lastUpdate).save(MON_30_NOV_2015_17_00_00_GMT);
+        verify(getRequestedFor(urlPathEqualTo(PlaceRestService.PATH))
+                .withoutHeader(Header.IF_MODIFIED_SINCE));
     }
 
     private UUID uuid(String uuid) {
         return UUID.fromString(uuid);
     }
 
-    private User stubUser() {
-        return new User("dcp-user");
-    }
-
     @Test
     public void testSuccessResponseMultipleItem() throws Exception {
-        stubFor(get(urlEqualTo(PlaceRestService.PATH))
+        stubFor(get(urlPathEqualTo(PlaceRestService.PATH))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader(Header.LAST_MODIFIED, MON_30_NOV_2015_17_00_00_GMT)
                         .withBody(ResourceFile.read("placeList10Item.json"))));
 
-        PlaceRestService restService = new PlaceRestService(
-                localHost(),
-                lastUpdate,
-                userRepository);
         List<Place> buildingList = restService.getUpdate();
 
         assertEquals(10, buildingList.size());
@@ -144,7 +141,7 @@ public class PlaceRestServiceTest extends WireMockTestBase {
 
     @Test
     public void testSuccessResponseWithNextPage() throws Exception {
-        stubFor(get(urlEqualTo(PlaceRestService.PATH))
+        stubFor(get(urlPathEqualTo(PlaceRestService.PATH))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader(Header.LAST_MODIFIED, MON_30_NOV_2015_17_00_00_GMT)
@@ -159,14 +156,11 @@ public class PlaceRestServiceTest extends WireMockTestBase {
                         .withBody(ResourceFile.read("placeNextList5Item.json"))));
 
 
-        RestService<Place> service = new PlaceRestService(
-                localHost(),
-                lastUpdate,
-                userRepository);
+
         ArrayList<Place> placeArrayList = new ArrayList<>();
         do {
-            placeArrayList.addAll(service.getUpdate());
-        } while (service.hasNextRequest());
+            placeArrayList.addAll(restService.getUpdate());
+        } while (restService.hasNextRequest());
 
         assertEquals(15, placeArrayList.size());
         Place place1 = placeArrayList.get(0);
@@ -190,7 +184,6 @@ public class PlaceRestServiceTest extends WireMockTestBase {
                 .willReturn(aResponse()
                         .withStatus(201)));
 
-        AbsUploadRestService<Place> restService = new PlaceRestService(localHost(), lastUpdate, userRepository);
         boolean uploadStatus = restService.postData(stubPlace());
 
         assertEquals(true, uploadStatus);
@@ -201,6 +194,7 @@ public class PlaceRestServiceTest extends WireMockTestBase {
 
     private Place stubPlace() {
         Place place = Place.withName("555");
+        place.setUpdateBy("dpc-user");
         place.setLocation(new Location(1, 1));
         place.setUpdateTimestamp(DateTime.now().toString());
         return place;
@@ -212,7 +206,6 @@ public class PlaceRestServiceTest extends WireMockTestBase {
                 .willReturn(aResponse()
                         .withStatus(404)));
 
-        AbsUploadRestService<Place> restService = new PlaceRestService(localHost(), lastUpdate, userRepository);
         restService.postData(stubPlace());
     }
 
@@ -223,8 +216,34 @@ public class PlaceRestServiceTest extends WireMockTestBase {
                         .withBody(ResourceFile.read("errorResponses.json")).withStatus(400))
         );
 
-        AbsUploadRestService<Place> restService = new PlaceRestService(localHost(), lastUpdate, userRepository);
         restService.postData(stubPlace());
     }
 
+    @Test
+    public void testPut() throws Exception {
+        Place place = stubPlace();
+        stubFor(put(urlEqualTo(PlaceRestService.PATH + "/" + place.getId().toString()))
+                .willReturn(aResponse()
+                        .withStatus(200)));
+
+        boolean success = restService.put(place.getId().toString(), place);
+
+        assertEquals(true, success);
+        verify(putRequestedFor(urlEqualTo(PlaceRestService.PATH + "/" + place.getId().toString()))
+                .withHeader(Header.CONTENT_TYPE, equalTo("application/json; charset=utf-8"))
+                .withHeader(Header.USER_AGENT, equalTo("tanrabad-survey-app"))
+                .withRequestBody(equalToJson(LoganSquare.serialize(JsonPlace.parse(place)))));
+    }
+
+    @Test
+    public void testPutConflict() throws Exception {
+        Place place = stubPlace();
+        stubFor(put(urlEqualTo(PlaceRestService.PATH + "/" + place.getId().toString()))
+                .willReturn(aResponse()
+                        .withStatus(409)));
+
+        boolean success = restService.put(place.getId().toString(), place);
+
+        assertEquals(false, success);
+    }
 }

@@ -34,7 +34,7 @@ public abstract class AbsRestService <T> implements RestService<T> {
     protected final OkHttpClient client = new OkHttpClient();
     protected ServiceLastUpdate serviceLastUpdate;
     protected String baseApi;
-    private String nextUrl = "";
+    private String nextUrl = null;
 
     public AbsRestService(String baseApi, ServiceLastUpdate serviceLastUpdate) {
         this.baseApi = baseApi;
@@ -72,7 +72,7 @@ public abstract class AbsRestService <T> implements RestService<T> {
         String linkHeader = response.header(LINK);
         if (linkHeader != null && !linkHeader.isEmpty()) {
             PageLinks pageLinks = new PageLinks(linkHeader);
-            nextUrl = pageLinks.getNext().replace(baseApi + getPath(), "");
+            nextUrl = pageLinks.getNext();
         } else {
             nextUrl = null;
         }
@@ -89,18 +89,32 @@ public abstract class AbsRestService <T> implements RestService<T> {
     protected final Request makeRequest() {
         Request.Builder requestBuilder = new Request.Builder()
                 .get()
-                .url(baseApi + getPath() + nextUrl);
+                .url(getUrl());
         headerIfModifiedSince(requestBuilder);
         return requestBuilder.build();
     }
+
+    public String getUrl() {
+        if (nextUrl != null && !nextUrl.isEmpty()) {
+            return nextUrl;
+        }
+        String url = baseApi + getPath();
+        if (getDefaultParams() != null)
+            url += "?" + getDefaultParams();
+        return url;
+    }
+
+    public String getDefaultParams() {
+        return null;
+    }
+
+    protected abstract String getPath();
 
     private void headerIfModifiedSince(Request.Builder requestBuilder) {
         String lastUpdate = this.serviceLastUpdate.get();
         if (lastUpdate != null)
             requestBuilder.addHeader(IF_MODIFIED_SINCE, lastUpdate);
     }
-
-    protected abstract String getPath();
 
     protected abstract List<T> jsonToEntityList(String responseBody);
 }

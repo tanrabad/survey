@@ -26,6 +26,8 @@ import th.or.nectec.tanrabad.survey.service.http.Status;
 
 import java.io.IOException;
 
+import static th.or.nectec.tanrabad.survey.service.http.Header.USER_AGENT;
+
 public abstract class AbsUploadRestService <T> extends AbsRestService implements UploadRestService<T> {
 
     public static final String TANRABAD_SURVEY_APP = "tanrabad-survey-app";
@@ -53,11 +55,29 @@ public abstract class AbsUploadRestService <T> extends AbsRestService implements
     private Request getPostRequest(T data) {
         return new Request.Builder()
                 .post(RequestBody.create(JSON_MEDIA_TYPE, entityToJsonString(data)))
-                .addHeader(Header.USER_AGENT, TANRABAD_SURVEY_APP)
+                .addHeader(USER_AGENT, TANRABAD_SURVEY_APP)
                 .url(baseApi + getPath())
                 .build();
     }
 
     protected abstract String entityToJsonString(T data);
 
+
+    @Override
+    public boolean put(String dataId, T data) {
+        try {
+            Request request = makePostRequest(dataId, data);
+            Response response = client.newCall(request).execute();
+            return response.isSuccessful();
+        } catch (IOException io) {
+            throw new RestServiceException(io);
+        }
+    }
+
+    private Request makePostRequest(String dataId, T data) {
+        return new Request.Builder().put(RequestBody.create(JSON_MEDIA_TYPE, entityToJsonString(data)))
+                .addHeader(USER_AGENT, TANRABAD_SURVEY_APP)
+                .url(baseApi + getPath() + "/" + dataId)
+                .build();
+    }
 }

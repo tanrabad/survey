@@ -18,7 +18,6 @@
 package th.or.nectec.tanrabad.survey.service;
 
 import android.support.annotation.NonNull;
-import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.junit.Before;
@@ -42,10 +41,9 @@ import static org.junit.Assert.assertEquals;
 
 public class BuildingRestServiceTest extends WireMockTestBase {
 
+    public static final String MON_30_NOV_2015_17_00_00_GMT = "Mon, 30 Nov 2015 17:00:00 GMT";
     protected static final DateTimeFormatter RFC1123_FORMATTER =
             DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss 'GMT'");
-    public static final String MON_30_NOV_2015_17_00_00_GMT = "Mon, 30 Nov 2015 17:00:00 GMT";
-
     UserRepository userRepository = Mockito.mock(UserRepository.class);
     PlaceRepository placeRepository = Mockito.mock(PlaceRepository.class);
     ServiceLastUpdate lastUpdate = Mockito.mock(ServiceLastUpdate.class);
@@ -90,7 +88,7 @@ public class BuildingRestServiceTest extends WireMockTestBase {
 
     @Test
     public void testNotModifiedResponse() throws Exception {
-        stubFor(get(urlEqualTo(BuildingRestService.PATH))
+        stubFor(get(urlPathEqualTo(BuildingRestService.PATH))
                 .willReturn(aResponse()
                         .withStatus(304)
                         .withBody("[]")));
@@ -102,7 +100,7 @@ public class BuildingRestServiceTest extends WireMockTestBase {
 
     @Test
     public void testSuccessResponse() throws Exception {
-        stubFor(get(urlEqualTo(BuildingRestService.PATH))
+        stubFor(get(urlPathEqualTo(BuildingRestService.PATH))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader(Header.LAST_MODIFIED, MON_30_NOV_2015_17_00_00_GMT)
@@ -120,7 +118,7 @@ public class BuildingRestServiceTest extends WireMockTestBase {
 
     @Test
     public void testSuccessResponseMultipleItem() throws Exception {
-        stubFor(get(urlEqualTo(BuildingRestService.PATH))
+        stubFor(get(urlPathEqualTo(BuildingRestService.PATH))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader(Header.LAST_MODIFIED, MON_30_NOV_2015_17_00_00_GMT)
@@ -147,7 +145,7 @@ public class BuildingRestServiceTest extends WireMockTestBase {
     @Test
     public void testWithoutIfModifiedSinceHeader() throws Exception {
         Mockito.when(lastUpdate.get()).thenReturn(null);
-        stubFor(get(urlEqualTo(BuildingRestService.PATH))
+        stubFor(get(urlPathEqualTo(BuildingRestService.PATH))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader(Header.LAST_MODIFIED, MON_30_NOV_2015_17_00_00_GMT)
@@ -155,6 +153,7 @@ public class BuildingRestServiceTest extends WireMockTestBase {
 
         restService.getUpdate();
 
-        verify(getRequestedFor(urlEqualTo(BuildingRestService.PATH)).withoutHeader(Header.IF_MODIFIED_SINCE));
+        verify(getRequestedFor(urlPathEqualTo(BuildingRestService.PATH))
+                .withoutHeader(Header.IF_MODIFIED_SINCE));
     }
 }

@@ -197,3 +197,14 @@ VALUES
    "2015-12-24T12:05:19.626+07:00"),
   ("6a2fc9f1-3489-4a73-a425-b3d4e5b0e34b", "9b27df17-4234-4b9b-b444-0dc3d637d1fe", "ลานหน้าศาลากลาง", "dpc-user",
    "2015-12-24T12:05:19.626+07:00");
+
+INSERT INTO
+  survey (survey_id, building_id, person_count, surveyor,create_time,update_time)
+VALUES
+  ('0fedd057-a5cf-43c9-81d3-9b2d2c4c3cb8', '6a2fc9f1-3489-4a73-a425-b3d4e5b0e34b', '5', 'dpc-user','2015-12-24T12:19:20.626+07:00','2015-12-24T12:19:20.626+07:00');
+
+INSERT INTO
+  survey_detail (detail_id, survey_id, container_location_id, container_type_id, container_count, container_have_larva)
+VALUES
+  ('7d05e397-da5e-4c07-bd86-a1c80ce23b45', '0fedd057-a5cf-43c9-81d3-9b2d2c4c3cb8', '1', '1', '10', '2'),
+  ('91e319c1-680d-49ee-9b5e-43e6f6c80ea6', '0fedd057-a5cf-43c9-81d3-9b2d2c4c3cb8', '2', '2', '7', '5');

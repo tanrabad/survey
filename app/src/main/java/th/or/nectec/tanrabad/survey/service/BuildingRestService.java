@@ -59,8 +59,8 @@ public class BuildingRestService extends AbsUploadRestService<Building> {
             for (JsonBuilding eachJsonBuilding : jsonBuildings) {
                 buildings.add(eachJsonBuilding.getEntity(placeRepository, userRepository));
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException io) {
+            throw new RestServiceException(io);
 
         }
         return buildings;
@@ -70,8 +70,8 @@ public class BuildingRestService extends AbsUploadRestService<Building> {
     protected String entityToJsonString(Building data) {
         try {
             return LoganSquare.serialize(JsonBuilding.parse(data));
-        } catch (IOException e) {
-            throw new RestServiceException();
+        } catch (IOException io) {
+            throw new RestServiceException(io);
         }
     }
 }

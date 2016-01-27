@@ -201,26 +201,26 @@ public class DbSurveyRepository implements SurveyRepository, ChangedRepository<S
     @Override
     public Survey findByBuildingAndUserIn7Day(Building building, User user) {
         SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
-        Cursor cursor = db.query(DETAIL_TABLE_NAME, BuildingColumn.wildcard(),
+        Cursor cursor = db.query(TABLE_NAME, SurveyColumn.wildcard(),
                 SurveyColumn.BUILDING_ID + "=? AND " + SurveyColumn.SURVEYOR + "=?", new String[]{building.getId().toString(), user.getUsername()}, null, null, null);
-        cursor.close();
         return getSurvey(cursor);
     }
 
     @Override
     public List<Survey> findByPlaceAndUserIn7Days(Place place, User user) {
         SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
-        Cursor cursor = db.query(DETAIL_TABLE_NAME + " INNER JOIN building USING(building_id)", BuildingColumn.wildcard(),
+        String[] columns = new String[]{SurveyColumn.ID, SurveyColumn.BUILDING_ID, SurveyColumn.PERSON_COUNT, SurveyColumn.SURVEYOR,
+                TABLE_NAME + "." + SurveyColumn.LATITUDE, TABLE_NAME + "." + SurveyColumn.LONGITUDE,
+                SurveyColumn.CREATE_TIME, TABLE_NAME + "." + SurveyColumn.UPDATE_TIME, TABLE_NAME + "." + SurveyColumn.CHANGED_STATUS};
+        Cursor cursor = db.query(TABLE_NAME + " INNER JOIN building USING(building_id)", columns,
                 BuildingColumn.PLACE_ID + "=? AND " + SurveyColumn.SURVEYOR + "=?", new String[]{place.getId().toString(), user.getUsername()}, null, null, null);
-        cursor.close();
         return new CursorList<>(cursor, getSurveyMapper(cursor));
     }
 
     public List<SurveyDetail> findSurveyDetail(UUID surveyId, int containerLocationID) {
         SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
-        Cursor cursor = db.query(DETAIL_TABLE_NAME, BuildingColumn.wildcard(),
+        Cursor cursor = db.query(DETAIL_TABLE_NAME, SurveyDetailColumn.wildcard(),
                 SurveyDetailColumn.SURVEY_ID + "=? AND " + SurveyDetailColumn.CONTAINER_LOCATION_ID + "=?", new String[]{surveyId.toString(), String.valueOf(containerLocationID)}, null, null, null);
-        cursor.close();
         return new CursorList<>(cursor, getSurveyDetailMapper(cursor));
     }
 

@@ -38,4 +38,13 @@ public class SurveySaver {
             surveySavePresenter.displaySaveFail();
         }
     }
+
+    public void update(Survey survey) {
+        if (saveValidator.validate(survey)) {
+            if (surveyRepository.update(survey))
+                surveySavePresenter.displaySaveSuccess();
+        } else {
+            surveySavePresenter.displaySaveFail();
+        }
+    }
 }

@@ -39,7 +39,6 @@ public class SurveyBuildingHistoryController {
         this.surveyBuildingPresenter = surveyBuildingPresenter;
     }
 
-
     public void showSurveyBuildingOf(String placeUUID, String username) {
         User user = checkUserExist(username);
         if (user == null) return;
@@ -48,12 +47,11 @@ public class SurveyBuildingHistoryController {
         if (place == null) return;
 
         List<Survey> buildings = surveyRepository.findByPlaceAndUserIn7Days(place, user);
-        if (buildings == null) {
+        if (buildings != null && !buildings.isEmpty()) {
+            surveyBuildingPresenter.displaySurveyBuildingList(buildings);
+        } else {
             surveyBuildingPresenter.displaySurveyBuildingsNotFound();
-            return;
         }
-
-        surveyBuildingPresenter.displaySurveyBuildingList(buildings);
     }
 
     private User checkUserExist(String username) {

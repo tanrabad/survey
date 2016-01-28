@@ -47,7 +47,7 @@ public class PlaceWithSurveyHistoryChooser {
 
         List<Place> surveyPlaces = surveyRepository.findByUserIn7Days(user);
 
-        if(surveyPlaces!=null){
+        if (surveyPlaces != null && !surveyPlaces.isEmpty()) {
             placeWithSurveyStatusChooserPresenter.displaySurveyPlaceList(surveyPlaces);
         }else{
             placeWithSurveyStatusChooserPresenter.displaySurveyPlacesNotFound();

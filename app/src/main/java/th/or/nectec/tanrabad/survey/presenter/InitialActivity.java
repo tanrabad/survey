@@ -41,6 +41,7 @@ public class InitialActivity extends TanrabadActivity {
     WritableRepoUpdateJob<PlaceType> placeTypeUpdateJob = new WritableRepoUpdateJob<>(new PlaceTypeRestService(), new DbPlaceTypeRepository(TanrabadApp.getInstance()));
     WritableRepoUpdateJob<PlaceSubType> placeSubTypeUpdateJob = new WritableRepoUpdateJob<>(new PlaceSubTypeRestService(), new DbPlaceSubTypeRepository(TanrabadApp.getInstance()));
     WritableRepoUpdateJob<ContainerType> containerTypeUpdateJob = new WritableRepoUpdateJob<>(new ContainerTypeRestService(), BrokerContainerTypeRepository.getInstance());
+    WritableRepoUpdateJob<ContainerLocation> containerLocationUpdateJob = new WritableRepoUpdateJob<>(new ContainerLocationRestService(), new DbContainerLocationRepository(TanrabadApp.getInstance()));
     WritableRepoUpdateJob<Place> placeUpdateJob = new WritableRepoUpdateJob<>(new PlaceRestService(), BrokerPlaceRepository.getInstance());
     WritableRepoUpdateJob<Building> buildingUpdateJob = new WritableRepoUpdateJob<>(new BuildingRestService(), BrokerBuildingRepository.getInstance());
 
@@ -57,6 +58,7 @@ public class InitialActivity extends TanrabadActivity {
                 .addJob(new CreateDatabaseJob(this))
                 .addJob(new InMemoryInitializeJob())
                 .addJob(new SetupScriptJob(this))
+                .addJob(containerLocationUpdateJob)
                 .addJob(containerTypeUpdateJob)
                 .addJob(provinceUpdateJob)
                 .addJob(districtUpdateJob)
@@ -112,6 +114,8 @@ public class InitialActivity extends TanrabadActivity {
             loadingText.setText("อาคาร");
         else if (startingJob.equals(containerTypeUpdateJob))
             loadingText.setText("ดึงประเภทภาชนะมา");
+        else if (startingJob.equals(containerLocationUpdateJob))
+            loadingText.setText("ดึงที่ตั้งภาชนะมา");
     }
 
     private void openMainActivityThenFinish() {

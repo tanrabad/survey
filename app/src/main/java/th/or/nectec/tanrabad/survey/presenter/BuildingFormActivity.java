@@ -41,6 +41,7 @@ import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.job.AbsJobRunner;
 import th.or.nectec.tanrabad.survey.job.Job;
 import th.or.nectec.tanrabad.survey.job.PostDataJob;
+import th.or.nectec.tanrabad.survey.job.PutDataJob;
 import th.or.nectec.tanrabad.survey.presenter.maps.LiteMapFragment;
 import th.or.nectec.tanrabad.survey.presenter.maps.LocationUtils;
 import th.or.nectec.tanrabad.survey.repository.BrokerBuildingRepository;
@@ -282,8 +283,16 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
 
     @Override
     public void displayUpdateSuccess() {
+        doPutData();
         setResult(RESULT_OK);
         finish();
+    }
+
+    private void doPutData() {
+        BuildingPostJobRunner buildingPostJobRunner = new BuildingPostJobRunner();
+        buildingPostJobRunner.addJob(new PutDataJob<>(new DbPlaceRepository(this), new PlaceRestService()));
+        buildingPostJobRunner.addJob(new PutDataJob<>(new DbBuildingRepository(this), new BuildingRestService()));
+        buildingPostJobRunner.start();
     }
 
     public void onRootViewClick(View view) {

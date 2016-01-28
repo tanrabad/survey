@@ -302,7 +302,9 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     private ArrayList<SurveyDetail> getSurveyDetail(HashMap<Integer, SurveyContainerView> containerViews) {
         ArrayList<SurveyDetail> surveyDetails = new ArrayList<>();
         for (Map.Entry<Integer, SurveyContainerView> eachView : containerViews.entrySet()) {
-            surveyDetails.add(eachView.getValue().getSurveyDetail());
+            SurveyDetail surveyDetail = eachView.getValue().getSurveyDetail();
+            if (surveyDetail != null)
+                surveyDetails.add(surveyDetail);
         }
         return surveyDetails;
     }

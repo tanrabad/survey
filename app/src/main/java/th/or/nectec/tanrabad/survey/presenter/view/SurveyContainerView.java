@@ -27,6 +27,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -40,8 +41,8 @@ import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.utils.MacAddressUtils;
 
 public class SurveyContainerView extends LinearLayout {
+    SurveyDetail surveyDetail;
     private ContainerType containerType;
-
     private TextView containerTypeView;
     private EditText totalContainerView;
     private EditText foundContainerView;
@@ -144,11 +145,23 @@ public class SurveyContainerView extends LinearLayout {
     }
 
     public SurveyDetail getSurveyDetail() {
-        return new SurveyDetail(UUIDUtils.generateOrdered(MacAddressUtils.getMacAddress(getContext())),
-                containerType, getTotalValue(), getFoundValue());
+        if (surveyDetail != null) {
+            Log.v("sd", "notnull/" + containerType.getName());
+            surveyDetail.setContainerCount(getTotalValue(), getFoundValue());
+            return surveyDetail;
+        } else {
+            if (getTotalValue() == 0 && getFoundValue() == 0) {
+                return null;
+            }
+            Log.v("sd", "null/" + containerType.getName());
+            return new SurveyDetail(UUIDUtils.generateOrdered(MacAddressUtils.getMacAddress(getContext())),
+                    containerType, getTotalValue(), getFoundValue());
+        }
     }
 
     public void setSurveyDetail(SurveyDetail surveyDetail) {
+        this.surveyDetail = surveyDetail;
+        Log.d("detailUUID", surveyDetail.getId().toString());
         int totalContainer = surveyDetail.getTotalContainer();
         if (totalContainer > 0)
             totalContainerView.setText(String.valueOf(totalContainer));

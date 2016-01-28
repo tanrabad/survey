@@ -158,15 +158,19 @@ public class DbSurveyRepository implements SurveyRepository, ChangedRepository<S
         List<SurveyDetail> indoorDetail = survey.getIndoorDetail();
         List<SurveyDetail> outdoorDetail = survey.getOutdoorDetail();
         for (SurveyDetail eachIndoorDetail : indoorDetail) {
-            boolean isSuccess = updateSurveyDetail(db, survey.getId(), INDOOR_CONTAINER_LOCATION, eachIndoorDetail);
-            if (!isSuccess)
-                throw new SurveyRepositoryException("Cannot update indoor survey detail.");
+            if (!updateSurveyDetail(db, survey.getId(), INDOOR_CONTAINER_LOCATION, eachIndoorDetail)) {
+                boolean isInsertSuccess = saveSurveyDetail(db, survey.getId(), INDOOR_CONTAINER_LOCATION, eachIndoorDetail);
+                if (!isInsertSuccess)
+                    throw new SurveyRepositoryException("Cannot update indoor survey detail.");
+            }
         }
 
         for (SurveyDetail eachOutdoorDetail : outdoorDetail) {
-            boolean isSuccess = updateSurveyDetail(db, survey.getId(), OUTDOOR_CONTAINER_LOCATION, eachOutdoorDetail);
-            if (!isSuccess)
-                throw new SurveyRepositoryException("Cannot update outdoor survey detail.");
+            if (!updateSurveyDetail(db, survey.getId(), OUTDOOR_CONTAINER_LOCATION, eachOutdoorDetail)) {
+                boolean isInsertSuccess = saveSurveyDetail(db, survey.getId(), OUTDOOR_CONTAINER_LOCATION, eachOutdoorDetail);
+                if (!isInsertSuccess)
+                    throw new SurveyRepositoryException("Cannot update outdoor survey detail.");
+            }
         }
         return true;
     }

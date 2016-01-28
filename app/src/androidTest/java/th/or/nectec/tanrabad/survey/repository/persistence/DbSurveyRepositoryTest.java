@@ -90,12 +90,10 @@ public class DbSurveyRepositoryTest {
         survey.setLocation(new Location(80, 12));
         survey.setResidentCount(15);
         SurveyDetail surveyDetail1 = new SurveyDetail(UUID.randomUUID(), getWater(), 3, 2);
-        SurveyDetail surveyDetail2 = new SurveyDetail(UUID.randomUUID(), getDrinkingWater(), 4, 2);
         SurveyDetail surveyDetail3 = new SurveyDetail(UUID.randomUUID(), getWater(), 6, 5);
         SurveyDetail surveyDetail4 = new SurveyDetail(UUID.randomUUID(), getDrinkingWater(), 4, 1);
         List<SurveyDetail> indoorDetail = new ArrayList<>();
         indoorDetail.add(surveyDetail1);
-        indoorDetail.add(surveyDetail2);
         survey.setIndoorDetail(indoorDetail);
         List<SurveyDetail> outdoorDetail = new ArrayList<>();
         outdoorDetail.add(surveyDetail3);
@@ -115,8 +113,11 @@ public class DbSurveyRepositoryTest {
         Survey survey = getSurvey();
         dbSurveyRepository.save(survey);
         survey.setResidentCount(6);
+        List<SurveyDetail> indoorDetail = survey.getIndoorDetail();
+        indoorDetail.get(0).setContainerCount(5, 4);
+        indoorDetail.add(new SurveyDetail(UUID.randomUUID(), getDrinkingWater(), 7, 3));
+        survey.setIndoorDetail(indoorDetail);
         boolean isSuccess = dbSurveyRepository.update(survey);
-
 
         Cursor surveyQuery = dbTestRule.getReadable().query(DbSurveyRepository.TABLE_NAME, SurveyColumn.wildcard(), SurveyColumn.ID + "=?",
                 new String[]{survey.getId().toString()}, null, null, null);
@@ -125,6 +126,23 @@ public class DbSurveyRepositoryTest {
         assertEquals(true, surveyQuery.moveToFirst());
         assertEquals(6, surveyQuery.getInt(surveyQuery.getColumnIndex(SurveyColumn.PERSON_COUNT)));
         assertEquals(ChangedStatus.ADD, surveyQuery.getInt(surveyQuery.getColumnIndex(SurveyColumn.CHANGED_STATUS)));
+
+        List<SurveyDetail> surveyDetails = dbSurveyRepository.findSurveyDetail(survey.getId(), DbSurveyRepository.INDOOR_CONTAINER_LOCATION);
+        assertEquals(2, surveyDetails.size());
         surveyQuery.close();
+    }
+
+    @Test
+    public void testUpdateException() throws Exception {
+        Survey survey = getSurvey();
+        dbSurveyRepository.save(survey);
+        List<SurveyDetail> indoorDetail = new ArrayList<>();
+        indoorDetail.add(new SurveyDetail(UUID.randomUUID(), getWater(), 3, 2));
+        survey.setIndoorDetail(indoorDetail);
+        boolean isSuccess = dbSurveyRepository.update(survey);
+
+        List<SurveyDetail> surveyDetails = dbSurveyRepository.findSurveyDetail(survey.getId(), DbSurveyRepository.INDOOR_CONTAINER_LOCATION);
+        assertEquals(false, isSuccess);
+        assertEquals(1, surveyDetails.size());
     }
 }

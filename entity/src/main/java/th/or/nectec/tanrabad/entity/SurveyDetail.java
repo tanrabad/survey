@@ -33,7 +33,7 @@ public class SurveyDetail implements Comparable {
         setContainerCount(totalContainer, foundLarvaContainer);
     }
 
-    private void setContainerCount(int total, int found) {
+    public void setContainerCount(int total, int found) {
         if (found > total)
             throw new ContainerFoundLarvaOverTotalException();
         this.totalContainer = total;

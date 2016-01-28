@@ -38,6 +38,7 @@ import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.job.AbsJobRunner;
 import th.or.nectec.tanrabad.survey.job.Job;
 import th.or.nectec.tanrabad.survey.job.PostDataJob;
+import th.or.nectec.tanrabad.survey.job.PutDataJob;
 import th.or.nectec.tanrabad.survey.presenter.maps.LiteMapFragment;
 import th.or.nectec.tanrabad.survey.presenter.maps.LocationUtils;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
@@ -300,8 +301,15 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
 
     @Override
     public void displayUpdateSuccess() {
+        doPutData();
         setResult(RESULT_OK);
         finish();
+    }
+
+    private void doPutData() {
+        PlacePostJobRunner placePostJobRunner = new PlacePostJobRunner();
+        placePostJobRunner.addJob(new PutDataJob<>(new DbPlaceRepository(this), new PlaceRestService()));
+        placePostJobRunner.start();
     }
 
     @Override

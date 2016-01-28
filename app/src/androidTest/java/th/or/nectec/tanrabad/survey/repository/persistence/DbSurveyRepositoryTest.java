@@ -97,6 +97,7 @@ public class DbSurveyRepositoryTest {
         assertEquals(2, surveyDetails.getInt(surveyDetails.getColumnIndex(SurveyDetailColumn.CONTAINER_TYPE_ID)));
         assertEquals(2, surveyDetails.getInt(surveyDetails.getColumnIndex(SurveyDetailColumn.CONTAINER_LOCATION_ID)));
         surveyQuery.close();
+        surveyDetails.close();
     }
 
     private Survey getSurvey() {
@@ -158,6 +159,7 @@ public class DbSurveyRepositoryTest {
         assertEquals(2, surveyDetailsCursor.getInt(surveyDetailsCursor.getColumnIndex(SurveyDetailColumn.CONTAINER_TYPE_ID)));
         assertEquals(2, surveyDetailsCursor.getInt(surveyDetailsCursor.getColumnIndex(SurveyDetailColumn.CONTAINER_LOCATION_ID)));
         surveyQuery.close();
+        surveyDetailsCursor.close();
     }
 
     @Test

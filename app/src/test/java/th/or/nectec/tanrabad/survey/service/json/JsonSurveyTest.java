@@ -52,7 +52,7 @@ public class JsonSurveyTest {
                 "[{\"container_count\":10,\"container_have_larva\":5," +
                 "\"container_location_id\":1,\"container_type\":1," +
                 "\"survey_detail_id\":\"772c4938-b910-11e5-a0c5-aabbccddeeff\"}," +
-                "{\"container_count\":7,\"container_have_larvae\":5," +
+                "{\"container_count\":7,\"container_have_larva\":5," +
                 "\"container_location_id\":2,\"container_type\":2,\"" +
                 "survey_detail_id\":\"772c4938-b917-11e5-a0c5-aabbccddeeff\"}]," +
                 "\"location\":{\"coordinates\":[-73.150055,39.745675],\"type\":\"Point\"}," +

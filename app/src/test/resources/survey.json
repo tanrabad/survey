@@ -14,14 +14,14 @@
       "container_location_id": 1,
       "container_type": 1,
       "container_count": 24,
-      "container_have_larvae": 10
+      "container_have_larva": 10
     },
     {
       "survey_detail_id": "6af5225b-5642-10fb-a3a0-4e000a8425602",
       "container_location_id": 2,
       "container_type": 1,
       "container_count": 13,
-      "container_have_larvae": 0
+      "container_have_larva": 0
     }
   ]
 }

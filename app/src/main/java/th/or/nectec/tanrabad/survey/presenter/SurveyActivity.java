@@ -19,7 +19,9 @@ package th.or.nectec.tanrabad.survey.presenter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -31,12 +33,21 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import th.or.nectec.tanrabad.domain.survey.*;
 import th.or.nectec.tanrabad.entity.*;
+import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 import th.or.nectec.tanrabad.entity.utils.UUIDUtils;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
+import th.or.nectec.tanrabad.survey.job.AbsJobRunner;
+import th.or.nectec.tanrabad.survey.job.Job;
+import th.or.nectec.tanrabad.survey.job.PostDataJob;
 import th.or.nectec.tanrabad.survey.presenter.view.AdvanceStepperDialog;
 import th.or.nectec.tanrabad.survey.presenter.view.SurveyContainerView;
 import th.or.nectec.tanrabad.survey.presenter.view.TorchButton;
@@ -44,8 +55,11 @@ import th.or.nectec.tanrabad.survey.repository.BrokerBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerContainerTypeRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerSurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
+import th.or.nectec.tanrabad.survey.repository.persistence.DbSurveyRepository;
+import th.or.nectec.tanrabad.survey.service.json.SurveyRestService;
 import th.or.nectec.tanrabad.survey.utils.EditTextStepper;
 import th.or.nectec.tanrabad.survey.utils.MacAddressUtils;
+import th.or.nectec.tanrabad.survey.utils.SnackToast;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
@@ -58,10 +72,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SurveyActivity extends TanrabadActivity implements ContainerPresenter, SurveyPresenter, SurveySavePresenter {
+public class SurveyActivity extends TanrabadActivity implements ContainerPresenter, SurveyPresenter, SurveySavePresenter,
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     public static final String BUILDING_UUID_ARG = "building_uuid";
     public static final String USERNAME_ARG = "username_arg";
+
+    private static final long UPDATE_INTERVAL_MS = 500;
+    private static final long FASTEST_INTERVAL_MS = 100;
+
     ContainerIconMapping containerIconMapping;
     private HashMap<Integer, SurveyContainerView> indoorContainerViews;
     private HashMap<Integer, SurveyContainerView> outdoorContainerViews;
@@ -71,6 +90,8 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     private SurveyRepository surveyRepository;
     private Survey survey;
     private boolean isEditSurvey;
+    private GoogleApiClient locationApiClient;
+    private android.location.Location location;
 
     public static void open(Activity activity, Building building) {
         Intent intent = new Intent(activity, SurveyActivity.class);
@@ -88,6 +109,38 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         findViewsFromLayout();
         showContainerList();
         initSurvey();
+
+        if (isGpsEnabled()) {
+            setupLocationAPI();
+        } else {
+            showGpsSettingsDialog();
+        }
+    }
+
+    private void setupLocationAPI() {
+        locationApiClient = new GoogleApiClient.Builder(this)
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
+    }
+
+    private boolean isGpsEnabled() {
+        LocationManager locationManager = (LocationManager) getSystemService(Activity.LOCATION_SERVICE);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    }
+
+    private void showGpsSettingsDialog() {
+        PromptMessage promptMessage = new AlertDialogPromptMessage(this);
+        promptMessage.setOnConfirm(getString(R.string.enable_gps), new PromptMessage.OnConfirmListener() {
+            @Override
+            public void onConfirm() {
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(intent);
+            }
+        });
+        promptMessage.setOnCancel(getResources().getString(R.string.cancel), null);
+        promptMessage.show(getString(R.string.gps_dialog_tilte), getString(R.string.gps_dialog_message));
     }
 
     private void setupToolbar() {
@@ -123,6 +176,13 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         surveyController.checkThisBuildingAndUserCanSurvey(buildingUUID, username);
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (locationApiClient != null) {
+            locationApiClient.disconnect();
+        }
+    }
 
     @Override
     public void onEditSurvey(Survey survey) {
@@ -232,6 +292,9 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     @Override
     public void displaySaveSuccess() {
+        SurveyUpdateJob surveyUpdateJob = new SurveyUpdateJob();
+        surveyUpdateJob.addJob(new PostDataJob<>(new DbSurveyRepository(this), new SurveyRestService()));
+        surveyUpdateJob.start();
         finish();
         openSurveyBuildingHistory();
     }
@@ -272,8 +335,8 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
             survey.setResidentCount(getResidentCount());
             survey.setIndoorDetail(getSurveyDetail(indoorContainerViews));
             survey.setOutdoorDetail(getSurveyDetail(outdoorContainerViews));
+            survey.setLocation(getLastLocation());
             survey.finishSurvey();
-
 
             if (isEditSurvey) {
                 SurveySaver surveySaver = new SurveySaver(this, new SaveSurveyValidator(this), surveyRepository);
@@ -315,6 +378,10 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
             if (!eachView.getValue().isValid()) isValid = false;
         }
         return isValid;
+    }
+
+    public Location getLastLocation() {
+        return new Location(location.getLatitude(), location.getLongitude());
     }
 
     private void showAbortSurveyPrompt() {
@@ -365,7 +432,64 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         super.onPause();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (locationApiClient != null) {
+            locationApiClient.connect();
+        }
+    }
+
     public void onRootViewClick(View view) {
         SoftKeyboard.hideOn(this);
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        setupLocationUpdateService();
+    }
+
+    private void setupLocationUpdateService() {
+        LocationRequest locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+        locationRequest.setInterval(UPDATE_INTERVAL_MS);
+        locationRequest.setFastestInterval(FASTEST_INTERVAL_MS);
+
+        LocationServices.FusedLocationApi.requestLocationUpdates(
+                locationApiClient, locationRequest, this);
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Alert.highLevel().show("ไม่สามารถเชื่อมต่อ Google Play Services ได้");
+    }
+
+    @Override
+    public void onLocationChanged(android.location.Location location) {
+        this.location = location;
+    }
+
+    public class SurveyUpdateJob extends AbsJobRunner {
+
+        @Override
+        protected void onJobError(Job errorJob, Exception exception) {
+            super.onJobError(errorJob, exception);
+        }
+
+        @Override
+        protected void onJobStart(Job startingJob) {
+
+        }
+
+        @Override
+        protected void onRunFinish() {
+            SnackToast.make(SurveyActivity.this, "SUCCESS", Toast.LENGTH_LONG).show();
+        }
     }
 }

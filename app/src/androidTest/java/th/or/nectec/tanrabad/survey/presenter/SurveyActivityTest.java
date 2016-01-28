@@ -23,14 +23,11 @@ import android.support.test.espresso.intent.Intents;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-
 import org.hamcrest.Matchers;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
 
@@ -43,9 +40,7 @@ import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtra;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static android.support.test.espresso.matcher.ViewMatchers.*;
 
 @RunWith(AndroidJUnit4.class)
 public class SurveyActivityTest extends TanrabadEspressoTestBase {
@@ -59,7 +54,7 @@ public class SurveyActivityTest extends TanrabadEspressoTestBase {
     public void setUp() {
         Intent intent = new Intent();
         intent.putExtra("building_uuid", UUID.nameUUIDFromBytes("1xyz".getBytes()).toString());
-        intent.putExtra("username_arg", "sara");
+        intent.putExtra("username_arg", "dpc-user");
         mActivity = mActivityTestRule.launchActivity(intent);
     }
 

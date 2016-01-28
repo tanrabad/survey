@@ -94,7 +94,7 @@ public class PlaceSearchActivity extends TanrabadActivity implements SearchView.
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Place selectedPlace = placeAdapter.getItem(position);
-                SurveyBuildingHistoryActivity.openBuildingSurveyHistoryActivity(PlaceSearchActivity.this, selectedPlace, "sara");
+                SurveyBuildingHistoryActivity.openBuildingSurveyHistoryActivity(PlaceSearchActivity.this, selectedPlace, "dpc-user");
                 finish();
             }
         });

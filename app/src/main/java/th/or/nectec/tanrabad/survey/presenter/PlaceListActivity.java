@@ -28,7 +28,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import th.or.nectec.tanrabad.survey.R;
 import uk.co.chrisjenx.calligraphy.CalligraphyUtils;
 import uk.co.chrisjenx.calligraphy.TypefaceUtils;
@@ -63,7 +62,7 @@ public class PlaceListActivity extends TanrabadActivity {
     }
 
     private void setupTabPager() {
-        placePagerAdapter = new PlacePagerAdapter(getSupportFragmentManager(), PlaceListActivity.this, "sara");
+        placePagerAdapter = new PlacePagerAdapter(getSupportFragmentManager(), PlaceListActivity.this, "dpc-user");
         placePager.setAdapter(placePagerAdapter);
         tabLayout.setupWithViewPager(placePager);
     }

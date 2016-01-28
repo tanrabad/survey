@@ -23,20 +23,20 @@ import th.or.nectec.tanrabad.entity.User;
 
 public class StubUserRepository implements UserRepository {
 
-    private final User sara;
+    private final User dpcUser;
 
     public StubUserRepository() {
-        sara = new User("sara");
-        sara.setFirstname("ซาร่า");
-        sara.setLastname("คิดส์");
-        sara.setEmail("sara.k@gmail.com");
-        sara.setOrganizationId(1);
+        dpcUser = new User("dpc-user");
+        dpcUser.setFirstname("ซาร่า");
+        dpcUser.setLastname("คิดส์");
+        dpcUser.setEmail("sara.k@gmail.com");
+        dpcUser.setOrganizationId(1);
     }
 
     @Override
     public User findByUsername(String userName) {
-        if (sara.getUsername().equals(userName)) {
-            return sara ;
+        if (dpcUser.getUsername().equals(userName)) {
+            return dpcUser;
         } else {
             return null;
         }

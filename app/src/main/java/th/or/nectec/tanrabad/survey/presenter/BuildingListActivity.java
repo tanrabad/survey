@@ -129,13 +129,13 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         buildingSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String searchString) {
-                surveyBuildingChooser.searchSurveyBuildingOfPlaceByName(searchString, getPlaceUuidFromIntent().toString(), "sara");
+                surveyBuildingChooser.searchSurveyBuildingOfPlaceByName(searchString, getPlaceUuidFromIntent().toString(), "dpc-user");
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String searchString) {
-                surveyBuildingChooser.searchSurveyBuildingOfPlaceByName(searchString, getPlaceUuidFromIntent().toString(), "sara");
+                surveyBuildingChooser.searchSurveyBuildingOfPlaceByName(searchString, getPlaceUuidFromIntent().toString(), "dpc-user");
                 return true;
             }
         });
@@ -155,7 +155,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     }
 
     private void loadSurveyBuildingList() {
-        surveyBuildingChooser.displaySurveyBuildingOf(getPlaceUuidFromIntent().toString(), "sara");
+        surveyBuildingChooser.displaySurveyBuildingOf(getPlaceUuidFromIntent().toString(), "dpc-user");
     }
 
     @Override

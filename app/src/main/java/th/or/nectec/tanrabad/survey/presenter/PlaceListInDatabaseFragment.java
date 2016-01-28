@@ -175,7 +175,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
         promptMessage.setOnConfirm(getString(R.string.survey), new PromptMessage.OnConfirmListener() {
             @Override
             public void onConfirm() {
-                SurveyBuildingHistoryActivity.openBuildingSurveyHistoryActivity(getActivity(), placeData, "sara");
+                SurveyBuildingHistoryActivity.openBuildingSurveyHistoryActivity(getActivity(), placeData, "dpc-user");
             }
         });
         promptMessage.setOnCancel(getString(R.string.cancel), null);

@@ -87,7 +87,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
 
     @NonNull
     private String getUsername() {
-        return "sara";
+        return "dpc-user";
     }
 
     private void startAnimation() {

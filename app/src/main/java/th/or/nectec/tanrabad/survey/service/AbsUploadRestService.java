@@ -39,7 +39,7 @@ public abstract class AbsUploadRestService <T> extends AbsRestService implements
     @Override
     public boolean post(T data) {
         try {
-            Request request = buildPostRequest(data);
+            Request request = getPostRequest(data);
             Response response = client.newCall(request).execute();
             if (response.code() == Status.BAD_REQUEST)
                 throw new RestServiceException.ErrorResponseException(response);
@@ -51,7 +51,8 @@ public abstract class AbsUploadRestService <T> extends AbsRestService implements
         }
     }
 
-    private Request buildPostRequest(T data) {
+
+    private Request getPostRequest(T data) throws IOException {
         return new Request.Builder()
                 .post(RequestBody.create(JSON_MEDIA_TYPE, entityToJsonString(data)))
                 .addHeader(USER_AGENT, TRB_USER_AGENT)
@@ -59,7 +60,7 @@ public abstract class AbsUploadRestService <T> extends AbsRestService implements
                 .build();
     }
 
-    protected abstract String entityToJsonString(T data);
+    protected abstract String entityToJsonString(T data) throws IOException;
 
     @Override
     public boolean put(T data) {
@@ -74,7 +75,7 @@ public abstract class AbsUploadRestService <T> extends AbsRestService implements
         }
     }
 
-    private Request buildPutRequest(T data) {
+    private Request buildPutRequest(T data) throws IOException{
         return new Request.Builder().put(RequestBody.create(JSON_MEDIA_TYPE, entityToJsonString(data)))
                 .addHeader(USER_AGENT, TRB_USER_AGENT)
                 .url(baseApi + getPath() + "/" + getId(data))

@@ -146,7 +146,6 @@ public class SurveyContainerView extends LinearLayout {
 
     public SurveyDetail getSurveyDetail() {
         if (surveyDetail != null) {
-            Log.v("sd", "notnull/" + containerType.getName());
             surveyDetail.setContainerCount(getTotalValue(), getFoundValue());
             return surveyDetail;
         } else {
@@ -161,7 +160,6 @@ public class SurveyContainerView extends LinearLayout {
 
     public void setSurveyDetail(SurveyDetail surveyDetail) {
         this.surveyDetail = surveyDetail;
-        Log.d("detailUUID", surveyDetail.getId().toString());
         int totalContainer = surveyDetail.getTotalContainer();
         if (totalContainer > 0)
             totalContainerView.setText(String.valueOf(totalContainer));

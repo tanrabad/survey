@@ -28,6 +28,11 @@ public class SurveyRestService extends AbsUploadRestService<Survey> {
     }
 
     @Override
+    protected String getId(Survey data) {
+        return data.getId().toString();
+    }
+
+    @Override
     protected String getPath() {
         return PATH;
     }

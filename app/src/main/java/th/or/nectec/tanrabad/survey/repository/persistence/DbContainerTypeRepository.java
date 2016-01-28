@@ -34,7 +34,7 @@ public class DbContainerTypeRepository implements ContainerTypeRepository {
     public ContainerType findByID(int containerTypeID) {
         SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
         Cursor containerTypeCursor = db.query(TABLE_NAME, ContainerTypeColumn.wildcard(),
-                null, null, null, null, ContainerTypeColumn.ID);
+                ContainerTypeColumn.ID + "=?", new String[]{String.valueOf(containerTypeID)}, null, null, ContainerTypeColumn.ID);
         return getContainerType(containerTypeCursor);
     }
 

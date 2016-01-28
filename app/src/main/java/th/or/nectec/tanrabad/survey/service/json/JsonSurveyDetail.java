@@ -26,8 +26,8 @@ public class JsonSurveyDetail {
     @JsonField(name = "container_count")
     int containerCount;
 
-    @JsonField(name = "container_have_larvae")
-    int containerHaveLarvae;
+    @JsonField(name = "container_have_larva")
+    int containerHaveLarva;
 
     public static ArrayList<JsonSurveyDetail> parseList(List<SurveyDetail> indoorDetailList, List<SurveyDetail> outdoorDetailList) {
         ArrayList<JsonSurveyDetail> jsonSurveyDetailList = new ArrayList<>();
@@ -46,7 +46,7 @@ public class JsonSurveyDetail {
         jsonSurveyDetail.surveyDetailID = surveyDetail.getId();
         jsonSurveyDetail.containerLocationID = containerLocationID;
         jsonSurveyDetail.containerCount = surveyDetail.getTotalContainer();
-        jsonSurveyDetail.containerHaveLarvae = surveyDetail.getFoundLarvaContainer();
+        jsonSurveyDetail.containerHaveLarva = surveyDetail.getFoundLarvaContainer();
         jsonSurveyDetail.containerType = surveyDetail.getContainerType().getId();
         return jsonSurveyDetail;
     }

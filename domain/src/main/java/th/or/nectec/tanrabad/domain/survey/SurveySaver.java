@@ -42,9 +42,9 @@ public class SurveySaver {
     public void update(Survey survey) {
         if (saveValidator.validate(survey)) {
             if (surveyRepository.update(survey))
-                surveySavePresenter.displaySaveSuccess();
+                surveySavePresenter.displayUpdateSuccess();
         } else {
-            surveySavePresenter.displaySaveFail();
+            surveySavePresenter.displayUpdateFail();
         }
     }
 }

@@ -30,7 +30,7 @@ public class JsonSurveyTest {
         assertEquals(1, jsonSurvey.details.get(0).containerLocationID);
         assertEquals(1, jsonSurvey.details.get(0).containerType);
         assertEquals(24, jsonSurvey.details.get(0).containerCount);
-        assertEquals(10, jsonSurvey.details.get(0).containerHaveLarvae);
+        assertEquals(10, jsonSurvey.details.get(0).containerHaveLarva);
     }
 
     @Test
@@ -49,7 +49,7 @@ public class JsonSurveyTest {
         assertEquals("{\"building_id\":\"5cf5665b-5642-10fb-a3a0-5e612a842583\"," +
                 "\"create_timestamp\":\"2015-01-11T03:00:00.000Z\",\"" +
                 "details\":" +
-                "[{\"container_count\":10,\"container_have_larvae\":5," +
+                "[{\"container_count\":10,\"container_have_larva\":5," +
                 "\"container_location_id\":1,\"container_type\":1," +
                 "\"survey_detail_id\":\"772c4938-b910-11e5-a0c5-aabbccddeeff\"}," +
                 "{\"container_count\":7,\"container_have_larvae\":5," +

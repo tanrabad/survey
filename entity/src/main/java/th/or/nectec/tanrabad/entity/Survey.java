@@ -129,7 +129,6 @@ public class Survey extends Entity implements LocationEntity, Comparable<Survey>
         if (outdoorDetails != null ? !outdoorDetails.equals(survey.outdoorDetails) : survey.outdoorDetails != null)
             return false;
         return !(startTimestamp != null ? !startTimestamp.equals(survey.startTimestamp) : survey.startTimestamp != null);
-
     }
 
     @Override

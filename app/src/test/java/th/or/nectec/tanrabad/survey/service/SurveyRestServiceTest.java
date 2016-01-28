@@ -31,7 +31,7 @@ public class SurveyRestServiceTest extends WireMockTestBase {
         SurveyRestService surveyRestService = new SurveyRestService(localHost(), Mockito.mock(ServiceLastUpdate.class));
         Survey survey = getSurvey();
 
-        boolean postDataResult = surveyRestService.postData(survey);
+        boolean postDataResult = surveyRestService.post(survey);
 
         assertEquals(true, postDataResult);
         verify(postRequestedFor(urlEqualTo(SurveyRestService.PATH))

@@ -21,4 +21,8 @@ public interface SurveySavePresenter {
     void displaySaveSuccess();
 
     void displaySaveFail();
+
+    void displayUpdateSuccess();
+
+    void displayUpdateFail();
 }

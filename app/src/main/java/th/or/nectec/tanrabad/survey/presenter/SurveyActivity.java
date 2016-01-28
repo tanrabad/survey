@@ -25,6 +25,7 @@ import android.provider.Settings;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -48,12 +49,12 @@ import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.job.AbsJobRunner;
 import th.or.nectec.tanrabad.survey.job.Job;
 import th.or.nectec.tanrabad.survey.job.PostDataJob;
+import th.or.nectec.tanrabad.survey.job.PutDataJob;
 import th.or.nectec.tanrabad.survey.presenter.view.AdvanceStepperDialog;
 import th.or.nectec.tanrabad.survey.presenter.view.SurveyContainerView;
 import th.or.nectec.tanrabad.survey.presenter.view.TorchButton;
 import th.or.nectec.tanrabad.survey.repository.BrokerBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerContainerTypeRepository;
-import th.or.nectec.tanrabad.survey.repository.BrokerSurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.repository.persistence.DbSurveyRepository;
 import th.or.nectec.tanrabad.survey.service.json.SurveyRestService;
@@ -167,7 +168,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     }
 
     private void initSurvey() {
-        surveyRepository = BrokerSurveyRepository.getInstance();
+        surveyRepository = new DbSurveyRepository(this);
         SurveyController surveyController = new SurveyController(surveyRepository, BrokerBuildingRepository.getInstance(), new StubUserRepository(), this);
 
         String buildingUUID = getIntent().getStringExtra(BUILDING_UUID_ARG);
@@ -236,6 +237,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     }
 
     private void loadSurveyData(Survey survey) {
+        Log.d("loadsurvey", survey.toString());
         residentCountView.setText(String.valueOf(survey.getResidentCount()));
         loadSurveyDetail(survey.getIndoorDetail(), indoorContainerViews);
         loadSurveyDetail(survey.getOutdoorDetail(), outdoorContainerViews);
@@ -292,11 +294,15 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     @Override
     public void displaySaveSuccess() {
+        doPostData();
+        finish();
+        openSurveyBuildingHistory();
+    }
+
+    private void doPostData() {
         SurveyUpdateJob surveyUpdateJob = new SurveyUpdateJob();
         surveyUpdateJob.addJob(new PostDataJob<>(new DbSurveyRepository(this), new SurveyRestService()));
         surveyUpdateJob.start();
-        finish();
-        openSurveyBuildingHistory();
     }
 
     private void openSurveyBuildingHistory() {
@@ -309,6 +315,24 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     @Override
     public void displaySaveFail() {
         Toast.makeText(SurveyActivity.this, R.string.save_fail, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void displayUpdateSuccess() {
+        //doPutData();
+        finish();
+        openSurveyBuildingHistory();
+    }
+
+    @Override
+    public void displayUpdateFail() {
+
+    }
+
+    private void doPutData() {
+        SurveyUpdateJob surveyUpdateJob = new SurveyUpdateJob();
+        surveyUpdateJob.addJob(new PutDataJob<>(new DbSurveyRepository(this), new SurveyRestService()));
+        surveyUpdateJob.start();
     }
 
     @Override
@@ -338,6 +362,8 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
             survey.setLocation(getLastLocation());
             survey.finishSurvey();
 
+            Log.e("result", survey.toString());
+
             if (isEditSurvey) {
                 SurveySaver surveySaver = new SurveySaver(this, new SaveSurveyValidator(this), surveyRepository);
                 surveySaver.update(survey);
@@ -366,8 +392,11 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         ArrayList<SurveyDetail> surveyDetails = new ArrayList<>();
         for (Map.Entry<Integer, SurveyContainerView> eachView : containerViews.entrySet()) {
             SurveyDetail surveyDetail = eachView.getValue().getSurveyDetail();
-            if (surveyDetail != null)
+            if (surveyDetail != null) {
+                Log.d("surveydetail", surveyDetail.toString());
                 surveyDetails.add(surveyDetail);
+            }
+
         }
         return surveyDetails;
     }

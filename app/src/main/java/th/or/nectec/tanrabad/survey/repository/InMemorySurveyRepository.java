@@ -34,7 +34,7 @@ public class InMemorySurveyRepository implements SurveyRepository {
         this.surveys = new ArrayList<>();
     }
 
-    protected static InMemorySurveyRepository getInstance() {
+    public static InMemorySurveyRepository getInstance() {
         if (instance == null)
             instance = new InMemorySurveyRepository();
         return instance;
@@ -67,12 +67,6 @@ public class InMemorySurveyRepository implements SurveyRepository {
     }
 
     @Override
-    public boolean save(Survey survey) {
-        surveys.add(survey);
-        return true;
-    }
-
-    @Override
     public List<Place> findByUserIn7Days(User user) {
         ArrayList<Place> surveyPlaces = new ArrayList<>();
         for (Survey eachSurvey : surveys) {
@@ -84,6 +78,12 @@ public class InMemorySurveyRepository implements SurveyRepository {
             }
         }
         return surveyPlaces.isEmpty() ? null : surveyPlaces;
+    }
+
+    @Override
+    public boolean save(Survey survey) {
+        surveys.add(survey);
+        return true;
     }
 
 

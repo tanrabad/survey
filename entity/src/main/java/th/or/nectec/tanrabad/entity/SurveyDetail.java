@@ -45,22 +45,42 @@ public class SurveyDetail implements Comparable {
     }
 
     @Override
-    public int hashCode() {
-        int result = containerType.hashCode();
-        result = 31 * result + totalContainer;
-        result = 31 * result + foundLarvaContainer;
-        return result;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        SurveyDetail that = (SurveyDetail) o;
+
+        if (totalContainer != that.totalContainer) return false;
+        if (foundLarvaContainer != that.foundLarvaContainer) return false;
+        if (containerType != null ? !containerType.equals(that.containerType) : that.containerType != null)
+            return false;
+        return surveyDetailID != null ? surveyDetailID.equals(that.surveyDetailID) : that.surveyDetailID == null;
+
     }
 
     @Override
-    public boolean equals(Object other) {
-        if (this == other) return true;
-        if (other == null || getClass() != other.getClass()) return false;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-        SurveyDetail that = (SurveyDetail) other;
-        return totalContainer == that.totalContainer &&
-                foundLarvaContainer == that.foundLarvaContainer &&
-                containerType.equals(that.containerType);
+        SurveyDetail that = (SurveyDetail) o;
+
+        if (totalContainer != that.totalContainer) return false;
+        if (foundLarvaContainer != that.foundLarvaContainer) return false;
+        if (containerType != null ? !containerType.equals(that.containerType) : that.containerType != null)
+            return false;
+        return surveyDetailID != null ? surveyDetailID.equals(that.surveyDetailID) : that.surveyDetailID == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = containerType != null ? containerType.hashCode() : 0;
+        result = 31 * result + totalContainer;
+        result = 31 * result + foundLarvaContainer;
+        result = 31 * result + (surveyDetailID != null ? surveyDetailID.hashCode() : 0);
+        return result;
     }
 
     @Override
@@ -69,6 +89,7 @@ public class SurveyDetail implements Comparable {
                 "containerType=" + containerType +
                 ", totalContainer=" + totalContainer +
                 ", foundLarvaContainer=" + foundLarvaContainer +
+                ", surveyDetailID=" + surveyDetailID +
                 '}';
     }
 

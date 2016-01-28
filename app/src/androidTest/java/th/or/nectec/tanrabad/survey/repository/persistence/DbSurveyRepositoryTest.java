@@ -72,6 +72,9 @@ public class DbSurveyRepositoryTest {
         Cursor surveyQuery = dbTestRule.getReadable().query(DbSurveyRepository.TABLE_NAME, SurveyColumn.wildcard(), SurveyColumn.ID + "=?",
                 new String[]{surveyID().toString()}, null, null, null);
 
+        Cursor surveyDetails = dbTestRule.getReadable().query(DbSurveyRepository.DETAIL_TABLE_NAME, SurveyDetailColumn.wildcard(), SurveyDetailColumn.SURVEY_ID + "=?",
+                new String[]{surveyID().toString()}, null, null, null);
+
         assertEquals(true, surveyQuery.moveToFirst());
         assertEquals(true, isSuccess);
         assertEquals(surveyID().toString(), surveyQuery.getString(surveyQuery.getColumnIndex(SurveyColumn.ID)));
@@ -82,6 +85,17 @@ public class DbSurveyRepositoryTest {
         assertEquals("2015-12-24T12:19:20.626+07:00", surveyQuery.getString(surveyQuery.getColumnIndex(SurveyColumn.CREATE_TIME)));
         assertEquals("2015-12-24T13:20:21.626+07:00", surveyQuery.getString(surveyQuery.getColumnIndex(SurveyColumn.UPDATE_TIME)));
         assertEquals(ChangedStatus.ADD, surveyQuery.getInt(surveyQuery.getColumnIndex(SurveyColumn.CHANGED_STATUS)));
+
+        assertEquals(3, surveyDetails.getCount());
+        assertEquals(true, surveyDetails.moveToFirst());
+        assertEquals(1, surveyDetails.getInt(surveyDetails.getColumnIndex(SurveyDetailColumn.CONTAINER_TYPE_ID)));
+        assertEquals(1, surveyDetails.getInt(surveyDetails.getColumnIndex(SurveyDetailColumn.CONTAINER_LOCATION_ID)));
+        assertEquals(true, surveyDetails.moveToNext());
+        assertEquals(1, surveyDetails.getInt(surveyDetails.getColumnIndex(SurveyDetailColumn.CONTAINER_TYPE_ID)));
+        assertEquals(2, surveyDetails.getInt(surveyDetails.getColumnIndex(SurveyDetailColumn.CONTAINER_LOCATION_ID)));
+        assertEquals(true, surveyDetails.moveToNext());
+        assertEquals(2, surveyDetails.getInt(surveyDetails.getColumnIndex(SurveyDetailColumn.CONTAINER_TYPE_ID)));
+        assertEquals(2, surveyDetails.getInt(surveyDetails.getColumnIndex(SurveyDetailColumn.CONTAINER_LOCATION_ID)));
         surveyQuery.close();
     }
 
@@ -129,6 +143,20 @@ public class DbSurveyRepositoryTest {
 
         List<SurveyDetail> surveyDetails = dbSurveyRepository.findSurveyDetail(survey.getId(), DbSurveyRepository.INDOOR_CONTAINER_LOCATION);
         assertEquals(2, surveyDetails.size());
+
+        Cursor surveyDetailsCursor = dbTestRule.getReadable().query(DbSurveyRepository.DETAIL_TABLE_NAME, SurveyDetailColumn.wildcard(), SurveyDetailColumn.SURVEY_ID + "=?",
+                new String[]{surveyID().toString()}, null, null, null);
+
+        assertEquals(4, surveyDetailsCursor.getCount());
+        assertEquals(true, surveyDetailsCursor.moveToFirst());
+        assertEquals(1, surveyDetailsCursor.getInt(surveyDetailsCursor.getColumnIndex(SurveyDetailColumn.CONTAINER_TYPE_ID)));
+        assertEquals(1, surveyDetailsCursor.getInt(surveyDetailsCursor.getColumnIndex(SurveyDetailColumn.CONTAINER_LOCATION_ID)));
+        assertEquals(true, surveyDetailsCursor.moveToNext());
+        assertEquals(1, surveyDetailsCursor.getInt(surveyDetailsCursor.getColumnIndex(SurveyDetailColumn.CONTAINER_TYPE_ID)));
+        assertEquals(2, surveyDetailsCursor.getInt(surveyDetailsCursor.getColumnIndex(SurveyDetailColumn.CONTAINER_LOCATION_ID)));
+        assertEquals(true, surveyDetailsCursor.moveToNext());
+        assertEquals(2, surveyDetailsCursor.getInt(surveyDetailsCursor.getColumnIndex(SurveyDetailColumn.CONTAINER_TYPE_ID)));
+        assertEquals(2, surveyDetailsCursor.getInt(surveyDetailsCursor.getColumnIndex(SurveyDetailColumn.CONTAINER_LOCATION_ID)));
         surveyQuery.close();
     }
 
@@ -144,5 +172,14 @@ public class DbSurveyRepositoryTest {
         List<SurveyDetail> surveyDetails = dbSurveyRepository.findSurveyDetail(survey.getId(), DbSurveyRepository.INDOOR_CONTAINER_LOCATION);
         assertEquals(false, isSuccess);
         assertEquals(1, surveyDetails.size());
+    }
+
+    @Test
+    public void testLoadSavedSurvey() throws Exception {
+        Survey survey = getSurvey();
+        dbSurveyRepository.save(survey);
+
+        Survey querySurvey = dbSurveyRepository.findByBuildingAndUserIn7Day(survey.getSurveyBuilding(), survey.getUser());
+        assertEquals(survey, querySurvey);
     }
 }

@@ -45,9 +45,9 @@ public class SurveyIndoorOutdoorDetailTest {
         ContainerType containerType2 = new ContainerType(8, "กากใบพืช");
         ContainerType containerType3 = new ContainerType(7, "ยางรถยนต์เก่า");
 
-        SurveyDetail detail1 = new SurveyDetail(UUID.randomUUID(), containerType1, 5, 1);
-        SurveyDetail detail2 = new SurveyDetail(UUID.randomUUID(), containerType2, 4, 0);
-        SurveyDetail detail3 = new SurveyDetail(UUID.randomUUID(), containerType3, 4, 2);
+        SurveyDetail detail1 = new SurveyDetail(UUID.nameUUIDFromBytes("1".getBytes()), containerType1, 5, 1);
+        SurveyDetail detail2 = new SurveyDetail(UUID.nameUUIDFromBytes("2".getBytes()), containerType2, 4, 0);
+        SurveyDetail detail3 = new SurveyDetail(UUID.nameUUIDFromBytes("3".getBytes()), containerType3, 4, 2);
 
         ArrayList<SurveyDetail> detailArrayList = new ArrayList<>();
         detailArrayList.add(detail1);

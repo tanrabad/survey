@@ -25,7 +25,6 @@ import android.provider.Settings;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -237,7 +236,6 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     }
 
     private void loadSurveyData(Survey survey) {
-        Log.d("loadsurvey", survey.toString());
         residentCountView.setText(String.valueOf(survey.getResidentCount()));
         loadSurveyDetail(survey.getIndoorDetail(), indoorContainerViews);
         loadSurveyDetail(survey.getOutdoorDetail(), outdoorContainerViews);
@@ -361,9 +359,6 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
             survey.setOutdoorDetail(getSurveyDetail(outdoorContainerViews));
             survey.setLocation(getLastLocation());
             survey.finishSurvey();
-
-            Log.e("result", survey.toString());
-
             if (isEditSurvey) {
                 SurveySaver surveySaver = new SurveySaver(this, new SaveSurveyValidator(this), surveyRepository);
                 surveySaver.update(survey);
@@ -393,10 +388,8 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         for (Map.Entry<Integer, SurveyContainerView> eachView : containerViews.entrySet()) {
             SurveyDetail surveyDetail = eachView.getValue().getSurveyDetail();
             if (surveyDetail != null) {
-                Log.d("surveydetail", surveyDetail.toString());
                 surveyDetails.add(surveyDetail);
             }
-
         }
         return surveyDetails;
     }

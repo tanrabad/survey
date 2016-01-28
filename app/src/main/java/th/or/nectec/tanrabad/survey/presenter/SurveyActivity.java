@@ -42,7 +42,7 @@ import th.or.nectec.tanrabad.survey.presenter.view.SurveyContainerView;
 import th.or.nectec.tanrabad.survey.presenter.view.TorchButton;
 import th.or.nectec.tanrabad.survey.repository.BrokerBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerContainerTypeRepository;
-import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
+import th.or.nectec.tanrabad.survey.repository.BrokerSurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.EditTextStepper;
 import th.or.nectec.tanrabad.survey.utils.MacAddressUtils;
@@ -70,11 +70,12 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     private EditText residentCountView;
     private SurveyRepository surveyRepository;
     private Survey survey;
+    private boolean isEditSurvey;
 
     public static void open(Activity activity, Building building) {
         Intent intent = new Intent(activity, SurveyActivity.class);
         intent.putExtra(SurveyActivity.BUILDING_UUID_ARG, building.getId().toString());
-        intent.putExtra(SurveyActivity.USERNAME_ARG, "sara");
+        intent.putExtra(SurveyActivity.USERNAME_ARG, "dpc-user");
         activity.startActivity(intent);
     }
 
@@ -113,7 +114,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     }
 
     private void initSurvey() {
-        surveyRepository = InMemorySurveyRepository.getInstance();
+        surveyRepository = BrokerSurveyRepository.getInstance();
         SurveyController surveyController = new SurveyController(surveyRepository, BrokerBuildingRepository.getInstance(), new StubUserRepository(), this);
 
         String buildingUUID = getIntent().getStringExtra(BUILDING_UUID_ARG);
@@ -129,6 +130,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         if (supportActionBar != null)
             supportActionBar.setTitle(R.string.title_activity_edit_survey);
 
+        isEditSurvey = true;
         this.survey = survey;
         setBuildingInfo();
         loadSurveyData(survey);
@@ -138,7 +140,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     public void onNewSurvey(Building building, User user) {
         survey = new Survey(UUIDUtils.generateOrdered(MacAddressUtils.getMacAddress(this)), user, building);
         survey.startSurvey();
-
+        isEditSurvey = false;
         setBuildingInfo();
     }
 
@@ -272,8 +274,14 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
             survey.setOutdoorDetail(getSurveyDetail(outdoorContainerViews));
             survey.finishSurvey();
 
-            SurveySaver surveySaver = new SurveySaver(this, new SaveSurveyValidator(this), surveyRepository);
-            surveySaver.save(survey);
+
+            if (isEditSurvey) {
+                SurveySaver surveySaver = new SurveySaver(this, new SaveSurveyValidator(this), surveyRepository);
+                surveySaver.update(survey);
+            } else {
+                SurveySaver surveySaver = new SurveySaver(this, new SaveSurveyValidator(this), surveyRepository);
+                surveySaver.save(survey);
+            }
         } catch (SurveyDetail.ContainerFoundLarvaOverTotalException e) {
             Alert.highLevel().show(R.string.over_total_container);
             validateSurveyContainerViews(indoorContainerViews);

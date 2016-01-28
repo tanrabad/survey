@@ -34,7 +34,7 @@ import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyHistoryChooser;
 import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyHistoryListPresenter;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
-import th.or.nectec.tanrabad.survey.repository.InMemorySurveyRepository;
+import th.or.nectec.tanrabad.survey.repository.BrokerSurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 
@@ -80,7 +80,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
         cardView = (CardView) findViewById(R.id.card_layout);
         PlaceWithSurveyHistoryChooser placeWithSurveyHistoryChooser = new PlaceWithSurveyHistoryChooser(
                 new StubUserRepository(),
-                InMemorySurveyRepository.getInstance(),
+                BrokerSurveyRepository.getInstance(),
                 this);
         placeWithSurveyHistoryChooser.showSurveyPlaceList(getUsername());
     }

@@ -17,7 +17,10 @@
 
 package th.or.nectec.tanrabad.survey.job;
 
-import th.or.nectec.tanrabad.survey.repository.*;
+import th.or.nectec.tanrabad.survey.repository.InMemoryContainerTypeRepository;
+import th.or.nectec.tanrabad.survey.repository.InMemoryDistrictRepository;
+import th.or.nectec.tanrabad.survey.repository.InMemoryProvinceRepository;
+import th.or.nectec.tanrabad.survey.repository.InMemorySubdistrictRepository;
 
 public class InMemoryInitializeJob implements Job {
 
@@ -31,7 +34,6 @@ public class InMemoryInitializeJob implements Job {
     @Override
     public void execute() {
         InMemoryContainerTypeRepository.getInstance();
-        InMemorySurveyRepository.getInstance();
         InMemorySubdistrictRepository.getInstance();
         InMemoryDistrictRepository.getInstance();
         InMemoryProvinceRepository.getInstance();

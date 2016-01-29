@@ -20,7 +20,7 @@ package th.or.nectec.tanrabad.entity.lookup;
 public class ContainerLocation {
 
     private final int id;
-    private String name;
+    private final String name;
 
     public ContainerLocation(int id, String name) {
         this.id = id;
@@ -33,13 +33,6 @@ public class ContainerLocation {
 
     public int getId() {
         return id;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + name.hashCode();
-        return result;
     }
 
     @Override

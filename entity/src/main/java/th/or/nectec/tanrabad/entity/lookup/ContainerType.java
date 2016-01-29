@@ -22,22 +22,19 @@ import static java.lang.Integer.compare;
 public class ContainerType implements Comparable<ContainerType> {
 
     private final int id;
-    private String name;
+    private final String name;
 
     public ContainerType(int id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public String getName() {
-        return name;
+    public int getId() {
+        return id;
     }
 
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + name.hashCode();
-        return result;
+    public String getName() {
+        return name;
     }
 
     @Override
@@ -59,9 +56,5 @@ public class ContainerType implements Comparable<ContainerType> {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
-    }
-
-    public int getId() {
-        return id;
     }
 }

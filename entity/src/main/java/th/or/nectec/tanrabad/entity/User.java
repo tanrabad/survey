@@ -81,15 +81,5 @@ public class User {
         if (firstname != null ? !firstname.equals(user.firstname) : user.firstname != null)
             return false;
         return !(lastname != null ? !lastname.equals(user.lastname) : user.lastname != null);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = username.hashCode();
-        result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
-        result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
-        result = 31 * result + organizationId;
-        return result;
     }
 }

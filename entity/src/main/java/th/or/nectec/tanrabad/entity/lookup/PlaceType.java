@@ -37,17 +37,6 @@ public class PlaceType extends Entity {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        return result;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

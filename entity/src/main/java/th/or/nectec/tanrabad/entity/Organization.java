@@ -49,14 +49,6 @@ public class Organization {
     }
 
     @Override
-    public int hashCode() {
-        int result = organizationId;
-        result = 31 * result + name.hashCode();
-        result = 31 * result + areaLevelId;
-        return result;
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

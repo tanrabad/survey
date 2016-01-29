@@ -22,10 +22,10 @@ import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 import java.util.UUID;
 
 public class SurveyDetail implements Comparable {
+    private final UUID surveyDetailID;
     private final ContainerType containerType;
     private int totalContainer;
     private int foundLarvaContainer;
-    private UUID surveyDetailID;
 
     public SurveyDetail(UUID surveyDetailID, ContainerType containerType, int totalContainer, int foundLarvaContainer) {
         this.containerType = containerType;
@@ -40,8 +40,24 @@ public class SurveyDetail implements Comparable {
         this.foundLarvaContainer = found;
     }
 
+    public UUID getId() {
+        return surveyDetailID;
+    }
+
     public ContainerType getContainerType() {
         return containerType;
+    }
+
+    public int getTotalContainer() {
+        return totalContainer;
+    }
+
+    public int getFoundLarvaContainer() {
+        return foundLarvaContainer;
+    }
+
+    public boolean isFoundLarva() {
+        return foundLarvaContainer > 0;
     }
 
     @Override
@@ -60,15 +76,6 @@ public class SurveyDetail implements Comparable {
     }
 
     @Override
-    public int hashCode() {
-        int result = containerType != null ? containerType.hashCode() : 0;
-        result = 31 * result + totalContainer;
-        result = 31 * result + foundLarvaContainer;
-        result = 31 * result + (surveyDetailID != null ? surveyDetailID.hashCode() : 0);
-        return result;
-    }
-
-    @Override
     public String toString() {
         return "SurveyDetail{" +
                 "containerType=" + containerType +
@@ -78,33 +85,15 @@ public class SurveyDetail implements Comparable {
                 '}';
     }
 
-    public int getTotalContainer() {
-        return totalContainer;
-    }
-
-    public int getFoundLarvaContainer() {
-        return foundLarvaContainer;
-    }
-
-    public boolean isFoundLarva() {
-        return foundLarvaContainer > 0;
-    }
-
     @Override
     public int compareTo(Object o) {
         SurveyDetail other = (SurveyDetail) o;
-
         if (foundLarvaContainer > other.foundLarvaContainer)
             return 1;
         else if (foundLarvaContainer < other.foundLarvaContainer)
             return -1;
         else
             return 0;
-
-    }
-
-    public UUID getId() {
-        return surveyDetailID;
     }
 
     public class ContainerFoundLarvaOverTotalException extends RuntimeException {

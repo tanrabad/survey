@@ -87,14 +87,6 @@ public class Building extends Entity implements LocationEntity {
     }
 
     @Override
-    public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (place != null ? place.hashCode() : 0);
-        return result;
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -104,8 +96,8 @@ public class Building extends Entity implements LocationEntity {
         if (!id.equals(building.id)) return false;
         if (name != null ? !name.equals(building.name) : building.name != null) return false;
         return !(place != null ? !place.equals(building.place) : building.place != null);
-
     }
+
 
     @Override
     public String toString() {

@@ -44,20 +44,11 @@ public class PlaceSubType extends Entity {
     }
 
     @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + name.hashCode();
-        result = 31 * result + placeTypeId;
-        return result;
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         PlaceSubType that = (PlaceSubType) o;
-
         if (id != that.id) return false;
         if (placeTypeId != that.placeTypeId) return false;
         return name.equals(that.name);

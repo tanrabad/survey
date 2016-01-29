@@ -10,14 +10,22 @@ public class Polygon {
     public Polygon(List<Location> boundary, List<Location>[] holes) {
         this.boundary = boundary;
         this.holes = holes;
-
     }
 
-    @Override
-    public int hashCode() {
-        int result = boundary.hashCode();
-        result = 31 * result + Arrays.hashCode(holes);
-        return result;
+    public List<Location> getBoundary() {
+        return boundary;
+    }
+
+    public List<Location> getHole(int holeIndex) {
+        return holes[holeIndex];
+    }
+
+    public List<Location>[] getAllHoles() {
+        return holes;
+    }
+
+    public int getHolesCount() {
+        return holes.length;
     }
 
     @Override
@@ -37,21 +45,5 @@ public class Polygon {
                 "boundary=" + boundary +
                 ", holes=" + Arrays.toString(holes) +
                 '}';
-    }
-
-    public List<Location> getBoundary() {
-        return boundary;
-    }
-
-    public List<Location> getHole(int holeIndex) {
-        return holes[holeIndex];
-    }
-
-    public List<Location>[] getAllHoles() {
-        return holes;
-    }
-
-    public int getHolesCount() {
-        return holes.length;
     }
 }

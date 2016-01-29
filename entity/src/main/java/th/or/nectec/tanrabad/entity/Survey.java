@@ -103,15 +103,17 @@ public class Survey extends Entity implements LocationEntity, Comparable<Survey>
         this.outdoorDetails = outdoorDetails;
     }
 
-    @Override
-    public int hashCode() {
-        int result = user.hashCode();
-        result = 31 * result + surveyBuilding.hashCode();
-        result = 31 * result + residentCount;
-        result = 31 * result + (indoorDetails != null ? indoorDetails.hashCode() : 0);
-        result = 31 * result + (outdoorDetails != null ? outdoorDetails.hashCode() : 0);
-        result = 31 * result + (startTimestamp != null ? startTimestamp.hashCode() : 0);
-        return result;
+    public boolean isFoundLarvae() {
+        return isFoundLarvaeInDetails(indoorDetails) || isFoundLarvaeInDetails(outdoorDetails);
+    }
+
+    private boolean isFoundLarvaeInDetails(List<SurveyDetail> details) {
+        if (details != null) {
+            for (SurveyDetail detail : details) {
+                if (detail.isFoundLarva()) return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -142,19 +144,6 @@ public class Survey extends Entity implements LocationEntity, Comparable<Survey>
                 '}';
     }
 
-    public boolean isFoundLarvae() {
-        return isFoundLarvaeInDetails(indoorDetails) || isFoundLarvaeInDetails(outdoorDetails);
-    }
-
-    private boolean isFoundLarvaeInDetails(List<SurveyDetail> details) {
-        if (details != null) {
-            for (SurveyDetail detail : details) {
-                if (detail.isFoundLarva()) return true;
-            }
-        }
-        return false;
-    }
-
     @Override
     public int compareTo(Survey other) {
         return this.getFinishTimestamp().compareTo(other.getFinishTimestamp());
@@ -181,7 +170,6 @@ public class Survey extends Entity implements LocationEntity, Comparable<Survey>
         private int resident = 0;
         private User surveyor = TESTER;
         private UUID surveyID;
-        private String macAddress;
         private Building building = DEFAULT_BUILDING;
         private Location location;
         private DateTime startTimeStamp;

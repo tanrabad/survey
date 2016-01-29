@@ -17,7 +17,6 @@ import th.or.nectec.tanrabad.survey.repository.SurveyRepositoryException;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorList;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -233,8 +232,25 @@ public class DbSurveyRepository implements SurveyRepository, ChangedRepository<S
     }
 
     @Override
-    public ArrayList<Place> findByUserIn7Days(User user) {
-        return null;
+    public List<Place> findByUserIn7Days(User user) {
+        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        String[] columns = new String[]{
+                DbPlaceRepository.TABLE_NAME + "." + PlaceColumn.ID,
+                DbPlaceRepository.TABLE_NAME + "." + PlaceColumn.NAME,
+                PlaceColumn.SUBDISTRICT_CODE,
+                DbPlaceRepository.TABLE_NAME + "." + PlaceColumn.LATITUDE,
+                DbPlaceRepository.TABLE_NAME + "." + PlaceColumn.LONGITUDE,
+                DbPlaceRepository.TABLE_NAME + "." + PlaceColumn.SUBTYPE_ID,
+                DbPlaceRepository.TABLE_NAME + "." + PlaceColumn.UPDATE_TIME,
+                DbPlaceRepository.TABLE_NAME + "." + PlaceColumn.UPDATE_BY,
+                DbPlaceRepository.TABLE_NAME + "." + PlaceColumn.CHANGED_STATUS};
+        Cursor cursor = db.query(TABLE_NAME + " INNER JOIN building USING(building_id) INNER JOIN place USING(place_id)", columns,
+                SurveyColumn.SURVEYOR + "=?", new String[]{user.getUsername()}, null, null, null);
+        return new CursorList<>(cursor, getPlaceSurveyMapper(cursor));
+    }
+
+    private CursorMapper<Place> getPlaceSurveyMapper(Cursor cursor) {
+        return new PlaceCursorMapper(cursor, userRepository);
     }
 
     private Survey getSurvey(Cursor cursor) {

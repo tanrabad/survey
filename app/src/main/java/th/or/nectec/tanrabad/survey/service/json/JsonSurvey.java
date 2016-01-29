@@ -8,7 +8,7 @@ import th.or.nectec.tanrabad.entity.Survey;
 import java.util.List;
 import java.util.UUID;
 
-@JsonObject
+@JsonObject(serializeNullObjects = true)
 public class JsonSurvey {
 
     @JsonField(name = "survey_id", typeConverter = UUIDConverter.class)
@@ -38,7 +38,7 @@ public class JsonSurvey {
         jsonSurvey.buildingID = survey.getSurveyBuilding().getId();
         jsonSurvey.personCount = survey.getResidentCount();
         jsonSurvey.details = JsonSurveyDetail.parseList(survey.getIndoorDetail(), survey.getOutdoorDetail());
-        jsonSurvey.location = GeoJsonPoint.parse(survey.getLocation());
+        jsonSurvey.location = survey.getLocation() == null ? null : GeoJsonPoint.parse(survey.getLocation());
         jsonSurvey.surveyor = survey.getUser().getUsername();
         jsonSurvey.createTimestamp = survey.getStartTimestamp().withZone(DateTimeZone.UTC).toString();
         return jsonSurvey;

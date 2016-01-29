@@ -89,8 +89,8 @@ public class KeyContainerTest {
         assertEquals(ContainerTypeStub.น้ำดื่ม, keyContainer.indoorNumberOne());
         assertEquals(ContainerTypeStub.แจกัน, keyContainer.indoorNumberTwo());
         assertEquals(ContainerTypeStub.น้ำใช้, keyContainer.indoorNumberThree());
-        assertEquals(ContainerTypeStub.ยางรถยนต์เก่า, keyContainer.outdoorNumberOne());
-        assertEquals(ContainerTypeStub.จานรองกระถาง, keyContainer.outdoorNumberTwo());
+        assertEquals(ContainerTypeStub.จานรองกระถาง, keyContainer.outdoorNumberOne());
+        assertEquals(ContainerTypeStub.ยางรถยนต์เก่า, keyContainer.outdoorNumberTwo());
         assertEquals(ContainerTypeStub.อ่างบัว_ไม้น้ำ, keyContainer.outdoorNumberThree());
     }
 }

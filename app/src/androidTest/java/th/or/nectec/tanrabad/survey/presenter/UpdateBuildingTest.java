@@ -48,22 +48,18 @@ public class UpdateBuildingTest extends TanrabadEspressoTestBase {
     @Before
     public void setUp() {
         Intent intent = new Intent();
-        intent.putExtra("place_uuid_arg", UUID.nameUUIDFromBytes("1abc".getBytes()).toString());
-        intent.putExtra("building_uuid_arg", UUID.nameUUIDFromBytes("PR10xyz".getBytes()).toString());
+        intent.putExtra("place_uuid_arg", "935b9aeb-6522-461e-994f-f9e9006c4a33".toString());
+        intent.putExtra("building_uuid_arg", "4d843012-9696-4824-b52e-87398a589f40".toString());
 
         mActivity = mActivityTestRule.launchActivity(intent);
     }
 
     @Test
-    public void EditBuildingNameAndDefineLocationThenSaveShouldNotFoundPromptCanNotEditBuilding() {
+    public void EditBuildingNameThenSaveShouldNotFoundPromptCanNotEditBuilding() {
         onView(withId(R.id.building_name))
                 .check(matches(withText("214/55")));
         onView(withId(R.id.building_name))
                 .perform(replaceText("50/7"));
-        onView(withId(R.id.add_marker))
-                .perform(click());
-        onView(withId(R.id.save_marker_menu))
-                .perform(click());
 
         onView(withId(R.id.save))
                 .perform(click());

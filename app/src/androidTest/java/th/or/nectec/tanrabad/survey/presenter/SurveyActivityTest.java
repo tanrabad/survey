@@ -53,7 +53,7 @@ public class SurveyActivityTest extends TanrabadEspressoTestBase {
     @Before
     public void setUp() {
         Intent intent = new Intent();
-        intent.putExtra("building_uuid", UUID.nameUUIDFromBytes("1xyz".getBytes()).toString());
+        intent.putExtra("building_uuid", "f5bfd399-8fb2-4a69-874a-b40495f7786f".toString());
         intent.putExtra("username_arg", "dpc-user");
         mActivity = mActivityTestRule.launchActivity(intent);
     }
@@ -94,12 +94,13 @@ public class SurveyActivityTest extends TanrabadEspressoTestBase {
     public void surveySuccessThenTouchSaveShouldOpenIntentSurveyBuildingHistoryPage() {
         onView(withId(R.id.resident_count))
                 .perform(replaceText("9"));
+        waitingFor(4000);
         onView(withId(R.id.save))
                 .perform(click());
 
         Intents.intended(Matchers.allOf(
                 hasComponent(new ComponentName(mActivity, SurveyBuildingHistoryActivity.class)),
-                hasExtra(SurveyBuildingHistoryActivity.PLACE_UUID_ARG, UUID.nameUUIDFromBytes("1abc".getBytes()).toString())
+                hasExtra(SurveyBuildingHistoryActivity.PLACE_UUID_ARG, "935b9aeb-6522-461e-994f-f9e9006c4a33".toString())
         ));
     }
 }

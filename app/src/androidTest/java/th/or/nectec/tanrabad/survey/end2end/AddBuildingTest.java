@@ -48,7 +48,7 @@ public class AddBuildingTest extends TanrabadEspressoTestBase {
     @Before
     public void setUp() {
         Intent intent = new Intent();
-        intent.putExtra("place_uuid_arg", UUID.nameUUIDFromBytes("67UIP".getBytes()).toString());
+        intent.putExtra("place_uuid_arg", "e5ce769e-f397-4409-bec2-818f7bd02464".toString());
         mActivity = mActivityTestRule.launchActivity(intent);
     }
 
@@ -62,6 +62,7 @@ public class AddBuildingTest extends TanrabadEspressoTestBase {
                 .perform(click());
         onView(withText(R.string.save_location))
                 .perform(click());
+        clickConfirmButton();
         onView(withId(R.id.save))
                 .perform(click());
 

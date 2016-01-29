@@ -50,7 +50,7 @@ public class EditBuildingLocationTest extends TanrabadEspressoTestBase {
     @Before
     public void setUp() {
         Intent intent = new Intent();
-        intent.putExtra("place_uuid_arg", UUID.nameUUIDFromBytes("1abc".getBytes()).toString());
+        intent.putExtra("place_uuid_arg", "935b9aeb-6522-461e-994f-f9e9006c4a33".toString());
         mActivity = mActivityTestRule.launchActivity(intent);
     }
 
@@ -60,7 +60,7 @@ public class EditBuildingLocationTest extends TanrabadEspressoTestBase {
                 .perform(click());
         onView(withText(R.string.save_location))
                 .perform(click());
-
+        clickConfirmButton();
         onView(withId(R.id.edit_location))
                 .check(matches(isDisplayed()));
     }
@@ -71,7 +71,7 @@ public class EditBuildingLocationTest extends TanrabadEspressoTestBase {
                 .perform(click());
         onView(withText(R.string.save_location))
                 .perform(click());
-
+        clickConfirmButton();
         onView(withId(R.id.edit_location))
                 .perform(click());
         onView(withId(R.id.save_marker_menu))

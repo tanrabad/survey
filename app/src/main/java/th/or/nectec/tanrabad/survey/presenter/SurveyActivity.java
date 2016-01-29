@@ -25,6 +25,7 @@ import android.provider.Settings;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -82,8 +83,6 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     public static final String BUILDING_UUID_ARG = "building_uuid";
     public static final String USERNAME_ARG = "username_arg";
-    private static final long UPDATE_INTERVAL_MS = 500;
-    private static final long FASTEST_INTERVAL_MS = 100;
     ContainerIconMapping containerIconMapping;
     private HashMap<Integer, SurveyContainerView> indoorContainerViews;
     private HashMap<Integer, SurveyContainerView> outdoorContainerViews;
@@ -295,7 +294,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     @Override
     public void displaySaveSuccess() {
-        doPostData();
+        doUploadData();
         finish();
         openSurveyBuildingHistory();
     }
@@ -314,7 +313,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     @Override
     public void displayUpdateSuccess() {
-        doPutData();
+        doUploadData();
         finish();
         openSurveyBuildingHistory();
     }
@@ -324,17 +323,12 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     }
 
-    private void doPutData() {
-        SurveyUpdateJob surveyUpdateJob = new SurveyUpdateJob();
-        surveyUpdateJob.addJob(new PutDataJob<>(new DbSurveyRepository(this), new SurveyRestService()));
-        surveyUpdateJob.start();
-    }
-
-    private void doPostData() {
+    private void doUploadData() {
         SurveyUpdateJob surveyUpdateJob = new SurveyUpdateJob();
         surveyUpdateJob.addJob(new PostDataJob<>(new DbPlaceRepository(this), new PlaceRestService()));
         surveyUpdateJob.addJob(new PostDataJob<>(new DbBuildingRepository(this), new BuildingRestService()));
         surveyUpdateJob.addJob(new PostDataJob<>(new DbSurveyRepository(this), new SurveyRestService()));
+        surveyUpdateJob.addJob(new PutDataJob<>(new DbSurveyRepository(this), new SurveyRestService()));
         surveyUpdateJob.start();
     }
 
@@ -410,9 +404,10 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     public Location getLastLocation() {
         if (location == null)
             return null;
-        int minutesInMillis = 60000;
+        int minutes = 5;
+        int minutesInMillis = minutes * 60000;
         long differentTimeInMinutes = (DateTime.now().getMillis() - location.getTime()) / minutesInMillis;
-        return differentTimeInMinutes < 1 ? new Location(location.getLatitude(), location.getLongitude()) : null;
+        return differentTimeInMinutes <= minutes ? new Location(location.getLatitude(), location.getLongitude()) : null;
     }
 
     private void showAbortSurveyPrompt() {
@@ -483,10 +478,10 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     private void setupLocationUpdateService() {
         LocationRequest locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-
+        final long UPDATE_INTERVAL_MS = 500;
+        final long FASTEST_INTERVAL_MS = 100;
         locationRequest.setInterval(UPDATE_INTERVAL_MS);
         locationRequest.setFastestInterval(FASTEST_INTERVAL_MS);
-
         LocationServices.FusedLocationApi.requestLocationUpdates(
                 locationApiClient, locationRequest, this);
     }
@@ -511,6 +506,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         @Override
         protected void onJobError(Job errorJob, Exception exception) {
             super.onJobError(errorJob, exception);
+            Log.d(errorJob.toString(), exception.getMessage());
         }
 
         @Override

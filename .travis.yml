@@ -24,9 +24,7 @@ android:
   - extra-android-m2repository
   - sys-img-armeabi-v7a-android-16
 script:
-- ./gradlew clean
-- ./gradlew test --continue
-- ./gradlew build --stacktrace
+- ./gradlew tBP --stacktrace
 notifications:
   slack:
     rooms:

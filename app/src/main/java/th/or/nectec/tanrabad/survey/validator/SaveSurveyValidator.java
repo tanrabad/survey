@@ -18,7 +18,6 @@
 package th.or.nectec.tanrabad.survey.validator;
 
 import android.content.Context;
-
 import th.or.nectec.tanrabad.domain.survey.SurveyValidator;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.survey.R;
@@ -42,6 +41,10 @@ public class SaveSurveyValidator implements SurveyValidator {
 
         if (survey.getResidentCount() < 1) {
             throw new ValidatorException(R.string.please_enter_resident);
+        }
+
+        if (survey.getLocation() == null) {
+            throw new ValidatorException(R.string.cant_get_current_location);
         }
 
         return true;

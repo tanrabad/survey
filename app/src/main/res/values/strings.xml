@@ -65,6 +65,7 @@
     <string name="please_define_location">กรุณาระบุพิกัด</string>
     <string name="please_define_building_location">กรุณาระบุพิกัดของอาคาร</string>
     <string name="confirm_add_building_location">ยืนยันบันทึกพิกัดอาคารหรือไม่</string>
+    <string name="cant_get_current_location">ไม่สามารถจับตำแหน่งพิกัดปัจจุบันได้</string>
 
     <!--place type-->
     <string name="village_community">หมู่บ้าน/ชุมชน</string>

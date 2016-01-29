@@ -245,7 +245,7 @@ public class DbSurveyRepository implements SurveyRepository, ChangedRepository<S
                 DbPlaceRepository.TABLE_NAME + "." + PlaceColumn.UPDATE_BY,
                 DbPlaceRepository.TABLE_NAME + "." + PlaceColumn.CHANGED_STATUS};
         Cursor cursor = db.query(TABLE_NAME + " INNER JOIN building USING(building_id) INNER JOIN place USING(place_id)", columns,
-                SurveyColumn.SURVEYOR + "=?", new String[]{user.getUsername()}, null, null, null);
+                SurveyColumn.SURVEYOR + "=?", new String[]{user.getUsername()}, DbPlaceRepository.TABLE_NAME + "." + PlaceColumn.ID, null, null);
         return new CursorList<>(cursor, getPlaceSurveyMapper(cursor));
     }
 

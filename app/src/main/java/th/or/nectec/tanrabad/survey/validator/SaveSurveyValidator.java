@@ -43,10 +43,6 @@ public class SaveSurveyValidator implements SurveyValidator {
             throw new ValidatorException(R.string.please_enter_resident);
         }
 
-        if (survey.getLocation() == null) {
-            throw new ValidatorException(R.string.cant_get_current_location);
-        }
-
         return true;
 
     }

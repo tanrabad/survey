@@ -290,7 +290,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     @Override
     public void displaySaveSuccess() {
-        doUploadData();
+        doPostData();
         finish();
         openSurveyBuildingHistory();
     }
@@ -309,7 +309,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     @Override
     public void displayUpdateSuccess() {
-        doUploadData();
+        doPutData();
         finish();
         openSurveyBuildingHistory();
     }
@@ -319,12 +319,20 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     }
 
-    private void doUploadData() {
+    private void doPutData() {
         SurveyUpdateJob surveyUpdateJob = new SurveyUpdateJob();
         surveyUpdateJob.addJob(new PostDataJob<>(new DbPlaceRepository(this), new PlaceRestService()));
         surveyUpdateJob.addJob(new PostDataJob<>(new DbBuildingRepository(this), new BuildingRestService()));
         surveyUpdateJob.addJob(new PostDataJob<>(new DbSurveyRepository(this), new SurveyRestService()));
         surveyUpdateJob.addJob(new PutDataJob<>(new DbSurveyRepository(this), new SurveyRestService()));
+        surveyUpdateJob.start();
+    }
+
+    private void doPostData() {
+        SurveyUpdateJob surveyUpdateJob = new SurveyUpdateJob();
+        surveyUpdateJob.addJob(new PostDataJob<>(new DbPlaceRepository(this), new PlaceRestService()));
+        surveyUpdateJob.addJob(new PostDataJob<>(new DbBuildingRepository(this), new BuildingRestService()));
+        surveyUpdateJob.addJob(new PostDataJob<>(new DbSurveyRepository(this), new SurveyRestService()));
         surveyUpdateJob.start();
     }
 
@@ -512,7 +520,8 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
         @Override
         protected void onRunFinish() {
-            SnackToast.make(SurveyActivity.this, "SUCCESS", Toast.LENGTH_LONG).show();
+            if (errorJobs() == 0)
+                SnackToast.make(SurveyActivity.this, getString(R.string.upload_data_success), Toast.LENGTH_LONG).show();
         }
     }
 }

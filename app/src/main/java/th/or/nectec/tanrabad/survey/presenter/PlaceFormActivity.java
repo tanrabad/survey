@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -342,13 +343,19 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     public class PlacePostJobRunner extends AbsJobRunner {
 
         @Override
-        protected void onJobStart(Job startingJob) {
+        protected void onJobError(Job errorJob, Exception exception) {
+            super.onJobError(errorJob, exception);
+            Log.e(errorJob.toString(), exception.getMessage());
+        }
 
+        @Override
+        protected void onJobStart(Job startingJob) {
         }
 
         @Override
         protected void onRunFinish() {
-            SnackToast.make(PlaceFormActivity.this, "อัพโหลดข้อมูลสำเร็จ", Toast.LENGTH_LONG).show();
+            if (errorJobs() == 0)
+                SnackToast.make(PlaceFormActivity.this, getString(R.string.upload_data_success), Toast.LENGTH_LONG).show();
         }
     }
 

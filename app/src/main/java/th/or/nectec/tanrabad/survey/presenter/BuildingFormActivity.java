@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -290,7 +291,7 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
 
     private void doPutData() {
         BuildingPostJobRunner buildingPostJobRunner = new BuildingPostJobRunner();
-        buildingPostJobRunner.addJob(new PutDataJob<>(new DbPlaceRepository(this), new PlaceRestService()));
+        buildingPostJobRunner.addJob(new PostDataJob<>(new DbPlaceRepository(this), new PlaceRestService()));
         buildingPostJobRunner.addJob(new PutDataJob<>(new DbBuildingRepository(this), new BuildingRestService()));
         buildingPostJobRunner.start();
     }
@@ -302,12 +303,19 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
     public class BuildingPostJobRunner extends AbsJobRunner {
 
         @Override
+        protected void onJobError(Job errorJob, Exception exception) {
+            super.onJobError(errorJob, exception);
+            Log.e(errorJob.toString(), exception.getMessage());
+        }
+
+        @Override
         protected void onJobStart(Job startingJob) {
         }
 
         @Override
         protected void onRunFinish() {
-            SnackToast.make(BuildingFormActivity.this, "อัพโหลดข้อมูลสำเร็จ", Toast.LENGTH_LONG).show();
+            if (errorJobs() == 0)
+                SnackToast.make(BuildingFormActivity.this, getString(R.string.upload_data_success), Toast.LENGTH_LONG).show();
         }
     }
 }

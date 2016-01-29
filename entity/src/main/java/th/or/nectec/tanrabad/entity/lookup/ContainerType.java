@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015  NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,8 +17,6 @@
 
 package th.or.nectec.tanrabad.entity.lookup;
 
-import static java.lang.Integer.compare;
-
 public class ContainerType implements Comparable<ContainerType> {
 
     private final int id;
@@ -27,10 +25,6 @@ public class ContainerType implements Comparable<ContainerType> {
     public ContainerType(int id, String name) {
         this.id = id;
         this.name = name;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public String getName() {
@@ -46,15 +40,21 @@ public class ContainerType implements Comparable<ContainerType> {
     }
 
     @Override
-    public int compareTo(ContainerType o) {
-        return compare(this.id, o.getId());
-    }
-
-    @Override
     public String toString() {
         return "ContainerType{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(ContainerType o) {
+        if (id > o.getId()) return 1;
+        else if (id < o.getId()) return -1;
+        else return 0;
+    }
+
+    public int getId() {
+        return id;
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -57,7 +57,6 @@ public class KeyContainerTest {
                 .addIndoorDetail(UUID.randomUUID(), ContainerTypeStub.น้ำดื่ม, 4, 4)
                 .addIndoorDetail(UUID.randomUUID(), ContainerTypeStub.ที่รองกันมด, 4, 4)
                 .addIndoorDetail(UUID.randomUUID(), ContainerTypeStub.แจกัน, 5, 5)
-
                 .addOutdoorDetail(UUID.randomUUID(), ContainerTypeStub.อ่างบัว_ไม้น้ำ, 6, 6)
                 .addOutdoorDetail(UUID.randomUUID(), ContainerTypeStub.น้ำใช้, 3, 3)
                 .build();
@@ -66,7 +65,6 @@ public class KeyContainerTest {
                 .addIndoorDetail(UUID.randomUUID(), ContainerTypeStub.น้ำดื่ม, 10, 10)
                 .addIndoorDetail(UUID.randomUUID(), ContainerTypeStub.ที่รองกันมด, 4, 4)
                 .addIndoorDetail(UUID.randomUUID(), ContainerTypeStub.แจกัน, 10, 10)
-
                 .addOutdoorDetail(UUID.randomUUID(), ContainerTypeStub.ยางรถยนต์เก่า, 8, 8)
                 .addOutdoorDetail(UUID.randomUUID(), ContainerTypeStub.ภาชนะที่ไม่ใช้, 3, 3)
                 .build();
@@ -74,8 +72,7 @@ public class KeyContainerTest {
                 .setResident(5)
                 .addIndoorDetail(UUID.randomUUID(), ContainerTypeStub.น้ำดื่ม, 2, 2)
                 .addIndoorDetail(UUID.randomUUID(), ContainerTypeStub.น้ำใช้, 13, 13)
-
-                .addOutdoorDetail(UUID.randomUUID(), ContainerTypeStub.จานรองกระถาง, 8, 8)
+                .addOutdoorDetail(UUID.randomUUID(), ContainerTypeStub.จานรองกระถาง, 9, 9)
                 .addOutdoorDetail(UUID.randomUUID(), ContainerTypeStub.กากใบพืช, 2, 2)
                 .build();
 

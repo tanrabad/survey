@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,6 +19,7 @@ package th.or.nectec.tanrabad.entity;
 
 import org.junit.Test;
 import th.or.nectec.tanrabad.entity.lookup.ContainerType;
+import th.or.nectec.tanrabad.entity.utils.ContainerTypeStub;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -60,6 +61,13 @@ public class ContainerTypeTest {
         ContainerType otherContainer = new ContainerType(ID_น้ำใช้, น้ำใข้);
 
         assertEquals(containerType, otherContainer);
+    }
+
+    @Test
+    public void testCompare() throws Exception {
+        assertEquals(-1, ContainerTypeStub.น้ำใช้.compareTo(ContainerTypeStub.ยางรถยนต์เก่า));
+        assertEquals(0, ContainerTypeStub.น้ำดื่ม.compareTo(ContainerTypeStub.น้ำดื่ม));
+        assertEquals(1, ContainerTypeStub.อื่นๆ.compareTo(ContainerTypeStub.น้ำดื่ม));
 
     }
 }

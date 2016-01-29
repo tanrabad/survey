@@ -38,6 +38,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import org.joda.time.DateTime;
 import th.or.nectec.tanrabad.domain.survey.*;
 import th.or.nectec.tanrabad.entity.*;
 import th.or.nectec.tanrabad.entity.field.Location;
@@ -55,7 +56,11 @@ import th.or.nectec.tanrabad.survey.presenter.view.TorchButton;
 import th.or.nectec.tanrabad.survey.repository.BrokerBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerContainerTypeRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
+import th.or.nectec.tanrabad.survey.repository.persistence.DbBuildingRepository;
+import th.or.nectec.tanrabad.survey.repository.persistence.DbPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.persistence.DbSurveyRepository;
+import th.or.nectec.tanrabad.survey.service.BuildingRestService;
+import th.or.nectec.tanrabad.survey.service.PlaceRestService;
 import th.or.nectec.tanrabad.survey.service.json.SurveyRestService;
 import th.or.nectec.tanrabad.survey.utils.EditTextStepper;
 import th.or.nectec.tanrabad.survey.utils.MacAddressUtils;
@@ -77,10 +82,8 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     public static final String BUILDING_UUID_ARG = "building_uuid";
     public static final String USERNAME_ARG = "username_arg";
-
     private static final long UPDATE_INTERVAL_MS = 500;
     private static final long FASTEST_INTERVAL_MS = 100;
-
     ContainerIconMapping containerIconMapping;
     private HashMap<Integer, SurveyContainerView> indoorContainerViews;
     private HashMap<Integer, SurveyContainerView> outdoorContainerViews;
@@ -297,12 +300,6 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         openSurveyBuildingHistory();
     }
 
-    private void doPostData() {
-        SurveyUpdateJob surveyUpdateJob = new SurveyUpdateJob();
-        surveyUpdateJob.addJob(new PostDataJob<>(new DbSurveyRepository(this), new SurveyRestService()));
-        surveyUpdateJob.start();
-    }
-
     private void openSurveyBuildingHistory() {
         Intent intent = new Intent(SurveyActivity.this, SurveyBuildingHistoryActivity.class);
         intent.putExtra(SurveyBuildingHistoryActivity.PLACE_UUID_ARG, survey.getSurveyBuilding().getPlace().getId().toString());
@@ -317,7 +314,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     @Override
     public void displayUpdateSuccess() {
-        //doPutData();
+        doPutData();
         finish();
         openSurveyBuildingHistory();
     }
@@ -330,6 +327,14 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     private void doPutData() {
         SurveyUpdateJob surveyUpdateJob = new SurveyUpdateJob();
         surveyUpdateJob.addJob(new PutDataJob<>(new DbSurveyRepository(this), new SurveyRestService()));
+        surveyUpdateJob.start();
+    }
+
+    private void doPostData() {
+        SurveyUpdateJob surveyUpdateJob = new SurveyUpdateJob();
+        surveyUpdateJob.addJob(new PostDataJob<>(new DbPlaceRepository(this), new PlaceRestService()));
+        surveyUpdateJob.addJob(new PostDataJob<>(new DbBuildingRepository(this), new BuildingRestService()));
+        surveyUpdateJob.addJob(new PostDataJob<>(new DbSurveyRepository(this), new SurveyRestService()));
         surveyUpdateJob.start();
     }
 
@@ -403,7 +408,11 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     }
 
     public Location getLastLocation() {
-        return new Location(location.getLatitude(), location.getLongitude());
+        if (location == null)
+            return null;
+        int minutesInMillis = 60000;
+        long differentTimeInMinutes = (DateTime.now().getMillis() - location.getTime()) / minutesInMillis;
+        return differentTimeInMinutes < 1 ? new Location(location.getLatitude(), location.getLongitude()) : null;
     }
 
     private void showAbortSurveyPrompt() {

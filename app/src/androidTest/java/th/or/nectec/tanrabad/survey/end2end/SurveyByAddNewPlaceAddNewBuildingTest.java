@@ -87,6 +87,7 @@ public class SurveyByAddNewPlaceAddNewBuildingTest extends TanrabadEspressoTestB
                 .perform(click());
         onView(withId(R.id.resident_count))
                 .perform(replaceText("4"));
+        waitingFor(4000);
         onView(withId(R.id.save))
                 .perform(click());
 

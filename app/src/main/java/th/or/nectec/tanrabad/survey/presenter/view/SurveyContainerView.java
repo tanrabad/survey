@@ -27,7 +27,6 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -39,6 +38,8 @@ import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 import th.or.nectec.tanrabad.entity.utils.UUIDUtils;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.utils.MacAddressUtils;
+
+import java.util.HashMap;
 
 public class SurveyContainerView extends LinearLayout {
     SurveyDetail surveyDetail;
@@ -138,6 +139,7 @@ public class SurveyContainerView extends LinearLayout {
     public void setContainerType(ContainerType container) {
         containerType = container;
         containerTypeView.setText(container.getName());
+        setContainerIcon(ContainerIconMapping.getContainerIcon(container));
     }
 
     public void setContainerIcon(@DrawableRes int iconResource) {
@@ -152,7 +154,6 @@ public class SurveyContainerView extends LinearLayout {
             if (getTotalValue() == 0 && getFoundValue() == 0) {
                 return null;
             }
-            Log.v("sd", "null/" + containerType.getName());
             return new SurveyDetail(UUIDUtils.generateOrdered(MacAddressUtils.getMacAddress(getContext())),
                     containerType, getTotalValue(), getFoundValue());
         }
@@ -186,5 +187,30 @@ public class SurveyContainerView extends LinearLayout {
         else
             //noinspection deprecation
             return getResources().getColor(color);
+    }
+
+    private static class ContainerIconMapping {
+        private static HashMap<Integer, Integer> containerIconMapper = getIconMapping();
+
+        private static HashMap<Integer, Integer> getIconMapping() {
+            HashMap<Integer, Integer> iconMapper = new HashMap<>();
+            iconMapper.put(1, R.mipmap.ic_container_earthen_jar);
+            iconMapper.put(2, R.mipmap.ic_container_bottle);
+            iconMapper.put(3, R.mipmap.ic_container_vase);
+            iconMapper.put(4, R.mipmap.ic_container_ant_tray);
+            iconMapper.put(5, R.mipmap.ic_container_pot_saucer);
+            iconMapper.put(6, R.mipmap.ic_container_lotus);
+            iconMapper.put(7, R.mipmap.ic_container_tire);
+            iconMapper.put(8, R.mipmap.ic_container_leaf);
+            iconMapper.put(9, R.mipmap.ic_container_garbages);
+            iconMapper.put(10, R.mipmap.ic_container_bowl);
+            return iconMapper;
+        }
+
+        private static int getContainerIcon(ContainerType containerType) {
+            if (!containerIconMapper.containsKey(containerType.getId()))
+                return R.mipmap.ic_building_home_black;
+            return containerIconMapper.get(containerType.getId());
+        }
     }
 }

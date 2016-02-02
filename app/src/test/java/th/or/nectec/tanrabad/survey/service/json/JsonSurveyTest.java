@@ -17,7 +17,7 @@ import static org.junit.Assert.assertEquals;
 public class JsonSurveyTest {
 
     @Test
-    public void testParseToJsonString() throws Exception {
+    public void testParseFromJsonString() throws Exception {
         JsonSurvey jsonSurvey = LoganSquare.parse(ResourceFile.read("survey.json"), JsonSurvey.class);
 
         assertEquals("6af5225b-5642-10fb-a3a0-4e000a842583", jsonSurvey.surveyID.toString());

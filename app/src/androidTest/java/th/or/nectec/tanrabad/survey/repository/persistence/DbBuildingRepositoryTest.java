@@ -48,6 +48,7 @@ public class DbBuildingRepositoryTest {
     public SurveyDbTestRule dbTestRule = new SurveyDbTestRule();
     private UserRepository userRepository;
     private PlaceRepository placeRepository;
+    private final Context context = InstrumentationRegistry.getTargetContext();
 
     @Before
     public void setup() {
@@ -77,9 +78,8 @@ public class DbBuildingRepositoryTest {
         building.setUpdateBy(updateBy);
         DateTime updateTime = DateTime.now();
         building.setUpdateTimestamp(updateTime.toString());
-        Context context = InstrumentationRegistry.getTargetContext();
         DbBuildingRepository dbBuildngRepository = new DbBuildingRepository(context);
-        boolean success = dbBuildngRepository.save(building);
+        boolean saveResult = dbBuildngRepository.save(building);
 
         SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
         Cursor cursor = db.query(DbBuildingRepository.TABLE_NAME,
@@ -88,7 +88,7 @@ public class DbBuildingRepositoryTest {
                 new String[]{building.getId().toString()},
                 null, null, null);
 
-        assertEquals(true, success);
+        assertEquals(true, saveResult);
         assertEquals(true, cursor.moveToFirst());
         assertEquals(1, cursor.getCount());
         assertEquals(building.getId().toString(), cursor.getString(cursor.getColumnIndex(BuildingColumn.ID)));
@@ -110,7 +110,6 @@ public class DbBuildingRepositoryTest {
         building.setUpdateBy(updateBy);
         DateTime updateTime = DateTime.now();
         building.setUpdateTimestamp(updateTime.toString());
-        Context context = InstrumentationRegistry.getTargetContext();
         DbBuildingRepository dbBuildngRepository = new DbBuildingRepository(context);
         boolean success = dbBuildngRepository.update(building);
 
@@ -143,7 +142,6 @@ public class DbBuildingRepositoryTest {
         building.setUpdateBy(updateBy);
         DateTime updateTime = DateTime.now();
         building.setUpdateTimestamp(updateTime.toString());
-        Context context = InstrumentationRegistry.getTargetContext();
         DbBuildingRepository dbBuildngRepository = new DbBuildingRepository(context);
         dbBuildngRepository.save(building);
         building.setName("No. 1/2");
@@ -171,7 +169,6 @@ public class DbBuildingRepositoryTest {
     @Test
     public void testFindByPlaceUUID() throws Exception {
         Place place = stubPlace();
-        Context context = InstrumentationRegistry.getTargetContext();
         DbBuildingRepository dbBuildingRepository = new DbBuildingRepository(context, userRepository, placeRepository);
 
         List<Building> buildingList = dbBuildingRepository.findByPlaceUUID(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"));
@@ -188,7 +185,6 @@ public class DbBuildingRepositoryTest {
     @Test
     public void testFindByPlaceUUIDAndBuildingName() throws Exception {
         Place place = stubPlace();
-        Context context = InstrumentationRegistry.getTargetContext();
         DbBuildingRepository dbBuildingRepository = new DbBuildingRepository(context, userRepository, placeRepository);
 
         List<Building> buildingList = dbBuildingRepository.findByPlaceUUIDAndBuildingName(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"), "23/2");
@@ -205,7 +201,6 @@ public class DbBuildingRepositoryTest {
     @Test
     public void testFindByBuildingUUID() throws Exception {
         Place place = stubPlace();
-        Context context = InstrumentationRegistry.getTargetContext();
         DbBuildingRepository dbBuildingRepository = new DbBuildingRepository(context, userRepository, placeRepository);
 
         Building building = dbBuildingRepository.findByUUID(UUID.fromString("00001db8-7207-8a65-152f-ad208cb99b01"));

@@ -104,7 +104,7 @@ public class BuildingRestServiceTest extends WireMockTestBase {
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader(Header.LAST_MODIFIED, MON_30_NOV_2015_17_00_00_GMT)
-                        .withBody(ResourceFile.read("buildingList.json"))));
+                        .withBody(ResourceFile.read("buildingList1Item.json"))));
 
         List<Building> buildingList = restService.getUpdate();
 
@@ -122,23 +122,23 @@ public class BuildingRestServiceTest extends WireMockTestBase {
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader(Header.LAST_MODIFIED, MON_30_NOV_2015_17_00_00_GMT)
-                        .withBody(ResourceFile.read("buildingList10Item.json"))));
+                        .withBody(ResourceFile.read("buildingList3Item.json"))));
 
         List<Building> buildingList = restService.getUpdate();
 
-        assertEquals(10, buildingList.size());
+        assertEquals(3, buildingList.size());
         Building building1 = buildingList.get(0);
         assertEquals(uuid("b7a9d934-04fc-a22e-0539-6c17504f732e"), building1.getId());
         assertEquals("อาคาร 1", building1.getName());
         assertEquals(null, building1.getLocation());
-        Building building5 = buildingList.get(4);
-        assertEquals(uuid("b7a9d934-04fc-a22e-0539-6c17504f7313"), building5.getId());
-        assertEquals("อาคาร 5", building5.getName());
-        assertEquals(null, building5.getLocation());
-        Building building10 = buildingList.get(9);
-        assertEquals(uuid("b7a9d934-04fc-a22e-0539-6c17504f7318"), building10.getId());
-        assertEquals("อาคาร 10", building10.getName());
-        assertEquals(null, building10.getLocation());
+        Building building2 = buildingList.get(1);
+        assertEquals(uuid("b7a9d934-04fc-a22e-0539-6c17504f7310"), building2.getId());
+        assertEquals("อาคาร 2", building2.getName());
+        assertEquals(null, building2.getLocation());
+        Building building3 = buildingList.get(2);
+        assertEquals(uuid("b7a9d934-04fc-a22e-0539-6c17504f7311"), building3.getId());
+        assertEquals("อาคาร 3", building3.getName());
+        assertEquals(null, building3.getLocation());
         Mockito.verify(lastUpdate).save(MON_30_NOV_2015_17_00_00_GMT);
     }
 
@@ -149,7 +149,7 @@ public class BuildingRestServiceTest extends WireMockTestBase {
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader(Header.LAST_MODIFIED, MON_30_NOV_2015_17_00_00_GMT)
-                        .withBody(ResourceFile.read("buildingList10Item.json"))));
+                        .withBody(ResourceFile.read("buildingList3Item.json"))));
 
         restService.getUpdate();
 

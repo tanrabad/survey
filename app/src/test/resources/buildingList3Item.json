@@ -1,0 +1,32 @@
+[
+  {
+    "building_id": "b7a9d934-04fc-a22e-0539-6c17504f732e",
+    "place_id": "b5f7b062-12f5-3402-ac88-0343733503bd",
+    "place_type_id": 4,
+    "name": "อาคาร 1",
+    "location": null,
+    "updated_by": "dcp-user",
+    "push_timestamp": "2015-12-24T05:05:16.725Z",
+    "update_timestamp": "2015-12-24T05:05:19.626Z"
+  },
+  {
+    "building_id": "b7a9d934-04fc-a22e-0539-6c17504f7310",
+    "place_id": "b5f7b062-12f5-3402-ac88-0343733503bd",
+    "place_type_id": 4,
+    "name": "อาคาร 2",
+    "location": null,
+    "updated_by": "dcp-user",
+    "push_timestamp": "2015-12-24T05:05:16.725Z",
+    "update_timestamp": "2015-12-24T05:05:19.626Z"
+  },
+  {
+    "building_id": "b7a9d934-04fc-a22e-0539-6c17504f7311",
+    "place_id": "b5f7b062-12f5-3402-ac88-0343733503bd",
+    "place_type_id": 4,
+    "name": "อาคาร 3",
+    "location": null,
+    "updated_by": "dcp-user",
+    "push_timestamp": "2015-12-24T05:05:16.725Z",
+    "update_timestamp": "2015-12-24T05:05:19.626Z"
+  }
+]

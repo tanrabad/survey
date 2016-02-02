@@ -143,5 +143,7 @@
     </string>
     <string name="authentication">ยืนยันตัวตน</string>
     <string name="upload_data_success">อัพโหลดข้อมูลสำเร็จ</string>
+    <string name="connect_internet_when_use_for_first_time">กรุณาเชื่อมต่ออินเทอร์เน็ต เนื่องจากท่านใช้งานเป็นครั้งแรก
+    </string>
 
 </resources>

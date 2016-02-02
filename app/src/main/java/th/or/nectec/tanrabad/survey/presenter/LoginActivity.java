@@ -19,8 +19,13 @@ package th.or.nectec.tanrabad.survey.presenter;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.service.PlaceRestService;
+import th.or.nectec.tanrabad.survey.service.ServiceLastUpdatePreference;
+import th.or.nectec.tanrabad.survey.utils.alert.Alert;
+import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
 
 public class LoginActivity extends TanrabadActivity {
 
@@ -33,8 +38,13 @@ public class LoginActivity extends TanrabadActivity {
         findViewById(R.id.authentication_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openInitialActivity();
-                finish();
+                String placeTimeStamp = new ServiceLastUpdatePreference(LoginActivity.this, PlaceRestService.PATH).get();
+                if (!InternetConnection.isAvailable(LoginActivity.this) && TextUtils.isEmpty(placeTimeStamp)) {
+                    Alert.highLevel().show(R.string.connect_internet_when_use_for_first_time);
+                } else {
+                    openInitialActivity();
+                    finish();
+                }
             }
         });
     }

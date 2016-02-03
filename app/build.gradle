@@ -50,6 +50,7 @@ android {
         versionName rootProject.ext.genVersionName
         testApplicationId "th.or.nectec.tanrabad.survey.test"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        setProperty("archivesBaseName", "trb$versionCode-$buildTime")
     }
 
     compileOptions {

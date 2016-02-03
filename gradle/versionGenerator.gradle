@@ -17,9 +17,9 @@
 
 import java.text.SimpleDateFormat
 
-def versionMajor = 0
+def versionMajor = 1
 def versionMinor = 0
-def versionPatch = 1
+def versionPatch = 0
 
 def buildNumber = "$versionMajor.$versionMinor.$versionPatch"
 
@@ -30,4 +30,4 @@ def buildTime() {
 
 rootProject.ext.buildTime = buildTime()
 rootProject.ext.genVersionName = "$buildNumber";
-rootProject.ext.genVersionCode = versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100
+rootProject.ext.genVersionCode = versionMajor * 10000 + versionMinor * 1000 + versionPatch

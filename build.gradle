@@ -49,6 +49,7 @@ ext {
     calligraphyVersion = "2.1.0"
     thaiWidgetVersion = "0.4.3"
     gsonVersion = "2.4"
+    dexmakerVersion = "1.2"
 
     junitVersion = "4.12"
     jMockVersion = "2.8.1"

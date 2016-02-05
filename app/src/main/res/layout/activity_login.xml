@@ -18,7 +18,7 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
-                tools:ignore="Overdraw"
+                tools:ignore="Overdraw,RelativeOverlap"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -35,12 +35,22 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignRight="@id/bg_blue"
+            android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/screen_horizontal_margin"
             android:layout_marginTop="@dimen/screen_vertical_margin"
             android:gravity="right"
-            android:text="@string/version"
-            android:textColor="#ffffff"/>
+            android:text="@string/app_version"
+            android:textColor="@color/light_gray"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/screen_horizontal_margin"
+            android:layout_marginTop="52dp"
+            android:textColor="@color/light_gray"
+            android:textSize="@dimen/text_caption"
+            android:text="@string/app_build_time"/>
 
     <ImageView
             android:contentDescription="@null"
@@ -99,7 +109,6 @@
     </LinearLayout>
 
     <LinearLayout
-
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:orientation="vertical"

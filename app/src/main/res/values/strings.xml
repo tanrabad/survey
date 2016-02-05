@@ -136,7 +136,6 @@
     <string name="please_wait">กรุณารอสักครู่&#8230;</string>
     <string name="clear_search_history">ล้างประวัติการค้นหา</string>
     <string name="trial">ทดลองใช้งาน</string>
-    <string name="version">version 1.0</string>
     <string name="powered_by">Powered by</string>
     <string name="copyright">Copyright © 2016 NECTEC - National Electronics and Computers Technology Center. Code
         released under The Apache License, Version 2.0. Image and document released under Creative Common</string>
@@ -146,5 +145,6 @@
     <string name="connect_internet_when_use_for_first_time">กรุณาเชื่อมต่ออินเทอร์เน็ต เนื่องจากท่านใช้งานเป็นครั้งแรก
     </string>
     <string name="ok">ตกลง</string>
+
 
 </resources>

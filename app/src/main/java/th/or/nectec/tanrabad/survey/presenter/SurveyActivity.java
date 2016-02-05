@@ -30,6 +30,8 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -271,10 +273,21 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         outdoorContainerViews = new HashMap<>();
     }
 
+    int containerViewAnimOffset = 200;
+    int offsetStep = 50;
+
     private void buildIndoorContainerView(ContainerType containerType) {
         SurveyContainerView surveyContainerView = buildContainerView(containerType);
         indoorContainerViews.put(containerType.getId(), surveyContainerView);
         indoorContainerLayout.addView(surveyContainerView);
+        surveyContainerView.startAnimation(getContainerViewAnimation());
+    }
+
+    private Animation getContainerViewAnimation() {
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.scale_in);
+        animation.setStartOffset(containerViewAnimOffset);
+        containerViewAnimOffset += offsetStep;
+        return animation;
     }
 
     private SurveyContainerView buildContainerView(ContainerType containerType) {

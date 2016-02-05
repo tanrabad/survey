@@ -45,4 +45,5 @@
     <color name="header_survey_building_history">#999999</color>
 
     <color name="water_blue">#1B7FDD</color>
+    <color name="dark_blue">#0066cc</color>
 </resources>

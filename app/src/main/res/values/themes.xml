@@ -58,6 +58,12 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+    <style name="AppTheme.NoActionBar.Blue">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="colorPrimary">@color/water_blue</item>
+        <item name="colorPrimaryDark">@color/dark_blue</item>
+    </style>
 
     <style name="AppTheme.Alternate">
         <item name="actionBarStyle">@style/ActionBar.Alternate</item>

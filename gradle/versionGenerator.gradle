@@ -24,7 +24,7 @@ def versionPatch = 1
 def buildNumber = "$versionMajor.$versionMinor.$versionPatch"
 
 def buildTime() {
-    def df = new SimpleDateFormat("yyMMddhhmm")
+    def df = new SimpleDateFormat("yyMMddHHmm")
     return df.format(new Date())
 }
 

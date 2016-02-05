@@ -3,8 +3,7 @@
     <translate
             android:fromXDelta="0%"
             android:toXDelta="0%"
-            android:fromYDelta="-100%p"
-            android:toYDelta="0%p"
+            android:fromYDelta="0%p"
+            android:toYDelta="100%p"
             android:duration="@android:integer/config_longAnimTime"/>
-
 </set>

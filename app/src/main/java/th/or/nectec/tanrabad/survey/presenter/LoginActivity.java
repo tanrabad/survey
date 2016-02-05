@@ -28,12 +28,14 @@ import th.or.nectec.tanrabad.survey.service.ServiceLastUpdatePreference;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
 
+import static android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN;
 import static android.view.animation.AnimationUtils.loadAnimation;
 
 public class LoginActivity extends TanrabadActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getWindow().setFlags(FLAG_FULLSCREEN, FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -54,7 +56,7 @@ public class LoginActivity extends TanrabadActivity {
 
     private void startAnimation() {
         findViewById(R.id.bg_blue).startAnimation(loadAnimation(this, R.anim.login_bg_blue));
-        Animation dropIn = loadAnimation(this, R.anim.drop_in);
+        Animation dropIn = loadAnimation(this, R.anim.logo);
         dropIn.setStartOffset(1200);
         findViewById(R.id.logo_tabrabad).startAnimation(dropIn);
     }
@@ -62,6 +64,7 @@ public class LoginActivity extends TanrabadActivity {
     private void openInitialActivity() {
         Intent intent = new Intent(this, InitialActivity.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.drop_in, R.anim.drop_out);
     }
 
     private void openMainActivity() {

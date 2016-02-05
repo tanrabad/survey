@@ -228,7 +228,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         place.setSubType(placeSubType.getId());
         place.setSubdistrictCode(addressSelect.getAddress() == null ? null : addressSelect.getAddress().getCode());
         place.setUpdateTimestamp(DateTime.now().toString());
-        place.setUpdateBy("dpc-user");
+        place.setUpdateBy(AccountUtils.getUser().getUsername());
     }
 
     public void doUpdateData() {
@@ -281,7 +281,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
             doPostData();
         setResult(RESULT_OK);
         finish();
-        SurveyBuildingHistoryActivity.openBuildingSurveyHistoryActivity(PlaceFormActivity.this, place, "dpc-user");
+        SurveyBuildingHistoryActivity.openBuildingSurveyHistoryActivity(PlaceFormActivity.this, place, AccountUtils.getUser().getUsername());
     }
 
     private void doPostData() {

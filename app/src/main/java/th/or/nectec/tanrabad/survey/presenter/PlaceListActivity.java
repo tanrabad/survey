@@ -62,7 +62,7 @@ public class PlaceListActivity extends TanrabadActivity {
     }
 
     private void setupTabPager() {
-        placePagerAdapter = new PlacePagerAdapter(getSupportFragmentManager(), PlaceListActivity.this, "dpc-user");
+        placePagerAdapter = new PlacePagerAdapter(getSupportFragmentManager(), PlaceListActivity.this, AccountUtils.getUser().getUsername());
         placePager.setAdapter(placePagerAdapter);
         tabLayout.setupWithViewPager(placePager);
     }

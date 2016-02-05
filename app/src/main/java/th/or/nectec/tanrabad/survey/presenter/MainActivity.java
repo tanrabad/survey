@@ -21,7 +21,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.AnimRes;
 import android.support.annotation.IdRes;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -82,12 +81,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
                 new StubUserRepository(),
                 BrokerSurveyRepository.getInstance(),
                 this);
-        placeWithSurveyHistoryChooser.showSurveyPlaceList(getUsername());
-    }
-
-    @NonNull
-    private String getUsername() {
-        return "dpc-user";
+        placeWithSurveyHistoryChooser.showSurveyPlaceList(AccountUtils.getUser().getUsername());
     }
 
     private void startAnimation() {
@@ -118,7 +112,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
 
     private void openPlaceListActivity() {
         Intent intent = new Intent(MainActivity.this, PlaceListActivity.class);
-        intent.putExtra(PlaceListActivity.USER_NAME_ARG, getUsername());
+        intent.putExtra(PlaceListActivity.USER_NAME_ARG, AccountUtils.getUser().getUsername());
         startActivity(intent);
     }
 
@@ -148,7 +142,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
     private void openSurveyBuildingHistoryActivity(Place place) {
         Intent intent = new Intent(MainActivity.this, SurveyBuildingHistoryActivity.class);
         intent.putExtra(SurveyBuildingHistoryActivity.PLACE_UUID_ARG, place.getId().toString());
-        intent.putExtra(SurveyBuildingHistoryActivity.USER_NAME_ARG, getUsername());
+        intent.putExtra(SurveyBuildingHistoryActivity.USER_NAME_ARG, AccountUtils.getUser().getUsername());
         startActivity(intent);
     }
 }

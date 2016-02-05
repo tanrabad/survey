@@ -98,7 +98,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     public static void open(Activity activity, Building building) {
         Intent intent = new Intent(activity, SurveyActivity.class);
         intent.putExtra(SurveyActivity.BUILDING_UUID_ARG, building.getId().toString());
-        intent.putExtra(SurveyActivity.USERNAME_ARG, "dpc-user");
+        intent.putExtra(SurveyActivity.USERNAME_ARG, AccountUtils.getUser().getUsername());
         activity.startActivity(intent);
     }
 

@@ -16,33 +16,28 @@
   ~ limitations under the License.
   -->
 
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<selector xmlns:android="http://schemas.android.com/apk/res/android"
+          android:interpolator="@android:anim/accelerate_interpolator"
+          android:enterFadeDuration="100"
+          android:exitFadeDuration="250">
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
-            <corners android:radius="20dip"/>
-            <stroke android:width="1dip"
-                    android:color="@color/shock_pink"/>
-            <gradient android:angle="-90"
-                      android:startColor="@color/shock_pink"
-                      android:endColor="@color/shock_pink"/>
+            <corners android:radius="30dp"/>
+            <solid android:color="@color/dark_pink"/>
         </shape>
     </item>
     <item android:state_focused="true">
         <shape android:shape="rectangle">
-            <corners android:radius="20dip"/>
-            <stroke android:width="1dip"
-                    android:color="@color/shock_pink"/>
+            <corners android:radius="30dp"/>
+            <stroke android:width="2dip"
+                    android:color="@color/amber_500"/>
             <solid android:color="@color/shock_pink"/>
         </shape>
     </item>
     <item>
         <shape android:shape="rectangle">
-            <corners android:radius="20dip"/>
-            <stroke android:width="1dip"
-                    android:color="@color/shock_pink"/>
-            <gradient android:angle="-90"
-                      android:startColor="@color/shock_pink"
-                      android:endColor="@color/shock_pink"/>
+            <corners android:radius="30dp"/>
+            <solid android:color="@color/shock_pink"/>
         </shape>
     </item>
 </selector>

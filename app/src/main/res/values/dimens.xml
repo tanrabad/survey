@@ -43,6 +43,6 @@
     <dimen name="popup_corner_radius_outer">10dp</dimen>
     <dimen name="number_input_size">48dp</dimen>
     <dimen name="image_button_padding">8dp</dimen>
-    <dimen name="text_micro">12sp</dimen>
+    <dimen name="text_micro">10sp</dimen>
 
 </resources>

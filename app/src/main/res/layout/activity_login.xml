@@ -84,16 +84,17 @@
                   android:layout_below="@+id/logo_tabrabad">
 
         <Button
+                android:theme="@style/ButtonTanrabad"
                 android:id="@+id/authentication_button"
                 android:layout_width="450dp"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
-                android:textColor="#ffffff"
                 android:background="@drawable/rounded_button"
+                android:textColor="#ffffff"
                 android:textSize="@dimen/text_title"
-                android:contentDescription="@string/authentication"
-                android:text="@string/trial"/>
+                android:text="@string/trial"
+                android:contentDescription="@string/authentication" />
 
     </LinearLayout>
 
@@ -103,9 +104,9 @@
             android:layout_height="fill_parent"
             android:orientation="vertical"
             android:gravity="bottom"
-            android:layout_marginBottom="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginLeft="8dp">
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp">
 
         <TextView
                 tools:ignore="MissingPrefix"
@@ -128,7 +129,7 @@
                 fontPath="fonts/RobotoCondensed-Regular.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4sp"
+                android:layout_marginTop="4dp"
                 android:textSize="@dimen/text_micro"
                 android:text="@string/copyright"
                 android:textColor="@color/dark_gray"/>

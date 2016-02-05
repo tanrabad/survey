@@ -19,6 +19,7 @@ package th.or.nectec.tanrabad.survey;
 
 import org.hamcrest.Matcher;
 import org.junit.Rule;
+import th.or.nectec.tanrabad.survey.presenter.SurveyAccountTestRule;
 import th.or.nectec.tanrabad.survey.repository.persistence.SurveyDbTestRule;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -31,6 +32,9 @@ import static org.hamcrest.Matchers.containsString;
 public class TanrabadEspressoTestBase {
     @Rule
     public SurveyDbTestRule dbTestRule = new SurveyDbTestRule();
+
+    @Rule
+    public SurveyAccountTestRule accountTestRule = new SurveyAccountTestRule();
 
     protected void waitingFor(int time) {
         try {

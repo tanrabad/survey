@@ -20,16 +20,12 @@ package th.or.nectec.tanrabad.survey.end2end;
 import android.content.Intent;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
 import th.or.nectec.tanrabad.survey.presenter.BuildingFormActivity;
-
-import java.util.UUID;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -48,7 +44,7 @@ public class AddBuildingTest extends TanrabadEspressoTestBase {
     @Before
     public void setUp() {
         Intent intent = new Intent();
-        intent.putExtra("place_uuid_arg", "e5ce769e-f397-4409-bec2-818f7bd02464".toString());
+        intent.putExtra("place_uuid_arg", "e5ce769e-f397-4409-bec2-818f7bd02464");
         mActivity = mActivityTestRule.launchActivity(intent);
     }
 

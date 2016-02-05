@@ -121,6 +121,7 @@ public class InitialActivity extends TanrabadActivity {
 
     private void openMainActivityThenFinish() {
         Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
         finish();
     }

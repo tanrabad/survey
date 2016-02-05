@@ -23,7 +23,54 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white">
+    <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:gravity="bottom"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp">
 
+        <TextView
+                tools:ignore="MissingPrefix"
+                fontPath="fonts/RobotoCondensed-Regular.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/dark_gray"
+                android:textSize="@dimen/text_micro"
+                android:text="@string/powered_by"/>
+
+        <ImageView
+                android:layout_marginBottom="@dimen/space_between_content"
+                android:layout_width="125dp"
+                android:layout_height="39dp"
+                android:src="@drawable/logo_nectec"
+                android:contentDescription="@string/nectec"/>
+
+        <TextView
+                tools:ignore="MissingPrefix"
+                fontPath="fonts/RobotoCondensed-Regular.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textSize="@dimen/text_micro"
+                android:text="@string/copyright"
+                android:textColor="@color/dark_gray"/>
+    </LinearLayout>
+    <Button
+            android:id="@+id/authentication_button"
+            android:layout_width="420dp"
+            android:layout_height="60dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/rounded_button"
+            android:layout_marginTop="500dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_title"
+            android:text="@string/trial"
+            android:contentDescription="@string/authentication"/>
     <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,9 +83,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginRight="@dimen/screen_horizontal_margin"
+            android:layout_marginEnd="@dimen/screen_horizontal_margin"
             android:layout_marginTop="@dimen/screen_vertical_margin"
-            android:gravity="right"
             android:text="@string/app_version"
             android:textColor="@color/light_gray"/>
 
@@ -46,7 +94,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginRight="@dimen/screen_horizontal_margin"
+            android:layout_marginEnd="@dimen/screen_horizontal_margin"
             android:layout_marginTop="52dp"
             android:textColor="@color/light_gray"
             android:textSize="@dimen/text_caption"
@@ -85,64 +135,6 @@
                 android:textColor="#ffffff"/>
     </LinearLayout>
 
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="vertical"
-                  android:gravity="center"
-                  android:layout_marginTop="220dp"
-                  android:layout_centerHorizontal="true"
-                  android:layout_below="@+id/logo_tabrabad">
 
-        <Button
-                android:theme="@style/ButtonTanrabad"
-                android:id="@+id/authentication_button"
-                android:layout_width="450dp"
-                android:layout_height="60dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:background="@drawable/rounded_button"
-                android:textColor="#ffffff"
-                android:textSize="@dimen/text_title"
-                android:text="@string/trial"
-                android:contentDescription="@string/authentication" />
-
-    </LinearLayout>
-
-    <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical"
-            android:gravity="bottom"
-            android:layout_marginBottom="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginLeft="16dp">
-
-        <TextView
-                tools:ignore="MissingPrefix"
-                fontPath="fonts/RobotoCondensed-Regular.ttf"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/dark_gray"
-                android:textSize="@dimen/text_micro"
-                android:text="@string/powered_by"/>
-
-        <ImageView
-                android:layout_marginBottom="@dimen/space_between_content"
-                android:layout_width="125dp"
-                android:layout_height="39dp"
-                android:src="@drawable/logo_nectec"
-                android:contentDescription="@string/nectec"/>
-
-        <TextView
-                tools:ignore="MissingPrefix"
-                fontPath="fonts/RobotoCondensed-Regular.ttf"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textSize="@dimen/text_micro"
-                android:text="@string/copyright"
-                android:textColor="@color/dark_gray"/>
-
-    </LinearLayout>
 
 </RelativeLayout>

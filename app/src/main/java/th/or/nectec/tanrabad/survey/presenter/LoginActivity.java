@@ -21,11 +21,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.animation.Animation;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.service.PlaceRestService;
 import th.or.nectec.tanrabad.survey.service.ServiceLastUpdatePreference;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
+
+import static android.view.animation.AnimationUtils.loadAnimation;
 
 public class LoginActivity extends TanrabadActivity {
 
@@ -34,7 +37,6 @@ public class LoginActivity extends TanrabadActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        View logo = findViewById(R.id.logo_tabrabad);
         findViewById(R.id.authentication_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,6 +49,14 @@ public class LoginActivity extends TanrabadActivity {
                 }
             }
         });
+        startAnimation();
+    }
+
+    private void startAnimation() {
+        findViewById(R.id.bg_blue).startAnimation(loadAnimation(this, R.anim.login_bg_blue));
+        Animation dropIn = loadAnimation(this, R.anim.drop_in);
+        dropIn.setStartOffset(1200);
+        findViewById(R.id.logo_tabrabad).startAnimation(dropIn);
     }
 
     private void openInitialActivity() {

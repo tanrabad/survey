@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2015 NECTEC
+  ~ Copyright (c) 2016 NECTEC
   ~   National Electronics and Computer Technology Center, Thailand
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -36,8 +36,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignRight="@id/bg_blue"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginRight="@dimen/screen_horizontal_margin"
+            android:layout_marginTop="@dimen/screen_vertical_margin"
             android:gravity="right"
             android:text="@string/version"
             android:textColor="#ffffff"/>
@@ -92,28 +92,28 @@
                 android:textColor="#ffffff"
                 android:background="@drawable/rounded_button"
                 android:textSize="@dimen/text_title"
-                android:text="@string/authentication"/>
+                android:contentDescription="@string/authentication"
+                android:text="@string/trial"/>
 
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/trial"
-                android:textSize="@dimen/text_body"
-                android:textColor="#848484"/>
     </LinearLayout>
 
     <LinearLayout
+
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:orientation="vertical"
             android:gravity="bottom"
-            android:layout_marginLeft="@dimen/screen_horizontal_margin">
+            android:layout_marginBottom="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp">
 
         <TextView
+                tools:ignore="MissingPrefix"
+                fontPath="fonts/RobotoCondensed-Regular.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
+                android:textColor="@color/dark_gray"
+                android:textSize="@dimen/text_micro"
                 android:text="@string/powered_by"/>
 
         <ImageView
@@ -121,15 +121,17 @@
                 android:layout_width="125dp"
                 android:layout_height="39dp"
                 android:src="@drawable/logo_nectec"
-                android:contentDescription="@null"/>
+                android:contentDescription="@string/nectec"/>
 
         <TextView
+                tools:ignore="MissingPrefix"
+                fontPath="fonts/RobotoCondensed-Regular.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5sp"
-                android:textSize="15sp"
+                android:layout_marginTop="4sp"
+                android:textSize="@dimen/text_micro"
                 android:text="@string/copyright"
-                android:layout_marginBottom="@dimen/screen_vertical_margin"/>
+                android:textColor="@color/dark_gray"/>
 
     </LinearLayout>
 

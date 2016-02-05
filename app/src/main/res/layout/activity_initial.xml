@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright (c) 2015 NECTEC
+  ~ Copyright (c) 2016 NECTEC
   ~   National Electronics and Computer Technology Center, Thailand
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,6 +19,7 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@drawable/bg_water"
                 tools:context="th.or.nectec.tanrabad.survey.presenter.InitialActivity">
 
     <TextView
@@ -27,6 +28,7 @@
             android:layout_centerVertical="true"
             android:id="@+id/please_wait"
             android:text="@string/please_wait"
+            android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
@@ -35,6 +37,7 @@
             android:layout_below="@id/please_wait"
             android:id="@+id/loading"
             android:textIsSelectable="false"
+            android:textColor="@color/white"
             tools:text="กำลังรวบรวมข้อมูลสถานที่"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>

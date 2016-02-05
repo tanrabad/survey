@@ -81,42 +81,42 @@ public class InitialActivity extends TanrabadActivity {
     public void updateLoadingText(Job startingJob) {
         switch (startingJob.id()) {
             case InMemoryInitializeJob.ID:
-                loadingText.setText("หาลูกน้ำมาให้สำรวจ");
+                loadingText.setText("ทำสมาธิ");
                 break;
             case SetupScriptJob.ID:
-                loadingText.setText("ดึงประเภทย่อยสถานที่มา");
+                loadingText.setText("หยิบกล่องดินสอ");
                 break;
             case CreateDatabaseJob.ID:
-                loadingText.setText("กำลังสร้างฐานข้อมูลชั่วคราว");
+                loadingText.setText("เตรียมกระดาษสำหรับจดข้อมูล");
                 break;
             case WritableRepoUpdateJob.ID:
                 updateLoadingTextByWritableJobInstance(startingJob);
                 break;
             default:
-                loadingText.setText("ยังไงหละนี้");
+                loadingText.setText("มายังไงหละนี้");
                 break;
         }
     }
 
     private void updateLoadingTextByWritableJobInstance(Job startingJob) {
         if (startingJob.equals(provinceUpdateJob))
-            loadingText.setText("จังหวัด");
+            loadingText.setText("รอพบกับท่านผู้ว่า");
         else if (startingJob.equals(districtUpdateJob))
-            loadingText.setText("อำเภอ");
+            loadingText.setText("ไปหานายอำเภอ");
         else if (startingJob.equals(subDistrictUpdateJob))
-            loadingText.setText("ตำบล");
+            loadingText.setText("กินข้าวกับ อบต.");
         else if (startingJob.equals(placeTypeUpdateJob))
-            loadingText.setText("ประเภทสถานที่");
+            loadingText.setText("เข้าเทศบาล");
         else if (startingJob.equals(placeSubTypeUpdateJob))
-            loadingText.setText("ประเภทย่อยสถานที่");
-        else if (startingJob.equals(placeUpdateJob))
-            loadingText.setText("สถานที่");
-        else if (startingJob.equals(buildingUpdateJob))
-            loadingText.setText("อาคาร");
+            loadingText.setText("คุยกับคนพื้นที่");
         else if (startingJob.equals(containerTypeUpdateJob))
-            loadingText.setText("ดึงประเภทภาชนะมา");
+            loadingText.setText("ค้นกระเป๋าโดเรม่อน");
         else if (startingJob.equals(containerLocationUpdateJob))
-            loadingText.setText("ดึงที่ตั้งภาชนะมา");
+            loadingText.setText("หาตำแหน่ง Dragon Ball");
+        else if (startingJob.equals(placeUpdateJob))
+            loadingText.setText("เชื่อมต่อกับ J.A.R.V.I.S.");
+        else if (startingJob.equals(buildingUpdateJob))
+            loadingText.setText("เตรียมตัวกำจัดเหล่าร้าย");
     }
 
     private void openMainActivityThenFinish() {

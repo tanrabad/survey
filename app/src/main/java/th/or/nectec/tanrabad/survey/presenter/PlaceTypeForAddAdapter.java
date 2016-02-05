@@ -35,12 +35,12 @@ public class PlaceTypeForAddAdapter extends BaseAdapter {
 
     ArrayList<PlaceType> placeTypes = new ArrayList<>();
 
-    public PlaceTypeForAddAdapter(Context context) {
+    public PlaceTypeForAddAdapter(Context context, boolean canAddVillage) {
         this.context = context;
-
         ArrayList<PlaceType> placeTypes = new ArrayList<>();
         placeTypes.addAll(new DbPlaceTypeRepository(context).find());
-        placeTypes.remove(new PlaceType(1, "หมู่บ้าน/ชุมชน"));
+        if (!canAddVillage)
+            placeTypes.remove(new PlaceType(1, "หมู่บ้าน/ชุมชน"));
         this.placeTypes.addAll(placeTypes);
     }
 

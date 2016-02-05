@@ -143,7 +143,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     }
 
     private void setupPlaceTypeSelector() {
-        final PlaceTypeForAddAdapter placeAdapter = new PlaceTypeForAddAdapter(this);
+        final PlaceTypeForAddAdapter placeAdapter = new PlaceTypeForAddAdapter(this, false);
         placeTypeSelector.setAdapter(placeAdapter);
         placeTypeSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

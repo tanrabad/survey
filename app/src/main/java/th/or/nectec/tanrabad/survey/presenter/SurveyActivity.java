@@ -64,6 +64,7 @@ import th.or.nectec.tanrabad.survey.service.BuildingRestService;
 import th.or.nectec.tanrabad.survey.service.PlaceRestService;
 import th.or.nectec.tanrabad.survey.service.json.SurveyRestService;
 import th.or.nectec.tanrabad.survey.utils.EditTextStepper;
+import th.or.nectec.tanrabad.survey.utils.LocationPermissionPrompt;
 import th.or.nectec.tanrabad.survey.utils.MacAddressUtils;
 import th.or.nectec.tanrabad.survey.utils.SnackToast;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
@@ -486,8 +487,13 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         final long FASTEST_INTERVAL_MS = 100;
         locationRequest.setInterval(UPDATE_INTERVAL_MS);
         locationRequest.setFastestInterval(FASTEST_INTERVAL_MS);
-        LocationServices.FusedLocationApi.requestLocationUpdates(
-                locationApiClient, locationRequest, this);
+
+        try {
+            LocationServices.FusedLocationApi.requestLocationUpdates(
+                    locationApiClient, locationRequest, this);
+        } catch (SecurityException securityException) {
+            LocationPermissionPrompt.show(this);
+        }
     }
 
     @Override

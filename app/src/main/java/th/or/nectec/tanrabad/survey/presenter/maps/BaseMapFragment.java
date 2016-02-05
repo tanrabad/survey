@@ -24,7 +24,6 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -35,8 +34,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
-
 import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.utils.LocationPermissionPrompt;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
@@ -63,19 +62,8 @@ class BaseMapFragment extends com.google.android.gms.maps.SupportMapFragment imp
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setupMap();
-        setupLocationAPI();
-    }
-
-
-    private void setupMap() {
-        googleMap = getMap();
-        googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         getMapAsync(this);
-        UiSettings googleMapUiSettings = googleMap.getUiSettings();
-        googleMapUiSettings.setScrollGesturesEnabled(!isLocked);
-        googleMapUiSettings.setMyLocationButtonEnabled(isMyLocationButtonEnabled);
-        googleMapUiSettings.setZoomControlsEnabled(isZoomable);
+        setupLocationAPI();
     }
 
     private void setupLocationAPI() {
@@ -121,15 +109,47 @@ class BaseMapFragment extends com.google.android.gms.maps.SupportMapFragment imp
     }
 
     public void setMyLocationEnabled(boolean isLocationEnabled) {
-        googleMap.setMyLocationEnabled(isLocationEnabled);
-        if (isLocationEnabled)
-            setupLocationUpdateService();
+        try {
+            googleMap.setMyLocationEnabled(isLocationEnabled);
+            if (isLocationEnabled)
+                setupLocationUpdateService();
+        } catch (SecurityException securityException) {
+            LocationPermissionPrompt.show(getActivity());
+        }
+    }
+
+    private void setupLocationUpdateService() {
+        LocationRequest locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+        locationRequest.setInterval(UPDATE_INTERVAL_MS);
+        locationRequest.setFastestInterval(FASTEST_INTERVAL_MS);
+
+        try {
+            LocationServices.FusedLocationApi.requestLocationUpdates(
+                    locationApiClient, locationRequest, this);
+        } catch (SecurityException securityException) {
+            LocationPermissionPrompt.show(getActivity());
+        }
     }
 
     private void moveToLastLocation() {
         myLocation = getLastLocation();
         if (myLocation != null)
             moveToLocation(myLocation);
+    }
+
+    public Location getLastLocation() {
+        try {
+            return LocationServices.FusedLocationApi.getLastLocation(locationApiClient);
+        } catch (SecurityException securityException) {
+            return null;
+        }
+    }
+
+    public void moveToLocation(Location location) {
+        LatLng cur = new LatLng(location.getLatitude(), location.getLongitude());
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(cur, 15));
     }
 
     private boolean isGpsEnabled() {
@@ -153,26 +173,6 @@ class BaseMapFragment extends com.google.android.gms.maps.SupportMapFragment imp
         }
     }
 
-    private void setupLocationUpdateService() {
-        LocationRequest locationRequest = LocationRequest.create();
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-
-        locationRequest.setInterval(UPDATE_INTERVAL_MS);
-        locationRequest.setFastestInterval(FASTEST_INTERVAL_MS);
-
-        LocationServices.FusedLocationApi.requestLocationUpdates(
-                locationApiClient, locationRequest, this);
-    }
-
-    public Location getLastLocation() {
-        return LocationServices.FusedLocationApi.getLastLocation(locationApiClient);
-    }
-
-    public void moveToLocation(Location location) {
-        LatLng cur = new LatLng(location.getLatitude(), location.getLongitude());
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(cur, 15));
-    }
-
     @Override
     public void onConnectionSuspended(int cause) {
         Alert.lowLevel().show("Google Play Service ระงับการติดต่อชั่วคราว");
@@ -189,7 +189,17 @@ class BaseMapFragment extends com.google.android.gms.maps.SupportMapFragment imp
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        this.googleMap = googleMap;
+        setupMap();
         ThailandLocation.move(getActivity(), googleMap);
+    }
+
+    private void setupMap() {
+        googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        UiSettings googleMapUiSettings = googleMap.getUiSettings();
+        googleMapUiSettings.setScrollGesturesEnabled(!isLocked);
+        googleMapUiSettings.setMyLocationButtonEnabled(isMyLocationButtonEnabled);
+        googleMapUiSettings.setZoomControlsEnabled(isZoomable);
     }
 
     @Override

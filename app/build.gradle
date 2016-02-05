@@ -118,7 +118,7 @@ dependencies {
     compile("com.google.maps.android:android-maps-utils:$androidMapUtilsVersion") {
         exclude(group: 'com.google.android.gms')
     }
-    compile "com.bartoszlipinski.recyclerviewheader:library:1.2.0"
+    compile "com.bartoszlipinski.recyclerviewheader:library:$recyclerViewHeaderVersion"
     compile "com.bluelinelabs:logansquare:$loganSquareVersion"
     compile("com.crashlytics.sdk.android:answers:$answersVersion@aar") { transitive = true; }
     compile("com.crashlytics.sdk.android:crashlytics:$crashlyticsVersion@aar") { transitive = true; }

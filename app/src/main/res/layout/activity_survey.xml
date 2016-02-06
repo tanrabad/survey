@@ -187,15 +187,17 @@
 
 
             <android.support.percent.PercentRelativeLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:minHeight="1520dp"
                     android:background="@color/white"
                     android:onClick="onRootViewClick">
 
                 <LinearLayout
                         android:id="@+id/indoor_container"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="1200dp"
                         android:background="@color/lighter_gray"
                         android:orientation="vertical"
                         app:layout_widthPercent="50%"/>
@@ -204,11 +206,11 @@
                 <LinearLayout
                         android:id="@+id/outdoor_container"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="1200dp"
                         android:layout_toRightOf="@id/indoor_container"
                         android:layout_toEndOf="@id/indoor_container"
                         android:layout_weight="1"
-                        android:background="@color/white"
                         android:orientation="vertical"
                         app:layout_widthPercent="50%"/>
 

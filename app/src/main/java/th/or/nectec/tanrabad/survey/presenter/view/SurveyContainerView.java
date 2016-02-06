@@ -29,10 +29,7 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.*;
 import th.or.nectec.tanrabad.entity.SurveyDetail;
 import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 import th.or.nectec.tanrabad.entity.utils.UUIDUtils;
@@ -41,7 +38,7 @@ import th.or.nectec.tanrabad.survey.utils.MacAddressUtils;
 
 import java.util.HashMap;
 
-public class SurveyContainerView extends LinearLayout {
+public class SurveyContainerView extends RelativeLayout {
     SurveyDetail surveyDetail;
     private ContainerType containerType;
     private TextView containerTypeView;
@@ -57,14 +54,17 @@ public class SurveyContainerView extends LinearLayout {
     };
 
     public SurveyContainerView(Context context) {
-        super(context);
+        this(context, null);
+    }
+
+    public SurveyContainerView(Context context, AttributeSet attrs) {
+        super(context, attrs);
         initInflate();
         initInstances();
     }
 
     private void initInflate() {
-        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.view_survey_container, this);
+        inflate(getContext(), R.layout.view_survey_container,  this);
     }
 
     private void initInstances() {
@@ -128,12 +128,6 @@ public class SurveyContainerView extends LinearLayout {
         if (getTotalValue() < getFoundValue()) {
             foundContainerView.setText(String.valueOf(getTotalValue()));
         }
-    }
-
-    public SurveyContainerView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        initInflate();
-        initInstances();
     }
 
     public void setContainerType(ContainerType container) {

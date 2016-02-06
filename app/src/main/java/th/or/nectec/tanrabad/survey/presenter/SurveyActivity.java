@@ -86,6 +86,9 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     public static final String BUILDING_UUID_ARG = "building_uuid";
     public static final String USERNAME_ARG = "username_arg";
+    private boolean firstLoad = true;
+    private int containerViewAnimOffset = 240;
+    private static final int offsetStep = 80;
     private HashMap<Integer, SurveyContainerView> indoorContainerViews;
     private HashMap<Integer, SurveyContainerView> outdoorContainerViews;
     private LinearLayout outdoorContainerLayout;
@@ -96,6 +99,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     private boolean isEditSurvey;
     private GoogleApiClient locationApiClient;
     private android.location.Location location;
+    public static final String HOUSE_NO_PREFIX = "บ้านเลขที่ ";
 
     public static void open(Activity activity, Building building) {
         Intent intent = new Intent(activity, SurveyActivity.class);
@@ -110,14 +114,29 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         setContentView(R.layout.activity_survey);
         setupToolbar();
         setupHomeButton();
-        findViewsFromLayout();
-        showContainerList();
-        initSurvey();
+    }
 
-        if (isGpsEnabled()) {
-            setupLocationAPI();
-        } else {
-            showGpsSettingsDialog();
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (locationApiClient != null && !locationApiClient.isConnected()) {
+            locationApiClient.connect();
+        }
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus && firstLoad) {
+            findViewsFromLayout();
+            showContainerList();
+            initSurvey();
+            if (isGpsEnabled()) {
+                setupLocationAPI();
+            } else {
+                showGpsSettingsDialog();
+            }
+            firstLoad = false;
         }
     }
 
@@ -127,6 +146,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
+        locationApiClient.connect();
     }
 
     private boolean isGpsEnabled() {
@@ -230,11 +250,10 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     }
 
     private String getBuildingNameWithPrefix(Building building) {
-        String houseNoPrefix = "บ้านเลขที่ ";
         String buildName = building.getName();
         Place place = survey.getSurveyBuilding().getPlace();
         if (place.getType() == Place.TYPE_VILLAGE_COMMUNITY) {
-            buildName = houseNoPrefix + buildName;
+            buildName = HOUSE_NO_PREFIX + buildName;
         }
         return buildName;
     }
@@ -273,8 +292,6 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         outdoorContainerViews = new HashMap<>();
     }
 
-    int containerViewAnimOffset = 200;
-    int offsetStep = 50;
 
     private void buildIndoorContainerView(ContainerType containerType) {
         SurveyContainerView surveyContainerView = buildContainerView(containerType);
@@ -300,6 +317,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         SurveyContainerView surveyContainerView = buildContainerView(containerType);
         outdoorContainerViews.put(containerType.getId(), surveyContainerView);
         outdoorContainerLayout.addView(surveyContainerView);
+        surveyContainerView.startAnimation(getContainerViewAnimation());
     }
 
     @Override
@@ -476,13 +494,6 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         super.onPause();
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (locationApiClient != null) {
-            locationApiClient.connect();
-        }
-    }
 
     public void onRootViewClick(View view) {
         SoftKeyboard.hideOn(this);

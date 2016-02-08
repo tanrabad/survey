@@ -18,6 +18,7 @@
 package th.or.nectec.tanrabad.survey.presenter;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.AnimRes;
 import android.support.annotation.IdRes;
@@ -36,20 +37,22 @@ import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.repository.BrokerSurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
+import th.or.nectec.tanrabad.survey.utils.android.NetworkChangeReceiver;
 
 import java.util.List;
 
 public class MainActivity extends TanrabadActivity implements View.OnClickListener, PlaceWithSurveyHistoryListPresenter, AdapterView.OnItemClickListener {
 
     private PlaceAdapter placeAdapter;
-    private RecyclerView placeHistoryList;
     private CardView cardView;
+    private NetworkChangeReceiver networkChangeReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupViewOnClick();
+        setupSyncButton();
         setupList();
         showRecentSurveyCard();
 
@@ -58,14 +61,37 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
         }
     }
 
+    private void setupSyncButton() {
+        networkChangeReceiver = new NetworkChangeReceiver();
+        networkChangeReceiver.setOnNetworkChangedListener(new NetworkChangeReceiver.OnNetworkChangedListener() {
+            @Override
+            public void onNetworkChanged(boolean isConnected) {
+                if (isConnected) {
+                    findViewById(R.id.sync_data).setVisibility(View.VISIBLE);
+                } else {
+                    findViewById(R.id.sync_data).setVisibility(View.GONE);
+                }
+            }
+        });
+        registerReceiver(networkChangeReceiver, new IntentFilter(
+                android.net.ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(networkChangeReceiver);
+    }
+
     private void setupViewOnClick() {
         findViewById(R.id.start_survey).setOnClickListener(this);
         findViewById(R.id.root).setOnClickListener(this);
         findViewById(R.id.magnifier).setOnClickListener(this);
+        findViewById(R.id.sync_data).setOnClickListener(this);
     }
 
     private void setupList() {
-        placeHistoryList = (RecyclerView) findViewById(R.id.place_history_list);
+        RecyclerView placeHistoryList = (RecyclerView) findViewById(R.id.place_history_list);
         placeAdapter = new PlaceAdapter(this);
         placeHistoryList.setAdapter(placeAdapter);
         placeHistoryList.setLayoutManager(new LinearLayoutManager(this));

@@ -145,6 +145,7 @@
     <string name="connect_internet_when_use_for_first_time">กรุณาเชื่อมต่ออินเทอร์เน็ต เนื่องจากท่านใช้งานเป็นครั้งแรก
     </string>
     <string name="ok">ตกลง</string>
+    <string name="sync_data">sync ข้อมูล</string>
 
 
 </resources>

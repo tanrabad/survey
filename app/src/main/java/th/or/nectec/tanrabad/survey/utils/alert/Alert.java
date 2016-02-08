@@ -16,7 +16,7 @@ public class Alert {
     }
 
     public static AlertMessage mediumLevel() {
-        return new ToastAlertMessage(context);
+        return new SnackToastAlertMessage(context);
     }
 
     public static AlertMessage highLevel() {

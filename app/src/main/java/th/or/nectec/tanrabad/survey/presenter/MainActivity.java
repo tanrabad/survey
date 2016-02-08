@@ -34,6 +34,7 @@ import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyHistoryChooser;
 import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyHistoryListPresenter;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.job.SyncJobRunner;
 import th.or.nectec.tanrabad.survey.repository.BrokerSurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
@@ -132,6 +133,9 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
             case R.id.magnifier:
             case R.id.root:
                 startAnimation(R.id.larvae, R.anim.dook_digg);
+                break;
+            case R.id.sync_data:
+                new SyncJobRunner().start();
                 break;
         }
     }

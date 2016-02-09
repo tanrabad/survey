@@ -39,6 +39,7 @@ public class StubUserRepository implements UserRepository {
         dpcUser.setLastname("คิดส์");
         dpcUser.setEmail("sara.k@gmail.com");
         dpcUser.setOrganizationId(1);
+        dpcUser.setHealthRegionCode("dpc-4");
         return dpcUser;
     }
 
@@ -48,6 +49,7 @@ public class StubUserRepository implements UserRepository {
         dpcUser.setLastname("ทดสอบ");
         dpcUser.setEmail("dpc13@gmail.com");
         dpcUser.setOrganizationId(1);
+        dpcUser.setHealthRegionCode("dpc-13");
         return dpcUser;
     }
 

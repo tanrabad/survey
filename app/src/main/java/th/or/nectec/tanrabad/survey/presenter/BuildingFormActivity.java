@@ -26,7 +26,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 import com.google.android.gms.maps.SupportMapFragment;
 import org.joda.time.DateTime;
 import th.or.nectec.tanrabad.domain.building.BuildingController;
@@ -51,7 +54,6 @@ import th.or.nectec.tanrabad.survey.repository.persistence.DbBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.persistence.DbPlaceRepository;
 import th.or.nectec.tanrabad.survey.service.BuildingRestService;
 import th.or.nectec.tanrabad.survey.service.PlaceRestService;
-import th.or.nectec.tanrabad.survey.utils.SnackToast;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
 import th.or.nectec.tanrabad.survey.utils.android.TwiceBackPressed;
@@ -314,8 +316,11 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
 
         @Override
         protected void onRunFinish() {
-            if (errorJobs() == 0)
-                SnackToast.make(BuildingFormActivity.this, getString(R.string.upload_data_success), Toast.LENGTH_LONG).show();
+            if (errorJobs() == 0) {
+                Alert.mediumLevel().show(R.string.upload_data_success);
+            } else {
+                Alert.mediumLevel().show(R.string.upload_data_failure);
+            }
         }
     }
 }

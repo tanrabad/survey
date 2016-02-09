@@ -68,7 +68,6 @@ import th.or.nectec.tanrabad.survey.service.json.SurveyRestService;
 import th.or.nectec.tanrabad.survey.utils.EditTextStepper;
 import th.or.nectec.tanrabad.survey.utils.LocationPermissionPrompt;
 import th.or.nectec.tanrabad.survey.utils.MacAddressUtils;
-import th.or.nectec.tanrabad.survey.utils.SnackToast;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
@@ -86,9 +85,10 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     public static final String BUILDING_UUID_ARG = "building_uuid";
     public static final String USERNAME_ARG = "username_arg";
+    public static final String HOUSE_NO_PREFIX = "บ้านเลขที่ ";
+    private static final int offsetStep = 80;
     private boolean firstLoad = true;
     private int containerViewAnimOffset = 240;
-    private static final int offsetStep = 80;
     private HashMap<Integer, SurveyContainerView> indoorContainerViews;
     private HashMap<Integer, SurveyContainerView> outdoorContainerViews;
     private LinearLayout outdoorContainerLayout;
@@ -99,7 +99,6 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     private boolean isEditSurvey;
     private GoogleApiClient locationApiClient;
     private android.location.Location location;
-    public static final String HOUSE_NO_PREFIX = "บ้านเลขที่ ";
 
     public static void open(Activity activity, Building building) {
         Intent intent = new Intent(activity, SurveyActivity.class);
@@ -116,11 +115,16 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         setupHomeButton();
     }
 
+    private void setupToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+    }
+
     @Override
-    public void onStart() {
-        super.onStart();
-        if (locationApiClient != null && !locationApiClient.isConnected()) {
-            locationApiClient.connect();
+    public void onStop() {
+        super.onStop();
+        if (locationApiClient != null) {
+            locationApiClient.disconnect();
         }
     }
 
@@ -167,11 +171,6 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         promptMessage.show(getString(R.string.gps_dialog_tilte), getString(R.string.gps_dialog_message));
     }
 
-    private void setupToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-    }
-
     private void findViewsFromLayout() {
         indoorContainerLayout = (LinearLayout) findViewById(R.id.indoor_container);
         outdoorContainerLayout = (LinearLayout) findViewById(R.id.outdoor_container);
@@ -201,11 +200,9 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        if (locationApiClient != null) {
-            locationApiClient.disconnect();
-        }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.action_activity_survey, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -369,12 +366,6 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.action_activity_survey, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save:
@@ -494,6 +485,13 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         super.onPause();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (locationApiClient != null && !locationApiClient.isConnected()) {
+            locationApiClient.connect();
+        }
+    }
 
     public void onRootViewClick(View view) {
         SoftKeyboard.hideOn(this);
@@ -550,8 +548,11 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
         @Override
         protected void onRunFinish() {
-            if (errorJobs() == 0)
-                SnackToast.make(SurveyActivity.this, getString(R.string.upload_data_success), Toast.LENGTH_LONG).show();
+            if (errorJobs() == 0) {
+                Alert.mediumLevel().show(R.string.upload_data_success);
+            } else {
+                Alert.mediumLevel().show(R.string.upload_data_failure);
+            }
         }
     }
 }

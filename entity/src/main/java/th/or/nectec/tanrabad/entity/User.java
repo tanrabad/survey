@@ -23,6 +23,7 @@ public class User {
     private String firstname;
     private String lastname;
     private String email;
+    private String healthRegionCode;
     private int organizationId;
 
     public User(String username) {
@@ -63,6 +64,14 @@ public class User {
 
     public void setOrganizationId(int organizationId) {
         this.organizationId = organizationId;
+    }
+
+    public String getHealthRegionCode() {
+        return healthRegionCode;
+    }
+
+    public void setHealthRegionCode(String healthRegionCode) {
+        this.healthRegionCode = healthRegionCode;
     }
 
     public String getUsername() {

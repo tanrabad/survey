@@ -27,6 +27,7 @@ import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.survey.WireMockTestBase;
+import th.or.nectec.tanrabad.survey.presenter.AccountUtils;
 import th.or.nectec.tanrabad.survey.service.http.Header;
 import th.or.nectec.tanrabad.survey.service.json.JsonPlace;
 import th.or.nectec.tanrabad.survey.utils.ResourceFile;
@@ -51,15 +52,12 @@ public class PlaceRestServiceTest extends WireMockTestBase {
 
     @Before
     public void setUp() throws Exception {
+        super.setUp();
         Mockito.when(userRepository.findByUsername("dpc-user")).thenReturn(stubUser());
         restService = new PlaceRestService(
                 localHost(),
                 lastUpdate,
                 userRepository);
-    }
-
-    private User stubUser() {
-        return new User("dpc-user");
     }
 
     @Test

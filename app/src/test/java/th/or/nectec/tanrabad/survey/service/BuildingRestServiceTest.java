@@ -51,6 +51,7 @@ public class BuildingRestServiceTest extends WireMockTestBase {
 
     @Before
     public void setUp() throws Exception {
+        super.setUp();
         Mockito.when(lastUpdate.get()).thenReturn(PlaceRestServiceTest.MON_30_NOV_2015_17_00_00_GMT);
         Mockito.when(userRepository.findByUsername("dcp-user")).thenReturn(stubUser());
         Mockito.when(placeRepository.findByUUID(uuid("b5f7b062-12f5-3402-ac88-0343733503bd"))).thenReturn(stubPlace());
@@ -63,10 +64,6 @@ public class BuildingRestServiceTest extends WireMockTestBase {
 
     private UUID uuid(String uuid) {
         return UUID.fromString(uuid);
-    }
-
-    private User stubUser() {
-        return new User("dcp-user");
     }
 
     @NonNull

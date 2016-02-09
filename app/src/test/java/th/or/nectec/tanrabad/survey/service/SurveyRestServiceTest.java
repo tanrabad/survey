@@ -13,7 +13,6 @@ import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 import th.or.nectec.tanrabad.survey.WireMockTestBase;
 import th.or.nectec.tanrabad.survey.service.json.JsonSurvey;
-import th.or.nectec.tanrabad.survey.service.json.SurveyRestService;
 
 import java.util.ArrayList;
 import java.util.List;

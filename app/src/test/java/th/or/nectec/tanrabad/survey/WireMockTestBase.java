@@ -18,7 +18,10 @@
 package th.or.nectec.tanrabad.survey;
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
+import org.junit.Before;
 import org.junit.Rule;
+import th.or.nectec.tanrabad.entity.User;
+import th.or.nectec.tanrabad.survey.presenter.AccountUtils;
 
 public class WireMockTestBase {
 
@@ -31,6 +34,17 @@ public class WireMockTestBase {
 
     @Rule
     public WireMockRule wireMockRule = new WireMockRule(HTTP_PORT);
+
+    @Before
+    public void setUp() throws Exception {
+        AccountUtils.setUser(stubUser());
+    }
+
+    protected User stubUser() {
+        User user = new User("dpc-user");
+        user.setHealthRegionCode("dpc-4");
+        return user;
+    }
 
     public String localHost() {
         return HTTP_LOCALHOST_8089;

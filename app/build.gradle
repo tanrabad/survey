@@ -32,6 +32,7 @@ apply plugin: "io.fabric"
 apply plugin: "com.neenbedankt.android-apt"
 apply from: "../gradle/versionGenerator.gradle"
 apply from: "jacoco.gradle"
+apply from: "checkstyle.gradle"
 
 repositories {
     maven { url "https://maven.fabric.io/public" }

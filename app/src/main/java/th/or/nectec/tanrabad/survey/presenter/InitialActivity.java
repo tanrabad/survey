@@ -23,7 +23,6 @@ import android.widget.TextView;
 import net.frakbot.jumpingbeans.JumpingBeans;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.entity.lookup.*;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
@@ -135,7 +134,6 @@ public class InitialActivity extends TanrabadActivity {
         @Override
         protected void onRunFinish() {
             pleaseWaitBeans.stopJumping();
-            AccountUtils.setUser(User.fromUsername("dpc-13-beta"));
             openMainActivityThenFinish();
         }
     }

@@ -23,6 +23,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Animation;
 import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.service.PlaceRestService;
 import th.or.nectec.tanrabad.survey.service.ServiceLastUpdatePreference;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
@@ -46,6 +47,7 @@ public class LoginActivity extends TanrabadActivity {
                 if (!InternetConnection.isAvailable(LoginActivity.this) && TextUtils.isEmpty(placeTimeStamp)) {
                     Alert.highLevel().show(R.string.connect_internet_when_use_for_first_time);
                 } else {
+                    AccountUtils.setUser(new StubUserRepository().findByUsername("dpc-13-beta"));
                     openInitialActivity();
                     finish();
                 }

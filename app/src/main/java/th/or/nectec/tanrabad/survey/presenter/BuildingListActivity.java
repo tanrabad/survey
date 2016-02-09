@@ -24,6 +24,7 @@ import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -170,7 +171,8 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         this.place = place;
         TextView placeName = (TextView) findViewById(R.id.place_name);
         placeName.setText(place.getName());
-        if (place.getType() == Place.TYPE_VILLAGE_COMMUNITY) {
+        String healthRegionCode = AccountUtils.getUser().getHealthRegionCode();
+        if (place.getType() == Place.TYPE_VILLAGE_COMMUNITY && !TextUtils.equals(healthRegionCode, "dpc-13")) {
             editPlaceButton.setVisibility(View.GONE);
         } else {
             editPlaceButton.setVisibility(View.VISIBLE);

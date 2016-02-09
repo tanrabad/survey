@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,17 +18,18 @@
 package th.or.nectec.tanrabad.survey.presenter.view;
 
 import android.content.Context;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageButton;
-
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.utils.CameraFlashLight;
 import th.or.nectec.tanrabad.survey.utils.Torch;
 
 public class TorchButton extends ImageButton {
 
-    private Torch torch;
+    private final Torch torch;
+    private final Handler uiThread = new Handler();
 
     public TorchButton(Context context) {
         this(context, null);
@@ -58,10 +59,26 @@ public class TorchButton extends ImageButton {
         setBackgroundResource(R.drawable.bg_button_flat_oval);
         setContentDescription(getContext().getString(R.string.torch));
 
-        if (!isInEditMode() && !torch.isAvailable()) {
-            setVisibility(View.GONE);
-            setEnabled(false);
+        if (!isInEditMode()) {
+            hideIfNotAvailable();
         }
+    }
+
+    private void hideIfNotAvailable() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (!torch.isAvailable()) {
+                    uiThread.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            setVisibility(View.GONE);
+                            setEnabled(false);
+                        }
+                    });
+                }
+            }
+        }).run();
     }
 
     @Override

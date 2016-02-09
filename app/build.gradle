@@ -76,6 +76,7 @@ android {
             testCoverageEnabled = true
             ext.enableCrashlytics = false
             manifestPlaceholders = [google_map_key: System.env.'TANRABAD_GOOGLE_DEBUG_KEY']
+            buildConfigField "String", "API_URL", "\"http://tanrabad.igridproject.info/v1\""
             resValue "string", "app_version", "version $genVersionName"
             resValue "string", "app_build_time", "build $buildTime"
         }
@@ -85,6 +86,7 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             manifestPlaceholders = [google_map_key: System.getenv('TANRABAD_GOOGLE_RELEASE_KEY')]
+            buildConfigField "String", "API_URL", "\"http://tanrabad.igridproject.info/v1\""
             resValue "string", "app_version", "version $genVersionName"
             resValue "string", "app_build_time", "build $buildTime"
         }

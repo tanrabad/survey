@@ -1,11 +1,9 @@
-package th.or.nectec.tanrabad.survey.service.json;
+package th.or.nectec.tanrabad.survey.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
-import th.or.nectec.tanrabad.survey.service.AbsUploadRestService;
-import th.or.nectec.tanrabad.survey.service.ServiceLastUpdate;
-import th.or.nectec.tanrabad.survey.service.ServiceLastUpdatePreference;
+import th.or.nectec.tanrabad.survey.service.json.JsonSurvey;
 
 import java.io.IOException;
 import java.util.List;

@@ -11,7 +11,7 @@ import th.or.nectec.tanrabad.survey.repository.persistence.DbPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.persistence.DbSurveyRepository;
 import th.or.nectec.tanrabad.survey.service.BuildingRestService;
 import th.or.nectec.tanrabad.survey.service.PlaceRestService;
-import th.or.nectec.tanrabad.survey.service.json.SurveyRestService;
+import th.or.nectec.tanrabad.survey.service.SurveyRestService;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 
 public class SyncJobRunner extends AbsJobRunner {

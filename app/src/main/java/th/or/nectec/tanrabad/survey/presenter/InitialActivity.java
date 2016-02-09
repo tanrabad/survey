@@ -33,6 +33,7 @@ import th.or.nectec.tanrabad.survey.repository.BrokerContainerTypeRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.persistence.*;
 import th.or.nectec.tanrabad.survey.service.*;
+import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
 
 public class InitialActivity extends TanrabadActivity {
 
@@ -125,6 +126,13 @@ public class InitialActivity extends TanrabadActivity {
             loadingText.setText("เตรียมตัวกำจัดเหล่าร้าย");
     }
     public class InitialJobRunner extends AbsJobRunner {
+
+        @Override
+        protected void onJobError(Job errorJob, Exception exception) {
+            super.onJobError(errorJob, exception);
+            if (InternetConnection.isAvailable(InitialActivity.this)) TanrabadApp.log(exception);
+        }
+
         @Override
         protected void onJobStart(Job startingJob) {
             updateLoadingText(startingJob);

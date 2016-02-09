@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,14 +17,41 @@
 
 package th.or.nectec.tanrabad.survey.utils.tool;
 
+import th.or.nectec.tanrabad.entity.Building;
+import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.Survey;
+import th.or.nectec.tanrabad.entity.User;
 
 public interface ActionLogger {
 
-    void cancelSurvey(Survey survey);
+    void login(User user);
 
-    void updateSurvey(Survey lastSurvey, Survey survey);
+    void turnOnTorch();
 
-    void finishSurvey(Survey survey);
+    void turnOffTorch();
+
+    void addBuilding(Building building);
+
+    void updateBuilding(Building building);
+
+    void addPlace(Place place);
+
+    void updatePlace(Place place);
+
+    void searchPlace(String query);
+
+    void filterBuilding(String query);
+
+    void firstTimeWithoutInternet();
+
+    void startSurvey(Place place);
+
+    void finishSurvey(Place place, boolean success);
+
+    void startSurvey(Survey survey);
+
+    void updateSurvey(Survey survey);
+
+    void finishSurvey(Survey survey, boolean success);
 
 }

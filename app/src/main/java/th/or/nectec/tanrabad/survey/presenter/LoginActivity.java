@@ -22,6 +22,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Animation;
 import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.service.PlaceRestService;
 import th.or.nectec.tanrabad.survey.service.ServiceLastUpdatePreference;
@@ -42,9 +43,9 @@ public class LoginActivity extends TanrabadActivity {
         findViewById(R.id.authentication_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String placeTimeStamp = new ServiceLastUpdatePreference(LoginActivity.this, PlaceRestService.PATH).get();
-                if (!InternetConnection.isAvailable(LoginActivity.this) && TextUtils.isEmpty(placeTimeStamp)) {
+                if (isFirstTime() && !InternetConnection.isAvailable(LoginActivity.this)) {
                     Alert.highLevel().show(R.string.connect_internet_when_use_for_first_time);
+                    TanrabadApp.action().firstTimeWithoutInternet();
                 } else {
                     AccountUtils.setUser(new StubUserRepository().findByUsername("dpc-13-beta"));
                     InitialActivity.open(LoginActivity.this);
@@ -53,6 +54,11 @@ public class LoginActivity extends TanrabadActivity {
             }
         });
         startAnimation();
+    }
+
+    private boolean isFirstTime() {
+        String placeTimeStamp = new ServiceLastUpdatePreference(LoginActivity.this, PlaceRestService.PATH).get();
+        return TextUtils.isEmpty(placeTimeStamp);
     }
 
     private void startAnimation() {

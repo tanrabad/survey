@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015  NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,6 +25,7 @@ public class User {
     private String email;
     private String healthRegionCode;
     private int organizationId;
+    private UserType type;
 
     public User(String username) {
         this.username = username;
@@ -32,6 +33,10 @@ public class User {
 
     public static User fromUsername(String username) {
         return new User(username);
+    }
+
+    public UserType getUserType() {
+        return UserType.RESEARCH;
     }
 
     public String getFirstname() {
@@ -90,5 +95,21 @@ public class User {
         if (firstname != null ? !firstname.equals(user.firstname) : user.firstname != null)
             return false;
         return !(lastname != null ? !lastname.equals(user.lastname) : user.lastname != null);
+    }
+
+    public enum UserType {
+        OPERATION("_operation"),
+        RESEARCH("_research");
+
+        private final String typeName;
+
+        UserType(String typeName) {
+            this.typeName = typeName;
+        }
+
+        @Override
+        public String toString() {
+            return typeName;
+        }
     }
 }

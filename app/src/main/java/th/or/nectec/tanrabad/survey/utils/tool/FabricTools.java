@@ -19,11 +19,14 @@ package th.or.nectec.tanrabad.survey.utils.tool;
 
 import android.content.Context;
 import com.crashlytics.android.Crashlytics;
-import com.crashlytics.android.answers.Answers;
-import com.crashlytics.android.answers.CustomEvent;
+import com.crashlytics.android.answers.*;
 import com.crashlytics.android.core.CrashlyticsCore;
 import io.fabric.sdk.android.Fabric;
+import th.or.nectec.tanrabad.entity.Building;
+import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.Survey;
+import th.or.nectec.tanrabad.entity.User;
+import th.or.nectec.tanrabad.entity.utils.ContainerIndex;
 import th.or.nectec.tanrabad.survey.BuildConfig;
 
 public class FabricTools implements ExceptionLogger, ActionLogger {
@@ -40,7 +43,6 @@ public class FabricTools implements ExceptionLogger, ActionLogger {
                 .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
                 .build();
         Fabric.with(context, crashlytics, new Answers());
-
         answers = Answers.getInstance();
     }
 
@@ -57,36 +59,133 @@ public class FabricTools implements ExceptionLogger, ActionLogger {
     }
 
     @Override
-    public void cancelSurvey(Survey survey) {
-        answers.logCustom(new CustomEvent("cancel finishSurvey")
-                .putCustomAttribute("building-name", survey.getSurveyBuilding().getName())
-                .putCustomAttribute("user-id", survey.getUser().getUsername())
-                .putCustomAttribute("user-org-id", survey.getUser().getOrganizationId()));
+    public void login(User user) {
+        Crashlytics.setUserName(user.getUsername());
+        answers.logLogin(new LoginEvent()
+                .putCustomAttribute("Health-Region Code", user.getHealthRegionCode())
+                .putCustomAttribute("Organization ID", user.getOrganizationId())
+                .putCustomAttribute("User Type", user.getUserType().toString())
+                .putSuccess(true));
     }
 
     @Override
-    public void updateSurvey(Survey lastSurvey, Survey survey) {
-        answers.logCustom(new CustomEvent("update finishSurvey")
-                .putCustomAttribute("building-id", survey.getSurveyBuilding().getId().toString())
-                .putCustomAttribute("building-name", survey.getSurveyBuilding().getName())
-                .putCustomAttribute("user-id", survey.getUser().getUsername())
-                .putCustomAttribute("user-org-id", survey.getUser().getOrganizationId())
-                .putCustomAttribute("diff-resident-count", lastSurvey.getResidentCount() - survey.getResidentCount())
-                .putCustomAttribute("diff-indoor-container-type-count", lastSurvey.getIndoorDetail().size() - survey.getIndoorDetail().size())
-                .putCustomAttribute("diff-outdoor-container-type-count", lastSurvey.getIndoorDetail().size() - survey.getOutdoorDetail().size())
-        );
+    public void turnOnTorch() {
+        answers.logLevelStart(new LevelStartEvent()
+                .putLevelName(Level.TORCH));
     }
 
     @Override
-    public void finishSurvey(Survey survey) {
-        answers.logCustom(new CustomEvent("finish finishSurvey")
-                .putCustomAttribute("building-id", survey.getSurveyBuilding().getId().toString())
-                .putCustomAttribute("building-name", survey.getSurveyBuilding().getName())
-                .putCustomAttribute("resident-count", survey.getResidentCount())
-                .putCustomAttribute("indoor-container-type-count", survey.getIndoorDetail().size())
-                .putCustomAttribute("outdoor-container-type-count", survey.getOutdoorDetail().size())
-                .putCustomAttribute("user-id", survey.getUser().getUsername())
-                .putCustomAttribute("user-org-id", survey.getUser().getOrganizationId()));
+    public void turnOffTorch() {
+        answers.logLevelEnd(new LevelEndEvent()
+                .putLevelName(Level.TORCH));
     }
+
+    @Override
+    public void addBuilding(Building building) {
+        answers.logCustom(new CustomEvent(Event.ADD_BUILDING));
+    }
+
+    @Override
+    public void updateBuilding(Building building) {
+        answers.logCustom(new CustomEvent(Event.EDIT_BUILDING));
+    }
+
+    @Override
+    public void addPlace(Place place) {
+        answers.logCustom(new CustomEvent(Event.ADD_PLACE));
+    }
+
+    @Override
+    public void updatePlace(Place place) {
+        answers.logCustom(new CustomEvent(Event.EDIT_PLACE));
+    }
+
+    @Override
+    public void searchPlace(String query) {
+        answers.logSearch(new SearchEvent()
+                .putCustomAttribute("Entity", Place.class.getName())
+                .putQuery(query));
+    }
+
+    @Override
+    public void filterBuilding(String query) {
+        answers.logSearch(new SearchEvent()
+                .putCustomAttribute("Entity", Building.class.getName())
+                .putQuery(query));
+    }
+
+    @Override
+    public void firstTimeWithoutInternet() {
+        answers.logCustom(new CustomEvent("Start Without Internet"));
+    }
+
+    @Override
+    public void startSurvey(Place place) {
+        answers.logLevelStart(new LevelStartEvent()
+                .putCustomAttribute("Place Name", place.getName())
+                .putCustomAttribute("Place Type", place.getType())
+                .putLevelName(Level.SURVEY_PLACE));
+
+    }
+
+    @Override
+    public void finishSurvey(Place place, boolean success) {
+        answers.logLevelEnd(new LevelEndEvent()
+                .putSuccess(success)
+                .putLevelName(Level.SURVEY_PLACE));
+
+    }
+
+    @Override
+    public void startSurvey(Survey survey) {
+        answers.logLevelStart(new LevelStartEvent()
+                .putCustomAttribute("Mode", "NEW")
+                .putCustomAttribute("Place Type", survey.getSurveyBuilding().getPlace().getSubType())
+                .putCustomAttribute("User Type", survey.getUser().getUserType().toString())
+                .putLevelName(Level.SURVEY_BUILDING));
+    }
+
+    @Override
+    public void updateSurvey(Survey survey) {
+        answers.logLevelStart(new LevelStartEvent()
+                .putCustomAttribute("Mode", "UPDATE")
+                .putCustomAttribute("Last Score", getScore(survey, true))
+                .putCustomAttribute("User Type", survey.getUser().getUserType().toString())
+                .putLevelName(Level.SURVEY_BUILDING));
+    }
+
+    @Override
+    public void finishSurvey(Survey survey, boolean success) {
+        answers.logLevelEnd(new LevelEndEvent()
+                .putScore(getScore(survey, success))
+                .putSuccess(success)
+                .putLevelName(Level.SURVEY_BUILDING));
+    }
+
+    private int getScore(Survey survey, boolean success) {
+        int score = 0;
+        if (success) {
+            ContainerIndex ci = new ContainerIndex(survey);
+            ci.calculate();
+            score = ci.getTotalContainer();
+        }
+        return score;
+    }
+
+    private static class Event {
+        public static final String ADD_BUILDING = "Add Building";
+        public static final String EDIT_BUILDING = "Edit building";
+        public static final String ADD_PLACE = "Add Place";
+        public static final String EDIT_PLACE = "Edit Place";
+    }
+
+
+    private static class Level {
+        public static final String SURVEY_BUILDING = "Survey Building";
+        public static final String SURVEY_PLACE = "Survey Place";
+        public static final String TORCH = "Torch";
+    }
+
+
 }
 

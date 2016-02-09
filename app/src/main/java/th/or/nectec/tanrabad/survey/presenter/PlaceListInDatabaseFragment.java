@@ -23,7 +23,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.*;
 import android.widget.AdapterView;
 import android.widget.TextView;
@@ -187,8 +186,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
         final Place placeData = placeAdapter.getItem(position);
 
-        String healthRegionCode = AccountUtils.getUser().getHealthRegionCode();
-        if (!TextUtils.equals(healthRegionCode, "dpc-13") && placeData.getType() == Place.TYPE_VILLAGE_COMMUNITY) {
+        if (AccountUtils.canAddOrEditVillage() && placeData.getType() == Place.TYPE_VILLAGE_COMMUNITY) {
             Alert.lowLevel().show(R.string.cant_edit_community_village);
             return false;
         } else {

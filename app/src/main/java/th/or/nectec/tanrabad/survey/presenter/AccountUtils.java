@@ -6,6 +6,10 @@ import th.or.nectec.tanrabad.entity.User;
 public class AccountUtils {
     private static User user;
 
+    public static boolean canAddOrEditVillage(){
+        return getUser().getHealthRegionCode().equals("dpc-13");
+    }
+
     public static User getUser() {
         if (AccountUtils.user == null)
             throw new NullPointerException("user is null, please set user before call this");

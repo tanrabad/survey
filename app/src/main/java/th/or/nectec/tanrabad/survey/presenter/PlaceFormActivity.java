@@ -142,8 +142,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     }
 
     private void setupPlaceTypeSelector() {
-        String healthRegionCode = AccountUtils.getUser().getHealthRegionCode();
-        final PlaceTypeForAddAdapter placeAdapter = new PlaceTypeForAddAdapter(this, TextUtils.equals(healthRegionCode, "dpc-13"));
+        final PlaceTypeForAddAdapter placeAdapter = new PlaceTypeForAddAdapter(this, AccountUtils.canAddOrEditVillage());
         placeTypeSelector.setAdapter(placeAdapter);
         placeTypeSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

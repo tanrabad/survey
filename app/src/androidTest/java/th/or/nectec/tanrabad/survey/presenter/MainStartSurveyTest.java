@@ -34,7 +34,6 @@ import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtraWithKey;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
@@ -66,8 +65,7 @@ public class MainStartSurveyTest extends TanrabadEspressoTestBase {
                 .perform(ViewActions.click());
 
         Intents.intended(Matchers.allOf(
-                hasComponent(new ComponentName(mActivity, PlaceListActivity.class)),
-                hasExtraWithKey(TanrabadActivity.USER_NAME_ARG)
+                hasComponent(new ComponentName(mActivity, PlaceListActivity.class))
         ));
     }
 }

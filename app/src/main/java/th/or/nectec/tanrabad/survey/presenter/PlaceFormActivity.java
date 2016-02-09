@@ -148,7 +148,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         placeTypeSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                setupWorshipPlaceSubtypeSpinner(placeAdapter.getItem(i));
+                setupPlaceSubtypeSpinner(placeAdapter.getItem(i));
             }
 
             @Override
@@ -160,7 +160,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         placeTypeSelector.setSelection(placeAdapter.getPlaceTypePosition(getPlaceTypeID()));
     }
 
-    private void setupWorshipPlaceSubtypeSpinner(PlaceType selectedPlaceType) {
+    private void setupPlaceSubtypeSpinner(PlaceType selectedPlaceType) {
         placeSubtypeLabel.setText(String.format(getString(R.string.place_subtype_label), selectedPlaceType.getName()));
         PlaceSubTypeAdapter placeSubTypeAdapter = new PlaceSubTypeAdapter(PlaceFormActivity.this, selectedPlaceType.getId());
         placeSubtypeSelector.setAdapter(placeSubTypeAdapter);

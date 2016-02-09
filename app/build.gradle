@@ -73,7 +73,7 @@ android {
     buildTypes {
         debug {
             debuggable true
-            testCoverageEnabled = true
+            testCoverageEnabled true
             ext.enableCrashlytics = false
             manifestPlaceholders = [google_map_key: System.env.'TANRABAD_GOOGLE_DEBUG_KEY']
             buildConfigField "String", "API_URL", "\"http://tanrabad.igridproject.info/v1\""
@@ -110,6 +110,13 @@ android {
 
     testOptions {
         unitTests.returnDefaultValues = true
+    }
+
+    dexOptions {
+        if (isCi) {
+            incremental false
+            preDexLibraries false
+        }
     }
 }
 

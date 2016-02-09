@@ -17,6 +17,7 @@
 
 package th.or.nectec.tanrabad.survey.presenter;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -47,6 +48,12 @@ public class InitialActivity extends TanrabadActivity {
 
     private TextView loadingText;
     private JumpingBeans pleaseWaitBeans;
+
+    public static void open(Activity activity) {
+        Intent intent = new Intent(activity, InitialActivity.class);
+        activity.startActivity(intent);
+        activity.overridePendingTransition(R.anim.drop_in, R.anim.drop_out);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,14 +124,6 @@ public class InitialActivity extends TanrabadActivity {
         else if (startingJob.equals(buildingUpdateJob))
             loadingText.setText("เตรียมตัวกำจัดเหล่าร้าย");
     }
-
-    private void openMainActivityThenFinish() {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        startActivity(intent);
-        finish();
-    }
-
     public class InitialJobRunner extends AbsJobRunner {
         @Override
         protected void onJobStart(Job startingJob) {
@@ -134,7 +133,8 @@ public class InitialActivity extends TanrabadActivity {
         @Override
         protected void onRunFinish() {
             pleaseWaitBeans.stopJumping();
-            openMainActivityThenFinish();
+            MainActivity.open(InitialActivity.this);
+            finish();
         }
     }
 

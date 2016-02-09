@@ -17,6 +17,7 @@
 
 package th.or.nectec.tanrabad.survey.presenter;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.view.ActionMode;
@@ -62,6 +63,12 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     private EmptyLayoutView emptyLayoutView;
     private SurveyBuildingChooser surveyBuildingChooser = new SurveyBuildingChooser(new StubUserRepository(), BrokerPlaceRepository.getInstance(), BrokerBuildingRepository.getInstance(), BrokerSurveyRepository.getInstance(), this);
     private SearchView buildingSearchView;
+
+    public static void open(Activity activity, String placeUUID) {
+        Intent intent = new Intent(activity, BuildingListActivity.class);
+        intent.putExtra(BuildingListActivity.PLACE_UUID_ARG, placeUUID);
+        activity.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -251,16 +258,12 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         promptMessage.setOnConfirm(getString(R.string.yes), new PromptMessage.OnConfirmListener() {
             @Override
             public void onConfirm() {
-                openPlaceListActivity();
+                PlaceListActivity.open(BuildingListActivity.this);
+                finish();
             }
         });
         promptMessage.setOnCancel(getString(R.string.no), null);
         promptMessage.show(getString(R.string.abort_survey), place.getName());
-    }
-
-    private void openPlaceListActivity() {
-        PlaceListActivity.open(BuildingListActivity.this);
-        finish();
     }
 
     @Override

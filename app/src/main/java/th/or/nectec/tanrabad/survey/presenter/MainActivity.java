@@ -17,6 +17,7 @@
 
 package th.or.nectec.tanrabad.survey.presenter;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -47,6 +48,12 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
     private PlaceAdapter placeAdapter;
     private CardView cardView;
     private NetworkChangeReceiver networkChangeReceiver;
+
+    public static void open(Activity activity) {
+        Intent intent = new Intent(activity, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        activity.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,7 +134,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.start_survey:
-                openPlaceListActivity();
+                PlaceListActivity.open(this);
                 break;
             case R.id.magnifier:
             case R.id.root:
@@ -137,12 +144,6 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
                 new SyncJobRunner().start();
                 break;
         }
-    }
-
-    private void openPlaceListActivity() {
-        Intent intent = new Intent(MainActivity.this, PlaceListActivity.class);
-        intent.putExtra(PlaceListActivity.USER_NAME_ARG, AccountUtils.getUser().getUsername());
-        startActivity(intent);
     }
 
     @Override
@@ -165,13 +166,6 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
         Place place = placeAdapter.getItem(position);
-        openSurveyBuildingHistoryActivity(place);
-    }
-
-    private void openSurveyBuildingHistoryActivity(Place place) {
-        Intent intent = new Intent(MainActivity.this, SurveyBuildingHistoryActivity.class);
-        intent.putExtra(SurveyBuildingHistoryActivity.PLACE_UUID_ARG, place.getId().toString());
-        intent.putExtra(SurveyBuildingHistoryActivity.USER_NAME_ARG, AccountUtils.getUser().getUsername());
-        startActivity(intent);
+        SurveyBuildingHistoryActivity.open(this, place);
     }
 }

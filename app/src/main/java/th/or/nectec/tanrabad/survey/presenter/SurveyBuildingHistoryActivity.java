@@ -53,7 +53,6 @@ import java.util.UUID;
 public class SurveyBuildingHistoryActivity extends TanrabadActivity implements SurveyBuildingPresenter, PlacePresenter {
 
     public static final String PLACE_UUID_ARG = "place_uuid_arg";
-    public static final String USER_NAME_ARG = "username_arg";
 
     private TextView placeName;
     private ImageButton surveyMoreBuildingButton;
@@ -62,10 +61,9 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
     private Place place;
     private EmptyLayoutView emptyLayoutView;
 
-    public static void openBuildingSurveyHistoryActivity(Activity activity, Place placeData, String username) {
+    public static void open(Activity activity, Place placeData) {
         Intent intent = new Intent(activity, SurveyBuildingHistoryActivity.class);
         intent.putExtra(SurveyBuildingHistoryActivity.PLACE_UUID_ARG, placeData.getId().toString());
-        intent.putExtra(SurveyBuildingHistoryActivity.USER_NAME_ARG, username);
         activity.startActivity(intent);
     }
 
@@ -130,25 +128,14 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
                 BrokerPlaceRepository.getInstance(),
                 BrokerSurveyRepository.getInstance(),
                 this);
-        surveyBuildingHistoryController.showSurveyBuildingOf(getPlaceUuidFromIntent(), getUsernameFromIntent());
+        surveyBuildingHistoryController.showSurveyBuildingOf(getPlaceUuidFromIntent(), AccountUtils.getUser().getUsername());
         surveyMoreBuildingButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                openBuildingListActivity();
+                BuildingListActivity.open(SurveyBuildingHistoryActivity.this, getPlaceUuidFromIntent());
             }
         });
-    }
-
-    private String getUsernameFromIntent() {
-        return getIntent().getStringExtra(USER_NAME_ARG);
-    }
-
-    private void openBuildingListActivity() {
-        Intent intent = new Intent(SurveyBuildingHistoryActivity.this, BuildingListActivity.class);
-        intent.putExtra(BuildingListActivity.PLACE_UUID_ARG, getPlaceUuidFromIntent());
-        intent.putExtra(SurveyActivity.USERNAME_ARG, getUsernameFromIntent());
-        startActivity(intent);
     }
 
     @Override
@@ -170,7 +157,7 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
     @Override
     public void displaySurveyBuildingsNotFound() {
         finish();
-        openBuildingListActivity();
+        BuildingListActivity.open(SurveyBuildingHistoryActivity.this, getPlaceUuidFromIntent());
     }
 
     @Override

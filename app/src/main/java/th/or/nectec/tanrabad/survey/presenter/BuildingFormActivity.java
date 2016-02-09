@@ -246,7 +246,7 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
         building.setName(buildingNameView.getText().toString().trim());
         building.setPlace(place);
         building.setUpdateTimestamp(DateTime.now().toString());
-        building.setUpdateBy("dpc-user"); //TODO: 22/1/2559 set user later.
+        building.setUpdateBy(AccountUtils.getUser().getUsername());
         try {
             if (TextUtils.isEmpty(getBuildingUUID())) {
                 BuildingSaver buildingSaver = new BuildingSaver(BrokerBuildingRepository.getInstance(), new SaveBuildingValidator(), this);

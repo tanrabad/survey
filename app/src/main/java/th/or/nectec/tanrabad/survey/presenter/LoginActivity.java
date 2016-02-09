@@ -17,7 +17,6 @@
 
 package th.or.nectec.tanrabad.survey.presenter;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -48,7 +47,7 @@ public class LoginActivity extends TanrabadActivity {
                     Alert.highLevel().show(R.string.connect_internet_when_use_for_first_time);
                 } else {
                     AccountUtils.setUser(new StubUserRepository().findByUsername("dpc-13-beta"));
-                    openInitialActivity();
+                    InitialActivity.open(LoginActivity.this);
                     finish();
                 }
             }
@@ -62,17 +61,4 @@ public class LoginActivity extends TanrabadActivity {
         dropIn.setStartOffset(1200);
         findViewById(R.id.logo_tabrabad).startAnimation(dropIn);
     }
-
-    private void openInitialActivity() {
-        Intent intent = new Intent(this, InitialActivity.class);
-        startActivity(intent);
-        overridePendingTransition(R.anim.drop_in, R.anim.drop_out);
-    }
-
-    private void openMainActivity() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
-
-
 }

@@ -280,7 +280,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
             doPostData();
         setResult(RESULT_OK);
         finish();
-        SurveyBuildingHistoryActivity.openBuildingSurveyHistoryActivity(PlaceFormActivity.this, place, AccountUtils.getUser().getUsername());
+        SurveyBuildingHistoryActivity.open(PlaceFormActivity.this, place);
     }
 
     private void doPostData() {

@@ -104,7 +104,6 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     public static void open(Activity activity, Building building) {
         Intent intent = new Intent(activity, SurveyActivity.class);
         intent.putExtra(SurveyActivity.BUILDING_UUID_ARG, building.getId().toString());
-        intent.putExtra(SurveyActivity.USERNAME_ARG, AccountUtils.getUser().getUsername());
         activity.startActivity(intent);
     }
 
@@ -195,7 +194,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         SurveyController surveyController = new SurveyController(surveyRepository, BrokerBuildingRepository.getInstance(), new StubUserRepository(), this);
 
         String buildingUUID = getIntent().getStringExtra(BUILDING_UUID_ARG);
-        String username = getIntent().getStringExtra(USERNAME_ARG);
+        String username = AccountUtils.getUser().getUsername();
 
         surveyController.checkThisBuildingAndUserCanSurvey(buildingUUID, username);
     }

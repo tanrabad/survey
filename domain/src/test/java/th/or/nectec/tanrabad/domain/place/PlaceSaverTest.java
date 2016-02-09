@@ -122,23 +122,4 @@ public class PlaceSaverTest {
         PlaceSaver placeSaver = new PlaceSaver(placeRepository, placeValidator, placeSavePresenter);
         placeSaver.update(place);
     }
-
-    @Test
-    public void testCannotSaveVillageType() throws Exception {
-
-        place = Place.withName("123");
-        place.setType(Place.TYPE_VILLAGE_COMMUNITY);
-
-        context.checking(new Expectations() {
-            {
-                allowing(PlaceSaverTest.this.placeValidator).setPlaceRepository(placeRepository);
-                allowing(placeValidator).validate(place);
-                will(returnValue(false));
-                never(placeRepository);
-                oneOf(placeSavePresenter).alertCannotSaveVillageType();
-            }
-        });
-        PlaceSaver placeSaver = new PlaceSaver(placeRepository, placeValidator, placeSavePresenter);
-        placeSaver.save(place);
-    }
 }

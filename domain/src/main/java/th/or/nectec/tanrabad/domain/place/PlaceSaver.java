@@ -35,11 +35,6 @@ public class PlaceSaver {
     }
 
     public void save(Place place) {
-        if(place.getType()== Place.TYPE_VILLAGE_COMMUNITY){
-            placeSavePresenter.alertCannotSaveVillageType();
-            return;
-        }
-
         if(placeValidator.validate(place)){
             if(placeRepository.save(place))
                 placeSavePresenter.displaySaveSuccess();

@@ -28,7 +28,7 @@ import java.util.List;
 
 public class ProvinceRestService extends AbsRestService<Province> {
 
-    public static final String PATH = "/province?geostd=4326&hr_code=dpc-04";
+    public static final String PATH = "/province";
 
     public ProvinceRestService() {
         this(BASE_API, new ServiceLastUpdatePreference(TanrabadApp.getInstance(), PATH));
@@ -36,6 +36,11 @@ public class ProvinceRestService extends AbsRestService<Province> {
 
     public ProvinceRestService(String apiBaseUrl, ServiceLastUpdate serviceLastUpdate) {
         super(apiBaseUrl, serviceLastUpdate);
+    }
+
+    @Override
+    public String getDefaultParams() {
+        return "geostd=4326&" + getHealthRegionCodeParam();
     }
 
     @Override

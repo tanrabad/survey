@@ -48,7 +48,7 @@ public class BuildingRestService extends AbsUploadRestService<Building> {
 
     @Override
     public String getDefaultParams() {
-        return "geostd=4326&hr_code=dpc-04";
+        return "geostd=4326&" + getHealthRegionCodeParam();
     }
 
     @Override

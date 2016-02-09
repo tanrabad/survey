@@ -28,7 +28,7 @@ import java.util.List;
 
 public class AmphurRestService extends AbsRestService<District> {
 
-    public static final String PATH = "/amphur?geostd=4326&hr_code=dpc-04";
+    public static final String PATH = "/amphur";
 
     public AmphurRestService() {
         this(BASE_API, new ServiceLastUpdatePreference(TanrabadApp.getInstance(), PATH));
@@ -36,6 +36,11 @@ public class AmphurRestService extends AbsRestService<District> {
 
     public AmphurRestService(String apiBaseUrl, ServiceLastUpdate serviceLastUpdate) {
         super(apiBaseUrl, serviceLastUpdate);
+    }
+
+    @Override
+    public String getDefaultParams() {
+        return "geostd=4326&" + getHealthRegionCodeParam();
     }
 
     protected String getPath() {

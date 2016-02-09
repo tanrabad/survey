@@ -20,6 +20,8 @@ package th.or.nectec.tanrabad.survey.service;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
+import th.or.nectec.tanrabad.entity.User;
+import th.or.nectec.tanrabad.survey.presenter.AccountUtils;
 import th.or.nectec.tanrabad.survey.service.http.Status;
 
 import java.io.IOException;
@@ -34,11 +36,21 @@ public abstract class AbsRestService <T> implements RestService<T> {
     protected final OkHttpClient client = new OkHttpClient();
     protected ServiceLastUpdate serviceLastUpdate;
     protected String baseApi;
+    private User user;
     private String nextUrl = null;
 
     public AbsRestService(String baseApi, ServiceLastUpdate serviceLastUpdate) {
+        this(baseApi, serviceLastUpdate, AccountUtils.getUser());
+    }
+
+    public AbsRestService(String baseApi, ServiceLastUpdate serviceLastUpdate, User user) {
         this.baseApi = baseApi;
         this.serviceLastUpdate = serviceLastUpdate;
+        this.user = user;
+    }
+
+    protected String getHealthRegionCodeParam() {
+        return "hr_code=" + user.getHealthRegionCode();
     }
 
     @Override

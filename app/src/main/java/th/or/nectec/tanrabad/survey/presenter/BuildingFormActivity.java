@@ -55,6 +55,7 @@ import th.or.nectec.tanrabad.survey.repository.persistence.DbPlaceRepository;
 import th.or.nectec.tanrabad.survey.service.BuildingRestService;
 import th.or.nectec.tanrabad.survey.service.PlaceRestService;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
+import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
 import th.or.nectec.tanrabad.survey.utils.android.TwiceBackPressed;
 import th.or.nectec.tanrabad.survey.validator.SaveBuildingValidator;
@@ -261,7 +262,8 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
 
     @Override
     public void displaySaveSuccess() {
-        doPostData();
+        if (InternetConnection.isAvailable(this))
+            doPostData();
         setResult(RESULT_OK);
         finish();
         SurveyActivity.open(BuildingFormActivity.this, building);
@@ -286,7 +288,8 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
 
     @Override
     public void displayUpdateSuccess() {
-        doPutData();
+        if (InternetConnection.isAvailable(this))
+            doPutData();
         setResult(RESULT_OK);
         finish();
     }

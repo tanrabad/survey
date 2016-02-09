@@ -69,6 +69,7 @@ import th.or.nectec.tanrabad.survey.utils.EditTextStepper;
 import th.or.nectec.tanrabad.survey.utils.LocationPermissionPrompt;
 import th.or.nectec.tanrabad.survey.utils.MacAddressUtils;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
+import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
@@ -319,7 +320,8 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     @Override
     public void displaySaveSuccess() {
-        doPostData();
+        if (InternetConnection.isAvailable(this))
+            doPostData();
         finish();
         openSurveyBuildingHistory();
     }
@@ -338,7 +340,8 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     @Override
     public void displayUpdateSuccess() {
-        doPutData();
+        if (InternetConnection.isAvailable(this))
+            doPutData();
         finish();
         openSurveyBuildingHistory();
     }

@@ -47,6 +47,7 @@ import th.or.nectec.tanrabad.survey.repository.adapter.ThaiWidgetProvinceReposit
 import th.or.nectec.tanrabad.survey.repository.persistence.DbPlaceRepository;
 import th.or.nectec.tanrabad.survey.service.PlaceRestService;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
+import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
 import th.or.nectec.tanrabad.survey.utils.android.ResourceUtils;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
 import th.or.nectec.tanrabad.survey.utils.android.TwiceBackPressed;
@@ -275,7 +276,8 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
 
     @Override
     public void displaySaveSuccess() {
-        doPostData();
+        if (InternetConnection.isAvailable(this))
+            doPostData();
         setResult(RESULT_OK);
         finish();
         SurveyBuildingHistoryActivity.openBuildingSurveyHistoryActivity(PlaceFormActivity.this, place, AccountUtils.getUser().getUsername());
@@ -299,7 +301,8 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
 
     @Override
     public void displayUpdateSuccess() {
-        doPutData();
+        if (InternetConnection.isAvailable(this))
+            doPutData();
         setResult(RESULT_OK);
         finish();
     }

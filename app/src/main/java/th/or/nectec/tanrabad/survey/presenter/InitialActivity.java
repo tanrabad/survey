@@ -135,7 +135,7 @@ public class InitialActivity extends TanrabadActivity {
         @Override
         protected void onRunFinish() {
             pleaseWaitBeans.stopJumping();
-            AccountUtils.setUser(User.fromUsername("dpc-user"));
+            AccountUtils.setUser(User.fromUsername("dpc-13-beta"));
             openMainActivityThenFinish();
         }
     }

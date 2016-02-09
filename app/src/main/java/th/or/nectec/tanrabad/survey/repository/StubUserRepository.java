@@ -21,25 +21,42 @@ package th.or.nectec.tanrabad.survey.repository;
 import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.entity.User;
 
+import java.util.HashMap;
+
 public class StubUserRepository implements UserRepository {
 
-    private final User dpcUser;
+    HashMap<String, User> userMapping;
 
     public StubUserRepository() {
-        dpcUser = new User("dpc-user");
+        userMapping = new HashMap<>();
+        userMapping.put("dpc-user", getDpcUser());
+        userMapping.put("dpc-13-beta", getDpc13BetaUser());
+    }
+
+    private User getDpcUser() {
+        User dpcUser = new User("dpc-user");
         dpcUser.setFirstname("ซาร่า");
         dpcUser.setLastname("คิดส์");
         dpcUser.setEmail("sara.k@gmail.com");
         dpcUser.setOrganizationId(1);
+        return dpcUser;
+    }
+
+    private User getDpc13BetaUser() {
+        User dpcUser = new User("dpc-13-beta");
+        dpcUser.setFirstname("ทดสอบ");
+        dpcUser.setLastname("ทดสอบ");
+        dpcUser.setEmail("dpc13@gmail.com");
+        dpcUser.setOrganizationId(1);
+        return dpcUser;
     }
 
     @Override
     public User findByUsername(String userName) {
-        if (dpcUser.getUsername().equals(userName)) {
-            return dpcUser;
+        if (userMapping.containsKey(userName)) {
+            return userMapping.get(userName);
         } else {
             return null;
         }
     }
-
 }

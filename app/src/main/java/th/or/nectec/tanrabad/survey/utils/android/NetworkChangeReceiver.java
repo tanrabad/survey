@@ -8,6 +8,10 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
 
     OnNetworkChangedListener listener;
 
+    public NetworkChangeReceiver(OnNetworkChangedListener listener) {
+        this.listener = listener;
+    }
+
     @Override
     public void onReceive(final Context context, final Intent intent) {
         if (InternetConnection.isAvailable(context)) {
@@ -17,10 +21,6 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
             if (listener != null)
                 listener.onNetworkChanged(false);
         }
-    }
-
-    public void setOnNetworkChangedListener(OnNetworkChangedListener networkChangedListener) {
-        listener = networkChangedListener;
     }
 
     public interface OnNetworkChangedListener {

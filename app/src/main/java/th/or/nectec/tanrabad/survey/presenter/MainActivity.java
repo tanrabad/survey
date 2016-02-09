@@ -63,8 +63,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
     }
 
     private void setupSyncButton() {
-        networkChangeReceiver = new NetworkChangeReceiver();
-        networkChangeReceiver.setOnNetworkChangedListener(new NetworkChangeReceiver.OnNetworkChangedListener() {
+        networkChangeReceiver = new NetworkChangeReceiver(new NetworkChangeReceiver.OnNetworkChangedListener() {
             @Override
             public void onNetworkChanged(boolean isConnected) {
                 if (isConnected) {

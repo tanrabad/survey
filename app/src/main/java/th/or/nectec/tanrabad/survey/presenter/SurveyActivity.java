@@ -398,7 +398,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
             Alert.highLevel().show(R.string.over_total_container);
             validateSurveyContainerViews(indoorContainerViews);
             validateSurveyContainerViews(outdoorContainerViews);
-            TanrabadApp.error().logException(e);
+            TanrabadApp.log(e);
         } catch (ValidatorException e) {
             Alert.highLevel().show(e.getMessageID());
             if (e.getMessageID() == R.string.please_enter_resident)

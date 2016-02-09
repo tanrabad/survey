@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,7 +26,7 @@ import io.fabric.sdk.android.Fabric;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.survey.BuildConfig;
 
-public class FabricTools implements CrashLogger, ActionLogger {
+public class FabricTools implements ExceptionLogger, ActionLogger {
 
     private static FabricTools instance;
     private Answers answers;
@@ -44,16 +44,16 @@ public class FabricTools implements CrashLogger, ActionLogger {
         answers = Answers.getInstance();
     }
 
-    @Override
-    public void logException(Exception e) {
-        Crashlytics.logException(e);
-    }
-
     public static FabricTools getInstance(Context context) {
         if (instance == null) {
             instance = new FabricTools(context);
         }
         return instance;
+    }
+
+    @Override
+    public void log(Exception e) {
+        Crashlytics.logException(e);
     }
 
     @Override

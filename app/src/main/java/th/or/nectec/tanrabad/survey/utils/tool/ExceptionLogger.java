@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,8 +17,8 @@
 
 package th.or.nectec.tanrabad.survey.utils.tool;
 
-public interface CrashLogger {
+public interface ExceptionLogger {
 
-    void logException(Exception e);
+    void log(Exception e);
 
 }

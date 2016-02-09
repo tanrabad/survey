@@ -20,13 +20,13 @@ package th.or.nectec.tanrabad.survey;
 import android.app.Application;
 import android.content.Context;
 import th.or.nectec.tanrabad.survey.utils.tool.ActionLogger;
-import th.or.nectec.tanrabad.survey.utils.tool.CrashLogger;
+import th.or.nectec.tanrabad.survey.utils.tool.ExceptionLogger;
 import th.or.nectec.tanrabad.survey.utils.tool.FabricTools;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class TanrabadApp extends Application {
 
-    private static CrashLogger crashLogger;
+    private static ExceptionLogger exceptionLogger;
     private static ActionLogger actionLogger;
     private static TanrabadApp instance;
 
@@ -34,12 +34,12 @@ public class TanrabadApp extends Application {
         return actionLogger;
     }
 
-    public static CrashLogger error() {
-        return crashLogger;
-    }
-
     public static Context getInstance() {
         return instance;
+    }
+
+    public static void log(Exception e) {
+        exceptionLogger.log(e);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class TanrabadApp extends Application {
 
     private void setupAnalysisTools() {
         FabricTools fabricTools = FabricTools.getInstance(this);
-        crashLogger = fabricTools;
+        exceptionLogger = fabricTools;
         actionLogger = fabricTools;
     }
 

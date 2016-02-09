@@ -19,7 +19,6 @@ package th.or.nectec.tanrabad.survey.presenter;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.AnimRes;
 import android.support.annotation.IdRes;
@@ -60,7 +59,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupViewOnClick();
-        setupSyncButton();
+        setupNetworkChangeReceiver();
         setupList();
         showRecentSurveyCard();
 
@@ -69,7 +68,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
         }
     }
 
-    private void setupSyncButton() {
+    private void setupNetworkChangeReceiver() {
         networkChangeReceiver = new NetworkChangeReceiver(new NetworkChangeReceiver.OnNetworkChangedListener() {
             @Override
             public void onNetworkChanged(boolean isConnected) {
@@ -80,8 +79,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
                 }
             }
         });
-        registerReceiver(networkChangeReceiver, new IntentFilter(
-                android.net.ConnectivityManager.CONNECTIVITY_ACTION));
+        registerReceiver(networkChangeReceiver, NetworkChangeReceiver.getIntentFilter());
     }
 
     @Override

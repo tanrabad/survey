@@ -3,6 +3,7 @@ package th.or.nectec.tanrabad.survey.utils.android;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 
 public class NetworkChangeReceiver extends BroadcastReceiver {
 
@@ -10,6 +11,10 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
 
     public NetworkChangeReceiver(OnNetworkChangedListener listener) {
         this.listener = listener;
+    }
+
+    public static IntentFilter getIntentFilter() {
+        return new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION);
     }
 
     @Override

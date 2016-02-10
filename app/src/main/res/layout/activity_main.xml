@@ -138,6 +138,11 @@
             android:layout_height="wrap_content"
             app:layout_anchor="@id/root"
             app:layout_anchorGravity="right"
+            android:drawableLeft="@mipmap/ic_sync"
+            android:drawablePadding="6dp"
+            android:background="@color/transparent"
+            android:textColor="@color/text_sync_state"
+            android:layout_marginRight="@dimen/space_between_content"
             android:text="@string/sync_data"/>
 
 </android.support.design.widget.CoordinatorLayout>

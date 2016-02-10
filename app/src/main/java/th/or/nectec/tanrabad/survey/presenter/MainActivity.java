@@ -139,7 +139,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
 
     private void setupSyncAnimator() {
         waterAnimator = (ObjectAnimator) AnimatorInflater.loadAnimator(
-                this, R.animator.water_spin_anim);
+                this, R.animator.water_spin);
         waterAnimator.setTarget(findViewById(R.id.water_shadow));
     }
 
@@ -155,6 +155,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
                 break;
             case R.id.sync_data:
                 startOrResumeSyncAnimation();
+                findViewById(R.id.sync_data).setEnabled(false);
                 SyncJobBuilder.build(new SyncJobRunner()).start();
                 break;
         }
@@ -214,6 +215,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
 
         @Override
         protected void onRunFinish() {
+            findViewById(R.id.sync_data).setEnabled(true);
             stopSyncAnimation();
             if (errorJobs() == 0) {
                 Alert.mediumLevel().show("ปรับปรุงข้อมูลเรียบร้อยแล้วนะ");

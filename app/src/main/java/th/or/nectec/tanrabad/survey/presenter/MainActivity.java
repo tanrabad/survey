@@ -42,7 +42,8 @@ import th.or.nectec.tanrabad.survey.utils.android.NetworkChangeReceiver;
 
 import java.util.List;
 
-public class MainActivity extends TanrabadActivity implements View.OnClickListener, PlaceWithSurveyHistoryListPresenter, AdapterView.OnItemClickListener {
+public class MainActivity extends TanrabadActivity implements View.OnClickListener,
+        PlaceWithSurveyHistoryListPresenter, AdapterView.OnItemClickListener {
 
     private PlaceAdapter placeAdapter;
     private CardView cardView;

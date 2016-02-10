@@ -21,10 +21,6 @@
             <property name="severity" value="error"/>
         </module>
 
-        <module name="AvoidStarImport">
-            <property name="severity" value="error"/>
-        </module>
-
         <!-- General Code Style -->
 
         <module name="LineLength">

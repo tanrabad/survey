@@ -11,17 +11,18 @@ import java.util.UUID;
 public class BrokerSurveyRepository implements SurveyRepository {
 
     private static BrokerSurveyRepository instance;
-    private SurveyRepository cache;
-    private SurveyRepository persistent;
+    private final SurveyRepository cache;
+    private final SurveyRepository persistent;
 
-    public BrokerSurveyRepository(SurveyRepository cache, SurveyRepository persistent) {
+    private BrokerSurveyRepository(SurveyRepository cache, SurveyRepository persistent) {
         this.cache = cache;
         this.persistent = persistent;
     }
 
     public static BrokerSurveyRepository getInstance() {
         if (instance == null)
-            instance = new BrokerSurveyRepository(InMemorySurveyRepository.getInstance(), new DbSurveyRepository(TanrabadApp.getInstance()));
+            instance = new BrokerSurveyRepository(InMemorySurveyRepository.getInstance(),
+                    new DbSurveyRepository(TanrabadApp.getInstance()));
         return instance;
     }
 

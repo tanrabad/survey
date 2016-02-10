@@ -21,8 +21,8 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import th.or.nectec.tanrabad.entity.User;
-import th.or.nectec.tanrabad.survey.presenter.AccountUtils;
 import th.or.nectec.tanrabad.survey.BuildConfig;
+import th.or.nectec.tanrabad.survey.presenter.AccountUtils;
 import th.or.nectec.tanrabad.survey.service.http.Status;
 
 import java.io.IOException;
@@ -31,7 +31,7 @@ import java.util.List;
 
 import static th.or.nectec.tanrabad.survey.service.http.Header.*;
 
-public abstract class AbsRestService <T> implements RestService<T> {
+public abstract class AbsRestService<T> implements RestService<T> {
 
     public static final String BASE_API = BuildConfig.API_URL;
     protected final OkHttpClient client = new OkHttpClient();

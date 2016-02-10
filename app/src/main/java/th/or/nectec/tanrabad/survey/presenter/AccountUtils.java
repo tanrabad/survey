@@ -6,7 +6,7 @@ import th.or.nectec.tanrabad.entity.User;
 public class AccountUtils {
     private static User user;
 
-    public static boolean canAddOrEditVillage(){
+    public static boolean canAddOrEditVillage() {
         return getUser().getHealthRegionCode().equals("dpc-13");
     }
 

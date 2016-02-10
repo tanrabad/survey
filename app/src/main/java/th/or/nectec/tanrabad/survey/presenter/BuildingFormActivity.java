@@ -64,7 +64,8 @@ import th.or.nectec.tanrabad.survey.validator.ValidatorException;
 
 import java.util.UUID;
 
-public class BuildingFormActivity extends TanrabadActivity implements PlacePresenter, BuildingPresenter, BuildingSavePresenter, View.OnClickListener {
+public class BuildingFormActivity extends TanrabadActivity implements PlacePresenter, BuildingPresenter,
+        BuildingSavePresenter, View.OnClickListener {
 
     public static final String PLACE_UUID_ARG = "place_uuid_arg";
     public static final String BUILDING_UUID_ARG = "building_uuid_arg";
@@ -212,7 +213,8 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
         switch (requestCode) {
             case BuildingMapMarkerActivity.MARK_LOCATION_REQUEST_CODE:
                 if (resultCode == RESULT_OK) {
-                    Location buildingLocation = LocationUtils.convertJsonToLocation(data.getStringExtra(BuildingMapMarkerActivity.BUILDING_LOCATION));
+                    Location buildingLocation = LocationUtils.convertJsonToLocation(
+                            data.getStringExtra(BuildingMapMarkerActivity.BUILDING_LOCATION));
                     building.setLocation(buildingLocation);
                     setupPreviewMapWithPosition(buildingLocation);
                 }

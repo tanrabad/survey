@@ -27,7 +27,7 @@ import java.io.IOException;
 
 import static th.or.nectec.tanrabad.survey.service.http.Header.USER_AGENT;
 
-public abstract class AbsUploadRestService <T> extends AbsRestService implements UploadRestService<T> {
+public abstract class AbsUploadRestService<T> extends AbsRestService implements UploadRestService<T> {
 
     public static final String TRB_USER_AGENT = "tanrabad-survey-app";
     public static final MediaType JSON_MEDIA_TYPE = MediaType.parse("application/json");
@@ -75,7 +75,7 @@ public abstract class AbsUploadRestService <T> extends AbsRestService implements
         }
     }
 
-    private Request buildPutRequest(T data) throws IOException{
+    private Request buildPutRequest(T data) throws IOException {
         return new Request.Builder().put(RequestBody.create(JSON_MEDIA_TYPE, entityToJsonString(data)))
                 .addHeader(USER_AGENT, TRB_USER_AGENT)
                 .url(baseApi + getPath() + "/" + getId(data))

@@ -26,8 +26,7 @@ import th.or.nectec.tanrabad.survey.repository.persistence.DbBuildingRepository;
 import java.util.List;
 import java.util.UUID;
 
-public class BrokerBuildingRepository implements BuildingRepository
-{
+public class BrokerBuildingRepository implements BuildingRepository {
     private static BrokerBuildingRepository instance;
     private BuildingRepository cache;
     private BuildingRepository database;
@@ -58,7 +57,7 @@ public class BrokerBuildingRepository implements BuildingRepository
     @Override
     public Building findByUUID(UUID uuid) {
         Building building = cache.findByUUID(uuid);
-        if(building == null){
+        if (building == null) {
             building = database.findByUUID(uuid);
             cache.save(building);
         }
@@ -68,7 +67,7 @@ public class BrokerBuildingRepository implements BuildingRepository
     @Override
     public boolean save(Building building) {
         boolean success = database.save(building);
-        if(success)
+        if (success)
             cache.save(building);
         return success;
     }
@@ -76,7 +75,7 @@ public class BrokerBuildingRepository implements BuildingRepository
     @Override
     public boolean update(Building building) {
         boolean success = database.update(building);
-        if(success)
+        if (success)
             cache.update(building);
         return success;
     }

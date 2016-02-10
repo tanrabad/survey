@@ -17,7 +17,9 @@ public class SurveyAccountTestRule extends ExternalResource {
 
     @Override
     protected void before() throws Throwable {
-        AccountUtils.setUser(User.fromUsername(username));
+        User user = User.fromUsername(username);
+        user.setHealthRegionCode("dpc-04");
+        AccountUtils.setUser(user);
     }
 
 }

@@ -9,7 +9,7 @@ import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 
 public class LocationPermissionPrompt {
 
-    final private static int REQUEST_CODE_ASK_PERMISSIONS = 777;
+    private static final int REQUEST_CODE_ASK_PERMISSIONS = 777;
 
     public static void show(final Activity activity) {
         if (!ActivityCompat.shouldShowRequestPermissionRationale(activity,
@@ -36,7 +36,6 @@ public class LocationPermissionPrompt {
         ActivityCompat.requestPermissions(activity,
                 new String[]{Manifest.permission_group.LOCATION},
                 REQUEST_CODE_ASK_PERMISSIONS);
-
 
     }
 }

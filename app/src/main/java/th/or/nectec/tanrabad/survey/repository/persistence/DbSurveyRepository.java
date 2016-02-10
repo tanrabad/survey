@@ -10,6 +10,7 @@ import th.or.nectec.tanrabad.domain.building.BuildingRepository;
 import th.or.nectec.tanrabad.domain.survey.ContainerTypeRepository;
 import th.or.nectec.tanrabad.domain.survey.SurveyRepository;
 import th.or.nectec.tanrabad.entity.*;
+import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.repository.BrokerBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.ChangedRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
@@ -56,7 +57,7 @@ public class DbSurveyRepository implements SurveyRepository, ChangedRepository<S
             db.setTransactionSuccessful();
             surveySaveSuccess = true;
         } catch (SurveyRepositoryException e) {
-            e.printStackTrace();
+            TanrabadApp.log(e);
             surveySaveSuccess = false;
         } finally {
             db.endTransaction();
@@ -125,7 +126,7 @@ public class DbSurveyRepository implements SurveyRepository, ChangedRepository<S
             surveyUpdateSuccess = true;
             db.setTransactionSuccessful();
         } catch (SurveyRepositoryException e) {
-            e.printStackTrace();
+            TanrabadApp.log(e);
             surveyUpdateSuccess = false;
         } finally {
             db.endTransaction();

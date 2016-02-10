@@ -34,7 +34,10 @@ import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyHistoryChooser;
 import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyHistoryListPresenter;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
-import th.or.nectec.tanrabad.survey.job.SyncJobRunner;
+import th.or.nectec.tanrabad.survey.TanrabadApp;
+import th.or.nectec.tanrabad.survey.job.AbsJobRunner;
+import th.or.nectec.tanrabad.survey.job.Job;
+import th.or.nectec.tanrabad.survey.job.SyncJobBuilder;
 import th.or.nectec.tanrabad.survey.repository.BrokerSurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
@@ -140,7 +143,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
                 startAnimation(R.id.larvae, R.anim.dook_digg);
                 break;
             case R.id.sync_data:
-                new SyncJobRunner().start();
+                SyncJobBuilder.build(new SyncJobRunner()).start();
                 break;
         }
     }
@@ -166,5 +169,28 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
         Place place = placeAdapter.getItem(position);
         SurveyBuildingHistoryActivity.open(this, place);
+    }
+
+    public class SyncJobRunner extends AbsJobRunner {
+
+        @Override
+        protected void onJobError(Job errorJob, Exception exception) {
+            super.onJobError(errorJob, exception);
+            TanrabadApp.log(exception);
+        }
+
+        @Override
+        protected void onJobStart(Job startingJob) {
+
+        }
+
+        @Override
+        protected void onRunFinish() {
+            if (errorJobs() == 0) {
+                Alert.mediumLevel().show("ปรับปรุงข้อมูลเรียบร้อยแล้วนะ");
+            } else {
+                Alert.mediumLevel().show("ปรับปรุงข้อมูลไม่สำเร็จ ลองใหม่อีกครั้งนะ");
+            }
+        }
     }
 }

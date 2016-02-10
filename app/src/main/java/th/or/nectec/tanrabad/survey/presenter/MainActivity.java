@@ -17,8 +17,11 @@
 
 package th.or.nectec.tanrabad.survey.presenter;
 
+import android.animation.AnimatorInflater;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.AnimRes;
 import android.support.annotation.IdRes;
@@ -51,6 +54,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
     private PlaceAdapter placeAdapter;
     private CardView cardView;
     private NetworkChangeReceiver networkChangeReceiver;
+    private ObjectAnimator waterAnimator;
 
     public static void open(Activity activity) {
         Intent intent = new Intent(activity, MainActivity.class);
@@ -65,6 +69,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
         setupViewOnClick();
         setupNetworkChangeReceiver();
         setupList();
+        setupSyncAnimator();
         showRecentSurveyCard();
 
         if (!isUiTesting()) {
@@ -132,6 +137,12 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
         findViewById(viewId).startAnimation(anim);
     }
 
+    private void setupSyncAnimator() {
+        waterAnimator = (ObjectAnimator) AnimatorInflater.loadAnimator(
+                this, R.animator.water_spin_anim);
+        waterAnimator.setTarget(findViewById(R.id.water_shadow));
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -143,8 +154,17 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
                 startAnimation(R.id.larvae, R.anim.dook_digg);
                 break;
             case R.id.sync_data:
+                startOrResumeSyncAnimation();
                 SyncJobBuilder.build(new SyncJobRunner()).start();
                 break;
+        }
+    }
+
+    private void startOrResumeSyncAnimation() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && waterAnimator.isPaused()) {
+            waterAnimator.resume();
+        } else {
+            waterAnimator.start();
         }
     }
 
@@ -171,6 +191,14 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
         SurveyBuildingHistoryActivity.open(this, place);
     }
 
+    private void stopSyncAnimation() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            waterAnimator.pause();
+        } else {
+            waterAnimator.cancel();
+        }
+    }
+
     public class SyncJobRunner extends AbsJobRunner {
 
         @Override
@@ -186,6 +214,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
 
         @Override
         protected void onRunFinish() {
+            stopSyncAnimation();
             if (errorJobs() == 0) {
                 Alert.mediumLevel().show("ปรับปรุงข้อมูลเรียบร้อยแล้วนะ");
             } else {

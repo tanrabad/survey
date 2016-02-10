@@ -6,5 +6,5 @@ VALUES
 INSERT INTO
   user_profile (username, org_id)
 VALUES
-  ("dpc-user", "100");
+  ("dpc-user", "100"),
   ("dpc-13-beta", "100");

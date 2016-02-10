@@ -38,9 +38,9 @@ import static com.google.android.gms.location.LocationServices.FusedLocationApi;
 
 public class PlayLocationService {
 
-    private static final long MAX_NO_UPDATE = 5 * 60 * 1000; //5 Minute
-    private static final long UPDATE_INTERVAL_MS = 60 * 1000; //1 Minute
-    private static final long FASTEST_INTERVAL_MS = 30 * 1000; //30 second
+    private static final long MAX_NO_UPDATE = 5 * 60 * 1000;
+    private static final long UPDATE_INTERVAL_MS = 60 * 1000;
+    private static final long FASTEST_INTERVAL_MS = 15 * 1000;
     private static PlayLocationService instance;
     private final Context context;
     private GoogleApiClient locationApiClient;
@@ -73,7 +73,7 @@ public class PlayLocationService {
         }
     };
 
-    public PlayLocationService(Context context) {
+    private PlayLocationService(Context context) {
         this.context = context;
         setupLocationAPI();
     }
@@ -103,10 +103,16 @@ public class PlayLocationService {
     }
 
     public Location getCurrentLocation() {
-        if (currentLocation == null)
+        if (currentLocation == null) {
+            Alert.lowLevel().show("no location data");
             return null;
-        long diffTime = (DateTime.now().getMillis() - currentLocation.getTime());
-        return diffTime <= MAX_NO_UPDATE ? currentLocation : null;
+        }
+        long diffTime = DateTime.now().getMillis() - currentLocation.getTime();
+        if (diffTime <= MAX_NO_UPDATE) return currentLocation;
+        else {
+            Alert.lowLevel().show("location not update");
+            return null;
+        }
     }
 
     public Location getLastKnowLocation() {
@@ -129,9 +135,11 @@ public class PlayLocationService {
 
     private LocationRequest getLocationRequest() {
         LocationRequest locationRequest = LocationRequest.create();
-        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         locationRequest.setInterval(UPDATE_INTERVAL_MS);
         locationRequest.setFastestInterval(FASTEST_INTERVAL_MS);
         return locationRequest;
     }
+
+
 }

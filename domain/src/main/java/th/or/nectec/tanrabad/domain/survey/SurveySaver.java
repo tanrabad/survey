@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,27 +24,27 @@ public class SurveySaver {
     private final SurveyRepository surveyRepository;
     private SurveySavePresenter surveySavePresenter;
 
-    public SurveySaver(SurveySavePresenter surveySavePresenter, SurveyValidator validator, SurveyRepository surveyRepository) {
+    public SurveySaver(SurveySavePresenter surveySavePresenter,
+                       SurveyValidator validator,
+                       SurveyRepository surveyRepository) {
         this.surveySavePresenter = surveySavePresenter;
         saveValidator = validator;
         this.surveyRepository = surveyRepository;
     }
 
     public void save(Survey survey) {
-        if (saveValidator.validate(survey)) {
-            if (surveyRepository.save(survey))
-                surveySavePresenter.displaySaveSuccess();
-        } else {
+        if (saveValidator.validate(survey) && surveyRepository.save(survey))
+            surveySavePresenter.displaySaveSuccess();
+        else
             surveySavePresenter.displaySaveFail();
-        }
+
     }
 
     public void update(Survey survey) {
-        if (saveValidator.validate(survey)) {
-            if (surveyRepository.update(survey))
-                surveySavePresenter.displayUpdateSuccess();
-        } else {
+        if (saveValidator.validate(survey) && surveyRepository.update(survey))
+            surveySavePresenter.displayUpdateSuccess();
+        else
             surveySavePresenter.displayUpdateFail();
-        }
+
     }
 }

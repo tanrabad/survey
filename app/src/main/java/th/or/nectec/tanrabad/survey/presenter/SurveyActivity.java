@@ -19,9 +19,7 @@ package th.or.nectec.tanrabad.survey.presenter;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -36,12 +34,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
-import org.joda.time.DateTime;
 import th.or.nectec.tanrabad.domain.survey.*;
 import th.or.nectec.tanrabad.entity.*;
 import th.or.nectec.tanrabad.entity.field.Location;
@@ -66,8 +58,9 @@ import th.or.nectec.tanrabad.survey.service.BuildingRestService;
 import th.or.nectec.tanrabad.survey.service.PlaceRestService;
 import th.or.nectec.tanrabad.survey.service.SurveyRestService;
 import th.or.nectec.tanrabad.survey.utils.EditTextStepper;
-import th.or.nectec.tanrabad.survey.utils.LocationPermissionPrompt;
+import th.or.nectec.tanrabad.survey.utils.GpsUtils;
 import th.or.nectec.tanrabad.survey.utils.MacAddressUtils;
+import th.or.nectec.tanrabad.survey.utils.PlayLocationService;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
@@ -81,11 +74,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SurveyActivity extends TanrabadActivity implements ContainerPresenter, SurveyPresenter, SurveySavePresenter,
-        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
+public class SurveyActivity extends TanrabadActivity implements ContainerPresenter, SurveyPresenter,
+        SurveySavePresenter {
 
     public static final String BUILDING_UUID_ARG = "building_uuid";
-    public static final String USERNAME_ARG = "username_arg";
     public static final String HOUSE_NO_PREFIX = "บ้านเลขที่ ";
     private static final int offsetStep = 80;
     private boolean firstLoad = true;
@@ -98,8 +90,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     private SurveyRepository surveyRepository;
     private Survey survey;
     private boolean isEditSurvey;
-    private GoogleApiClient locationApiClient;
-    private android.location.Location location;
+    private PlayLocationService locationService = PlayLocationService.getInstance();
 
     public static void open(Activity activity, Building building) {
         Intent intent = new Intent(activity, SurveyActivity.class);
@@ -113,6 +104,12 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         setContentView(R.layout.activity_survey);
         setupToolbar();
         setupHomeButton();
+        enableGps();
+    }
+
+    private void enableGps() {
+        if (!GpsUtils.isGpsEnabled(this))
+            GpsUtils.showGpsSettingsDialog(this);
     }
 
     private void setupToolbar() {
@@ -121,11 +118,100 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        if (locationApiClient != null) {
-            locationApiClient.disconnect();
+    protected void onResume() {
+        super.onResume();
+        locationService.connect();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.save:
+                saveSurveyData();
+                break;
+            case android.R.id.home:
+                showAbortSurveyPrompt();
+                break;
         }
+        return true;
+    }
+
+    private void saveSurveyData() {
+        try {
+            survey.setResidentCount(getResidentCount());
+            survey.setIndoorDetail(getSurveyDetail(indoorContainerViews));
+            survey.setOutdoorDetail(getSurveyDetail(outdoorContainerViews));
+            survey.setLocation(getCurrentLocation());
+            survey.finishSurvey();
+            if (isEditSurvey) {
+                SurveySaver surveySaver = new SurveySaver(this, new SaveSurveyValidator(this), surveyRepository);
+                surveySaver.update(survey);
+            } else {
+                SurveySaver surveySaver = new SurveySaver(this, new SaveSurveyValidator(this), surveyRepository);
+                surveySaver.save(survey);
+            }
+        } catch (SurveyDetail.ContainerFoundLarvaOverTotalException e) {
+            Alert.highLevel().show(R.string.over_total_container);
+            validateSurveyContainerViews(indoorContainerViews);
+            validateSurveyContainerViews(outdoorContainerViews);
+            TanrabadApp.log(e);
+        } catch (ValidatorException e) {
+            Alert.highLevel().show(e.getMessageID());
+            if (e.getMessageID() == R.string.please_enter_resident)
+                residentCountView.requestFocus();
+        }
+    }
+
+    private Location getCurrentLocation() {
+        android.location.Location gpsLocation = PlayLocationService.getInstance().getCurrentLocation();
+        if (gpsLocation != null)
+            return new Location(gpsLocation.getLatitude(), gpsLocation.getLongitude());
+        return null;
+    }
+
+    private int getResidentCount() {
+        String residentCountStr = residentCountView.getText().toString();
+        return TextUtils.isEmpty(residentCountStr) ? 0 : Integer.valueOf(residentCountStr);
+    }
+
+    private ArrayList<SurveyDetail> getSurveyDetail(HashMap<Integer,SurveyContainerView> containerViews) {
+        ArrayList<SurveyDetail> surveyDetails = new ArrayList<>();
+        for (Map.Entry<Integer,SurveyContainerView> eachView : containerViews.entrySet()) {
+            SurveyDetail surveyDetail = eachView.getValue().getSurveyDetail();
+            if (surveyDetail != null) {
+                surveyDetails.add(surveyDetail);
+            }
+        }
+        return surveyDetails;
+    }
+
+    private boolean validateSurveyContainerViews(HashMap<Integer,SurveyContainerView> containerViews) {
+        boolean isValid = true;
+        for (Map.Entry<Integer,SurveyContainerView> eachView : containerViews.entrySet()) {
+            if (!eachView.getValue().isValid()) isValid = false;
+        }
+        return isValid;
+    }
+
+    private void showAbortSurveyPrompt() {
+        PromptMessage promptMessage = new AlertDialogPromptMessage(this);
+        promptMessage.setOnCancel(getString(R.string.no), null);
+        promptMessage.setOnConfirm(getString(R.string.yes), new PromptMessage.OnConfirmListener() {
+            @Override
+            public void onConfirm() {
+                finish();
+            }
+        });
+        promptMessage.show(getString(R.string.abort_survey), getBuildingNameWithPrefix(survey.getSurveyBuilding()));
+    }
+
+    private String getBuildingNameWithPrefix(Building building) {
+        String buildName = building.getName();
+        Place place = survey.getSurveyBuilding().getPlace();
+        if (place.getType() == Place.TYPE_VILLAGE_COMMUNITY) {
+            buildName = HOUSE_NO_PREFIX + buildName;
+        }
+        return buildName;
     }
 
     @Override
@@ -135,40 +221,8 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
             findViewsFromLayout();
             showContainerList();
             initSurvey();
-            if (isGpsEnabled()) {
-                setupLocationAPI();
-            } else {
-                showGpsSettingsDialog();
-            }
             firstLoad = false;
         }
-    }
-
-    private void setupLocationAPI() {
-        locationApiClient = new GoogleApiClient.Builder(this)
-                .addApi(LocationServices.API)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .build();
-        locationApiClient.connect();
-    }
-
-    private boolean isGpsEnabled() {
-        LocationManager locationManager = (LocationManager) getSystemService(Activity.LOCATION_SERVICE);
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-    }
-
-    private void showGpsSettingsDialog() {
-        PromptMessage promptMessage = new AlertDialogPromptMessage(this);
-        promptMessage.setOnConfirm(getString(R.string.enable_gps), new PromptMessage.OnConfirmListener() {
-            @Override
-            public void onConfirm() {
-                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivity(intent);
-            }
-        });
-        promptMessage.setOnCancel(getResources().getString(R.string.cancel), null);
-        promptMessage.show(getString(R.string.gps_dialog_tilte), getString(R.string.gps_dialog_message));
     }
 
     private void findViewsFromLayout() {
@@ -185,13 +239,15 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     }
 
     private void showContainerList() {
-        ContainerController containerController = new ContainerController(BrokerContainerTypeRepository.getInstance(), this);
+        ContainerController containerController =
+                new ContainerController(BrokerContainerTypeRepository.getInstance(), this);
         containerController.showList();
     }
 
     private void initSurvey() {
         surveyRepository = new DbSurveyRepository(this);
-        SurveyController surveyController = new SurveyController(surveyRepository, BrokerBuildingRepository.getInstance(), new StubUserRepository(), this);
+        SurveyController surveyController = new SurveyController(surveyRepository,
+                BrokerBuildingRepository.getInstance(), new StubUserRepository(), this);
 
         String buildingUUID = getIntent().getStringExtra(BUILDING_UUID_ARG);
         String username = AccountUtils.getUser().getUsername();
@@ -246,22 +302,14 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         ((TextView) findViewById(R.id.place_name)).setText(building.getPlace().getName());
     }
 
-    private String getBuildingNameWithPrefix(Building building) {
-        String buildName = building.getName();
-        Place place = survey.getSurveyBuilding().getPlace();
-        if (place.getType() == Place.TYPE_VILLAGE_COMMUNITY) {
-            buildName = HOUSE_NO_PREFIX + buildName;
-        }
-        return buildName;
-    }
-
     private void loadSurveyData(Survey survey) {
         residentCountView.setText(String.valueOf(survey.getResidentCount()));
         loadSurveyDetail(survey.getIndoorDetail(), indoorContainerViews);
         loadSurveyDetail(survey.getOutdoorDetail(), outdoorContainerViews);
     }
 
-    private void loadSurveyDetail(List<SurveyDetail> indoorDetails, HashMap<Integer, SurveyContainerView> surveyContainerViews) {
+    private void loadSurveyDetail(List<SurveyDetail> indoorDetails,
+                                  HashMap<Integer,SurveyContainerView> surveyContainerViews) {
         for (SurveyDetail eachDetail : indoorDetails) {
             SurveyContainerView surveyContainerView = surveyContainerViews.get(eachDetail.getContainerType().getId());
             surveyContainerView.setSurveyDetail(eachDetail);
@@ -288,7 +336,6 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         indoorContainerViews = new HashMap<>();
         outdoorContainerViews = new HashMap<>();
     }
-
 
     private void buildIndoorContainerView(ContainerType containerType) {
         SurveyContainerView surveyContainerView = buildContainerView(containerType);
@@ -327,14 +374,15 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     private void openSurveyBuildingHistory() {
         Intent intent = new Intent(SurveyActivity.this, SurveyBuildingHistoryActivity.class);
-        intent.putExtra(SurveyBuildingHistoryActivity.PLACE_UUID_ARG, survey.getSurveyBuilding().getPlace().getId().toString());
         intent.putExtra(SurveyBuildingHistoryActivity.USER_NAME_ARG, survey.getUser().getUsername());
+        intent.putExtra(SurveyBuildingHistoryActivity.PLACE_UUID_ARG, survey.getSurveyBuilding()
+                .getPlace().getId().toString());
         startActivity(intent);
     }
 
     @Override
     public void displaySaveFail() {
-        Toast.makeText(SurveyActivity.this, R.string.save_fail, Toast.LENGTH_LONG).show();
+        Alert.mediumLevel().show(R.string.save_fail);
     }
 
     @Override
@@ -347,7 +395,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     @Override
     public void displayUpdateFail() {
-
+        Alert.mediumLevel().show(R.string.save_fail);
     }
 
     private void doPutData() {
@@ -365,90 +413,6 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         surveyUpdateJob.addJob(new PostDataJob<>(new DbBuildingRepository(this), new BuildingRestService()));
         surveyUpdateJob.addJob(new PostDataJob<>(new DbSurveyRepository(this), new SurveyRestService()));
         surveyUpdateJob.start();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.save:
-                SaveSurveyData();
-                break;
-            case android.R.id.home:
-                showAbortSurveyPrompt();
-                break;
-        }
-        return true;
-    }
-
-    private void SaveSurveyData() {
-        try {
-            survey.setResidentCount(getResidentCount());
-            survey.setIndoorDetail(getSurveyDetail(indoorContainerViews));
-            survey.setOutdoorDetail(getSurveyDetail(outdoorContainerViews));
-            survey.setLocation(getLastLocation());
-            survey.finishSurvey();
-            if (isEditSurvey) {
-                SurveySaver surveySaver = new SurveySaver(this, new SaveSurveyValidator(this), surveyRepository);
-                surveySaver.update(survey);
-            } else {
-                SurveySaver surveySaver = new SurveySaver(this, new SaveSurveyValidator(this), surveyRepository);
-                surveySaver.save(survey);
-            }
-        } catch (SurveyDetail.ContainerFoundLarvaOverTotalException e) {
-            Alert.highLevel().show(R.string.over_total_container);
-            validateSurveyContainerViews(indoorContainerViews);
-            validateSurveyContainerViews(outdoorContainerViews);
-            TanrabadApp.log(e);
-        } catch (ValidatorException e) {
-            Alert.highLevel().show(e.getMessageID());
-            if (e.getMessageID() == R.string.please_enter_resident)
-                residentCountView.requestFocus();
-        }
-    }
-
-    private int getResidentCount() {
-        String residentCountStr = residentCountView.getText().toString();
-        return TextUtils.isEmpty(residentCountStr) ? 0 : Integer.valueOf(residentCountStr);
-    }
-
-    private ArrayList<SurveyDetail> getSurveyDetail(HashMap<Integer, SurveyContainerView> containerViews) {
-        ArrayList<SurveyDetail> surveyDetails = new ArrayList<>();
-        for (Map.Entry<Integer, SurveyContainerView> eachView : containerViews.entrySet()) {
-            SurveyDetail surveyDetail = eachView.getValue().getSurveyDetail();
-            if (surveyDetail != null) {
-                surveyDetails.add(surveyDetail);
-            }
-        }
-        return surveyDetails;
-    }
-
-    private boolean validateSurveyContainerViews(HashMap<Integer, SurveyContainerView> containerViews) {
-        boolean isValid = true;
-        for (Map.Entry<Integer, SurveyContainerView> eachView : containerViews.entrySet()) {
-            if (!eachView.getValue().isValid()) isValid = false;
-        }
-        return isValid;
-    }
-
-    public Location getLastLocation() {
-        if (location == null)
-            return null;
-        int minutes = 5;
-        int minutesInMillis = minutes * 60000;
-        long differentTimeInMinutes = (DateTime.now().getMillis() - location.getTime()) / minutesInMillis;
-        return differentTimeInMinutes <= minutes ? new Location(location.getLatitude(), location.getLongitude()) : null;
-    }
-
-    private void showAbortSurveyPrompt() {
-        PromptMessage promptMessage = new AlertDialogPromptMessage(this);
-        promptMessage.setOnCancel(getString(R.string.no), null);
-        promptMessage.setOnConfirm(getString(R.string.yes), new PromptMessage.OnConfirmListener() {
-            @Override
-            public void onConfirm() {
-                finish();
-            }
-        });
-        promptMessage.show(getString(R.string.abort_survey), getBuildingNameWithPrefix(survey.getSurveyBuilding()));
     }
 
     @Override
@@ -483,56 +447,14 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     @Override
     protected void onPause() {
-        ((TorchButton) findViewById(R.id.torch)).safeTurnOff();
         super.onPause();
+        ((TorchButton) findViewById(R.id.torch)).safeTurnOff();
+        locationService.disconnect();
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (locationApiClient != null && !locationApiClient.isConnected()) {
-            locationApiClient.connect();
-        }
-    }
 
     public void onRootViewClick(View view) {
         SoftKeyboard.hideOn(this);
-    }
-
-    @Override
-    public void onConnected(Bundle bundle) {
-        setupLocationUpdateService();
-    }
-
-    private void setupLocationUpdateService() {
-        LocationRequest locationRequest = LocationRequest.create();
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        final long UPDATE_INTERVAL_MS = 500;
-        final long FASTEST_INTERVAL_MS = 100;
-        locationRequest.setInterval(UPDATE_INTERVAL_MS);
-        locationRequest.setFastestInterval(FASTEST_INTERVAL_MS);
-
-        try {
-            LocationServices.FusedLocationApi.requestLocationUpdates(
-                    locationApiClient, locationRequest, this);
-        } catch (SecurityException securityException) {
-            LocationPermissionPrompt.show(this);
-        }
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-        Alert.highLevel().show("ไม่สามารถเชื่อมต่อ Google Play Services ได้");
-    }
-
-    @Override
-    public void onLocationChanged(android.location.Location location) {
-        this.location = location;
     }
 
     public class SurveyUpdateJob extends AbsJobRunner {

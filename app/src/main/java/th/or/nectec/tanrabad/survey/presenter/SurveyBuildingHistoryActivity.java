@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +30,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
 import th.or.nectec.tanrabad.domain.place.PlaceController;
@@ -100,7 +102,8 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
     }
 
     private void setupBuildingHistoryList() {
-        surveyBuildingHistoryAdapter = new SurveyBuildingHistoryAdapter(this, BuildingIconWhiteMapping.getBuildingIcon(place));
+        surveyBuildingHistoryAdapter = new SurveyBuildingHistoryAdapter(this,
+                BuildingIconWhiteMapping.getBuildingIcon(place));
         RecyclerView surveyBuildingHistoryList = (RecyclerView) findViewById(R.id.survey_building_history_list);
         surveyBuildingHistoryList.setAdapter(surveyBuildingHistoryAdapter);
         surveyBuildingHistoryList.setLayoutManager(new LinearLayoutManager(this));
@@ -124,11 +127,13 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
     }
 
     private void showSurveyBuildingHistoryList() {
-        SurveyBuildingHistoryController surveyBuildingHistoryController = new SurveyBuildingHistoryController(new StubUserRepository(),
+        SurveyBuildingHistoryController surveyBuildingHistoryController = new SurveyBuildingHistoryController(
+                new StubUserRepository(),
                 BrokerPlaceRepository.getInstance(),
                 BrokerSurveyRepository.getInstance(),
                 this);
-        surveyBuildingHistoryController.showSurveyBuildingOf(getPlaceUuidFromIntent(), AccountUtils.getUser().getUsername());
+        surveyBuildingHistoryController.showSurveyBuildingOf(getPlaceUuidFromIntent(),
+                AccountUtils.getUser().getUsername());
         surveyMoreBuildingButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -142,6 +147,8 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
     public void displayPlace(Place place) {
         this.place = place;
         placeName.setText(place.getName());
+        ImageView icon = (ImageView) findViewById(R.id.building_icon);
+        icon.setImageResource(BuildingIconMapping.getBuildingIcon(place));
     }
 
     @Override
@@ -166,7 +173,8 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
         TextView cardSubhead = (TextView) findViewById(R.id.place_subhead);
         HouseIndex hi = new HouseIndex(surveys);
         hi.calculate();
-        cardSubhead.setText(getString(R.string.format_house_survey, hi.getTotalSurveyHouse(), hi.getFoundLarvaeHouse()));
+        cardSubhead.setText(Html.fromHtml(
+                getString(R.string.format_house_survey, hi.getTotalSurveyHouse(), hi.getFoundLarvaeHouse())));
         surveyBuildingHistoryAdapter.updateData(surveys);
     }
 

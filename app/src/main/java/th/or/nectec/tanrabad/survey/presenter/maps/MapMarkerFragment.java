@@ -20,6 +20,8 @@ package th.or.nectec.tanrabad.survey.presenter.maps;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
+import android.support.annotation.Nullable;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
@@ -28,12 +30,36 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.utils.MapUtils;
 
-public class MapMarkerFragment extends BaseMapFragment implements MapMarkerInterface, GoogleMap.OnMapLongClickListener, GoogleMap.OnMarkerDragListener, OnMapReadyCallback {
+public class MapMarkerFragment extends BaseMapFragment implements MapMarkerInterface, GoogleMap.OnMapLongClickListener,
+        GoogleMap.OnMarkerDragListener, OnMapReadyCallback {
 
     public static final String FRAGMENT_TAG = "map_marker_fragment";
 
     Marker marker;
     private th.or.nectec.tanrabad.entity.field.Location markedLocation;
+    private GoogleApiClient.ConnectionCallbacks locationServiceCallback = new GoogleApiClient.ConnectionCallbacks() {
+        @Override
+        public void onConnected(@Nullable Bundle bundle) {
+            LatLng targetLocation;
+            if (markedLocation != null) {
+                targetLocation = LocationUtils.convertLocationToLatLng(markedLocation);
+                marker = addDraggableMarker(targetLocation);
+                moveToLocation(targetLocation);
+            } else {
+                Location lastLocation = playLocationService.getLastKnowLocation();
+                if (lastLocation != null && marker == null) {
+                    targetLocation = LocationUtils.convertLocationToLatLng(lastLocation);
+                    marker = addDraggableMarker(targetLocation);
+                    moveToLocation(targetLocation);
+                }
+            }
+        }
+
+        @Override
+        public void onConnectionSuspended(int i) {
+
+        }
+    };
 
     public static MapMarkerFragment newInstance() {
         MapMarkerFragment mapMarkerFragment = new MapMarkerFragment();
@@ -41,10 +67,10 @@ public class MapMarkerFragment extends BaseMapFragment implements MapMarkerInter
         return mapMarkerFragment;
     }
 
-    public static MapMarkerFragment newInstanceWithLocation(th.or.nectec.tanrabad.entity.field.Location buildingLocation) {
+    public static MapMarkerFragment newInstanceWithLocation(th.or.nectec.tanrabad.entity.field.Location location) {
         MapMarkerFragment mapMarkerFragment = new MapMarkerFragment();
         mapMarkerFragment.setMoveToMyLocation(false);
-        mapMarkerFragment.setMarkedLocation(buildingLocation);
+        mapMarkerFragment.setMarkedLocation(location);
         return mapMarkerFragment;
     }
 
@@ -57,21 +83,28 @@ public class MapMarkerFragment extends BaseMapFragment implements MapMarkerInter
     }
 
     @Override
-    public void onConnected(Bundle connectionHint) {
-        super.onConnected(connectionHint);
-        LatLng targetLocation;
-        if (markedLocation != null) {
-            targetLocation = LocationUtils.convertLocationToLatLng(markedLocation);
-            marker = addDraggableMarker(targetLocation);
-            moveToLocation(targetLocation);
-        } else {
-            Location lastLocation = getLastLocation();
-            if (lastLocation != null && marker == null) {
-                targetLocation = LocationUtils.convertLocationToLatLng(lastLocation);
-                marker = addDraggableMarker(targetLocation);
-                moveToLocation(targetLocation);
-            }
-        }
+    public void onStop() {
+        super.onStop();
+        playLocationService.removeConnectionCallbacks(locationServiceCallback);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        super.onMapReady(googleMap);
+        playLocationService.addConnectionCallbacks(locationServiceCallback);
+    }
+
+    @Override
+    public void onMapLongClick(LatLng latLng) {
+        removeMarkedLocation();
+        marker = addDraggableMarker(latLng);
+    }
+
+    public void removeMarkedLocation() {
+        if (marker == null)
+            return;
+        marker.remove();
+        marker = null;
     }
 
     public Marker addDraggableMarker(LatLng position) {
@@ -88,20 +121,6 @@ public class MapMarkerFragment extends BaseMapFragment implements MapMarkerInter
         return pinnedMarker;
     }
 
-
-    @Override
-    public void onMapLongClick(LatLng latLng) {
-        removeMarkedLocation();
-        marker = addDraggableMarker(latLng);
-    }
-
-    public void removeMarkedLocation() {
-        if (marker == null)
-            return;
-        marker.remove();
-        marker = null;
-    }
-
     @Override
     public void onMarkerDragStart(Marker marker) {
         getMap().getUiSettings().setScrollGesturesEnabled(false);
@@ -109,7 +128,6 @@ public class MapMarkerFragment extends BaseMapFragment implements MapMarkerInter
 
     @Override
     public void onMarkerDrag(Marker marker) {
-
     }
 
     @Override
@@ -118,7 +136,8 @@ public class MapMarkerFragment extends BaseMapFragment implements MapMarkerInter
     }
 
     public th.or.nectec.tanrabad.entity.field.Location getMarkedLocation() {
-        return marker == null ? null : new th.or.nectec.tanrabad.entity.field.Location(marker.getPosition().latitude, marker.getPosition().longitude);
+        return marker == null ? null : new th.or.nectec.tanrabad.entity.field.Location(marker.getPosition().latitude,
+                marker.getPosition().longitude);
     }
 
     @Override

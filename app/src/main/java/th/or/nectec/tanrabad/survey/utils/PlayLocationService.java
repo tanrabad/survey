@@ -56,7 +56,6 @@ public class PlayLocationService {
     private LocationListener locationListener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
-            Alert.lowLevel().show(location.toString());
             currentLocation = location;
         }
     };
@@ -141,5 +140,12 @@ public class PlayLocationService {
         return locationRequest;
     }
 
+    public void addConnectionCallbacks(ConnectionCallbacks connectionCallbacks) {
+        locationApiClient.registerConnectionCallbacks(connectionCallbacks);
+    }
+
+    public void removeConnectionCallbacks(ConnectionCallbacks connectionCallbacks) {
+        locationApiClient.unregisterConnectionCallbacks(connectionCallbacks);
+    }
 
 }

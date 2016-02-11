@@ -18,7 +18,9 @@
 package th.or.nectec.tanrabad.survey.presenter.maps;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.graphics.ColorUtils;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CircleOptions;
@@ -38,13 +40,32 @@ import th.or.nectec.tanrabad.survey.utils.android.ResourceUtils;
 import java.util.List;
 import java.util.UUID;
 
-public class BuildingMapMarkerFragment extends MapMarkerFragment implements
-        GoogleMap.OnMapLongClickListener, GoogleMap.OnMarkerDragListener, OnMapReadyCallback {
+public class BuildingMapMarkerFragment extends MapMarkerFragment implements GoogleMap.OnMapLongClickListener,
+        GoogleMap.OnMarkerDragListener, OnMapReadyCallback {
 
     public static final String FRAGMENT_TAG = "building_map_marker_fragment";
     public static final int DISTANCE_LIMIT_IN_METER = 4000;
     private Place place;
     private Marker placeMarker;
+    private GoogleApiClient.ConnectionCallbacks locationServiceCallback = new GoogleApiClient.ConnectionCallbacks() {
+        @Override
+        public void onConnected(@Nullable Bundle bundle) {
+            Location placeLocation = place.getLocation();
+            if (placeLocation != null) {
+                addPlaceMarker();
+                addPlaceCircle();
+                queryAndAddAnotherBuildingMarker();
+                if (getMarkedLocation() == null) {
+                    moveToLocation(LocationUtils.convertLocationToLatLng(placeLocation));
+                }
+            }
+        }
+
+        @Override
+        public void onConnectionSuspended(int i) {
+
+        }
+    };
 
     public static BuildingMapMarkerFragment newInstance(String placeUUID) {
         BuildingMapMarkerFragment mapMarkerFragment = new BuildingMapMarkerFragment();
@@ -65,18 +86,15 @@ public class BuildingMapMarkerFragment extends MapMarkerFragment implements
         return mapMarkerFragment;
     }
 
+    public void onStart() {
+        super.onStart();
+        playLocationService.addConnectionCallbacks(locationServiceCallback);
+    }
+
     @Override
-    public void onConnected(Bundle connectionHint) {
-        super.onConnected(connectionHint);
-        Location placeLocation = place.getLocation();
-        if (placeLocation != null) {
-            addPlaceMarker();
-            addPlaceCircle();
-            queryAndAddAnotherBuildingMarker();
-            if (getMarkedLocation() == null) {
-                moveToLocation(LocationUtils.convertLocationToLatLng(placeLocation));
-            }
-        }
+    public void onStop() {
+        super.onStop();
+        playLocationService.removeConnectionCallbacks(locationServiceCallback);
     }
 
     private void addPlaceMarker() {

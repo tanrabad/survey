@@ -67,7 +67,7 @@ public class JsonBuilding {
     public Building getEntity(PlaceRepository placeRepository, UserRepository userRepository) {
         Building building = new Building(buildingID, buildingName);
         building.setPlace(placeRepository.findByUUID(placeID));
-        Location location = this.location==null ? null : this.location.getEntity();
+        Location location = this.location == null ? null : this.location.getEntity();
         building.setLocation(location);
         building.setUpdateBy(updatedBy);
         building.setUpdateTimestamp(ThaiDateTimeConverter.convert(updateTime).toString());

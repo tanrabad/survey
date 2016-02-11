@@ -174,9 +174,9 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         return TextUtils.isEmpty(residentCountStr) ? 0 : Integer.valueOf(residentCountStr);
     }
 
-    private ArrayList<SurveyDetail> getSurveyDetail(HashMap<Integer,SurveyContainerView> containerViews) {
+    private ArrayList<SurveyDetail> getSurveyDetail(HashMap<Integer, SurveyContainerView> containerViews) {
         ArrayList<SurveyDetail> surveyDetails = new ArrayList<>();
-        for (Map.Entry<Integer,SurveyContainerView> eachView : containerViews.entrySet()) {
+        for (Map.Entry<Integer, SurveyContainerView> eachView : containerViews.entrySet()) {
             SurveyDetail surveyDetail = eachView.getValue().getSurveyDetail();
             if (surveyDetail != null) {
                 surveyDetails.add(surveyDetail);
@@ -185,9 +185,9 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         return surveyDetails;
     }
 
-    private boolean validateSurveyContainerViews(HashMap<Integer,SurveyContainerView> containerViews) {
+    private boolean validateSurveyContainerViews(HashMap<Integer, SurveyContainerView> containerViews) {
         boolean isValid = true;
-        for (Map.Entry<Integer,SurveyContainerView> eachView : containerViews.entrySet()) {
+        for (Map.Entry<Integer, SurveyContainerView> eachView : containerViews.entrySet()) {
             if (!eachView.getValue().isValid()) isValid = false;
         }
         return isValid;
@@ -309,7 +309,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     }
 
     private void loadSurveyDetail(List<SurveyDetail> indoorDetails,
-                                  HashMap<Integer,SurveyContainerView> surveyContainerViews) {
+                                  HashMap<Integer, SurveyContainerView> surveyContainerViews) {
         for (SurveyDetail eachDetail : indoorDetails) {
             SurveyContainerView surveyContainerView = surveyContainerViews.get(eachDetail.getContainerType().getId());
             surveyContainerView.setSurveyDetail(eachDetail);

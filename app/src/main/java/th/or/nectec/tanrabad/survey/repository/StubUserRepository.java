@@ -25,16 +25,18 @@ import java.util.HashMap;
 
 public class StubUserRepository implements UserRepository {
 
+    public static final String DEV_USERNAME = "dpc-user";
+    public static final String DEMO_USERNAME = "dpc-13-beta";
     HashMap<String, User> userMapping;
 
     public StubUserRepository() {
         userMapping = new HashMap<>();
-        userMapping.put("dpc-user", getDpcUser());
-        userMapping.put("dpc-13-beta", getDpc13BetaUser());
+        userMapping.put(DEV_USERNAME, getDpcUser());
+        userMapping.put(DEMO_USERNAME, getDpc13BetaUser());
     }
 
     private User getDpcUser() {
-        User dpcUser = new User("dpc-user");
+        User dpcUser = new User(DEV_USERNAME);
         dpcUser.setFirstname("ซาร่า");
         dpcUser.setLastname("คิดส์");
         dpcUser.setEmail("sara.k@gmail.com");
@@ -44,7 +46,7 @@ public class StubUserRepository implements UserRepository {
     }
 
     private User getDpc13BetaUser() {
-        User dpcUser = new User("dpc-13-beta");
+        User dpcUser = new User(DEMO_USERNAME);
         dpcUser.setFirstname("ทดสอบ");
         dpcUser.setLastname("ทดสอบ");
         dpcUser.setEmail("dpc13@gmail.com");

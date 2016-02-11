@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -51,7 +51,8 @@ import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 import java.util.List;
 import java.util.UUID;
 
-public class BuildingListActivity extends TanrabadActivity implements BuildingWithSurveyStatusListPresenter, PlacePresenter, ActionMode.Callback, View.OnClickListener {
+public class BuildingListActivity extends TanrabadActivity implements BuildingWithSurveyStatusListPresenter,
+        PlacePresenter, ActionMode.Callback, View.OnClickListener {
 
     public static final String PLACE_UUID_ARG = "place_uuid_arg";
     public static final String IS_NEW_SURVEY_ARG = "is_new_survey_arg";
@@ -61,7 +62,12 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     private BuildingWithSurveyStatusAdapter buildingAdapter;
     private Place place;
     private EmptyLayoutView emptyLayoutView;
-    private SurveyBuildingChooser surveyBuildingChooser = new SurveyBuildingChooser(new StubUserRepository(), BrokerPlaceRepository.getInstance(), BrokerBuildingRepository.getInstance(), BrokerSurveyRepository.getInstance(), this);
+    private SurveyBuildingChooser surveyBuildingChooser = new SurveyBuildingChooser(
+            new StubUserRepository(),
+            BrokerPlaceRepository.getInstance(),
+            BrokerBuildingRepository.getInstance(),
+            BrokerSurveyRepository.getInstance(),
+            this);
     private SearchView buildingSearchView;
 
     public static void open(Activity activity, String placeUUID) {
@@ -136,16 +142,24 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         buildingSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String searchString) {
-                surveyBuildingChooser.searchSurveyBuildingOfPlaceByName(searchString, getPlaceUuidFromIntent().toString(), "dpc-user");
+                surveyBuildingChooser.searchSurveyBuildingOfPlaceByName(searchString,
+                        getPlaceUuidFromIntent().toString(),
+                        getUsername());
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String searchString) {
-                surveyBuildingChooser.searchSurveyBuildingOfPlaceByName(searchString, getPlaceUuidFromIntent().toString(), "dpc-user");
+                surveyBuildingChooser.searchSurveyBuildingOfPlaceByName(searchString,
+                        getPlaceUuidFromIntent().toString(),
+                        getUsername());
                 return true;
             }
         });
+    }
+
+    private String getUsername() {
+        return AccountUtils.getUser().toString();
     }
 
     private void setupEmptyLayout() {
@@ -162,7 +176,8 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     }
 
     private void loadSurveyBuildingList() {
-        surveyBuildingChooser.displaySurveyBuildingOf(getPlaceUuidFromIntent().toString(), "dpc-user");
+        surveyBuildingChooser.displaySurveyBuildingOf(getPlaceUuidFromIntent().toString(),
+                getUsername());
     }
 
     @Override

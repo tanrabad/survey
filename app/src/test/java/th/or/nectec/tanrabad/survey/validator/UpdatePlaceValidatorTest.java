@@ -20,8 +20,8 @@ package th.or.nectec.tanrabad.survey.validator;
 import org.junit.Test;
 import org.mockito.Mockito;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
-import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.field.Location;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -42,15 +42,6 @@ public class UpdatePlaceValidatorTest {
     public void testAddressNull() throws Exception {
         UpdatePlaceValidator savePlaceValidator = new UpdatePlaceValidator();
         Place place = new Place(UUID.randomUUID(), "5555");
-
-        savePlaceValidator.validate(place);
-    }
-
-    @Test(expected = NullLocationException.class)
-    public void testLocationNull() throws Exception {
-        UpdatePlaceValidator savePlaceValidator = new UpdatePlaceValidator();
-        Place place = new Place(UUID.randomUUID(), "5555");
-        place.setSubdistrictCode("130202");
 
         savePlaceValidator.validate(place);
     }

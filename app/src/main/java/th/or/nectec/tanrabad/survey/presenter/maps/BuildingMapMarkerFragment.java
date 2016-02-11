@@ -26,16 +26,20 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.SphericalUtil;
+import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.repository.BrokerBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.utils.MapUtils;
 import th.or.nectec.tanrabad.survey.utils.android.ResourceUtils;
 
+import java.util.List;
 import java.util.UUID;
 
-public class BuildingMapMarkerFragment extends MapMarkerFragment implements GoogleMap.OnMapLongClickListener, GoogleMap.OnMarkerDragListener, OnMapReadyCallback {
+public class BuildingMapMarkerFragment extends MapMarkerFragment implements
+        GoogleMap.OnMapLongClickListener, GoogleMap.OnMarkerDragListener, OnMapReadyCallback {
 
     public static final String FRAGMENT_TAG = "building_map_marker_fragment";
     public static final int DISTANCE_LIMIT_IN_METER = 4000;
@@ -68,6 +72,7 @@ public class BuildingMapMarkerFragment extends MapMarkerFragment implements Goog
         if (placeLocation != null) {
             addPlaceMarker();
             addPlaceCircle();
+            queryAndAddAnotherBuildingMarker();
             if (getMarkedLocation() == null) {
                 moveToLocation(LocationUtils.convertLocationToLatLng(placeLocation));
             }
@@ -83,6 +88,23 @@ public class BuildingMapMarkerFragment extends MapMarkerFragment implements Goog
         placeMarker = googleMap.addMarker(markerOptions);
     }
 
+    private void queryAndAddAnotherBuildingMarker() {
+        List<Building> buildingsInPlaceList = BrokerBuildingRepository.getInstance().findByPlaceUUID(place.getId());
+        for (Building eachBuilding : buildingsInPlaceList) {
+            if (!eachBuilding.getLocation().equals(getMarkedLocation()))
+                addAnotherBuildingMarker(eachBuilding.getLocation());
+        }
+    }
+
+    private void addAnotherBuildingMarker(Location buildingLocation) {
+        LatLng buildingPosition = LocationUtils.convertLocationToLatLng(buildingLocation);
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.icon(MapUtils.getIconBitmapDescriptor(getActivity(), R.color.amber_500));
+        markerOptions.position(buildingPosition);
+        markerOptions.title(place.getName());
+        placeMarker = googleMap.addMarker(markerOptions);
+    }
+
     private void addPlaceCircle() {
         LatLng placePosition = LocationUtils.convertLocationToLatLng(place.getLocation());
         int placeColor = ResourceUtils.from(getActivity()).getColor(R.color.water_blue);
@@ -92,7 +114,7 @@ public class BuildingMapMarkerFragment extends MapMarkerFragment implements Goog
         circleOptions.fillColor(ColorUtils.setAlphaComponent(placeColor, 40));
         circleOptions.strokeColor(placeColor);
         circleOptions.strokeWidth(1);
-        getMap().addCircle(circleOptions);
+        googleMap.addCircle(circleOptions);
     }
 
     public boolean isDistanceBetweenPlaceAndBuildingExceed() {

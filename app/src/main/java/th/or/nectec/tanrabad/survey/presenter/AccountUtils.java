@@ -19,6 +19,7 @@ public class AccountUtils {
 
     public static void setUser(User user) {
         AccountUtils.user = user;
-        TanrabadApp.action().login(user);
+        if (TanrabadApp.action() != null)
+            TanrabadApp.action().login(AccountUtils.user);
     }
 }

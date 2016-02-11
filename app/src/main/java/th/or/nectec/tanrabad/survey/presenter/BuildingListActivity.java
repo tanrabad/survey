@@ -24,6 +24,7 @@ import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,6 +40,7 @@ import th.or.nectec.tanrabad.domain.place.PlacePresenter;
 import th.or.nectec.tanrabad.domain.survey.SurveyBuildingChooser;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView;
 import th.or.nectec.tanrabad.survey.repository.BrokerBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
@@ -121,6 +123,8 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 BuildingWithSurveyStatus building = buildingAdapter.getItem(position);
                 SurveyActivity.open(BuildingListActivity.this, building.getBuilding());
+                if (!TextUtils.isEmpty(buildingSearchView.getQuery()))
+                    TanrabadApp.action().filterBuilding(buildingSearchView.getQuery().toString());
             }
         });
         buildingAdapter.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -142,7 +146,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         buildingSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String searchString) {
-
+                TanrabadApp.action().filterBuilding(searchString);
                 surveyBuildingChooser.searchSurveyBuildingOfPlaceByName(searchString,
                         getPlaceUuidFromIntent().toString(),
                         AccountUtils.getUser());

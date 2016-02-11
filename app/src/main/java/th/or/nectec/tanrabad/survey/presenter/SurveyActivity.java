@@ -199,6 +199,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         promptMessage.setOnConfirm(getString(R.string.yes), new PromptMessage.OnConfirmListener() {
             @Override
             public void onConfirm() {
+                TanrabadApp.action().finishSurvey(survey, false);
                 finish();
             }
         });
@@ -269,6 +270,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
         isEditSurvey = true;
         this.survey = survey;
+        TanrabadApp.action().updateSurvey(survey);
         setBuildingInfo();
         loadSurveyData(survey);
     }
@@ -278,6 +280,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         survey = new Survey(UUIDUtils.generateOrdered(MacAddressUtils.getMacAddress(this)), user, building);
         survey.startSurvey();
         isEditSurvey = false;
+        TanrabadApp.action().startSurvey(survey);
         setBuildingInfo();
     }
 
@@ -368,6 +371,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     public void displaySaveSuccess() {
         if (InternetConnection.isAvailable(this))
             doPostData();
+        TanrabadApp.action().finishSurvey(survey, true);
         finish();
         openSurveyBuildingHistory();
     }

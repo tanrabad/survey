@@ -41,6 +41,7 @@ import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.utils.HouseIndex;
 import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerSurveyRepository;
@@ -144,6 +145,39 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.finish:
+                TanrabadApp.action().finishSurvey(place, true);
+                showFinishSurveyPrompt();
+                break;
+            case android.R.id.home:
+                TanrabadApp.action().finishSurvey(place, false);
+                showFinishSurveyPrompt();
+                break;
+        }
+        return true;
+    }
+
+    public void showFinishSurveyPrompt() {
+        PromptMessage promptMessage = new AlertDialogPromptMessage(this);
+        promptMessage.setOnConfirm(getString(R.string.confirm), new PromptMessage.OnConfirmListener() {
+            @Override
+            public void onConfirm() {
+                openMainActivity();
+            }
+        });
+        promptMessage.setOnCancel(getString(R.string.cancel), null);
+        promptMessage.show(getString(R.string.finish_place_survey), place.getName());
+    }
+
+    private void openMainActivity() {
+        Intent intent = new Intent(SurveyBuildingHistoryActivity.this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
+
+    @Override
     public void displayPlace(Place place) {
         this.place = place;
         placeName.setText(place.getName());
@@ -185,38 +219,8 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.finish:
-                showFinishSurveyPrompt();
-                break;
-            case android.R.id.home:
-                showFinishSurveyPrompt();
-                break;
-        }
-        return true;
-    }
-
-    public void showFinishSurveyPrompt() {
-        PromptMessage promptMessage = new AlertDialogPromptMessage(this);
-        promptMessage.setOnConfirm(getString(R.string.confirm), new PromptMessage.OnConfirmListener() {
-            @Override
-            public void onConfirm() {
-                openMainActivity();
-            }
-        });
-        promptMessage.setOnCancel(getString(R.string.cancel), null);
-        promptMessage.show(getString(R.string.finish_place_survey), place.getName());
-    }
-
-    private void openMainActivity() {
-        Intent intent = new Intent(SurveyBuildingHistoryActivity.this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-    }
-
-    @Override
     public void onBackPressed() {
+        TanrabadApp.action().finishSurvey(place, false);
         showFinishSurveyPrompt();
     }
 }

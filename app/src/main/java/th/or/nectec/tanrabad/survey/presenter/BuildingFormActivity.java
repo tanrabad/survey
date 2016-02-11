@@ -42,6 +42,7 @@ import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.job.AbsJobRunner;
 import th.or.nectec.tanrabad.survey.job.Job;
 import th.or.nectec.tanrabad.survey.job.PostDataJob;
@@ -79,7 +80,8 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
     private EditText buildingNameView;
     private FrameLayout addLocationBackground;
     private PlaceController placeController = new PlaceController(BrokerPlaceRepository.getInstance(), this);
-    private BuildingController buildingController = new BuildingController(BrokerBuildingRepository.getInstance(), this);
+    private BuildingController buildingController = new BuildingController(
+            BrokerBuildingRepository.getInstance(), this);
 
     private Place place;
     private Building building;
@@ -147,6 +149,36 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
     private void setupPreviewMap() {
         SupportMapFragment supportMapFragment = LiteMapFragment.newInstance();
         getSupportFragmentManager().beginTransaction().replace(R.id.map_container, supportMapFragment).commit();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.save:
+                saveBuildingData();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void saveBuildingData() {
+        building.setName(buildingNameView.getText().toString().trim());
+        building.setPlace(place);
+        building.setUpdateTimestamp(DateTime.now().toString());
+        building.setUpdateBy(AccountUtils.getUser().getUsername());
+        try {
+            if (TextUtils.isEmpty(getBuildingUUID())) {
+                BuildingSaver buildingSaver = new BuildingSaver(
+                        BrokerBuildingRepository.getInstance(), new SaveBuildingValidator(), this);
+                buildingSaver.save(building);
+            } else {
+                BuildingSaver buildingSaver = new BuildingSaver(
+                        BrokerBuildingRepository.getInstance(), new UpdateBuildingValidator(), this);
+                buildingSaver.update(building);
+            }
+        } catch (ValidatorException e) {
+            Alert.highLevel().show(e.getMessageID());
+        }
     }
 
     @Override
@@ -235,39 +267,12 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.save:
-                saveBuildingData();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void saveBuildingData() {
-        building.setName(buildingNameView.getText().toString().trim());
-        building.setPlace(place);
-        building.setUpdateTimestamp(DateTime.now().toString());
-        building.setUpdateBy(AccountUtils.getUser().getUsername());
-        try {
-            if (TextUtils.isEmpty(getBuildingUUID())) {
-                BuildingSaver buildingSaver = new BuildingSaver(BrokerBuildingRepository.getInstance(), new SaveBuildingValidator(), this);
-                buildingSaver.save(building);
-            } else {
-                BuildingSaver buildingSaver = new BuildingSaver(BrokerBuildingRepository.getInstance(), new UpdateBuildingValidator(), this);
-                buildingSaver.update(building);
-            }
-        } catch (ValidatorException e) {
-            Alert.highLevel().show(e.getMessageID());
-        }
-    }
-
-    @Override
     public void displaySaveSuccess() {
         if (InternetConnection.isAvailable(this))
             doPostData();
         setResult(RESULT_OK);
         finish();
+        TanrabadApp.action().addBuilding(building);
         SurveyActivity.open(BuildingFormActivity.this, building);
     }
 
@@ -294,6 +299,7 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
             doPutData();
         setResult(RESULT_OK);
         finish();
+        TanrabadApp.action().updateBuilding(building);
     }
 
     private void doPutData() {

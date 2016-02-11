@@ -36,6 +36,7 @@ import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.entity.lookup.PlaceSubType;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.job.AbsJobRunner;
 import th.or.nectec.tanrabad.survey.job.Job;
 import th.or.nectec.tanrabad.survey.job.PostDataJob;
@@ -194,12 +195,6 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.action_activity_place_form, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save:
@@ -244,6 +239,11 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.action_activity_place_form, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -286,6 +286,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         setResult(RESULT_OK);
         finish();
         SurveyBuildingHistoryActivity.open(PlaceFormActivity.this, place);
+        TanrabadApp.action().addPlace(place);
     }
 
     private void doPostData() {
@@ -310,6 +311,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
             doPutData();
         setResult(RESULT_OK);
         finish();
+        TanrabadApp.action().updatePlace(place);
     }
 
     private void doPutData() {

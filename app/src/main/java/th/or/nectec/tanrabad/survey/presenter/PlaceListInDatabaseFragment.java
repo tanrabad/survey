@@ -31,6 +31,7 @@ import th.or.nectec.tanrabad.domain.place.PlaceChooser;
 import th.or.nectec.tanrabad.domain.place.PlaceListPresenter;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
@@ -173,6 +174,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements
         promptMessage.setOnConfirm(getString(R.string.survey), new PromptMessage.OnConfirmListener() {
             @Override
             public void onConfirm() {
+                TanrabadApp.action().startSurvey(placeData);
                 SurveyBuildingHistoryActivity.open(getActivity(), placeData);
             }
         });

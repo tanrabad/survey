@@ -23,6 +23,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageButton;
 import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.utils.CameraFlashLight;
 import th.or.nectec.tanrabad.survey.utils.Torch;
 
@@ -98,11 +99,13 @@ public class TorchButton extends ImageButton {
     }
 
     private void turnOff() {
+        TanrabadApp.action().turnOffTorch();
         torch.turnOff();
         setImageResource(R.drawable.torch_off);
     }
 
     private void turnOn() {
+        TanrabadApp.action().turnOnTorch();
         torch.turnOn();
         setImageResource(R.drawable.torch_on);
     }

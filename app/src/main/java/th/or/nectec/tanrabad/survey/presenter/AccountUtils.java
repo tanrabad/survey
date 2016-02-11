@@ -2,6 +2,7 @@ package th.or.nectec.tanrabad.survey.presenter;
 
 
 import th.or.nectec.tanrabad.entity.User;
+import th.or.nectec.tanrabad.survey.TanrabadApp;
 
 public class AccountUtils {
     private static User user;
@@ -18,5 +19,6 @@ public class AccountUtils {
 
     public static void setUser(User user) {
         AccountUtils.user = user;
+        TanrabadApp.action().login(user);
     }
 }

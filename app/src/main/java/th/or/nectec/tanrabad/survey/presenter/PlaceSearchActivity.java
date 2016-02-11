@@ -18,11 +18,13 @@ import th.or.nectec.tanrabad.domain.place.PlaceChooser;
 import th.or.nectec.tanrabad.domain.place.PlaceListPresenter;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 
 import java.util.List;
 
-public class PlaceSearchActivity extends TanrabadActivity implements SearchView.OnQueryTextListener, PlaceListPresenter {
+public class PlaceSearchActivity extends TanrabadActivity implements
+        SearchView.OnQueryTextListener, PlaceListPresenter {
 
     PlaceChooser placeChooser = new PlaceChooser(BrokerPlaceRepository.getInstance(), this);
     private SearchRecentSuggestions suggestions;
@@ -69,7 +71,8 @@ public class PlaceSearchActivity extends TanrabadActivity implements SearchView.
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Cursor selectedItem = (Cursor) adapterView.getItemAtPosition(position);
-                searchView.setQuery(selectedItem.getString(selectedItem.getColumnIndex(SearchManager.SUGGEST_COLUMN_TEXT_1)), true);
+                searchView.setQuery(selectedItem.getString(
+                        selectedItem.getColumnIndex(SearchManager.SUGGEST_COLUMN_TEXT_1)), true);
             }
         });
         if (recentQuery.getCount() > 0) {
@@ -106,25 +109,6 @@ public class PlaceSearchActivity extends TanrabadActivity implements SearchView.
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.action_search, menu);
-        setupSearchView(menu);
-        suggestions = new SearchRecentSuggestions(this, PlaceSuggestionProvider.AUTHORITY, PlaceSuggestionProvider.MODE);
-        return true;
-    }
-
-    private void setupSearchView(Menu menu) {
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-        searchView.setIconified(false);
-        searchView.setIconifiedByDefault(false);
-        searchView.setOnQueryTextListener(this);
-        searchView.setMaxWidth(Integer.MAX_VALUE);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -135,7 +119,29 @@ public class PlaceSearchActivity extends TanrabadActivity implements SearchView.
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.action_search, menu);
+        setupSearchView(menu);
+        suggestions = new SearchRecentSuggestions(
+                this, PlaceSuggestionProvider.AUTHORITY, PlaceSuggestionProvider.MODE);
+        return true;
+    }
+
+    private void setupSearchView(Menu menu) {
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        searchView.setIconified(false);
+        searchView.setIconifiedByDefault(false);
+        searchView.setOnQueryTextListener(this);
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+    }
+
+    @Override
     public boolean onQueryTextSubmit(String query) {
+        TanrabadApp.action().searchPlace(query);
         placeChooser.searchByName(query);
         suggestions.saveRecentQuery(query, null);
         searchHistoryListView.setVisibility(View.GONE);

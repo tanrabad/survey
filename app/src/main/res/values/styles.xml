@@ -74,15 +74,16 @@
     </style>
 
     <style name="SpinnerItem">
-        <item name="android:background">@drawable/bg_list_item</item>
+        <item name="android:background">@drawable/bg_spinner_item</item>
         <item name="android:paddingTop">@dimen/list_padding_top</item>
         <item name="android:paddingLeft">@dimen/list_padding_left</item>
         <item name="android:paddingBottom">@dimen/list_padding_bottom</item>
+        <item name="android:paddingRight">@dimen/list_padding_right</item>
         <item name="android:minHeight">@dimen/list_item_min_height</item>
     </style>
 
     <style name="SpinnerItem.Dropdown">
-        <item name="android:background">@drawable/bg_list_item</item>
+        <item name="android:background">@drawable/bg_spinner_item</item>
         <item name="android:paddingTop">@dimen/list_padding_top</item>
         <item name="android:paddingLeft">@dimen/list_padding_left</item>
         <item name="android:paddingRight">@dimen/list_padding_right</item>

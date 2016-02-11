@@ -333,6 +333,8 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         this.place = place;
         placeNameView.setText(place.getName());
 
+        placeTypeSelector.setEnabled(false);
+
         if (!TextUtils.isEmpty(place.getSubdistrictCode())) {
             addressSelect.setAddressCode(place.getSubdistrictCode());
         }

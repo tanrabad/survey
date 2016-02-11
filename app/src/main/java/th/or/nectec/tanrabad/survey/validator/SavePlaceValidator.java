@@ -40,14 +40,12 @@ public class SavePlaceValidator implements PlaceValidator {
             throw new NullAddressException(R.string.please_define_place_address);
         }
 
-        if (place.getLocation() == null) {
-            throw new NullLocationException(R.string.please_define_place_location);
-        }
-
         List<Place> places = placeRepository.find();
         if (places != null) {
             for (Place eachPlace : places) {
-                if (isSamePlaceName(place, eachPlace) && isSamePlaceType(place, eachPlace) && isSamePlaceAddress(place, eachPlace)) {
+                if (isSamePlaceName(place, eachPlace) &&
+                        isSamePlaceType(place, eachPlace) &&
+                        isSamePlaceAddress(place, eachPlace)) {
                     throw new ValidatorException(R.string.cant_save_same_place_name);
                 }
             }

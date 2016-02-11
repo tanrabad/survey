@@ -19,17 +19,14 @@ package th.or.nectec.tanrabad.survey.presenter;
 
 import android.content.ComponentName;
 import android.content.Intent;
-
 import android.support.test.espresso.intent.Intents;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
@@ -78,24 +75,6 @@ public class PlaceFormActivityByPutExtraPlaceTypeSchoolTest extends TanrabadEspr
                 .perform(click());
 
         textDisplayed(R.string.please_define_place_address);
-    }
-
-    @Test
-    public void touchSaveByTypeJustPlaceNameAndAddressThenTouchSaveShouldFoundPromptPleaseDefinePlaceLocation() {
-        onView(withId(R.id.place_name))
-                .perform(replaceText("โรงเรียนอนุบาลเนคเทค"));
-        onView(withId(R.id.address_select))
-                .perform(click());
-        onView(withText("นนทบุรี"))
-                .perform(click());
-        onView(withText("บางกรวย"))
-                .perform(click());
-        onView(withText("บางกรวย"))
-                .perform(click());
-        onView(withId(R.id.save))
-                .perform(click());
-
-        textDisplayed(R.string.please_define_place_location);
     }
 
     @Test

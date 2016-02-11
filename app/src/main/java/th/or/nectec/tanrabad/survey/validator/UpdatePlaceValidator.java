@@ -38,11 +38,6 @@ public class UpdatePlaceValidator implements PlaceValidator {
             throw new NullAddressException(R.string.please_define_place_address);
         }
 
-        if (place.getLocation() == null) {
-            throw new NullLocationException(R.string.please_define_place_location);
-
-        }
-
         List<Place> places = placeRepository.find();
         if (places != null) {
             for (Place eachPlace : places) {

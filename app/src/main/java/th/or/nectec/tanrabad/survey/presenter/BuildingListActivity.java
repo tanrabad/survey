@@ -161,7 +161,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     }
 
     private String getUsername() {
-        return AccountUtils.getUser().toString();
+        return AccountUtils.getUser().getUsername();
     }
 
     private void setupEmptyLayout() {
@@ -180,6 +180,16 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     private void loadSurveyBuildingList() {
         surveyBuildingChooser.displaySurveyBuildingOf(getPlaceUuidFromIntent().toString(),
                 getUsername());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.add_building_menu:
+                BuildingFormActivity.startAdd(BuildingListActivity.this, getPlaceUuidFromIntent().toString());
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -217,6 +227,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
 
     @Override
     public void alertUserNotFound() {
+        Alert.lowLevel().show("ไม่เจอ user โว้ย");
     }
 
     @Override
@@ -228,16 +239,6 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.action_activity_building_list, menu);
         return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.add_building_menu:
-                BuildingFormActivity.startAdd(BuildingListActivity.this, getPlaceUuidFromIntent().toString());
-                break;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

@@ -148,6 +148,7 @@
     </string>
     <string name="ok">ตกลง</string>
     <string name="sync_data">sync ข้อมูล</string>
+    <string name="not_available">N/A</string>
 
 
 </resources>

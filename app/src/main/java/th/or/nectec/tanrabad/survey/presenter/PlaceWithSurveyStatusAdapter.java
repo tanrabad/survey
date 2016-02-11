@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,14 +25,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyStatus;
+import th.or.nectec.tanrabad.survey.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyStatus;
-import th.or.nectec.tanrabad.survey.R;
-
-public class PlaceWithSurveyStatusAdapter extends RecyclerView.Adapter<PlaceWithSurveyStatusAdapter.ViewHolder> implements ListViewAdapter<PlaceWithSurveyStatus> {
+public class PlaceWithSurveyStatusAdapter extends RecyclerView.Adapter<PlaceWithSurveyStatusAdapter.ViewHolder>
+        implements ListViewAdapter<PlaceWithSurveyStatus> {
 
     Context context;
 
@@ -58,6 +58,21 @@ public class PlaceWithSurveyStatusAdapter extends RecyclerView.Adapter<PlaceWith
     }
 
     @Override
+    public PlaceWithSurveyStatus getItem(int position) {
+        return places.get(position);
+    }
+
+    @Override
+    public void setOnItemClickListener(AdapterView.OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    @Override
+    public void setOnItemLongClickListener(AdapterView.OnItemLongClickListener onItemLongClickListener) {
+        this.onItemLongClickListener = onItemLongClickListener;
+    }
+
+    @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_place, parent, false);
         return new ViewHolder(v, this);
@@ -80,26 +95,11 @@ public class PlaceWithSurveyStatusAdapter extends RecyclerView.Adapter<PlaceWith
         return places.size();
     }
 
-    @Override
-    public void setOnItemClickListener(AdapterView.OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
-    }
-
     private void onItemHolderClick(ViewHolder itemHolder) {
         if (onItemClickListener != null) {
             onItemClickListener.onItemClick(null, itemHolder.itemView,
                     itemHolder.getAdapterPosition(), itemHolder.getItemId());
         }
-    }
-
-    @Override
-    public void setOnItemLongClickListener(AdapterView.OnItemLongClickListener onItemLongClickListener) {
-        this.onItemLongClickListener = onItemLongClickListener;
-    }
-
-    @Override
-    public PlaceWithSurveyStatus getItem(int position) {
-        return places.get(position);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

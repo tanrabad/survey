@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,18 +28,18 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.survey.R;
 
-public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<BuildingWithSurveyStatusAdapter.ViewHolder> implements ListViewAdapter<BuildingWithSurveyStatus> {
+import java.util.ArrayList;
+import java.util.List;
 
-    Context context;
-    int buildingIcon;
+public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<BuildingWithSurveyStatusAdapter.ViewHolder>
+        implements ListViewAdapter<BuildingWithSurveyStatus> {
+
+    private final Context context;
+    private final int buildingIcon;
 
     ArrayList<BuildingWithSurveyStatus> buildings = new ArrayList<>();
     private AdapterView.OnItemClickListener onItemClickListener;
@@ -97,12 +97,10 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
         holder.buildingIcon.setImageResource(buildingIcon);
         if (buildingWithSurveyStatus.isSurvey()) {
             holder.rootView.setEnabled(false);
-            holder.surveyed.setVisibility(View.VISIBLE);
-            //BackgroundSetter.set(holder.buildingIcon, R.drawable.bg_icon_highlight);
+            holder.surveyedStatus.setVisibility(View.VISIBLE);
         } else {
             holder.rootView.setEnabled(true);
-            holder.surveyed.setVisibility(View.INVISIBLE);
-            // BackgroundSetter.set(holder.buildingIcon, R.drawable.bg_icon);
+            holder.surveyedStatus.setVisibility(View.INVISIBLE);
         }
 
         if (isEditButtonVisible) {
@@ -140,7 +138,7 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
         TextView buildingTextView;
         Button editBuilding;
         ImageView buildingIcon;
-        View surveyed;
+        View surveyedStatus;
         View rootView;
 
         public ViewHolder(View itemView) {
@@ -149,7 +147,7 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
             buildingTextView = (TextView) itemView.findViewById(R.id.building_name);
             buildingIcon = (ImageView) itemView.findViewById(R.id.building_icon);
             editBuilding = (Button) itemView.findViewById(R.id.edit_building);
-            surveyed = itemView.findViewById(R.id.surveyed);
+            surveyedStatus = itemView.findViewById(R.id.surveyed);
             editBuilding.setOnClickListener(this);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
@@ -159,7 +157,9 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
         public void onClick(View view) {
             if (view.getId() == R.id.edit_building) {
                 Building building = buildings.get(getAdapterPosition()).getBuilding();
-                BuildingFormActivity.startEdit((Activity) context, building.getPlace().getId().toString(), building.getId().toString());
+                BuildingFormActivity.startEdit((Activity) context,
+                        building.getPlace().getId().toString(),
+                        building.getId().toString());
             } else {
                 onItemHolderClick(this);
             }

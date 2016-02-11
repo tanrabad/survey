@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,18 +27,18 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.utils.ContainerIndex;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.view.TimeAgoView;
 import th.or.nectec.tanrabad.survey.utils.time.DurationTimePrinter;
 
-public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBuildingHistoryAdapter.ViewHolder> implements ListViewAdapter<Survey> {
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBuildingHistoryAdapter.ViewHolder>
+        implements ListViewAdapter<Survey> {
 
     Context context;
     ArrayList<Survey> surveyBuildings = new ArrayList<>();
@@ -86,7 +86,8 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_survey_building_history, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_survey_building_history,
+                parent, false);
         return new ViewHolder(view, this);
     }
 
@@ -98,21 +99,33 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
         holder.duration.setText(context.getString(R.string.survey_duration) + " " + getDuration(currentSurvey));
         holder.timeAgoView.setTime(currentSurvey.getFinishTimestamp());
 
-        ContainerIndex ci = new ContainerIndex(currentSurvey);
-        float ciValue = ci.calculate();
-        holder.surveyBuildingIcon.setBackgroundResource(getIconBackgroundByCI(ciValue));
-        holder.containerIndex.setText(context.getString(R.string.format_ci, (int) ciValue));
-        holder.containerCount.setText(Html.fromHtml(context.getString(R.string.format_container_count,
-                ci.getTotalContainer(), ci.getFoundLarvaeContainer())));
+        setCiValue(holder, currentSurvey);
     }
 
     private String getDuration(Survey currentSurvey) {
         return DurationTimePrinter.print(currentSurvey.getStartTimestamp(), currentSurvey.getFinishTimestamp());
     }
 
+    private void setCiValue(ViewHolder holder, Survey currentSurvey) {
+        ContainerIndex ci = new ContainerIndex(currentSurvey);
+        float ciValue = ci.calculate();
+        holder.surveyBuildingIcon.setBackgroundResource(getIconBackgroundByCI(ciValue));
+        holder.containerIndex.setText(ci.getTotalContainer() > 0
+                ? context.getString(R.string.format_ci, (int) ciValue)
+                : context.getString(R.string.not_available));
+        holder.containerCount.setText(Html.fromHtml(context.getString(R.string.format_container_count,
+                ci.getTotalContainer(), ci.getFoundLarvaeContainer())));
+    }
+
     @DrawableRes
     private int getIconBackgroundByCI(float ciValue) {
-        return ciValue == 0 || Float.isNaN(ciValue) ? R.drawable.bg_icon_building_without_larvae : R.drawable.bg_icon_building_have_larvae;
+        if (ciValue == 0f) {
+            return R.drawable.bg_icon_building_without_larvae;
+        } else if (Float.isNaN(ciValue)) {
+            return R.drawable.bg_icon;
+        } else {
+            return R.drawable.bg_icon_building_have_larvae;
+        }
     }
 
     @Override

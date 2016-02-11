@@ -18,21 +18,19 @@
 package th.or.nectec.tanrabad.survey.presenter;
 
 import android.content.Intent;
-import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-
+import android.text.Html;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.*;
-import static android.support.test.espresso.matcher.ViewMatchers.*;
+import static android.support.test.espresso.action.ViewActions.replaceText;
+import static android.support.test.espresso.matcher.ViewMatchers.withHint;
 
 @RunWith(AndroidJUnit4.class)
 public class PlaceSearchActivityTest extends TanrabadEspressoTestBase {
@@ -53,7 +51,9 @@ public class PlaceSearchActivityTest extends TanrabadEspressoTestBase {
                 .perform(replaceText("บางป่า"))
                 .perform(ViewActions.pressImeActionButton());
 
-        textDisplayed(R.string.place_name_not_found);
+        textDisplayed(Html.fromHtml(
+                String.format(mActivity.getString(R.string.place_name_not_found),
+                        "บางป่า")).toString());
     }
 
     @Test

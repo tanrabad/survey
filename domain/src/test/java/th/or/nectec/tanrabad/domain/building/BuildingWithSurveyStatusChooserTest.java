@@ -116,7 +116,7 @@ public class BuildingWithSurveyStatusChooserTest {
             }
         });
         SurveyBuildingChooser surveyBuildingHistoryController = new SurveyBuildingChooser(userRepository, placeRepository, buildingRepository, surveyRepository, buildingWithSurveyStatusListPresenter);
-        surveyBuildingHistoryController.displaySurveyBuildingOf(placeUUID, username);
+        surveyBuildingHistoryController.displaySurveyBuildingOf(placeUUID, user);
     }
 
     @Test
@@ -149,7 +149,7 @@ public class BuildingWithSurveyStatusChooserTest {
             }
         });
         SurveyBuildingChooser surveyBuildingHistoryController = new SurveyBuildingChooser(userRepository, placeRepository, buildingRepository, surveyRepository, buildingWithSurveyStatusListPresenter);
-        surveyBuildingHistoryController.searchSurveyBuildingOfPlaceByName(searchBuildingName, placeUUID, username);
+        surveyBuildingHistoryController.searchSurveyBuildingOfPlaceByName(searchBuildingName, placeUUID, user);
     }
 
 
@@ -186,7 +186,7 @@ public class BuildingWithSurveyStatusChooserTest {
             }
         });
         SurveyBuildingChooser surveyBuildingHistoryController = new SurveyBuildingChooser(userRepository, placeRepository, buildingRepository, surveyRepository, buildingWithSurveyStatusListPresenter);
-        surveyBuildingHistoryController.displaySurveyBuildingOf(placeUUID, username);
+        surveyBuildingHistoryController.displaySurveyBuildingOf(placeUUID, user);
     }
 
     @Test
@@ -209,7 +209,7 @@ public class BuildingWithSurveyStatusChooserTest {
             }
         });
         SurveyBuildingChooser surveyBuildingHistoryController = new SurveyBuildingChooser(userRepository, placeRepository, buildingRepository, surveyRepository, buildingWithSurveyStatusListPresenter);
-        surveyBuildingHistoryController.displaySurveyBuildingOf(placeUUID, username);
+        surveyBuildingHistoryController.displaySurveyBuildingOf(placeUUID, user);
 
     }
 
@@ -224,7 +224,7 @@ public class BuildingWithSurveyStatusChooserTest {
             }
         });
         SurveyBuildingChooser surveyBuildingChooser = new SurveyBuildingChooser(userRepository, placeRepository, buildingRepository, surveyRepository, buildingWithSurveyStatusListPresenter);
-        surveyBuildingChooser.displaySurveyBuildingOf(placeUUID, username);
+        surveyBuildingChooser.displaySurveyBuildingOf(placeUUID, user);
     }
 
     @Test
@@ -241,7 +241,7 @@ public class BuildingWithSurveyStatusChooserTest {
             }
         });
         SurveyBuildingChooser surveyBuildingChooser = new SurveyBuildingChooser(userRepository, placeRepository, buildingRepository, surveyRepository, buildingWithSurveyStatusListPresenter);
-        surveyBuildingChooser.displaySurveyBuildingOf(placeUUID, username);
+        surveyBuildingChooser.displaySurveyBuildingOf(placeUUID, user);
     }
 }
 

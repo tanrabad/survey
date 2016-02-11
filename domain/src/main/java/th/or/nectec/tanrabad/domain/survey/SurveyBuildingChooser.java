@@ -41,7 +41,12 @@ public class SurveyBuildingChooser {
     private User user;
     private Place place;
 
-    public SurveyBuildingChooser(UserRepository userRepository, PlaceRepository placeRepository, BuildingRepository buildingRepository, SurveyRepository surveyRepository, BuildingWithSurveyStatusListPresenter surveyBuildingPresenter) {
+    public SurveyBuildingChooser(
+            UserRepository userRepository,
+            PlaceRepository placeRepository,
+            BuildingRepository buildingRepository,
+            SurveyRepository surveyRepository,
+            BuildingWithSurveyStatusListPresenter surveyBuildingPresenter) {
 
         this.userRepository = userRepository;
         this.placeRepository = placeRepository;
@@ -50,17 +55,17 @@ public class SurveyBuildingChooser {
         this.surveyBuildingPresenter = surveyBuildingPresenter;
     }
 
-    public void displaySurveyBuildingOf(String placeUUID, String username) {
-        if (!isUserAndPlaceFound(placeUUID, username)) return;
+    public void displaySurveyBuildingOf(String placeUUID, User user) {
+        if (!isUserAndPlaceFound(placeUUID, user)) return;
 
         List<Building> buildings = buildingRepository.findByPlaceUUID(place.getId());
 
         checkBuildingAreFoundAndUpdateBuildingSurveyStatus(buildings);
     }
 
-    private boolean isUserAndPlaceFound(String placeUUID, String username) {
-        user = userRepository.findByUsername(username);
-        if (user == null) {
+    private boolean isUserAndPlaceFound(String placeUUID, User user) {
+        this.user = userRepository.findByUsername(user.getUsername());
+        if (this.user == null) {
             surveyBuildingPresenter.alertUserNotFound();
             return false;
         }
@@ -82,7 +87,8 @@ public class SurveyBuildingChooser {
         List<Survey> surveys = surveyRepository.findByPlaceAndUserIn7Days(place, user);
         List<BuildingWithSurveyStatus> buildingsWithSurveyStatuses = new ArrayList<>();
         for (Building eachBuilding : buildings) {
-            BuildingWithSurveyStatus buildingWithSurveyStatus = new BuildingWithSurveyStatus(eachBuilding, surveys != null && isBuildingSurveyed(surveys, eachBuilding));
+            BuildingWithSurveyStatus buildingWithSurveyStatus = new BuildingWithSurveyStatus(
+                    eachBuilding, surveys != null && isBuildingSurveyed(surveys, eachBuilding));
             buildingsWithSurveyStatuses.add(buildingWithSurveyStatus);
         }
         surveyBuildingPresenter.displayAllSurveyBuildingList(buildingsWithSurveyStatuses);
@@ -97,8 +103,8 @@ public class SurveyBuildingChooser {
         return false;
     }
 
-    public void searchSurveyBuildingOfPlaceByName(String searchBuildingName, String placeUUID, String username) {
-        if (!isUserAndPlaceFound(placeUUID, username)) return;
+    public void searchSurveyBuildingOfPlaceByName(String searchBuildingName, String placeUUID, User user) {
+        if (!isUserAndPlaceFound(placeUUID, user)) return;
 
         List<Building> buildings = buildingRepository.findByPlaceUUIDAndBuildingName(place.getId(), searchBuildingName);
 

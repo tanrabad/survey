@@ -145,7 +145,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
 
                 surveyBuildingChooser.searchSurveyBuildingOfPlaceByName(searchString,
                         getPlaceUuidFromIntent().toString(),
-                        getUsername());
+                        AccountUtils.getUser());
                 return true;
             }
 
@@ -154,14 +154,10 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
 
                 surveyBuildingChooser.searchSurveyBuildingOfPlaceByName(searchString,
                         getPlaceUuidFromIntent().toString(),
-                        getUsername());
+                        AccountUtils.getUser());
                 return true;
             }
         });
-    }
-
-    private String getUsername() {
-        return AccountUtils.getUser().getUsername();
     }
 
     private void setupEmptyLayout() {
@@ -178,8 +174,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     }
 
     private void loadSurveyBuildingList() {
-        surveyBuildingChooser.displaySurveyBuildingOf(getPlaceUuidFromIntent().toString(),
-                getUsername());
+        surveyBuildingChooser.displaySurveyBuildingOf(getPlaceUuidFromIntent().toString(), AccountUtils.getUser());
     }
 
     @Override
@@ -227,7 +222,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
 
     @Override
     public void alertUserNotFound() {
-        Alert.lowLevel().show("ไม่เจอ user โว้ย");
+        Alert.lowLevel().show(R.string.user_not_found);
     }
 
     @Override

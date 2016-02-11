@@ -10,6 +10,8 @@ import android.provider.SearchRecentSuggestions;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.text.Html;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -156,6 +158,11 @@ public class PlaceSearchActivity extends TanrabadActivity implements
         placeListView.setVisibility(View.GONE);
         emptyText.setVisibility(View.GONE);
         querySuggestion(query);
+        if (TextUtils.isEmpty(query)) {
+            placeAdapter.clearData();
+        } else {
+            placeChooser.searchByName(query);
+        }
         return true;
     }
 
@@ -164,7 +171,6 @@ public class PlaceSearchActivity extends TanrabadActivity implements
         placeAdapter.updateData(places);
         placeListView.setVisibility(View.VISIBLE);
         emptyText.setVisibility(View.GONE);
-        clearSearchHistory.setVisibility(View.GONE);
     }
 
     @Override
@@ -172,5 +178,8 @@ public class PlaceSearchActivity extends TanrabadActivity implements
         placeAdapter.clearData();
         placeListView.setVisibility(View.GONE);
         emptyText.setVisibility(View.VISIBLE);
+        emptyText.setText(Html.fromHtml(
+                String.format(getString(R.string.place_name_not_found),
+                        searchView.getQuery().toString())));
     }
 }

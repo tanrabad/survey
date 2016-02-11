@@ -108,6 +108,8 @@ public class BuildingMapMarkerFragment extends MapMarkerFragment implements Goog
 
     private void queryAndAddAnotherBuildingMarker() {
         List<Building> buildingsInPlaceList = BrokerBuildingRepository.getInstance().findByPlaceUUID(place.getId());
+        if (buildingsInPlaceList == null)
+            return;
         for (Building eachBuilding : buildingsInPlaceList) {
             if (!eachBuilding.getLocation().equals(getMarkedLocation()))
                 addAnotherBuildingMarker(eachBuilding.getLocation());

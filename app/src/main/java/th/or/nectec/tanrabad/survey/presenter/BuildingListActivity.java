@@ -142,6 +142,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         buildingSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String searchString) {
+
                 surveyBuildingChooser.searchSurveyBuildingOfPlaceByName(searchString,
                         getPlaceUuidFromIntent().toString(),
                         getUsername());
@@ -150,6 +151,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
 
             @Override
             public boolean onQueryTextChange(String searchString) {
+
                 surveyBuildingChooser.searchSurveyBuildingOfPlaceByName(searchString,
                         getPlaceUuidFromIntent().toString(),
                         getUsername());
@@ -185,7 +187,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         this.place = place;
         TextView placeName = (TextView) findViewById(R.id.place_name);
         placeName.setText(place.getName());
-        if (place.getType() == Place.TYPE_VILLAGE_COMMUNITY && AccountUtils.canAddOrEditVillage()) {
+        if (place.getType() == Place.TYPE_VILLAGE_COMMUNITY && !AccountUtils.canAddOrEditVillage()) {
             editPlaceButton.setVisibility(View.GONE);
         } else {
             editPlaceButton.setVisibility(View.VISIBLE);

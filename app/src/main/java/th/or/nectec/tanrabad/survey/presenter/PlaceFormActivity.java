@@ -59,7 +59,8 @@ import th.or.nectec.thai.widget.address.AddressPickerDialog;
 
 import java.util.UUID;
 
-public class PlaceFormActivity extends TanrabadActivity implements View.OnClickListener, PlaceSavePresenter, PlacePresenter {
+public class PlaceFormActivity extends TanrabadActivity implements View.OnClickListener,
+        PlaceSavePresenter, PlacePresenter {
 
     public static final String PLACE_TYPE_ID_ARG = "place_category_id_arg";
     public static final String PLACE_UUID_ARG = "place_uuid_arg";
@@ -113,7 +114,8 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         placeNameView = (EditText) findViewById(R.id.place_name);
         addressSelect = (AddressPicker) findViewById(R.id.address_select);
-        AddressPickerDialog popup = new AddressPickerDialog(this).setProvinceRepository(new ThaiWidgetProvinceRepository());
+        AddressPickerDialog popup = new AddressPickerDialog(this)
+                .setProvinceRepository(new ThaiWidgetProvinceRepository());
         addressSelect.setPopup(popup);
         placeTypeSelector = (AppCompatSpinner) findViewById(R.id.place_type_selector);
         placeSubtypeLayout = findViewById(R.id.place_subtype_layout);
@@ -142,7 +144,8 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     }
 
     private void setupPlaceTypeSelector() {
-        final PlaceTypeForAddAdapter placeAdapter = new PlaceTypeForAddAdapter(this, AccountUtils.canAddOrEditVillage());
+        final PlaceTypeForAddAdapter placeAdapter = new PlaceTypeForAddAdapter(
+                this, !AccountUtils.canAddOrEditVillage());
         placeTypeSelector.setAdapter(placeAdapter);
         placeTypeSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -161,7 +164,8 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
 
     private void setupPlaceSubtypeSpinner(PlaceType selectedPlaceType) {
         placeSubtypeLabel.setText(String.format(getString(R.string.place_subtype_label), selectedPlaceType.getName()));
-        PlaceSubTypeAdapter placeSubTypeAdapter = new PlaceSubTypeAdapter(PlaceFormActivity.this, selectedPlaceType.getId());
+        PlaceSubTypeAdapter placeSubTypeAdapter = new PlaceSubTypeAdapter(
+                PlaceFormActivity.this, selectedPlaceType.getId());
         placeSubtypeSelector.setAdapter(placeSubTypeAdapter);
         if (placeSubTypeAdapter.getCount() > 0) {
             placeSubtypeLayout.setVisibility(View.VISIBLE);
@@ -247,7 +251,8 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         switch (requestCode) {
             case MapMarkerActivity.MARK_LOCATION_REQUEST_CODE:
                 if (resultCode == RESULT_OK) {
-                    Location placeLocation = LocationUtils.convertJsonToLocation(data.getStringExtra(MapMarkerActivity.MAP_LOCATION));
+                    Location placeLocation = LocationUtils.convertJsonToLocation(
+                            data.getStringExtra(MapMarkerActivity.MAP_LOCATION));
                     place.setLocation(placeLocation);
                     setupPreviewMapWithPosition(placeLocation);
                 }

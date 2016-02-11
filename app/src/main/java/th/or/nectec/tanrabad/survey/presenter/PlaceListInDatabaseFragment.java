@@ -39,7 +39,9 @@ import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 
 import java.util.List;
 
-public class PlaceListInDatabaseFragment extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener, AdapterView.OnItemSelectedListener, PlaceListPresenter {
+public class PlaceListInDatabaseFragment extends Fragment implements
+        AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener,
+        AdapterView.OnItemSelectedListener, PlaceListPresenter {
 
     private PlaceAdapter placeAdapter;
     private PlaceTypeAdapter placeTypeAdapter;
@@ -72,11 +74,6 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
         placeAdapter.clearData();
         placeCountView.setVisibility(View.GONE);
         emptyLayoutView.setVisibility(View.VISIBLE);
-    }
-
-
-    private String getUsername() {
-        return "sara";
     }
 
     @Override
@@ -147,7 +144,8 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
         placeAdapter.setOnItemLongClickListener(this);
         placeListView.setAdapter(placeAdapter);
         placeListView.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(
+                getContext(), LinearLayoutManager.VERTICAL, false);
         placeListView.setLayoutManager(linearLayoutManager);
         recyclerViewHeader.attachTo(placeListView, true);
     }
@@ -186,7 +184,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
         final Place placeData = placeAdapter.getItem(position);
 
-        if (AccountUtils.canAddOrEditVillage() && placeData.getType() == Place.TYPE_VILLAGE_COMMUNITY) {
+        if (!AccountUtils.canAddOrEditVillage() && placeData.getType() == Place.TYPE_VILLAGE_COMMUNITY) {
             Alert.lowLevel().show(R.string.cant_edit_community_village);
             return false;
         } else {

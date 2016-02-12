@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -34,18 +34,16 @@ public class BuildingSaver {
     }
 
     public void save(Building building) {
-        if (buildingValidator.validate(building)) {
-            if (buildingRepository.save(building))
-                buildingSavePresenter.displaySaveSuccess();
+        if (buildingValidator.validate(building) && buildingRepository.save(building)) {
+            buildingSavePresenter.displaySaveSuccess();
         } else {
             buildingSavePresenter.displaySaveFail();
         }
     }
 
     public void update(Building building) {
-        if (buildingValidator.validate(building)) {
-            if (buildingRepository.update(building))
-                buildingSavePresenter.displayUpdateSuccess();
+        if (buildingValidator.validate(building) && buildingRepository.update(building)) {
+            buildingSavePresenter.displayUpdateSuccess();
         } else {
             buildingSavePresenter.displayUpdateFail();
         }

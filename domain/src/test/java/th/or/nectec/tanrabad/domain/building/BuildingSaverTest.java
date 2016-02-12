@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,13 +18,11 @@
 package th.or.nectec.tanrabad.domain.building;
 
 import org.jmock.Expectations;
+import org.jmock.auto.Mock;
 import org.jmock.integration.junit4.JUnitRuleMockery;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.field.Location;
 
 import java.util.UUID;
 
@@ -33,113 +31,109 @@ public class BuildingSaverTest {
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
 
-    private UUID buildingUUID;
-    private String buildingName;
-    private Place place;
-    private Location buildingLocation;
+    @Mock
+    protected BuildingValidator validator;
+    @Mock
+    protected BuildingSavePresenter presenter;
+    @Mock
+    protected BuildingRepository repository;
 
-    private BuildingValidator buildingValidator;
-    private BuildingSavePresenter buildingSavePresenter;
-    private BuildingRepository buildingRepository;
-    private Building building;
-
-    @Before
-    public void setUp() {
-        buildingSavePresenter = context.mock(BuildingSavePresenter.class);
-        buildingValidator = context.mock(BuildingValidator.class);
-        buildingRepository = context.mock(BuildingRepository.class);
-
-        buildingUUID = UUID.nameUUIDFromBytes("3xyz".getBytes());
-        buildingName = "123";
-        place = Place.withName("Village A");
-        buildingLocation = new Location(51.500152, -0.126236);
-
-        building = new Building(buildingUUID, buildingName);
-        building.setLocation(buildingLocation);
-    }
+    private Building building = new Building(UUID.randomUUID(), "MockBuilding");
 
     @Test
     public void testSaveSuccess() throws Exception {
-
         context.checking(new Expectations() {
             {
-                oneOf(buildingValidator).setBuildingRepository(with(buildingRepository));
-                allowing(BuildingSaverTest.this.buildingValidator).validate(with(building));
+                oneOf(validator).setBuildingRepository(with(repository));
+                allowing(BuildingSaverTest.this.validator).validate(with(building));
                 will(returnValue(true));
-                oneOf(BuildingSaverTest.this.buildingRepository).save(with(building));
+                oneOf(BuildingSaverTest.this.repository).save(with(building));
                 will(returnValue(true));
-                oneOf(BuildingSaverTest.this.buildingSavePresenter).displaySaveSuccess();
+                oneOf(BuildingSaverTest.this.presenter).displaySaveSuccess();
             }
         });
-        BuildingSaver buildingSaver = new BuildingSaver(buildingRepository, buildingValidator, buildingSavePresenter);
+        BuildingSaver buildingSaver = new BuildingSaver(repository, validator, presenter);
         buildingSaver.save(building);
     }
 
     @Test
-    public void testSaveFail() throws Exception {
-
+    public void testSaveNotPassValidator() throws Exception {
         building.setName(null);
         context.checking(new Expectations() {
             {
-                oneOf(buildingValidator).setBuildingRepository(with(buildingRepository));
-                allowing(buildingValidator).validate(building);
+                oneOf(validator).setBuildingRepository(with(repository));
+                allowing(validator).validate(building);
                 will(returnValue(false));
-                never(buildingRepository);
-                oneOf(buildingSavePresenter).displaySaveFail();
+                never(repository);
+                oneOf(presenter).displaySaveFail();
             }
         });
-        BuildingSaver buildingSaver = new BuildingSaver(buildingRepository, buildingValidator, buildingSavePresenter);
+        BuildingSaver buildingSaver = new BuildingSaver(repository, validator, presenter);
         buildingSaver.save(building);
+    }
+
+    @Test
+    public void testSavePassValidatorButSaveNotSuccess() throws Exception {
+        context.checking(new Expectations() {
+            {
+                oneOf(validator).setBuildingRepository(with(repository));
+                allowing(validator).validate(building);
+                will(returnValue(true));
+                allowing(repository).save(building);
+                will(returnValue(false));
+                oneOf(presenter).displaySaveFail();
+            }
+        });
+        BuildingSaver buildingSaverAfter = new BuildingSaver(repository, validator, presenter);
+        buildingSaverAfter.save(building);
     }
 
     @Test
     public void testUpdateSuccess() throws Exception {
         context.checking(new Expectations() {
             {
-                oneOf(buildingValidator).setBuildingRepository(with(buildingRepository));
-                allowing(buildingValidator).validate(with(building));
+                oneOf(validator).setBuildingRepository(with(repository));
+                allowing(validator).validate(with(building));
                 will(returnValue(true));
-                oneOf(BuildingSaverTest.this.buildingRepository).update(with(building));
+                oneOf(BuildingSaverTest.this.repository).update(with(building));
                 will(returnValue(true));
-                oneOf(BuildingSaverTest.this.buildingSavePresenter).displayUpdateSuccess();
+                oneOf(BuildingSaverTest.this.presenter).displayUpdateSuccess();
             }
         });
-        BuildingSaver buildingSaver = new BuildingSaver(buildingRepository, buildingValidator, buildingSavePresenter);
+        BuildingSaver buildingSaver = new BuildingSaver(repository, validator, presenter);
         buildingSaver.update(building);
     }
 
     @Test
-    public void testUpdateFail() throws Exception {
+    public void testUpdateNotPassValidator() throws Exception {
+        context.checking(new Expectations() {
+            {
+                oneOf(validator).setBuildingRepository(with(repository));
+                allowing(validator).validate(building);
+                will(returnValue(false));
+                never(repository);
+                oneOf(presenter).displayUpdateFail();
+            }
+        });
+        BuildingSaver buildingSaver = new BuildingSaver(repository, validator, presenter);
+        buildingSaver.update(building);
+    }
+
+    @Test
+    public void testUpdatePassValidatorButUpdateNotSuccess() throws Exception {
         building.setName(null);
         context.checking(new Expectations() {
             {
-                oneOf(buildingValidator).setBuildingRepository(with(buildingRepository));
-                allowing(buildingValidator).validate(building);
+                oneOf(validator).setBuildingRepository(with(repository));
+                allowing(validator).validate(building);
+                will(returnValue(true));
+                allowing(repository).update(building);
                 will(returnValue(false));
-                never(buildingRepository);
-                oneOf(buildingSavePresenter).displayUpdateFail();
+                oneOf(presenter).displayUpdateFail();
             }
         });
-        BuildingSaver buildingSaver = new BuildingSaver(buildingRepository, buildingValidator, buildingSavePresenter);
+        BuildingSaver buildingSaver = new BuildingSaver(repository, validator, presenter);
         buildingSaver.update(building);
-    }
-
-    @Test
-    public void testSaveDuplicateBuilding() throws Exception {
-        final Building secondBuilding = Building.withName("123");
-        secondBuilding.setPlace(place);
-        context.checking(new Expectations() {
-            {
-                oneOf(buildingValidator).setBuildingRepository(with(buildingRepository));
-                allowing(buildingValidator).validate(secondBuilding);
-                will(returnValue(false));
-                never(buildingRepository);
-                oneOf(buildingSavePresenter).displaySaveFail();
-            }
-        });
-
-        BuildingSaver buildingSaverAfter = new BuildingSaver(buildingRepository, buildingValidator, buildingSavePresenter);
-        buildingSaverAfter.save(secondBuilding);
     }
 
 }

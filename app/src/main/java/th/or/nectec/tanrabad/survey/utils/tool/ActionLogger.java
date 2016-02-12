@@ -26,9 +26,7 @@ public interface ActionLogger {
 
     void login(User user);
 
-    void turnOnTorch();
-
-    void turnOffTorch();
+    void useTorch(int durationSecond);
 
     void addBuilding(Building building);
 

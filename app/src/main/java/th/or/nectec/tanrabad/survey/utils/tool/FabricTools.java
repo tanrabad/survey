@@ -28,6 +28,8 @@ import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.entity.utils.ContainerIndex;
 import th.or.nectec.tanrabad.survey.BuildConfig;
+import th.or.nectec.tanrabad.survey.repository.InMemoryPlaceSubTypeRepository;
+import th.or.nectec.tanrabad.survey.repository.InMemoryPlaceTypeRepository;
 
 public class FabricTools implements ExceptionLogger, ActionLogger {
 
@@ -69,15 +71,9 @@ public class FabricTools implements ExceptionLogger, ActionLogger {
     }
 
     @Override
-    public void turnOnTorch() {
-        answers.logLevelStart(new LevelStartEvent()
-                .putLevelName(Level.TORCH));
-    }
-
-    @Override
-    public void turnOffTorch() {
-        answers.logLevelEnd(new LevelEndEvent()
-                .putLevelName(Level.TORCH));
+    public void useTorch(int durationSecond) {
+        answers.logCustom(new CustomEvent("Use Torch")
+                .putCustomAttribute("duration (sec)", durationSecond));
     }
 
     @Override
@@ -103,14 +99,14 @@ public class FabricTools implements ExceptionLogger, ActionLogger {
     @Override
     public void searchPlace(String query) {
         answers.logSearch(new SearchEvent()
-                .putCustomAttribute("Entity", Place.class.getName())
+                .putCustomAttribute("Entity", "Place")
                 .putQuery(query));
     }
 
     @Override
     public void filterBuilding(String query) {
         answers.logSearch(new SearchEvent()
-                .putCustomAttribute("Entity", Building.class.getName())
+                .putCustomAttribute("Entity", "Building")
                 .putQuery(query));
     }
 
@@ -121,18 +117,25 @@ public class FabricTools implements ExceptionLogger, ActionLogger {
 
     @Override
     public void startSurvey(Place place) {
-        answers.logLevelStart(new LevelStartEvent()
+        answers.logCustom(new CustomEvent(Event.START_PLACE_SURVEY)
                 .putCustomAttribute("Place Name", place.getName())
-                .putCustomAttribute("Place Type", place.getType())
-                .putLevelName(Level.SURVEY_PLACE));
+                .putCustomAttribute("Place Type", getPlaceTypeName(place))
+                .putCustomAttribute("Place Sub Type", getPlaceSubTypeName(place)));
 
+    }
+
+    private String getPlaceTypeName(Place place) {
+        return InMemoryPlaceTypeRepository.getInstance().findByID(place.getType()).getName();
+    }
+
+    private String getPlaceSubTypeName(Place place) {
+        return InMemoryPlaceSubTypeRepository.getInstance().findByID(place.getSubType()).getName();
     }
 
     @Override
     public void finishSurvey(Place place, boolean success) {
-        answers.logLevelEnd(new LevelEndEvent()
-                .putSuccess(success)
-                .putLevelName(Level.SURVEY_PLACE));
+        answers.logCustom(new CustomEvent(Event.FINISH_PLACE_SURVEY)
+                .putCustomAttribute("Finish Method", success ? "finish button" : "back button"));
 
     }
 
@@ -140,7 +143,6 @@ public class FabricTools implements ExceptionLogger, ActionLogger {
     public void startSurvey(Survey survey) {
         answers.logLevelStart(new LevelStartEvent()
                 .putCustomAttribute("Mode", "NEW")
-                .putCustomAttribute("Place Type", survey.getSurveyBuilding().getPlace().getSubType())
                 .putCustomAttribute("User Type", survey.getUser().getUserType().toString())
                 .putLevelName(Level.SURVEY_BUILDING));
     }
@@ -177,15 +179,13 @@ public class FabricTools implements ExceptionLogger, ActionLogger {
         public static final String EDIT_BUILDING = "Edit building";
         public static final String ADD_PLACE = "Add Place";
         public static final String EDIT_PLACE = "Edit Place";
+        public static final String START_PLACE_SURVEY = "Start Place Survey";
+        public static final String FINISH_PLACE_SURVEY = "Finish Place Survey";
     }
-
 
     private static class Level {
         public static final String SURVEY_BUILDING = "Survey Building";
-        public static final String SURVEY_PLACE = "Survey Place";
-        public static final String TORCH = "Torch";
     }
-
 
 }
 

@@ -26,11 +26,13 @@ import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.utils.CameraFlashLight;
 import th.or.nectec.tanrabad.survey.utils.Torch;
+import th.or.nectec.tanrabad.survey.utils.time.JodaCurrentTime;
 
 public class TorchButton extends ImageButton {
 
     private final Torch torch;
     private final Handler uiThread = new Handler();
+    long startTime = 0;
 
     public TorchButton(Context context) {
         this(context, null);
@@ -99,15 +101,19 @@ public class TorchButton extends ImageButton {
     }
 
     private void turnOff() {
-        TanrabadApp.action().turnOffTorch();
+        TanrabadApp.action().useTorch(calculateUsageDuration());
         torch.turnOff();
         setImageResource(R.drawable.torch_off);
     }
 
     private void turnOn() {
-        TanrabadApp.action().turnOnTorch();
+        startTime = new JodaCurrentTime().getInMills();
         torch.turnOn();
         setImageResource(R.drawable.torch_on);
+    }
+
+    private int calculateUsageDuration() {
+        return (int) ((new JodaCurrentTime().getInMills() - startTime) / 1000);
     }
 
     public void safeTurnOff() {

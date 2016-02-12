@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,108 +18,118 @@
 package th.or.nectec.tanrabad.domain.place;
 
 import org.jmock.Expectations;
+import org.jmock.auto.Mock;
 import org.jmock.integration.junit4.JUnitRuleMockery;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.field.Location;
 
 import java.util.UUID;
 
 public class PlaceSaverTest {
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
+    @Mock
+    protected PlaceValidator validator;
+    @Mock
+    protected PlaceSavePresenter presenter;
+    @Mock
+    protected PlaceRepository repository;
 
-    private UUID placeUUID;
-    private String placeName;
-    private int placeType;
-    private Location placeLocation;
-
-    private PlaceValidator placeValidator;
-    private PlaceSavePresenter placeSavePresenter;
-    private PlaceRepository placeRepository;
-    private Place place;
-
-    @Before
-    public void setUp() {
-        placeSavePresenter = context.mock(PlaceSavePresenter.class);
-        placeValidator = context.mock(PlaceValidator.class);
-        placeRepository = context.mock(PlaceRepository.class);
-
-        placeUUID = UUID.nameUUIDFromBytes("1stu".getBytes());
-        placeName = "victoria";
-        placeType = Place.TYPE_FACTORY;
-        placeLocation = new Location(51.500152, -0.126236);
-
-        place = new Place(placeUUID, placeName);
-        place.setType(placeType);
-        place.setLocation(placeLocation);
-    }
+    private Place place = new Place(UUID.randomUUID(), "test Place");
 
     @Test
-    public void testSavePlace() throws Exception {
-
+    public void testSaveSuccess() throws Exception {
         context.checking(new Expectations() {
             {
-                allowing(PlaceSaverTest.this.placeValidator).setPlaceRepository(placeRepository);
-                allowing(PlaceSaverTest.this.placeValidator).validate(with(place));
+                allowing(PlaceSaverTest.this.validator).setPlaceRepository(repository);
+                allowing(PlaceSaverTest.this.validator).validate(with(place));
                 will(returnValue(true));
-                oneOf(PlaceSaverTest.this.placeRepository).save(with(place));
+                oneOf(PlaceSaverTest.this.repository).save(with(place));
                 will(returnValue(true));
-                oneOf(PlaceSaverTest.this.placeSavePresenter).displaySaveSuccess();
+                oneOf(PlaceSaverTest.this.presenter).displaySaveSuccess();
             }
         });
-        PlaceSaver placeSaver = new PlaceSaver(placeRepository, placeValidator, placeSavePresenter);
+        PlaceSaver placeSaver = new PlaceSaver(repository, validator, presenter);
         placeSaver.save(place);
     }
 
     @Test
-    public void testUpdatePlace() throws Exception {
+    public void testUpdateSuccess() throws Exception {
 
         context.checking(new Expectations() {
             {
-                allowing(PlaceSaverTest.this.placeValidator).setPlaceRepository(placeRepository);
-                allowing(PlaceSaverTest.this.placeValidator).validate(with(place));
+                allowing(PlaceSaverTest.this.validator).setPlaceRepository(repository);
+                allowing(PlaceSaverTest.this.validator).validate(with(place));
                 will(returnValue(true));
-                oneOf(PlaceSaverTest.this.placeRepository).update(with(place));
+                oneOf(PlaceSaverTest.this.repository).update(with(place));
                 will(returnValue(true));
-                oneOf(PlaceSaverTest.this.placeSavePresenter).displayUpdateSuccess();
+                oneOf(PlaceSaverTest.this.presenter).displayUpdateSuccess();
             }
         });
-        PlaceSaver placeSaver = new PlaceSaver(placeRepository, placeValidator, placeSavePresenter);
+        PlaceSaver placeSaver = new PlaceSaver(repository, validator, presenter);
         placeSaver.update(place);
     }
 
     @Test
-    public void testSaveFail() throws Exception {
-
+    public void testSaveNotPassValidator() throws Exception {
         context.checking(new Expectations() {
             {
-                allowing(PlaceSaverTest.this.placeValidator).setPlaceRepository(placeRepository);
-                allowing(placeValidator).validate(place);
+                allowing(PlaceSaverTest.this.validator).setPlaceRepository(repository);
+                allowing(validator).validate(place);
                 will(returnValue(false));
-                never(placeRepository);
-                oneOf(placeSavePresenter).displaySaveFail();
+                never(repository);
+                oneOf(presenter).displaySaveFail();
             }
         });
-        PlaceSaver placeSaver = new PlaceSaver(placeRepository, placeValidator, placeSavePresenter);
+        PlaceSaver placeSaver = new PlaceSaver(repository, validator, presenter);
         placeSaver.save(place);
     }
 
     @Test
-    public void testUpdateFail() throws Exception {
-
+    public void testSavePassValidatorButSaveFail() throws Exception {
         context.checking(new Expectations() {
             {
-                allowing(PlaceSaverTest.this.placeValidator).setPlaceRepository(placeRepository);
-                allowing(placeValidator).validate(place);
+                allowing(PlaceSaverTest.this.validator).setPlaceRepository(repository);
+                allowing(validator).validate(place);
                 will(returnValue(false));
-                never(placeRepository);
-                oneOf(placeSavePresenter).displayUpdateFail();
+                allowing(repository).save(place);
+                will(returnValue(false));
+                oneOf(presenter).displaySaveFail();
             }
         });
-        PlaceSaver placeSaver = new PlaceSaver(placeRepository, placeValidator, placeSavePresenter);
+        PlaceSaver placeSaver = new PlaceSaver(repository, validator, presenter);
+        placeSaver.save(place);
+    }
+
+    @Test
+    public void testUpdateNotPassValidator() throws Exception {
+        context.checking(new Expectations() {
+            {
+                allowing(PlaceSaverTest.this.validator).setPlaceRepository(repository);
+                allowing(validator).validate(place);
+                will(returnValue(false));
+                never(repository);
+                oneOf(presenter).displayUpdateFail();
+            }
+        });
+        PlaceSaver placeSaver = new PlaceSaver(repository, validator, presenter);
+        placeSaver.update(place);
+    }
+
+    @Test
+    public void testUpdatePassValidatorButUpdateFail() throws Exception {
+        context.checking(new Expectations() {
+            {
+                allowing(PlaceSaverTest.this.validator).setPlaceRepository(repository);
+                allowing(validator).validate(place);
+                will(returnValue(true));
+                allowing(repository).update(place);
+                will(returnValue(false));
+                oneOf(presenter).displayUpdateFail();
+            }
+        });
+        PlaceSaver placeSaver = new PlaceSaver(repository, validator, presenter);
         placeSaver.update(place);
     }
 }

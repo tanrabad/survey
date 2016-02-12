@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,14 +20,13 @@ package th.or.nectec.tanrabad.domain.place;
 import th.or.nectec.tanrabad.entity.Place;
 
 public class PlaceSaver {
-        private final PlaceSavePresenter placeSavePresenter;
-        private final PlaceRepository placeRepository;
-        private final PlaceValidator placeValidator;
+    private final PlaceSavePresenter placeSavePresenter;
+    private final PlaceRepository placeRepository;
+    private final PlaceValidator placeValidator;
 
     public PlaceSaver(PlaceRepository placeRepository,
                       PlaceValidator placeValidator,
                       PlaceSavePresenter placeSavePresenter) {
-
         this.placeRepository = placeRepository;
         this.placeSavePresenter = placeSavePresenter;
         this.placeValidator = placeValidator;
@@ -35,18 +34,16 @@ public class PlaceSaver {
     }
 
     public void save(Place place) {
-        if(placeValidator.validate(place)){
-            if(placeRepository.save(place))
-                placeSavePresenter.displaySaveSuccess();
-        }else{
+        if (placeValidator.validate(place) && placeRepository.save(place)) {
+            placeSavePresenter.displaySaveSuccess();
+        } else {
             placeSavePresenter.displaySaveFail();
         }
     }
 
     public void update(Place place) {
-        if (placeValidator.validate(place)) {
-            if (placeRepository.update(place))
-                placeSavePresenter.displayUpdateSuccess();
+        if (placeValidator.validate(place) && placeRepository.update(place)) {
+            placeSavePresenter.displayUpdateSuccess();
         } else {
             placeSavePresenter.displayUpdateFail();
         }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,16 +25,14 @@ public class ContainerController {
     private ContainerTypeRepository containerTypeRepository;
     private ContainerPresenter containerPresenter;
 
-
-    public ContainerController(ContainerTypeRepository containerTypeRepository, ContainerPresenter containerPresenter) {
-
+    public ContainerController(ContainerTypeRepository containerTypeRepository,
+                               ContainerPresenter containerPresenter) {
         this.containerTypeRepository = containerTypeRepository;
         this.containerPresenter = containerPresenter;
     }
 
     public void showList() {
         List<ContainerType> containerTypes = containerTypeRepository.find();
-
         if (containerTypes == null) {
             containerPresenter.alertContainerNotFound();
         } else {

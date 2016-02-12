@@ -47,7 +47,6 @@ public class SurveyBuildingChooser {
             BuildingRepository buildingRepository,
             SurveyRepository surveyRepository,
             BuildingWithSurveyStatusListPresenter surveyBuildingPresenter) {
-
         this.userRepository = userRepository;
         this.placeRepository = placeRepository;
         this.buildingRepository = buildingRepository;
@@ -83,7 +82,6 @@ public class SurveyBuildingChooser {
             surveyBuildingPresenter.alertBuildingsNotFound();
             return;
         }
-
         List<Survey> surveys = surveyRepository.findByPlaceAndUserIn7Days(place, user);
         List<BuildingWithSurveyStatus> buildingsWithSurveyStatuses = new ArrayList<>();
         for (Building eachBuilding : buildings) {

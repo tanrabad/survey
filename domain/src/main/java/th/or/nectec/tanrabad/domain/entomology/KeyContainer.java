@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.entity.utils;
+package th.or.nectec.tanrabad.domain.entomology;
 
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.SurveyDetail;
@@ -28,8 +28,8 @@ public class KeyContainer {
     private final List<Survey> surveys;
     protected List<SurveyDetail> indoorKey;
     protected List<SurveyDetail> outdoorKey;
-    Map<ContainerType,Integer> indoorMap = new HashMap<>();
-    Map<ContainerType,Integer> outdoorMap = new HashMap<>();
+    Map<ContainerType, Integer> indoorMap = new HashMap<>();
+    Map<ContainerType, Integer> outdoorMap = new HashMap<>();
 
     public KeyContainer(Survey survey) {
         surveys = new ArrayList<>();
@@ -78,20 +78,22 @@ public class KeyContainer {
             }
         }
 
-        Iterator<Map.Entry<ContainerType,Integer>> indoorItr = indoorMap.entrySet().iterator();
+        Iterator<Map.Entry<ContainerType, Integer>> indoorItr = indoorMap.entrySet().iterator();
         indoorKey = new ArrayList<>();
         while (indoorItr.hasNext()) {
-            Map.Entry<ContainerType,Integer> containerTypeIntegerEntry = indoorItr.next();
-            indoorKey.add(new SurveyDetail(UUID.randomUUID(), containerTypeIntegerEntry.getKey(), containerTypeIntegerEntry.getValue(), containerTypeIntegerEntry.getValue()));
+            Map.Entry<ContainerType, Integer> containerTypeIntegerEntry = indoorItr.next();
+            indoorKey.add(new SurveyDetail(UUID.randomUUID(), containerTypeIntegerEntry.getKey(),
+                    containerTypeIntegerEntry.getValue(), containerTypeIntegerEntry.getValue()));
         }
         Collections.sort(indoorKey);
 
-        Iterator<Map.Entry<ContainerType,Integer>> outdoorItr = outdoorMap.entrySet().iterator();
+        Iterator<Map.Entry<ContainerType, Integer>> outdoorItr = outdoorMap.entrySet().iterator();
         outdoorKey = new ArrayList<>();
         while (outdoorItr.hasNext()) {
 
-            Map.Entry<ContainerType,Integer> containerTypeIntegerEntry = outdoorItr.next();
-            outdoorKey.add(new SurveyDetail(UUID.randomUUID(), containerTypeIntegerEntry.getKey(), containerTypeIntegerEntry.getValue(), containerTypeIntegerEntry.getValue()));
+            Map.Entry<ContainerType, Integer> containerTypeIntegerEntry = outdoorItr.next();
+            outdoorKey.add(new SurveyDetail(UUID.randomUUID(), containerTypeIntegerEntry.getKey(),
+                    containerTypeIntegerEntry.getValue(), containerTypeIntegerEntry.getValue()));
         }
         Collections.sort(outdoorKey);
     }

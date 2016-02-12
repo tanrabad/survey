@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -33,13 +33,13 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
+import th.or.nectec.tanrabad.domain.entomology.HouseIndex;
 import th.or.nectec.tanrabad.domain.place.PlaceController;
 import th.or.nectec.tanrabad.domain.place.PlacePresenter;
 import th.or.nectec.tanrabad.domain.survey.SurveyBuildingHistoryController;
 import th.or.nectec.tanrabad.domain.survey.SurveyBuildingPresenter;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.Survey;
-import th.or.nectec.tanrabad.entity.utils.HouseIndex;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView;
@@ -88,18 +88,9 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
         startSurveyMoreBuildingButtonAnimation();
     }
 
-    private void startSurveyMoreBuildingButtonAnimation() {
-        Animation moreBuildingAnim = AnimationUtils.loadAnimation(this, R.anim.survey_more_building_button);
-        surveyMoreBuildingButton.startAnimation(moreBuildingAnim);
-    }
-
     private void showPlaceInfo() {
         PlaceController placeController = new PlaceController(BrokerPlaceRepository.getInstance(), this);
         placeController.showPlace(UUID.fromString(getPlaceUuidFromIntent()));
-    }
-
-    private String getPlaceUuidFromIntent() {
-        return getIntent().getStringExtra(PLACE_UUID_ARG);
     }
 
     private void setupBuildingHistoryList() {
@@ -142,6 +133,15 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
                 BuildingListActivity.open(SurveyBuildingHistoryActivity.this, getPlaceUuidFromIntent());
             }
         });
+    }
+
+    private void startSurveyMoreBuildingButtonAnimation() {
+        Animation moreBuildingAnim = AnimationUtils.loadAnimation(this, R.anim.survey_more_building_button);
+        surveyMoreBuildingButton.startAnimation(moreBuildingAnim);
+    }
+
+    private String getPlaceUuidFromIntent() {
+        return getIntent().getStringExtra(PLACE_UUID_ARG);
     }
 
     @Override

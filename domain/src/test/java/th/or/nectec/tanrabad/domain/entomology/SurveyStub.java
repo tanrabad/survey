@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,25 +15,23 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.entity.utils;
+package th.or.nectec.tanrabad.domain.entomology;
 
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.entity.lookup.ContainerType;
+import th.or.nectec.tanrabad.entity.stub.ContainerTypeStub;
 
 import java.util.UUID;
 
 public class SurveyStub {
 
-
     public static final User SURVEYOR = User.fromUsername("surveyor");
-    private static String macAddress = "aa:bb:cc:dd:ee:ff";
 
     public static Survey withoutLarvae(Building building) {
         return new Survey.Builder(UUID.randomUUID(), SURVEYOR).setBuilding(building)
                 .addIndoorDetail(UUID.randomUUID(), ContainerTypeStub.น้ำใช้, 20, 0).build();
-
     }
 
     public static Survey withLarvae(Building building) {

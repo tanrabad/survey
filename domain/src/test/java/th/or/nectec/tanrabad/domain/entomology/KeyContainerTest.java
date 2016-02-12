@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.entity.utils;
+package th.or.nectec.tanrabad.domain.entomology;
 
 import org.junit.Test;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Survey;
+import th.or.nectec.tanrabad.entity.stub.ContainerTypeStub;
 
 import java.util.ArrayList;
 import java.util.UUID;

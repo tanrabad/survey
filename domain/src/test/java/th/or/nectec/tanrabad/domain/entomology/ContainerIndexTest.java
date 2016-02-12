@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.entity.utils;
+package th.or.nectec.tanrabad.domain.entomology;
 
 import org.junit.Test;
+import th.or.nectec.tanrabad.entity.stub.ContainerTypeStub;
 
 import static org.junit.Assert.assertEquals;
 
@@ -74,6 +75,5 @@ public class ContainerIndexTest {
 
         assertEquals(4, ci.getFoundLarvaeContainer());
         assertEquals(100, ci.getTotalContainer());
-
     }
 }

@@ -19,7 +19,7 @@ package th.or.nectec.tanrabad.entity;
 
 import org.junit.Test;
 import th.or.nectec.tanrabad.entity.lookup.ContainerType;
-import th.or.nectec.tanrabad.entity.utils.ContainerTypeStub;
+import th.or.nectec.tanrabad.entity.stub.ContainerTypeStub;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;

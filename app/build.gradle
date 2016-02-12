@@ -36,6 +36,7 @@ apply from: "checkstyle.gradle"
 
 repositories {
     maven { url "https://maven.fabric.io/public" }
+    maven { url "https://jitpack.io" }
 }
 
 android {
@@ -135,6 +136,7 @@ dependencies {
     compile "com.bluelinelabs:logansquare:$loganSquareVersion"
     compile("com.crashlytics.sdk.android:answers:$answersVersion@aar") { transitive = true; }
     compile("com.crashlytics.sdk.android:crashlytics:$crashlyticsVersion@aar") { transitive = true; }
+    compile "com.github.amlcurran.showcaseview:library:$showcaseViewVersion"
     compile "com.squareup.okhttp:okhttp:$okHttpVersion"
     compile "joda-time:joda-time:$jodaTimeVersion"
     compile "net.frakbot:jumpingbeans:$jumpingbeansVersion"

@@ -28,7 +28,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import com.github.amlcurran.showcaseview.ShowcaseView;
 import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.presenter.showcase.ShowcaseFontStyle;
+import th.or.nectec.tanrabad.survey.presenter.showcase.ToolbarActionItemTarget;
 import uk.co.chrisjenx.calligraphy.CalligraphyUtils;
 import uk.co.chrisjenx.calligraphy.TypefaceUtils;
 
@@ -45,24 +48,42 @@ public class PlaceListActivity extends TanrabadActivity {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_list);
         setupViews();
         setupHomeButton();
         setupTabPager();
         changeTabsFont();
+
+
+        displayShowcase();
+    }
+
+    private void displayShowcase() {
+        new ShowcaseView.Builder(this)
+                .setStyle(R.style.CustomShowcaseTheme)
+                .setContentTitle("ค้นหาสถานที่")
+                .setContentText("กดที่นี่เพื่อค้นหาสถานที่นะจ๊ะ")
+                .setTarget(new ToolbarActionItemTarget((Toolbar) findViewById(R.id.toolbar), R.id.action_search))
+                .setContentTextPaint(ShowcaseFontStyle.getTitleStyle(this))
+                .setContentTitlePaint(ShowcaseFontStyle.getContentStyle(this))
+                .build();
     }
 
     private void setupViews() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.inflateMenu(R.menu.action_activity_place_search);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         placePager = (ViewPager) findViewById(R.id.place_pager);
         setSupportActionBar(toolbar);
     }
 
     private void setupTabPager() {
-        placePagerAdapter = new PlacePagerAdapter(getSupportFragmentManager(), PlaceListActivity.this, AccountUtils.getUser().getUsername());
+        placePagerAdapter = new PlacePagerAdapter(
+                getSupportFragmentManager(),
+                PlaceListActivity.this,
+                AccountUtils.getUser().getUsername());
         placePager.setAdapter(placePagerAdapter);
         tabLayout.setupWithViewPager(placePager);
     }
@@ -76,10 +97,22 @@ public class PlaceListActivity extends TanrabadActivity {
             for (int i = 0; i < tabChildsCount; i++) {
                 View tabViewChild = vgTab.getChildAt(i);
                 if (tabViewChild instanceof TextView) {
-                    CalligraphyUtils.applyFontToTextView((TextView) tabViewChild, TypefaceUtils.load(this.getAssets(), "fonts/ThaiSansNeue-Regular.otf"));
+                    CalligraphyUtils.applyFontToTextView(
+                            (TextView) tabViewChild,
+                            TypefaceUtils.load(this.getAssets(), "fonts/ThaiSansNeue-Regular.otf"));
                 }
             }
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                PlaceSearchActivity.open(this);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -98,15 +131,5 @@ public class PlaceListActivity extends TanrabadActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.action_activity_place_search, menu);
         return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_search:
-                PlaceSearchActivity.open(this);
-                break;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

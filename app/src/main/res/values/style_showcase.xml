@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomShowcaseTheme" parent="ShowcaseView.Light">
+        <item name="sv_backgroundColor">@color/black_transparent_70</item>
+        <item name="sv_showcaseColor">@color/transparent</item>
+        <item name="sv_buttonText">รับทราบ</item>
+        <item name="sv_tintButtonColor">false</item>
+        <item name="sv_titleTextAppearance">@style/ShowcaseTitle</item>
+        <item name="sv_detailTextAppearance">@style/ShowcaseDetail</item>
+    </style>
+
+    <style name="ShowcaseTitle" parent="TextAppearance.ShowcaseView.Title.Light">
+        <item name="android:textColor">@color/color_accent</item>
+        <item name="android:textSize">@dimen/text_title</item>
+        <item name="fontPath">fonts/ThaiSansNeue-Bold.otf</item>
+    </style>
+
+    <style name="ShowcaseDetail" parent="TextAppearance.ShowcaseView.Detail.Light">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_subhead</item>
+        <item name="fontPath">fonts/ThaiSansNeue-Regular.otf</item>
+    </style>
+</resources>

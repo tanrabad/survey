@@ -107,11 +107,6 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         placeController.showPlace(getPlaceUuidFromIntent());
     }
 
-    private UUID getPlaceUuidFromIntent() {
-        String uuid = getIntent().getStringExtra(PLACE_UUID_ARG);
-        return UUID.fromString(uuid);
-    }
-
     private void setupBuildingList() {
         buildingAdapter = new BuildingWithSurveyStatusAdapter(this, BuildingIconMapping.getBuildingIcon(place));
         buildingList = (RecyclerView) findViewById(R.id.building_list);
@@ -122,7 +117,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 BuildingWithSurveyStatus building = buildingAdapter.getItem(position);
-                SurveyActivity.open(BuildingListActivity.this, building.getBuilding());
+                SurveyActivity.open(BuildingListActivity.this, building.building);
                 if (!TextUtils.isEmpty(buildingSearchView.getQuery()))
                     TanrabadApp.action().filterBuilding(buildingSearchView.getQuery().toString());
             }
@@ -133,7 +128,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
                 BuildingWithSurveyStatus building = buildingAdapter.getItem(position);
                 BuildingFormActivity.startEdit(BuildingListActivity.this,
                         getPlaceUuidFromIntent().toString(),
-                        building.getBuilding().getId().toString());
+                        building.building.getId().toString());
                 return true;
             }
         });
@@ -179,6 +174,11 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
 
     private void loadSurveyBuildingList() {
         surveyBuildingChooser.displaySurveyBuildingOf(getPlaceUuidFromIntent().toString(), AccountUtils.getUser());
+    }
+
+    private UUID getPlaceUuidFromIntent() {
+        String uuid = getIntent().getStringExtra(PLACE_UUID_ARG);
+        return UUID.fromString(uuid);
     }
 
     @Override

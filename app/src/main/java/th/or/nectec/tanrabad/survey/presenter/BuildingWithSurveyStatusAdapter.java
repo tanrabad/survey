@@ -41,7 +41,7 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
     private final Context context;
     private final int buildingIcon;
 
-    ArrayList<BuildingWithSurveyStatus> buildings = new ArrayList<>();
+    ArrayList<BuildingWithSurveyStatus> buildingsWithSurveyStatusList = new ArrayList<>();
     private AdapterView.OnItemClickListener onItemClickListener;
     private AdapterView.OnItemLongClickListener onItemLongClickListener;
     private boolean isEditButtonVisible;
@@ -53,20 +53,20 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
 
     @Override
     public void updateData(List<BuildingWithSurveyStatus> buildings) {
-        this.buildings.clear();
-        this.buildings.addAll(buildings);
+        this.buildingsWithSurveyStatusList.clear();
+        this.buildingsWithSurveyStatusList.addAll(buildings);
         notifyDataSetChanged();
     }
 
     @Override
     public void clearData() {
-        this.buildings.clear();
+        this.buildingsWithSurveyStatusList.clear();
         notifyDataSetChanged();
     }
 
     @Override
     public BuildingWithSurveyStatus getItem(int i) {
-        return buildings.get(i);
+        return buildingsWithSurveyStatusList.get(i);
     }
 
     @Override
@@ -92,10 +92,10 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
 
     @Override
     public void onBindViewHolder(BuildingWithSurveyStatusAdapter.ViewHolder holder, int position) {
-        BuildingWithSurveyStatus buildingWithSurveyStatus = buildings.get(position);
-        holder.buildingTextView.setText(buildingWithSurveyStatus.getBuilding().getName());
+        BuildingWithSurveyStatus buildingWithSurveyStatus = buildingsWithSurveyStatusList.get(position);
+        holder.buildingTextView.setText(buildingWithSurveyStatus.building.getName());
         holder.buildingIcon.setImageResource(buildingIcon);
-        if (buildingWithSurveyStatus.isSurvey()) {
+        if (buildingWithSurveyStatus.isSurvey) {
             holder.rootView.setEnabled(false);
             holder.surveyedStatus.setVisibility(View.VISIBLE);
         } else {
@@ -117,7 +117,7 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
 
     @Override
     public int getItemCount() {
-        return buildings.size();
+        return buildingsWithSurveyStatusList.size();
     }
 
     private void onItemHolderClick(ViewHolder itemHolder) {
@@ -156,7 +156,7 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
         @Override
         public void onClick(View view) {
             if (view.getId() == R.id.edit_building) {
-                Building building = buildings.get(getAdapterPosition()).getBuilding();
+                Building building = buildingsWithSurveyStatusList.get(getAdapterPosition()).building;
                 BuildingFormActivity.startEdit((Activity) context,
                         building.getPlace().getId().toString(),
                         building.getId().toString());

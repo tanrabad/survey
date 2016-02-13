@@ -86,13 +86,16 @@ public class SurveyBuildingChooser {
         List<BuildingWithSurveyStatus> buildingsWithSurveyStatuses = new ArrayList<>();
         for (Building eachBuilding : buildings) {
             BuildingWithSurveyStatus buildingWithSurveyStatus = new BuildingWithSurveyStatus(
-                    eachBuilding, surveys != null && isBuildingSurveyed(surveys, eachBuilding));
+                    eachBuilding, isBuildingSurveyed(surveys, eachBuilding));
             buildingsWithSurveyStatuses.add(buildingWithSurveyStatus);
         }
         surveyBuildingPresenter.displayAllSurveyBuildingList(buildingsWithSurveyStatuses);
     }
 
     private boolean isBuildingSurveyed(List<Survey> surveys, Building eachBuilding) {
+        if (surveys == null) {
+            return false;
+        }
         for (Survey eachSurvey : surveys) {
             if (eachSurvey.getSurveyBuilding().equals(eachBuilding)) {
                 return true;

@@ -21,35 +21,12 @@ import th.or.nectec.tanrabad.entity.Building;
 
 
 public class BuildingWithSurveyStatus {
-    Building building;
-    boolean isSurvey;
+    public final Building building;
+    public final boolean isSurvey;
 
     public BuildingWithSurveyStatus(Building building, boolean isSurvey) {
         this.building = building;
         this.isSurvey = isSurvey;
-    }
-
-    public Building getBuilding() {
-        return building;
-    }
-
-    public void setBuilding(Building building) {
-        this.building = building;
-    }
-
-    public boolean isSurvey() {
-        return isSurvey;
-    }
-
-    public void setIsSurvey(boolean isSurvey) {
-        this.isSurvey = isSurvey;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = building != null ? building.hashCode() : 0;
-        result = 31 * result + (isSurvey ? 1 : 0);
-        return result;
     }
 
     @Override
@@ -63,13 +40,5 @@ public class BuildingWithSurveyStatus {
                 ? !building.equals(that.building)
                 : that.building != null);
 
-    }
-
-    @Override
-    public String toString() {
-        return "SurveyBuilding{" +
-                "building=" + building +
-                ", isSurvey=" + isSurvey +
-                '}';
     }
 }

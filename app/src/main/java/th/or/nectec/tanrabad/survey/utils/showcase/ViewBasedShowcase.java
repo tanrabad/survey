@@ -16,8 +16,8 @@ public class ViewBasedShowcase implements Showcase {
         showcaseBuilder = new ShowcaseView.Builder(activity)
                 .setStyle(R.style.CustomShowcaseTheme)
                 .setTarget(new ViewTarget(viewId, activity))
-                .setContentTextPaint(ShowcaseFontStyle.getTitleStyle(activity))
-                .setContentTitlePaint(ShowcaseFontStyle.getContentStyle(activity))
+                .setContentTextPaint(ShowcaseFontStyle.getContentStyle(activity))
+                .setContentTitlePaint(ShowcaseFontStyle.getTitleStyle(activity))
                 .setShowcaseEventListener(new SimpleShowcaseEventListener() {
                     @Override
                     public void onShowcaseViewHide(ShowcaseView showcaseView) {

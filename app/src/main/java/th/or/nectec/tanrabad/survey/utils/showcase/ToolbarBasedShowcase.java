@@ -5,7 +5,6 @@ import android.support.annotation.IdRes;
 import android.support.v7.widget.Toolbar;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.SimpleShowcaseEventListener;
-import th.or.nectec.tanrabad.survey.R;
 
 public class ToolbarBasedShowcase implements Showcase {
 
@@ -13,8 +12,7 @@ public class ToolbarBasedShowcase implements Showcase {
     private OnShowcaseDismissListener onShowcaseDismissListener;
 
     public ToolbarBasedShowcase(Activity activity, @IdRes int toolbarId, @IdRes int viewId) {
-        showcaseBuilder = new ShowcaseView.Builder(activity)
-                .setStyle(R.style.CustomShowcaseTheme)
+        showcaseBuilder = BaseShowcase.build(activity)
                 .setTarget(new ToolbarActionItemTarget((Toolbar) activity.findViewById(toolbarId), viewId))
                 .setContentTextPaint(ShowcaseFontStyle.getContentStyle(activity))
                 .setContentTitlePaint(ShowcaseFontStyle.getTitleStyle(activity))

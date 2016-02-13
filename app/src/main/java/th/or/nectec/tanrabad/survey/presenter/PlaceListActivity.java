@@ -60,25 +60,6 @@ public class PlaceListActivity extends TanrabadActivity {
         //displayShowcase();
     }
 
-    private void displayShowcase() {
-        ToolbarBasedShowcase toolbarBasedShowcase = new ToolbarBasedShowcase(this, R.id.toolbar, R.id.action_search);
-        toolbarBasedShowcase.setTitle("ค้นหาสถานที่");
-        toolbarBasedShowcase.setMessage("กดที่แว่นขยายเพื่อค้นหาสถานที่นะจ๊ะ");
-        toolbarBasedShowcase.setOnShowCaseDismissListener(new Showcase.OnShowcaseDismissListener() {
-            @Override
-            public void onDismissListener(ShowcaseView showcaseView) {
-                displayNextShowcase();
-            }
-        });
-        toolbarBasedShowcase.display();
-    }
-
-    private void displayNextShowcase() {
-        ViewBasedShowcase toolbarBasedShowcase = new ViewBasedShowcase(this, R.id.place_filter);
-        toolbarBasedShowcase.setMessage("กดที่นี่เพื่อเปลี่ยนประเภทสถานที่");
-        toolbarBasedShowcase.display();
-    }
-
     private void setupViews() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.inflateMenu(R.menu.action_activity_place_search);
@@ -121,6 +102,25 @@ public class PlaceListActivity extends TanrabadActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void displayShowcase() {
+        ToolbarBasedShowcase toolbarBasedShowcase = new ToolbarBasedShowcase(this, R.id.toolbar, R.id.action_search);
+        toolbarBasedShowcase.setTitle("ค้นหาสถานที่");
+        toolbarBasedShowcase.setMessage("กดที่แว่นขยายเพื่อค้นหาสถานที่นะจ๊ะ");
+        toolbarBasedShowcase.setOnShowCaseDismissListener(new Showcase.OnShowcaseDismissListener() {
+            @Override
+            public void onDismissListener(ShowcaseView showcaseView) {
+                displayNextShowcase();
+            }
+        });
+        toolbarBasedShowcase.display();
+    }
+
+    private void displayNextShowcase() {
+        ViewBasedShowcase toolbarBasedShowcase = new ViewBasedShowcase(this, R.id.place_filter);
+        toolbarBasedShowcase.setMessage("กดที่นี่เพื่อเปลี่ยนประเภทสถานที่");
+        toolbarBasedShowcase.display();
     }
 
     @Override

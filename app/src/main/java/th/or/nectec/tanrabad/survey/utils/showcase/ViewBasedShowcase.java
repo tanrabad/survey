@@ -5,19 +5,15 @@ import android.support.annotation.IdRes;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.SimpleShowcaseEventListener;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
-import th.or.nectec.tanrabad.survey.R;
 
 public class ViewBasedShowcase implements Showcase {
 
     private final ShowcaseView.Builder showcaseBuilder;
-    private OnShowcaseDismissListener onShowcaseDismissListener;
+    private Showcase.OnShowcaseDismissListener onShowcaseDismissListener;
 
     public ViewBasedShowcase(Activity activity, @IdRes int viewId) {
-        showcaseBuilder = new ShowcaseView.Builder(activity)
-                .setStyle(R.style.CustomShowcaseTheme)
+        showcaseBuilder = BaseShowcase.build(activity)
                 .setTarget(new ViewTarget(viewId, activity))
-                .setContentTextPaint(ShowcaseFontStyle.getContentStyle(activity))
-                .setContentTitlePaint(ShowcaseFontStyle.getTitleStyle(activity))
                 .setShowcaseEventListener(new SimpleShowcaseEventListener() {
                     @Override
                     public void onShowcaseViewHide(ShowcaseView showcaseView) {

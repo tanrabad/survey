@@ -81,8 +81,8 @@ public class PlaceWithSurveyStatusAdapter extends RecyclerView.Adapter<PlaceWith
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         PlaceWithSurveyStatus placeWithSurveyStatus = places.get(position);
-        holder.placeTextView.setText(placeWithSurveyStatus.getPlace().getName());
-        holder.placeIcon.setImageResource(PlaceIconMapping.getPlaceIcon(placeWithSurveyStatus.getPlace()));
+        holder.placeTextView.setText(placeWithSurveyStatus.place.getName());
+        holder.placeIcon.setImageResource(PlaceIconMapping.getPlaceIcon(placeWithSurveyStatus.place));
     }
 
     @Override

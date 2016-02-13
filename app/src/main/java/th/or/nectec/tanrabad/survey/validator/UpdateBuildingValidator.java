@@ -21,7 +21,7 @@ import android.text.TextUtils;
 import th.or.nectec.tanrabad.domain.building.BuildingRepository;
 import th.or.nectec.tanrabad.domain.building.BuildingValidator;
 import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.R;
 
 import java.util.List;
@@ -34,7 +34,7 @@ public class UpdateBuildingValidator implements BuildingValidator {
 
         if (TextUtils.isEmpty(building.getName())) {
 
-            throw new ValidatorException(building.getPlace().getType() == Place.TYPE_VILLAGE_COMMUNITY ?
+            throw new ValidatorException(building.getPlace().getType() == PlaceType.VILLAGE_COMMUNITY ?
                     R.string.please_define_house_no : R.string.please_define_building_name);
         }
 
@@ -45,7 +45,8 @@ public class UpdateBuildingValidator implements BuildingValidator {
         List<Building> buildingInPlace = buildingRepository.findByPlaceUUID(building.getPlace().getId());
         if (buildingInPlace != null) {
             for (Building eachBuilding : buildingInPlace) {
-                if (eachBuilding.getName().equals(building.getName()) && !eachBuilding.getId().equals(building.getId())) {
+                if (eachBuilding.getName().equals(building.getName()) &&
+                        !eachBuilding.getId().equals(building.getId())) {
                     throw new ValidatorException(R.string.cant_save_same_building_name);
                 }
             }

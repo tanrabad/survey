@@ -26,6 +26,8 @@ import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.entity.field.Location;
+import th.or.nectec.tanrabad.entity.lookup.PlaceSubType;
+import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.repository.persistence.PlaceTypeMapper;
 import th.or.nectec.tanrabad.survey.utils.ResourceFile;
 
@@ -52,8 +54,8 @@ public class JsonPlaceTest {
     @Test
     public void testParsePlaceDataToJsonString() throws Exception {
         Place placeData = new Place(UUID.nameUUIDFromBytes("123".getBytes()), "วัดป่า");
-        placeData.setType(Place.TYPE_WORSHIP);
-        placeData.setSubType(Place.SUBTYPE_TEMPLE);
+        placeData.setType(PlaceType.WORSHIP);
+        placeData.setSubType(PlaceSubType.TEMPLE);
         placeData.setSubdistrictCode("510403");
         placeData.setLocation(stubLocation());
         placeData.setUpdateBy(stubUser());
@@ -63,8 +65,8 @@ public class JsonPlaceTest {
         JsonPlace jsonPlace = JsonPlace.parse(placeData);
 
         assertEquals(UUID.nameUUIDFromBytes("123".getBytes()), jsonPlace.placeID);
-        assertEquals(Place.TYPE_WORSHIP, jsonPlace.placeTypeID);
-        assertEquals(Place.SUBTYPE_TEMPLE, jsonPlace.placeSubtypeID);
+        assertEquals(PlaceType.WORSHIP, jsonPlace.placeTypeID);
+        assertEquals(PlaceSubType.TEMPLE, jsonPlace.placeSubtypeID);
         assertEquals("วัดป่า", jsonPlace.placeName);
         assertEquals("510403", jsonPlace.tambonCode);
         assertEquals(stubLocation().getLatitude(), jsonPlace.location.getLatitude(), 0);
@@ -87,7 +89,7 @@ public class JsonPlaceTest {
         UserRepository userRepository = Mockito.mock(UserRepository.class);
         Mockito.when(userRepository.findByUsername("dcp-user")).thenReturn(stubUser());
         Place placeData = new Place(UUID.fromString("b7a9d934-04fc-a22e-0539-6c17504f732e"), "รพ.สต.ตำบลนาทราย");
-        placeData.setType(Place.TYPE_HOSPITAL);
+        placeData.setType(PlaceType.HOSPITAL);
         placeData.setSubType(3);
         placeData.setSubdistrictCode("510403");
         placeData.setLocation(stubLocation());
@@ -104,7 +106,7 @@ public class JsonPlaceTest {
         UserRepository userRepository = Mockito.mock(UserRepository.class);
         Mockito.when(userRepository.findByUsername("dcp-user")).thenReturn(stubUser());
         Place placeData = new Place(UUID.fromString("b7a9d934-04fc-a22e-0539-6c17504f732e"), "รพ.สต.ตำบลนาทราย");
-        placeData.setType(Place.TYPE_HOSPITAL);
+        placeData.setType(PlaceType.HOSPITAL);
         placeData.setSubType(PlaceTypeMapper.โรงพยาบาลทั่วไป);
         placeData.setSubdistrictCode("510403");
         placeData.setLocation(stubLocation());

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,6 +21,11 @@ import th.or.nectec.tanrabad.entity.Entity;
 
 public class PlaceType extends Entity {
 
+    public static final int VILLAGE_COMMUNITY = 1;
+    public static final int WORSHIP = 2;
+    public static final int SCHOOL = 3;
+    public static final int HOSPITAL = 4;
+    public static final int FACTORY = 5;
     private int id;
     private String name;
 

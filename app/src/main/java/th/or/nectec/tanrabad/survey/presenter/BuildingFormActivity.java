@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -41,6 +41,7 @@ import th.or.nectec.tanrabad.domain.place.PlacePresenter;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.field.Location;
+import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.job.AbsJobRunner;
@@ -185,7 +186,7 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
     public void displayPlace(Place place) {
         this.place = place;
         placeName.setText(place.getName());
-        if (place.getType() == Place.TYPE_VILLAGE_COMMUNITY) {
+        if (place.getType() == PlaceType.VILLAGE_COMMUNITY) {
             buildingNameTitle.setText(R.string.house_no);
         } else {
             buildingNameTitle.setText(R.string.building_name);

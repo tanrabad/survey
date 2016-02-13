@@ -27,7 +27,7 @@ import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.User;
+import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.WireMockTestBase;
 import th.or.nectec.tanrabad.survey.service.http.Header;
 import th.or.nectec.tanrabad.survey.utils.ResourceFile;
@@ -69,7 +69,7 @@ public class BuildingRestServiceTest extends WireMockTestBase {
     @NonNull
     private Place stubPlace() {
         Place place = new Place(UUID.fromString("b5f7b062-12f5-3402-ac88-0343733503bd"), "รพ.สต.ตำบลนาทราย");
-        place.setType(Place.TYPE_HOSPITAL);
+        place.setType(PlaceType.HOSPITAL);
         return place;
     }
 

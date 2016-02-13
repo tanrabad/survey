@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,12 +18,13 @@
 package th.or.nectec.tanrabad.survey.presenter;
 
 import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.R;
 
 public class BuildingIconMapping {
 
     public static int getBuildingIcon(Place place) {
-        if (place.getType() == Place.TYPE_VILLAGE_COMMUNITY) {
+        if (place.getType() == PlaceType.VILLAGE_COMMUNITY) {
             return R.mipmap.ic_building_home_black;
         } else {
             return R.mipmap.ic_building_black;

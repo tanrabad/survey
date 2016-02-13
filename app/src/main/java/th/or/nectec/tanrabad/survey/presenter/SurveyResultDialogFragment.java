@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.job.AbsJobRunner;
@@ -172,7 +173,7 @@ public class SurveyResultDialogFragment extends DialogFragment {
     }
 
     private boolean isVillage(JsonEntomology jsonEntomology) {
-        return jsonEntomology.placeType == Place.TYPE_VILLAGE_COMMUNITY;
+        return jsonEntomology.placeType == PlaceType.VILLAGE_COMMUNITY;
     }
 
     public class SurveyResultJobRunner extends AbsJobRunner {

@@ -22,6 +22,8 @@ import org.mockito.Mockito;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.field.Location;
+import th.or.nectec.tanrabad.entity.lookup.PlaceSubType;
+import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -76,24 +78,24 @@ public class SavePlaceValidatorTest {
         return places;
     }
 
+    private Location stubLocation() {
+        return new Location(1, 1);
+    }
+
     private Place stubPlace() {
         Place testPlace = Place.withName("ทดสอบ");
         testPlace.setSubdistrictCode("130202");
         testPlace.setLocation(stubLocation());
-        testPlace.setType(Place.TYPE_HOSPITAL);
+        testPlace.setType(PlaceType.HOSPITAL);
         return testPlace;
-    }
-
-    private Location stubLocation() {
-        return new Location(1, 1);
     }
 
     private Place stubPlaceWorship() {
         Place testPlace = Place.withName("วัดสาม");
         testPlace.setSubdistrictCode("130202");
         testPlace.setLocation(stubLocation());
-        testPlace.setType(Place.TYPE_WORSHIP);
-        testPlace.setSubType(Place.SUBTYPE_TEMPLE);
+        testPlace.setType(PlaceType.WORSHIP);
+        testPlace.setSubType(PlaceSubType.TEMPLE);
         return testPlace;
     }
 
@@ -115,7 +117,7 @@ public class SavePlaceValidatorTest {
         PlaceRepository placeRepository = Mockito.mock(PlaceRepository.class);
         Mockito.when(placeRepository.find()).thenReturn(stubPlacesList());
         Place place = stubPlace();
-        place.setType(Place.TYPE_FACTORY);
+        place.setType(PlaceType.FACTORY);
         SavePlaceValidator savePlaceValidator = new SavePlaceValidator();
         savePlaceValidator.setPlaceRepository(placeRepository);
 
@@ -128,7 +130,7 @@ public class SavePlaceValidatorTest {
         Mockito.when(placeRepository.find()).thenReturn(stubPlacesList());
         Place place = stubPlace();
         place.setName("ทดสอบ789");
-        place.setType(Place.TYPE_SCHOOL);
+        place.setType(PlaceType.SCHOOL);
         SavePlaceValidator savePlaceValidator = new SavePlaceValidator();
         savePlaceValidator.setPlaceRepository(placeRepository);
 
@@ -153,7 +155,7 @@ public class SavePlaceValidatorTest {
         Mockito.when(placeRepository.find()).thenReturn(stubPlacesList());
         Place place = stubPlace();
         place.setSubdistrictCode("130203");
-        place.setType(Place.TYPE_SCHOOL);
+        place.setType(PlaceType.SCHOOL);
         SavePlaceValidator savePlaceValidator = new SavePlaceValidator();
         savePlaceValidator.setPlaceRepository(placeRepository);
 
@@ -190,7 +192,7 @@ public class SavePlaceValidatorTest {
         PlaceRepository placeRepository = Mockito.mock(PlaceRepository.class);
         Mockito.when(placeRepository.find()).thenReturn(stubPlacesList());
         Place place = stubPlaceWorship();
-        place.setSubType(Place.SUBTYPE_CHURCH);
+        place.setSubType(PlaceSubType.CHURCH);
         SavePlaceValidator savePlaceValidator = new SavePlaceValidator();
         savePlaceValidator.setPlaceRepository(placeRepository);
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,14 +22,6 @@ import th.or.nectec.tanrabad.entity.field.Location;
 import java.util.UUID;
 
 public class Place extends Entity implements LocationEntity {
-    public static final int TYPE_VILLAGE_COMMUNITY = 1;
-    public static final int TYPE_WORSHIP = 2;
-    public static final int SUBTYPE_TEMPLE = 13;
-    public static final int SUBTYPE_CHURCH = 14;
-    public static final int SUBTYPE_MOSQUE = 15;
-    public static final int TYPE_SCHOOL = 3;
-    public static final int TYPE_HOSPITAL = 4;
-    public static final int TYPE_FACTORY = 5;
 
     private UUID id;
     private String name;
@@ -98,12 +90,12 @@ public class Place extends Entity implements LocationEntity {
         return updateBy;
     }
 
-    public void setUpdateBy(String updateBy) {
-        this.updateBy = updateBy;
-    }
-
     public void setUpdateBy(User updateBy) {
         this.updateBy = updateBy.getUsername();
+    }
+
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
     }
 
     @Override

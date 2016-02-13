@@ -21,6 +21,7 @@ package th.or.nectec.tanrabad.survey.validator;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceValidator;
 import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.R;
 
 import java.util.List;
@@ -54,19 +55,19 @@ public class SavePlaceValidator implements PlaceValidator {
         return true;
     }
 
-    private boolean isSamePlaceAddress(Place place, Place comparePlace) {
-        return comparePlace.getSubdistrictCode().equals(place.getSubdistrictCode());
+    private boolean isSamePlaceName(Place place, Place comparePlace) {
+        return comparePlace.getName().equals(place.getName());
     }
 
     private boolean isSamePlaceType(Place place, Place comparePlace) {
-        if (place.getType() == Place.TYPE_WORSHIP) {
+        if (place.getType() == PlaceType.WORSHIP) {
             return comparePlace.getSubType() == place.getSubType();
         }
         return comparePlace.getType() == place.getType();
     }
 
-    private boolean isSamePlaceName(Place place, Place comparePlace) {
-        return comparePlace.getName().equals(place.getName());
+    private boolean isSamePlaceAddress(Place place, Place comparePlace) {
+        return comparePlace.getSubdistrictCode().equals(place.getSubdistrictCode());
     }
 
     @Override

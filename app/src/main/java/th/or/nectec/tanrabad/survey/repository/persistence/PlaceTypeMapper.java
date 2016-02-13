@@ -1,7 +1,25 @@
+/*
+ * Copyright (c) 2016 NECTEC
+ *   National Electronics and Computer Technology Center, Thailand
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package th.or.nectec.tanrabad.survey.repository.persistence;
 
 import android.util.SparseIntArray;
-import th.or.nectec.tanrabad.entity.Place;
+
+import static th.or.nectec.tanrabad.entity.lookup.PlaceType.*;
 
 public class PlaceTypeMapper {
     public static final int สำนักงานสาธารณสุขจังหวัด = 1;
@@ -25,23 +43,23 @@ public class PlaceTypeMapper {
     private SparseIntArray placeSubTypeMapping = new SparseIntArray();
 
     private PlaceTypeMapper() {
-        placeSubTypeMapping.put(สำนักงานสาธารณสุขจังหวัด, Place.TYPE_HOSPITAL);
-        placeSubTypeMapping.put(สำนักงานสาธารณสุขอำเภอ, Place.TYPE_HOSPITAL);
-        placeSubTypeMapping.put(โรงพยาบาลส่งเสริมสุขภาพตำบล, Place.TYPE_HOSPITAL);
-        placeSubTypeMapping.put(โรงพยาบาลทั่วไป, Place.TYPE_HOSPITAL);
-        placeSubTypeMapping.put(โรงพยาบาลชุมชน, Place.TYPE_HOSPITAL);
-        placeSubTypeMapping.put(โรงพยาบาลสังกัดกระทรวงอื่น, Place.TYPE_HOSPITAL);
-        placeSubTypeMapping.put(โรงพยาบาลเอกชน, Place.TYPE_HOSPITAL);
-        placeSubTypeMapping.put(ศูนย์สุขภาพชุมชน, Place.TYPE_HOSPITAL);
-        placeSubTypeMapping.put(ศูนย์วิชาการ, Place.TYPE_HOSPITAL);
-        placeSubTypeMapping.put(ชุมชนแออัด, Place.TYPE_VILLAGE_COMMUNITY);
-        placeSubTypeMapping.put(ชุมชนพักอาศัย, Place.TYPE_VILLAGE_COMMUNITY);
-        placeSubTypeMapping.put(ชุมชนพาณิชย์, Place.TYPE_VILLAGE_COMMUNITY);
-        placeSubTypeMapping.put(วัด, Place.TYPE_WORSHIP);
-        placeSubTypeMapping.put(โบสถ์, Place.TYPE_WORSHIP);
-        placeSubTypeMapping.put(มัสยิด, Place.TYPE_WORSHIP);
-        placeSubTypeMapping.put(โรงเรียน, Place.TYPE_SCHOOL);
-        placeSubTypeMapping.put(โรงงาน, Place.TYPE_FACTORY);
+        placeSubTypeMapping.put(สำนักงานสาธารณสุขจังหวัด, HOSPITAL);
+        placeSubTypeMapping.put(สำนักงานสาธารณสุขอำเภอ, HOSPITAL);
+        placeSubTypeMapping.put(โรงพยาบาลส่งเสริมสุขภาพตำบล, HOSPITAL);
+        placeSubTypeMapping.put(โรงพยาบาลทั่วไป, HOSPITAL);
+        placeSubTypeMapping.put(โรงพยาบาลชุมชน, HOSPITAL);
+        placeSubTypeMapping.put(โรงพยาบาลสังกัดกระทรวงอื่น, HOSPITAL);
+        placeSubTypeMapping.put(โรงพยาบาลเอกชน, HOSPITAL);
+        placeSubTypeMapping.put(ศูนย์สุขภาพชุมชน, HOSPITAL);
+        placeSubTypeMapping.put(ศูนย์วิชาการ, HOSPITAL);
+        placeSubTypeMapping.put(ชุมชนแออัด, VILLAGE_COMMUNITY);
+        placeSubTypeMapping.put(ชุมชนพักอาศัย, VILLAGE_COMMUNITY);
+        placeSubTypeMapping.put(ชุมชนพาณิชย์, VILLAGE_COMMUNITY);
+        placeSubTypeMapping.put(วัด, WORSHIP);
+        placeSubTypeMapping.put(โบสถ์, WORSHIP);
+        placeSubTypeMapping.put(มัสยิด, WORSHIP);
+        placeSubTypeMapping.put(โรงเรียน, SCHOOL);
+        placeSubTypeMapping.put(โรงงาน, FACTORY);
     }
 
     public static PlaceTypeMapper getInstance() {
@@ -56,15 +74,15 @@ public class PlaceTypeMapper {
 
     public int getDefaultPlaceType(int placeTypeID) {
         switch (placeTypeID) {
-            case Place.TYPE_VILLAGE_COMMUNITY:
+            case VILLAGE_COMMUNITY:
                 return ชุมชนพักอาศัย;
-            case Place.TYPE_WORSHIP:
+            case WORSHIP:
                 return วัด;
-            case Place.TYPE_SCHOOL:
+            case SCHOOL:
                 return โรงเรียน;
-            case Place.TYPE_HOSPITAL:
+            case HOSPITAL:
                 return โรงพยาบาลทั่วไป;
-            case Place.TYPE_FACTORY:
+            case FACTORY:
                 return โรงงาน;
             default:
                 return -1;

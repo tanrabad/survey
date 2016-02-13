@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,6 +18,8 @@
 package th.or.nectec.tanrabad.survey.presenter;
 
 import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.lookup.PlaceSubType;
+import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.R;
 
 import java.util.HashMap;
@@ -26,17 +28,17 @@ public class PlaceIconMapping {
     private static final HashMap<Integer, Integer> PLACE_ICON_MAP = new HashMap<>();
 
     static {
-        PLACE_ICON_MAP.put(Place.TYPE_VILLAGE_COMMUNITY, R.mipmap.ic_place_village);
-        PLACE_ICON_MAP.put(Place.SUBTYPE_TEMPLE, R.mipmap.ic_place_temple);
-        PLACE_ICON_MAP.put(Place.SUBTYPE_CHURCH, R.mipmap.ic_place_church);
-        PLACE_ICON_MAP.put(Place.SUBTYPE_MOSQUE, R.mipmap.ic_place_mosque);
-        PLACE_ICON_MAP.put(Place.TYPE_SCHOOL, R.mipmap.ic_place_school);
-        PLACE_ICON_MAP.put(Place.TYPE_HOSPITAL, R.mipmap.ic_place_hospital);
-        PLACE_ICON_MAP.put(Place.TYPE_FACTORY, R.mipmap.ic_place_factory);
+        PLACE_ICON_MAP.put(PlaceType.VILLAGE_COMMUNITY, R.mipmap.ic_place_village);
+        PLACE_ICON_MAP.put(PlaceSubType.TEMPLE, R.mipmap.ic_place_temple);
+        PLACE_ICON_MAP.put(PlaceSubType.CHURCH, R.mipmap.ic_place_church);
+        PLACE_ICON_MAP.put(PlaceSubType.MOSQUE, R.mipmap.ic_place_mosque);
+        PLACE_ICON_MAP.put(PlaceType.SCHOOL, R.mipmap.ic_place_school);
+        PLACE_ICON_MAP.put(PlaceType.HOSPITAL, R.mipmap.ic_place_hospital);
+        PLACE_ICON_MAP.put(PlaceType.FACTORY, R.mipmap.ic_place_factory);
     }
 
     public static int getPlaceIcon(Place place) {
-        if (place.getType() == Place.TYPE_WORSHIP) {
+        if (place.getType() == PlaceType.WORSHIP) {
             if (!PLACE_ICON_MAP.containsKey(place.getSubType()))
                 return R.mipmap.ic_place_temple;
             return PLACE_ICON_MAP.get(place.getSubType());

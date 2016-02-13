@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,35 +21,12 @@ import th.or.nectec.tanrabad.entity.Place;
 
 
 public class PlaceWithSurveyStatus {
-    Place place;
-    boolean isSurvey;
+    public final Place place;
+    public final boolean isSurvey;
 
     public PlaceWithSurveyStatus(Place place, boolean isSurvey) {
         this.place = place;
         this.isSurvey = isSurvey;
-    }
-
-    public Place getPlace() {
-        return place;
-    }
-
-    public void setPlace(Place place) {
-        this.place = place;
-    }
-
-    public boolean isSurvey() {
-        return isSurvey;
-    }
-
-    public void setIsSurvey(boolean isSurvey) {
-        this.isSurvey = isSurvey;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = place != null ? place.hashCode() : 0;
-        result = 31 * result + (isSurvey ? 1 : 0);
-        return result;
     }
 
     @Override
@@ -59,15 +36,8 @@ public class PlaceWithSurveyStatus {
 
         PlaceWithSurveyStatus that = (PlaceWithSurveyStatus) o;
 
-        return isSurvey == that.isSurvey && !(place != null ? !place.equals(that.place) : that.place != null);
+        if (isSurvey != that.isSurvey) return false;
+        return place.equals(that.place);
 
-    }
-
-    @Override
-    public String toString() {
-        return "SurveyPlace{" +
-                "place=" + place +
-                ", isSurvey=" + isSurvey +
-                '}';
     }
 }

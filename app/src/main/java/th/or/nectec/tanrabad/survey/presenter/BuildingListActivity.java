@@ -39,6 +39,7 @@ import th.or.nectec.tanrabad.domain.place.PlaceController;
 import th.or.nectec.tanrabad.domain.place.PlacePresenter;
 import th.or.nectec.tanrabad.domain.survey.SurveyBuildingChooser;
 import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView;
@@ -161,7 +162,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
 
     private void setupEmptyLayout() {
         emptyLayoutView = (EmptyLayoutView) findViewById(R.id.empty_layout);
-        emptyLayoutView.setEmptyIcon(place.getType() == Place.TYPE_VILLAGE_COMMUNITY ?
+        emptyLayoutView.setEmptyIcon(place.getType() == PlaceType.VILLAGE_COMMUNITY ?
                 R.mipmap.ic_building_home_black : R.mipmap.ic_building_black);
         emptyLayoutView.setEmptyText(R.string.building_list_not_found);
         emptyLayoutView.setEmptyButtonText(R.string.add_building, new View.OnClickListener() {
@@ -196,7 +197,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         this.place = place;
         TextView placeName = (TextView) findViewById(R.id.place_name);
         placeName.setText(place.getName());
-        if (place.getType() == Place.TYPE_VILLAGE_COMMUNITY && !AccountUtils.canAddOrEditVillage()) {
+        if (place.getType() == PlaceType.VILLAGE_COMMUNITY && !AccountUtils.canAddOrEditVillage()) {
             editPlaceButton.setVisibility(View.GONE);
         } else {
             editPlaceButton.setVisibility(View.VISIBLE);

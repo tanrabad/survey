@@ -27,6 +27,7 @@ import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.entity.field.Location;
+import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 
 import java.util.UUID;
 
@@ -80,7 +81,7 @@ public class JsonBuildingTest {
     @NonNull
     private Place stubPlace() {
         Place place = new Place(UUID.fromString("5cf5665b-5642-10fb-a3a0-5e612a842584"), "รพ.สต.ตำบลนาทราย");
-        place.setType(Place.TYPE_HOSPITAL);
+        place.setType(PlaceType.HOSPITAL);
         return place;
     }
 

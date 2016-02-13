@@ -23,6 +23,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,10 +80,10 @@ public class PlaceChooseTest {
     @Test
     public void getPlaceListWithFilterBuildingType() throws Exception {
         Place villageA = Place.withName("Village A");
-        villageA.setType(Place.TYPE_VILLAGE_COMMUNITY);
+        villageA.setType(PlaceType.VILLAGE_COMMUNITY);
 
         Place villageB = Place.withName("Village B");
-        villageB.setType(Place.TYPE_VILLAGE_COMMUNITY);
+        villageB.setType(PlaceType.VILLAGE_COMMUNITY);
 
         final List<Place> filterPlace = new ArrayList<>();
         filterPlace.add(villageA);
@@ -90,14 +91,14 @@ public class PlaceChooseTest {
 
         context.checking(new Expectations() {
             {
-                oneOf(placeRepository).findByPlaceType(Place.TYPE_VILLAGE_COMMUNITY);
+                oneOf(placeRepository).findByPlaceType(PlaceType.VILLAGE_COMMUNITY);
                 will(returnValue(filterPlace));
                 oneOf(placeListPresenter).displayPlaceList(filterPlace);
             }
         });
 
         PlaceChooser chooser = new PlaceChooser(placeRepository, placeListPresenter);
-        chooser.getPlaceListWithPlaceTypeFilter(Place.TYPE_VILLAGE_COMMUNITY);
+        chooser.getPlaceListWithPlaceTypeFilter(PlaceType.VILLAGE_COMMUNITY);
     }
 
     @Test

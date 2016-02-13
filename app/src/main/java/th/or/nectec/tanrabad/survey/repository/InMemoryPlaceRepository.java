@@ -25,6 +25,8 @@ import th.or.nectec.tanrabad.domain.place.PlaceRepositoryException;
 import th.or.nectec.tanrabad.entity.LocationEntity;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.field.Location;
+import th.or.nectec.tanrabad.entity.lookup.PlaceSubType;
+import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 
 import java.util.*;
 
@@ -46,28 +48,28 @@ public class InMemoryPlaceRepository implements PlaceRepository, LocationReposit
 
     private InMemoryPlaceRepository() {
         palazzettoVillage = new Place(generateUUID("1abc"), "หมู่บ้านพาลาซเซตโต้");
-        palazzettoVillage.setType(Place.TYPE_VILLAGE_COMMUNITY);
+        palazzettoVillage.setType(PlaceType.VILLAGE_COMMUNITY);
         golfView = new Place(generateUUID("67UIP"), "ชุมชนกอล์ฟวิว");
-        golfView.setType(Place.TYPE_VILLAGE_COMMUNITY);
+        golfView.setType(PlaceType.VILLAGE_COMMUNITY);
         bangkokHospital = new Place(generateUUID("2bcd"), "โรงพยาบาลกรุงเทพ");
-        bangkokHospital.setType(Place.TYPE_HOSPITAL);
+        bangkokHospital.setType(PlaceType.HOSPITAL);
         thammasatHospital = new Place(generateUUID("32UAW"), "ธรรมศาสตร์");
 
         thammasatHospital.setSubdistrictCode("120202");
-        thammasatHospital.setType(Place.TYPE_HOSPITAL);
+        thammasatHospital.setType(PlaceType.HOSPITAL);
         watpaphukon = new Place(generateUUID("3def"), "วัดป่าภูก้อน");
-        watpaphukon.setType(Place.TYPE_WORSHIP);
-        watpaphukon.setSubType(Place.SUBTYPE_TEMPLE);
+        watpaphukon.setType(PlaceType.WORSHIP);
+        watpaphukon.setSubType(PlaceSubType.TEMPLE);
         watpaphukon.setSubdistrictCode("120202");
         saintMaryChurch = new Place(generateUUID("3xss"), "โบสถ์เซนต์เมรี่");
-        saintMaryChurch.setType(Place.TYPE_WORSHIP);
-        saintMaryChurch.setSubType(Place.SUBTYPE_CHURCH);
+        saintMaryChurch.setType(PlaceType.WORSHIP);
+        saintMaryChurch.setSubType(PlaceSubType.CHURCH);
         saintMarySchool = new Place(generateUUID("042ST"), "โรงเรียนเซนต์เมรี่");
-        saintMarySchool.setType(Place.TYPE_SCHOOL);
+        saintMarySchool.setType(PlaceType.SCHOOL);
         donboscoSchool = new Place(generateUUID("12AJK"), "โรงเรียนดอนบอสโก");
-        donboscoSchool.setType(Place.TYPE_SCHOOL);
+        donboscoSchool.setType(PlaceType.SCHOOL);
         anubarnNursery = new Place(generateUUID("45JKO"), "โรงเรียนอนุบาล");
-        anubarnNursery.setType(Place.TYPE_SCHOOL);
+        anubarnNursery.setType(PlaceType.SCHOOL);
 
         placesMap.put(generateUUID("1abc"), palazzettoVillage);
         placesMap.put(generateUUID("67UIP"), golfView);
@@ -165,7 +167,8 @@ public class InMemoryPlaceRepository implements PlaceRepository, LocationReposit
         ArrayList<LocationEntity> filterPlaces = new ArrayList<>();
         for (LocationEntity eachPlace : placesMap.values()) {
             final Location location = eachPlace.getLocation();
-            if (isLessThanOrEqualMaximumLocation(minimumLocation, location) && isMoreThanOrEqualMinimumLocation(maximumLocation, location))
+            if (isLessThanOrEqualMaximumLocation(minimumLocation, location) &&
+                    isMoreThanOrEqualMinimumLocation(maximumLocation, location))
                 filterPlaces.add(eachPlace);
         }
         return filterPlaces.isEmpty() ? null : filterPlaces;
@@ -183,24 +186,31 @@ public class InMemoryPlaceRepository implements PlaceRepository, LocationReposit
     }
 
     @Override
-    public List<LocationEntity> findTrimmedInBoundaryLocation(Location insideMinimumLocation, Location outsideMinimumLocation, Location insideMaximumLocation, Location outsideMaximumLocation) {
+    public List<LocationEntity> findTrimmedInBoundaryLocation(Location insideMinimumLocation,
+                                                              Location outsideMinimumLocation,
+                                                              Location insideMaximumLocation,
+                                                              Location outsideMaximumLocation) {
         List<LocationEntity> filterPlaces = findInBoundaryLocation(outsideMinimumLocation, outsideMaximumLocation);
-        for (int i = 0; i < 4; i++) {
-            switch (i) {
+        for (int round = 0; round < 4; round++) {
+            switch (round) {
                 case 0:
                     trim(insideMaximumLocation, outsideMaximumLocation, filterPlaces);
                     break;
                 case 1:
-                    Location topLeftSouthEastMiniBoundary = new Location(insideMaximumLocation.getLatitude(), insideMinimumLocation.getLongitude());
-                    Location bottomRightSouthEastMiniBoundary = new Location(outsideMaximumLocation.getLatitude(), outsideMinimumLocation.getLongitude());
+                    Location topLeftSouthEastMiniBoundary = new Location(insideMaximumLocation.getLatitude(),
+                            insideMinimumLocation.getLongitude());
+                    Location bottomRightSouthEastMiniBoundary = new Location(outsideMaximumLocation.getLatitude(),
+                            outsideMinimumLocation.getLongitude());
                     trim(topLeftSouthEastMiniBoundary, bottomRightSouthEastMiniBoundary, filterPlaces);
                     break;
                 case 2:
                     trim(outsideMinimumLocation, insideMinimumLocation, filterPlaces);
                     break;
                 case 3:
-                    Location topLeftNorthWestMiniBoundary = new Location(outsideMinimumLocation.getLatitude(), outsideMaximumLocation.getLongitude());
-                    Location bottomRightNorthWestMiniBoundary = new Location(insideMinimumLocation.getLatitude(), insideMaximumLocation.getLongitude());
+                    Location topLeftNorthWestMiniBoundary = new Location(outsideMinimumLocation.getLatitude(),
+                            outsideMaximumLocation.getLongitude());
+                    Location bottomRightNorthWestMiniBoundary = new Location(insideMinimumLocation.getLatitude(),
+                            insideMaximumLocation.getLongitude());
                     trim(topLeftNorthWestMiniBoundary, bottomRightNorthWestMiniBoundary, filterPlaces);
                     break;
             }
@@ -208,17 +218,19 @@ public class InMemoryPlaceRepository implements PlaceRepository, LocationReposit
         return filterPlaces.isEmpty() ? null : filterPlaces;
     }
 
-
-    private void trim(Location insideMaximumLocation, Location outsideMaximumLocation, List<LocationEntity> filterPlaces) {
+    private void trim(Location insideMaximumLocation, Location outsideMaximumLocation,
+                      List<LocationEntity> filterPlaces) {
         List<LocationEntity> trimmedLocation = findInBoundaryLocation(insideMaximumLocation, outsideMaximumLocation);
         filterPlaces.removeAll(trimmedLocation);
     }
 
     private boolean isLessThanOrEqualMaximumLocation(Location maximumLocation, Location location) {
-        return location.getLatitude() <= maximumLocation.getLatitude() && location.getLongitude() <= maximumLocation.getLongitude();
+        return location.getLatitude() <= maximumLocation.getLatitude()
+                && location.getLongitude() <= maximumLocation.getLongitude();
     }
 
     private boolean isMoreThanOrEqualMinimumLocation(Location minimumLocation, Location location) {
-        return location.getLatitude() >= minimumLocation.getLatitude() && location.getLongitude() >= minimumLocation.getLongitude();
+        return location.getLatitude() >= minimumLocation.getLatitude()
+                && location.getLongitude() >= minimumLocation.getLongitude();
     }
 }

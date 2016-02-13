@@ -21,6 +21,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.WireMockTestBase;
 import th.or.nectec.tanrabad.survey.service.http.Header;
 import th.or.nectec.tanrabad.survey.service.json.JsonEntomology;
@@ -50,13 +51,14 @@ public class EntomologyRestServiceTest extends WireMockTestBase {
 
     private Place stubPlace() {
         Place place = new Place(UUID.fromString("6e79ca31-d0da-fc50-64d2-ac403dfff644"), "หมู่ 5 บ้านท่าน้ำ");
-        place.setType(Place.TYPE_VILLAGE_COMMUNITY);
+        place.setType(PlaceType.VILLAGE_COMMUNITY);
         return place;
     }
 
     @Test
     public void testGetUrl() throws Exception {
-        assertEquals(localHost() + EntomologyRestService.PATH + "?" + restService.getDefaultParams(), restService.getUrl());
+        assertEquals(localHost() + EntomologyRestService.PATH + "?" + restService.getDefaultParams(),
+                restService.getUrl());
     }
 
     @Test(expected = RestServiceException.class)

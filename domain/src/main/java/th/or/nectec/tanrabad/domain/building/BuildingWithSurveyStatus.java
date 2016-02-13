@@ -30,15 +30,14 @@ public class BuildingWithSurveyStatus {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (other == null || getClass() != other.getClass()) return false;
 
-        BuildingWithSurveyStatus that = (BuildingWithSurveyStatus) o;
+        BuildingWithSurveyStatus that = (BuildingWithSurveyStatus) other;
 
-        return isSurvey == that.isSurvey && !(building != null
-                ? !building.equals(that.building)
-                : that.building != null);
+        if (isSurvey != that.isSurvey) return false;
+        return building.equals(that.building);
 
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015  NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,6 +21,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import th.or.nectec.tanrabad.entity.field.Location;
+import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 
 import java.util.UUID;
 
@@ -32,7 +33,7 @@ public class PlaceTest {
 
     public static final UUID BANGPHAI_UUID = UUID.randomUUID();
     public static final String BANGPHAI_NAME = "บางไผ่";
-    public static final int BANGPHAI_TYPE = Place.TYPE_VILLAGE_COMMUNITY;
+    public static final int BANGPHAI_TYPE = PlaceType.VILLAGE_COMMUNITY;
     private final Place place1 = new Place(BANGPHAI_UUID, BANGPHAI_NAME);
     private final Place place2 = new Place(BANGPHAI_UUID, BANGPHAI_NAME);
     private Location location = new Location(14.078606, 100.603120);
@@ -56,8 +57,8 @@ public class PlaceTest {
 
     @Test
     public void testSetThenGetPlaceType() {
-        place1.setType(Place.TYPE_SCHOOL);
-        assertEquals(Place.TYPE_SCHOOL, place1.getType());
+        place1.setType(PlaceType.SCHOOL);
+        assertEquals(PlaceType.SCHOOL, place1.getType());
     }
 
     @Test
@@ -76,8 +77,8 @@ public class PlaceTest {
 
     @Test
     public void placeWithDifferentTypeMustNotEqual() {
-        place1.setType(Place.TYPE_FACTORY);
-        place2.setType(Place.TYPE_SCHOOL);
+        place1.setType(PlaceType.FACTORY);
+        place2.setType(PlaceType.SCHOOL);
         assertNotEquals(place1, place2);
     }
 

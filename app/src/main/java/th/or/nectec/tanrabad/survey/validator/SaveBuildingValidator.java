@@ -21,7 +21,7 @@ import android.text.TextUtils;
 import th.or.nectec.tanrabad.domain.building.BuildingRepository;
 import th.or.nectec.tanrabad.domain.building.BuildingValidator;
 import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.R;
 
 import java.util.List;
@@ -34,7 +34,7 @@ public class SaveBuildingValidator implements BuildingValidator {
 
         if (TextUtils.isEmpty(building.getName())) {
 
-            throw new ValidatorException(building.getPlace().getType() == Place.TYPE_VILLAGE_COMMUNITY ?
+            throw new ValidatorException(building.getPlace().getType() == PlaceType.VILLAGE_COMMUNITY ?
                     R.string.please_define_house_no : R.string.please_define_building_name);
         }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,6 +30,7 @@ import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
 import th.or.nectec.tanrabad.domain.place.PlaceChooser;
 import th.or.nectec.tanrabad.domain.place.PlaceListPresenter;
 import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView;
@@ -186,7 +187,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
         final Place placeData = placeAdapter.getItem(position);
 
-        if (!AccountUtils.canAddOrEditVillage() && placeData.getType() == Place.TYPE_VILLAGE_COMMUNITY) {
+        if (!AccountUtils.canAddOrEditVillage() && placeData.getType() == PlaceType.VILLAGE_COMMUNITY) {
             Alert.lowLevel().show(R.string.cant_edit_community_village);
             return false;
         } else {

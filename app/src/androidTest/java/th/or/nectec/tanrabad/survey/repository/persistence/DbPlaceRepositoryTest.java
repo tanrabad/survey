@@ -33,6 +33,7 @@ import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.entity.field.Location;
+import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.utils.time.ThaiDateTimeConverter;
 
 import java.util.ArrayList;
@@ -46,6 +47,7 @@ public class DbPlaceRepositoryTest {
 
     @Rule
     public SurveyDbTestRule dbTestRule = new SurveyDbTestRule();
+    DateTime updateTime = DateTime.now();
     private UserRepository userRepository;
 
     @Before
@@ -58,8 +60,6 @@ public class DbPlaceRepositoryTest {
     private User stubUser() {
         return User.fromUsername("dpc-user");
     }
-
-    DateTime updateTime = DateTime.now();
 
     @Test
     public void testSave() throws Exception {
@@ -86,6 +86,18 @@ public class DbPlaceRepositoryTest {
         assertEquals(updateTime, ThaiDateTimeConverter.convert(cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_TIME))));
         assertEquals(ChangedStatus.ADD, cursor.getInt(cursor.getColumnIndex(PlaceColumn.CHANGED_STATUS)));
         cursor.close();
+    }
+
+    @NonNull
+    private Place getPlace() {
+        Place place = new Place(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5f"), "หมู่บ้านทดสอบ");
+        place.setSubdistrictCode("120202");
+        place.setSubType(PlaceTypeMapper.ชุมชนแออัด);
+        place.setType(PlaceType.VILLAGE_COMMUNITY);
+        place.setLocation(new Location(10.200000f, 100.100000f));
+        place.setUpdateBy(stubUser());
+        place.setUpdateTimestamp(updateTime.toString());
+        return place;
     }
 
     @Test
@@ -120,7 +132,7 @@ public class DbPlaceRepositoryTest {
         Place place = new Place(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"), "หมู่บ้านทดสอบ");
         place.setSubdistrictCode("120202");
         place.setSubType(PlaceTypeMapper.ชุมชนแออัด);
-        place.setType(Place.TYPE_VILLAGE_COMMUNITY);
+        place.setType(PlaceType.VILLAGE_COMMUNITY);
         place.setLocation(new Location(10.200000f, 100.100000f));
         place.setUpdateBy(stubUser());
         place.setUpdateTimestamp(updateTime.toString());
@@ -194,7 +206,7 @@ public class DbPlaceRepositoryTest {
         Context context = InstrumentationRegistry.getTargetContext();
         DbPlaceRepository dbPlaceRepository = new DbPlaceRepository(context, userRepository);
 
-        List<Place> placeList = dbPlaceRepository.findByPlaceType(Place.TYPE_VILLAGE_COMMUNITY);
+        List<Place> placeList = dbPlaceRepository.findByPlaceType(PlaceType.VILLAGE_COMMUNITY);
         Place place = placeList.get(0);
 
         assertEquals(3, placeList.size());
@@ -217,17 +229,5 @@ public class DbPlaceRepositoryTest {
         assertEquals("หมู่บ้านทดสอบ", place.getName());
         assertEquals("120202", place.getSubdistrictCode());
         assertEquals("dpc-user", place.getUpdateBy());
-    }
-
-    @NonNull
-    private Place getPlace() {
-        Place place = new Place(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5f"), "หมู่บ้านทดสอบ");
-        place.setSubdistrictCode("120202");
-        place.setSubType(PlaceTypeMapper.ชุมชนแออัด);
-        place.setType(Place.TYPE_VILLAGE_COMMUNITY);
-        place.setLocation(new Location(10.200000f, 100.100000f));
-        place.setUpdateBy(stubUser());
-        place.setUpdateTimestamp(updateTime.toString());
-        return place;
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,7 +27,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
 
@@ -49,7 +49,7 @@ public class PlaceFormActivityByPutExtraPlaceTypeSchoolTest extends TanrabadEspr
     @Before
     public void setUp() {
         Intent intent = new Intent();
-        intent.putExtra("place_category_id_arg", Place.TYPE_SCHOOL);
+        intent.putExtra("place_category_id_arg", PlaceType.SCHOOL);
         mActivity = mActivityTestRule.launchActivity(intent);
     }
 

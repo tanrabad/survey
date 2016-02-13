@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,7 +25,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
 
@@ -48,7 +48,7 @@ public class UpdatePlaceTest extends TanrabadEspressoTestBase {
     public void setUp() {
         Intent intent = new Intent();
         intent.putExtra("place_uuid_arg", "37ebde70-aa49-4c06-b102-53a022d46370");
-        intent.putExtra("place_category_id_arg", Place.TYPE_HOSPITAL);
+        intent.putExtra("place_category_id_arg", PlaceType.HOSPITAL);
         mActivity = mActivityTestRule.launchActivity(intent);
     }
 

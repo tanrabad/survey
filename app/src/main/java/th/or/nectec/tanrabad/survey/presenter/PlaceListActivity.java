@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -56,19 +56,7 @@ public class PlaceListActivity extends TanrabadActivity {
         setupTabPager();
         changeTabsFont();
 
-
-        displayShowcase();
-    }
-
-    private void displayShowcase() {
-        new ShowcaseView.Builder(this)
-                .setStyle(R.style.CustomShowcaseTheme)
-                .setContentTitle("ค้นหาสถานที่")
-                .setContentText("กดที่นี่เพื่อค้นหาสถานที่นะจ๊ะ")
-                .setTarget(new ToolbarActionItemTarget((Toolbar) findViewById(R.id.toolbar), R.id.action_search))
-                .setContentTextPaint(ShowcaseFontStyle.getTitleStyle(this))
-                .setContentTitlePaint(ShowcaseFontStyle.getContentStyle(this))
-                .build();
+        //displayShowcase();
     }
 
     private void setupViews() {
@@ -113,6 +101,17 @@ public class PlaceListActivity extends TanrabadActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void displayShowcase() {
+        new ShowcaseView.Builder(this)
+                .setStyle(R.style.CustomShowcaseTheme)
+                .setContentTitle("ค้นหาสถานที่")
+                .setContentText("กดที่นี่เพื่อค้นหาสถานที่นะจ๊ะ")
+                .setTarget(new ToolbarActionItemTarget((Toolbar) findViewById(R.id.toolbar), R.id.action_search))
+                .setContentTextPaint(ShowcaseFontStyle.getTitleStyle(this))
+                .setContentTitlePaint(ShowcaseFontStyle.getContentStyle(this))
+                .build();
     }
 
     @Override

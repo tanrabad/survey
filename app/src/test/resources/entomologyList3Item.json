@@ -1,0 +1,149 @@
+[
+  {
+    "place_id": "6e79ca31-d0da-fc50-64d2-ac403dfff644",
+    "place_name": "หมู่ 5 บ้านท่าน้ำ",
+    "place_type": 1,
+    "location": {
+      "coordinates": [
+        100.60137651189666,
+        14.078273636945516
+      ],
+      "type": "Point"
+    },
+    "tambon_name": "บางเขน",
+    "amphur_name": "เมืองนนทบุรี",
+    "province_name": "นนทบุรี",
+    "num_surveyed_containers": "119",
+    "num_found_containers": "30",
+    "date_surveyed": 1435856400,
+    "hi_value": "54.00",
+    "bi_value": "125.00",
+    "ci_value": "25.00",
+    "key_container_in": [
+      {
+        "rank": 1,
+        "container_name": "แจกัน"
+      },
+      {
+        "rank": 2,
+        "container_name": "น้ำใช้"
+      },
+      {
+        "rank": 3,
+        "container_name": "ที่รองกันมด"
+      }
+    ],
+    "key_container_out": [
+      {
+        "rank": 1,
+        "container_name": "ภาชนะที่ไม่ใช้"
+      },
+      {
+        "rank": 2,
+        "container_name": "ยางรถยนต์เก่า"
+      },
+      {
+        "rank": 3,
+        "container_name": "อื่น ๆ (ที่ใช้ประโยชน์)"
+      }
+    ]
+  },
+  {
+    "place_id": "a9956d82-3c3a-5bfa-ae0b-2c0e2b786810",
+    "place_name": "หมู่ 9 บ้านวัดแดง",
+    "place_type": 1,
+    "location": {
+      "coordinates": [
+        100.60678079724312,
+        14.090106321804223
+      ],
+      "type": "Point"
+    },
+    "tambon_name": "ท่าทราย",
+    "amphur_name": "เมืองนนทบุรี",
+    "province_name": "นนทบุรี",
+    "num_surveyed_containers": "77",
+    "num_found_containers": "17",
+    "date_surveyed": 1405443600,
+    "hi_value": "75.00",
+    "bi_value": "425.00",
+    "ci_value": "22.00",
+    "key_container_in": [
+      {
+        "rank": 1,
+        "container_name": "อื่น ๆ (ที่ใช้ประโยชน์)"
+      },
+      {
+        "rank": 2,
+        "container_name": "จานรองกระถาง"
+      },
+      {
+        "rank": 3,
+        "container_name": "ยางรถยนต์เก่า,น้ำใช้"
+      }
+    ],
+    "key_container_out": [
+      {
+        "rank": 1,
+        "container_name": "แจกัน"
+      },
+      {
+        "rank": 2,
+        "container_name": "น้ำใช้"
+      },
+      {
+        "rank": 3,
+        "container_name": "ที่รองกันมด"
+      }
+    ]
+  },
+  {
+    "place_id": "86df6a0f-4368-c972-d4a1-15574868d085",
+    "place_name": "หมู่ 1 บ้านท่าลาน",
+    "place_type": 1,
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        103.1926757198,
+        14.9733720169419
+      ]
+    },
+    "tambon_name": "ท่าแร้ง",
+    "amphur_name": "เขตบางเขน",
+    "province_name": "กรุงเทพมหานคร",
+    "num_surveyed_containers": "61",
+    "num_found_containers": "15",
+    "date_surveyed": 1426093200,
+    "hi_value": "66.00",
+    "bi_value": "66.00",
+    "ci_value": "6.00",
+    "key_container_in": [
+      {
+        "rank": 1,
+        "container_name": "แจกัน,น้ำใช้"
+      },
+      {
+        "rank": 2,
+        "container_name": "ที่รองกันมด,จานรองกระถาง,น้ำดื่ม"
+      },
+      {
+        "rank": 3,
+        "container_name": "ภาชนะที่ไม่ใช้,ยางรถยนต์เก่า,อื่น ๆ (ที่ใช้ประโยชน์)"
+      }
+    ],
+    "key_container_out": [
+      {
+        "rank": 1,
+        "container_name": "แจกัน"
+      },
+      {
+        "rank": 2,
+        "container_name": "น้ำใช้"
+      },
+      {
+        "rank": 3,
+        "container_name": "ที่รองกันมด"
+      }
+    ]
+  }
+]

@@ -1,3 +1,20 @@
+/*
+ * Copyright (c) 2016 NECTEC
+ *   National Electronics and Computer Technology Center, Thailand
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package th.or.nectec.tanrabad.survey.repository.persistence;
 
 import android.content.ContentValues;
@@ -55,12 +72,14 @@ public class DbContainerLocationRepository implements ContainerLocationRepositor
 
     @Override
     public boolean save(ContainerLocation containerLocation) {
-        return saveByContentValues(new SurveyLiteDatabase(context).getWritableDatabase(), containerLocationContentValues(containerLocation));
+        return saveByContentValues(new SurveyLiteDatabase(context).getWritableDatabase(),
+                containerLocationContentValues(containerLocation));
     }
 
     @Override
     public boolean update(ContainerLocation containerLocation) {
-        return updateByContentValues(new SurveyLiteDatabase(context).getWritableDatabase(), containerLocationContentValues(containerLocation));
+        return updateByContentValues(new SurveyLiteDatabase(context).getWritableDatabase(),
+                containerLocationContentValues(containerLocation));
     }
 
     @Override
@@ -79,7 +98,9 @@ public class DbContainerLocationRepository implements ContainerLocationRepositor
     }
 
     private boolean updateByContentValues(SQLiteDatabase db, ContentValues containerLocation) {
-        return db.update(TABLE_NAME, containerLocation, ContainerLocationColumn.ID + "=?", new String[]{containerLocation.getAsString(ContainerLocationColumn.ID)}) > 0;
+        return db.update(TABLE_NAME, containerLocation,
+                ContainerLocationColumn.ID + "=?",
+                new String[]{containerLocation.getAsString(ContainerLocationColumn.ID)}) > 0;
     }
 
     private boolean saveByContentValues(SQLiteDatabase db, ContentValues containerLocation) {
@@ -88,8 +109,8 @@ public class DbContainerLocationRepository implements ContainerLocationRepositor
 
     private ContentValues containerLocationContentValues(ContainerLocation containerLocation) {
         ContentValues values = new ContentValues();
-        values.put(ContainerLocationColumn.ID, containerLocation.getId());
-        values.put(ContainerLocationColumn.NAME, containerLocation.getName());
+        values.put(ContainerLocationColumn.ID, containerLocation.id);
+        values.put(ContainerLocationColumn.NAME, containerLocation.name);
         return values;
     }
 }

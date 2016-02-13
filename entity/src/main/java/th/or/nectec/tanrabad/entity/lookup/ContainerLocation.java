@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015  NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,20 +19,12 @@ package th.or.nectec.tanrabad.entity.lookup;
 
 public class ContainerLocation {
 
-    private final int id;
-    private final String name;
+    public final int id;
+    public final String name;
 
     public ContainerLocation(int id, String name) {
         this.id = id;
         this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getId() {
-        return id;
     }
 
     @Override

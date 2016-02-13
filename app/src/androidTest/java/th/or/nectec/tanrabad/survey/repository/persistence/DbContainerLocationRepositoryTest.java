@@ -85,11 +85,11 @@ public class DbContainerLocationRepositoryTest {
 
         assertEquals(2, containerLocationList.size());
         ContainerLocation containerType = containerLocationList.get(0);
-        assertEquals(1, containerType.getId());
-        assertEquals("ภายในอาคาร", containerType.getName());
+        assertEquals(1, containerType.id);
+        assertEquals("ภายในอาคาร", containerType.name);
         ContainerLocation containerType10 = containerLocationList.get(1);
-        assertEquals(2, containerType10.getId());
-        assertEquals("ภายนอกอาคาร", containerType10.getName());
+        assertEquals(2, containerType10.id);
+        assertEquals("ภายนอกอาคาร", containerType10.name);
     }
 
 }

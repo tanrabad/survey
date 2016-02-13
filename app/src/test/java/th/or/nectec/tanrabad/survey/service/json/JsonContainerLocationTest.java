@@ -24,19 +24,19 @@ public class JsonContainerLocationTest {
     public void testParseToContainerLocationEntity() throws Exception {
         JsonContainerLocation jsonContainerLocation = LoganSquare.parse(containerLocationJson, JsonContainerLocation.class);
         ContainerLocation containerLocation = jsonContainerLocation.getEntity();
-        assertEquals(1, containerLocation.getId());
-        assertEquals("ภายในอาคาร", containerLocation.getName());
+        assertEquals(1, containerLocation.id);
+        assertEquals("ภายในอาคาร", containerLocation.name);
     }
 
     @Test
     public void testParseToContainerTypeEntity() throws Exception {
         List<JsonContainerLocation> containerLocationList = LoganSquare.parseList(ResourceFile.read("containerLocation.json"), JsonContainerLocation.class);
         ContainerLocation indoorLocation = containerLocationList.get(0).getEntity();
-        assertEquals(1, indoorLocation.getId());
-        assertEquals("ภายในอาคาร", indoorLocation.getName());
+        assertEquals(1, indoorLocation.id);
+        assertEquals("ภายในอาคาร", indoorLocation.name);
 
         ContainerLocation outdoorLocation = containerLocationList.get(1).getEntity();
-        assertEquals(2, outdoorLocation.getId());
-        assertEquals("ภายนอกอาคาร", outdoorLocation.getName());
+        assertEquals(2, outdoorLocation.id);
+        assertEquals("ภายนอกอาคาร", outdoorLocation.name);
     }
 }

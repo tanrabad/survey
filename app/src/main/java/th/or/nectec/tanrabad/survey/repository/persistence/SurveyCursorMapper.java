@@ -30,6 +30,9 @@ import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
 
 import java.util.UUID;
 
+import static th.or.nectec.tanrabad.survey.repository.persistence.DbSurveyRepository.INDOOR_CONTAINER_LOCATION;
+import static th.or.nectec.tanrabad.survey.repository.persistence.DbSurveyRepository.OUTDOOR_CONTAINER_LOCATION;
+
 class SurveyCursorMapper implements CursorMapper<Survey> {
 
     private final UserRepository userRepository;
@@ -44,7 +47,10 @@ class SurveyCursorMapper implements CursorMapper<Survey> {
     private int updateTimeIndex;
     private int surveyorIndex;
 
-    public SurveyCursorMapper(Cursor cursor, UserRepository userRepository, BuildingRepository buildingRepository, SurveyRepository surveyRepository) {
+    public SurveyCursorMapper(Cursor cursor,
+                              UserRepository userRepository,
+                              BuildingRepository buildingRepository,
+                              SurveyRepository surveyRepository) {
         this.userRepository = userRepository;
         this.buildingRepository = buildingRepository;
         this.surveyRepository = surveyRepository;
@@ -70,8 +76,8 @@ class SurveyCursorMapper implements CursorMapper<Survey> {
         Survey survey = new Survey(surveyID, user, building);
         survey.setLocation(new Location(cursor.getDouble(latIndex), cursor.getDouble(lngIndex)));
         survey.setResidentCount(cursor.getInt(personCountIndex));
-        survey.setIndoorDetail(surveyRepository.findSurveyDetail(surveyID, DbSurveyRepository.INDOOR_CONTAINER_LOCATION));
-        survey.setOutdoorDetail(surveyRepository.findSurveyDetail(surveyID, DbSurveyRepository.OUTDOOR_CONTAINER_LOCATION));
+        survey.setIndoorDetail(surveyRepository.findSurveyDetail(surveyID, INDOOR_CONTAINER_LOCATION));
+        survey.setOutdoorDetail(surveyRepository.findSurveyDetail(surveyID, OUTDOOR_CONTAINER_LOCATION));
         survey.setStartTimestamp(new DateTime(cursor.getString(createTimeIndex)));
         survey.setFinishTimestamp(new DateTime(cursor.getString(updateTimeIndex)));
         return survey;

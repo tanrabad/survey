@@ -30,8 +30,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import th.or.nectec.tanrabad.survey.R;
-import th.or.nectec.tanrabad.survey.presenter.showcase.ShowcaseFontStyle;
-import th.or.nectec.tanrabad.survey.presenter.showcase.ToolbarActionItemTarget;
+import th.or.nectec.tanrabad.survey.utils.showcase.Showcase;
+import th.or.nectec.tanrabad.survey.utils.showcase.ToolbarBasedShowcase;
+import th.or.nectec.tanrabad.survey.utils.showcase.ViewBasedShowcase;
 import uk.co.chrisjenx.calligraphy.CalligraphyUtils;
 import uk.co.chrisjenx.calligraphy.TypefaceUtils;
 
@@ -57,6 +58,25 @@ public class PlaceListActivity extends TanrabadActivity {
         changeTabsFont();
 
         //displayShowcase();
+    }
+
+    private void displayShowcase() {
+        ToolbarBasedShowcase toolbarBasedShowcase = new ToolbarBasedShowcase(this, R.id.toolbar, R.id.action_search);
+        toolbarBasedShowcase.setTitle("ค้นหาสถานที่");
+        toolbarBasedShowcase.setMessage("กดที่แว่นขยายเพื่อค้นหาสถานที่นะจ๊ะ");
+        toolbarBasedShowcase.setOnShowCaseDismissListener(new Showcase.OnShowcaseDismissListener() {
+            @Override
+            public void onDismissListener(ShowcaseView showcaseView) {
+                displayNextShowcase();
+            }
+        });
+        toolbarBasedShowcase.display();
+    }
+
+    private void displayNextShowcase() {
+        ViewBasedShowcase toolbarBasedShowcase = new ViewBasedShowcase(this, R.id.place_filter);
+        toolbarBasedShowcase.setMessage("กดที่นี่เพื่อเปลี่ยนประเภทสถานที่");
+        toolbarBasedShowcase.display();
     }
 
     private void setupViews() {
@@ -101,17 +121,6 @@ public class PlaceListActivity extends TanrabadActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void displayShowcase() {
-        new ShowcaseView.Builder(this)
-                .setStyle(R.style.CustomShowcaseTheme)
-                .setContentTitle("ค้นหาสถานที่")
-                .setContentText("กดที่นี่เพื่อค้นหาสถานที่นะจ๊ะ")
-                .setTarget(new ToolbarActionItemTarget((Toolbar) findViewById(R.id.toolbar), R.id.action_search))
-                .setContentTextPaint(ShowcaseFontStyle.getTitleStyle(this))
-                .setContentTitlePaint(ShowcaseFontStyle.getContentStyle(this))
-                .build();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package th.or.nectec.tanrabad.survey.presenter.showcase;
+package th.or.nectec.tanrabad.survey.utils.showcase;
 
 import android.content.Context;
 import android.graphics.Typeface;

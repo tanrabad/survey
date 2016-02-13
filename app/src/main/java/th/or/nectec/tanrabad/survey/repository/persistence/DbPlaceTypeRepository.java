@@ -34,7 +34,7 @@ public class DbPlaceTypeRepository implements PlaceTypeRepository {
     public PlaceType findByID(int placeTypeID) {
         SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
         Cursor placeTypeCursor = db.query(TABLE_NAME, PlaceTypeColumn.wildcard(),
-                null, null, null, null, null);
+                PlaceTypeColumn.ID + "=?", new String[]{String.valueOf(placeTypeID)}, null, null, null);
         return getPlaceType(placeTypeCursor);
     }
 
@@ -55,12 +55,14 @@ public class DbPlaceTypeRepository implements PlaceTypeRepository {
 
     @Override
     public boolean save(PlaceType placeType) {
-        return saveByContentValues(new SurveyLiteDatabase(context).getWritableDatabase(), placeTypeContentValues(placeType));
+        return saveByContentValues(new SurveyLiteDatabase(context).getWritableDatabase(),
+                placeTypeContentValues(placeType));
     }
 
     @Override
     public boolean update(PlaceType placeType) {
-        return updateByContentValues(new SurveyLiteDatabase(context).getWritableDatabase(), placeTypeContentValues(placeType));
+        return updateByContentValues(new SurveyLiteDatabase(context).getWritableDatabase(),
+                placeTypeContentValues(placeType));
     }
 
     @Override
@@ -79,7 +81,8 @@ public class DbPlaceTypeRepository implements PlaceTypeRepository {
     }
 
     private boolean updateByContentValues(SQLiteDatabase db, ContentValues placeType) {
-        return db.update(TABLE_NAME, placeType, PlaceTypeColumn.ID + "=?", new String[]{placeType.getAsString(PlaceTypeColumn.ID)}) > 0;
+        return db.update(TABLE_NAME, placeType, PlaceTypeColumn.ID + "=?",
+                new String[]{placeType.getAsString(PlaceTypeColumn.ID)}) > 0;
     }
 
     private boolean saveByContentValues(SQLiteDatabase db, ContentValues placeType) {

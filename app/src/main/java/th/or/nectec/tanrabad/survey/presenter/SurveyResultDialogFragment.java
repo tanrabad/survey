@@ -28,6 +28,7 @@ import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.thai.address.AddressPrinter;
 
 import java.text.DecimalFormat;
+import java.util.List;
 import java.util.UUID;
 
 public class SurveyResultDialogFragment extends DialogFragment {
@@ -65,6 +66,7 @@ public class SurveyResultDialogFragment extends DialogFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_survey_result, container, false);
         assignViews(view);
+        getDialog().setCanceledOnTouchOutside(false);
         return view;
     }
 
@@ -178,6 +180,8 @@ public class SurveyResultDialogFragment extends DialogFragment {
 
     public class SurveyResultJobRunner extends AbsJobRunner {
 
+        private JsonEntomology entomology;
+
         @Override
         protected void onJobError(Job errorJob, Exception exception) {
             super.onJobError(errorJob, exception);
@@ -189,7 +193,9 @@ public class SurveyResultDialogFragment extends DialogFragment {
             super.onJobDone(job);
             if (job.equals(jsonEntomologyGetDataJob)) {
                 GetDataJob<JsonEntomology> entomologyJob = (GetDataJob<JsonEntomology>) job;
-                updateEntomologyInfo(entomologyJob.getData().get(0));
+                List<JsonEntomology> entomologyList = entomologyJob.getData();
+                entomology = entomologyList == null ? entomologyList.get(0) : null;
+
             }
         }
 
@@ -199,10 +205,11 @@ public class SurveyResultDialogFragment extends DialogFragment {
 
         @Override
         protected void onRunFinish() {
-            if (errorJobs() == 0) {
-                Alert.mediumLevel().show("ปรับปรุงข้อมูลเรียบร้อยแล้วนะ");
-            } else {
-                Alert.mediumLevel().show("ปรับปรุงข้อมูลไม่สำเร็จ ลองใหม่อีกครั้งนะ");
+            if (errorJobs() == 0)
+                updateEntomologyInfo(entomology);
+            else {
+                dismiss();
+                Alert.highLevel().show(R.string.cannot_view_survey_result);
             }
         }
     }

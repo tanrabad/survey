@@ -18,81 +18,118 @@
 package th.or.nectec.tanrabad.domain.survey;
 
 import org.jmock.Expectations;
+import org.jmock.auto.Mock;
 import org.jmock.integration.junit4.JUnitRuleMockery;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Survey;
-import th.or.nectec.tanrabad.entity.SurveyDetail;
 import th.or.nectec.tanrabad.entity.User;
-import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 
-import java.util.ArrayList;
 import java.util.UUID;
 
 public class SurveySaverTest {
 
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
-    private SurveyValidator surveyValidator;
-    private SurveySavePresenter surveySavePresenter;
-    private SurveyRepository surveyRepository;
-    private Survey survey;
+    @Mock
+    protected SurveyValidator validator;
+    @Mock
+    protected SurveySavePresenter presenter;
+    @Mock
+    protected SurveyRepository repository;
 
-    @Before
-    public void setUp() {
-        mockInterfaceClass();
-        setupSurveyObject();
-    }
-
-    private void mockInterfaceClass() {
-        surveySavePresenter = context.mock(SurveySavePresenter.class);
-        surveyValidator = context.mock(SurveyValidator.class);
-        surveyRepository = context.mock(SurveyRepository.class);
-    }
-
-    private void setupSurveyObject() {
-        ArrayList<SurveyDetail> indoorDetails = new ArrayList<>();
-        indoorDetails.add(new SurveyDetail(UUID.randomUUID(), new ContainerType(1, "น้ำใช้"), 10, 2));
-        ArrayList<SurveyDetail> outdoorDetails = new ArrayList<>();
-        outdoorDetails.add(new SurveyDetail(UUID.randomUUID(), new ContainerType(2, "น้ำดื่ม"), 5, 0));
-
-        survey = new Survey(UUID.randomUUID(), User.fromUsername("blaze"), Building.withName("214/2"));
-        survey.setResidentCount(4);
-        survey.setIndoorDetail(indoorDetails);
-        survey.setOutdoorDetail(outdoorDetails);
-    }
-
+    private Survey survey = new Survey(UUID.randomUUID(), User.fromUsername("blaze"), Building.withName("214/2"));
+    
     @Test
-    public void testHappyPath() {
+    public void testSaveSuccess() {
         context.checking(new Expectations() {
             {
-                allowing(surveyValidator).validate(with(survey));
+                allowing(validator).validate(with(survey));
                 will(returnValue(true));
-                oneOf(surveyRepository).save(with(survey));
+                oneOf(repository).save(with(survey));
                 will(returnValue(true));
-                oneOf(surveySavePresenter).displaySaveSuccess();
+                oneOf(presenter).displaySaveSuccess();
             }
         });
-        SurveySaver surveySaver = new SurveySaver(surveySavePresenter, surveyValidator, surveyRepository);
+        SurveySaver surveySaver = new SurveySaver(presenter, validator, repository);
         surveySaver.save(survey);
-
     }
 
     @Test
-    public void testSadPath() {
+    public void testSaveNotPassValidator() {
         context.checking(new Expectations() {
             {
-                allowing(surveyValidator).validate(survey);
+                allowing(validator).validate(survey);
                 will(returnValue(false));
-                never(surveyRepository);
-
-                oneOf(surveySavePresenter).displaySaveFail();
+                never(repository);
+                oneOf(presenter).displaySaveFail();
             }
         });
-        SurveySaver surveySaver = new SurveySaver(surveySavePresenter, surveyValidator, surveyRepository);
+        SurveySaver surveySaver = new SurveySaver(presenter, validator, repository);
         surveySaver.save(survey);
+    }
+
+
+    @Test
+    public void testSavePassValidatorButCannotSave() {
+        context.checking(new Expectations() {
+            {
+                allowing(validator).validate(survey);
+                will(returnValue(true));
+                allowing(repository).save(survey);
+                will(returnValue(false));
+                oneOf(presenter).displaySaveFail();
+            }
+        });
+        SurveySaver surveySaver = new SurveySaver(presenter, validator, repository);
+        surveySaver.save(survey);
+    }
+
+
+    @Test
+    public void testUpdateSuccess() {
+        context.checking(new Expectations() {
+            {
+                allowing(validator).validate(with(survey));
+                will(returnValue(true));
+                oneOf(repository).update(with(survey));
+                will(returnValue(true));
+                oneOf(presenter).displayUpdateSuccess();
+            }
+        });
+        SurveySaver surveySaver = new SurveySaver(presenter, validator, repository);
+        surveySaver.update(survey);
+    }
+
+    @Test
+    public void testUpdateNotPassValidator() {
+        context.checking(new Expectations() {
+            {
+                allowing(validator).validate(survey);
+                will(returnValue(false));
+                never(repository);
+                oneOf(presenter).displayUpdateFail();
+            }
+        });
+        SurveySaver surveySaver = new SurveySaver(presenter, validator, repository);
+        surveySaver.update(survey);
+    }
+
+
+    @Test
+    public void testUpdatePassValidatorButCannotUpdate() {
+        context.checking(new Expectations() {
+            {
+                allowing(validator).validate(survey);
+                will(returnValue(true));
+                allowing(repository).update(survey);
+                will(returnValue(false));
+                oneOf(presenter).displayUpdateFail();
+            }
+        });
+        SurveySaver surveySaver = new SurveySaver(presenter, validator, repository);
+        surveySaver.update(survey);
     }
 
 

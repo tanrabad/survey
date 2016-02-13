@@ -22,15 +22,15 @@ import th.or.nectec.tanrabad.survey.service.RestService;
 
 import java.util.List;
 
-public class WritableRepoUpdateJob <T> implements Job {
+public class WritableRepoUpdateJob<T> implements Job {
 
     public static final int ID = 192384;
-    WritableRepository<T> writableRepository;
+    WritableRepository<T> repository;
     RestService<T> restService;
 
-    public WritableRepoUpdateJob(RestService<T> restService, WritableRepository<T> writableRepository) {
+    public <K extends RestService<T>> WritableRepoUpdateJob(K restService, WritableRepository<T> repository) {
         this.restService = restService;
-        this.writableRepository = writableRepository;
+        this.repository = repository;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class WritableRepoUpdateJob <T> implements Job {
         do {
             List<T> update = restService.getUpdate();
             if (!update.isEmpty())
-                writableRepository.updateOrInsert(update);
+                repository.updateOrInsert(update);
         } while (restService.hasNextRequest());
     }
 }

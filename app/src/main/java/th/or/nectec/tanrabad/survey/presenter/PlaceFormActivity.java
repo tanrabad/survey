@@ -108,7 +108,6 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     }
 
     private void setupViews() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         placeNameView = (EditText) findViewById(R.id.place_name);
         addressSelect = (AddressPicker) findViewById(R.id.address_select);
         AddressPickerDialog popup = new AddressPickerDialog(this)
@@ -130,6 +129,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         editLocationButton = (Button) findViewById(R.id.edit_location);
         editLocationButton.setVisibility(View.GONE);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         addMarkerButton.setOnClickListener(this);
         editLocationButton.setOnClickListener(this);
@@ -213,8 +213,8 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
             getPlaceFieldData();
             PlaceSaver placeSaver = new PlaceSaver(placeRepository, new SavePlaceValidator(), this);
             placeSaver.save(place);
-        } catch (ValidatorException e) {
-            Alert.highLevel().show(e.getMessageID());
+        } catch (ValidatorException exception) {
+            Alert.highLevel().show(exception.getMessageId());
         }
     }
 
@@ -223,8 +223,8 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         try {
             PlaceSaver placeSaver = new PlaceSaver(placeRepository, new UpdatePlaceValidator(), this);
             placeSaver.update(place);
-        } catch (ValidatorException e) {
-            Alert.highLevel().show(e.getMessageID());
+        } catch (ValidatorException exception) {
+            Alert.highLevel().show(exception.getMessageId());
         }
     }
 

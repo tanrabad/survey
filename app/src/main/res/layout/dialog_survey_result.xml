@@ -51,7 +51,8 @@
             android:layout_width="match_parent"
             android:id="@+id/place_info_layout"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/place_icon" android:layout_alignStart="@+id/place_icon"
+            android:layout_alignLeft="@+id/place_icon"
+            android:layout_alignStart="@+id/place_icon"
             android:layout_marginBottom="@dimen/screen_vertical_margin">
             <ImageView
                 style="@style/ListIcon"

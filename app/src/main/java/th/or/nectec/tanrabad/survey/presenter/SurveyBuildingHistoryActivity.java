@@ -84,12 +84,14 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
     private void setupView() {
         placeName = (TextView) findViewById(R.id.place_name);
         surveyMoreBuildingButton = (ImageButton) findViewById(R.id.survey_more_building_button);
-        startSurveyMoreBuildingButtonAnimation();
-    }
+        surveyMoreBuildingButton.setOnClickListener(new View.OnClickListener() {
 
-    private void startSurveyMoreBuildingButtonAnimation() {
-        Animation moreBuildingAnim = AnimationUtils.loadAnimation(this, R.anim.survey_more_building_button);
-        surveyMoreBuildingButton.startAnimation(moreBuildingAnim);
+            @Override
+            public void onClick(View view) {
+                BuildingListActivity.open(SurveyBuildingHistoryActivity.this, getPlaceUuidFromIntent());
+            }
+        });
+        startSurveyMoreBuildingButtonAnimation();
     }
 
     private void setupViewSurveyButton() {
@@ -110,10 +112,6 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
     private void showPlaceInfo() {
         PlaceController placeController = new PlaceController(BrokerPlaceRepository.getInstance(), this);
         placeController.showPlace(UUID.fromString(getPlaceUuidFromIntent()));
-    }
-
-    private String getPlaceUuidFromIntent() {
-        return getIntent().getStringExtra(PLACE_UUID_ARG);
     }
 
     private void setupBuildingHistoryList() {
@@ -149,13 +147,15 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
                 this);
         surveyBuildingHistoryController.showSurveyBuildingOf(getPlaceUuidFromIntent(),
                 AccountUtils.getUser().getUsername());
-        surveyMoreBuildingButton.setOnClickListener(new View.OnClickListener() {
+    }
 
-            @Override
-            public void onClick(View view) {
-                BuildingListActivity.open(SurveyBuildingHistoryActivity.this, getPlaceUuidFromIntent());
-            }
-        });
+    private String getPlaceUuidFromIntent() {
+        return getIntent().getStringExtra(PLACE_UUID_ARG);
+    }
+
+    private void startSurveyMoreBuildingButtonAnimation() {
+        Animation moreBuildingAnim = AnimationUtils.loadAnimation(this, R.anim.survey_more_building_button);
+        surveyMoreBuildingButton.startAnimation(moreBuildingAnim);
     }
 
     @Override

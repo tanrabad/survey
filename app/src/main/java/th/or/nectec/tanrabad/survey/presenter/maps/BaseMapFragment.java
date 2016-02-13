@@ -38,7 +38,7 @@ class BaseMapFragment extends com.google.android.gms.maps.SupportMapFragment
     private Boolean isLocked = false;
     private Boolean isZoomable = false;
     private Boolean isMoveToMyLocation = false;
-    private Boolean isGPSDialogShowed = false;
+    private Boolean isGpsDialogShowed = false;
     private Boolean isMyLocationEnabled = true;
     private boolean isMyLocationButtonEnabled = true;
 
@@ -71,9 +71,9 @@ class BaseMapFragment extends com.google.android.gms.maps.SupportMapFragment
         setupMap();
         ThailandLocation.move(getActivity(), googleMap);
 
-        if (!GpsUtils.isGpsEnabled(getContext()) && !isGPSDialogShowed) {
+        if (!GpsUtils.isGpsEnabled(getContext()) && !isGpsDialogShowed) {
             GpsUtils.showGpsSettingsDialog(getContext());
-            isGPSDialogShowed = true;
+            isGpsDialogShowed = true;
         }
 
         setMyLocationEnabled(isMyLocationEnabled);

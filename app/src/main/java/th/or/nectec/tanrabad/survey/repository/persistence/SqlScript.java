@@ -35,20 +35,20 @@ public class SqlScript {
             InputStreamReader isr = new InputStreamReader(is);
             BufferedReader reader = new BufferedReader(isr);
 
-            executeSQLScript(db, reader);
+            executeSqlScript(db, reader);
             db.setTransactionSuccessful();
 
             reader.close();
             is.close();
             isr.close();
-        } catch (IOException e) {
-            throw new RuntimeException("Unable to read SQL script", e);
+        } catch (IOException exception) {
+            throw new RuntimeException("Unable to read SQL script", exception);
         } finally {
             db.endTransaction();
         }
     }
 
-    private static void executeSQLScript(SQLiteDatabase db, BufferedReader reader)
+    private static void executeSqlScript(SQLiteDatabase db, BufferedReader reader)
             throws IOException {
         String line;
         StringBuilder statement = new StringBuilder();

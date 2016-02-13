@@ -74,10 +74,10 @@ public class PlayLocationService {
 
     private PlayLocationService(Context context) {
         this.context = context;
-        setupLocationAPI();
+        setupLocationApi();
     }
 
-    private void setupLocationAPI() {
+    private void setupLocationApi() {
         locationApiClient = new GoogleApiClient.Builder(context)
                 .addApi(LocationServices.API)
                 .addConnectionCallbacks(connectionCallbacks)

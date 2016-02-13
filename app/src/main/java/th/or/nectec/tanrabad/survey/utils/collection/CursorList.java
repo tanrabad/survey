@@ -26,7 +26,7 @@ public class CursorList<T> extends AbstractList<T> {
     private Cursor cursor;
     private CursorMapper<T> mapper;
 
-    public CursorList(Cursor cursor, CursorMapper<T> mapper){
+    public CursorList(Cursor cursor, CursorMapper<T> mapper) {
         this.cursor = cursor;
         this.mapper = mapper;
     }
@@ -55,7 +55,7 @@ public class CursorList<T> extends AbstractList<T> {
     protected void finalize() throws Throwable {
         try {
             cursor.close();
-        }catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
         super.finalize();

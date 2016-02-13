@@ -66,9 +66,9 @@ public abstract class AbsJobRunner implements JobRunner {
         jobFinishCount++;
     }
 
-    abstract protected void onJobStart(Job startingJob);
+    protected abstract void onJobStart(Job startingJob);
 
-    abstract protected void onRunFinish();
+    protected abstract void onRunFinish();
 
     private enum JobStatus {
         START, DONE, ERROR

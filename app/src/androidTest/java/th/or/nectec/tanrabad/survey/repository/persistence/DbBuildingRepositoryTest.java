@@ -44,11 +44,11 @@ import static org.junit.Assert.assertEquals;
 @RunWith(AndroidJUnit4.class)
 public class DbBuildingRepositoryTest {
 
+    private final Context context = InstrumentationRegistry.getTargetContext();
     @Rule
     public SurveyDbTestRule dbTestRule = new SurveyDbTestRule();
     private UserRepository userRepository;
     private PlaceRepository placeRepository;
-    private final Context context = InstrumentationRegistry.getTargetContext();
 
     @Before
     public void setup() {
@@ -60,12 +60,12 @@ public class DbBuildingRepositoryTest {
         Mockito.when(userRepository.findByUsername("dpc-user")).thenReturn(user);
     }
 
-    private User stubUser() {
-        return User.fromUsername("dpc-user");
-    }
-
     private Place stubPlace() {
         return new Place(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"), "หมู่บ้านทดสอบ");
+    }
+
+    private User stubUser() {
+        return User.fromUsername("dpc-user");
     }
 
     @Test
@@ -168,16 +168,15 @@ public class DbBuildingRepositoryTest {
 
     @Test
     public void testFindByPlaceUUID() throws Exception {
-        Place place = stubPlace();
-        DbBuildingRepository dbBuildingRepository = new DbBuildingRepository(context, userRepository, placeRepository);
+        DbBuildingRepository repository = new DbBuildingRepository(context, userRepository, placeRepository);
 
-        List<Building> buildingList = dbBuildingRepository.findByPlaceUUID(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"));
+        List<Building> buildingList = repository.findByPlaceUUID(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"));
         Building building = buildingList.get(0);
 
         assertEquals(1, buildingList.size());
         assertEquals("00001db8-7207-8a65-152f-ad208cb99b01", building.getId().toString());
         assertEquals("23/2", building.getName());
-        assertEquals(place.getId(), building.getPlace().getId());
+        assertEquals(stubPlace().getId(), building.getPlace().getId());
         assertEquals("dpc-user", building.getUpdateBy());
         assertEquals("2015-12-24T12:05:19.626+07:00", building.getUpdateTimestamp().toString());
     }

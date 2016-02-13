@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,6 +17,7 @@
 
 package th.or.nectec.tanrabad.survey;
 
+import android.view.View;
 import org.hamcrest.Matcher;
 import org.junit.Rule;
 import th.or.nectec.tanrabad.survey.presenter.SurveyAccountTestRule;
@@ -39,12 +40,12 @@ public class TanrabadEspressoTestBase {
     protected void waitingFor(int time) {
         try {
             Thread.sleep(time);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        } catch (InterruptedException exception) {
+            exception.printStackTrace();
         }
     }
 
-    protected Matcher containText(String text) {
+    protected Matcher<View> containText(String text) {
         return withText(containsString(text));
     }
 

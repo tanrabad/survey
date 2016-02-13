@@ -109,7 +109,7 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
     private void setCiValue(ViewHolder holder, Survey currentSurvey) {
         ContainerIndex ci = new ContainerIndex(currentSurvey);
         float ciValue = ci.calculate();
-        holder.surveyBuildingIcon.setBackgroundResource(getIconBackgroundByCI(ciValue));
+        holder.surveyBuildingIcon.setBackgroundResource(getIconBackgroundByCi(ciValue));
         holder.containerIndex.setText(ci.getTotalContainer() > 0
                 ? context.getString(R.string.format_ci, (int) ciValue)
                 : context.getString(R.string.not_available));
@@ -118,7 +118,7 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
     }
 
     @DrawableRes
-    private int getIconBackgroundByCI(float ciValue) {
+    private int getIconBackgroundByCi(float ciValue) {
         if (ciValue == 0f) {
             return R.drawable.bg_icon_building_without_larvae;
         } else if (Float.isNaN(ciValue)) {

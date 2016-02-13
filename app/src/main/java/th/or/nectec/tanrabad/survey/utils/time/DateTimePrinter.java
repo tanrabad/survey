@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,7 +24,7 @@ import java.util.Locale;
 import java.util.Map;
 
 class DateTimePrinter implements TimePrettyPrinter {
-    private static final Map<Integer,String> monthNameMap = new HashMap<>();
+    private static final Map<Integer, String> monthNameMap = new HashMap<>();
 
     static {
         monthNameMap.put(1, "ม.ค.");

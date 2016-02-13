@@ -37,9 +37,9 @@ public class ContainerLocation {
 
     @Override
     public String toString() {
-        return "ContainerLocation{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+        return "ContainerLocation{"
+                + "id=" + id
+                + ", name='" + name + '\''
+                + '}';
     }
 }

@@ -101,10 +101,10 @@ public class Building extends Entity implements LocationEntity {
 
     @Override
     public String toString() {
-        return "Building{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", place=" + place +
-                '}';
+        return "Building{"
+                + "id=" + id
+                + ", name='" + name + '\''
+                + ", place=" + place
+                + '}';
     }
 }

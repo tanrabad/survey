@@ -44,11 +44,11 @@ public interface ActionLogger {
 
     void startSurvey(Place place);
 
-    void finishSurvey(Place place, boolean success);
-
     void startSurvey(Survey survey);
 
     void updateSurvey(Survey survey);
+
+    void finishSurvey(Place place, boolean success);
 
     void finishSurvey(Survey survey, boolean success);
 

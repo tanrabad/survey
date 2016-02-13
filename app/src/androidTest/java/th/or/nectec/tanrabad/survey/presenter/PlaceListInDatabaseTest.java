@@ -58,8 +58,8 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
 
     @Test
     public void openDefineSurveyPlaceShouldFoundListPlace8List() {
-        onView(allOf(ViewMatchers.withId(R.id.place_count)
-                , withContentDescription(R.string.number_place_list_in_database)))
+        onView(allOf(ViewMatchers.withId(R.id.place_count),
+                withContentDescription(R.string.number_place_list_in_database)))
                 .check(matches(containText("10")));
     }
 
@@ -67,8 +67,8 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
     public void chooseTypeVillageCommunityShouldFound2List() {
         changePlaceTypeFilterTo(R.string.village_community);
 
-        onView(allOf(withId(R.id.place_count)
-                , withContentDescription(R.string.number_place_list_in_database)))
+        onView(allOf(withId(R.id.place_count),
+                withContentDescription(R.string.number_place_list_in_database)))
                 .check(matches(containText("3")));
         textDisplayed("หมู่บ้านพาลาซเซตโต้");
         textDisplayed("ชุมชนกอล์ฟวิว");
@@ -103,7 +103,6 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
     @Test
     public void touchAddPlaceTypeFactory() {
         changePlaceTypeFilterTo(R.string.factory);
-
 
         onView(withId(R.id.add_place_menu))
                 .perform(click());

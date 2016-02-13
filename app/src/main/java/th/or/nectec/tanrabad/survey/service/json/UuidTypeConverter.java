@@ -15,26 +15,21 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey.utils.alert;
+package th.or.nectec.tanrabad.survey.service.json;
 
-import android.content.Context;
-import android.support.annotation.StringRes;
-import android.widget.Toast;
+import com.bluelinelabs.logansquare.typeconverters.StringBasedTypeConverter;
 
-class ToastAlertMessage implements AlertMessage {
-    private Context context;
+import java.util.UUID;
 
-    public ToastAlertMessage(Context context) {
-        this.context = context;
+public class UuidTypeConverter extends StringBasedTypeConverter<UUID> {
+
+    @Override
+    public UUID getFromString(String string) {
+        return UUID.fromString(string);
     }
 
     @Override
-    public void show(String message) {
-        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void show(@StringRes int messageId) {
-        Toast.makeText(context, messageId, Toast.LENGTH_LONG).show();
+    public String convertToString(UUID object) {
+        return object.toString();
     }
 }

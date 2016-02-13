@@ -47,11 +47,11 @@ public class SurveyLiteDatabaseTest {
         Cursor province = db.query("province", new String[]{"province_code", "name"}, null, null, null, null, null);
         Cursor subdistricts = db.query("subdistrict", new String[]{"subdistrict_code", "name", "district_code"}, null, null, null, null, null);
 
+        assertEquals(52, subdistricts.getCount());
         assertEquals(true, province.moveToFirst());
         assertEquals(1, province.getCount());
         assertEquals("12", province.getString(0));
         assertEquals("นนทบุรี", province.getString(1));
-        assertEquals(52, subdistricts.getCount());
 
         province.close();
         subdistricts.close();

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,7 +19,7 @@ package th.or.nectec.tanrabad.survey.service;
 
 import java.util.List;
 
-public interface RestService <T> {
+public interface RestService<T> {
     List<T> getUpdate();
 
     boolean hasNextRequest();

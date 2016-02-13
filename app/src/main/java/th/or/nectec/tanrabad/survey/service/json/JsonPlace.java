@@ -31,7 +31,7 @@ import java.util.UUID;
 @JsonObject
 public class JsonPlace {
 
-    @JsonField(name = "place_id", typeConverter = UUIDConverter.class)
+    @JsonField(name = "place_id", typeConverter = UuidTypeConverter.class)
     public UUID placeID;
 
     @JsonField(name = "place_type_id")
@@ -70,7 +70,6 @@ public class JsonPlace {
     @JsonField(name = "update_timestamp")
     public String updateTime;
 
-
     public static JsonPlace parse(Place place) {
         JsonPlace jsonPlace = new JsonPlace();
         jsonPlace.placeID = place.getId();
@@ -87,8 +86,8 @@ public class JsonPlace {
     public Place getEntity(UserRepository userRepository) {
         Place place = new Place(placeID, placeName);
         place.setType(placeTypeID);
-        place.setSubType(placeSubtypeID == 0 ?
-                PlaceTypeMapper.getInstance().getDefaultPlaceType(placeTypeID) : placeSubtypeID);
+        place.setSubType(placeSubtypeID == 0
+                ? PlaceTypeMapper.getInstance().getDefaultPlaceType(placeTypeID) : placeSubtypeID);
         place.setSubdistrictCode(tambonCode);
         Location location = this.location == null ? null : this.location.getEntity();
         place.setLocation(location);

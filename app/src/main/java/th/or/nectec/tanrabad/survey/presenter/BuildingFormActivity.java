@@ -178,7 +178,7 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
                 buildingSaver.update(building);
             }
         } catch (ValidatorException e) {
-            Alert.highLevel().show(e.getMessageID());
+            Alert.highLevel().show(e.getMessageId());
         }
     }
 

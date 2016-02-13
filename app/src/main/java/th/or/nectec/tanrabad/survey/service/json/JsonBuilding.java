@@ -31,10 +31,10 @@ import java.util.UUID;
 @JsonObject
 public class JsonBuilding {
 
-    @JsonField(name = "building_id", typeConverter = UUIDConverter.class)
+    @JsonField(name = "building_id", typeConverter = UuidTypeConverter.class)
     public UUID buildingID;
 
-    @JsonField(name = "place_id", typeConverter = UUIDConverter.class)
+    @JsonField(name = "place_id", typeConverter = UuidTypeConverter.class)
     public UUID placeID;
 
     @JsonField(name = "place_type_id")

@@ -38,7 +38,7 @@ public class ContainerTypeControllerTest {
         containerTypes.add(new ContainerType(1, "น้ำใช้"));
         containerTypes.add(new ContainerType(2, "น้ำดื่ม"));
 
-        context.checking(new Expectations(){{
+        context.checking(new Expectations() {{
             allowing(containerTypeRepository).find();
             will(returnValue(containerTypes));
             oneOf(containerPresenter).displayContainerList(with(containerTypes));

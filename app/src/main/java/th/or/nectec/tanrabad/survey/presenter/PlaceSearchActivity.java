@@ -1,3 +1,20 @@
+/*
+ * Copyright (c) 2016 NECTEC
+ *   National Electronics and Computer Technology Center, Thailand
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package th.or.nectec.tanrabad.survey.presenter;
 
 import android.app.Activity;
@@ -35,7 +52,8 @@ public class PlaceSearchActivity extends TanrabadActivity implements
     private ListView searchHistoryListView;
     private SimpleCursorAdapter searchHistoryAdapter;
     private RecyclerView placeListView;
-    private TextView emptyText, clearSearchHistory;
+    private TextView emptyText;
+    private TextView clearSearchHistory;
 
     public static void open(Activity activity) {
         Intent intent = new Intent(activity, PlaceSearchActivity.class);
@@ -66,6 +84,15 @@ public class PlaceSearchActivity extends TanrabadActivity implements
         });
     }
 
+    private void setupSearchHistoryList() {
+        searchHistoryAdapter = new SimpleCursorAdapter(this,
+                R.layout.list_item_search_history, null,
+                new String[]{SearchManager.SUGGEST_COLUMN_TEXT_1}, new int[]{R.id.text_item},
+                SimpleCursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+        searchHistoryListView = (ListView) findViewById(R.id.place_search_history_list);
+        searchHistoryListView.setAdapter(searchHistoryAdapter);
+    }
+
     private void querySuggestion(String queryString) {
         Cursor recentQuery = PlaceSuggestionProvider.querySuggestion(this, queryString);
         searchHistoryAdapter.changeCursor(recentQuery);
@@ -82,15 +109,6 @@ public class PlaceSearchActivity extends TanrabadActivity implements
         } else {
             clearSearchHistory.setVisibility(View.GONE);
         }
-    }
-
-    private void setupSearchHistoryList() {
-        searchHistoryAdapter = new SimpleCursorAdapter(this,
-                R.layout.list_item_search_history, null,
-                new String[]{SearchManager.SUGGEST_COLUMN_TEXT_1}, new int[]{R.id.text_item},
-                SimpleCursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
-        searchHistoryListView = (ListView) findViewById(R.id.place_search_history_list);
-        searchHistoryListView.setAdapter(searchHistoryAdapter);
     }
 
     private void setupPlaceList() {

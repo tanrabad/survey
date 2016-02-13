@@ -44,9 +44,9 @@ public class SavePlaceValidator implements PlaceValidator {
         List<Place> places = placeRepository.find();
         if (places != null) {
             for (Place eachPlace : places) {
-                if (isSamePlaceName(place, eachPlace) &&
-                        isSamePlaceType(place, eachPlace) &&
-                        isSamePlaceAddress(place, eachPlace)) {
+                if (isSamePlaceName(place, eachPlace)
+                        && isSamePlaceType(place, eachPlace)
+                        && isSamePlaceAddress(place, eachPlace)) {
                     throw new ValidatorException(R.string.cant_save_same_place_name);
                 }
             }

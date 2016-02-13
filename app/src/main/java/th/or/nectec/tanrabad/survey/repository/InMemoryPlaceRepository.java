@@ -167,8 +167,8 @@ public class InMemoryPlaceRepository implements PlaceRepository, LocationReposit
         ArrayList<LocationEntity> filterPlaces = new ArrayList<>();
         for (LocationEntity eachPlace : placesMap.values()) {
             final Location location = eachPlace.getLocation();
-            if (isLessThanOrEqualMaximumLocation(minimumLocation, location) &&
-                    isMoreThanOrEqualMinimumLocation(maximumLocation, location))
+            if (isLessThanOrEqualMaximumLocation(minimumLocation, location)
+                    && isMoreThanOrEqualMinimumLocation(maximumLocation, location))
                 filterPlaces.add(eachPlace);
         }
         return filterPlaces.isEmpty() ? null : filterPlaces;

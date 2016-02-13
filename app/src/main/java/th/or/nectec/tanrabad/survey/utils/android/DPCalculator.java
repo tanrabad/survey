@@ -29,8 +29,8 @@ public class DPCalculator {
         this.context = context;
     }
 
-    public static DPCalculator from(Context context){
-        if(instance == null)
+    public static DPCalculator from(Context context) {
+        if (instance == null)
             instance = new DPCalculator(context);
         return instance;
     }

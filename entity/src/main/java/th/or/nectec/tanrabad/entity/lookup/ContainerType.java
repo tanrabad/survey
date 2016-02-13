@@ -41,10 +41,10 @@ public class ContainerType implements Comparable<ContainerType> {
 
     @Override
     public String toString() {
-        return "ContainerType{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+        return "ContainerType{"
+                + "id=" + id
+                + ", name='" + name + '\''
+                + '}';
     }
 
     @Override

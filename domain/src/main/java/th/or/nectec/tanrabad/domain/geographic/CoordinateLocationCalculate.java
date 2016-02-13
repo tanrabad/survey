@@ -35,8 +35,8 @@ public class CoordinateLocationCalculate implements CoordinateLocationCalculator
 
         //d/Redius called angular distance in radians.
 
-        double newMaximumLatitudeRadian = Math.asin(Math.sin(lat1Radian) * Math.cos(distanceInKm / RADIUS) +
-                Math.cos(lat1Radian) * Math.sin(distanceInKm / RADIUS) * Math.cos(brng));
+        double newMaximumLatitudeRadian = Math.asin(Math.sin(lat1Radian) * Math.cos(distanceInKm / RADIUS)
+                + Math.cos(lat1Radian) * Math.sin(distanceInKm / RADIUS) * Math.cos(brng));
 
         double newMaximumLongitudeRadian = Math.toRadians(lon1) + Math.atan2(Math.sin(brng) * Math.sin(distanceInKm / RADIUS) * Math.cos(lon1Radian),
                 Math.cos(distanceInKm / RADIUS) - Math.sin(lon1Radian) * Math.sin(Math.toRadians(newMaximumLatitudeRadian)));

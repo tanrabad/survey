@@ -34,8 +34,8 @@ public class SaveBuildingValidator implements BuildingValidator {
 
         if (TextUtils.isEmpty(building.getName())) {
 
-            throw new ValidatorException(building.getPlace().getType() == PlaceType.VILLAGE_COMMUNITY ?
-                    R.string.please_define_house_no : R.string.please_define_building_name);
+            throw new ValidatorException(building.getPlace().getType() == PlaceType.VILLAGE_COMMUNITY
+                    ? R.string.please_define_house_no : R.string.please_define_building_name);
         }
 
         if (building.getLocation() == null) {

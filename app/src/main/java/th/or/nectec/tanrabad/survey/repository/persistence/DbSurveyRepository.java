@@ -87,12 +87,6 @@ public class DbSurveyRepository implements SurveyRepository, ChangedRepository<S
         return surveySaveSuccess;
     }
 
-    private boolean saveByContentValues(SQLiteDatabase db, ContentValues survey) {
-        if (db.insert(TABLE_NAME, null, survey) == ERROR_INSERT_ID)
-            throw new SurveyRepositoryException("Cannot insert survey data.");
-        return true;
-    }
-
     @Override
     public boolean update(Survey survey) {
         ContentValues values = surveyContentValues(survey);
@@ -137,8 +131,12 @@ public class DbSurveyRepository implements SurveyRepository, ChangedRepository<S
         return changedStatus;
     }
 
-    private SQLiteDatabase getReadableDatabase() {
-        return new SurveyLiteDatabase(context).getReadableDatabase();
+    private boolean updateByContentValues(SQLiteDatabase db, ContentValues survey) {
+        int update = db.update(TABLE_NAME,
+                survey,
+                SurveyColumn.ID + "=?",
+                new String[]{survey.getAsString(SurveyColumn.ID)});
+        return update > 0;
     }
 
     private void updateOrInsertDetails(SQLiteDatabase db, Survey survey, int location) {
@@ -158,20 +156,16 @@ public class DbSurveyRepository implements SurveyRepository, ChangedRepository<S
         }
     }
 
+    private SQLiteDatabase getReadableDatabase() {
+        return new SurveyLiteDatabase(context).getReadableDatabase();
+    }
+
     private boolean updateSurveyDetail(SQLiteDatabase db, UUID id, int containerLocation, SurveyDetail surveyDetail) {
         int updateCount = db.update(DETAIL_TABLE_NAME,
                 detailContentValues(id, containerLocation, surveyDetail),
                 SurveyDetailColumn.ID + " =?",
                 new String[]{surveyDetail.getId().toString()});
         return updateCount == 1;
-    }
-
-    private boolean updateByContentValues(SQLiteDatabase db, ContentValues survey) {
-        int update = db.update(TABLE_NAME,
-                survey,
-                SurveyColumn.ID + "=?",
-                new String[]{survey.getAsString(SurveyColumn.ID)});
-        return update > 0;
     }
 
     private ContentValues surveyContentValues(Survey survey) {
@@ -191,6 +185,12 @@ public class DbSurveyRepository implements SurveyRepository, ChangedRepository<S
         return values;
     }
 
+    private boolean saveByContentValues(SQLiteDatabase db, ContentValues survey) {
+        if (db.insert(TABLE_NAME, null, survey) == ERROR_INSERT_ID)
+            throw new SurveyRepositoryException("Cannot insert survey data.");
+        return true;
+    }
+
     private boolean saveSurveyDetail(SQLiteDatabase db, Survey survey, int location) {
         List<SurveyDetail> details = getSurveyDetails(survey, location);
         if (details == null) {
@@ -199,8 +199,7 @@ public class DbSurveyRepository implements SurveyRepository, ChangedRepository<S
         for (SurveyDetail eachDetail : details) {
             boolean isSuccess = saveSurveyDetail(db, survey.getId(), location, eachDetail);
             if (!isSuccess) {
-                throw new SurveyRepositoryException("Cannot insert survey detail data. " +
-                        eachDetail.toString());
+                throw new SurveyRepositoryException("Cannot insert survey detail data. " + eachDetail.toString());
             }
         }
         return true;

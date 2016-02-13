@@ -68,12 +68,12 @@ public class PlaceTypeMapper {
         return instances;
     }
 
-    public int findBySubType(int subtypeID) {
-        return placeSubTypeMapping.get(subtypeID, subtypeID);
+    public int findBySubType(int subtypeId) {
+        return placeSubTypeMapping.get(subtypeId, subtypeId);
     }
 
-    public int getDefaultPlaceType(int placeTypeID) {
-        switch (placeTypeID) {
+    public int getDefaultPlaceType(int placetypeid) {
+        switch (placetypeid) {
             case VILLAGE_COMMUNITY:
                 return ชุมชนพักอาศัย;
             case WORSHIP:

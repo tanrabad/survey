@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,8 +30,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
-
-import java.util.UUID;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.pressBack;
@@ -100,7 +98,7 @@ public class SurveyActivityTest extends TanrabadEspressoTestBase {
 
         Intents.intended(Matchers.allOf(
                 hasComponent(new ComponentName(mActivity, SurveyBuildingHistoryActivity.class)),
-                hasExtra(SurveyBuildingHistoryActivity.PLACE_UUID_ARG, "935b9aeb-6522-461e-994f-f9e9006c4a33".toString())
+                hasExtra(SurveyBuildingHistoryActivity.PLACE_UUID_ARG, "935b9aeb-6522-461e-994f-f9e9006c4a33")
         ));
     }
 }

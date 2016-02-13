@@ -151,14 +151,14 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
                 SurveySaver surveySaver = new SurveySaver(this, new SaveSurveyValidator(this), surveyRepository);
                 surveySaver.save(survey);
             }
-        } catch (SurveyDetail.ContainerFoundLarvaOverTotalException e) {
+        } catch (SurveyDetail.ContainerFoundLarvaOverTotalException exception) {
             Alert.highLevel().show(R.string.over_total_container);
             validateSurveyContainerViews(indoorContainerViews);
             validateSurveyContainerViews(outdoorContainerViews);
-            TanrabadApp.log(e);
-        } catch (ValidatorException e) {
-            Alert.highLevel().show(e.getMessageID());
-            if (e.getMessageID() == R.string.please_enter_resident)
+            TanrabadApp.log(exception);
+        } catch (ValidatorException exception) {
+            Alert.highLevel().show(exception.getMessageId());
+            if (exception.getMessageId() == R.string.please_enter_resident)
                 residentCountView.requestFocus();
         }
     }
@@ -251,10 +251,10 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         SurveyController surveyController = new SurveyController(surveyRepository,
                 BrokerBuildingRepository.getInstance(), new StubUserRepository(), this);
 
-        String buildingUUID = getIntent().getStringExtra(BUILDING_UUID_ARG);
+        String buildingUuid = getIntent().getStringExtra(BUILDING_UUID_ARG);
         String username = AccountUtils.getUser().getUsername();
 
-        surveyController.checkThisBuildingAndUserCanSurvey(buildingUUID, username);
+        surveyController.checkThisBuildingAndUserCanSurvey(buildingUuid, username);
     }
 
     @Override
@@ -442,7 +442,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
                 default:
                     return super.onKeyDown(keyCode, event);
             }
-        } catch (NullPointerException | ClassCastException e) {
+        } catch (NullPointerException | ClassCastException exception) {
             Alert.lowLevel().show("กดที่ช่องสำหรับกรอกตัวเลข แล้วลองกด เพิ่ม+/ลด- เสียงดูจิ ");
         } catch (EditTextStepper.NotSupportEditTextInputTypeException nse) {
             //Do Nothing

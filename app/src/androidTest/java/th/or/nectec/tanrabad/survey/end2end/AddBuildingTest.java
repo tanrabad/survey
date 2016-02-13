@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -50,7 +50,7 @@ public class AddBuildingTest extends TanrabadEspressoTestBase {
 
     @Test
     public void typeBuildingNameAndLocationThenTouchSaveShouldFoundSurveyPage() {
-        String placeName = "ชุมชนกอล์ฟวิว";
+
         String buildingName = "ตึก1 สีม่วง";
         onView(withId(R.id.building_name))
                 .perform(replaceText(buildingName));
@@ -63,7 +63,7 @@ public class AddBuildingTest extends TanrabadEspressoTestBase {
                 .perform(click());
 
         onView(withId(R.id.place_name))
-                .check(matches(withText(placeName)));
+                .check(matches(withText("ชุมชนกอล์ฟวิว")));
         onView(withId(R.id.building_name))
                 .check(matches(containText(buildingName)));
     }

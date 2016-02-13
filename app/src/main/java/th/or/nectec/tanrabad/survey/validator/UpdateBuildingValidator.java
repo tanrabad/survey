@@ -34,8 +34,8 @@ public class UpdateBuildingValidator implements BuildingValidator {
 
         if (TextUtils.isEmpty(building.getName())) {
 
-            throw new ValidatorException(building.getPlace().getType() == PlaceType.VILLAGE_COMMUNITY ?
-                    R.string.please_define_house_no : R.string.please_define_building_name);
+            throw new ValidatorException(building.getPlace().getType() == PlaceType.VILLAGE_COMMUNITY
+                    ? R.string.please_define_house_no : R.string.please_define_building_name);
         }
 
         if (building.getLocation() == null) {
@@ -45,8 +45,8 @@ public class UpdateBuildingValidator implements BuildingValidator {
         List<Building> buildingInPlace = buildingRepository.findByPlaceUUID(building.getPlace().getId());
         if (buildingInPlace != null) {
             for (Building eachBuilding : buildingInPlace) {
-                if (eachBuilding.getName().equals(building.getName()) &&
-                        !eachBuilding.getId().equals(building.getId())) {
+                if (eachBuilding.getName().equals(building.getName())
+                        && !eachBuilding.getId().equals(building.getId())) {
                     throw new ValidatorException(R.string.cant_save_same_building_name);
                 }
             }

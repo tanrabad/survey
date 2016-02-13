@@ -40,8 +40,8 @@ public class ResourceFile {
             }
             result = sb.toString();
             return result;
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception exception) {
+            exception.printStackTrace();
             return null;
         }
     }

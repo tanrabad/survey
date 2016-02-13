@@ -63,11 +63,11 @@ public class Address {
 
     @Override
     public String toString() {
-        return "Address{" +
-                "subdistrict='" + subdistrict + '\'' +
-                ", district='" + district + '\'' +
-                ", province='" + province + '\'' +
-                ", addressCode='" + addressCode + '\'' +
-                '}';
+        return "Address{"
+                + "subdistrict='" + subdistrict + '\''
+                + ", district='" + district + '\''
+                + ", province='" + province + '\''
+                + ", addressCode='" + addressCode + '\''
+                + '}';
     }
 }

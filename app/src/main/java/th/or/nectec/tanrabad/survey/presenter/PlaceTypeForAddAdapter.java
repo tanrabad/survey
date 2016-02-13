@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -79,9 +79,9 @@ public class PlaceTypeForAddAdapter extends BaseAdapter {
         return view;
     }
 
-    public int getPlaceTypePosition(int placeTypeID) {
+    public int getPlaceTypePosition(int placetypeid) {
         for (PlaceType eachPlaceTypes : placeTypes) {
-            if (eachPlaceTypes.getId() == placeTypeID)
+            if (eachPlaceTypes.getId() == placetypeid)
                 return placeTypes.indexOf(eachPlaceTypes);
         }
         return -1;

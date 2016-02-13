@@ -28,7 +28,7 @@ import java.util.UUID;
 class SurveyDetailCursorMapper implements CursorMapper<SurveyDetail> {
 
     private int idIndex;
-    private int containerTypeIDIndex;
+    private int containerTypeIdIndex;
     private int containerCountIndex;
     private int containerHaveLarvaIndex;
     private ContainerTypeRepository containerTypeRepository;
@@ -40,17 +40,17 @@ class SurveyDetailCursorMapper implements CursorMapper<SurveyDetail> {
 
     private void findColumnIndexOf(Cursor cursor) {
         idIndex = cursor.getColumnIndex(SurveyDetailColumn.ID);
-        containerTypeIDIndex = cursor.getColumnIndex(SurveyDetailColumn.CONTAINER_TYPE_ID);
+        containerTypeIdIndex = cursor.getColumnIndex(SurveyDetailColumn.CONTAINER_TYPE_ID);
         containerCountIndex = cursor.getColumnIndex(SurveyDetailColumn.CONTAINER_COUNT);
         containerHaveLarvaIndex = cursor.getColumnIndex(SurveyDetailColumn.CONTAINER_HAVE_LARVA);
     }
 
     @Override
     public SurveyDetail map(Cursor cursor) {
-        UUID surveyDetailID = UUID.fromString(cursor.getString(idIndex));
-        ContainerType containerType = containerTypeRepository.findByID(cursor.getInt(containerTypeIDIndex));
+        UUID surveyDetailId = UUID.fromString(cursor.getString(idIndex));
+        ContainerType containerType = containerTypeRepository.findByID(cursor.getInt(containerTypeIdIndex));
         int totalContainer = cursor.getInt(containerCountIndex);
         int larvaFoundContainer = cursor.getInt(containerHaveLarvaIndex);
-        return new SurveyDetail(surveyDetailID, containerType, totalContainer, larvaFoundContainer);
+        return new SurveyDetail(surveyDetailId, containerType, totalContainer, larvaFoundContainer);
     }
 }

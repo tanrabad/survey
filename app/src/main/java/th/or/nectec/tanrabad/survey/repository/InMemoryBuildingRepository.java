@@ -27,8 +27,7 @@ import java.util.*;
 public class InMemoryBuildingRepository implements BuildingRepository {
 
     private static InMemoryBuildingRepository instance;
-    Map<UUID,Building> buildingMap = new HashMap<>();
-
+    Map<UUID, Building> buildingMap = new HashMap<>();
 
     private InMemoryBuildingRepository() {
         InMemoryPlaceRepository inMemoryPlaceRepository = InMemoryPlaceRepository.getInstance();
@@ -78,10 +77,8 @@ public class InMemoryBuildingRepository implements BuildingRepository {
         Building building5 = new Building(generateUUID("2opj"), "ตึกพักญาติ");
         building5.setPlace(inMemoryPlaceRepository.getBangkokHospital());
 
-
         Building building6 = new Building(generateUUID("3opj"), "โรงอาหาร");
         building6.setPlace(inMemoryPlaceRepository.getBangkokHospital());
-
 
         Building building7 = new Building(generateUUID("1hij"), "ศาลาใหญ่");
         building7.setPlace(inMemoryPlaceRepository.getWatpaphukon());
@@ -111,7 +108,6 @@ public class InMemoryBuildingRepository implements BuildingRepository {
         buildingMap.put(buildingPR08.getId(), buildingPR08);
         buildingMap.put(buildingPR09.getId(), buildingPR09);
         buildingMap.put(buildingPR10.getId(), buildingPR10);
-
 
     }
 

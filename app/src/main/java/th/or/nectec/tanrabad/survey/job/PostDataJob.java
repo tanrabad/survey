@@ -22,7 +22,7 @@ import th.or.nectec.tanrabad.survey.service.UploadRestService;
 
 import java.util.List;
 
-public class PostDataJob <T> implements Job {
+public class PostDataJob<T> implements Job {
 
     public static final int ID = 90000;
     private ChangedRepository<T> changedRepository;

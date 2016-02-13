@@ -63,9 +63,11 @@ public class MarkerDropInAnimator {
     }
 
     private class MarkerAnimationRunnable implements Runnable {
-        long startTime, duration;
+        long startTime;
+        long duration;
         Handler handler;
-        LatLng target, startLatLng;
+        LatLng target;
+        LatLng startLatLng;
         Interpolator interpolator = new LinearOutSlowInInterpolator();
 
         MarkerAnimationRunnable(Handler handler, LatLng startLatLng, LatLng target, long duration) {

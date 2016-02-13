@@ -78,6 +78,7 @@ android {
             ext.enableCrashlytics = false
             manifestPlaceholders = [google_map_key: System.getenv("TANRABAD_GOOGLE_DEBUG_KEY")]
             buildConfigField "String", "API_URL", "\"http://tanrabad.igridproject.info/v1\""
+            buildConfigField "String", "USER", "\"dpc-user\""
             resValue "string", "app_version", "version $genVersionName-Debug"
         }
         release {
@@ -87,6 +88,7 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             manifestPlaceholders = [google_map_key: System.getenv("TANRABAD_GOOGLE_RELEASE_KEY")]
             buildConfigField "String", "API_URL", "\"http://tanrabad.igridproject.info/v1\""
+            buildConfigField "String", "USER", "\"dpc-13-beta\""
             resValue "string", "app_version", "version $genVersionName"
         }
     }

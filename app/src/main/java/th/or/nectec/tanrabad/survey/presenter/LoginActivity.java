@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Animation;
+import th.or.nectec.tanrabad.survey.BuildConfig;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
@@ -47,7 +48,7 @@ public class LoginActivity extends TanrabadActivity {
                     Alert.highLevel().show(R.string.connect_internet_when_use_for_first_time);
                     TanrabadApp.action().firstTimeWithoutInternet();
                 } else {
-                    AccountUtils.setUser(new StubUserRepository().findByUsername("dpc-13-beta"));
+                    AccountUtils.setUser(new StubUserRepository().findByUsername(BuildConfig.USER));
                     InitialActivity.open(LoginActivity.this);
                     finish();
                 }

@@ -62,7 +62,7 @@ public abstract class AbsJobRunner implements JobRunner {
         jobErrorCount++;
     }
 
-    private void onJobDone(Job job) {
+    protected void onJobDone(Job job) {
         jobFinishCount++;
     }
 

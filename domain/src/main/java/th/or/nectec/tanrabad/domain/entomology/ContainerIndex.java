@@ -38,10 +38,6 @@ public class ContainerIndex {
         surveys.add(survey);
     }
 
-    public ContainerIndex(List<Survey> surveys) {
-        this.surveys = surveys;
-    }
-
     public void add(Survey survey) {
         surveys.add(survey);
     }

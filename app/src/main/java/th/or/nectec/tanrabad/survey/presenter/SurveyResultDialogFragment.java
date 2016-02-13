@@ -18,7 +18,7 @@ import th.or.nectec.tanrabad.survey.job.Job;
 import th.or.nectec.tanrabad.survey.job.SyncJobBuilder;
 import th.or.nectec.tanrabad.survey.presenter.view.KeyContainerView;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
-import th.or.nectec.tanrabad.survey.repository.persistence.DbPlaceTypeRepository;
+import th.or.nectec.tanrabad.survey.repository.persistence.DbPlaceSubTypeRepository;
 import th.or.nectec.tanrabad.survey.service.json.JsonEntomology;
 import th.or.nectec.tanrabad.survey.service.json.JsonKeyContainer;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
@@ -106,13 +106,11 @@ public class SurveyResultDialogFragment extends DialogFragment {
         jobRunner.start();
     }
 
-
     private boolean isVillage(JsonEntomology jsonEntomology) {
         return jsonEntomology.placeType == PlaceType.VILLAGE_COMMUNITY;
     }
 
     public class SurveyResultJobRunner extends AbsJobRunner {
-
         private JsonEntomology entomology;
 
         @Override
@@ -139,7 +137,7 @@ public class SurveyResultDialogFragment extends DialogFragment {
 
         @Override
         protected void onRunFinish() {
-            if (errorJobs() == 0) {
+            if (errorJobs() == 0 && entomology != null) {
                 progressBar.setVisibility(View.GONE);
                 surveyResultLayout.setVisibility(View.VISIBLE);
                 gotIt.setVisibility(View.VISIBLE);
@@ -153,7 +151,7 @@ public class SurveyResultDialogFragment extends DialogFragment {
         private void updateEntomologyInfo(JsonEntomology jsonEntomology) {
             Place place = BrokerPlaceRepository.getInstance().findByUUID(jsonEntomology.placeID);
             placeIconView.setImageResource(PlaceIconMapping.getPlaceIcon(place));
-            placeTypeView.setText(new DbPlaceTypeRepository(getContext()).findByID(jsonEntomology.placeType).getName());
+            placeTypeView.setText(new DbPlaceSubTypeRepository(getContext()).findByID(place.getSubType()).getName());
             placeNameView.setText(jsonEntomology.placeName);
             addressView.setText(AddressPrinter.print(
                     jsonEntomology.tambonName, jsonEntomology.amphurName, jsonEntomology.provinceName));

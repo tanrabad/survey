@@ -46,6 +46,11 @@
         <item name="android:textSize">@dimen/text_subhead</item>
     </style>
 
+    <style name="TanrabadTextAppearance.Subhead.2">
+        <item name="android:textSize">@dimen/text_subhead</item>
+        <item name="fontPath">fonts/ThaiSansNeue-Bold.otf</item>
+    </style>
+
     <style name="TanrabadTextAppearance.Title">
         <item name="android:textSize">@dimen/text_title</item>
         <item name="fontPath">fonts/ThaiSansNeue-Bold.otf</item>

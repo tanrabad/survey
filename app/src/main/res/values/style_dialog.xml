@@ -28,6 +28,7 @@
         <item name="buttonBarNegativeButtonStyle">@style/DialogButton</item>
         <item name="buttonBarNeutralButtonStyle">@style/DialogButton</item>
         <item name="colorAccent">@color/color_accent</item>
+        <item name="buttonStyle">@style/ButtonTanrabad</item>
     </style>
 
     <style name="DialogButton" parent="Base.Widget.AppCompat.Button.Borderless.Colored">

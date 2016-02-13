@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                               xmlns:tools="http://schemas.android.com/tools"
+                                               xmlns:app="http://schemas.android.com/apk/res-auto"
+                                               android:layout_width="match_parent"
+                                               android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/survey_result"
+        android:id="@+id/survey_result_title" android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" android:layout_marginBottom="@dimen/screen_vertical_margin"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView" android:layout_alignParentTop="true" android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:id="@+id/place_info_layout"
+        android:layout_height="wrap_content" android:layout_below="@id/survey_result_title"
+        android:layout_alignLeft="@+id/place_icon" android:layout_alignStart="@+id/place_icon"
+        android:layout_marginBottom="@dimen/screen_vertical_margin">
+        <ImageView
+            style="@style/ListIcon"
+            tools:src="@mipmap/ic_place_hospital"
+            android:id="@+id/place_icon"
+            android:contentDescription="@string/place_icon"
+            android:layout_gravity="center_vertical"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="ชุมชนที่พักอาศัย"
+                style="@style/TanrabadTextAppearance.Caption"
+                android:id="@+id/place_type" android:layout_marginBottom="@dimen/text_padding"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="หมู่บ้านทดสอบ"
+                android:id="@+id/place_name"
+                android:layout_below="@+id/place_type" android:layout_marginBottom="@dimen/text_padding"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="ต.บางรักพัฒนา อ.บางบัวทอง จ.นนทบุรี"
+                style="@style/TanrabadTextAppearance.Caption"
+                android:id="@+id/address" android:layout_below="@+id/place_name"/>
+        </RelativeLayout>
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="HI 10%   CI 5%   BI 8"
+        android:id="@+id/index_info"
+        android:layout_below="@+id/place_info_layout" android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/screen_vertical_margin"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="บ้านที่สำรวจทั้งหมด 100 หลัง"
+        android:id="@+id/survey_count" android:layout_below="@+id/index_info"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="บ้านที่พบลูกน้ำ 9 หลัง"
+        android:id="@+id/survey_found_count" android:layout_below="@+id/survey_count"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="บ้านที่ไม่มีภาชนะขังน้ำ 10 หลัง"
+        android:id="@+id/no_container_houses" android:layout_below="@+id/survey_found_count"/>
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+              tools:text="ภาชนะสำรวจทั้งหมด 1000 พบ 50"
+              android:id="@+id/container_count"
+              android:layout_below="@+id/no_container_houses"
+              android:layout_marginBottom="@dimen/screen_vertical_margin"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/key_container_title"
+        android:id="@+id/key_container_title" android:layout_below="@+id/container_count"
+        android:layout_alignLeft="@+id/container_count" android:layout_alignStart="@+id/container_count"
+        android:layout_marginBottom="@dimen/screen_vertical_margin"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/indoor"
+        android:id="@+id/indoor_title"
+        app:layout_widthPercent="50%"
+        android:gravity="center"
+        android:layout_below="@+id/key_container_title"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/outdoor"
+        android:id="@+id/outdoor_title"
+        android:layout_toRightOf="@id/indoor_title"
+        app:layout_widthPercent="50%"
+        android:gravity="center"
+        android:layout_alignBaseline="@id/indoor_title"/>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/indoor_title"
+        android:id="@+id/indoor_container"
+        app:layout_widthPercent="50%" android:layout_marginBottom="@dimen/screen_vertical_margin">
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_widthPercent="50%"
+        android:id="@+id/outdoor_container"
+        android:layout_toRightOf="@id/indoor_container">
+    </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/got_it"
+        android:layout_below="@+id/indoor_container"
+        android:id="@+id/got_it"/>
+</android.support.percent.PercentRelativeLayout>

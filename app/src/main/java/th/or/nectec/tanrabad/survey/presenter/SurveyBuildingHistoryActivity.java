@@ -28,10 +28,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.*;
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
 import th.or.nectec.tanrabad.domain.entomology.HouseIndex;
 import th.or.nectec.tanrabad.domain.place.PlaceController;
@@ -47,6 +44,7 @@ import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerSurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
+import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 
@@ -76,6 +74,7 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
         setContentView(R.layout.activity_history_building_list);
         setupHomeButton();
         setupView();
+        setupViewSurveyButton();
         showPlaceInfo();
         setupBuildingHistoryList();
         setupEmptyLayout();
@@ -88,9 +87,33 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
         startSurveyMoreBuildingButtonAnimation();
     }
 
+    private void startSurveyMoreBuildingButtonAnimation() {
+        Animation moreBuildingAnim = AnimationUtils.loadAnimation(this, R.anim.survey_more_building_button);
+        surveyMoreBuildingButton.startAnimation(moreBuildingAnim);
+    }
+
+    private void setupViewSurveyButton() {
+        Button viewSurveyResultButton = (Button) findViewById(R.id.view_survey_result_button);
+        viewSurveyResultButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (InternetConnection.isAvailable(SurveyBuildingHistoryActivity.this)) {
+                    SurveyResultDialogFragment.newInstances(place).show(
+                            getSupportFragmentManager(), SurveyResultDialogFragment.FRAGMENT_TAG);
+                } else {
+                    Alert.lowLevel().show("กรุณาเชื่อมต่ออินเทอร์เน็ตก่อนดูผลการสำรวจ");
+                }
+            }
+        });
+    }
+
     private void showPlaceInfo() {
         PlaceController placeController = new PlaceController(BrokerPlaceRepository.getInstance(), this);
         placeController.showPlace(UUID.fromString(getPlaceUuidFromIntent()));
+    }
+
+    private String getPlaceUuidFromIntent() {
+        return getIntent().getStringExtra(PLACE_UUID_ARG);
     }
 
     private void setupBuildingHistoryList() {
@@ -133,15 +156,6 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
                 BuildingListActivity.open(SurveyBuildingHistoryActivity.this, getPlaceUuidFromIntent());
             }
         });
-    }
-
-    private void startSurveyMoreBuildingButtonAnimation() {
-        Animation moreBuildingAnim = AnimationUtils.loadAnimation(this, R.anim.survey_more_building_button);
-        surveyMoreBuildingButton.startAnimation(moreBuildingAnim);
-    }
-
-    private String getPlaceUuidFromIntent() {
-        return getIntent().getStringExtra(PLACE_UUID_ARG);
     }
 
     @Override

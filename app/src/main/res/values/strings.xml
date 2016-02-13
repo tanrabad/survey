@@ -149,6 +149,9 @@
     <string name="ok">ตกลง</string>
     <string name="sync_data">sync ข้อมูล</string>
     <string name="not_available">N/A</string>
+    <string name="view_survey_result">ดูผลการสำรวจ</string>
+    <string name="survey_result">ผลการสำรวจ</string>
+    <string name="key_container_title">ภาชนะที่พบลูกน้ำยุงลายมากที่สุด</string>
 
 
 </resources>

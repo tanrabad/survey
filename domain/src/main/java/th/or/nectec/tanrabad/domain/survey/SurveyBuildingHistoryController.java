@@ -32,7 +32,10 @@ public class SurveyBuildingHistoryController {
     private SurveyRepository surveyRepository;
     private SurveyBuildingPresenter surveyBuildingPresenter;
 
-    public SurveyBuildingHistoryController(UserRepository userRepository, PlaceRepository placeRepository, SurveyRepository surveyRepository, SurveyBuildingPresenter surveyBuildingPresenter) {
+    public SurveyBuildingHistoryController(UserRepository userRepository,
+                                           PlaceRepository placeRepository,
+                                           SurveyRepository surveyRepository,
+                                           SurveyBuildingPresenter surveyBuildingPresenter) {
         this.userRepository = userRepository;
         this.placeRepository = placeRepository;
         this.surveyRepository = surveyRepository;
@@ -42,13 +45,11 @@ public class SurveyBuildingHistoryController {
     public void showSurveyBuildingOf(String placeUUID, String username) {
         User user = checkUserExist(username);
         if (user == null) return;
-
         Place place = checkPlaceExist(placeUUID);
         if (place == null) return;
-
-        List<Survey> buildings = surveyRepository.findByPlaceAndUserIn7Days(place, user);
-        if (buildings != null && !buildings.isEmpty()) {
-            surveyBuildingPresenter.displaySurveyBuildingList(buildings);
+        List<Survey> surveys = surveyRepository.findByPlaceAndUserIn7Days(place, user);
+        if (surveys != null && !surveys.isEmpty()) {
+            surveyBuildingPresenter.displaySurveyBuildingList(surveys);
         } else {
             surveyBuildingPresenter.displaySurveyBuildingsNotFound();
         }
@@ -57,7 +58,6 @@ public class SurveyBuildingHistoryController {
     private User checkUserExist(String username) {
         User user = userRepository.findByUsername(username);
         if (user == null) {
-
             surveyBuildingPresenter.alertUserNotFound();
             return null;
         }

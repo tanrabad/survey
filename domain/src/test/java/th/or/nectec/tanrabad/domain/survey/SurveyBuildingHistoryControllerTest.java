@@ -18,8 +18,8 @@
 package th.or.nectec.tanrabad.domain.survey;
 
 import org.jmock.Expectations;
+import org.jmock.auto.Mock;
 import org.jmock.integration.junit4.JUnitRuleMockery;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import th.or.nectec.tanrabad.domain.UserRepository;
@@ -35,90 +35,88 @@ import java.util.UUID;
 
 public class SurveyBuildingHistoryControllerTest {
 
+    private static final String USERNAME = "test-user";
+    private static final String placeUUID = UUID.nameUUIDFromBytes("1abc".getBytes()).toString();
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
+    @Mock
+    protected SurveyRepository surveyRepository;
+    @Mock
+    protected PlaceRepository placeRepository;
+    @Mock
+    protected UserRepository userRepository;
+    @Mock
+    protected SurveyBuildingPresenter presenter;
 
-    private SurveyRepository surveyRepository;
-    private PlaceRepository placeRepository;
-    private UserRepository userRepository;
-    private SurveyBuildingPresenter surveyBuildingPresenter;
-    private Place place;
-    private User user;
-    private String placeUUID;
-    private String username;
-
-    @Before
-    public void setUp(){
-        surveyRepository = context.mock(SurveyRepository.class);
-        placeRepository = context.mock(PlaceRepository.class);
-        userRepository = context.mock(UserRepository.class);
-        surveyBuildingPresenter = context.mock(SurveyBuildingPresenter.class);
-
-        placeUUID = UUID.nameUUIDFromBytes("1abc".getBytes()).toString();
-        username = "ice";
-
-        place = new Place(UUID.fromString(placeUUID), "1/1");
-        user = User.fromUsername(username);
-    }
+    private Place place = new Place(UUID.fromString(placeUUID), "1/1");
+    private User user = User.fromUsername(USERNAME);
 
     @Test
     public void testShowSurveyBuildingList() throws Exception {
-
-        Building building1 = Building.withName("123");
-        building1.setPlace(place);
-
+        Building building = Building.withName("test-building-name");
+        building.setPlace(place);
         final List<Survey> surveys = new ArrayList<>();
-        Survey survey1 = new Survey(UUID.randomUUID(), user, building1);
-        surveys.add(survey1);
-
+        surveys.add(new Survey(UUID.randomUUID(), user, building));
         context.checking(new Expectations() {
             {
                 allowing(placeRepository).findByUUID(with(UUID.fromString(placeUUID)));
                 will(returnValue(place));
-
-                allowing(userRepository).findByUsername(with(username));
+                allowing(userRepository).findByUsername(with(USERNAME));
                 will(returnValue(user));
-
-                allowing(SurveyBuildingHistoryControllerTest.this.surveyRepository).findByPlaceAndUserIn7Days(with(place), with(user));
+                allowing(SurveyBuildingHistoryControllerTest.this.surveyRepository)
+                        .findByPlaceAndUserIn7Days(with(place), with(user));
                 will(returnValue(surveys));
-                oneOf(surveyBuildingPresenter).displaySurveyBuildingList(surveys);
+                oneOf(presenter).displaySurveyBuildingList(surveys);
             }
         });
-        SurveyBuildingHistoryController surveyBuildingHistoryController = new SurveyBuildingHistoryController(userRepository, placeRepository, this.surveyRepository, surveyBuildingPresenter);
-        surveyBuildingHistoryController.showSurveyBuildingOf(placeUUID, username);
+        SurveyBuildingHistoryController controller = new SurveyBuildingHistoryController(userRepository, placeRepository, this.surveyRepository, presenter);
+        controller.showSurveyBuildingOf(placeUUID, USERNAME);
     }
 
     @Test
     public void testNotFoundSurveyPlace() throws Exception {
-
         context.checking(new Expectations() {
             {
                 allowing(placeRepository).findByUUID(with(UUID.fromString(placeUUID)));
                 will(returnValue(null));
-                oneOf(surveyBuildingPresenter).alertPlaceNotFound();
-
-                allowing(userRepository).findByUsername(with(username));
+                oneOf(presenter).alertPlaceNotFound();
+                allowing(userRepository).findByUsername(with(USERNAME));
                 will(returnValue(user));
             }
         });
-        SurveyBuildingHistoryController surveyBuildingHistoryController = new SurveyBuildingHistoryController(userRepository, placeRepository, this.surveyRepository, surveyBuildingPresenter);
-        surveyBuildingHistoryController.showSurveyBuildingOf(placeUUID, username);
+        SurveyBuildingHistoryController controller = new SurveyBuildingHistoryController(userRepository, placeRepository, this.surveyRepository, presenter);
+        controller.showSurveyBuildingOf(placeUUID, USERNAME);
     }
 
     @Test
     public void testNotFoundUser() throws Exception {
-
         context.checking(new Expectations() {
             {
-                allowing(userRepository).findByUsername(with(username));
+                allowing(userRepository).findByUsername(with(USERNAME));
                 will(returnValue(null));
-                oneOf(surveyBuildingPresenter).alertUserNotFound();
+                oneOf(presenter).alertUserNotFound();
             }
         });
-        SurveyBuildingHistoryController surveyBuildingHistoryController = new SurveyBuildingHistoryController(userRepository, placeRepository, this.surveyRepository, surveyBuildingPresenter);
-        surveyBuildingHistoryController.showSurveyBuildingOf(placeUUID, username);
+        SurveyBuildingHistoryController controller = new SurveyBuildingHistoryController(userRepository, placeRepository, this.surveyRepository, presenter);
+        controller.showSurveyBuildingOf(placeUUID, USERNAME);
     }
 
+    @Test
+    public void testNotFoundSurvey() throws Exception {
+        context.checking(new Expectations() {
+            {
+                allowing(userRepository).findByUsername(with(USERNAME));
+                will(returnValue(user));
+                allowing(placeRepository).findByUUID(with(UUID.fromString(placeUUID)));
+                will(returnValue(place));
+                allowing(SurveyBuildingHistoryControllerTest.this.surveyRepository).findByPlaceAndUserIn7Days(with(place), with(user));
+                will(returnValue(null));
+                oneOf(presenter).displaySurveyBuildingsNotFound();
+            }
+        });
+        SurveyBuildingHistoryController controller = new SurveyBuildingHistoryController(userRepository, placeRepository, this.surveyRepository, presenter);
+        controller.showSurveyBuildingOf(placeUUID, USERNAME);
+    }
 }
 
 

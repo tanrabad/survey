@@ -34,61 +34,34 @@ public class SurveyPlaceChooser {
     private SurveyRepository surveyRepository;
     private PlaceWithSurveyStatusListPresenter surveyPlacePresenter;
 
-    public SurveyPlaceChooser(UserRepository userRepository, PlaceRepository placeRepository, SurveyRepository surveyRepository, PlaceWithSurveyStatusListPresenter surveyBuildingPresenter) {
-
+    public SurveyPlaceChooser(UserRepository userRepository,
+                              PlaceRepository placeRepository,
+                              SurveyRepository surveyRepository,
+                              PlaceWithSurveyStatusListPresenter surveyBuildingPresenter) {
         this.userRepository = userRepository;
         this.placeRepository = placeRepository;
         this.surveyRepository = surveyRepository;
         this.surveyPlacePresenter = surveyBuildingPresenter;
     }
 
-    public void displaySurveyBuildingOf(String username) {
+    public void displaySurveyedPlaceOf(String username) {
         User user = userRepository.findByUsername(username);
         if (user == null) {
             surveyPlacePresenter.alertUserNotFound();
             return;
         }
-
         List<Place> places = placeRepository.find();
         if (places == null) {
             surveyPlacePresenter.displayPlacesNotfound();
             return;
         }
-
         List<Place> surveyPlaces = surveyRepository.findByUserIn7Days(user);
-
-        List<PlaceWithSurveyStatus> buildingsWithSurveyStatuses = new ArrayList<>();
-
+        List<PlaceWithSurveyStatus> placeWithSurveyStatusList = new ArrayList<>();
         for (Place eachPlace : places) {
-            PlaceWithSurveyStatus buildingWithSurveyStatus = new PlaceWithSurveyStatus(eachPlace, surveyPlaces != null && surveyPlaces.remove(eachPlace));
-            buildingsWithSurveyStatuses.add(buildingWithSurveyStatus);
+            PlaceWithSurveyStatus place = new PlaceWithSurveyStatus(eachPlace,
+                    surveyPlaces != null && surveyPlaces.remove(eachPlace));
+            placeWithSurveyStatusList.add(place);
         }
-
-        surveyPlacePresenter.displayAllSurveyPlaceList(buildingsWithSurveyStatuses);
-    }
-
-    public void getPlaceListWithPlaceFilter(int selectedID, String username) {
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
-            surveyPlacePresenter.alertUserNotFound();
-            return;
-        }
-
-        List<Place> places = placeRepository.findByPlaceType(selectedID);
-        if (places == null) {
-            surveyPlacePresenter.displayPlacesNotfound();
-            return;
-        }
-
-        List<Place> surveyPlaces = surveyRepository.findByUserIn7Days(user);
-
-        List<PlaceWithSurveyStatus> buildingsWithSurveyStatuses = new ArrayList<>();
-
-        for (Place eachPlace : places) {
-            PlaceWithSurveyStatus buildingWithSurveyStatus = new PlaceWithSurveyStatus(eachPlace, surveyPlaces != null && surveyPlaces.remove(eachPlace));
-            buildingsWithSurveyStatuses.add(buildingWithSurveyStatus);
-        }
-
-        surveyPlacePresenter.displayAllSurveyPlaceList(buildingsWithSurveyStatuses);
+        surveyPlacePresenter.displayAllSurveyPlaceList(placeWithSurveyStatusList);
     }
 }

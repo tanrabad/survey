@@ -37,7 +37,6 @@ public class SurveySaver {
             surveySavePresenter.displaySaveSuccess();
         else
             surveySavePresenter.displaySaveFail();
-
     }
 
     public void update(Survey survey) {

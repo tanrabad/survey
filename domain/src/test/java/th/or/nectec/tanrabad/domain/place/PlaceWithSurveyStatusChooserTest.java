@@ -90,7 +90,7 @@ public class PlaceWithSurveyStatusChooserTest {
             }
         });
         SurveyPlaceChooser surveyPlaceHistoryController = new SurveyPlaceChooser(userRepository, placeRepository, surveyRepository, placeWithSurveyStatusListPresenter);
-        surveyPlaceHistoryController.displaySurveyBuildingOf(username);
+        surveyPlaceHistoryController.displaySurveyedPlaceOf(username);
     }
 
     @Test
@@ -121,7 +121,7 @@ public class PlaceWithSurveyStatusChooserTest {
             }
         });
         SurveyPlaceChooser surveyPlaceHistoryController = new SurveyPlaceChooser(userRepository, placeRepository, surveyRepository, placeWithSurveyStatusListPresenter);
-        surveyPlaceHistoryController.displaySurveyBuildingOf(username);
+        surveyPlaceHistoryController.displaySurveyedPlaceOf(username);
     }
 
     @Test
@@ -142,7 +142,7 @@ public class PlaceWithSurveyStatusChooserTest {
             }
         });
         SurveyPlaceChooser surveyPlaceHistoryController = new SurveyPlaceChooser(userRepository, placeRepository, surveyRepository, placeWithSurveyStatusListPresenter);
-        surveyPlaceHistoryController.displaySurveyBuildingOf(username);
+        surveyPlaceHistoryController.displaySurveyedPlaceOf(username);
     }
 
 
@@ -157,7 +157,7 @@ public class PlaceWithSurveyStatusChooserTest {
             }
         });
         SurveyPlaceChooser surveyPlaceHistoryController = new SurveyPlaceChooser(userRepository, placeRepository, surveyRepository, placeWithSurveyStatusListPresenter);
-        surveyPlaceHistoryController.displaySurveyBuildingOf(username);
+        surveyPlaceHistoryController.displaySurveyedPlaceOf(username);
     }
 
 }

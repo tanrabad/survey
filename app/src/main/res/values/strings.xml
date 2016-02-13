@@ -152,8 +152,9 @@
     <string name="view_survey_result">ดูผลการสำรวจ</string>
     <string name="survey_result">ผลการสำรวจ</string>
     <string name="key_container_title">ภาชนะที่พบลูกน้ำยุงลายมากที่สุด</string>
-    <string name="house_survey_index">HI %1$s%% CI %2$s%% BI %3$s</string>
-    <string name="place_survey_index">HI %1$s%% CI %2$s%%</string>
+    <string name="house_index">HI %1$s%%</string>
+    <string name="container_index">CI %1$s%%</string>
+    <string name="breteau_index">BI %1$s</string>
     <string name="survey_count">%1$sที่สำรวจทั้งหมด %2$d</string>
     <string name="survey_found_count">%1$sที่พบลูกน้ำ %2$d</string>
     <string name="no_container_houses">%1$sที่ไม่มีภาชนะขังน้ำ %2$d</string>

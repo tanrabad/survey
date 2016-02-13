@@ -5,34 +5,50 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:contentDescription="@null"
+        android:src="@mipmap/ic_cloud"
+        android:id="@+id/cloud_icon"
+        android:layout_alignParentEnd="true"
+        android:padding="@dimen/text_padding"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/survey_result"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textIsSelectable="false"
+        android:padding="@dimen/text_padding"
+        android:layout_toLeftOf="@id/cloud_icon"
+        android:id="@+id/survey_result_title" android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <android.support.v4.widget.ContentLoadingProgressBar
+        android:id="@+id/loading"
+        style="?android:attr/progressBarStyleSmall"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/survey_result_title"
+        android:layout_marginBottom="48dp"/>
+
     <android.support.percent.PercentRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/screen_horizontal_margin"
-        android:id="@+id/result_layout">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/survey_result"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textIsSelectable="false"
-            android:id="@+id/survey_result_title" android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" android:layout_marginBottom="@dimen/screen_vertical_margin"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:contentDescription="@null"
-            android:src="@mipmap/ic_cloud"
-            android:layout_alignParentEnd="true"/>
+        android:id="@+id/result_layout"
+        android:layout_below="@id/survey_result_title">
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:id="@+id/place_info_layout"
-            android:layout_height="wrap_content" android:layout_below="@id/survey_result_title"
+            android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/place_icon" android:layout_alignStart="@+id/place_icon"
             android:layout_marginBottom="@dimen/screen_vertical_margin">
             <ImageView
@@ -69,22 +85,46 @@
                     android:id="@+id/address" android:layout_below="@+id/place_name"/>
             </RelativeLayout>
         </LinearLayout>
-        <TextView
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="HI 10%   CI 5%   BI 8"
-            android:id="@+id/index_info"
-            android:textIsSelectable="false"
-            android:textAppearance="?android:attr/textAppearance"
-            android:layout_below="@+id/place_info_layout" android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/screen_vertical_margin"/>
+            android:orientation="horizontal"
+            android:layout_below="@id/place_info_layout"
+            android:id="@+id/index_layout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/screen_vertical_margin">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="HI 10%"
+                android:id="@+id/house_index"
+                android:textIsSelectable="false"
+                android:textAppearance="?android:attr/textAppearance"
+                android:layout_marginRight="@dimen/wide_space_between_content"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="CI 5%"
+                android:id="@+id/container_index"
+                android:textIsSelectable="false"
+                android:textAppearance="?android:attr/textAppearance"
+                android:layout_marginRight="@dimen/wide_space_between_content"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="BI 8"
+                android:id="@+id/breteau_index"
+                android:textIsSelectable="false"
+                android:textAppearance="?android:attr/textAppearance"/>
+        </LinearLayout>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textIsSelectable="false"
             android:textAppearance="?android:attr/textAppearance"
             tools:text="บ้านที่สำรวจทั้งหมด 100 หลัง"
-            android:id="@+id/survey_count" android:layout_below="@+id/index_info"/>
+            android:id="@+id/survey_count" android:layout_below="@id/index_layout"/>
         <TextView
             android:layout_width="wrap_content"
             android:textAppearance="?android:attr/textAppearance"

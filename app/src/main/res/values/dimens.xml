@@ -19,7 +19,9 @@
     <dimen name="screen_horizontal_margin">20dp</dimen>
     <dimen name="screen_vertical_margin">24dp</dimen>
     <dimen name="space_between_content">8dp</dimen>
+    <dimen name="wide_space_between_content">16dp</dimen>
     <dimen name="actionbar_size">64dp</dimen>
+    <dimen name="text_padding">24dp</dimen>
     <dimen name="toolbar_size">@dimen/actionbar_size</dimen>
 
     <dimen name="header_height">271dp</dimen>

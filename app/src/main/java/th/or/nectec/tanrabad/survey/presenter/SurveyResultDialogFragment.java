@@ -2,14 +2,12 @@ package th.or.nectec.tanrabad.survey.presenter;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.*;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.R;
@@ -38,17 +36,19 @@ public class SurveyResultDialogFragment extends DialogFragment {
     public static final String BUILDING = "อาคาร";
     public static final String HOUSE = "บ้าน";
     LinearLayout placeInfoLayout;
+    RelativeLayout surveyResultLayout;
     ImageView placeIconView;
     TextView placeTypeView;
     TextView placeNameView;
     TextView addressView;
-    TextView indexInfoView;
+    TextView houseIndexView, containerIndexView, breteauIndexView;
     TextView surveyCountView;
     TextView surveyFoundCountView;
     TextView noContainerHousesView;
     TextView containerCountView;
     LinearLayout indoorContainer;
     LinearLayout outdoorContainer;
+    ContentLoadingProgressBar progressBar;
     Button gotIt;
     private GetDataJob<JsonEntomology> jsonEntomologyGetDataJob;
 
@@ -71,18 +71,23 @@ public class SurveyResultDialogFragment extends DialogFragment {
     }
 
     private void assignViews(View view) {
+        surveyResultLayout = (RelativeLayout) view.findViewById(R.id.result_layout);
         placeInfoLayout = (LinearLayout) view.findViewById(R.id.place_info_layout);
         placeIconView = (ImageView) view.findViewById(R.id.place_icon);
         placeTypeView = (TextView) view.findViewById(R.id.place_type);
         placeNameView = (TextView) view.findViewById(R.id.place_name);
         addressView = (TextView) view.findViewById(R.id.address);
-        indexInfoView = (TextView) view.findViewById(R.id.index_info);
+        houseIndexView = (TextView) view.findViewById(R.id.house_index);
+        containerIndexView = (TextView) view.findViewById(R.id.container_index);
+        breteauIndexView = (TextView) view.findViewById(R.id.breteau_index);
         surveyCountView = (TextView) view.findViewById(R.id.survey_count);
         surveyFoundCountView = (TextView) view.findViewById(R.id.survey_found_count);
         noContainerHousesView = (TextView) view.findViewById(R.id.no_container_houses);
         containerCountView = (TextView) view.findViewById(R.id.container_count);
         indoorContainer = (LinearLayout) view.findViewById(R.id.indoor_container);
         outdoorContainer = (LinearLayout) view.findViewById(R.id.outdoor_container);
+        progressBar = (ContentLoadingProgressBar) view.findViewById(R.id.loading);
+
         gotIt = (Button) view.findViewById(R.id.got_it);
         gotIt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,76 +108,6 @@ public class SurveyResultDialogFragment extends DialogFragment {
         jobRunner.start();
     }
 
-    private void updateEntomologyInfo(JsonEntomology jsonEntomology) {
-
-        Place place = BrokerPlaceRepository.getInstance().findByUUID(jsonEntomology.placeID);
-        placeIconView.setImageResource(PlaceIconMapping.getPlaceIcon(place));
-        placeTypeView.setText(new DbPlaceTypeRepository(getContext()).findByID(jsonEntomology.placeType).getName());
-        placeNameView.setText(jsonEntomology.placeName);
-        addressView.setText(AddressPrinter.print(
-                jsonEntomology.tambonName, jsonEntomology.amphurName, jsonEntomology.provinceName));
-        boolean isVillage = isVillage(jsonEntomology);
-        setSurveyIndex(jsonEntomology, isVillage);
-        setSurveyCount(jsonEntomology, isVillage);
-        setSurveyFoundCount(jsonEntomology, isVillage);
-        setNoContainerHouseCount(jsonEntomology, isVillage);
-        setSurveyContainerCount(jsonEntomology);
-        setKeyContainerInfo(jsonEntomology);
-    }
-
-    private void setKeyContainerInfo(JsonEntomology jsonEntomology) {
-        for (JsonKeyContainer keyContainer : jsonEntomology.keyContainerIn) {
-            if (!TextUtils.isEmpty(keyContainer.containerName)) {
-                getFirstOfSameLevelKeyContainer(keyContainer, indoorContainer);
-            }
-        }
-        for (JsonKeyContainer keyContainer : jsonEntomology.keyContainerOut) {
-            if (!TextUtils.isEmpty(keyContainer.containerName)) {
-                getFirstOfSameLevelKeyContainer(keyContainer, outdoorContainer);
-            }
-        }
-    }
-
-    private void getFirstOfSameLevelKeyContainer(JsonKeyContainer keyContainer, LinearLayout container) {
-        String[] sameLevelKeyContainer = keyContainer.containerName.split(", ");
-        container.addView(buildKeyContainerView(sameLevelKeyContainer[0]));
-    }
-
-    private KeyContainerView buildKeyContainerView(String containerName) {
-        KeyContainerView keyContainerView = new KeyContainerView(getContext());
-        keyContainerView.setContainerType(containerName);
-        return keyContainerView;
-    }
-
-    private void setSurveyContainerCount(JsonEntomology jsonEntomology) {
-        containerCountView.setText(String.format(getString(R.string.survey_container_count),
-                jsonEntomology.numSurveyedContainer, jsonEntomology.numFoundContainers));
-    }
-
-    private void setNoContainerHouseCount(JsonEntomology jsonEntomology, boolean isVillage) {
-        noContainerHousesView.setText(String.format(getString(R.string.no_container_houses),
-                isVillage ? HOUSE : BUILDING, jsonEntomology.numNoContainerHouses));
-    }
-
-    private void setSurveyFoundCount(JsonEntomology jsonEntomology, boolean isVillage) {
-        surveyFoundCountView.setText(String.format(getString(R.string.survey_found_count),
-                isVillage ? HOUSE : BUILDING, jsonEntomology.numFoundHouses));
-    }
-
-    private void setSurveyCount(JsonEntomology jsonEntomology, boolean isVillage) {
-        surveyCountView.setText(String.format(getString(R.string.survey_count),
-                isVillage ? HOUSE : BUILDING, jsonEntomology.numSurveyedHouses));
-    }
-
-    private void setSurveyIndex(JsonEntomology jsonEntomology, boolean isVillage) {
-        DecimalFormat df = new DecimalFormat("#.##");
-        String indexInfo = isVillage
-                ? String.format(getString(R.string.house_survey_index),
-                df.format(jsonEntomology.hiValue), df.format(jsonEntomology.ciValue), df.format(jsonEntomology.biValue))
-                : String.format(getString(R.string.place_survey_index),
-                df.format(jsonEntomology.hiValue), df.format(jsonEntomology.ciValue));
-        indexInfoView.setText(indexInfo);
-    }
 
     private boolean isVillage(JsonEntomology jsonEntomology) {
         return jsonEntomology.placeType == PlaceType.VILLAGE_COMMUNITY;
@@ -194,23 +129,107 @@ public class SurveyResultDialogFragment extends DialogFragment {
             if (job.equals(jsonEntomologyGetDataJob)) {
                 GetDataJob<JsonEntomology> entomologyJob = (GetDataJob<JsonEntomology>) job;
                 List<JsonEntomology> entomologyList = entomologyJob.getData();
-                entomology = entomologyList == null ? entomologyList.get(0) : null;
-
+                entomology = entomologyList == null ? null : entomologyList.get(0);
             }
         }
 
         @Override
         protected void onJobStart(Job startingJob) {
+            progressBar.setVisibility(View.VISIBLE);
+            surveyResultLayout.setVisibility(View.GONE);
+            gotIt.setVisibility(View.GONE);
         }
 
         @Override
         protected void onRunFinish() {
-            if (errorJobs() == 0)
+            if (errorJobs() == 0) {
+                progressBar.setVisibility(View.GONE);
+                surveyResultLayout.setVisibility(View.VISIBLE);
+                gotIt.setVisibility(View.VISIBLE);
                 updateEntomologyInfo(entomology);
-            else {
+            } else {
                 dismiss();
                 Alert.highLevel().show(R.string.cannot_view_survey_result);
             }
+        }
+
+        private void updateEntomologyInfo(JsonEntomology jsonEntomology) {
+            Place place = BrokerPlaceRepository.getInstance().findByUUID(jsonEntomology.placeID);
+            placeIconView.setImageResource(PlaceIconMapping.getPlaceIcon(place));
+            placeTypeView.setText(new DbPlaceTypeRepository(getContext()).findByID(jsonEntomology.placeType).getName());
+            placeNameView.setText(jsonEntomology.placeName);
+            addressView.setText(AddressPrinter.print(
+                    jsonEntomology.tambonName, jsonEntomology.amphurName, jsonEntomology.provinceName));
+            boolean isVillage = isVillage(jsonEntomology);
+            setSurveyIndex(jsonEntomology, isVillage);
+            setSurveyCount(jsonEntomology, isVillage);
+            setSurveyFoundCount(jsonEntomology, isVillage);
+            setNoContainerHouseCount(jsonEntomology, isVillage);
+            setSurveyContainerCount(jsonEntomology);
+            setKeyContainerInfo(jsonEntomology);
+        }
+
+
+        private void setKeyContainerInfo(JsonEntomology jsonEntomology) {
+            for (JsonKeyContainer keyContainer : jsonEntomology.keyContainerIn) {
+                if (!TextUtils.isEmpty(keyContainer.containerName)) {
+                    getFirstOfSameLevelKeyContainer(keyContainer, indoorContainer);
+                }
+            }
+            for (JsonKeyContainer keyContainer : jsonEntomology.keyContainerOut) {
+                if (!TextUtils.isEmpty(keyContainer.containerName)) {
+                    getFirstOfSameLevelKeyContainer(keyContainer, outdoorContainer);
+                }
+            }
+        }
+
+        private void getFirstOfSameLevelKeyContainer(JsonKeyContainer keyContainer, LinearLayout container) {
+            String[] sameLevelKeyContainer = keyContainer.containerName.split(", ");
+            container.addView(buildKeyContainerView(sameLevelKeyContainer[0]));
+        }
+
+        private KeyContainerView buildKeyContainerView(String containerName) {
+            KeyContainerView keyContainerView = new KeyContainerView(getContext());
+            keyContainerView.setContainerType(containerName);
+            return keyContainerView;
+        }
+
+        private void setSurveyContainerCount(JsonEntomology jsonEntomology) {
+            containerCountView.setText(String.format(getString(R.string.survey_container_count),
+                    jsonEntomology.numSurveyedContainer, jsonEntomology.numFoundContainers));
+        }
+
+        private void setNoContainerHouseCount(JsonEntomology jsonEntomology, boolean isVillage) {
+            noContainerHousesView.setText(String.format(getString(R.string.no_container_houses),
+                    isVillage ? HOUSE : BUILDING, jsonEntomology.numNoContainerHouses));
+        }
+
+        private void setSurveyFoundCount(JsonEntomology jsonEntomology, boolean isVillage) {
+            surveyFoundCountView.setText(String.format(getString(R.string.survey_found_count),
+                    isVillage ? HOUSE : BUILDING, jsonEntomology.numFoundHouses));
+        }
+
+        private void setSurveyCount(JsonEntomology jsonEntomology, boolean isVillage) {
+            surveyCountView.setText(String.format(getString(R.string.survey_count),
+                    isVillage ? HOUSE : BUILDING, jsonEntomology.numSurveyedHouses));
+        }
+
+        private void setSurveyIndex(JsonEntomology jsonEntomology, boolean isVillage) {
+            DecimalFormat df = new DecimalFormat("#.##");
+            if (isVillage) {
+                houseIndexView.setVisibility(View.VISIBLE);
+                breteauIndexView.setVisibility(View.VISIBLE);
+                houseIndexView.setText(String.format(getString(R.string.house_index),
+                        df.format(jsonEntomology.hiValue)));
+                breteauIndexView.setText(String.format(getString(R.string.breteau_index),
+                        df.format(jsonEntomology.biValue)));
+            } else {
+                houseIndexView.setVisibility(View.GONE);
+                breteauIndexView.setVisibility(View.GONE);
+            }
+            containerIndexView.setText(String.format(getString(R.string.container_index),
+                    df.format(jsonEntomology.ciValue)));
+
         }
     }
 }

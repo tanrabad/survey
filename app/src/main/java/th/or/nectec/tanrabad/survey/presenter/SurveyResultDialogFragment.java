@@ -13,20 +13,18 @@ import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.job.AbsJobRunner;
-import th.or.nectec.tanrabad.survey.job.GetDataJob;
+import th.or.nectec.tanrabad.survey.job.EntomologyJob;
 import th.or.nectec.tanrabad.survey.job.Job;
 import th.or.nectec.tanrabad.survey.job.SyncJobBuilder;
 import th.or.nectec.tanrabad.survey.presenter.view.KeyContainerView;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.persistence.DbPlaceTypeRepository;
-import th.or.nectec.tanrabad.survey.service.EntomologyRestService;
 import th.or.nectec.tanrabad.survey.service.json.JsonEntomology;
 import th.or.nectec.tanrabad.survey.service.json.JsonKeyContainer;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.thai.address.AddressPrinter;
 
 import java.text.DecimalFormat;
-import java.util.List;
 import java.util.UUID;
 
 public class SurveyResultDialogFragment extends DialogFragment {
@@ -50,7 +48,7 @@ public class SurveyResultDialogFragment extends DialogFragment {
     LinearLayout outdoorContainer;
     ContentLoadingProgressBar progressBar;
     Button gotIt;
-    private GetDataJob<JsonEntomology> jsonEntomologyGetDataJob;
+    private EntomologyJob jsonEntomologyGetDataJob;
 
     public static SurveyResultDialogFragment newInstances(Place place) {
         SurveyResultDialogFragment fragment = new SurveyResultDialogFragment();
@@ -103,7 +101,7 @@ public class SurveyResultDialogFragment extends DialogFragment {
         Place place = BrokerPlaceRepository.getInstance().findByUUID(UUID.fromString(placeId));
         super.onActivityCreated(savedInstanceState);
         AbsJobRunner jobRunner = SyncJobBuilder.build(new SurveyResultJobRunner());
-        jsonEntomologyGetDataJob = new GetDataJob<>(new EntomologyRestService(place));
+        jsonEntomologyGetDataJob = new EntomologyJob(place);
         jobRunner.addJob(jsonEntomologyGetDataJob);
         jobRunner.start();
     }
@@ -127,9 +125,8 @@ public class SurveyResultDialogFragment extends DialogFragment {
         protected void onJobDone(Job job) {
             super.onJobDone(job);
             if (job.equals(jsonEntomologyGetDataJob)) {
-                GetDataJob<JsonEntomology> entomologyJob = (GetDataJob<JsonEntomology>) job;
-                List<JsonEntomology> entomologyList = entomologyJob.getData();
-                entomology = entomologyList == null ? null : entomologyList.get(0);
+                EntomologyJob entomologyJob = (EntomologyJob) job;
+                entomology = entomologyJob.getData();
             }
         }
 

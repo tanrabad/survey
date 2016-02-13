@@ -14,7 +14,7 @@ public class JsonEntomologyTest {
     @Test
     public void testParseEntomoLogyToObject() throws Exception {
         List<JsonEntomology> jsonEntomologyList = LoganSquare.parseList(
-                ResourceFile.read("entomologyList3Item.json"), JsonEntomology.class);
+                ResourceFile.read("entomologyList1Item.json"), JsonEntomology.class);
 
         JsonEntomology jsonEntomology1 = jsonEntomologyList.get(0);
         assertEquals("6e79ca31-d0da-fc50-64d2-ac403dfff644", jsonEntomology1.placeID.toString());
@@ -42,7 +42,7 @@ public class JsonEntomologyTest {
     @Test
     public void testParseMultipleEntomoLogyToObjects() throws Exception {
         List<JsonEntomology> jsonEntomologyList = LoganSquare.parseList(
-                ResourceFile.read("entomologyList3Item.json"), JsonEntomology.class);
+                ResourceFile.read("entomologyList1Item.json"), JsonEntomology.class);
 
         JsonEntomology jsonEntomology1 = jsonEntomologyList.get(0);
         assertEquals("6e79ca31-d0da-fc50-64d2-ac403dfff644", jsonEntomology1.placeID.toString());

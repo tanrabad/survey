@@ -20,12 +20,14 @@ package th.or.nectec.tanrabad.survey.service;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.WireMockTestBase;
 import th.or.nectec.tanrabad.survey.service.http.Header;
 import th.or.nectec.tanrabad.survey.service.json.JsonEntomology;
 import th.or.nectec.tanrabad.survey.utils.ResourceFile;
 
 import java.util.List;
+import java.util.UUID;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.junit.Assert.assertEquals;
@@ -42,7 +44,14 @@ public class EntomologyRestServiceTest extends WireMockTestBase {
         super.setUp();
         restService = new EntomologyRestService(
                 localHost(),
-                lastUpdate);
+                lastUpdate,
+                stubPlace());
+    }
+
+    private Place stubPlace() {
+        Place place = new Place(UUID.fromString("6e79ca31-d0da-fc50-64d2-ac403dfff644"), "หมู่ 5 บ้านท่าน้ำ");
+        place.setType(Place.TYPE_VILLAGE_COMMUNITY);
+        return place;
     }
 
     @Test
@@ -81,11 +90,11 @@ public class EntomologyRestServiceTest extends WireMockTestBase {
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader(Header.LAST_MODIFIED, MON_30_NOV_2015_17_00_00_GMT)
-                        .withBody(ResourceFile.read("entomologyList3Item.json"))));
+                        .withBody(ResourceFile.read("entomologyList1Item.json"))));
 
         List<JsonEntomology> jsonEntomologyList = restService.getUpdate();
 
-        assertEquals(3, jsonEntomologyList.size());
+        assertEquals(1, jsonEntomologyList.size());
         JsonEntomology jsonEntomology1 = jsonEntomologyList.get(0);
         assertEquals("6e79ca31-d0da-fc50-64d2-ac403dfff644", jsonEntomology1.placeID.toString());
         assertEquals("หมู่ 5 บ้านท่าน้ำ", jsonEntomology1.placeName);
@@ -94,24 +103,6 @@ public class EntomologyRestServiceTest extends WireMockTestBase {
         assertEquals(125.00, jsonEntomology1.biValue, 0);
         assertEquals("แจกัน", jsonEntomology1.keyContainerIn.get(0).containerName);
         assertEquals("ภาชนะที่ไม่ใช้", jsonEntomology1.keyContainerOut.get(0).containerName);
-
-        JsonEntomology jsonEntomology2 = jsonEntomologyList.get(1);
-        assertEquals("a9956d82-3c3a-5bfa-ae0b-2c0e2b786810", jsonEntomology2.placeID.toString());
-        assertEquals("หมู่ 9 บ้านวัดแดง", jsonEntomology2.placeName);
-        assertEquals(75.0, jsonEntomology2.hiValue, 0);
-        assertEquals(22.0, jsonEntomology2.ciValue, 0);
-        assertEquals(425.0, jsonEntomology2.biValue, 0);
-        assertEquals("อื่น ๆ (ที่ใช้ประโยชน์)", jsonEntomology2.keyContainerIn.get(0).containerName);
-        assertEquals("แจกัน", jsonEntomology2.keyContainerOut.get(0).containerName);
-
-        JsonEntomology jsonEntomology3 = jsonEntomologyList.get(2);
-        assertEquals("86df6a0f-4368-c972-d4a1-15574868d085", jsonEntomology3.placeID.toString());
-        assertEquals("หมู่ 1 บ้านท่าลาน", jsonEntomology3.placeName);
-        assertEquals(66.0, jsonEntomology3.hiValue, 0);
-        assertEquals(6.0, jsonEntomology3.ciValue, 0);
-        assertEquals(66.0, jsonEntomology3.biValue, 0);
-        assertEquals("แจกัน,น้ำใช้", jsonEntomology3.keyContainerIn.get(0).containerName);
-        assertEquals("แจกัน", jsonEntomology3.keyContainerOut.get(0).containerName);
     }
 
 

@@ -18,6 +18,7 @@
 package th.or.nectec.tanrabad.survey.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
+import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.service.json.JsonEntomology;
 
@@ -27,18 +28,20 @@ import java.util.List;
 public class EntomologyRestService extends AbsRestService<JsonEntomology> {
 
     public static final String PATH = "/entomology";
+    private Place place;
 
-    public EntomologyRestService() {
-        this(BASE_API, new ServiceLastUpdatePreference(TanrabadApp.getInstance(), PATH));
+    public EntomologyRestService(Place place) {
+        this(BASE_API, new ServiceLastUpdatePreference(TanrabadApp.getInstance(), PATH), place);
     }
 
-    public EntomologyRestService(String apiBaseUrl, ServiceLastUpdate serviceLastUpdate) {
+    public EntomologyRestService(String apiBaseUrl, ServiceLastUpdate serviceLastUpdate, Place place) {
         super(apiBaseUrl, serviceLastUpdate);
+        this.place = place;
     }
 
     @Override
     public String getDefaultParams() {
-        return "geostd=4326";
+        return "geostd=4326&place_id=" + place.getId();
     }
 
     @Override

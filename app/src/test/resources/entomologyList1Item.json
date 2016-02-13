@@ -1,0 +1,51 @@
+[
+  {
+    "place_id": "6e79ca31-d0da-fc50-64d2-ac403dfff644",
+    "place_name": "หมู่ 5 บ้านท่าน้ำ",
+    "place_type": 1,
+    "location": {
+      "coordinates": [
+        100.60137651189666,
+        14.078273636945516
+      ],
+      "type": "Point"
+    },
+    "tambon_name": "บางเขน",
+    "amphur_name": "เมืองนนทบุรี",
+    "province_name": "นนทบุรี",
+    "num_surveyed_containers": "119",
+    "num_found_containers": "30",
+    "date_surveyed": 1435856400,
+    "hi_value": "54.00",
+    "bi_value": "125.00",
+    "ci_value": "25.00",
+    "key_container_in": [
+      {
+        "rank": 1,
+        "container_name": "แจกัน"
+      },
+      {
+        "rank": 2,
+        "container_name": "น้ำใช้"
+      },
+      {
+        "rank": 3,
+        "container_name": "ที่รองกันมด"
+      }
+    ],
+    "key_container_out": [
+      {
+        "rank": 1,
+        "container_name": "ภาชนะที่ไม่ใช้"
+      },
+      {
+        "rank": 2,
+        "container_name": "ยางรถยนต์เก่า"
+      },
+      {
+        "rank": 3,
+        "container_name": "อื่น ๆ (ที่ใช้ประโยชน์)"
+      }
+    ]
+  }
+]

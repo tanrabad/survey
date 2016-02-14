@@ -49,7 +49,8 @@ public class DbProvinceRepository implements ProvinceRepository {
     @Override
     public List<Province> find() {
         SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
-        Cursor provinceCursor = db.query(TABLE_NAME, ProvinceColumn.WILDCARD, null, null, null, null, ProvinceColumn.CODE);
+        Cursor provinceCursor = db.query(TABLE_NAME, ProvinceColumn.WILDCARD,
+                null, null, null, null, ProvinceColumn.CODE);
         return new CursorList<>(provinceCursor, getMapper(provinceCursor));
     }
 
@@ -60,7 +61,8 @@ public class DbProvinceRepository implements ProvinceRepository {
     @Override
     public Province findByCode(String provinceCode) {
         SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
-        Cursor provinceCursor = db.query(TABLE_NAME, ProvinceColumn.WILDCARD, ProvinceColumn.CODE + "=?", new String[]{provinceCode}, null, null, null);
+        Cursor provinceCursor = db.query(TABLE_NAME, ProvinceColumn.WILDCARD, ProvinceColumn.CODE + "=?",
+                new String[]{provinceCode}, null, null, null);
         if (provinceCursor.moveToFirst()) {
             return getMapper(provinceCursor).map(provinceCursor);
         }

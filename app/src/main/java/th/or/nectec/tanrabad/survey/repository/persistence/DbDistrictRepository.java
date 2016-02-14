@@ -19,15 +19,19 @@ package th.or.nectec.tanrabad.survey.repository.persistence;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import th.or.nectec.tanrabad.domain.address.DistrictRepository;
 import th.or.nectec.tanrabad.entity.lookup.District;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
+import th.or.nectec.tanrabad.survey.utils.collection.CursorList;
+import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
 
 import java.util.List;
 
 public class DbDistrictRepository implements DistrictRepository {
 
+    public static final String TABLE_NAME = "district";
     private static DbDistrictRepository instance;
     private Context context;
 
@@ -44,11 +48,24 @@ public class DbDistrictRepository implements DistrictRepository {
 
     @Override
     public List<District> findByProvinceCode(String provinceCode) {
-        return null;
+        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        Cursor districtCursor = db.query(TABLE_NAME, DistrictColumn.WILDCARD, DistrictColumn.PROVINCE_CODE + "=?",
+                new String[]{provinceCode}, null, null, null);
+        return new CursorList<>(districtCursor, getMapper(districtCursor));
+    }
+
+    private DistrictCursorMapper getMapper(Cursor districtCursor) {
+        return new DistrictCursorMapper(districtCursor);
     }
 
     @Override
     public District findByCode(String districtCode) {
+        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        Cursor districtCursor = db.query(TABLE_NAME, DistrictColumn.WILDCARD, DistrictColumn.CODE + "=?",
+                new String[]{districtCode}, null, null, null);
+        if (districtCursor.moveToFirst()) {
+            return getMapper(districtCursor).map(districtCursor);
+        }
         return null;
     }
 
@@ -91,5 +108,38 @@ public class DbDistrictRepository implements DistrictRepository {
         cv.put("name", district.getName());
         cv.put("province_code", district.getProvinceCode());
         return cv;
+    }
+
+    public static class DistrictColumn {
+        public static final String CODE = "district_code";
+        public static final String PROVINCE_CODE = "province_code";
+        public static final String NAME = "name";
+        public static final String BOUNDARY = "boundary";
+        public static final String[] WILDCARD = new String[]{CODE, NAME, PROVINCE_CODE, BOUNDARY};
+    }
+
+    public static class DistrictCursorMapper implements CursorMapper<District> {
+
+        int codeIdx;
+        int nameIdx;
+        int provinceCodeIdx;
+        int boundaryIdx;
+
+        public DistrictCursorMapper(Cursor cursor) {
+            codeIdx = cursor.getColumnIndex(DistrictColumn.CODE);
+            nameIdx = cursor.getColumnIndex(DistrictColumn.NAME);
+            provinceCodeIdx = cursor.getColumnIndex(DistrictColumn.PROVINCE_CODE);
+            boundaryIdx = cursor.getColumnIndex(DistrictColumn.BOUNDARY);
+        }
+
+        @Override
+        public District map(Cursor cursor) {
+            District district = new District();
+            district.setCode(cursor.getString(codeIdx));
+            district.setName(cursor.getString(nameIdx));
+            district.setProvinceCode(cursor.getString(provinceCodeIdx));
+            //TODO parse boundary text in db to BoundaryObject
+            return district;
+        }
     }
 }

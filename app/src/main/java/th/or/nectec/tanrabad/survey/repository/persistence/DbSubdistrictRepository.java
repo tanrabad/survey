@@ -19,15 +19,19 @@ package th.or.nectec.tanrabad.survey.repository.persistence;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import th.or.nectec.tanrabad.domain.address.SubdistrictRepository;
 import th.or.nectec.tanrabad.entity.lookup.Subdistrict;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
+import th.or.nectec.tanrabad.survey.utils.collection.CursorList;
+import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
 
 import java.util.List;
 
 public class DbSubdistrictRepository implements SubdistrictRepository {
 
+    public static final String TABLE_NAME = "subdistrict";
     private static DbSubdistrictRepository instance;
     private Context context;
 
@@ -43,12 +47,25 @@ public class DbSubdistrictRepository implements SubdistrictRepository {
 
     @Override
     public List<Subdistrict> findByDistrictCode(String districtCode) {
-        return null;
+        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        Cursor subdistrictCursor = db.query(TABLE_NAME, SubdistrictColumn.WILDCARD,
+                SubdistrictColumn.DISTRICT_CODE + "=?", new String[]{districtCode}, null, null, null);
+        return new CursorList<>(subdistrictCursor, getMapper(subdistrictCursor));
     }
 
     @Override
     public Subdistrict findByCode(String subdistrictCode) {
+        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        Cursor subdistrictCursor = db.query(TABLE_NAME, SubdistrictColumn.WILDCARD, SubdistrictColumn.CODE + "=?",
+                new String[]{subdistrictCode}, null, null, null);
+        if (subdistrictCursor.moveToFirst()) {
+            return getMapper(subdistrictCursor).map(subdistrictCursor);
+        }
         return null;
+    }
+
+    private SubdistrictCursorMapper getMapper(Cursor subdistrictCursor) {
+        return new SubdistrictCursorMapper(subdistrictCursor);
     }
 
     @Override
@@ -90,5 +107,38 @@ public class DbSubdistrictRepository implements SubdistrictRepository {
         cv.put("name", subDistrict.getName());
         cv.put("district_code", subDistrict.getDistrictCode());
         return cv;
+    }
+
+    public static class SubdistrictColumn {
+        public static final String CODE = "subdistrict_code";
+        public static final String DISTRICT_CODE = "district_code";
+        public static final String NAME = "name";
+        public static final String BOUNDARY = "boundary";
+        public static final String[] WILDCARD = new String[]{CODE, NAME, DISTRICT_CODE, BOUNDARY};
+    }
+
+    public static class SubdistrictCursorMapper implements CursorMapper<Subdistrict> {
+
+        int codeIdx;
+        int nameIdx;
+        int districtCodeIdx;
+        int boundaryIdx;
+
+        public SubdistrictCursorMapper(Cursor cursor) {
+            codeIdx = cursor.getColumnIndex(SubdistrictColumn.CODE);
+            nameIdx = cursor.getColumnIndex(SubdistrictColumn.NAME);
+            districtCodeIdx = cursor.getColumnIndex(SubdistrictColumn.DISTRICT_CODE);
+            boundaryIdx = cursor.getColumnIndex(SubdistrictColumn.BOUNDARY);
+        }
+
+        @Override
+        public Subdistrict map(Cursor cursor) {
+            Subdistrict subdistrict = new Subdistrict();
+            subdistrict.setCode(cursor.getString(codeIdx));
+            subdistrict.setName(cursor.getString(nameIdx));
+            subdistrict.setDistrictCode(cursor.getString(districtCodeIdx));
+            //TODO parse boundary text in db to BoundaryObject
+            return subdistrict;
+        }
     }
 }

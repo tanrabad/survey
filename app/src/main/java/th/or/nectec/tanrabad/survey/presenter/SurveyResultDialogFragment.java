@@ -45,6 +45,7 @@ import th.or.nectec.tanrabad.survey.repository.persistence.DbSubdistrictReposito
 import th.or.nectec.tanrabad.survey.service.json.JsonEntomology;
 import th.or.nectec.tanrabad.survey.service.json.JsonKeyContainer;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
+import th.or.nectec.tanrabad.survey.utils.time.ThaiDatePrinter;
 import th.or.nectec.thai.address.AddressPrinter;
 
 import java.text.DecimalFormat;
@@ -60,6 +61,7 @@ public class SurveyResultDialogFragment extends DialogFragment {
     RelativeLayout surveyResultLayout;
     ImageView placeIconView;
     TextView placeTypeView;
+    TextView surveyDateView;
     TextView placeNameView;
     TextView addressView;
     TextView houseIndexView;
@@ -113,6 +115,7 @@ public class SurveyResultDialogFragment extends DialogFragment {
         outdoorContainerLayout = (LinearLayout) view.findViewById(R.id.outdoor_container);
         progressBar = (ContentLoadingProgressBar) view.findViewById(R.id.loading);
         errorMsgView = (TextView) view.findViewById(R.id.error_msg);
+        surveyDateView = (TextView) view.findViewById(R.id.survey_date);
 
         gotIt = (Button) view.findViewById(R.id.got_it);
         gotIt.setOnClickListener(new View.OnClickListener() {
@@ -217,6 +220,7 @@ public class SurveyResultDialogFragment extends DialogFragment {
 
         private void updateEntomologyInfo(JsonEntomology jsonEntomology) {
             boolean isVillage = isVillage(jsonEntomology);
+            surveyDateView.setText(ThaiDatePrinter.print(jsonEntomology.dateSurveyed));
             setSurveyIndex(jsonEntomology, isVillage);
             setSurveyCount(jsonEntomology, isVillage);
             setSurveyFoundCount(jsonEntomology, isVillage);
@@ -226,9 +230,6 @@ public class SurveyResultDialogFragment extends DialogFragment {
         }
 
         private void setKeyContainerInfo(JsonEntomology jsonEntomology) {
-            boolean indoorNull;
-            boolean outdoorNull;
-
             for (int index = 0; index < 3; index++) {
                 JsonKeyContainer indoorKeyContainer = jsonEntomology.keyContainerIn.get(index);
                 JsonKeyContainer outdoorKeyContainer = jsonEntomology.keyContainerOut.get(index);

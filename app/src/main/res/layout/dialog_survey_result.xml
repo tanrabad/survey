@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent" android:layout_height="wrap_content">
+                xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -19,9 +20,23 @@
         android:text="@string/survey_result"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textIsSelectable="false"
-        android:padding="@dimen/text_padding"
+        android:paddingTop="@dimen/text_padding"
+        android:paddingLeft="@dimen/text_padding"
         android:layout_toLeftOf="@id/cloud_icon"
         android:id="@+id/survey_result_title" android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="14 ก.พ. 2559"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textIsSelectable="false"
+        android:paddingLeft="@dimen/text_padding"
+        android:paddingBottom="@dimen/text_padding"
+        android:layout_below="@id/survey_result_title"
+        android:id="@+id/survey_date"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>
 

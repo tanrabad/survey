@@ -11,11 +11,9 @@ public class ToolbarBasedShowcase implements Showcase {
     private final ShowcaseView.Builder showcaseBuilder;
     private OnShowcaseDismissListener onShowcaseDismissListener;
 
-    public ToolbarBasedShowcase(Activity activity, @IdRes int toolbarId, @IdRes int viewId) {
+    public ToolbarBasedShowcase(Activity activity, @IdRes int toolbarId, @IdRes int viewId, boolean isShowOnlyOnce) {
         showcaseBuilder = BaseShowcase.build(activity)
                 .setTarget(new ToolbarActionItemTarget((Toolbar) activity.findViewById(toolbarId), viewId))
-                .setContentTextPaint(ShowcaseFontStyle.getContentStyle(activity))
-                .setContentTitlePaint(ShowcaseFontStyle.getTitleStyle(activity))
                 .setShowcaseEventListener(new SimpleShowcaseEventListener() {
                     @Override
                     public void onShowcaseViewHide(ShowcaseView showcaseView) {
@@ -24,6 +22,9 @@ public class ToolbarBasedShowcase implements Showcase {
                             onShowcaseDismissListener.onDismissListener(showcaseView);
                     }
                 });
+
+        if (isShowOnlyOnce)
+            showcaseBuilder.singleShot(activity.getTaskId() + toolbarId + viewId);
     }
 
     @Override
@@ -43,7 +44,6 @@ public class ToolbarBasedShowcase implements Showcase {
 
     @Override
     public void setOnShowCaseDismissListener(OnShowcaseDismissListener onShowcaseDismissListener) {
-
         this.onShowcaseDismissListener = onShowcaseDismissListener;
     }
 }

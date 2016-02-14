@@ -11,7 +11,7 @@ public class ViewBasedShowcase implements Showcase {
     private final ShowcaseView.Builder showcaseBuilder;
     private Showcase.OnShowcaseDismissListener onShowcaseDismissListener;
 
-    public ViewBasedShowcase(Activity activity, @IdRes int viewId) {
+    public ViewBasedShowcase(Activity activity, @IdRes int viewId, boolean isShowOnlyOnce) {
         showcaseBuilder = BaseShowcase.build(activity)
                 .setTarget(new ViewTarget(viewId, activity))
                 .setShowcaseEventListener(new SimpleShowcaseEventListener() {
@@ -22,6 +22,9 @@ public class ViewBasedShowcase implements Showcase {
                             onShowcaseDismissListener.onDismissListener(showcaseView);
                     }
                 });
+
+        if (isShowOnlyOnce)
+            showcaseBuilder.singleShot(activity.getTaskId() + viewId);
     }
 
     @Override
@@ -41,7 +44,6 @@ public class ViewBasedShowcase implements Showcase {
 
     @Override
     public void setOnShowCaseDismissListener(OnShowcaseDismissListener onShowcaseDismissListener) {
-
         this.onShowcaseDismissListener = onShowcaseDismissListener;
     }
 }

@@ -62,7 +62,6 @@ public class PlaceListActivity extends TanrabadActivity {
 
     private void setupViews() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.inflateMenu(R.menu.action_activity_place_search);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         placePager = (ViewPager) findViewById(R.id.place_pager);
         setSupportActionBar(toolbar);
@@ -105,7 +104,8 @@ public class PlaceListActivity extends TanrabadActivity {
     }
 
     private void displayShowcase() {
-        ToolbarBasedShowcase toolbarBasedShowcase = new ToolbarBasedShowcase(this, R.id.toolbar, R.id.action_search);
+        ToolbarBasedShowcase toolbarBasedShowcase = new ToolbarBasedShowcase(
+                this, R.id.toolbar, R.id.action_search, true);
         toolbarBasedShowcase.setTitle("ค้นหาสถานที่");
         toolbarBasedShowcase.setMessage("กดที่แว่นขยายเพื่อค้นหาสถานที่นะจ๊ะ");
         toolbarBasedShowcase.setOnShowCaseDismissListener(new Showcase.OnShowcaseDismissListener() {
@@ -118,7 +118,7 @@ public class PlaceListActivity extends TanrabadActivity {
     }
 
     private void displayNextShowcase() {
-        ViewBasedShowcase toolbarBasedShowcase = new ViewBasedShowcase(this, R.id.place_filter);
+        ViewBasedShowcase toolbarBasedShowcase = new ViewBasedShowcase(this, R.id.place_filter, true);
         toolbarBasedShowcase.setMessage("กดที่นี่เพื่อเปลี่ยนประเภทสถานที่");
         toolbarBasedShowcase.display();
     }

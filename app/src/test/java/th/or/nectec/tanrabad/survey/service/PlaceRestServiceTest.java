@@ -24,10 +24,8 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.survey.WireMockTestBase;
-import th.or.nectec.tanrabad.survey.presenter.AccountUtils;
 import th.or.nectec.tanrabad.survey.service.http.Header;
 import th.or.nectec.tanrabad.survey.service.json.JsonPlace;
 import th.or.nectec.tanrabad.survey.utils.ResourceFile;
@@ -41,7 +39,6 @@ import static org.junit.Assert.assertEquals;
 import static th.or.nectec.tanrabad.survey.service.PlaceRestService.PATH;
 import static th.or.nectec.tanrabad.survey.service.http.Header.CONTENT_TYPE;
 import static th.or.nectec.tanrabad.survey.service.http.Header.USER_AGENT;
-
 
 public class PlaceRestServiceTest extends WireMockTestBase {
 
@@ -73,6 +70,7 @@ public class PlaceRestServiceTest extends WireMockTestBase {
                         .withBody("")));
 
         restService.getUpdate();
+        Mockito.verify(lastUpdate, Mockito.never()).save(Mockito.anyString());
     }
 
     @Test
@@ -88,6 +86,7 @@ public class PlaceRestServiceTest extends WireMockTestBase {
         assertEquals(0, buildings.size());
         verify(getRequestedFor(urlPathEqualTo(PATH))
                 .withHeader(Header.IF_MODIFIED_SINCE, equalTo(MON_30_NOV_2015_17_00_00_GMT)));
+        Mockito.verify(lastUpdate, Mockito.never()).save(Mockito.anyString());
     }
 
     @Test
@@ -148,8 +147,8 @@ public class PlaceRestServiceTest extends WireMockTestBase {
                         .withStatus(200)
                         .withHeader(Header.LAST_MODIFIED, MON_30_NOV_2015_17_00_00_GMT)
                         .withHeader(Header.LINK,
-                                "<" + localHost() + PATH + "?page=2&per_page=10>; rel=\"next\"," +
-                                        "<" + localHost() + PATH + "?page=2&per_page=10>; rel=\"last\"")
+                                "<" + localHost() + PATH + "?page=2&per_page=10>; rel=\"next\","
+                                        + "<" + localHost() + PATH + "?page=2&per_page=10>; rel=\"last\"")
                         .withBody(ResourceFile.read("placeList10Item.json"))));
         stubFor(get(urlEqualTo(PATH + "?page=2&per_page=10"))
                 .willReturn(aResponse()

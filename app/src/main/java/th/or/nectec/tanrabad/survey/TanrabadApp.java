@@ -42,6 +42,10 @@ public class TanrabadApp extends Application {
         exceptionLogger.log(e);
     }
 
+    public static void log(String message) {
+        exceptionLogger.log(message);
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();

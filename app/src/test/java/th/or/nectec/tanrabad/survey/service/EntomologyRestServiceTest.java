@@ -98,7 +98,7 @@ public class EntomologyRestServiceTest extends WireMockTestBase {
 
         assertEquals(1, jsonEntomologyList.size());
         JsonEntomology jsonEntomology1 = jsonEntomologyList.get(0);
-        assertEquals("6e79ca31-d0da-fc50-64d2-ac403dfff644", jsonEntomology1.placeID.toString());
+        assertEquals("6e79ca31-d0da-fc50-64d2-ac403dfff644", jsonEntomology1.placeId.toString());
         assertEquals("หมู่ 5 บ้านท่าน้ำ", jsonEntomology1.placeName);
         assertEquals(54.00, jsonEntomology1.hiValue, 0);
         assertEquals(25.00, jsonEntomology1.ciValue, 0);

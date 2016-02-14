@@ -467,7 +467,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         @Override
         protected void onJobError(Job errorJob, Exception exception) {
             super.onJobError(errorJob, exception);
-            Log.e(errorJob.toString(), exception.getMessage());
+            TanrabadApp.log(exception);
         }
 
         @Override

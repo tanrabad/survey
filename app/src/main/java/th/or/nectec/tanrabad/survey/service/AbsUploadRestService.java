@@ -17,6 +17,7 @@
 
 package th.or.nectec.tanrabad.survey.service;
 
+import android.util.Log;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
@@ -41,8 +42,10 @@ public abstract class AbsUploadRestService<T> extends AbsRestService implements 
         try {
             Request request = getPostRequest(data);
             Response response = client.newCall(request).execute();
-            if (response.code() == Status.BAD_REQUEST)
-                throw new RestServiceException.ErrorResponseException(response);
+            if (response.code() == Status.BAD_REQUEST) {
+                Log.e("URS", entityToJsonString(data));
+                throw new RestServiceException.ErrorResponseException(request, response);
+            }
             if (isNotSuccess(response))
                 throw new RestServiceException(response);
             return response.code() == Status.CREATED;
@@ -67,6 +70,10 @@ public abstract class AbsUploadRestService<T> extends AbsRestService implements 
         try {
             Request request = buildPutRequest(data);
             Response response = client.newCall(request).execute();
+            if (response.code() == Status.BAD_REQUEST) {
+                Log.e("URS", entityToJsonString(data));
+                throw new RestServiceException.ErrorResponseException(request, response);
+            }
             if (isNotSuccess(response))
                 throw new RestServiceException(response);
             return true;

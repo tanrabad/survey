@@ -45,6 +45,7 @@ class SurveyCursorMapper implements CursorMapper<Survey> {
     private int lngIndex;
     private int createTimeIndex;
     private int updateTimeIndex;
+    private int changeStatusIndex;
     private int surveyorIndex;
 
     public SurveyCursorMapper(Cursor cursor,
@@ -66,6 +67,7 @@ class SurveyCursorMapper implements CursorMapper<Survey> {
         createTimeIndex = cursor.getColumnIndex(SurveyColumn.CREATE_TIME);
         updateTimeIndex = cursor.getColumnIndex(SurveyColumn.UPDATE_TIME);
         surveyorIndex = cursor.getColumnIndex(SurveyColumn.SURVEYOR);
+        changeStatusIndex = cursor.getColumnIndex(SurveyColumn.CHANGED_STATUS);
     }
 
     @Override
@@ -73,7 +75,8 @@ class SurveyCursorMapper implements CursorMapper<Survey> {
         UUID surveyId = UUID.fromString(cursor.getString(idIndex));
         User user = userRepository.findByUsername(cursor.getString(surveyorIndex));
         Building building = buildingRepository.findByUUID(UUID.fromString(cursor.getString(buildingIdIndex)));
-        Survey survey = new Survey(surveyId, user, building);
+        int changeStatus = cursor.getInt(changeStatusIndex);
+        Survey survey = new SurveyWithChange(surveyId, user, building, changeStatus);
         survey.setLocation(new Location(cursor.getDouble(latIndex), cursor.getDouble(lngIndex)));
         survey.setResidentCount(cursor.getInt(personCountIndex));
         survey.setIndoorDetail(surveyRepository.findSurveyDetail(surveyId, INDOOR_CONTAINER_LOCATION));
@@ -82,4 +85,5 @@ class SurveyCursorMapper implements CursorMapper<Survey> {
         survey.setFinishTimestamp(new DateTime(cursor.getString(updateTimeIndex)));
         return survey;
     }
+
 }

@@ -17,7 +17,7 @@ public class JsonEntomologyTest {
                 ResourceFile.read("entomologyList1Item.json"), JsonEntomology.class);
 
         JsonEntomology jsonEntomology1 = jsonEntomologyList.get(0);
-        assertEquals("6e79ca31-d0da-fc50-64d2-ac403dfff644", jsonEntomology1.placeID.toString());
+        assertEquals("6e79ca31-d0da-fc50-64d2-ac403dfff644", jsonEntomology1.placeId.toString());
         assertEquals("หมู่ 5 บ้านท่าน้ำ", jsonEntomology1.placeName);
         assertEquals(1, jsonEntomology1.placeType);
         assertEquals(14.078273636945516, jsonEntomology1.location.getLatitude(), 0);
@@ -45,7 +45,7 @@ public class JsonEntomologyTest {
                 ResourceFile.read("entomologyList3Item.json"), JsonEntomology.class);
 
         JsonEntomology jsonEntomology1 = jsonEntomologyList.get(0);
-        assertEquals("6e79ca31-d0da-fc50-64d2-ac403dfff644", jsonEntomology1.placeID.toString());
+        assertEquals("6e79ca31-d0da-fc50-64d2-ac403dfff644", jsonEntomology1.placeId.toString());
         assertEquals("หมู่ 5 บ้านท่าน้ำ", jsonEntomology1.placeName);
         assertEquals(1, jsonEntomology1.placeType);
         assertEquals(14.078273636945516, jsonEntomology1.location.getLatitude(), 0);
@@ -67,7 +67,7 @@ public class JsonEntomologyTest {
         assertEquals("อื่น ๆ (ที่ใช้ประโยชน์)", jsonEntomology1.keyContainerOut.get(2).containerName);
 
         JsonEntomology jsonEntomology2 = jsonEntomologyList.get(1);
-        assertEquals("a9956d82-3c3a-5bfa-ae0b-2c0e2b786810", jsonEntomology2.placeID.toString());
+        assertEquals("a9956d82-3c3a-5bfa-ae0b-2c0e2b786810", jsonEntomology2.placeId.toString());
         assertEquals("หมู่ 9 บ้านวัดแดง", jsonEntomology2.placeName);
         assertEquals(1, jsonEntomology2.placeType);
         assertEquals(14.090106321804223, jsonEntomology2.location.getLatitude(), 0);
@@ -89,7 +89,7 @@ public class JsonEntomologyTest {
         assertEquals("ที่รองกันมด", jsonEntomology2.keyContainerOut.get(2).containerName);
 
         JsonEntomology jsonEntomology3 = jsonEntomologyList.get(2);
-        assertEquals("86df6a0f-4368-c972-d4a1-15574868d085", jsonEntomology3.placeID.toString());
+        assertEquals("86df6a0f-4368-c972-d4a1-15574868d085", jsonEntomology3.placeId.toString());
         assertEquals("หมู่ 1 บ้านท่าลาน", jsonEntomology3.placeName);
         assertEquals(1, jsonEntomology3.placeType);
         assertEquals(14.9733720169419, jsonEntomology3.location.getLatitude(), 0);

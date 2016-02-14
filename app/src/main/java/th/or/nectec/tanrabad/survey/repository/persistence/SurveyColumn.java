@@ -31,6 +31,7 @@ public class SurveyColumn {
 
 
     public static String[] wildcard() {
-        return new String[]{ID, BUILDING_ID, PERSON_COUNT, SURVEYOR, LATITUDE, LONGITUDE, CREATE_TIME, UPDATE_TIME, CHANGED_STATUS};
+        return new String[] {ID, BUILDING_ID, PERSON_COUNT, SURVEYOR, LATITUDE, LONGITUDE,
+                CREATE_TIME, UPDATE_TIME, CHANGED_STATUS};
     }
 }

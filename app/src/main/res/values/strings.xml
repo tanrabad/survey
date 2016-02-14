@@ -160,6 +160,7 @@
     <string name="no_container_houses">%1$sที่ไม่มีภาชนะขังน้ำ %2$d</string>
     <string name="survey_container_count">ภาชนะสำรวจทั้งหมด %1$s พบ %2$d</string>
     <string name="cannot_view_survey_result">ไม่สามารถดูผลการสำรวจได้</string>
+    <string name="description_survey_not_synced">ข้อมูลสำรวจยังไม่ถูกส่งขึ้น cloud</string>
 
 
 </resources>

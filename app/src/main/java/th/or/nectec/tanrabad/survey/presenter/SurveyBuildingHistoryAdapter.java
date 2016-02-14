@@ -31,6 +31,7 @@ import th.or.nectec.tanrabad.domain.entomology.ContainerIndex;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.view.TimeAgoView;
+import th.or.nectec.tanrabad.survey.repository.persistence.SurveyWithChange;
 import th.or.nectec.tanrabad.survey.utils.time.DurationTimePrinter;
 
 import java.util.ArrayList;
@@ -98,8 +99,13 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
         holder.surveyBuildingTextView.setText(currentSurvey.getSurveyBuilding().getName());
         holder.duration.setText(context.getString(R.string.survey_duration) + " " + getDuration(currentSurvey));
         holder.timeAgoView.setTime(currentSurvey.getFinishTimestamp());
-
+        setSyncStatus(holder, currentSurvey);
         setCiValue(holder, currentSurvey);
+    }
+
+    private void setSyncStatus(ViewHolder holder, Survey currentSurvey) {
+        SurveyWithChange swc = (SurveyWithChange) currentSurvey;
+        holder.notSync.setVisibility(swc.isNotSynced() ? View.VISIBLE : View.GONE);
     }
 
     private String getDuration(Survey currentSurvey) {
@@ -145,6 +151,7 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
         TimeAgoView timeAgoView;
         TextView containerIndex;
         TextView containerCount;
+        ImageView notSync;
         private SurveyBuildingHistoryAdapter adapter;
 
         public ViewHolder(View itemView, SurveyBuildingHistoryAdapter adapter) {
@@ -157,6 +164,7 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
             duration = (TextView) itemView.findViewById(R.id.survey_duration);
             containerIndex = (TextView) itemView.findViewById(R.id.survey_ci);
             containerCount = (TextView) itemView.findViewById(R.id.survey_container_count);
+            notSync = (ImageView) itemView.findViewById(R.id.not_sync);
         }
 
         @Override

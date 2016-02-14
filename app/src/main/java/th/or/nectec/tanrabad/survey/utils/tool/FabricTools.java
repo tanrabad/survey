@@ -18,6 +18,7 @@
 package th.or.nectec.tanrabad.survey.utils.tool;
 
 import android.content.Context;
+import android.util.Log;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.*;
 import com.crashlytics.android.core.CrashlyticsCore;
@@ -58,7 +59,10 @@ public class FabricTools implements ExceptionLogger, ActionLogger {
 
     @Override
     public void log(Exception e) {
-        Crashlytics.logException(e);
+        if (BuildConfig.DEBUG)
+            e.printStackTrace();
+        else
+            Crashlytics.logException(e);
     }
 
     @Override

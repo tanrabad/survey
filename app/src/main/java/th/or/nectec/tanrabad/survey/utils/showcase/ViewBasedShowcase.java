@@ -24,7 +24,11 @@ public class ViewBasedShowcase implements Showcase {
                 });
 
         if (isShowOnlyOnce)
-            showcaseBuilder.singleShot(activity.getTaskId() + viewId);
+            showcaseBuilder.singleShot(getRootViewId(activity) + viewId);
+    }
+
+    private int getRootViewId(Activity activity) {
+        return activity.getWindow().getDecorView().getRootView().getId();
     }
 
     @Override

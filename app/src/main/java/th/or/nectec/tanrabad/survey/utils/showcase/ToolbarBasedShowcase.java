@@ -24,7 +24,7 @@ public class ToolbarBasedShowcase implements Showcase {
                 });
 
         if (isShowOnlyOnce)
-            showcaseBuilder.singleShot(activity.getTaskId() + toolbarId + viewId);
+            showcaseBuilder.singleShot(toolbarId + viewId);
     }
 
     @Override

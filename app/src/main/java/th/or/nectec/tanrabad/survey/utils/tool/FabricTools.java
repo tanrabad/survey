@@ -66,6 +66,12 @@ public class FabricTools implements ExceptionLogger, ActionLogger {
     }
 
     @Override
+    public void log(String message) {
+        if (BuildConfig.DEBUG)
+            Log.e("ทันระบาด", message);
+    }
+
+    @Override
     public void login(User user) {
         Crashlytics.setUserName(user.getUsername());
         answers.logLogin(new LoginEvent()
@@ -138,13 +144,6 @@ public class FabricTools implements ExceptionLogger, ActionLogger {
     }
 
     @Override
-    public void finishSurvey(Place place, boolean success) {
-        answers.logCustom(new CustomEvent(Event.FINISH_PLACE_SURVEY)
-                .putCustomAttribute("Finish Method", success ? "finish button" : "back button"));
-
-    }
-
-    @Override
     public void startSurvey(Survey survey) {
         answers.logLevelStart(new LevelStartEvent()
                 .putCustomAttribute("Mode", "NEW")
@@ -159,6 +158,13 @@ public class FabricTools implements ExceptionLogger, ActionLogger {
                 .putCustomAttribute("Last Score", getScore(survey, true))
                 .putCustomAttribute("User Type", survey.getUser().getUserType().toString())
                 .putLevelName(Level.SURVEY_BUILDING));
+    }
+
+    @Override
+    public void finishSurvey(Place place, boolean success) {
+        answers.logCustom(new CustomEvent(Event.FINISH_PLACE_SURVEY)
+                .putCustomAttribute("Finish Method", success ? "finish button" : "back button"));
+
     }
 
     @Override

@@ -21,4 +21,5 @@ public interface ExceptionLogger {
 
     void log(Exception e);
 
+    void log(String message);
 }

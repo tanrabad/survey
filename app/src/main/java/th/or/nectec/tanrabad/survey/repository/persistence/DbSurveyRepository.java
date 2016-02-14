@@ -77,8 +77,8 @@ public class DbSurveyRepository implements SurveyRepository, ChangedRepository<S
             saveSurveyDetail(db, survey, OUTDOOR_CONTAINER_LOCATION);
             db.setTransactionSuccessful();
             surveySaveSuccess = true;
-        } catch (SurveyRepositoryException e) {
-            TanrabadApp.log(e);
+        } catch (SurveyRepositoryException exception) {
+            TanrabadApp.log(exception);
             surveySaveSuccess = false;
         } finally {
             db.endTransaction();
@@ -100,8 +100,8 @@ public class DbSurveyRepository implements SurveyRepository, ChangedRepository<S
             updateOrInsertDetails(db, survey, OUTDOOR_CONTAINER_LOCATION);
             surveyUpdateSuccess = true;
             db.setTransactionSuccessful();
-        } catch (SurveyRepositoryException e) {
-            TanrabadApp.log(e);
+        } catch (SurveyRepositoryException exception) {
+            TanrabadApp.log(exception);
             surveyUpdateSuccess = false;
         } finally {
             db.endTransaction();
@@ -217,17 +217,17 @@ public class DbSurveyRepository implements SurveyRepository, ChangedRepository<S
     }
 
     private boolean saveSurveyDetail(SQLiteDatabase db,
-                                     UUID surveyID,
+                                     UUID surveyId,
                                      int containerLocation,
                                      SurveyDetail surveyDetail) {
-        ContentValues values = detailContentValues(surveyID, containerLocation, surveyDetail);
+        ContentValues values = detailContentValues(surveyId, containerLocation, surveyDetail);
         return db.insert(DETAIL_TABLE_NAME, null, values) != ERROR_INSERT_ID;
     }
 
-    private ContentValues detailContentValues(UUID surveyID, int containerLocationId, SurveyDetail surveyDetail) {
+    private ContentValues detailContentValues(UUID surveyId, int containerLocationId, SurveyDetail surveyDetail) {
         ContentValues values = new ContentValues();
         values.put(SurveyDetailColumn.ID, surveyDetail.getId().toString());
-        values.put(SurveyDetailColumn.SURVEY_ID, surveyID.toString());
+        values.put(SurveyDetailColumn.SURVEY_ID, surveyId.toString());
         values.put(SurveyDetailColumn.CONTAINER_LOCATION_ID, containerLocationId);
         values.put(SurveyDetailColumn.CONTAINER_TYPE_ID, surveyDetail.getContainerType().getId());
         values.put(SurveyDetailColumn.CONTAINER_COUNT, surveyDetail.getTotalContainer());
@@ -260,16 +260,16 @@ public class DbSurveyRepository implements SurveyRepository, ChangedRepository<S
                 columns,
                 BuildingColumn.PLACE_ID + "=? AND " + SurveyColumn.SURVEYOR + "=?",
                 new String[]{place.getId().toString(), user.getUsername()},
-                null, null, null);
+                null, null, SurveyColumn.CREATE_TIME + " DESC");
         return new CursorList<>(cursor, getSurveyMapper(cursor));
     }
 
-    public List<SurveyDetail> findSurveyDetail(UUID surveyId, int containerLocationID) {
+    public List<SurveyDetail> findSurveyDetail(UUID surveyId, int containerLocationId) {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query(DETAIL_TABLE_NAME,
                 SurveyDetailColumn.wildcard(),
                 SurveyDetailColumn.SURVEY_ID + "=? AND " + SurveyDetailColumn.CONTAINER_LOCATION_ID + "=?",
-                new String[]{surveyId.toString(), String.valueOf(containerLocationID)},
+                new String[]{surveyId.toString(), String.valueOf(containerLocationId)},
                 null, null, null);
         return new CursorList<>(cursor, getSurveyDetailMapper(cursor));
     }

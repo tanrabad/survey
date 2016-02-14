@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -34,10 +34,10 @@ public class Survey extends Entity implements LocationEntity, Comparable<Survey>
     private DateTime startTimestamp;
     private DateTime finishTimestamp;
     private Location location;
-    private UUID surveyUUID;
+    private UUID surveyId;
 
-    public Survey(UUID surveyID, User user, Building surveyBuilding) {
-        this.surveyUUID = surveyID;
+    public Survey(UUID surveyId, User user, Building surveyBuilding) {
+        this.surveyId = surveyId;
         this.user = user;
         this.surveyBuilding = surveyBuilding;
     }
@@ -126,22 +126,25 @@ public class Survey extends Entity implements LocationEntity, Comparable<Survey>
         if (residentCount != survey.residentCount) return false;
         if (!user.equals(survey.user)) return false;
         if (!surveyBuilding.equals(survey.surveyBuilding)) return false;
-        if (indoorDetails != null ? !indoorDetails.equals(survey.indoorDetails) : survey.indoorDetails != null)
+        if (indoorDetails != null
+                ? !indoorDetails.equals(survey.indoorDetails) : survey.indoorDetails != null)
             return false;
-        if (outdoorDetails != null ? !outdoorDetails.equals(survey.outdoorDetails) : survey.outdoorDetails != null)
+        if (outdoorDetails != null
+                ? !outdoorDetails.equals(survey.outdoorDetails) : survey.outdoorDetails != null)
             return false;
-        return !(startTimestamp != null ? !startTimestamp.equals(survey.startTimestamp) : survey.startTimestamp != null);
+        return !(startTimestamp != null
+                ? !startTimestamp.equals(survey.startTimestamp) : survey.startTimestamp != null);
     }
 
     @Override
     public String toString() {
-        return "Survey{" +
-                "user=" + user +
-                ", surveyBuilding=" + surveyBuilding +
-                ", residentCount=" + residentCount +
-                ", indoorDetails=" + indoorDetails +
-                ", outdoorDetails=" + outdoorDetails +
-                '}';
+        return "Survey{"
+                + "user=" + user
+                + ", surveyBuilding=" + surveyBuilding
+                + ", residentCount=" + residentCount
+                + ", indoorDetails=" + indoorDetails
+                + ", outdoorDetails=" + outdoorDetails
+                + '}';
     }
 
     @Override
@@ -158,7 +161,7 @@ public class Survey extends Entity implements LocationEntity, Comparable<Survey>
     }
 
     public UUID getId() {
-        return surveyUUID;
+        return surveyId;
     }
 
     public static class Builder {
@@ -169,7 +172,7 @@ public class Survey extends Entity implements LocationEntity, Comparable<Survey>
         private List<SurveyDetail> outdoor = new ArrayList<>();
         private int resident = 0;
         private User surveyor = TESTER;
-        private UUID surveyID;
+        private UUID surveyId;
         private Building building = DEFAULT_BUILDING;
         private Location location;
         private DateTime startTimeStamp;
@@ -179,9 +182,20 @@ public class Survey extends Entity implements LocationEntity, Comparable<Survey>
             this(UUID.randomUUID(), TESTER);
         }
 
-        public Builder(UUID surveyID, User surveyor) {
-            this.surveyID = surveyID;
+        public Builder(UUID surveyId, User surveyor) {
+            this.surveyId = surveyId;
             this.surveyor = surveyor;
+        }
+
+        public Survey build() {
+            Survey survey = new Survey(surveyId, surveyor, building);
+            survey.setResidentCount(resident);
+            survey.setIndoorDetail(indoor);
+            survey.setOutdoorDetail(outdoor);
+            survey.setLocation(location);
+            survey.setStartTimestamp(startTimeStamp);
+            survey.setFinishTimestamp(finishTimeStamp);
+            return survey;
         }
 
         public Builder setBuilding(Building building) {
@@ -194,25 +208,14 @@ public class Survey extends Entity implements LocationEntity, Comparable<Survey>
             return this;
         }
 
-        public Builder addIndoorDetail(UUID surveyDetailID, ContainerType containerType, int total, int foundLarvae) {
-            indoor.add(new SurveyDetail(surveyDetailID, containerType, total, foundLarvae));
+        public Builder addIndoorDetail(UUID surveydetailid, ContainerType containerType, int total, int foundLarvae) {
+            indoor.add(new SurveyDetail(surveydetailid, containerType, total, foundLarvae));
             return this;
         }
 
-        public Builder addOutdoorDetail(UUID surveyDetailID, ContainerType containerType, int total, int foundLarvae) {
-            outdoor.add(new SurveyDetail(surveyDetailID, containerType, total, foundLarvae));
+        public Builder addOutdoorDetail(UUID surveyDetailId, ContainerType containerType, int total, int foundLarvae) {
+            outdoor.add(new SurveyDetail(surveyDetailId, containerType, total, foundLarvae));
             return this;
-        }
-
-        public Survey build() {
-            Survey survey = new Survey(surveyID, surveyor, building);
-            survey.setResidentCount(resident);
-            survey.setIndoorDetail(indoor);
-            survey.setOutdoorDetail(outdoor);
-            survey.setLocation(location);
-            survey.setStartTimestamp(startTimeStamp);
-            survey.setFinishTimestamp(finishTimeStamp);
-            return survey;
         }
 
         public Builder setLocation(Location location) {
@@ -229,5 +232,6 @@ public class Survey extends Entity implements LocationEntity, Comparable<Survey>
             this.finishTimeStamp = finishTimeStamp;
             return this;
         }
+
     }
 }

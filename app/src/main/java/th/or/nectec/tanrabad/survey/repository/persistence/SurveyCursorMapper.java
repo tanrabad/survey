@@ -77,13 +77,19 @@ class SurveyCursorMapper implements CursorMapper<Survey> {
         Building building = buildingRepository.findByUUID(UUID.fromString(cursor.getString(buildingIdIndex)));
         int changeStatus = cursor.getInt(changeStatusIndex);
         Survey survey = new SurveyWithChange(surveyId, user, building, changeStatus);
-        survey.setLocation(new Location(cursor.getDouble(latIndex), cursor.getDouble(lngIndex)));
+        survey.setLocation(getLocation(cursor));
         survey.setResidentCount(cursor.getInt(personCountIndex));
         survey.setIndoorDetail(surveyRepository.findSurveyDetail(surveyId, INDOOR_CONTAINER_LOCATION));
         survey.setOutdoorDetail(surveyRepository.findSurveyDetail(surveyId, OUTDOOR_CONTAINER_LOCATION));
         survey.setStartTimestamp(new DateTime(cursor.getString(createTimeIndex)));
         survey.setFinishTimestamp(new DateTime(cursor.getString(updateTimeIndex)));
         return survey;
+    }
+
+    private Location getLocation(Cursor cursor) {
+        double lat = cursor.getDouble(latIndex);
+        double lng = cursor.getDouble(lngIndex);
+        return (lat != 0f && lng != 0f) ? new Location(lat, lng) : null;
     }
 
 }

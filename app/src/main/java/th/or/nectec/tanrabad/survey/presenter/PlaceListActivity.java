@@ -31,6 +31,7 @@ import android.widget.TextView;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.utils.showcase.Showcase;
+import th.or.nectec.tanrabad.survey.utils.showcase.ShowcaseFactory;
 import th.or.nectec.tanrabad.survey.utils.showcase.ToolbarBasedShowcase;
 import th.or.nectec.tanrabad.survey.utils.showcase.ViewBasedShowcase;
 import uk.co.chrisjenx.calligraphy.CalligraphyUtils;
@@ -41,6 +42,7 @@ public class PlaceListActivity extends TanrabadActivity {
     private TabLayout tabLayout;
     private ViewPager placePager;
     private PlacePagerAdapter placePagerAdapter;
+    private Toolbar toolbar;
 
     public static void open(Activity activity) {
         Intent intent = new Intent(activity, PlaceListActivity.class);
@@ -61,7 +63,7 @@ public class PlaceListActivity extends TanrabadActivity {
     }
 
     private void setupViews() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         placePager = (ViewPager) findViewById(R.id.place_pager);
         setSupportActionBar(toolbar);
@@ -104,8 +106,7 @@ public class PlaceListActivity extends TanrabadActivity {
     }
 
     private void displayShowcase() {
-        ToolbarBasedShowcase toolbarBasedShowcase = new ToolbarBasedShowcase(
-                this, R.id.toolbar, R.id.action_search, true);
+        ToolbarBasedShowcase toolbarBasedShowcase = ShowcaseFactory.toolbarShowCase(toolbar, R.id.action_search);
         toolbarBasedShowcase.setTitle("ค้นหาสถานที่");
         toolbarBasedShowcase.setMessage("กดที่แว่นขยายเพื่อค้นหาสถานที่นะจ๊ะ");
         toolbarBasedShowcase.setOnShowCaseDismissListener(new Showcase.OnShowcaseDismissListener() {
@@ -118,7 +119,7 @@ public class PlaceListActivity extends TanrabadActivity {
     }
 
     private void displayNextShowcase() {
-        ViewBasedShowcase toolbarBasedShowcase = new ViewBasedShowcase(this, R.id.place_filter, true);
+        ViewBasedShowcase toolbarBasedShowcase = ShowcaseFactory.viewShowcase(R.id.place_filter);
         toolbarBasedShowcase.setMessage("กดที่นี่เพื่อเปลี่ยนประเภทสถานที่");
         toolbarBasedShowcase.display();
     }

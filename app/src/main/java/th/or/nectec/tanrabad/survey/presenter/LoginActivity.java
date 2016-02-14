@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Animation;
+import android.widget.CheckBox;
 import th.or.nectec.tanrabad.survey.BuildConfig;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
@@ -29,17 +30,22 @@ import th.or.nectec.tanrabad.survey.service.PlaceRestService;
 import th.or.nectec.tanrabad.survey.service.ServiceLastUpdatePreference;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
+import th.or.nectec.tanrabad.survey.utils.showcase.ShowcasePreference;
 
 import static android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN;
 import static android.view.animation.AnimationUtils.loadAnimation;
 
 public class LoginActivity extends TanrabadActivity {
+    private CheckBox needShowcase;
+    private ShowcasePreference showcasePreference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().setFlags(FLAG_FULLSCREEN, FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        setupShowcaseOption();
 
         findViewById(R.id.authentication_button).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,6 +55,7 @@ public class LoginActivity extends TanrabadActivity {
                     TanrabadApp.action().firstTimeWithoutInternet();
                 } else {
                     AccountUtils.setUser(new StubUserRepository().findByUsername(BuildConfig.USER));
+                    showcasePreference.save(needShowcase.isChecked());
                     InitialActivity.open(LoginActivity.this);
                     finish();
                 }
@@ -56,6 +63,13 @@ public class LoginActivity extends TanrabadActivity {
         });
         startAnimation();
     }
+
+    private void setupShowcaseOption() {
+        showcasePreference = new ShowcasePreference(this);
+        needShowcase = (CheckBox) findViewById(R.id.need_showcase);
+        needShowcase.setChecked(showcasePreference.get());
+    }
+
 
     private boolean isFirstTime() {
         String placeTimeStamp = new ServiceLastUpdatePreference(LoginActivity.this, PlaceRestService.PATH).get();

@@ -6,14 +6,13 @@ import android.support.v7.widget.Toolbar;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.SimpleShowcaseEventListener;
 
-public class ToolbarBasedShowcase implements Showcase {
+public class ToolbarBasedShowcase extends BaseShowcase {
 
-    private final ShowcaseView.Builder showcaseBuilder;
     private OnShowcaseDismissListener onShowcaseDismissListener;
 
-    public ToolbarBasedShowcase(Activity activity, @IdRes int toolbarId, @IdRes int viewId, boolean isShowOnlyOnce) {
-        showcaseBuilder = BaseShowcase.build(activity)
-                .setTarget(new ToolbarActionItemTarget((Toolbar) activity.findViewById(toolbarId), viewId))
+    public ToolbarBasedShowcase(Activity activity, Toolbar toolbar, @IdRes int viewId) {
+        super(activity);
+        getBuilder().setTarget(new ToolbarActionItemTarget(toolbar, viewId))
                 .setShowcaseEventListener(new SimpleShowcaseEventListener() {
                     @Override
                     public void onShowcaseViewHide(ShowcaseView showcaseView) {
@@ -22,24 +21,6 @@ public class ToolbarBasedShowcase implements Showcase {
                             onShowcaseDismissListener.onDismissListener(showcaseView);
                     }
                 });
-
-        if (isShowOnlyOnce)
-            showcaseBuilder.singleShot(toolbarId + viewId);
-    }
-
-    @Override
-    public void setTitle(String title) {
-        showcaseBuilder.setContentTitle(title);
-    }
-
-    @Override
-    public void setMessage(String message) {
-        showcaseBuilder.setContentText(message);
-    }
-
-    @Override
-    public void display() {
-        showcaseBuilder.build();
     }
 
     @Override

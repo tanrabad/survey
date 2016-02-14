@@ -6,14 +6,12 @@ import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.SimpleShowcaseEventListener;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
 
-public class ViewBasedShowcase implements Showcase {
-
-    private final ShowcaseView.Builder showcaseBuilder;
+public class ViewBasedShowcase extends BaseShowcase {
     private Showcase.OnShowcaseDismissListener onShowcaseDismissListener;
 
-    public ViewBasedShowcase(Activity activity, @IdRes int viewId, boolean isShowOnlyOnce) {
-        showcaseBuilder = BaseShowcase.build(activity)
-                .setTarget(new ViewTarget(viewId, activity))
+    public ViewBasedShowcase(Activity activity, @IdRes int viewId) {
+        super(activity);
+        getBuilder().setTarget(new ViewTarget(viewId, activity))
                 .setShowcaseEventListener(new SimpleShowcaseEventListener() {
                     @Override
                     public void onShowcaseViewHide(ShowcaseView showcaseView) {
@@ -22,28 +20,6 @@ public class ViewBasedShowcase implements Showcase {
                             onShowcaseDismissListener.onDismissListener(showcaseView);
                     }
                 });
-
-        if (isShowOnlyOnce)
-            showcaseBuilder.singleShot(getRootViewId(activity) + viewId);
-    }
-
-    private int getRootViewId(Activity activity) {
-        return activity.getWindow().getDecorView().getRootView().getId();
-    }
-
-    @Override
-    public void setTitle(String title) {
-        showcaseBuilder.setContentTitle(title);
-    }
-
-    @Override
-    public void setMessage(String message) {
-        showcaseBuilder.setContentText(message);
-    }
-
-    @Override
-    public void display() {
-        showcaseBuilder.build();
     }
 
     @Override

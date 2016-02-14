@@ -162,6 +162,7 @@
     <string name="cannot_view_survey_result">ไม่สามารถดูผลการสำรวจได้</string>
     <string name="description_survey_not_synced">ข้อมูลสำรวจยังไม่ถูกส่งขึ้น cloud</string>
     <string name="please_connect_internet_before_view_entomology">กรุณาเชื่อมต่ออินเทอร์เน็ตก่อนดูผลการสำรวจ</string>
+    <string name="show_tutorial">แสดงคำแนะนำการใช้งาน</string>
 
 
 </resources>

@@ -59,18 +59,26 @@
                 android:textColor="@color/dark_gray"/>
     </LinearLayout>
     <Button
-            android:id="@+id/authentication_button"
-            android:layout_width="420dp"
-            android:layout_height="60dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/rounded_button"
-            android:layout_marginTop="500dp"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_title"
-            android:text="@string/trial"
-            android:contentDescription="@string/authentication"/>
+        android:id="@+id/authentication_button"
+        android:layout_width="420dp"
+        android:layout_height="60dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_marginBottom="@dimen/text_padding"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/rounded_button"
+        android:layout_marginTop="500dp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_title"
+        android:text="@string/trial"
+        android:contentDescription="@string/authentication"/>
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/show_tutorial"
+        android:layout_below="@id/authentication_button"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/need_showcase"/>
     <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

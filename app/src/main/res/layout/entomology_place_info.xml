@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/screen_horizontal_margin"
+    android:layout_marginRight="@dimen/screen_horizontal_margin"
+    android:layout_below="@id/survey_result_title"
+    android:layout_marginBottom="@dimen/screen_vertical_margin"
+    tools:showIn="@layout/dialog_survey_result">
+    <ImageView
+        style="@style/ListIcon"
+        tools:src="@mipmap/ic_place_hospital"
+        android:id="@+id/place_icon"
+        android:contentDescription="@string/place_icon"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="@dimen/space_between_content"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="ชุมชนที่พักอาศัย"
+            android:textIsSelectable="false"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/place_type"/>
+        <TextView
+            tools:text="หมู่บ้านทดสอบ"
+            android:textIsSelectable="false"
+            android:id="@+id/place_name"
+            android:layout_below="@+id/place_type" style="@style/EntomologyText.Title"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="ต.บางรักพัฒนา อ.บางบัวทอง จ.นนทบุรี"
+            android:textIsSelectable="false"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/address" android:layout_below="@+id/place_name"/>
+    </RelativeLayout>
+</LinearLayout>

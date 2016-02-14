@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_width="match_parent" android:layout_height="wrap_content">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -28,165 +25,26 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>
 
-    <android.support.v4.widget.ContentLoadingProgressBar
-        android:id="@+id/loading"
-        style="?android:attr/progressBarStyleSmall"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/survey_result_title"
-        android:layout_marginBottom="48dp"/>
+    <include layout="@layout/entomology_place_info"
+             android:id="@+id/place_info_layout"/>
 
-    <android.support.percent.PercentRelativeLayout
+
+    <RelativeLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/screen_horizontal_margin"
-        android:layout_marginRight="@dimen/screen_horizontal_margin"
-        android:layout_marginBottom="@dimen/screen_vertical_margin"
-        android:id="@+id/result_layout"
-        android:layout_below="@id/survey_result_title">
+        android:minHeight="300dp"
+        android:layout_below="@id/place_info_layout">
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:id="@+id/place_info_layout"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/place_icon"
-            android:layout_alignStart="@+id/place_icon"
-            android:layout_marginBottom="@dimen/screen_vertical_margin">
-            <ImageView
-                style="@style/ListIcon"
-                tools:src="@mipmap/ic_place_hospital"
-                android:id="@+id/place_icon"
-                android:contentDescription="@string/place_icon"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="@dimen/space_between_content"/>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="ชุมชนที่พักอาศัย"
-                    android:textIsSelectable="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:id="@+id/place_type"/>
-                <TextView
-                    tools:text="หมู่บ้านทดสอบ"
-                    android:textIsSelectable="false"
-                    android:id="@+id/place_name"
-                    android:layout_below="@+id/place_type" style="@style/EntomologyText.Title"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="ต.บางรักพัฒนา อ.บางบัวทอง จ.นนทบุรี"
-                    android:textIsSelectable="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:id="@+id/address" android:layout_below="@+id/place_name"/>
-            </RelativeLayout>
-        </LinearLayout>
+        <include layout="@layout/entomology_data_info"/>
 
-        <TextView
-            tools:text="HI 10%"
-            android:id="@+id/house_index"
-            android:textIsSelectable="false"
-            android:layout_below="@id/place_info_layout"
-            app:layout_widthPercent="33%"
-            style="@style/EntomologyText.Index"/>
-        <TextView
-            tools:text="CI 5%"
-            android:id="@+id/container_index"
-            android:textIsSelectable="false"
-            app:layout_widthPercent="33%"
-            android:layout_alignBaseline="@id/house_index"
-            android:layout_toRightOf="@id/house_index"
+        <include layout="@layout/entomology_loading"/>
+    </RelativeLayout>
 
-            style="@style/EntomologyText.Index"/>
-        <TextView
-            tools:text="BI 8"
-            android:layout_alignBaseline="@id/container_index"
-            android:id="@+id/breteau_index"
-            android:textIsSelectable="false"
-            app:layout_widthPercent="33%"
-            android:layout_toRightOf="@id/container_index"
-            style="@style/EntomologyText.Index"/>
-
-        <TextView
-            android:textIsSelectable="false"
-            tools:text="บ้านที่สำรวจทั้งหมด 100 หลัง"
-            android:id="@+id/survey_count" android:layout_below="@id/house_index" style="@style/EntomologyText"/>
-        <TextView
-            tools:text="บ้านที่พบลูกน้ำ 9 หลัง"
-            android:textIsSelectable="false"
-            android:id="@+id/survey_found_count" android:layout_below="@+id/survey_count"
-            style="@style/EntomologyText"/>
-        <TextView
-            android:textIsSelectable="false"
-            tools:text="บ้านที่ไม่มีภาชนะขังน้ำ 10 หลัง"
-            android:id="@+id/no_container_houses" android:layout_below="@+id/survey_found_count"
-            style="@style/EntomologyText"/>
-        <TextView
-            tools:text="ภาชนะสำรวจทั้งหมด 1000 พบ 50"
-            android:id="@+id/container_count"
-            android:layout_below="@+id/no_container_houses"
-            android:textIsSelectable="false"
-            android:layout_marginBottom="@dimen/screen_vertical_margin" style="@style/EntomologyText"/>
-        <TextView
-            android:textIsSelectable="false"
-            android:text="@string/key_container_title"
-            android:id="@+id/key_container_title" android:layout_below="@+id/container_count"
-            android:layout_alignLeft="@+id/container_count" android:layout_alignStart="@+id/container_count"
-            android:layout_marginLeft="@dimen/space_between_content"
-            android:layout_marginBottom="@dimen/space_between_content" style="@style/EntomologyText"/>
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/indoor"
-            android:id="@+id/indoor_title"
-            android:textIsSelectable="false"
-            android:textAppearance="?android:attr/textAppearanceInverse"
-            app:layout_widthPercent="50%"
-            android:paddingLeft="60dp"
-            android:layout_marginBottom="@dimen/space_between_content"
-            android:layout_below="@id/key_container_title"/>
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/outdoor"
-            android:textIsSelectable="false"
-            android:textAppearance="?android:attr/textAppearanceInverse"
-            android:layout_toRightOf="@id/indoor_title"
-            android:paddingLeft="60dp"
-            android:layout_marginBottom="@dimen/space_between_content"
-            app:layout_widthPercent="50%"
-            android:layout_alignBaseline="@id/indoor_title"/>
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/indoor_title"
-            android:foregroundGravity="center_horizontal"
-            android:id="@+id/indoor_container"
-            android:paddingLeft="60dp"
-            app:layout_widthPercent="50%"
-            android:layout_marginBottom="@dimen/space_between_content">
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_widthPercent="50%"
-            android:id="@+id/outdoor_container"
-            android:foregroundGravity="center_horizontal"
-            android:layout_alignTop="@id/indoor_container"
-            android:paddingLeft="60dp"
-            android:layout_toRightOf="@id/indoor_container">
-        </LinearLayout>
-    </android.support.percent.PercentRelativeLayout>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/container"
         android:text="@string/got_it"
-        android:layout_below="@id/result_layout"
         android:id="@+id/got_it"/>
 </RelativeLayout>

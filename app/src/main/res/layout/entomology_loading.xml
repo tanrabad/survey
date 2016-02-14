@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:tools="http://schemas.android.com/tools"
+       tools:showIn="@layout/dialog_survey_result">
+    <android.support.v4.widget.ContentLoadingProgressBar
+        android:id="@+id/loading"
+        style="?android:attr/progressBarStyleSmall"
+        android:layout_width="100dp"
+        android:layout_centerInParent="true"
+        android:layout_height="100dp"/>
+    <TextView
+        android:id="@+id/error_msg"
+        style="@style/EntomologyText"
+        android:layout_centerInParent="true"
+        android:textIsSelectable="false"
+        tools:text="@string/cannot_view_survey_result"/>
+</merge>

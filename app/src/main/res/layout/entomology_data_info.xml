@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/screen_horizontal_margin"
+    android:layout_marginRight="@dimen/screen_horizontal_margin"
+    android:layout_marginBottom="@dimen/screen_vertical_margin"
+    android:id="@+id/result_layout"
+    android:layout_below="@id/place_info_layout" tools:showIn="@layout/dialog_survey_result">
+
+    <TextView
+        tools:text="HI 10%"
+        android:id="@+id/house_index"
+        android:textIsSelectable="false"
+        android:layout_below="@id/place_info_layout"
+        app:layout_widthPercent="33%"
+        style="@style/EntomologyText.Index"/>
+    <TextView
+        tools:text="CI 5%"
+        android:id="@+id/container_index"
+        android:textIsSelectable="false"
+        app:layout_widthPercent="33%"
+        android:layout_alignBaseline="@id/house_index"
+        android:layout_toRightOf="@id/house_index"
+
+        style="@style/EntomologyText.Index"/>
+    <TextView
+        tools:text="BI 8"
+        android:layout_alignBaseline="@id/container_index"
+        android:id="@+id/breteau_index"
+        android:textIsSelectable="false"
+        app:layout_widthPercent="33%"
+        android:layout_toRightOf="@id/container_index"
+        style="@style/EntomologyText.Index"/>
+
+    <TextView
+        android:textIsSelectable="false"
+        tools:text="บ้านที่สำรวจทั้งหมด 100 หลัง"
+        android:id="@+id/survey_count" android:layout_below="@id/house_index" style="@style/EntomologyText"/>
+    <TextView
+        tools:text="บ้านที่พบลูกน้ำ 9 หลัง"
+        android:textIsSelectable="false"
+        android:id="@+id/survey_found_count" android:layout_below="@+id/survey_count"
+        style="@style/EntomologyText"/>
+    <TextView
+        android:textIsSelectable="false"
+        tools:text="บ้านที่ไม่มีภาชนะขังน้ำ 10 หลัง"
+        android:id="@+id/no_container_houses" android:layout_below="@+id/survey_found_count"
+        style="@style/EntomologyText"/>
+    <TextView
+        tools:text="ภาชนะสำรวจทั้งหมด 1000 พบ 50"
+        android:id="@+id/container_count"
+        android:layout_below="@+id/no_container_houses"
+        android:textIsSelectable="false"
+        android:layout_marginBottom="@dimen/screen_vertical_margin" style="@style/EntomologyText"/>
+    <TextView
+        android:textIsSelectable="false"
+        android:text="@string/key_container_title"
+        android:id="@+id/key_container_title" android:layout_below="@+id/container_count"
+        android:layout_alignLeft="@+id/container_count" android:layout_alignStart="@+id/container_count"
+        android:layout_marginLeft="@dimen/space_between_content"
+        android:layout_marginBottom="@dimen/space_between_content" style="@style/EntomologyText"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/indoor"
+        android:id="@+id/indoor_title"
+        android:textIsSelectable="false"
+        android:textAppearance="?android:attr/textAppearanceInverse"
+        app:layout_widthPercent="50%"
+        android:paddingLeft="60dp"
+        android:layout_marginBottom="@dimen/space_between_content"
+        android:layout_below="@id/key_container_title"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/outdoor"
+        android:textIsSelectable="false"
+        android:textAppearance="?android:attr/textAppearanceInverse"
+        android:layout_toRightOf="@id/indoor_title"
+        android:paddingLeft="60dp"
+        android:layout_marginBottom="@dimen/space_between_content"
+        app:layout_widthPercent="50%"
+        android:layout_alignBaseline="@id/indoor_title"/>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/indoor_title"
+        android:foregroundGravity="center_horizontal"
+        android:id="@+id/indoor_container"
+        android:paddingLeft="60dp"
+        app:layout_widthPercent="50%"
+        android:layout_marginBottom="@dimen/space_between_content">
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_widthPercent="50%"
+        android:id="@+id/outdoor_container"
+        android:foregroundGravity="center_horizontal"
+        android:layout_alignTop="@id/indoor_container"
+        android:paddingLeft="60dp"
+        android:layout_toRightOf="@id/indoor_container">
+    </LinearLayout>
+</android.support.percent.PercentRelativeLayout>

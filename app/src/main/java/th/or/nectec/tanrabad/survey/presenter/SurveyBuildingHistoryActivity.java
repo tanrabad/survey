@@ -44,7 +44,6 @@ import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerSurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
-import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 
@@ -94,17 +93,22 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
         startSurveyMoreBuildingButtonAnimation();
     }
 
+    private String getPlaceUuidFromIntent() {
+        return getIntent().getStringExtra(PLACE_UUID_ARG);
+    }
+
+    private void startSurveyMoreBuildingButtonAnimation() {
+        Animation moreBuildingAnim = AnimationUtils.loadAnimation(this, R.anim.survey_more_building_button);
+        surveyMoreBuildingButton.startAnimation(moreBuildingAnim);
+    }
+
     private void setupViewSurveyButton() {
         Button viewSurveyResultButton = (Button) findViewById(R.id.view_survey_result_button);
         viewSurveyResultButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (InternetConnection.isAvailable(SurveyBuildingHistoryActivity.this)) {
-                    SurveyResultDialogFragment.newInstances(place).show(
-                            getSupportFragmentManager(), SurveyResultDialogFragment.FRAGMENT_TAG);
-                } else {
-                    Alert.lowLevel().show("กรุณาเชื่อมต่ออินเทอร์เน็ตก่อนดูผลการสำรวจ");
-                }
+                SurveyResultDialogFragment.newInstances(place).show(
+                        getSupportFragmentManager(), SurveyResultDialogFragment.FRAGMENT_TAG);
             }
         });
     }
@@ -147,15 +151,6 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
                 this);
         surveyBuildingHistoryController.showSurveyBuildingOf(getPlaceUuidFromIntent(),
                 AccountUtils.getUser().getUsername());
-    }
-
-    private String getPlaceUuidFromIntent() {
-        return getIntent().getStringExtra(PLACE_UUID_ARG);
-    }
-
-    private void startSurveyMoreBuildingButtonAnimation() {
-        Animation moreBuildingAnim = AnimationUtils.loadAnimation(this, R.anim.survey_more_building_button);
-        surveyMoreBuildingButton.startAnimation(moreBuildingAnim);
     }
 
     @Override

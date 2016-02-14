@@ -23,7 +23,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -445,7 +444,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         } catch (NullPointerException | ClassCastException exception) {
             Alert.lowLevel().show("กดที่ช่องสำหรับกรอกตัวเลข แล้วลองกด เพิ่ม+/ลด- เสียงดูจิ ");
         } catch (EditTextStepper.NotSupportEditTextInputTypeException nse) {
-            //Do Nothing
+            TanrabadApp.log(nse);
         }
         return true;
     }

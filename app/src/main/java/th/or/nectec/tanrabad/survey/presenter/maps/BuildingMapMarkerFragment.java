@@ -31,6 +31,7 @@ import com.google.maps.android.SphericalUtil;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.field.Location;
+import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.repository.BrokerBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
@@ -45,6 +46,7 @@ public class BuildingMapMarkerFragment extends MapMarkerFragment implements Goog
 
     public static final String FRAGMENT_TAG = "building_map_marker_fragment";
     public static final int DISTANCE_LIMIT_IN_METER = 4000;
+    private static Location buildingLocation;
     private Place place;
     private Marker placeMarker;
     private GoogleApiClient.ConnectionCallbacks locationServiceCallback = new GoogleApiClient.ConnectionCallbacks() {
@@ -79,6 +81,7 @@ public class BuildingMapMarkerFragment extends MapMarkerFragment implements Goog
     }
 
     public static BuildingMapMarkerFragment newInstanceWithLocation(String placeUUID, Location buildingLocation) {
+        BuildingMapMarkerFragment.buildingLocation = buildingLocation;
         BuildingMapMarkerFragment mapMarkerFragment = new BuildingMapMarkerFragment();
         mapMarkerFragment.setMoveToMyLocation(false);
         mapMarkerFragment.setMarkedLocation(buildingLocation);
@@ -111,18 +114,22 @@ public class BuildingMapMarkerFragment extends MapMarkerFragment implements Goog
         if (buildingsInPlaceList == null)
             return;
         for (Building eachBuilding : buildingsInPlaceList) {
-            if (!eachBuilding.getLocation().equals(getMarkedLocation()))
-                addAnotherBuildingMarker(eachBuilding.getLocation());
+            if (!eachBuilding.getLocation().equals(buildingLocation))
+                addAnotherBuildingMarker(eachBuilding);
         }
     }
 
-    private void addAnotherBuildingMarker(Location buildingLocation) {
-        LatLng buildingPosition = LocationUtils.convertLocationToLatLng(buildingLocation);
+    private void addAnotherBuildingMarker(Building building) {
+        LatLng buildingPosition = LocationUtils.convertLocationToLatLng(building.getLocation());
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.icon(MapUtils.getIconBitmapDescriptor(getActivity(), R.color.amber_500));
         markerOptions.position(buildingPosition);
-        markerOptions.title(place.getName());
+        markerOptions.title(getBuildingPrefix() + building.getName());
         placeMarker = googleMap.addMarker(markerOptions);
+    }
+
+    private String getBuildingPrefix() {
+        return place.getType() == PlaceType.VILLAGE_COMMUNITY ? "บ้านเลขที่" : "อาคาร";
     }
 
     private void addPlaceCircle() {

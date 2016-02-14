@@ -13,6 +13,6 @@ public class UnixThaiDateTimeConverter extends LongBasedTypeConverter<DateTime> 
 
     @Override
     public long convertToLong(DateTime object) {
-        return object.getMillis();
+        return object.getMillis() / 1000;
     }
 }

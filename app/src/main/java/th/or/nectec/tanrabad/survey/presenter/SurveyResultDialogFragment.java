@@ -239,8 +239,8 @@ public class SurveyResultDialogFragment extends DialogFragment {
                 breteauIndexView.setText(String.format(getString(R.string.breteau_index),
                         df.format(jsonEntomology.biValue)));
             } else {
-                houseIndexView.setVisibility(View.GONE);
-                breteauIndexView.setVisibility(View.GONE);
+                houseIndexView.setVisibility(View.INVISIBLE);
+                breteauIndexView.setVisibility(View.INVISIBLE);
             }
             containerIndexView.setText(String.format(getString(R.string.container_index),
                     df.format(jsonEntomology.ciValue)));

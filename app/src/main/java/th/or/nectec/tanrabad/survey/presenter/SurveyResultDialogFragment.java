@@ -69,8 +69,8 @@ public class SurveyResultDialogFragment extends DialogFragment {
     TextView surveyFoundCountView;
     TextView noContainerHousesView;
     TextView containerCountView;
-    LinearLayout indoorContainer;
-    LinearLayout outdoorContainer;
+    LinearLayout indoorContainerLayout;
+    LinearLayout outdoorContainerLayout;
     ContentLoadingProgressBar progressBar;
     TextView errorMsgView;
     Button gotIt;
@@ -109,8 +109,8 @@ public class SurveyResultDialogFragment extends DialogFragment {
         surveyFoundCountView = (TextView) view.findViewById(R.id.survey_found_count);
         noContainerHousesView = (TextView) view.findViewById(R.id.no_container_houses);
         containerCountView = (TextView) view.findViewById(R.id.container_count);
-        indoorContainer = (LinearLayout) view.findViewById(R.id.indoor_container);
-        outdoorContainer = (LinearLayout) view.findViewById(R.id.outdoor_container);
+        indoorContainerLayout = (LinearLayout) view.findViewById(R.id.indoor_container);
+        outdoorContainerLayout = (LinearLayout) view.findViewById(R.id.outdoor_container);
         progressBar = (ContentLoadingProgressBar) view.findViewById(R.id.loading);
         errorMsgView = (TextView) view.findViewById(R.id.error_msg);
 
@@ -171,6 +171,14 @@ public class SurveyResultDialogFragment extends DialogFragment {
         gotIt.setVisibility(View.GONE);
     }
 
+    private void hideKeyContainerLayout() {
+        getView().findViewById(R.id.key_container_title).setVisibility(View.GONE);
+        getView().findViewById(R.id.indoor_title).setVisibility(View.GONE);
+        getView().findViewById(R.id.outdoor_title).setVisibility(View.GONE);
+        indoorContainerLayout.setVisibility(View.GONE);
+        outdoorContainerLayout.setVisibility(View.GONE);
+    }
+
     public class SurveyResultJobRunner extends AbsJobRunner {
         private JsonEntomology entomology;
 
@@ -218,14 +226,18 @@ public class SurveyResultDialogFragment extends DialogFragment {
         }
 
         private void setKeyContainerInfo(JsonEntomology jsonEntomology) {
-            for (JsonKeyContainer keyContainer : jsonEntomology.keyContainerIn) {
-                if (!TextUtils.isEmpty(keyContainer.containerName)) {
-                    getFirstOfSameLevelKeyContainer(keyContainer, indoorContainer);
-                }
-            }
-            for (JsonKeyContainer keyContainer : jsonEntomology.keyContainerOut) {
-                if (!TextUtils.isEmpty(keyContainer.containerName)) {
-                    getFirstOfSameLevelKeyContainer(keyContainer, outdoorContainer);
+            boolean indoorNull;
+            boolean outdoorNull;
+
+            for (int index = 0; index < 3; index++) {
+                JsonKeyContainer indoorKeyContainer = jsonEntomology.keyContainerIn.get(index);
+                JsonKeyContainer outdoorKeyContainer = jsonEntomology.keyContainerOut.get(index);
+                if (TextUtils.isEmpty(indoorKeyContainer.containerName)
+                        && TextUtils.isEmpty(outdoorKeyContainer.containerName)) {
+                    hideKeyContainerLayout();
+                } else {
+                    getFirstOfSameLevelKeyContainer(indoorKeyContainer, indoorContainerLayout);
+                    getFirstOfSameLevelKeyContainer(outdoorKeyContainer, outdoorContainerLayout);
                 }
             }
         }

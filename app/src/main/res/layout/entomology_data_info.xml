@@ -76,6 +76,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/outdoor"
+        android:id="@+id/outdoor_title"
         android:textIsSelectable="false"
         android:textAppearance="?android:attr/textAppearanceInverse"
         android:layout_toRightOf="@id/indoor_title"

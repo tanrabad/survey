@@ -20,7 +20,6 @@ package th.or.nectec.tanrabad.survey.presenter;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.widget.ContentLoadingProgressBar;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -270,18 +269,14 @@ public class SurveyResultDialogFragment extends DialogFragment {
             for (int index = 0; index < 3; index++) {
                 JsonKeyContainer indoorKeyContainer = jsonEntomology.keyContainerIn.get(index);
                 JsonKeyContainer outdoorKeyContainer = jsonEntomology.keyContainerOut.get(index);
-                if (TextUtils.isEmpty(indoorKeyContainer.containerName)
-                        && TextUtils.isEmpty(outdoorKeyContainer.containerName)) {
-                    hideKeyContainerLayout();
-                } else {
-                    getFirstOfSameLevelKeyContainer(indoorKeyContainer, indoorContainerLayout);
-                    getFirstOfSameLevelKeyContainer(outdoorKeyContainer, outdoorContainerLayout);
-                }
+
+                getFirstOfSameLevelKeyContainer(indoorKeyContainer, indoorContainerLayout);
+                getFirstOfSameLevelKeyContainer(outdoorKeyContainer, outdoorContainerLayout);
             }
         }
 
         private void getFirstOfSameLevelKeyContainer(JsonKeyContainer keyContainer, LinearLayout container) {
-            if (keyContainer.containerName != null)
+            if (keyContainer.containerName == null)
                 return;
             String[] sameLevelKeyContainer = keyContainer.containerName.split(", ");
             container.addView(buildKeyContainerView(sameLevelKeyContainer[0]));

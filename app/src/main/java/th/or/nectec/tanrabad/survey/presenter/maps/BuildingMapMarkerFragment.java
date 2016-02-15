@@ -129,7 +129,7 @@ public class BuildingMapMarkerFragment extends MapMarkerFragment implements Goog
     }
 
     private String getBuildingPrefix() {
-        return place.getType() == PlaceType.VILLAGE_COMMUNITY ? "บ้านเลขที่" : "อาคาร";
+        return place.getType() == PlaceType.VILLAGE_COMMUNITY ? "บ้านเลขที่ " : "อาคาร ";
     }
 
     private void addPlaceCircle() {

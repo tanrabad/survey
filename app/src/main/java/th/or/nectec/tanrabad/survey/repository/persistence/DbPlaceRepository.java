@@ -53,10 +53,7 @@ public class DbPlaceRepository implements PlaceRepository, ChangedRepository<Pla
     public List<Place> find() {
         SQLiteDatabase db = readableDatabase();
         Cursor placeCursor = db.query(TABLE_NAME, PlaceColumn.wildcard(),
-                null, null, null, null,
-                PlaceColumn.SUBDISTRICT_CODE + ", "
-                        + PlaceColumn.TYPE_ID + ", "
-                        + PlaceColumn.NAME + ", "
+                null, null, null, null, PlaceColumn.NAME + ", "
                         + PlaceColumn.UPDATE_TIME);
         return getPlaceList(placeCursor);
     }
@@ -87,7 +84,10 @@ public class DbPlaceRepository implements PlaceRepository, ChangedRepository<Pla
                 PlaceColumn.SUBDISTRICT_CODE, PlaceColumn.LATITUDE, PlaceColumn.LONGITUDE,
                 PlaceColumn.UPDATE_BY, PlaceColumn.UPDATE_TIME, PlaceColumn.CHANGED_STATUS};
         Cursor placeCursor = db.query(TABLE_NAME + " INNER JOIN place_subtype using(subtype_id)", placeColumn,
-                PlaceColumn.TYPE_ID + "=?", new String[]{String.valueOf(placeType)}, null, null, PlaceColumn.NAME);
+                PlaceColumn.TYPE_ID + "=?",
+                new String[]{String.valueOf(placeType)},
+                null, null,
+                TABLE_NAME + "." + PlaceColumn.NAME);
         return getPlaceList(placeCursor);
     }
 

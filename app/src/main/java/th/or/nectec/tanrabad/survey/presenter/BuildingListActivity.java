@@ -51,6 +51,7 @@ import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -73,9 +74,9 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
             this);
     private SearchView buildingSearchView;
 
-    public static void open(Activity activity, String placeUUID) {
+    public static void open(Activity activity, String placeUuid) {
         Intent intent = new Intent(activity, BuildingListActivity.class);
-        intent.putExtra(BuildingListActivity.PLACE_UUID_ARG, placeUUID);
+        intent.putExtra(BuildingListActivity.PLACE_UUID_ARG, placeUuid);
         activity.startActivity(intent);
     }
 
@@ -215,6 +216,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
 
     @Override
     public void displayAllSurveyBuildingList(List<BuildingWithSurveyStatus> buildingsWithSurveyStatuses) {
+        Collections.sort(buildingsWithSurveyStatuses);
         emptyLayoutView.setVisibility(View.GONE);
         editBuildingButton.setVisibility(View.VISIBLE);
         buildingSearchView.setVisibility(View.VISIBLE);

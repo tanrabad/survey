@@ -46,6 +46,8 @@ import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
+import th.or.nectec.tanrabad.survey.utils.showcase.BaseShowcase;
+import th.or.nectec.tanrabad.survey.utils.showcase.ShowcaseFactory;
 
 import java.util.List;
 import java.util.UUID;
@@ -91,6 +93,14 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
             }
         });
         startSurveyMoreBuildingButtonAnimation();
+        displaySurveyMoreBuildingShowcase();
+    }
+
+    private void displaySurveyMoreBuildingShowcase() {
+        BaseShowcase showcase = ShowcaseFactory.viewShowcase(R.id.survey_more_building_button);
+        showcase.setTitle(getString(R.string.showcase_survey_more_building_title));
+        showcase.setMessage(getString(R.string.showcase_survey_more_building));
+        showcase.display();
     }
 
     private String getPlaceUuidFromIntent() {

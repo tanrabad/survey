@@ -163,6 +163,8 @@
     <string name="description_survey_not_synced">ข้อมูลสำรวจยังไม่ถูกส่งขึ้น cloud</string>
     <string name="please_connect_internet_before_view_entomology">กรุณาเชื่อมต่ออินเทอร์เน็ตก่อนดูผลการสำรวจ</string>
     <string name="show_tutorial">แสดงคำแนะนำการใช้งาน</string>
+    <string name="showcase_survey_more_building">ถ้าต้องการจะสำรวจอาคารอื่น ๆ เพิ่มเติม ให้กดปุ่มนี้นะ</string>
+    <string name="showcase_survey_more_building_title">การสำรวจสถานที่เพิ่มเติม</string>
 
 
 </resources>

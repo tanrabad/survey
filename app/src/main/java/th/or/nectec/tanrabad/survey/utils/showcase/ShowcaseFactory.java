@@ -12,11 +12,11 @@ public class ShowcaseFactory {
         ShowcaseFactory.activity = activity;
     }
 
-    public static ToolbarBasedShowcase toolbarShowCase(Toolbar toolbar, @IdRes int viewId) {
+    public static BaseShowcase toolbarShowCase(Toolbar toolbar, @IdRes int viewId) {
         return new ToolbarBasedShowcase(activity, toolbar, viewId);
     }
 
-    public static ViewBasedShowcase viewShowcase(@IdRes int viewId) {
+    public static BaseShowcase viewShowcase(@IdRes int viewId) {
         return new ViewBasedShowcase(activity, viewId);
     }
 }

@@ -2,6 +2,8 @@ package th.or.nectec.tanrabad.survey.utils.showcase;
 
 
 import android.app.Activity;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import th.or.nectec.tanrabad.survey.R;
 
@@ -14,6 +16,7 @@ public abstract class BaseShowcase implements Showcase {
         this.activity = activity;
         builder = new ShowcaseView.Builder(activity)
                 .setStyle(R.style.CustomShowcaseTheme)
+                .withNewStyleShowcase()
                 .setContentTextPaint(ShowcaseFontStyle.getContentStyle(activity))
                 .setContentTitlePaint(ShowcaseFontStyle.getTitleStyle(activity));
     }
@@ -35,7 +38,14 @@ public abstract class BaseShowcase implements Showcase {
     @Override
     public void display() {
         if (new ShowcasePreference(activity).get()) {
-            builder.build();
+            RelativeLayout.LayoutParams lps = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            lps.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+            lps.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+            int margin = ((Number) (activity.getResources().getDisplayMetrics().density * 12)).intValue();
+            lps.setMargins(margin, margin, margin, margin);
+
+            ShowcaseView build = builder.build();
+            build.setButtonPosition(lps);
         }
     }
 }

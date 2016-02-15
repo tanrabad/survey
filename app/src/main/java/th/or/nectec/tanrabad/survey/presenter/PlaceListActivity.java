@@ -30,10 +30,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.utils.showcase.BaseShowcase;
 import th.or.nectec.tanrabad.survey.utils.showcase.Showcase;
 import th.or.nectec.tanrabad.survey.utils.showcase.ShowcaseFactory;
-import th.or.nectec.tanrabad.survey.utils.showcase.ToolbarBasedShowcase;
-import th.or.nectec.tanrabad.survey.utils.showcase.ViewBasedShowcase;
 import uk.co.chrisjenx.calligraphy.CalligraphyUtils;
 import uk.co.chrisjenx.calligraphy.TypefaceUtils;
 
@@ -106,7 +105,7 @@ public class PlaceListActivity extends TanrabadActivity {
     }
 
     private void displayShowcase() {
-        ToolbarBasedShowcase toolbarBasedShowcase = ShowcaseFactory.toolbarShowCase(toolbar, R.id.action_search);
+        BaseShowcase toolbarBasedShowcase = ShowcaseFactory.toolbarShowCase(toolbar, R.id.action_search);
         toolbarBasedShowcase.setTitle("ค้นหาสถานที่");
         toolbarBasedShowcase.setMessage("กดที่แว่นขยายเพื่อค้นหาสถานที่นะจ๊ะ");
         toolbarBasedShowcase.setOnShowCaseDismissListener(new Showcase.OnShowcaseDismissListener() {
@@ -119,7 +118,7 @@ public class PlaceListActivity extends TanrabadActivity {
     }
 
     private void displayNextShowcase() {
-        ViewBasedShowcase toolbarBasedShowcase = ShowcaseFactory.viewShowcase(R.id.place_filter);
+        BaseShowcase toolbarBasedShowcase = ShowcaseFactory.viewShowcase(R.id.place_filter);
         toolbarBasedShowcase.setMessage("กดที่นี่เพื่อเปลี่ยนประเภทสถานที่");
         toolbarBasedShowcase.display();
     }

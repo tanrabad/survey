@@ -17,7 +17,6 @@
 
 package th.or.nectec.tanrabad.survey.presenter;
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatSpinner;
@@ -39,6 +38,7 @@ import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 
+import java.util.Collections;
 import java.util.List;
 
 public class PlaceListInDatabaseFragment extends Fragment implements
@@ -54,7 +54,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements
     private RecyclerViewHeader recyclerViewHeader;
     private EmptyLayoutView emptyLayoutView;
 
-    private int placeTypeID = -1;
+    private int placeTypeId = -1;
 
     public static PlaceListInDatabaseFragment newInstance() {
         PlaceListInDatabaseFragment fragment = new PlaceListInDatabaseFragment();
@@ -65,6 +65,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements
 
     @Override
     public void displayPlaceList(List<Place> places) {
+        Collections.sort(places);
         placeAdapter.updateData(places);
         placeCountView.setText(getString(R.string.format_place_count, places.size()));
         placeCountView.setVisibility(View.VISIBLE);
@@ -80,13 +81,13 @@ public class PlaceListInDatabaseFragment extends Fragment implements
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-        placeTypeID = (int) placeTypeAdapter.getItemId(position);
+        placeTypeId = (int) placeTypeAdapter.getItemId(position);
         loadPlaceList();
     }
 
     protected void loadPlaceList() {
-        if (placeTypeID > 0) {
-            placeChooser.getPlaceListWithPlaceTypeFilter(this.placeTypeID);
+        if (placeTypeId > 0) {
+            placeChooser.getPlaceListWithPlaceTypeFilter(this.placeTypeId);
         } else {
             placeChooser.getPlaceList();
         }
@@ -128,7 +129,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements
         emptyLayoutView.setEmptyButtonText(R.string.add_place, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PlaceFormActivity.startAdd(getActivity(), placeTypeID);
+                PlaceFormActivity.startAdd(getActivity(), placeTypeId);
             }
         });
         emptyLayoutView.setEmptyText(R.string.places_not_found);
@@ -162,7 +163,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add_place_menu:
-                PlaceFormActivity.startAdd(getActivity(), placeTypeID);
+                PlaceFormActivity.startAdd(getActivity(), placeTypeId);
                 break;
         }
         return super.onOptionsItemSelected(item);

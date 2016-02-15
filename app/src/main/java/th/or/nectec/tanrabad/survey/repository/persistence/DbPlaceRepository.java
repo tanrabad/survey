@@ -39,7 +39,6 @@ public class DbPlaceRepository implements PlaceRepository, ChangedRepository<Pla
     private final Context context;
     private UserRepository userRepository;
 
-
     public DbPlaceRepository(Context context) {
         this.context = context;
         this.userRepository = new StubUserRepository();
@@ -52,17 +51,21 @@ public class DbPlaceRepository implements PlaceRepository, ChangedRepository<Pla
 
     @Override
     public List<Place> find() {
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        SQLiteDatabase db = readableDatabase();
         Cursor placeCursor = db.query(TABLE_NAME, PlaceColumn.wildcard(),
-                null, null, null, null, null);
+                null, null, null, null,
+                PlaceColumn.SUBDISTRICT_CODE + ", "
+                        + PlaceColumn.TYPE_ID + ", "
+                        + PlaceColumn.NAME + ", "
+                        + PlaceColumn.UPDATE_TIME);
         return getPlaceList(placeCursor);
     }
 
     @Override
-    public Place findByUUID(UUID placeUUID) {
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+    public Place findByUUID(UUID placeUuid) {
+        SQLiteDatabase db = readableDatabase();
         Cursor placeCursor = db.query(TABLE_NAME, PlaceColumn.wildcard(),
-                PlaceColumn.ID + "=?", new String[]{placeUUID.toString()}, null, null, null);
+                PlaceColumn.ID + "=?", new String[]{placeUuid.toString()}, null, null, null);
         return getPlace(placeCursor);
     }
 
@@ -79,21 +82,25 @@ public class DbPlaceRepository implements PlaceRepository, ChangedRepository<Pla
 
     @Override
     public List<Place> findByPlaceType(int placeType) {
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        SQLiteDatabase db = readableDatabase();
         String[] placeColumn = new String[]{PlaceColumn.ID, TABLE_NAME + "." + PlaceColumn.NAME, PlaceColumn.SUBTYPE_ID,
                 PlaceColumn.SUBDISTRICT_CODE, PlaceColumn.LATITUDE, PlaceColumn.LONGITUDE,
                 PlaceColumn.UPDATE_BY, PlaceColumn.UPDATE_TIME, PlaceColumn.CHANGED_STATUS};
         Cursor placeCursor = db.query(TABLE_NAME + " INNER JOIN place_subtype using(subtype_id)", placeColumn,
-                PlaceColumn.TYPE_ID + "=?", new String[]{String.valueOf(placeType)}, null, null, null);
+                PlaceColumn.TYPE_ID + "=?", new String[]{String.valueOf(placeType)}, null, null, PlaceColumn.NAME);
         return getPlaceList(placeCursor);
     }
 
     @Override
     public List<Place> findByName(String placeName) {
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        SQLiteDatabase db = readableDatabase();
         Cursor placeCursor = db.query(TABLE_NAME, PlaceColumn.wildcard(),
                 PlaceColumn.NAME + " LIKE ?", new String[]{"%" + placeName + "%"}, null, null, null);
         return getPlaceList(placeCursor);
+    }
+
+    private SQLiteDatabase readableDatabase() {
+        return new SurveyLiteDatabase(context).getReadableDatabase();
     }
 
     private List<Place> getPlaceList(Cursor placeCursor) {
@@ -109,22 +116,18 @@ public class DbPlaceRepository implements PlaceRepository, ChangedRepository<Pla
     public boolean save(Place place) {
         ContentValues values = placeContentValues(place);
         values.put(PlaceColumn.CHANGED_STATUS, ChangedStatus.ADD);
-        return saveByContentValues(new SurveyLiteDatabase(context).getWritableDatabase(), values);
-    }
-
-    private boolean saveByContentValues(SQLiteDatabase db, ContentValues place) {
-        return db.insert(TABLE_NAME, null, place) != ERROR_INSERT_ID;
+        return saveByContentValues(writableDatabase(), values);
     }
 
     @Override
     public boolean update(Place place) {
         ContentValues values = placeContentValues(place);
         values.put(PlaceColumn.CHANGED_STATUS, getAddOrChangedStatus(place));
-        return updateByContentValues(new SurveyLiteDatabase(context).getWritableDatabase(), values);
+        return updateByContentValues(writableDatabase(), values);
     }
 
     private int getAddOrChangedStatus(Place place) {
-        Cursor placeCursor = new SurveyLiteDatabase(context).getReadableDatabase().query(TABLE_NAME, new String[]{PlaceColumn.CHANGED_STATUS},
+        Cursor placeCursor = readableDatabase().query(TABLE_NAME, new String[]{PlaceColumn.CHANGED_STATUS},
                 PlaceColumn.ID + "=?", new String[]{place.getId().toString()}, null, null, null);
         if (placeCursor.moveToNext()) {
             if (placeCursor.getInt(0) == ChangedStatus.ADD)
@@ -142,7 +145,7 @@ public class DbPlaceRepository implements PlaceRepository, ChangedRepository<Pla
 
     @Override
     public void updateOrInsert(List<Place> updateList) {
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getWritableDatabase();
+        SQLiteDatabase db = writableDatabase();
         db.beginTransaction();
         for (Place place : updateList) {
             ContentValues values = placeContentValues(place);
@@ -173,17 +176,26 @@ public class DbPlaceRepository implements PlaceRepository, ChangedRepository<Pla
         return values;
     }
 
+    private boolean saveByContentValues(SQLiteDatabase db, ContentValues place) {
+        return db.insert(TABLE_NAME, null, place) != ERROR_INSERT_ID;
+    }
+
+    private SQLiteDatabase writableDatabase() {
+        return new SurveyLiteDatabase(context).getWritableDatabase();
+    }
+
     @Override
     public List<Place> getAdd() {
-        Cursor placeCursor = new SurveyLiteDatabase(context).getReadableDatabase().query(TABLE_NAME, PlaceColumn.wildcard(),
+        Cursor placeCursor = readableDatabase().query(TABLE_NAME, PlaceColumn.wildcard(),
                 PlaceColumn.CHANGED_STATUS + "=?", new String[]{String.valueOf(ChangedStatus.ADD)}, null, null, null);
         return getPlaceList(placeCursor);
     }
 
     @Override
     public List<Place> getChanged() {
-        Cursor placeCursor = new SurveyLiteDatabase(context).getReadableDatabase().query(TABLE_NAME, PlaceColumn.wildcard(),
-                PlaceColumn.CHANGED_STATUS + "=?", new String[]{String.valueOf(ChangedStatus.CHANGED)}, null, null, null);
+        Cursor placeCursor = readableDatabase().query(TABLE_NAME, PlaceColumn.wildcard(),
+                PlaceColumn.CHANGED_STATUS + "=?",
+                new String[]{String.valueOf(ChangedStatus.CHANGED)}, null, null, null);
         return getPlaceList(placeCursor);
     }
 
@@ -197,7 +209,7 @@ public class DbPlaceRepository implements PlaceRepository, ChangedRepository<Pla
     }
 
     private boolean updateByContentValues(ContentValues place) {
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        SQLiteDatabase db = writableDatabase();
         boolean isSuccess = updateByContentValues(db, place);
         db.close();
         return isSuccess;

@@ -19,8 +19,7 @@ package th.or.nectec.tanrabad.domain.building;
 
 import th.or.nectec.tanrabad.entity.Building;
 
-
-public class BuildingWithSurveyStatus {
+public class BuildingWithSurveyStatus implements Comparable<BuildingWithSurveyStatus> {
     public final Building building;
     public final boolean isSurvey;
 
@@ -38,6 +37,15 @@ public class BuildingWithSurveyStatus {
 
         if (isSurvey != that.isSurvey) return false;
         return building.equals(that.building);
+    }
 
+    @Override
+    public int compareTo(BuildingWithSurveyStatus that) {
+        if (this.building.compareTo(that.building) < 0) {
+            return -1;
+        } else if (this.building.compareTo(that.building) > 0) {
+            return 1;
+        }
+        return 0;
     }
 }

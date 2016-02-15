@@ -55,23 +55,24 @@ public class DbBuildingRepository implements BuildingRepository, ChangedReposito
 
     @Override
     public List<Building> findByPlaceUUID(UUID placeUuid) {
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        SQLiteDatabase db = readableDatabase();
         Cursor buildingCursor = db.query(TABLE_NAME, BuildingColumn.wildcard(),
-                BuildingColumn.PLACE_ID + "=?", new String[]{placeUuid.toString()}, null, null, null);
+                BuildingColumn.PLACE_ID + "=?", new String[]{placeUuid.toString()}, null, null, BuildingColumn.NAME);
         return getBuildingList(buildingCursor);
     }
 
     @Override
-    public List<Building> findByPlaceUUIDAndBuildingName(UUID placeUUID, String buildingName) {
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+    public List<Building> findByPlaceUUIDAndBuildingName(UUID placeUuid, String buildingName) {
+        SQLiteDatabase db = readableDatabase();
         Cursor cursor = db.query(TABLE_NAME, BuildingColumn.wildcard(),
-                BuildingColumn.PLACE_ID + "=? AND " + BuildingColumn.NAME + " LIKE ?", new String[]{placeUUID.toString(), "%" + buildingName + "%"}, null, null, null);
+                BuildingColumn.PLACE_ID + "=? AND " + BuildingColumn.NAME + " LIKE ?",
+                new String[]{placeUuid.toString(), "%" + buildingName + "%"}, null, null, BuildingColumn.NAME);
         return getBuildingList(cursor);
     }
 
     @Override
     public Building findByUUID(UUID uuid) {
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        SQLiteDatabase db = readableDatabase();
         Cursor cursor = db.query(TABLE_NAME, BuildingColumn.wildcard(),
                 BuildingColumn.ID + "=?", new String[]{uuid.toString()}, null, null, null);
         return getBuilding(cursor);
@@ -88,6 +89,10 @@ public class DbBuildingRepository implements BuildingRepository, ChangedReposito
         }
     }
 
+    private SQLiteDatabase readableDatabase() {
+        return new SurveyLiteDatabase(context).getReadableDatabase();
+    }
+
     private List<Building> getBuildingList(Cursor cursor) {
         List<Building> buildingList = new CursorList<>(cursor, getMapper(cursor));
         return buildingList.isEmpty() ? null : buildingList;
@@ -101,26 +106,18 @@ public class DbBuildingRepository implements BuildingRepository, ChangedReposito
     public boolean save(Building building) {
         ContentValues values = buildingContentValues(building);
         values.put(PlaceColumn.CHANGED_STATUS, ChangedStatus.ADD);
-        return saveByContentValues(new SurveyLiteDatabase(context).getWritableDatabase(), values);
-    }
-
-    private boolean saveByContentValues(SQLiteDatabase db, ContentValues building) {
-        return db.insert(TABLE_NAME, null, building) != ERROR_INSERT_ID;
+        return saveByContentValues(writableDatabase(), values);
     }
 
     @Override
     public boolean update(Building building) {
         ContentValues values = buildingContentValues(building);
         values.put(PlaceColumn.CHANGED_STATUS, getAddOrChangedStatus(building));
-        return updateByContentValues(new SurveyLiteDatabase(context).getWritableDatabase(), values);
-    }
-
-    private boolean updateByContentValues(SQLiteDatabase db, ContentValues place) {
-        return db.update(TABLE_NAME, place, BuildingColumn.ID + "=?", new String[]{place.getAsString(BuildingColumn.ID)}) > 0;
+        return updateByContentValues(writableDatabase(), values);
     }
 
     private int getAddOrChangedStatus(Building building) {
-        Cursor placeCursor = new SurveyLiteDatabase(context).getReadableDatabase().query(TABLE_NAME, new String[]{BuildingColumn.CHANGED_STATUS},
+        Cursor placeCursor = readableDatabase().query(TABLE_NAME, new String[]{BuildingColumn.CHANGED_STATUS},
                 BuildingColumn.ID + "=?", new String[]{building.getId().toString()}, null, null, null);
         if (placeCursor.moveToNext()) {
             if (placeCursor.getInt(0) == ChangedStatus.ADD)
@@ -132,9 +129,14 @@ public class DbBuildingRepository implements BuildingRepository, ChangedReposito
         return ChangedStatus.CHANGED;
     }
 
+    private boolean updateByContentValues(SQLiteDatabase db, ContentValues place) {
+        return db.update(TABLE_NAME, place, BuildingColumn.ID + "=?",
+                new String[]{place.getAsString(BuildingColumn.ID)}) > 0;
+    }
+
     @Override
     public void updateOrInsert(List<Building> buildings) {
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getWritableDatabase();
+        SQLiteDatabase db = writableDatabase();
         db.beginTransaction();
         for (Building building : buildings) {
             ContentValues values = buildingContentValues(building);
@@ -164,17 +166,28 @@ public class DbBuildingRepository implements BuildingRepository, ChangedReposito
         return values;
     }
 
+    private boolean saveByContentValues(SQLiteDatabase db, ContentValues building) {
+        return db.insert(TABLE_NAME, null, building) != ERROR_INSERT_ID;
+    }
+
+    private SQLiteDatabase writableDatabase() {
+        return new SurveyLiteDatabase(context).getWritableDatabase();
+    }
+
     @Override
     public List<Building> getAdd() {
-        Cursor buildingCursor = new SurveyLiteDatabase(context).getReadableDatabase().query(TABLE_NAME, BuildingColumn.wildcard(),
-                BuildingColumn.CHANGED_STATUS + "=?", new String[]{String.valueOf(ChangedStatus.ADD)}, null, null, null);
+        Cursor buildingCursor = readableDatabase().query(TABLE_NAME, BuildingColumn.wildcard(),
+                BuildingColumn.CHANGED_STATUS + "=?",
+                new String[]{String.valueOf(ChangedStatus.ADD)},
+                null, null, null);
         return getBuildingList(buildingCursor);
     }
 
     @Override
     public List<Building> getChanged() {
-        Cursor buildingCursor = new SurveyLiteDatabase(context).getReadableDatabase().query(TABLE_NAME, BuildingColumn.wildcard(),
-                BuildingColumn.CHANGED_STATUS + "=?", new String[]{String.valueOf(ChangedStatus.CHANGED)}, null, null, null);
+        Cursor buildingCursor = readableDatabase().query(TABLE_NAME, BuildingColumn.wildcard(),
+                BuildingColumn.CHANGED_STATUS + "=?", new String[]{String.valueOf(ChangedStatus.CHANGED)},
+                null, null, null);
         return getBuildingList(buildingCursor);
     }
 
@@ -187,7 +200,7 @@ public class DbBuildingRepository implements BuildingRepository, ChangedReposito
     }
 
     private boolean updateByContentValues(ContentValues place) {
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        SQLiteDatabase db = writableDatabase();
         boolean isSuccess = updateByContentValues(db, place);
         db.close();
         return isSuccess;

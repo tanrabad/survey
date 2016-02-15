@@ -43,7 +43,7 @@ ext {
 
     supportLibVersion = "23.1.1"
     playServicesVersion = "8.4.0"
-    androidMapUtilsVersion = "0.4"
+    androidMapUtilsVersion = "0.4.1"
     loganSquareVersion = "1.3.4"
     jodaTimeVersion = "2.9.1"
     jumpingbeansVersion = "1.3.0"

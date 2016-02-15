@@ -21,7 +21,7 @@ import th.or.nectec.tanrabad.entity.field.Location;
 
 import java.util.UUID;
 
-public class Building extends Entity implements LocationEntity {
+public class Building extends Entity implements LocationEntity, Comparable<Building> {
 
     private UUID id;
     private String name;
@@ -106,5 +106,21 @@ public class Building extends Entity implements LocationEntity {
                 + ", name='" + name + '\''
                 + ", place=" + place
                 + '}';
+    }
+
+    @Override
+    public int compareTo(Building that) {
+        if (this.name.compareTo(that.name) < 0) {
+            return -1;
+        } else if (this.name.compareTo(that.name) > 0) {
+            return 1;
+        }
+
+        if (this.updateTimestamp.compareTo(that.updateTimestamp) < 0) {
+            return -1;
+        } else if (this.updateTimestamp.compareTo(that.updateTimestamp) > 0) {
+            return 1;
+        }
+        return 0;
     }
 }

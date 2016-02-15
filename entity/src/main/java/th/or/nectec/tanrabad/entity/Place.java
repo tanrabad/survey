@@ -21,7 +21,7 @@ import th.or.nectec.tanrabad.entity.field.Location;
 
 import java.util.UUID;
 
-public class Place extends Entity implements LocationEntity {
+public class Place extends Entity implements LocationEntity, Comparable<Place> {
 
     private UUID id;
     private String name;
@@ -114,13 +114,47 @@ public class Place extends Entity implements LocationEntity {
 
     @Override
     public String toString() {
-        return "Place{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", type=" + type +
-                ", subType=" + subType +
-                ", location=" + location +
-                ", subdistrictCode=" + subdistrictCode +
-                '}';
+        return "Place{"
+                + "id=" + id
+                + ", name='" + name + '\''
+                + ", type=" + type
+                + ", subType=" + subType
+                + ", location=" + location
+                + ", subdistrictCode=" + subdistrictCode
+                + '}';
+    }
+
+    @Override
+    public int compareTo(Place that) {
+        if (this.subdistrictCode.compareTo(that.subdistrictCode) < 0) {
+            return -1;
+        } else if (this.subdistrictCode.compareTo(that.subdistrictCode) > 0) {
+            return 1;
+        }
+
+        if (this.type < that.type) {
+            return -1;
+        } else if (this.type > that.type) {
+            return 1;
+        }
+
+        if (this.subType < that.subType) {
+            return -1;
+        } else if (this.subType > that.subType) {
+            return 1;
+        }
+
+        if (this.name.compareTo(that.name) < 0) {
+            return -1;
+        } else if (this.name.compareTo(that.name) > 0) {
+            return 1;
+        }
+
+        if (this.updateTimestamp.compareTo(that.updateTimestamp) < 0) {
+            return -1;
+        } else if (this.updateTimestamp.compareTo(that.updateTimestamp) > 0) {
+            return 1;
+        }
+        return 0;
     }
 }

@@ -73,12 +73,13 @@
         android:text="@string/trial"
         android:contentDescription="@string/authentication"/>
     <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/show_tutorial"
-        android:layout_below="@id/authentication_button"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/need_showcase"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/show_tutorial"
+            android:layout_below="@id/authentication_button"
+            android:layout_centerHorizontal="true"
+            android:visibility="invisible"
+            android:id="@+id/need_showcase"/>
     <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

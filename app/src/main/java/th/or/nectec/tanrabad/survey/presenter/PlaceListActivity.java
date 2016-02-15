@@ -58,7 +58,7 @@ public class PlaceListActivity extends TanrabadActivity {
         setupTabPager();
         changeTabsFont();
 
-        displayShowcase();
+        //displayShowcase();
     }
 
     private void setupViews() {

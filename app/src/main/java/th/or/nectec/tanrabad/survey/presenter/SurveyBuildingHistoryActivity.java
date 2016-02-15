@@ -96,22 +96,6 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
         displaySurveyMoreBuildingShowcase();
     }
 
-    private void displaySurveyMoreBuildingShowcase() {
-        BaseShowcase showcase = ShowcaseFactory.viewShowcase(R.id.survey_more_building_button);
-        showcase.setTitle(getString(R.string.showcase_survey_more_building_title));
-        showcase.setMessage(getString(R.string.showcase_survey_more_building));
-        showcase.display();
-    }
-
-    private String getPlaceUuidFromIntent() {
-        return getIntent().getStringExtra(PLACE_UUID_ARG);
-    }
-
-    private void startSurveyMoreBuildingButtonAnimation() {
-        Animation moreBuildingAnim = AnimationUtils.loadAnimation(this, R.anim.survey_more_building_button);
-        surveyMoreBuildingButton.startAnimation(moreBuildingAnim);
-    }
-
     private void setupViewSurveyButton() {
         Button viewSurveyResultButton = (Button) findViewById(R.id.view_survey_result_button);
         viewSurveyResultButton.setOnClickListener(new View.OnClickListener() {
@@ -161,6 +145,22 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
                 this);
         surveyBuildingHistoryController.showSurveyBuildingOf(getPlaceUuidFromIntent(),
                 AccountUtils.getUser().getUsername());
+    }
+
+    private String getPlaceUuidFromIntent() {
+        return getIntent().getStringExtra(PLACE_UUID_ARG);
+    }
+
+    private void startSurveyMoreBuildingButtonAnimation() {
+        Animation moreBuildingAnim = AnimationUtils.loadAnimation(this, R.anim.survey_more_building_button);
+        surveyMoreBuildingButton.startAnimation(moreBuildingAnim);
+    }
+
+    private void displaySurveyMoreBuildingShowcase() {
+        BaseShowcase showcase = ShowcaseFactory.viewShowcase(R.id.survey_more_building_button);
+        showcase.setTitle(getString(R.string.showcase_survey_more_building_title));
+        showcase.setMessage(getString(R.string.showcase_survey_more_building));
+        //showcase.display();
     }
 
     @Override

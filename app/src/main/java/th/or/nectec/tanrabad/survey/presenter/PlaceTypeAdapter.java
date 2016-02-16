@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,7 +25,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.R;
-import th.or.nectec.tanrabad.survey.repository.persistence.DbPlaceTypeRepository;
+import th.or.nectec.tanrabad.survey.repository.BrokerPlaceTypeRepository;
 
 import java.util.ArrayList;
 
@@ -40,7 +40,7 @@ public class PlaceTypeAdapter extends BaseAdapter {
 
         ArrayList<PlaceType> placeTypes = new ArrayList<>();
         placeTypes.add(new PlaceType(-1, context.getString(R.string.not_define_place_type)));
-        placeTypes.addAll(new DbPlaceTypeRepository(context).find());
+        placeTypes.addAll(BrokerPlaceTypeRepository.getInstance().find());
         this.placeTypes.addAll(placeTypes);
     }
 

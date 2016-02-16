@@ -29,9 +29,8 @@ import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.BuildConfig;
-import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
-import th.or.nectec.tanrabad.survey.repository.persistence.DbPlaceTypeRepository;
+import th.or.nectec.tanrabad.survey.repository.BrokerPlaceTypeRepository;
 
 public class FabricTools implements ExceptionLogger, ActionLogger {
 
@@ -137,7 +136,7 @@ public class FabricTools implements ExceptionLogger, ActionLogger {
     }
 
     private String getPlaceTypeName(Place place) {
-        return new DbPlaceTypeRepository(TanrabadApp.getInstance()).findByID(place.getType()).getName();
+        return BrokerPlaceTypeRepository.getInstance().findByID(place.getType()).getName();
     }
 
     private String getPlaceSubTypeName(Place place) {

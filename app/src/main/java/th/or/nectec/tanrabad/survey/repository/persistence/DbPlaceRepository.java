@@ -44,11 +44,6 @@ public class DbPlaceRepository implements PlaceRepository, ChangedRepository<Pla
         this.userRepository = new StubUserRepository();
     }
 
-    public DbPlaceRepository(Context context, UserRepository userRepository) {
-        this.context = context;
-        this.userRepository = userRepository;
-    }
-
     @Override
     public List<Place> find() {
         SQLiteDatabase db = readableDatabase();

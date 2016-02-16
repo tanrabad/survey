@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,7 +24,7 @@ import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InMemoryPlaceTypeRepository implements PlaceTypeRepository {
+class InMemoryPlaceTypeRepository implements PlaceTypeRepository {
 
     private static InMemoryPlaceTypeRepository instance;
     private ArrayList<PlaceType> placeTypes;
@@ -45,9 +45,9 @@ public class InMemoryPlaceTypeRepository implements PlaceTypeRepository {
     }
 
     @Override
-    public PlaceType findByID(int placeTypeID) {
+    public PlaceType findByID(int placeTypeId) {
         for (PlaceType placeType : placeTypes) {
-            if (placeType.getId() == placeTypeID)
+            if (placeType.getId() == placeTypeId)
                 return placeType;
         }
         return null;

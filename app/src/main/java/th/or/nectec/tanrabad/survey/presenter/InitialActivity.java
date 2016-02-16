@@ -28,10 +28,7 @@ import th.or.nectec.tanrabad.entity.lookup.*;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.job.*;
-import th.or.nectec.tanrabad.survey.repository.BrokerBuildingRepository;
-import th.or.nectec.tanrabad.survey.repository.BrokerContainerTypeRepository;
-import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
-import th.or.nectec.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
+import th.or.nectec.tanrabad.survey.repository.*;
 import th.or.nectec.tanrabad.survey.repository.persistence.*;
 import th.or.nectec.tanrabad.survey.service.*;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
@@ -45,7 +42,7 @@ public class InitialActivity extends TanrabadActivity {
     WritableRepoUpdateJob<Subdistrict> subDistrictUpdateJob = new WritableRepoUpdateJob<>(
             new TambonRestService(), DbSubdistrictRepository.getInstance());
     WritableRepoUpdateJob<PlaceType> placeTypeUpdateJob = new WritableRepoUpdateJob<>(
-            new PlaceTypeRestService(), new DbPlaceTypeRepository(TanrabadApp.getInstance()));
+            new PlaceTypeRestService(), BrokerPlaceTypeRepository.getInstance());
     WritableRepoUpdateJob<PlaceSubType> placeSubTypeUpdateJob = new WritableRepoUpdateJob<>(
             new PlaceSubTypeRestService(), BrokerPlaceSubTypeRepository.getInstance());
     WritableRepoUpdateJob<ContainerType> containerTypeUpdateJob = new WritableRepoUpdateJob<>(

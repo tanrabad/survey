@@ -25,7 +25,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.R;
-import th.or.nectec.tanrabad.survey.repository.persistence.DbPlaceTypeRepository;
+import th.or.nectec.tanrabad.survey.repository.BrokerPlaceTypeRepository;
 
 import java.util.ArrayList;
 
@@ -38,7 +38,7 @@ public class PlaceTypeForAddAdapter extends BaseAdapter {
     public PlaceTypeForAddAdapter(Context context, boolean canAddVillage) {
         this.context = context;
         ArrayList<PlaceType> placeTypes = new ArrayList<>();
-        placeTypes.addAll(new DbPlaceTypeRepository(context).find());
+        placeTypes.addAll(BrokerPlaceTypeRepository.getInstance().find());
         if (!canAddVillage)
             placeTypes.remove(new PlaceType(1, "หมู่บ้าน/ชุมชน"));
         this.placeTypes.addAll(placeTypes);

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,7 +24,7 @@ import th.or.nectec.tanrabad.entity.lookup.PlaceSubType;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InMemoryPlaceSubTypeRepository implements PlaceSubTypeRepository {
+class InMemoryPlaceSubTypeRepository implements PlaceSubTypeRepository {
 
     private static InMemoryPlaceSubTypeRepository instance;
     private ArrayList<PlaceSubType> placeSubTypes;
@@ -45,19 +45,19 @@ public class InMemoryPlaceSubTypeRepository implements PlaceSubTypeRepository {
     }
 
     @Override
-    public PlaceSubType findByID(int placeSubTypeID) {
+    public PlaceSubType findByID(int placeSubTypeId) {
         for (PlaceSubType placeSubType : placeSubTypes) {
-            if (placeSubType.getId() == placeSubTypeID)
+            if (placeSubType.getId() == placeSubTypeId)
                 return placeSubType;
         }
         return null;
     }
 
     @Override
-    public List<PlaceSubType> findByPlaceTypeID(int placeTypeID) {
+    public List<PlaceSubType> findByPlaceTypeID(int placeTypeId) {
         ArrayList<PlaceSubType> queryPlaceSubType = new ArrayList<>();
         for (PlaceSubType placeSubType : placeSubTypes) {
-            if (placeSubType.getPlaceTypeId() == placeTypeID)
+            if (placeSubType.getPlaceTypeId() == placeTypeId)
                 queryPlaceSubType.add(placeSubType);
         }
         return queryPlaceSubType;

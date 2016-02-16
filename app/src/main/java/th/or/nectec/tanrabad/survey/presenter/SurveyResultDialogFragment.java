@@ -38,8 +38,8 @@ import th.or.nectec.tanrabad.survey.job.Job;
 import th.or.nectec.tanrabad.survey.job.SyncJobBuilder;
 import th.or.nectec.tanrabad.survey.presenter.view.KeyContainerView;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
+import th.or.nectec.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
 import th.or.nectec.tanrabad.survey.repository.persistence.DbDistrictRepository;
-import th.or.nectec.tanrabad.survey.repository.persistence.DbPlaceSubTypeRepository;
 import th.or.nectec.tanrabad.survey.repository.persistence.DbProvinceRepository;
 import th.or.nectec.tanrabad.survey.repository.persistence.DbSubdistrictRepository;
 import th.or.nectec.tanrabad.survey.service.json.JsonEntomology;
@@ -60,7 +60,7 @@ public class SurveyResultDialogFragment extends DialogFragment {
     LinearLayout placeInfoLayout;
     RelativeLayout surveyResultLayout;
     ImageView placeIconView;
-    TextView placeTypeView;
+    TextView placeSubTypeView;
     TextView surveyDateView;
     TextView placeNameView;
     TextView addressView;
@@ -100,7 +100,7 @@ public class SurveyResultDialogFragment extends DialogFragment {
         surveyResultLayout = (RelativeLayout) view.findViewById(R.id.result_layout);
         placeInfoLayout = (LinearLayout) view.findViewById(R.id.place_info_layout);
         placeIconView = (ImageView) view.findViewById(R.id.place_icon);
-        placeTypeView = (TextView) view.findViewById(R.id.place_type);
+        placeSubTypeView = (TextView) view.findViewById(R.id.place_type);
         placeNameView = (TextView) view.findViewById(R.id.place_name);
         addressView = (TextView) view.findViewById(R.id.address);
         houseIndexView = (TextView) view.findViewById(R.id.house_index);
@@ -142,7 +142,7 @@ public class SurveyResultDialogFragment extends DialogFragment {
 
     private void setPlaceInfo(Place place) {
         placeIconView.setImageResource(PlaceIconMapping.getPlaceIcon(place));
-        placeTypeView.setText(new DbPlaceSubTypeRepository(getContext()).findByID(place.getSubType()).getName());
+        placeSubTypeView.setText(BrokerPlaceSubTypeRepository.getInstance().findByID(place.getSubType()).getName());
         placeNameView.setText(place.getName());
         Subdistrict subdistrict = DbSubdistrictRepository.getInstance().findByCode(place.getSubdistrictCode());
         District district = DbDistrictRepository.getInstance().findByCode(subdistrict.getDistrictCode());

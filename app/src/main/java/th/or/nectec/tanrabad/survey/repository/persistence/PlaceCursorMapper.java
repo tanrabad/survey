@@ -21,6 +21,8 @@ import android.database.Cursor;
 import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.field.Location;
+import th.or.nectec.tanrabad.entity.lookup.PlaceSubType;
+import th.or.nectec.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
 
 import java.util.UUID;
@@ -58,13 +60,17 @@ class PlaceCursorMapper implements CursorMapper<Place> {
         UUID uuid = UUID.fromString(cursor.getString(idIndex));
         Place place = new Place(uuid, cursor.getString(nameIndex));
         place.setSubdistrictCode(cursor.getString(subdistrictCodeIndex));
-        int subtypeId = cursor.getInt(subtypeIndex);
-        place.setType(PlaceTypeMapper.getInstance().findBySubType(subtypeId));
-        place.setSubType(subtypeId);
+        PlaceSubType subType = getSubType(cursor);
+        place.setType(subType.getPlaceTypeId());
+        place.setSubType(subType.getId());
         place.setLocation(getLocation(cursor));
         place.setUpdateBy(cursor.getString(updateByIndex));
         place.setUpdateTimestamp(cursor.getString(updateTimeIndex));
         return place;
+    }
+
+    private PlaceSubType getSubType(Cursor cursor) {
+        return BrokerPlaceSubTypeRepository.getInstance().findByID(cursor.getInt(subtypeIndex));
     }
 
     private Location getLocation(Cursor cursor) {

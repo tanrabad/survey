@@ -36,6 +36,7 @@ import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
 import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyHistoryChooser;
 import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyHistoryListPresenter;
 import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.job.AbsJobRunner;
@@ -121,7 +122,10 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
                 new StubUserRepository(),
                 BrokerSurveyRepository.getInstance(),
                 this);
-        placeWithSurveyHistoryChooser.showSurveyPlaceList(AccountUtils.getUser().getUsername());
+        User user = AccountUtils.getUser();
+        if (user != null)
+            placeWithSurveyHistoryChooser.showSurveyPlaceList(user.getUsername());
+        else finish();
     }
 
     private void startAnimation() {

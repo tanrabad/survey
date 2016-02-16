@@ -1,0 +1,96 @@
+/*
+ * Copyright (c) 2016 NECTEC
+ *   National Electronics and Computer Technology Center, Thailand
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package th.or.nectec.tanrabad.survey.repository;
+
+import th.or.nectec.tanrabad.domain.place.PlaceSubTypeRepository;
+import th.or.nectec.tanrabad.entity.lookup.PlaceSubType;
+import th.or.nectec.tanrabad.survey.TanrabadApp;
+import th.or.nectec.tanrabad.survey.repository.persistence.DbPlaceSubTypeRepository;
+
+import java.util.List;
+
+public class BrokerPlaceSubTypeRepository implements PlaceSubTypeRepository {
+
+    private static BrokerPlaceSubTypeRepository instance;
+
+    private PlaceSubTypeRepository persistance;
+    private PlaceSubTypeRepository cache;
+
+    public BrokerPlaceSubTypeRepository(PlaceSubTypeRepository persistance, PlaceSubTypeRepository cache) {
+        this.persistance = persistance;
+        this.cache = cache;
+        cache.updateOrInsert(persistance.find());
+    }
+
+    public static PlaceSubTypeRepository getInstance() {
+        if (instance == null)
+            instance = new BrokerPlaceSubTypeRepository(new DbPlaceSubTypeRepository(TanrabadApp.getInstance()),
+                    InMemoryPlaceSubTypeRepository.getInstance());
+        return instance;
+    }
+
+    @Override
+    public List<PlaceSubType> find() {
+        List<PlaceSubType> placeSubTypes = cache.find();
+        if (placeSubTypes == null || placeSubTypes.isEmpty()) {
+            placeSubTypes = persistance.find();
+            cache.updateOrInsert(placeSubTypes);
+        }
+        return null;
+    }
+
+    @Override
+    public PlaceSubType findByID(int subTypeId) {
+        PlaceSubType subType = cache.findByID(subTypeId);
+        if (subType == null)
+            subType = persistance.findByID(subTypeId);
+        return subType;
+    }
+
+    @Override
+    public List<PlaceSubType> findByPlaceTypeID(int placeTypeId) {
+        List<PlaceSubType> subTypes = cache.findByPlaceTypeID(placeTypeId);
+        if (subTypes == null || subTypes.isEmpty()) {
+            subTypes = persistance.findByPlaceTypeID(placeTypeId);
+            cache.updateOrInsert(subTypes);
+        }
+        return subTypes;
+    }
+
+    @Override
+    public boolean save(PlaceSubType placeSubType) {
+        boolean success = persistance.save(placeSubType);
+        if (success)
+            cache.save(placeSubType);
+        return success;
+    }
+
+    @Override
+    public boolean update(PlaceSubType placeSubType) {
+        boolean success = persistance.update(placeSubType);
+        if (success)
+            cache.update(placeSubType);
+        return success;
+    }
+
+    @Override
+    public void updateOrInsert(List<PlaceSubType> placeSubTypes) {
+        persistance.updateOrInsert(placeSubTypes);
+        cache.updateOrInsert(placeSubTypes);
+    }
+}

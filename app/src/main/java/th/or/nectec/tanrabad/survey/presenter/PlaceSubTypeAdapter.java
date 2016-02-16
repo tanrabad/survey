@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,7 +25,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import th.or.nectec.tanrabad.entity.lookup.PlaceSubType;
 import th.or.nectec.tanrabad.survey.R;
-import th.or.nectec.tanrabad.survey.repository.persistence.DbPlaceSubTypeRepository;
+import th.or.nectec.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,9 +36,9 @@ public class PlaceSubTypeAdapter extends BaseAdapter {
 
     List<PlaceSubType> placeSubTypes = new ArrayList<>();
 
-    public PlaceSubTypeAdapter(Context context, int placeTypeID) {
+    public PlaceSubTypeAdapter(Context context, int placeTypeId) {
         this.context = context;
-        placeSubTypes = new DbPlaceSubTypeRepository(context).findByPlaceTypeID(placeTypeID);
+        placeSubTypes = BrokerPlaceSubTypeRepository.getInstance().findByPlaceTypeID(placeTypeId);
     }
 
     @Override
@@ -76,9 +76,9 @@ public class PlaceSubTypeAdapter extends BaseAdapter {
         return view;
     }
 
-    public int getPosition(int subtypeID) {
+    public int getPosition(int subtypeId) {
         for (PlaceSubType placeSubType : placeSubTypes) {
-            if (placeSubType.getId() == subtypeID) {
+            if (placeSubType.getId() == subtypeId) {
                 return placeSubTypes.indexOf(placeSubType);
             }
         }

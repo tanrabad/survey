@@ -48,7 +48,7 @@ public class BuildingMapMarkerActivityTest extends TanrabadEspressoTestBase {
     @Before
     public void setUp() {
         Intent intent = new Intent();
-        intent.putExtra("place_uuid", "e5ce769e-f397-4409-bec2-818f7bd02464".toString());
+        intent.putExtra("place_uuid", "e5ce769e-f397-4409-bec2-818f7bd02464");
         mActivity = mActivityTestRule.launchActivity(intent);
     }
 

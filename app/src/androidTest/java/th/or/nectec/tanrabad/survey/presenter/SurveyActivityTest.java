@@ -51,7 +51,7 @@ public class SurveyActivityTest extends TanrabadEspressoTestBase {
     @Before
     public void setUp() {
         Intent intent = new Intent();
-        intent.putExtra("building_uuid", "f5bfd399-8fb2-4a69-874a-b40495f7786f".toString());
+        intent.putExtra("building_uuid", "f5bfd399-8fb2-4a69-874a-b40495f7786f");
         intent.putExtra("username_arg", "dpc-user");
         mActivity = mActivityTestRule.launchActivity(intent);
     }

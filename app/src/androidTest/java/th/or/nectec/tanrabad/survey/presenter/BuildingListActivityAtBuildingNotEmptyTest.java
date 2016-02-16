@@ -58,7 +58,7 @@ public class BuildingListActivityAtBuildingNotEmptyTest extends TanrabadEspresso
     @Before
     public void setUp() {
         Intent intent = new Intent();
-        intent.putExtra("place_uuid_arg", "e1088db2-1670-4a0b-a907-af12df6bb258".toString());
+        intent.putExtra("place_uuid_arg", "e1088db2-1670-4a0b-a907-af12df6bb258");
         mActivity = mActivityTestRule.launchActivity(intent);
     }
 

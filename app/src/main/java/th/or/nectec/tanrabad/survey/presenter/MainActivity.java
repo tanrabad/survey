@@ -54,7 +54,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
     private PlaceAdapter placeAdapter;
     private CardView cardView;
     private NetworkChangeReceiver networkChangeReceiver;
-    private ObjectAnimator waterAnimator;
+    private ObjectAnimator syncProgressAnimator;
 
     public static void open(Activity activity) {
         Intent intent = new Intent(activity, MainActivity.class);
@@ -77,6 +77,13 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
         }
     }
 
+    private void setupViewOnClick() {
+        findViewById(R.id.start_survey).setOnClickListener(this);
+        findViewById(R.id.root).setOnClickListener(this);
+        findViewById(R.id.magnifier).setOnClickListener(this);
+        findViewById(R.id.sync_data).setOnClickListener(this);
+    }
+
     private void setupNetworkChangeReceiver() {
         networkChangeReceiver = new NetworkChangeReceiver(new NetworkChangeReceiver.OnNetworkChangedListener() {
             @Override
@@ -91,19 +98,6 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
         registerReceiver(networkChangeReceiver, NetworkChangeReceiver.getIntentFilter());
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unregisterReceiver(networkChangeReceiver);
-    }
-
-    private void setupViewOnClick() {
-        findViewById(R.id.start_survey).setOnClickListener(this);
-        findViewById(R.id.root).setOnClickListener(this);
-        findViewById(R.id.magnifier).setOnClickListener(this);
-        findViewById(R.id.sync_data).setOnClickListener(this);
-    }
-
     private void setupList() {
         RecyclerView placeHistoryList = (RecyclerView) findViewById(R.id.place_history_list);
         placeAdapter = new PlaceAdapter(this);
@@ -113,6 +107,12 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
         placeAdapter.setOnItemClickListener(this);
         RecyclerViewHeader recyclerViewHeader = (RecyclerViewHeader) findViewById(R.id.card_header);
         recyclerViewHeader.attachTo(placeHistoryList, true);
+    }
+
+    private void setupSyncAnimator() {
+        syncProgressAnimator = (ObjectAnimator) AnimatorInflater.loadAnimator(
+                this, R.animator.water_spin);
+        syncProgressAnimator.setTarget(findViewById(R.id.water_shadow));
     }
 
     private void showRecentSurveyCard() {
@@ -137,10 +137,10 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
         findViewById(viewId).startAnimation(anim);
     }
 
-    private void setupSyncAnimator() {
-        waterAnimator = (ObjectAnimator) AnimatorInflater.loadAnimator(
-                this, R.animator.water_spin);
-        waterAnimator.setTarget(findViewById(R.id.water_shadow));
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(networkChangeReceiver);
     }
 
     @Override
@@ -162,10 +162,11 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
     }
 
     private void startOrResumeSyncAnimation() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && waterAnimator.isPaused()) {
-            waterAnimator.resume();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
+                && syncProgressAnimator.isPaused()) {
+            syncProgressAnimator.resume();
         } else {
-            waterAnimator.start();
+            syncProgressAnimator.start();
         }
     }
 
@@ -194,9 +195,9 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
 
     private void stopSyncAnimation() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            waterAnimator.pause();
+            syncProgressAnimator.pause();
         } else {
-            waterAnimator.cancel();
+            syncProgressAnimator.cancel();
         }
     }
 

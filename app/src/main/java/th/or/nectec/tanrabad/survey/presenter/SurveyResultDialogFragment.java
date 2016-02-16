@@ -170,7 +170,7 @@ public class SurveyResultDialogFragment extends DialogFragment {
         progressBar.setVisibility(View.VISIBLE);
         errorMsgView.setVisibility(View.GONE);
         surveyResultLayout.setVisibility(View.GONE);
-        gotIt.setVisibility(View.GONE);
+        gotIt.setEnabled(false);
     }
 
     private void hideKeyContainerLayout() {
@@ -207,7 +207,7 @@ public class SurveyResultDialogFragment extends DialogFragment {
         @Override
         protected void onRunFinish() {
             progressBar.setVisibility(View.GONE);
-            gotIt.setVisibility(View.VISIBLE);
+            gotIt.setEnabled(true);
             if (errorJobs() == 0 && entomology != null) {
                 surveyResultLayout.setVisibility(View.VISIBLE);
                 updateEntomologyInfo(entomology);

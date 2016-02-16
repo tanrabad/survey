@@ -47,8 +47,7 @@
     <RelativeLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="200dp"
+        android:layout_height="450dp"
         android:layout_below="@id/place_info_layout">
 
         <include layout="@layout/entomology_data_info"/>
@@ -59,7 +58,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/container"
         android:text="@string/got_it"
-        android:id="@+id/got_it"/>
+        android:id="@+id/got_it"
+        android:layout_below="@id/container"/>
 </RelativeLayout>

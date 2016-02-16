@@ -301,7 +301,7 @@ public class DbSurveyRepository implements SurveyRepository, ChangedRepository<S
                 new String[]{user.getUsername()},
                 DbPlaceRepository.TABLE_NAME + "." + PlaceColumn.ID,
                 null,
-                null);
+                TABLE_NAME + "." + PlaceColumn.UPDATE_TIME + " DESC");
         return new CursorList<>(cursor, getPlaceSurveyMapper(cursor));
     }
 

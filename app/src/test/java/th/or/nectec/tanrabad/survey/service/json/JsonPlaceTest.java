@@ -41,9 +41,9 @@ public class JsonPlaceTest {
     public void testParseToJsonString() throws Exception {
         JsonPlace jsonPlace = LoganSquare.parse(ResourceFile.read("place.json"), JsonPlace.class);
 
-        assertEquals("b7a9d934-04fc-a22e-0539-6c17504f732e", jsonPlace.placeID.toString());
-        assertEquals(4, jsonPlace.placeTypeID);
-        assertEquals(3, jsonPlace.placeSubtypeID);
+        assertEquals("b7a9d934-04fc-a22e-0539-6c17504f732e", jsonPlace.placeId.toString());
+        assertEquals(4, jsonPlace.placeTypeId);
+        assertEquals(3, jsonPlace.placeSubtypeId);
         assertEquals("รพ.สต.ตำบลนาทราย", jsonPlace.placeName);
         assertEquals("510403", jsonPlace.tambonCode);
         assertEquals(39.745675, jsonPlace.location.getLatitude(), 0);
@@ -64,9 +64,9 @@ public class JsonPlaceTest {
 
         JsonPlace jsonPlace = JsonPlace.parse(placeData);
 
-        assertEquals(UUID.nameUUIDFromBytes("123".getBytes()), jsonPlace.placeID);
-        assertEquals(PlaceType.WORSHIP, jsonPlace.placeTypeID);
-        assertEquals(PlaceSubType.TEMPLE, jsonPlace.placeSubtypeID);
+        assertEquals(UUID.nameUUIDFromBytes("123".getBytes()), jsonPlace.placeId);
+        assertEquals(PlaceType.WORSHIP, jsonPlace.placeTypeId);
+        assertEquals(PlaceSubType.TEMPLE, jsonPlace.placeSubtypeId);
         assertEquals("วัดป่า", jsonPlace.placeName);
         assertEquals("510403", jsonPlace.tambonCode);
         assertEquals(stubLocation().getLatitude(), jsonPlace.location.getLatitude(), 0);
@@ -96,7 +96,7 @@ public class JsonPlaceTest {
         placeData.setUpdateBy(stubUser());
         placeData.setUpdateTimestamp(DateTime.now().toString());
         JsonPlace jsonPlace = LoganSquare.parse(ResourceFile.read("place.json"), JsonPlace.class);
-        Place parsedPlace = jsonPlace.getEntity(userRepository);
+        Place parsedPlace = jsonPlace.getEntity();
         assertEquals(parsedPlace, placeData);
         assertEquals(12, parsedPlace.getUpdateTimestamp().getHourOfDay());
     }
@@ -113,7 +113,7 @@ public class JsonPlaceTest {
         placeData.setUpdateBy(stubUser());
         placeData.setUpdateTimestamp(DateTime.now().toString());
         JsonPlace jsonPlace = LoganSquare.parse(ResourceFile.read("placeWithNullSubType.json"), JsonPlace.class);
-        Place parsedPlace = jsonPlace.getEntity(userRepository);
+        Place parsedPlace = jsonPlace.getEntity();
 
         assertEquals(parsedPlace, placeData);
     }

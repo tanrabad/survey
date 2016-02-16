@@ -39,11 +39,11 @@ public class TanrabadApp extends Application {
     }
 
     public static void log(Exception e) {
-        exceptionLogger.log(e);
+        if (exceptionLogger != null) exceptionLogger.log(e);
     }
 
     public static void log(String message) {
-        exceptionLogger.log(message);
+        if (exceptionLogger != null) exceptionLogger.log(message);
     }
 
     @Override

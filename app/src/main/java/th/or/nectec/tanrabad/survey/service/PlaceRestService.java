@@ -57,7 +57,7 @@ public class PlaceRestService extends AbsUploadRestService<Place> {
         ArrayList<Place> places = new ArrayList<>();
         List<JsonPlace> jsonPlaces = LoganSquare.parseList(responseBody, JsonPlace.class);
         for (JsonPlace eachJsonPlace : jsonPlaces)
-            places.add(eachJsonPlace.getEntity(userRepository));
+            places.add(eachJsonPlace.getEntity());
         return places;
     }
 

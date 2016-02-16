@@ -20,7 +20,6 @@ package th.or.nectec.tanrabad.survey.service.json;
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
 import org.joda.time.DateTimeZone;
-import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.survey.repository.persistence.PlaceTypeMapper;
@@ -32,13 +31,13 @@ import java.util.UUID;
 public class JsonPlace {
 
     @JsonField(name = "place_id", typeConverter = UuidTypeConverter.class)
-    public UUID placeID;
+    public UUID placeId;
 
     @JsonField(name = "place_type_id")
-    public int placeTypeID;
+    public int placeTypeId;
 
     @JsonField(name = "place_subtype_id")
-    public int placeSubtypeID;
+    public int placeSubtypeId;
 
     @JsonField(name = "place_name")
     public String placeName;
@@ -72,22 +71,22 @@ public class JsonPlace {
 
     public static JsonPlace parse(Place place) {
         JsonPlace jsonPlace = new JsonPlace();
-        jsonPlace.placeID = place.getId();
+        jsonPlace.placeId = place.getId();
         jsonPlace.placeName = place.getName();
-        jsonPlace.placeTypeID = place.getType();
-        jsonPlace.placeSubtypeID = place.getSubType();
-        jsonPlace.location = GeoJsonPoint.parse(place.getLocation());
+        jsonPlace.placeTypeId = place.getType();
+        jsonPlace.placeSubtypeId = place.getSubType();
+        jsonPlace.location = place.getLocation() == null ? null : GeoJsonPoint.parse(place.getLocation());
         jsonPlace.tambonCode = place.getSubdistrictCode();
         jsonPlace.updatedBy = place.getUpdateBy();
         jsonPlace.updateTime = place.getUpdateTimestamp().withZone(DateTimeZone.UTC).toString();
         return jsonPlace;
     }
 
-    public Place getEntity(UserRepository userRepository) {
-        Place place = new Place(placeID, placeName);
-        place.setType(placeTypeID);
-        place.setSubType(placeSubtypeID == 0
-                ? PlaceTypeMapper.getInstance().getDefaultPlaceType(placeTypeID) : placeSubtypeID);
+    public Place getEntity() {
+        Place place = new Place(placeId, placeName);
+        place.setType(placeTypeId);
+        place.setSubType(placeSubtypeId == 0
+                ? PlaceTypeMapper.getInstance().getDefaultPlaceType(placeTypeId) : placeSubtypeId);
         place.setSubdistrictCode(tambonCode);
         Location location = this.location == null ? null : this.location.getEntity();
         place.setLocation(location);

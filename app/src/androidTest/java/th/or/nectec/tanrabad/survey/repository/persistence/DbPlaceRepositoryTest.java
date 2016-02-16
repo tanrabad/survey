@@ -210,8 +210,8 @@ public class DbPlaceRepositoryTest {
         Place place = placeList.get(0);
 
         assertEquals(3, placeList.size());
-        assertEquals("abc01db8-7207-8a65-152f-ad208cb99b5e", place.getId().toString());
-        assertEquals("หมู่บ้านทดสอบ", place.getName());
+        assertEquals("e5ce769e-f397-4409-bec2-818f7bd02464", place.getId().toString());
+        assertEquals("ชุมชนกอล์ฟวิว", place.getName());
         assertEquals("120202", place.getSubdistrictCode());
         assertEquals("dpc-user", place.getUpdateBy());
     }
@@ -225,8 +225,8 @@ public class DbPlaceRepositoryTest {
         Place place = placeList.get(0);
 
         assertEquals(10, placeList.size());
-        assertEquals("abc01db8-7207-8a65-152f-ad208cb99b5e", place.getId().toString());
-        assertEquals("หมู่บ้านทดสอบ", place.getName());
+        assertEquals("e5ce769e-f397-4409-bec2-818f7bd02464", place.getId().toString());
+        assertEquals("ชุมชนกอล์ฟวิว", place.getName());
         assertEquals("120202", place.getSubdistrictCode());
         assertEquals("dpc-user", place.getUpdateBy());
     }

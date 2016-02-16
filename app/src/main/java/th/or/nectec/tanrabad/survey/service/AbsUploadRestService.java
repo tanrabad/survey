@@ -17,11 +17,11 @@
 
 package th.or.nectec.tanrabad.survey.service;
 
-import android.util.Log;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
+import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.service.http.Status;
 
 import java.io.IOException;
@@ -43,11 +43,14 @@ public abstract class AbsUploadRestService<T> extends AbsRestService implements 
             Request request = getPostRequest(data);
             Response response = client.newCall(request).execute();
             if (response.code() == Status.BAD_REQUEST) {
-                Log.e("URS", entityToJsonString(data));
+                TanrabadApp.log(entityToJsonString(data));
                 throw new RestServiceException.ErrorResponseException(request, response);
             }
-            if (isNotSuccess(response))
+            if (isNotSuccess(response)) {
+                TanrabadApp.log(entityToJsonString(data));
+                TanrabadApp.log(response.body().string());
                 throw new RestServiceException(response);
+            }
             return response.code() == Status.CREATED;
         } catch (IOException io) {
             throw new RestServiceException(io);
@@ -71,11 +74,14 @@ public abstract class AbsUploadRestService<T> extends AbsRestService implements 
             Request request = buildPutRequest(data);
             Response response = client.newCall(request).execute();
             if (response.code() == Status.BAD_REQUEST) {
-                Log.e("URS", entityToJsonString(data));
+                TanrabadApp.log(entityToJsonString(data));
                 throw new RestServiceException.ErrorResponseException(request, response);
             }
-            if (isNotSuccess(response))
+            if (isNotSuccess(response)) {
+                TanrabadApp.log(entityToJsonString(data));
+                TanrabadApp.log(response.body().string());
                 throw new RestServiceException(response);
+            }
             return true;
         } catch (IOException io) {
             throw new RestServiceException(io);

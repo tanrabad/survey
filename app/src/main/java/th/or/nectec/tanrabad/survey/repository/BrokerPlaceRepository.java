@@ -50,10 +50,10 @@ public class BrokerPlaceRepository implements PlaceRepository {
     }
 
     @Override
-    public Place findByUUID(UUID placeUUID) {
-        Place place = cache.findByUUID(placeUUID);
+    public Place findByUUID(UUID placeUuid) {
+        Place place = cache.findByUUID(placeUuid);
         if (place == null) {
-            place = persistence.findByUUID(placeUUID);
+            place = persistence.findByUUID(placeUuid);
             cache.save(place);
         }
         return place;
@@ -90,6 +90,5 @@ public class BrokerPlaceRepository implements PlaceRepository {
     @Override
     public void updateOrInsert(List<Place> update) {
         persistence.updateOrInsert(update);
-        cache.updateOrInsert(update);
     }
 }

@@ -50,8 +50,8 @@ public class BrokerBuildingRepository implements BuildingRepository {
     }
 
     @Override
-    public List<Building> findByPlaceUUIDAndBuildingName(UUID placeUUID, String buildingName) {
-        return database.findByPlaceUUIDAndBuildingName(placeUUID, buildingName);
+    public List<Building> findByPlaceUUIDAndBuildingName(UUID placeUuid, String buildingName) {
+        return database.findByPlaceUUIDAndBuildingName(placeUuid, buildingName);
     }
 
     @Override
@@ -83,6 +83,5 @@ public class BrokerBuildingRepository implements BuildingRepository {
     @Override
     public void updateOrInsert(List<Building> buildings) {
         database.updateOrInsert(buildings);
-        cache.updateOrInsert(buildings);
     }
 }

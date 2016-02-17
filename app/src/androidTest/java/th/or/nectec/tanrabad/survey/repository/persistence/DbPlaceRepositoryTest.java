@@ -191,7 +191,7 @@ public class DbPlaceRepositoryTest {
     @Test
     public void testFindByUUID() throws Exception {
         Context context = InstrumentationRegistry.getTargetContext();
-        DbPlaceRepository dbPlaceRepository = new DbPlaceRepository(context, userRepository);
+        DbPlaceRepository dbPlaceRepository = new DbPlaceRepository(context);
 
         Place place = dbPlaceRepository.findByUUID(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"));
 
@@ -204,7 +204,7 @@ public class DbPlaceRepositoryTest {
     @Test
     public void testFindByPlaceType() throws Exception {
         Context context = InstrumentationRegistry.getTargetContext();
-        DbPlaceRepository dbPlaceRepository = new DbPlaceRepository(context, userRepository);
+        DbPlaceRepository dbPlaceRepository = new DbPlaceRepository(context);
 
         List<Place> placeList = dbPlaceRepository.findByPlaceType(PlaceType.VILLAGE_COMMUNITY);
         Place place = placeList.get(0);
@@ -219,7 +219,7 @@ public class DbPlaceRepositoryTest {
     @Test
     public void testFindAllPlace() throws Exception {
         Context context = InstrumentationRegistry.getTargetContext();
-        DbPlaceRepository dbPlaceRepository = new DbPlaceRepository(context, userRepository);
+        DbPlaceRepository dbPlaceRepository = new DbPlaceRepository(context);
 
         List<Place> placeList = dbPlaceRepository.find();
         Place place = placeList.get(0);

@@ -21,6 +21,7 @@ import com.bluelinelabs.logansquare.LoganSquare;
 import org.joda.time.DateTime;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
+import th.or.nectec.tanrabad.survey.presenter.AccountUtils;
 import th.or.nectec.tanrabad.survey.service.json.JsonEntomology;
 
 import java.io.IOException;
@@ -42,7 +43,12 @@ public class EntomologyRestService extends AbsRestService<JsonEntomology> {
 
     @Override
     public String getDefaultParams() {
-        return "geostd=4326&place_id=" + place.getId() + getWeekIntervalParam();
+        return "geostd=4326&place_id=" + place.getId() + getWeekIntervalParam()
+                + getOrgIdParam();
+    }
+
+    private String getOrgIdParam() {
+        return "&org_id=" + AccountUtils.getUser().getOrganizationId();
     }
 
     public String getWeekIntervalParam() {

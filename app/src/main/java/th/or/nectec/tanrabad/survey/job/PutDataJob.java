@@ -14,6 +14,9 @@ public class PutDataJob<T> implements Job {
     private ChangedRepository<T> changedRepository;
     private IOException ioException;
     private RestServiceException restServiceException;
+    private int successCount = 0;
+    private int ioExceptionCount = 0;
+    private int restServiceExceptionCount = 0;
 
     public PutDataJob(ChangedRepository<T> changedRepository, UploadRestService<T> uploadRestService) {
         this.changedRepository = changedRepository;
@@ -32,12 +35,16 @@ public class PutDataJob<T> implements Job {
             return;
         for (T t : changedList) {
             try {
-                if (uploadRestService.put(t))
+                if (uploadRestService.put(t)) {
                     changedRepository.markUnchanged(t);
+                    successCount++;
+                }
             } catch (IOException exception) {
                 ioException = exception;
+                ioExceptionCount++;
             } catch (RestServiceException exception) {
                 restServiceException = exception;
+                restServiceExceptionCount++;
             }
         }
 
@@ -50,5 +57,17 @@ public class PutDataJob<T> implements Job {
         } else if (restServiceException != null) {
             throw restServiceException;
         }
+    }
+
+    public int getSuccessCount() {
+        return successCount;
+    }
+
+    public int getIoExceptionCount() {
+        return ioExceptionCount;
+    }
+
+    public int getRestServiceExceptionCount() {
+        return restServiceExceptionCount;
     }
 }

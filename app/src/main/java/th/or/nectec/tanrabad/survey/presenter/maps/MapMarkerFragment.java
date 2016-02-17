@@ -75,14 +75,6 @@ public class MapMarkerFragment extends BaseMapFragment implements MapMarkerInter
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        getMap().setOnMapLongClickListener(this);
-        getMap().setOnMarkerDragListener(this);
-    }
-
-    @Override
     public void onStop() {
         super.onStop();
         playLocationService.removeConnectionCallbacks(locationServiceCallback);
@@ -91,6 +83,8 @@ public class MapMarkerFragment extends BaseMapFragment implements MapMarkerInter
     @Override
     public void onMapReady(GoogleMap googleMap) {
         super.onMapReady(googleMap);
+        googleMap.setOnMapLongClickListener(this);
+        googleMap.setOnMarkerDragListener(this);
         playLocationService.addConnectionCallbacks(locationServiceCallback);
     }
 

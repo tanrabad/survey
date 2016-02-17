@@ -56,11 +56,11 @@ public class BuildingMapMarkerFragment extends MapMarkerFragment implements Goog
             if (placeLocation != null) {
                 addPlaceMarker();
                 addPlaceCircle();
-                queryAndAddAnotherBuildingMarker();
                 if (getMarkedLocation() == null) {
                     moveToLocation(LocationUtils.convertLocationToLatLng(placeLocation));
                 }
             }
+            queryAndAddAnotherBuildingMarker();
         }
 
         @Override
@@ -69,23 +69,23 @@ public class BuildingMapMarkerFragment extends MapMarkerFragment implements Goog
         }
     };
 
-    public static BuildingMapMarkerFragment newInstance(String placeUUID) {
+    public static BuildingMapMarkerFragment newInstance(String placeUuid) {
         BuildingMapMarkerFragment mapMarkerFragment = new BuildingMapMarkerFragment();
         mapMarkerFragment.setMoveToMyLocation(true);
-        mapMarkerFragment.loadPlaceData(placeUUID);
+        mapMarkerFragment.loadPlaceData(placeUuid);
         return mapMarkerFragment;
     }
 
-    private void loadPlaceData(String placeUUID) {
-        place = BrokerPlaceRepository.getInstance().findByUUID(UUID.fromString(placeUUID));
+    private void loadPlaceData(String placeUuid) {
+        place = BrokerPlaceRepository.getInstance().findByUUID(UUID.fromString(placeUuid));
     }
 
-    public static BuildingMapMarkerFragment newInstanceWithLocation(String placeUUID, Location buildingLocation) {
+    public static BuildingMapMarkerFragment newInstanceWithLocation(String placeUuid, Location buildingLocation) {
         BuildingMapMarkerFragment.buildingLocation = buildingLocation;
         BuildingMapMarkerFragment mapMarkerFragment = new BuildingMapMarkerFragment();
         mapMarkerFragment.setMoveToMyLocation(false);
         mapMarkerFragment.setMarkedLocation(buildingLocation);
-        mapMarkerFragment.loadPlaceData(placeUUID);
+        mapMarkerFragment.loadPlaceData(placeUuid);
         return mapMarkerFragment;
     }
 
@@ -119,13 +119,13 @@ public class BuildingMapMarkerFragment extends MapMarkerFragment implements Goog
         }
     }
 
-    private void addAnotherBuildingMarker(Building building) {
+    private Marker addAnotherBuildingMarker(Building building) {
         LatLng buildingPosition = LocationUtils.convertLocationToLatLng(building.getLocation());
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.icon(MapUtils.getIconBitmapDescriptor(getActivity(), R.color.amber_500));
         markerOptions.position(buildingPosition);
         markerOptions.title(getBuildingPrefix() + building.getName());
-        placeMarker = googleMap.addMarker(markerOptions);
+        return googleMap.addMarker(markerOptions);
     }
 
     private String getBuildingPrefix() {

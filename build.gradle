@@ -48,7 +48,7 @@ ext {
     jodaTimeVersion = "2.9.1"
     jumpingbeansVersion = "1.3.0"
     calligraphyVersion = "2.1.0"
-    thaiWidgetVersion = "0.4.3"
+    thaiWidgetVersion = "0.4.4"
     showcaseViewVersion = "5.4.1"
     answersVersion = "1.3.6"
     crashlyticsVersion = "2.5.5"

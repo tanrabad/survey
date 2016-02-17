@@ -17,10 +17,11 @@
 
 package th.or.nectec.tanrabad.survey.service;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface RestService<T> {
-    List<T> getUpdate();
+    List<T> getUpdate() throws IOException;
 
     boolean hasNextRequest();
 }

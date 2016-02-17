@@ -47,6 +47,7 @@ import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.adapter.ThaiWidgetProvinceRepository;
 import th.or.nectec.tanrabad.survey.repository.persistence.DbPlaceRepository;
 import th.or.nectec.tanrabad.survey.service.PlaceRestService;
+import th.or.nectec.tanrabad.survey.service.RestServiceException;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
 import th.or.nectec.tanrabad.survey.utils.android.ResourceUtils;
@@ -58,6 +59,7 @@ import th.or.nectec.tanrabad.survey.validator.ValidatorException;
 import th.or.nectec.thai.widget.address.AddressPicker;
 import th.or.nectec.thai.widget.address.AddressPickerDialog;
 
+import java.io.IOException;
 import java.util.UUID;
 
 public class PlaceFormActivity extends TanrabadActivity implements View.OnClickListener,
@@ -82,9 +84,9 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     private TwiceBackPressed twiceBackPressed;
 
 
-    public static void startAdd(Activity activity, int placeTypeID) {
+    public static void startAdd(Activity activity, int placeTypeId) {
         Intent intent = new Intent(activity, PlaceFormActivity.class);
-        intent.putExtra(PlaceFormActivity.PLACE_TYPE_ID_ARG, placeTypeID);
+        intent.putExtra(PlaceFormActivity.PLACE_TYPE_ID_ARG, placeTypeId);
         activity.startActivityForResult(intent, ADD_PLACE_REQ_CODE);
     }
 
@@ -160,16 +162,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
             }
         });
 
-        placeTypeSelector.setSelection(placeAdapter.getPlaceTypePosition(getPlaceTypeID()));
-    }
-
-    private void loadPlaceData() {
-        if (TextUtils.isEmpty(getPlaceUUID())) {
-            place = Place.withName(null);
-        } else {
-            PlaceController placeController = new PlaceController(placeRepository, this);
-            placeController.showPlace(UUID.fromString(getPlaceUUID()));
-        }
+        placeTypeSelector.setSelection(placeAdapter.getPlaceTypePosition(getPlaceTypeId()));
     }
 
     private void setupPlaceSubtypeSpinner(PlaceType selectedPlaceType) {
@@ -186,11 +179,20 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
 
     }
 
-    private int getPlaceTypeID() {
+    private int getPlaceTypeId() {
         return getIntent().getIntExtra(PLACE_TYPE_ID_ARG, PlaceType.WORSHIP);
     }
 
-    public String getPlaceUUID() {
+    private void loadPlaceData() {
+        if (TextUtils.isEmpty(getPlaceUuid())) {
+            place = Place.withName(null);
+        } else {
+            PlaceController placeController = new PlaceController(placeRepository, this);
+            placeController.showPlace(UUID.fromString(getPlaceUuid()));
+        }
+    }
+
+    public String getPlaceUuid() {
         return getIntent().getStringExtra(PLACE_UUID_ARG);
     }
 
@@ -198,7 +200,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save:
-                if (TextUtils.isEmpty(getPlaceUUID())) {
+                if (TextUtils.isEmpty(getPlaceUuid())) {
                     doSaveData();
                 } else {
                     doUpdateData();
@@ -218,16 +220,6 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         }
     }
 
-    public void doUpdateData() {
-        getPlaceFieldData();
-        try {
-            PlaceSaver placeSaver = new PlaceSaver(placeRepository, new UpdatePlaceValidator(), this);
-            placeSaver.update(place);
-        } catch (ValidatorException exception) {
-            Alert.highLevel().show(exception.getMessageId());
-        }
-    }
-
     private void getPlaceFieldData() {
         place.setName(placeNameView.getText().toString().trim());
         int placeTypeID = ((PlaceType) placeTypeSelector.getSelectedItem()).getId();
@@ -237,6 +229,16 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         place.setSubdistrictCode(addressSelect.getAddress() == null ? null : addressSelect.getAddress().getCode());
         place.setUpdateTimestamp(DateTime.now().toString());
         place.setUpdateBy(AccountUtils.getUser().getUsername());
+    }
+
+    public void doUpdateData() {
+        getPlaceFieldData();
+        try {
+            PlaceSaver placeSaver = new PlaceSaver(placeRepository, new UpdatePlaceValidator(), this);
+            placeSaver.update(place);
+        } catch (ValidatorException exception) {
+            Alert.highLevel().show(exception.getMessageId());
+        }
     }
 
     @Override
@@ -355,6 +357,12 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         protected void onJobError(Job errorJob, Exception exception) {
             super.onJobError(errorJob, exception);
             Log.e(errorJob.toString(), exception.getMessage());
+
+            if (exception instanceof IOException) {
+                Alert.mediumLevel().show(R.string.error_server_problem);
+            } else if (exception instanceof RestServiceException) {
+                Alert.mediumLevel().show(R.string.error_rest_service);
+            }
         }
 
         @Override

@@ -18,13 +18,17 @@
 package th.or.nectec.tanrabad.survey.job;
 
 import th.or.nectec.tanrabad.survey.repository.ChangedRepository;
+import th.or.nectec.tanrabad.survey.service.RestServiceException;
 import th.or.nectec.tanrabad.survey.service.UploadRestService;
 
+import java.io.IOException;
 import java.util.List;
 
 public class PostDataJob<T> implements Job {
 
     public static final int ID = 90000;
+    IOException ioException;
+    RestServiceException restServiceException;
     private ChangedRepository<T> changedRepository;
     private UploadRestService<T> uploadRestService;
 
@@ -39,13 +43,29 @@ public class PostDataJob<T> implements Job {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws Exception {
         List<T> addList = changedRepository.getAdd();
         if (addList == null)
             return;
         for (T eachData : addList) {
-            if (uploadRestService.post(eachData))
-                changedRepository.markUnchanged(eachData);
+            try {
+                if (uploadRestService.post(eachData))
+                    changedRepository.markUnchanged(eachData);
+            } catch (IOException exception) {
+                ioException = exception;
+            } catch (RestServiceException exception) {
+                restServiceException = exception;
+            }
+        }
+
+        throwBufferException();
+    }
+
+    private void throwBufferException() throws IOException {
+        if (ioException != null) {
+            throw ioException;
+        } else if (restServiceException != null) {
+            throw restServiceException;
         }
     }
 }

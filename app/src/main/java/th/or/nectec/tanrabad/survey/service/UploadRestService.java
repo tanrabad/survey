@@ -17,8 +17,10 @@
 
 package th.or.nectec.tanrabad.survey.service;
 
-public interface UploadRestService<T> {
-    boolean post(T data);
+import java.io.IOException;
 
-    boolean put(T data);
+public interface UploadRestService<T> {
+    boolean post(T data) throws IOException;
+
+    boolean put(T data) throws IOException;
 }

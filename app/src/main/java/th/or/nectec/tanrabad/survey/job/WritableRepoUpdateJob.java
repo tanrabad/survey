@@ -20,6 +20,7 @@ package th.or.nectec.tanrabad.survey.job;
 import th.or.nectec.tanrabad.domain.WritableRepository;
 import th.or.nectec.tanrabad.survey.service.RestService;
 
+import java.io.IOException;
 import java.util.List;
 
 public class WritableRepoUpdateJob<T> implements Job {
@@ -39,7 +40,7 @@ public class WritableRepoUpdateJob<T> implements Job {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws IOException {
         do {
             List<T> update = restService.getUpdate();
             if (!update.isEmpty())

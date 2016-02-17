@@ -31,7 +31,10 @@ import th.or.nectec.tanrabad.survey.job.*;
 import th.or.nectec.tanrabad.survey.repository.*;
 import th.or.nectec.tanrabad.survey.repository.persistence.*;
 import th.or.nectec.tanrabad.survey.service.*;
+import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
+
+import java.io.IOException;
 
 public class InitialActivity extends TanrabadActivity {
 
@@ -132,11 +135,19 @@ public class InitialActivity extends TanrabadActivity {
         else if (startingJob.equals(buildingUpdateJob))
             loadingText.setText("เตรียมตัวกำจัดเหล่าร้าย");
     }
+
     public class InitialJobRunner extends AbsJobRunner {
 
         @Override
         protected void onJobError(Job errorJob, Exception exception) {
             super.onJobError(errorJob, exception);
+
+            if (exception instanceof IOException) {
+                Alert.mediumLevel().show(R.string.error_server_problem);
+            } else if (exception instanceof RestServiceException) {
+                Alert.mediumLevel().show(R.string.error_rest_service);
+            }
+
             if (InternetConnection.isAvailable(InitialActivity.this)) TanrabadApp.log(exception);
         }
 

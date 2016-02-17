@@ -55,24 +55,19 @@ public abstract class AbsRestService<T> implements RestService<T> {
     }
 
     @Override
-    public List<T> getUpdate() {
-        try {
-            Request request = makeRequest();
-            Response response = client.newCall(request).execute();
-            getNextRequest(response);
+    public List<T> getUpdate() throws IOException {
+        Request request = makeRequest();
+        Response response = client.newCall(request).execute();
+        getNextRequest(response);
 
-            if (isNotModified(response))
-                return new ArrayList<>();
-            if (isNotSuccess(response))
-                throw new RestServiceException(response);
-            if (!hasNextRequest())
-                serviceLastUpdate.save(response.header(LAST_MODIFIED));
+        if (isNotModified(response))
+            return new ArrayList<>();
+        if (isNotSuccess(response))
+            throw new RestServiceException(response);
+        if (!hasNextRequest())
+            serviceLastUpdate.save(response.header(LAST_MODIFIED));
 
-            return jsonToEntityList(response.body().string());
-        } catch (IOException io) {
-            io.printStackTrace();
-            throw new RestServiceException(io);
-        }
+        return jsonToEntityList(response.body().string());
     }
 
     @Override

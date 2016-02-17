@@ -19,6 +19,7 @@ package th.or.nectec.tanrabad.survey.job;
 
 import th.or.nectec.tanrabad.survey.service.RestService;
 
+import java.io.IOException;
 import java.util.List;
 
 public class GetDataJob<T> implements Job {
@@ -37,7 +38,7 @@ public class GetDataJob<T> implements Job {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws IOException {
         data = restService.getUpdate();
     }
 

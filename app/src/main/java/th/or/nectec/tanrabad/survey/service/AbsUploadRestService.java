@@ -38,23 +38,19 @@ public abstract class AbsUploadRestService<T> extends AbsRestService implements 
     }
 
     @Override
-    public boolean post(T data) {
-        try {
-            Request request = getPostRequest(data);
-            Response response = client.newCall(request).execute();
-            if (response.code() == Status.BAD_REQUEST) {
-                TanrabadApp.log(entityToJsonString(data));
-                throw new RestServiceException.ErrorResponseException(request, response);
-            }
-            if (isNotSuccess(response)) {
-                TanrabadApp.log(entityToJsonString(data));
-                TanrabadApp.log(response.body().string());
-                throw new RestServiceException(response);
-            }
-            return response.code() == Status.CREATED;
-        } catch (IOException io) {
-            throw new RestServiceException(io);
+    public boolean post(T data) throws IOException {
+        Request request = getPostRequest(data);
+        Response response = client.newCall(request).execute();
+        if (response.code() == Status.BAD_REQUEST) {
+            TanrabadApp.log(entityToJsonString(data));
+            throw new RestServiceException.ErrorResponseException(request, response);
         }
+        if (isNotSuccess(response)) {
+            TanrabadApp.log(entityToJsonString(data));
+            TanrabadApp.log(response.body().string());
+            throw new RestServiceException(response);
+        }
+        return response.code() == Status.CREATED;
     }
 
 
@@ -69,23 +65,19 @@ public abstract class AbsUploadRestService<T> extends AbsRestService implements 
     protected abstract String entityToJsonString(T data) throws IOException;
 
     @Override
-    public boolean put(T data) {
-        try {
-            Request request = buildPutRequest(data);
-            Response response = client.newCall(request).execute();
-            if (response.code() == Status.BAD_REQUEST) {
-                TanrabadApp.log(entityToJsonString(data));
-                throw new RestServiceException.ErrorResponseException(request, response);
-            }
-            if (isNotSuccess(response)) {
-                TanrabadApp.log(entityToJsonString(data));
-                TanrabadApp.log(response.body().string());
-                throw new RestServiceException(response);
-            }
-            return true;
-        } catch (IOException io) {
-            throw new RestServiceException(io);
+    public boolean put(T data) throws IOException {
+        Request request = buildPutRequest(data);
+        Response response = client.newCall(request).execute();
+        if (response.code() == Status.BAD_REQUEST) {
+            TanrabadApp.log(entityToJsonString(data));
+            throw new RestServiceException.ErrorResponseException(request, response);
         }
+        if (isNotSuccess(response)) {
+            TanrabadApp.log(entityToJsonString(data));
+            TanrabadApp.log(response.body().string());
+            throw new RestServiceException(response);
+        }
+        return true;
     }
 
     private Request buildPutRequest(T data) throws IOException {

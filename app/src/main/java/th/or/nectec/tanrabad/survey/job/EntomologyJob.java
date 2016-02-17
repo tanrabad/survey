@@ -5,6 +5,7 @@ import th.or.nectec.tanrabad.survey.service.EntomologyRestService;
 import th.or.nectec.tanrabad.survey.service.RestService;
 import th.or.nectec.tanrabad.survey.service.json.JsonEntomology;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -24,7 +25,7 @@ public class EntomologyJob implements Job {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws IOException {
         List<JsonEntomology> entomologyList = restService.getUpdate();
         data = entomologyList.isEmpty() ? null : entomologyList.get(entomologyList.size() - 1);
     }

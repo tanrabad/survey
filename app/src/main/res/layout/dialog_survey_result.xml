@@ -60,5 +60,6 @@
         android:layout_height="wrap_content"
         android:text="@string/got_it"
         android:id="@+id/got_it"
+        style="@style/ButtonTanrabad"
         android:layout_below="@id/container"/>
 </RelativeLayout>

@@ -63,6 +63,12 @@ android {
         debug {
             storeFile file("debug.keystore")
         }
+        beta {
+            storeFile file("release.keystore")
+            keyAlias System.getenv("TANRABAD_KEY_ALIAS")
+            keyPassword System.getenv("TANRABAD_KEY_PASSWORD")
+            storePassword System.getenv("TANRABAD_STORE_PASSWORD")
+        }
         release {
             storeFile file("release.keystore")
             keyAlias System.getenv("TANRABAD_KEY_ALIAS")
@@ -81,7 +87,8 @@ android {
             buildConfigField "String", "USER", "\"dpc-user\""
             resValue "string", "app_version", "version $genVersionName-Debug"
         }
-        release {
+        beta {
+            debuggable true
             signingConfig signingConfigs.release
             minifyEnabled true
             shrinkResources true
@@ -89,6 +96,16 @@ android {
             manifestPlaceholders = [google_map_key: System.getenv("TANRABAD_GOOGLE_RELEASE_KEY")]
             buildConfigField "String", "API_URL", "\"http://tanrabad.igridproject.info/v1\""
             buildConfigField "String", "USER", "\"dpc-13-beta\""
+            resValue "string", "app_version", "version $genVersionName-Beta"
+        }
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            manifestPlaceholders = [google_map_key: System.getenv("TANRABAD_GOOGLE_RELEASE_KEY")]
+            buildConfigField "String", "API_URL", "\"http://tanrabad.igridproject.info/v1\""
+            buildConfigField "String", "USER", "\"dpc-13\""
             resValue "string", "app_version", "version $genVersionName"
         }
     }

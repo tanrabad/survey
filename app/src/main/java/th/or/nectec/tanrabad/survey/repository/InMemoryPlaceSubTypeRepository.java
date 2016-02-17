@@ -45,7 +45,7 @@ class InMemoryPlaceSubTypeRepository implements PlaceSubTypeRepository {
     }
 
     @Override
-    public PlaceSubType findByID(int placeSubTypeId) {
+    public PlaceSubType findById(int placeSubTypeId) {
         for (PlaceSubType placeSubType : placeSubTypes) {
             if (placeSubType.getId() == placeSubTypeId)
                 return placeSubType;
@@ -54,13 +54,22 @@ class InMemoryPlaceSubTypeRepository implements PlaceSubTypeRepository {
     }
 
     @Override
-    public List<PlaceSubType> findByPlaceTypeID(int placeTypeId) {
+    public List<PlaceSubType> findByPlaceTypeId(int placeTypeId) {
         ArrayList<PlaceSubType> queryPlaceSubType = new ArrayList<>();
         for (PlaceSubType placeSubType : placeSubTypes) {
             if (placeSubType.getPlaceTypeId() == placeTypeId)
                 queryPlaceSubType.add(placeSubType);
         }
         return queryPlaceSubType;
+    }
+
+    @Override
+    public int getDefaultPlaceSubTypeId(int placeId) {
+        for (PlaceSubType placeSubType : placeSubTypes) {
+            if (placeSubType.getPlaceTypeId() == placeId)
+                return placeSubType.getId();
+        }
+        return -1;
     }
 
     @Override

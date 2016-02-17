@@ -104,7 +104,7 @@ public class DbPlaceRepository implements PlaceRepository, ChangedRepository<Pla
     }
 
     private CursorMapper<Place> getMapper(Cursor cursor) {
-        return new PlaceCursorMapper(cursor, userRepository);
+        return new PlaceCursorMapper(cursor);
     }
 
     @Override

@@ -27,12 +27,14 @@ public class StubUserRepository implements UserRepository {
 
     public static final String DEV_USERNAME = "dpc-user";
     public static final String DEMO_USERNAME = "dpc-13-beta";
+    public static final String RELEASE_USERNAME = "dpc-13";
     HashMap<String, User> userMapping;
 
     public StubUserRepository() {
         userMapping = new HashMap<>();
         userMapping.put(DEV_USERNAME, getDpcUser());
         userMapping.put(DEMO_USERNAME, getDpc13BetaUser());
+        userMapping.put(RELEASE_USERNAME, getDpc13User());
     }
 
     private User getDpcUser() {
@@ -47,6 +49,16 @@ public class StubUserRepository implements UserRepository {
 
     private User getDpc13BetaUser() {
         User dpcUser = new User(DEMO_USERNAME);
+        dpcUser.setFirstname("ทดสอบ");
+        dpcUser.setLastname("ทดสอบ");
+        dpcUser.setEmail("dpc13@gmail.com");
+        dpcUser.setOrganizationId(1);
+        dpcUser.setHealthRegionCode("dpc-13");
+        return dpcUser;
+    }
+
+    private User getDpc13User() {
+        User dpcUser = new User(RELEASE_USERNAME);
         dpcUser.setFirstname("ทดสอบ");
         dpcUser.setLastname("ทดสอบ");
         dpcUser.setEmail("dpc13@gmail.com");

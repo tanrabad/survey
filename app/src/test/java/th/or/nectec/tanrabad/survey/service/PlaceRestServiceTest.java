@@ -23,8 +23,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import th.or.nectec.tanrabad.domain.UserRepository;
+import th.or.nectec.tanrabad.domain.place.PlaceSubTypeRepository;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.field.Location;
+import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.WireMockTestBase;
 import th.or.nectec.tanrabad.survey.service.http.Header;
 import th.or.nectec.tanrabad.survey.service.json.JsonPlace;
@@ -44,6 +46,7 @@ public class PlaceRestServiceTest extends WireMockTestBase {
 
     public static final String MON_30_NOV_2015_17_00_00_GMT = "Mon, 30 Nov 2015 17:00:00 GMT";
     UserRepository userRepository = Mockito.mock(UserRepository.class);
+    PlaceSubTypeRepository placeSubTypeRepository = Mockito.mock(PlaceSubTypeRepository.class);
     ServiceLastUpdate lastUpdate = Mockito.mock(ServiceLastUpdate.class);
     PlaceRestService restService;
 
@@ -51,10 +54,12 @@ public class PlaceRestServiceTest extends WireMockTestBase {
     public void setUp() throws Exception {
         super.setUp();
         Mockito.when(userRepository.findByUsername("dpc-user")).thenReturn(stubUser());
+        Mockito.when(placeSubTypeRepository.getDefaultPlaceSubTypeId(PlaceType.HOSPITAL)).thenReturn(1);
         restService = new PlaceRestService(
                 localHost(),
                 lastUpdate,
-                userRepository);
+                userRepository,
+                placeSubTypeRepository);
     }
 
     @Test

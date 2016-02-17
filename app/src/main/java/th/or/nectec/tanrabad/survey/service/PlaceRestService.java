@@ -19,8 +19,10 @@ package th.or.nectec.tanrabad.survey.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
 import th.or.nectec.tanrabad.domain.UserRepository;
+import th.or.nectec.tanrabad.domain.place.PlaceSubTypeRepository;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
+import th.or.nectec.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.service.json.JsonPlace;
 
@@ -32,14 +34,18 @@ public class PlaceRestService extends AbsUploadRestService<Place> {
 
     public static final String PATH = "/place";
     private UserRepository userRepository;
+    private PlaceSubTypeRepository placeSubTypeRepository;
 
     public PlaceRestService() {
-        this(BASE_API, new ServiceLastUpdatePreference(TanrabadApp.getInstance(), PATH), new StubUserRepository());
+        this(BASE_API, new ServiceLastUpdatePreference(TanrabadApp.getInstance(), PATH),
+                new StubUserRepository(), BrokerPlaceSubTypeRepository.getInstance());
     }
 
-    public PlaceRestService(String apiBaseUrl, ServiceLastUpdate serviceLastUpdate, UserRepository userRepository) {
+    public PlaceRestService(String apiBaseUrl, ServiceLastUpdate serviceLastUpdate, UserRepository userRepository,
+                            PlaceSubTypeRepository placeSubTypeRepository) {
         super(apiBaseUrl, serviceLastUpdate);
         this.userRepository = userRepository;
+        this.placeSubTypeRepository = placeSubTypeRepository;
     }
 
     @Override
@@ -57,7 +63,7 @@ public class PlaceRestService extends AbsUploadRestService<Place> {
         ArrayList<Place> places = new ArrayList<>();
         List<JsonPlace> jsonPlaces = LoganSquare.parseList(responseBody, JsonPlace.class);
         for (JsonPlace eachJsonPlace : jsonPlaces)
-            places.add(eachJsonPlace.getEntity());
+            places.add(eachJsonPlace.getEntity(placeSubTypeRepository));
         return places;
     }
 

@@ -38,7 +38,7 @@ public class PlaceSubTypeAdapter extends BaseAdapter {
 
     public PlaceSubTypeAdapter(Context context, int placeTypeId) {
         this.context = context;
-        placeSubTypes = BrokerPlaceSubTypeRepository.getInstance().findByPlaceTypeID(placeTypeId);
+        placeSubTypes = BrokerPlaceSubTypeRepository.getInstance().findByPlaceTypeId(placeTypeId);
     }
 
     @Override

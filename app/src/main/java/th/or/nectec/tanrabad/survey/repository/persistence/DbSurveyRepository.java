@@ -131,6 +131,10 @@ public class DbSurveyRepository implements SurveyRepository, ChangedRepository<S
         return changedStatus;
     }
 
+    private SQLiteDatabase readableDatabase() {
+        return new SurveyLiteDatabase(context).getReadableDatabase();
+    }
+
     private boolean updateByContentValues(SQLiteDatabase db, ContentValues survey) {
         int update = db.update(TABLE_NAME,
                 survey,
@@ -154,10 +158,6 @@ public class DbSurveyRepository implements SurveyRepository, ChangedRepository<S
                     throw new SurveyRepositoryException("Cannot insert or update survey detail.");
             }
         }
-    }
-
-    private SQLiteDatabase readableDatabase() {
-        return new SurveyLiteDatabase(context).getReadableDatabase();
     }
 
     private boolean updateSurveyDetail(SQLiteDatabase db, UUID id, int containerLocation, SurveyDetail surveyDetail) {
@@ -306,7 +306,7 @@ public class DbSurveyRepository implements SurveyRepository, ChangedRepository<S
     }
 
     private CursorMapper<Place> getPlaceSurveyMapper(Cursor cursor) {
-        return new PlaceCursorMapper(cursor, userRepository);
+        return new PlaceCursorMapper(cursor);
     }
 
     private Survey getSurvey(Cursor cursor) {

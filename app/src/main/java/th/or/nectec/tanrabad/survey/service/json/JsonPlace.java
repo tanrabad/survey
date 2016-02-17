@@ -20,9 +20,9 @@ package th.or.nectec.tanrabad.survey.service.json;
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
 import org.joda.time.DateTimeZone;
+import th.or.nectec.tanrabad.domain.place.PlaceSubTypeRepository;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.field.Location;
-import th.or.nectec.tanrabad.survey.repository.persistence.PlaceTypeMapper;
 import th.or.nectec.tanrabad.survey.utils.time.ThaiDateTimeConverter;
 
 import java.util.UUID;
@@ -82,11 +82,12 @@ public class JsonPlace {
         return jsonPlace;
     }
 
-    public Place getEntity() {
+    public Place getEntity(PlaceSubTypeRepository placeSubTypeRepository) {
         Place place = new Place(placeId, placeName);
         place.setType(placeTypeId);
         place.setSubType(placeSubtypeId == 0
-                ? PlaceTypeMapper.getInstance().getDefaultPlaceType(placeTypeId) : placeSubtypeId);
+                ? placeSubTypeRepository.getDefaultPlaceSubTypeId(placeTypeId)
+                : placeSubtypeId);
         place.setSubdistrictCode(tambonCode);
         Location location = this.location == null ? null : this.location.getEntity();
         place.setLocation(location);

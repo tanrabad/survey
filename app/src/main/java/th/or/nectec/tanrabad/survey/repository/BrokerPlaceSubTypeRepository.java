@@ -55,21 +55,26 @@ public class BrokerPlaceSubTypeRepository implements PlaceSubTypeRepository {
     }
 
     @Override
-    public PlaceSubType findByID(int subTypeId) {
-        PlaceSubType subType = cache.findByID(subTypeId);
+    public PlaceSubType findById(int subTypeId) {
+        PlaceSubType subType = cache.findById(subTypeId);
         if (subType == null)
-            subType = persistance.findByID(subTypeId);
+            subType = persistance.findById(subTypeId);
         return subType;
     }
 
     @Override
-    public List<PlaceSubType> findByPlaceTypeID(int placeTypeId) {
-        List<PlaceSubType> subTypes = cache.findByPlaceTypeID(placeTypeId);
+    public List<PlaceSubType> findByPlaceTypeId(int placeTypeId) {
+        List<PlaceSubType> subTypes = cache.findByPlaceTypeId(placeTypeId);
         if (subTypes == null || subTypes.isEmpty()) {
-            subTypes = persistance.findByPlaceTypeID(placeTypeId);
+            subTypes = persistance.findByPlaceTypeId(placeTypeId);
             cache.updateOrInsert(subTypes);
         }
         return subTypes;
+    }
+
+    @Override
+    public int getDefaultPlaceSubTypeId(int placeId) {
+        return persistance.getDefaultPlaceSubTypeId(placeId);
     }
 
     @Override

@@ -142,7 +142,7 @@ public class SurveyResultDialogFragment extends DialogFragment {
 
     private void setPlaceInfo(Place place) {
         placeIconView.setImageResource(PlaceIconMapping.getPlaceIcon(place));
-        placeSubTypeView.setText(BrokerPlaceSubTypeRepository.getInstance().findByID(place.getSubType()).getName());
+        placeSubTypeView.setText(BrokerPlaceSubTypeRepository.getInstance().findById(place.getSubType()).getName());
         placeNameView.setText(place.getName());
         Subdistrict subdistrict = DbSubdistrictRepository.getInstance().findByCode(place.getSubdistrictCode());
         District district = DbDistrictRepository.getInstance().findByCode(subdistrict.getDistrictCode());

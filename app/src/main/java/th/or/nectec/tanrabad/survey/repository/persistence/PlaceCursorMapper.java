@@ -18,7 +18,6 @@
 package th.or.nectec.tanrabad.survey.repository.persistence;
 
 import android.database.Cursor;
-import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.entity.lookup.PlaceSubType;
@@ -29,7 +28,6 @@ import java.util.UUID;
 
 class PlaceCursorMapper implements CursorMapper<Place> {
 
-    private final UserRepository userRepository;
     private int idIndex;
     private int nameIndex;
     private int subtypeIndex;
@@ -39,8 +37,7 @@ class PlaceCursorMapper implements CursorMapper<Place> {
     private int updateByIndex;
     private int updateTimeIndex;
 
-    public PlaceCursorMapper(Cursor cursor, UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public PlaceCursorMapper(Cursor cursor) {
         findColumnIndexOf(cursor);
     }
 
@@ -70,7 +67,7 @@ class PlaceCursorMapper implements CursorMapper<Place> {
     }
 
     private PlaceSubType getSubType(Cursor cursor) {
-        return BrokerPlaceSubTypeRepository.getInstance().findByID(cursor.getInt(subtypeIndex));
+        return BrokerPlaceSubTypeRepository.getInstance().findById(cursor.getInt(subtypeIndex));
     }
 
     private Location getLocation(Cursor cursor) {

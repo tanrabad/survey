@@ -31,19 +31,25 @@ public class DbPlaceSubTypeRepository implements PlaceSubTypeRepository {
     }
 
     @Override
-    public PlaceSubType findByID(int placeSubTypeID) {
+    public PlaceSubType findById(int placeSubTypeId) {
         SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
         Cursor placeTypeCursor = db.query(TABLE_NAME, PlaceSubTypeColumn.wildcard(),
-                PlaceSubTypeColumn.ID + " =?", new String[]{String.valueOf(placeSubTypeID)}, null, null, null);
+                PlaceSubTypeColumn.ID + " =?", new String[]{String.valueOf(placeSubTypeId)}, null, null, null);
         return getPlaceSubType(placeTypeCursor);
     }
 
     @Override
-    public List<PlaceSubType> findByPlaceTypeID(int placeTypeID) {
+    public List<PlaceSubType> findByPlaceTypeId(int placeTypeId) {
         SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
         Cursor placeTypeCursor = db.query(TABLE_NAME, PlaceSubTypeColumn.wildcard(),
-                PlaceSubTypeColumn.TYPE_ID + " =?", new String[]{String.valueOf(placeTypeID)}, null, null, null);
+                PlaceSubTypeColumn.TYPE_ID + " =?", new String[]{String.valueOf(placeTypeId)}, null, null, null);
         return new CursorList<>(placeTypeCursor, getMapper(placeTypeCursor));
+    }
+
+    @Override
+    public int getDefaultPlaceSubTypeId(int placeId) {
+        PlaceSubType placeSubType = findByPlaceTypeId(placeId).get(0);
+        return placeSubType == null ? -1 : placeSubType.getId();
     }
 
     private PlaceSubType getPlaceSubType(Cursor cursor) {
@@ -63,12 +69,14 @@ public class DbPlaceSubTypeRepository implements PlaceSubTypeRepository {
 
     @Override
     public boolean save(PlaceSubType placeType) {
-        return saveByContentValues(new SurveyLiteDatabase(context).getWritableDatabase(), placeTypeContentValues(placeType));
+        return saveByContentValues(new SurveyLiteDatabase(context).getWritableDatabase(),
+                placeTypeContentValues(placeType));
     }
 
     @Override
     public boolean update(PlaceSubType placeType) {
-        return updateByContentValues(new SurveyLiteDatabase(context).getWritableDatabase(), placeTypeContentValues(placeType));
+        return updateByContentValues(new SurveyLiteDatabase(context).getWritableDatabase(),
+                placeTypeContentValues(placeType));
     }
 
     @Override
@@ -87,7 +95,8 @@ public class DbPlaceSubTypeRepository implements PlaceSubTypeRepository {
     }
 
     private boolean updateByContentValues(SQLiteDatabase db, ContentValues placeSubType) {
-        return db.update(TABLE_NAME, placeSubType, PlaceSubTypeColumn.ID + "=?", new String[]{placeSubType.getAsString(PlaceSubTypeColumn.ID)}) > 0;
+        return db.update(TABLE_NAME, placeSubType, PlaceSubTypeColumn.ID + "=?",
+                new String[]{placeSubType.getAsString(PlaceSubTypeColumn.ID)}) > 0;
     }
 
     private boolean saveByContentValues(SQLiteDatabase db, ContentValues placeSubType) {

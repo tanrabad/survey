@@ -140,7 +140,7 @@ public class FabricTools implements ExceptionLogger, ActionLogger {
     }
 
     private String getPlaceSubTypeName(Place place) {
-        return BrokerPlaceSubTypeRepository.getInstance().findByID(place.getSubType()).getName();
+        return BrokerPlaceSubTypeRepository.getInstance().findById(place.getSubType()).getName();
     }
 
     @Override

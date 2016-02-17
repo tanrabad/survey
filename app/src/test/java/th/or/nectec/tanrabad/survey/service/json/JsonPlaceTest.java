@@ -20,15 +20,15 @@ package th.or.nectec.tanrabad.survey.service.json;
 import com.bluelinelabs.logansquare.LoganSquare;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import th.or.nectec.tanrabad.domain.UserRepository;
+import th.or.nectec.tanrabad.domain.place.PlaceSubTypeRepository;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.entity.lookup.PlaceSubType;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
-import th.or.nectec.tanrabad.survey.repository.persistence.PlaceTypeMapper;
 import th.or.nectec.tanrabad.survey.utils.ResourceFile;
 
 import java.util.UUID;
@@ -36,6 +36,13 @@ import java.util.UUID;
 import static org.junit.Assert.assertEquals;
 
 public class JsonPlaceTest {
+    private PlaceSubTypeRepository placeSubTypeRepository;
+
+    @Before
+    public void setup() {
+        placeSubTypeRepository = Mockito.mock(PlaceSubTypeRepository.class);
+        Mockito.when(placeSubTypeRepository.getDefaultPlaceSubTypeId(PlaceType.HOSPITAL)).thenReturn(1);
+    }
 
     @Test
     public void testParseToJsonString() throws Exception {
@@ -86,8 +93,6 @@ public class JsonPlaceTest {
 
     @Test
     public void testParseJsonStringToPlaceEntity() throws Exception {
-        UserRepository userRepository = Mockito.mock(UserRepository.class);
-        Mockito.when(userRepository.findByUsername("dcp-user")).thenReturn(stubUser());
         Place placeData = new Place(UUID.fromString("b7a9d934-04fc-a22e-0539-6c17504f732e"), "รพ.สต.ตำบลนาทราย");
         placeData.setType(PlaceType.HOSPITAL);
         placeData.setSubType(3);
@@ -96,25 +101,22 @@ public class JsonPlaceTest {
         placeData.setUpdateBy(stubUser());
         placeData.setUpdateTimestamp(DateTime.now().toString());
         JsonPlace jsonPlace = LoganSquare.parse(ResourceFile.read("place.json"), JsonPlace.class);
-        Place parsedPlace = jsonPlace.getEntity();
+        Place parsedPlace = jsonPlace.getEntity(placeSubTypeRepository);
         assertEquals(parsedPlace, placeData);
         assertEquals(12, parsedPlace.getUpdateTimestamp().getHourOfDay());
     }
 
     @Test
     public void testParseJsonStringWithNullPlaceSubtypeToPlaceEntity() throws Exception {
-        UserRepository userRepository = Mockito.mock(UserRepository.class);
-        Mockito.when(userRepository.findByUsername("dcp-user")).thenReturn(stubUser());
         Place placeData = new Place(UUID.fromString("b7a9d934-04fc-a22e-0539-6c17504f732e"), "รพ.สต.ตำบลนาทราย");
         placeData.setType(PlaceType.HOSPITAL);
-        placeData.setSubType(PlaceTypeMapper.โรงพยาบาลทั่วไป);
+        placeData.setSubType(1);
         placeData.setSubdistrictCode("510403");
         placeData.setLocation(stubLocation());
         placeData.setUpdateBy(stubUser());
         placeData.setUpdateTimestamp(DateTime.now().toString());
         JsonPlace jsonPlace = LoganSquare.parse(ResourceFile.read("placeWithNullSubType.json"), JsonPlace.class);
-        Place parsedPlace = jsonPlace.getEntity();
-
+        Place parsedPlace = jsonPlace.getEntity(placeSubTypeRepository);
         assertEquals(parsedPlace, placeData);
     }
 }

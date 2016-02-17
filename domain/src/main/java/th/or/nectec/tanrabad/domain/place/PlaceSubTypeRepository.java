@@ -26,7 +26,9 @@ public interface PlaceSubTypeRepository extends WritableRepository<PlaceSubType>
 
     List<PlaceSubType> find();
 
-    PlaceSubType findByID(int subTypeID);
+    PlaceSubType findById(int subTypeId);
 
-    List<PlaceSubType> findByPlaceTypeID(int placeTypeID);
+    List<PlaceSubType> findByPlaceTypeId(int placeTypeId);
+
+    int getDefaultPlaceSubTypeId(int placeId);
 }

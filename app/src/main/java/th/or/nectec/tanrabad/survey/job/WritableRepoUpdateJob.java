@@ -29,7 +29,7 @@ public class WritableRepoUpdateJob<T> implements Job {
     WritableRepository<T> repository;
     RestService<T> restService;
 
-    public <K extends RestService<T>> WritableRepoUpdateJob(K restService, WritableRepository<T> repository) {
+    public WritableRepoUpdateJob(RestService<T> restService, WritableRepository<T> repository) {
         this.restService = restService;
         this.repository = repository;
     }

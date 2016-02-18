@@ -176,7 +176,6 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
 
     private void openMainActivity() {
         Intent intent = new Intent(SurveyBuildingHistoryActivity.this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 

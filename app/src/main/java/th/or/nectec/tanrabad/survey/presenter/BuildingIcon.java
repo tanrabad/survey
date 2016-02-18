@@ -17,17 +17,28 @@
 
 package th.or.nectec.tanrabad.survey.presenter;
 
+import android.support.annotation.DrawableRes;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.R;
 
-public class BuildingIconMapping {
+public class BuildingIcon {
 
-    public static int getBuildingIcon(Place place) {
+    @DrawableRes
+    public static int get(Place place) {
         if (place.getType() == PlaceType.VILLAGE_COMMUNITY) {
             return R.mipmap.ic_building_home_black;
         } else {
             return R.mipmap.ic_building_black;
+        }
+    }
+
+    @DrawableRes
+    public static int getWhite(Place place) {
+        if (place.getType() == PlaceType.VILLAGE_COMMUNITY) {
+            return R.mipmap.ic_building_home_white;
+        } else {
+            return R.mipmap.ic_building_white;
         }
     }
 }

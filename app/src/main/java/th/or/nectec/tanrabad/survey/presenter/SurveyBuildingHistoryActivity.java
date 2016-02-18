@@ -126,7 +126,7 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
 
     private void setupBuildingHistoryList() {
         surveyBuildingHistoryAdapter = new SurveyBuildingHistoryAdapter(this,
-                BuildingIconWhiteMapping.getBuildingIcon(place));
+                BuildingIcon.getWhite(place));
         RecyclerView surveyBuildingHistoryList = (RecyclerView) findViewById(R.id.survey_building_history_list);
         surveyBuildingHistoryList.setAdapter(surveyBuildingHistoryAdapter);
         surveyBuildingHistoryList.setLayoutManager(new LinearLayoutManager(this));
@@ -184,7 +184,7 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
         this.place = place;
         placeName.setText(place.getName());
         ImageView icon = (ImageView) findViewById(R.id.building_icon);
-        icon.setImageResource(BuildingIconMapping.getBuildingIcon(place));
+        icon.setImageResource(BuildingIcon.get(place));
     }
 
     @Override

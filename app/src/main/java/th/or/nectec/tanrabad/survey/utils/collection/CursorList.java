@@ -20,6 +20,7 @@ package th.or.nectec.tanrabad.survey.utils.collection;
 import android.database.Cursor;
 
 import java.util.AbstractList;
+import java.util.List;
 
 public class CursorList<T> extends AbstractList<T> {
 
@@ -29,6 +30,14 @@ public class CursorList<T> extends AbstractList<T> {
     public CursorList(Cursor cursor, CursorMapper<T> mapper) {
         this.cursor = cursor;
         this.mapper = mapper;
+    }
+
+    public static void close(List list) {
+        if (list instanceof CursorList) {
+            Cursor cursor = ((CursorList) list).cursor;
+            if (cursor != null && !cursor.isClosed())
+                cursor.close();
+        }
     }
 
     public Cursor getCursor() {

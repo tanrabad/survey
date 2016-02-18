@@ -20,6 +20,7 @@ package th.or.nectec.tanrabad.survey.job;
 import th.or.nectec.tanrabad.survey.repository.ChangedRepository;
 import th.or.nectec.tanrabad.survey.service.RestServiceException;
 import th.or.nectec.tanrabad.survey.service.UploadRestService;
+import th.or.nectec.tanrabad.survey.utils.collection.CursorList;
 
 import java.io.IOException;
 import java.util.List;
@@ -64,7 +65,7 @@ public class PostDataJob<T> implements Job {
                 restServiceExceptionCount++;
             }
         }
-
+        CursorList.close(addList);
         throwBufferException();
     }
 

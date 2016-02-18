@@ -56,6 +56,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
     private CardView cardView;
     private NetworkChangeReceiver networkChangeReceiver;
     private ObjectAnimator syncProgressAnimator;
+    private PlaceWithSurveyHistoryChooser placeWithSurveyHistoryChooser;
 
     public static void open(Activity activity) {
         Intent intent = new Intent(activity, MainActivity.class);
@@ -72,7 +73,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
         setupList();
         setupSyncAnimator();
         showRecentSurveyCard();
-
+        doLoadingRecentSurveyData();
         if (!isUiTesting()) {
             startAnimation();
         }
@@ -118,10 +119,13 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
 
     private void showRecentSurveyCard() {
         cardView = (CardView) findViewById(R.id.card_layout);
-        PlaceWithSurveyHistoryChooser placeWithSurveyHistoryChooser = new PlaceWithSurveyHistoryChooser(
+        placeWithSurveyHistoryChooser = new PlaceWithSurveyHistoryChooser(
                 new StubUserRepository(),
                 BrokerSurveyRepository.getInstance(),
                 this);
+    }
+
+    private void doLoadingRecentSurveyData() {
         User user = AccountUtils.getUser();
         if (user != null)
             placeWithSurveyHistoryChooser.showSurveyPlaceList(user.getUsername());
@@ -139,6 +143,12 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
     private void startAnimation(@IdRes int viewId, @AnimRes int animId) {
         Animation anim = AnimationUtils.loadAnimation(this, animId);
         findViewById(viewId).startAnimation(anim);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        doLoadingRecentSurveyData();
     }
 
     @Override

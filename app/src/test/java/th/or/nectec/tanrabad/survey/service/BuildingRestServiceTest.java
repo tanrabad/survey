@@ -18,8 +18,6 @@
 package th.or.nectec.tanrabad.survey.service;
 
 import android.support.annotation.NonNull;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -38,12 +36,9 @@ import java.util.UUID;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.junit.Assert.assertEquals;
 
-
 public class BuildingRestServiceTest extends WireMockTestBase {
 
     public static final String MON_30_NOV_2015_17_00_00_GMT = "Mon, 30 Nov 2015 17:00:00 GMT";
-    protected static final DateTimeFormatter RFC1123_FORMATTER =
-            DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss 'GMT'");
     UserRepository userRepository = Mockito.mock(UserRepository.class);
     PlaceRepository placeRepository = Mockito.mock(PlaceRepository.class);
     ServiceLastUpdate lastUpdate = Mockito.mock(ServiceLastUpdate.class);

@@ -32,18 +32,18 @@ import static org.junit.Assert.assertTrue;
 public class InMemoryPlaceRepositoryTest {
 
     private static InMemoryPlaceRepository placeRepository = InMemoryPlaceRepository.getInstance();
-    private static Place tuHospital = Place.withName("โรงพยาบาลธรรมศาสตร์เฉลิมพระเกียรติ");
-    private static Place racha1School = Place.withName("โรงเรียนบางปะอิน \"ราชานุเคราะห์ ๑\"");
+    private static Place hospital = Place.withName("โรงพยาบาลธรรมศาสตร์เฉลิมพระเกียรติ");
+    private static Place school = Place.withName("โรงเรียนบางปะอิน \"ราชานุเคราะห์ ๑\"");
 
     @BeforeClass
     public static void setUp() throws Exception {
-        placeRepository.save(tuHospital);
-        placeRepository.save(racha1School);
+        placeRepository.save(hospital);
+        placeRepository.save(school);
     }
 
     @Test(expected = PlaceRepositoryException.class)
     public void testSaveExistPlaceMustThrowException() throws Exception {
-        placeRepository.save(tuHospital);
+        placeRepository.save(hospital);
     }
 
     @Test
@@ -53,16 +53,16 @@ public class InMemoryPlaceRepositoryTest {
 
     @Test
     public void testFindPlaceByUUID() throws Exception {
-        assertEquals(tuHospital, placeRepository.findByUUID(tuHospital.getId()));
-        assertEquals(racha1School, placeRepository.findByUUID(racha1School.getId()));
+        assertEquals(hospital, placeRepository.findByUUID(hospital.getId()));
+        assertEquals(school, placeRepository.findByUUID(school.getId()));
         assertEquals(null, placeRepository.findByUUID(UUID.randomUUID()));
     }
 
     @Test
     public void testUpdate() throws Exception {
-        Place racha1NewName = new Place(racha1School.getId(), "โรงเรียนบางปะอิน");
+        Place racha1NewName = new Place(school.getId(), "โรงเรียนบางปะอิน");
         placeRepository.update(racha1NewName);
-        assertEquals(racha1NewName, placeRepository.findByUUID(racha1School.getId()));
+        assertEquals(racha1NewName, placeRepository.findByUUID(school.getId()));
     }
 
     @Test(expected = PlaceRepositoryException.class)
@@ -74,7 +74,7 @@ public class InMemoryPlaceRepositoryTest {
     public void testFindPlaceByName() throws Exception {
         List<Place> searchPlace = placeRepository.findByName("๑");
         assertTrue(searchPlace.size() == 1);
-        assertTrue(searchPlace.contains(racha1School));
+        assertTrue(searchPlace.contains(school));
 
         List<Place> emptyPlaceList = placeRepository.findByName("C");
         assertTrue(emptyPlaceList == null);

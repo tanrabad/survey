@@ -21,11 +21,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.repository.ChangedRepository;
-import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorList;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
 
@@ -37,11 +35,9 @@ public class DbPlaceRepository implements PlaceRepository, ChangedRepository<Pla
     public static final String TABLE_NAME = "place";
     public static final int ERROR_INSERT_ID = -1;
     private final Context context;
-    private UserRepository userRepository;
 
     public DbPlaceRepository(Context context) {
         this.context = context;
-        this.userRepository = new StubUserRepository();
     }
 
     @Override

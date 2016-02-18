@@ -24,7 +24,7 @@ import java.util.List;
 
 public abstract class AbsJobRunner implements JobRunner {
 
-    List<Job> jobList = new ArrayList();
+    List<Job> jobList = new ArrayList<>();
     boolean running = false;
     int jobFinishCount = 0;
     int jobErrorCount = 0;

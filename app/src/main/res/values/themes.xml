@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2015 NECTEC
+  ~ Copyright (c) 2016 NECTEC
   ~   National Electronics and Computer Technology Center, Thailand
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -51,19 +51,23 @@
         <item name="colorPrimary">@color/color_primary</item>
         <item name="colorPrimaryDark">@color/color_primary_dark</item>
         <item name="colorAccent">@color/color_accent</item>
-        <item name="android:windowBackground">@color/light_gray</item>
+        <item name="android:windowBackground">@color/lighter_gray</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-    <style name="AppTheme.NoActionBar.Blue">
+    <style name="AppTheme.Blue">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="colorPrimary">@color/water_blue</item>
         <item name="colorPrimaryDark">@color/dark_blue</item>
     </style>
+    <style name="AppTheme.Blue.Water">
+        <item name="android:windowBackground">@drawable/bg_water</item>
+    </style>
+
 
     <style name="AppTheme.Alternate">
         <item name="actionBarStyle">@style/ActionBar.Alternate</item>

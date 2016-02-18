@@ -18,34 +18,37 @@
 package th.or.nectec.tanrabad.survey.presenter;
 
 import android.content.Context;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyStatus;
+import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlaceWithSurveyStatusAdapter extends RecyclerView.Adapter<PlaceWithSurveyStatusAdapter.ViewHolder>
-        implements ListViewAdapter<PlaceWithSurveyStatus> {
+public class PlaceSurveyAdapter extends RecyclerView.Adapter<PlaceSurveyAdapter.ViewHolder>
+        implements ListViewAdapter<Place> {
 
     Context context;
-
-    ArrayList<PlaceWithSurveyStatus> places = new ArrayList<>();
+    ArrayList<Place> places = new ArrayList<>();
+    private FragmentManager fragmentManager;
     private AdapterView.OnItemClickListener onItemClickListener;
     private AdapterView.OnItemLongClickListener onItemLongClickListener;
 
-    public PlaceWithSurveyStatusAdapter(Context context) {
+    public PlaceSurveyAdapter(Context context, FragmentManager fragmentManager) {
         this.context = context;
+        this.fragmentManager = fragmentManager;
     }
 
     @Override
-    public void updateData(List<PlaceWithSurveyStatus> places) {
+    public void updateData(List<Place> places) {
         this.places.clear();
         this.places.addAll(places);
         notifyDataSetChanged();
@@ -58,7 +61,7 @@ public class PlaceWithSurveyStatusAdapter extends RecyclerView.Adapter<PlaceWith
     }
 
     @Override
-    public PlaceWithSurveyStatus getItem(int position) {
+    public Place getItem(int position) {
         return places.get(position);
     }
 
@@ -74,15 +77,22 @@ public class PlaceWithSurveyStatusAdapter extends RecyclerView.Adapter<PlaceWith
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_place, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_place_survey, parent, false);
         return new ViewHolder(v, this);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        PlaceWithSurveyStatus placeWithSurveyStatus = places.get(position);
-        holder.placeTextView.setText(placeWithSurveyStatus.place.getName());
-        holder.placeIcon.setImageResource(PlaceIconMapping.getPlaceIcon(placeWithSurveyStatus.place));
+        final Place place = places.get(position);
+        holder.placeTextView.setText(place.getName());
+        holder.placeIcon.setImageResource(PlaceIconMapping.getPlaceIcon(place));
+        holder.viewSurveyResultButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SurveyResultDialogFragment.newInstances(place).show(
+                        fragmentManager, SurveyResultDialogFragment.FRAGMENT_TAG);
+            }
+        });
     }
 
     @Override
@@ -105,14 +115,16 @@ public class PlaceWithSurveyStatusAdapter extends RecyclerView.Adapter<PlaceWith
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView placeTextView;
         ImageView placeIcon;
-        private PlaceWithSurveyStatusAdapter adapter;
+        Button viewSurveyResultButton;
+        private PlaceSurveyAdapter adapter;
 
-        public ViewHolder(View itemView, PlaceWithSurveyStatusAdapter adapter) {
+        public ViewHolder(View itemView, final PlaceSurveyAdapter adapter) {
             super(itemView);
             this.adapter = adapter;
             itemView.setOnClickListener(this);
             placeTextView = (TextView) itemView.findViewById(R.id.place_name);
             placeIcon = (ImageView) itemView.findViewById(R.id.place_icon);
+            viewSurveyResultButton = (Button) itemView.findViewById(R.id.view_survey_result_button);
         }
 
         @Override

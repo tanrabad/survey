@@ -43,7 +43,7 @@ public class StubUserRepository implements UserRepository {
         dpcUser.setLastname("คิดส์");
         dpcUser.setEmail("sara.k@gmail.com");
         dpcUser.setOrganizationId(1);
-        dpcUser.setHealthRegionCode("dpc-04");
+        dpcUser.setHealthRegionCode("dpc-13");
         return dpcUser;
     }
 

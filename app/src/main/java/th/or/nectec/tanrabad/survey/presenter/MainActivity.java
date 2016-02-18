@@ -52,7 +52,7 @@ import java.util.List;
 public class MainActivity extends TanrabadActivity implements View.OnClickListener,
         PlaceWithSurveyHistoryListPresenter, AdapterView.OnItemClickListener {
 
-    private PlaceAdapter placeAdapter;
+    private PlaceSurveyAdapter placeSurveyAdapter;
     private CardView cardView;
     private NetworkChangeReceiver networkChangeReceiver;
     private ObjectAnimator syncProgressAnimator;
@@ -101,11 +101,11 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
 
     private void setupList() {
         RecyclerView placeHistoryList = (RecyclerView) findViewById(R.id.place_history_list);
-        placeAdapter = new PlaceAdapter(this);
-        placeHistoryList.setAdapter(placeAdapter);
+        placeSurveyAdapter = new PlaceSurveyAdapter(this, getSupportFragmentManager());
+        placeHistoryList.setAdapter(placeSurveyAdapter);
         placeHistoryList.setLayoutManager(new LinearLayoutManager(this));
         placeHistoryList.addItemDecoration(new SimpleDividerItemDecoration(this));
-        placeAdapter.setOnItemClickListener(this);
+        placeSurveyAdapter.setOnItemClickListener(this);
         RecyclerViewHeader recyclerViewHeader = (RecyclerViewHeader) findViewById(R.id.card_header);
         recyclerViewHeader.attachTo(placeHistoryList, true);
     }
@@ -176,7 +176,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
 
     @Override
     public void displaySurveyPlaceList(List<Place> surveyPlace) {
-        placeAdapter.updateData(surveyPlace);
+        placeSurveyAdapter.updateData(surveyPlace);
         cardView.setVisibility(View.VISIBLE);
     }
 
@@ -187,13 +187,13 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
 
     @Override
     public void displaySurveyPlacesNotFound() {
-        placeAdapter.clearData();
+        placeSurveyAdapter.clearData();
         cardView.setVisibility(View.GONE);
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-        Place place = placeAdapter.getItem(position);
+        Place place = placeSurveyAdapter.getItem(position);
         SurveyBuildingHistoryActivity.open(this, place);
     }
 

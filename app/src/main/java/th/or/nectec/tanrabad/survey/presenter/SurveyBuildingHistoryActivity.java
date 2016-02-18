@@ -28,7 +28,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
 import th.or.nectec.tanrabad.domain.entomology.HouseIndex;
 import th.or.nectec.tanrabad.domain.place.PlaceController;
@@ -44,8 +47,6 @@ import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerSurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
-import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
-import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 import th.or.nectec.tanrabad.survey.utils.showcase.BaseShowcase;
 import th.or.nectec.tanrabad.survey.utils.showcase.ShowcaseFactory;
 
@@ -75,7 +76,6 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
         setContentView(R.layout.activity_history_building_list);
         setupHomeButton();
         setupView();
-        setupViewSurveyButton();
         showPlaceInfo();
         setupBuildingHistoryList();
         setupEmptyLayout();
@@ -96,15 +96,20 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
         displaySurveyMoreBuildingShowcase();
     }
 
-    private void setupViewSurveyButton() {
-        Button viewSurveyResultButton = (Button) findViewById(R.id.view_survey_result_button);
-        viewSurveyResultButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SurveyResultDialogFragment.newInstances(place).show(
-                        getSupportFragmentManager(), SurveyResultDialogFragment.FRAGMENT_TAG);
-            }
-        });
+    private String getPlaceUuidFromIntent() {
+        return getIntent().getStringExtra(PLACE_UUID_ARG);
+    }
+
+    private void startSurveyMoreBuildingButtonAnimation() {
+        Animation moreBuildingAnim = AnimationUtils.loadAnimation(this, R.anim.survey_more_building_button);
+        surveyMoreBuildingButton.startAnimation(moreBuildingAnim);
+    }
+
+    private void displaySurveyMoreBuildingShowcase() {
+        BaseShowcase showcase = ShowcaseFactory.viewShowcase(R.id.survey_more_building_button);
+        showcase.setTitle(getString(R.string.showcase_survey_more_building_title));
+        showcase.setMessage(getString(R.string.showcase_survey_more_building));
+        //showcase.display();
     }
 
     private void showPlaceInfo() {
@@ -147,47 +152,19 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
                 AccountUtils.getUser().getUsername());
     }
 
-    private String getPlaceUuidFromIntent() {
-        return getIntent().getStringExtra(PLACE_UUID_ARG);
-    }
-
-    private void startSurveyMoreBuildingButtonAnimation() {
-        Animation moreBuildingAnim = AnimationUtils.loadAnimation(this, R.anim.survey_more_building_button);
-        surveyMoreBuildingButton.startAnimation(moreBuildingAnim);
-    }
-
-    private void displaySurveyMoreBuildingShowcase() {
-        BaseShowcase showcase = ShowcaseFactory.viewShowcase(R.id.survey_more_building_button);
-        showcase.setTitle(getString(R.string.showcase_survey_more_building_title));
-        showcase.setMessage(getString(R.string.showcase_survey_more_building));
-        //showcase.display();
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.finish:
                 TanrabadApp.action().finishSurvey(place, true);
-                showFinishSurveyPrompt();
+                openMainActivity();
                 break;
             case android.R.id.home:
                 TanrabadApp.action().finishSurvey(place, false);
-                showFinishSurveyPrompt();
+                openMainActivity();
                 break;
         }
         return true;
-    }
-
-    public void showFinishSurveyPrompt() {
-        PromptMessage promptMessage = new AlertDialogPromptMessage(this);
-        promptMessage.setOnConfirm(getString(R.string.confirm), new PromptMessage.OnConfirmListener() {
-            @Override
-            public void onConfirm() {
-                openMainActivity();
-            }
-        });
-        promptMessage.setOnCancel(getString(R.string.cancel), null);
-        promptMessage.show(getString(R.string.finish_place_survey), place.getName());
     }
 
     private void openMainActivity() {
@@ -240,7 +217,7 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
     @Override
     public void onBackPressed() {
         TanrabadApp.action().finishSurvey(place, false);
-        showFinishSurveyPrompt();
+        openMainActivity();
     }
 }
 

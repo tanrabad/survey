@@ -58,6 +58,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:minHeight="64dp"
         android:text="@string/got_it"
         android:id="@+id/got_it"
         style="@style/ButtonTanrabad"

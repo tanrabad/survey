@@ -43,17 +43,6 @@
                 style="@style/TextViewTanrabad.Header.Right"
                 android:textIsSelectable="true"
                 tools:text="หมู่ 1 บ้านบางไผ่"/>
-
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/view_survey_result"
-                android:id="@+id/view_survey_result_button"
-                android:layout_below="@+id/place_name"
-                android:layout_marginRight="@dimen/screen_horizontal_margin"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"/>
         </RelativeLayout>
 
         <include layout="@layout/component_header_collapsing_transparent"/>

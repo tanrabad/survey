@@ -88,7 +88,7 @@ android {
             resValue "string", "app_version", "version $genVersionName-Debug"
         }
         beta {
-            debuggable true
+            debuggable false
             signingConfig signingConfigs.release
             minifyEnabled true
             shrinkResources true

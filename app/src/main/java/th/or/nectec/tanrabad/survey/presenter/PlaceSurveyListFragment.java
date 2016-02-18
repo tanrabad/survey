@@ -17,8 +17,6 @@
 
 package th.or.nectec.tanrabad.survey.presenter;
 
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -40,13 +38,15 @@ import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 
 import java.util.List;
 
-public class PlaceSurveyListFragment extends Fragment implements PlaceWithSurveyHistoryListPresenter, AdapterView.OnItemClickListener {
+public class PlaceSurveyListFragment extends Fragment implements PlaceWithSurveyHistoryListPresenter,
+        AdapterView.OnItemClickListener {
 
     private static final String USERNAME_ARG = "username_arg";
     private String username;
 
-    private PlaceAdapter placeAdapter;
-    private PlaceWithSurveyHistoryChooser placeChooser = new PlaceWithSurveyHistoryChooser(new StubUserRepository(), BrokerSurveyRepository.getInstance(), this);
+    private PlaceSurveyAdapter placeAdapter;
+    private PlaceWithSurveyHistoryChooser placeChooser = new PlaceWithSurveyHistoryChooser(new StubUserRepository(),
+            BrokerSurveyRepository.getInstance(), this);
     private TextView placeCountView;
     private RecyclerView placeListView;
     private RecyclerViewHeader recyclerViewHeader;
@@ -88,11 +88,12 @@ public class PlaceSurveyListFragment extends Fragment implements PlaceWithSurvey
     }
 
     private void setupPlaceList() {
-        placeAdapter = new PlaceAdapter(getActivity());
+        placeAdapter = new PlaceSurveyAdapter(getActivity(), getActivity().getSupportFragmentManager());
         placeAdapter.setOnItemClickListener(this);
         placeListView.setAdapter(placeAdapter);
         placeListView.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),
+                LinearLayoutManager.VERTICAL, false);
         placeListView.setLayoutManager(linearLayoutManager);
         recyclerViewHeader.attachTo(placeListView, true);
     }
@@ -124,12 +125,6 @@ public class PlaceSurveyListFragment extends Fragment implements PlaceWithSurvey
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-        openBuildingListActivity(position);
-    }
-
-    private void openBuildingListActivity(int position) {
-        Intent intent = new Intent(getActivity(), BuildingListActivity.class);
-        intent.putExtra(BuildingListActivity.PLACE_UUID_ARG, placeAdapter.getItem(position).getId().toString());
-        startActivity(intent);
+        SurveyBuildingHistoryActivity.open(getActivity(), placeAdapter.getItem(position));
     }
 }

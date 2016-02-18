@@ -43,26 +43,18 @@ import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.job.AbsJobRunner;
 import th.or.nectec.tanrabad.survey.job.Job;
-import th.or.nectec.tanrabad.survey.job.PostDataJob;
-import th.or.nectec.tanrabad.survey.job.PutDataJob;
 import th.or.nectec.tanrabad.survey.presenter.view.AdvanceStepperDialog;
 import th.or.nectec.tanrabad.survey.presenter.view.SurveyContainerView;
 import th.or.nectec.tanrabad.survey.presenter.view.TorchButton;
 import th.or.nectec.tanrabad.survey.repository.BrokerBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerContainerTypeRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
-import th.or.nectec.tanrabad.survey.repository.persistence.DbBuildingRepository;
-import th.or.nectec.tanrabad.survey.repository.persistence.DbPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.persistence.DbSurveyRepository;
-import th.or.nectec.tanrabad.survey.service.BuildingRestService;
-import th.or.nectec.tanrabad.survey.service.PlaceRestService;
-import th.or.nectec.tanrabad.survey.service.SurveyRestService;
 import th.or.nectec.tanrabad.survey.utils.EditTextStepper;
 import th.or.nectec.tanrabad.survey.utils.GpsUtils;
 import th.or.nectec.tanrabad.survey.utils.MacAddressUtils;
 import th.or.nectec.tanrabad.survey.utils.PlayLocationService;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
-import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
@@ -162,19 +154,6 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         }
     }
 
-    private void showAbortSurveyPrompt() {
-        PromptMessage promptMessage = new AlertDialogPromptMessage(this);
-        promptMessage.setOnCancel(getString(R.string.no), null);
-        promptMessage.setOnConfirm(getString(R.string.yes), new PromptMessage.OnConfirmListener() {
-            @Override
-            public void onConfirm() {
-                TanrabadApp.action().finishSurvey(survey, false);
-                finish();
-            }
-        });
-        promptMessage.show(getString(R.string.abort_survey), getBuildingNameWithPrefix(survey.getSurveyBuilding()));
-    }
-
     private int getResidentCount() {
         String residentCountStr = residentCountView.getText().toString();
         return TextUtils.isEmpty(residentCountStr) ? 0 : Integer.valueOf(residentCountStr);
@@ -204,6 +183,19 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
             if (!eachView.getValue().isValid()) isValid = false;
         }
         return isValid;
+    }
+
+    private void showAbortSurveyPrompt() {
+        PromptMessage promptMessage = new AlertDialogPromptMessage(this);
+        promptMessage.setOnCancel(getString(R.string.no), null);
+        promptMessage.setOnConfirm(getString(R.string.yes), new PromptMessage.OnConfirmListener() {
+            @Override
+            public void onConfirm() {
+                TanrabadApp.action().finishSurvey(survey, false);
+                finish();
+            }
+        });
+        promptMessage.show(getString(R.string.abort_survey), getBuildingNameWithPrefix(survey.getSurveyBuilding()));
     }
 
     private String getBuildingNameWithPrefix(Building building) {
@@ -347,13 +339,6 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         surveyContainerView.startAnimation(getContainerViewAnimation());
     }
 
-    private void buildOutdoorContainerView(ContainerType containerType) {
-        SurveyContainerView surveyContainerView = buildContainerView(containerType);
-        outdoorContainerViews.put(containerType.getId(), surveyContainerView);
-        outdoorContainerLayout.addView(surveyContainerView);
-        surveyContainerView.startAnimation(getContainerViewAnimation());
-    }
-
     private SurveyContainerView buildContainerView(ContainerType containerType) {
         SurveyContainerView surveyContainerView = new SurveyContainerView(SurveyActivity.this);
         surveyContainerView.setContainerType(containerType);
@@ -367,10 +352,15 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         return animation;
     }
 
+    private void buildOutdoorContainerView(ContainerType containerType) {
+        SurveyContainerView surveyContainerView = buildContainerView(containerType);
+        outdoorContainerViews.put(containerType.getId(), surveyContainerView);
+        outdoorContainerLayout.addView(surveyContainerView);
+        surveyContainerView.startAnimation(getContainerViewAnimation());
+    }
+
     @Override
     public void displaySaveSuccess() {
-        if (InternetConnection.isAvailable(this))
-            doPostData();
         TanrabadApp.action().finishSurvey(survey, true);
         finish();
         openSurveyBuildingHistory();
@@ -383,8 +373,6 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     @Override
     public void displayUpdateSuccess() {
-        if (InternetConnection.isAvailable(this))
-            doPutData();
         finish();
         openSurveyBuildingHistory();
     }
@@ -392,23 +380,6 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     @Override
     public void displayUpdateFail() {
         Alert.mediumLevel().show(R.string.save_fail);
-    }
-
-    private void doPutData() {
-        SurveyUpdateJob surveyUpdateJob = new SurveyUpdateJob();
-        surveyUpdateJob.addJob(new PostDataJob<>(new DbPlaceRepository(this), new PlaceRestService()));
-        surveyUpdateJob.addJob(new PostDataJob<>(new DbBuildingRepository(this), new BuildingRestService()));
-        surveyUpdateJob.addJob(new PostDataJob<>(new DbSurveyRepository(this), new SurveyRestService()));
-        surveyUpdateJob.addJob(new PutDataJob<>(new DbSurveyRepository(this), new SurveyRestService()));
-        surveyUpdateJob.start();
-    }
-
-    private void doPostData() {
-        SurveyUpdateJob surveyUpdateJob = new SurveyUpdateJob();
-        surveyUpdateJob.addJob(new PostDataJob<>(new DbPlaceRepository(this), new PlaceRestService()));
-        surveyUpdateJob.addJob(new PostDataJob<>(new DbBuildingRepository(this), new BuildingRestService()));
-        surveyUpdateJob.addJob(new PostDataJob<>(new DbSurveyRepository(this), new SurveyRestService()));
-        surveyUpdateJob.start();
     }
 
     private void openSurveyBuildingHistory() {

@@ -42,11 +42,15 @@ import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
+import th.or.nectec.tanrabad.survey.job.AbsJobRunner;
+import th.or.nectec.tanrabad.survey.job.Job;
+import th.or.nectec.tanrabad.survey.job.SyncJobBuilder;
 import th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerSurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
+import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
 import th.or.nectec.tanrabad.survey.utils.showcase.BaseShowcase;
 import th.or.nectec.tanrabad.survey.utils.showcase.ShowcaseFactory;
 
@@ -80,6 +84,9 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
         setupBuildingHistoryList();
         setupEmptyLayout();
         showSurveyBuildingHistoryList();
+
+        if (InternetConnection.isAvailable(this))
+            SyncJobBuilder.build(new SurveyUpdateJob()).start();
     }
 
     private void setupView() {
@@ -218,6 +225,30 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
     public void onBackPressed() {
         TanrabadApp.action().finishSurvey(place, false);
         openMainActivity();
+    }
+
+    public class SurveyUpdateJob extends AbsJobRunner {
+
+        @Override
+        protected void onJobError(Job errorJob, Exception exception) {
+            super.onJobError(errorJob, exception);
+            TanrabadApp.log(exception);
+        }
+
+        @Override
+        protected void onJobStart(Job startingJob) {
+
+        }
+
+        @Override
+        protected void onRunFinish() {
+            if (errorJobs() == 0) {
+                Alert.mediumLevel().show(R.string.upload_data_success);
+            } else {
+                Alert.mediumLevel().show(R.string.upload_data_failure);
+            }
+            showSurveyBuildingHistoryList();
+        }
     }
 }
 

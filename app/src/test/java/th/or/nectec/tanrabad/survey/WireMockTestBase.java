@@ -19,7 +19,7 @@ package th.or.nectec.tanrabad.survey;
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import org.junit.Before;
-import org.junit.Rule;
+import org.junit.ClassRule;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.presenter.AccountUtils;
 
@@ -32,8 +32,8 @@ public class WireMockTestBase {
     public static final int HTTP_PORT = 8089;
     public static final String HTTP_LOCALHOST_8089 = "http://localhost:" + HTTP_PORT;
 
-    @Rule
-    public WireMockRule wireMockRule = new WireMockRule(HTTP_PORT);
+    @ClassRule
+    public static WireMockRule wireMockRule = new WireMockRule(HTTP_PORT);
 
     @Before
     public void setUp() throws Exception {

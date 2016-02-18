@@ -18,20 +18,15 @@
 package th.or.nectec.tanrabad.survey;
 
 
-import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.junit.Rule;
 import org.junit.Test;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.junit.Assert.assertEquals;
 
 public class OkHttpTest extends WireMockTestBase {
-
-    @Rule
-    public WireMockRule wireMockRule = new WireMockRule(HTTP_PORT);
 
     OkHttpClient client = new OkHttpClient();
 

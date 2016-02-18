@@ -22,7 +22,6 @@
 
     <include layout="@layout/list_item_place"/>
 
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,6 +29,6 @@
         android:id="@+id/view_survey_result_button"
         android:drawableLeft="@mipmap/ic_report"
         android:drawablePadding="@dimen/space_between_content"
-        android:layout_marginRight="@dimen/space_between_content"
+        android:layout_marginRight="@dimen/list_padding_right"
         android:layout_gravity="center_vertical|right"/>
 </FrameLayout>

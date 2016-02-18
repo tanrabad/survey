@@ -17,9 +17,10 @@
 
 package th.or.nectec.tanrabad.survey.service;
 
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.BuildConfig;
 import th.or.nectec.tanrabad.survey.presenter.AccountUtils;

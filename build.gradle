@@ -64,7 +64,7 @@ ext {
     robolectricVersion = "3.0"
     wiremockVersion = "1.57"
     slf4jVersion = "1.6.4"
-    okHttpVersion = "2.7.0"
+    okHttpVersion = "3.1.2"
     dexmakerVersion = "1.2"
 }
 

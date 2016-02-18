@@ -19,9 +19,9 @@ package th.or.nectec.tanrabad.survey;
 
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -92,6 +92,5 @@ public class OkHttpTest extends WireMockTestBase {
         assertEquals(false, res.isSuccessful());
         assertEquals("0", res.header(CONTENT_LENGTH));
         assertEquals("", res.body().string());
-
     }
 }

@@ -42,9 +42,7 @@ import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
-import th.or.nectec.tanrabad.survey.job.AbsJobRunner;
-import th.or.nectec.tanrabad.survey.job.Job;
-import th.or.nectec.tanrabad.survey.job.SyncJobBuilder;
+import th.or.nectec.tanrabad.survey.job.*;
 import th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerSurveyRepository;
@@ -228,10 +226,21 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
 
     public class SurveyUpdateJob extends AbsJobRunner {
 
+        int successCount = 0;
+
         @Override
         protected void onJobError(Job errorJob, Exception exception) {
             super.onJobError(errorJob, exception);
             TanrabadApp.log(exception);
+        }
+
+        @Override
+        protected void onJobDone(Job job) {
+            super.onJobDone(job);
+            if (job instanceof PostDataJob)
+                successCount += ((PostDataJob) job).getSuccessCount();
+            else if (job instanceof PutDataJob)
+                successCount += ((PutDataJob) job).getSuccessCount();
         }
 
         @Override
@@ -241,9 +250,9 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
 
         @Override
         protected void onRunFinish() {
-            if (errorJobs() == 0) {
+            if (errorJobs() == 0 && successCount > 0) {
                 Alert.mediumLevel().show(R.string.upload_data_success);
-            } else {
+            } else if (errorJobs() > 0) {
                 Alert.mediumLevel().show(R.string.upload_data_failure);
             }
             showSurveyBuildingHistoryList();

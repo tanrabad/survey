@@ -324,15 +324,18 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
         }
 
         private void getFirstOfSameLevelKeyContainer(JsonKeyContainer keyContainer, LinearLayout container) {
-            if (keyContainer.containerName == null)
+            if (keyContainer.containerId == null && keyContainer.containerName == null)
                 return;
-            String[] sameLevelKeyContainer = keyContainer.containerName.split(", ");
-            container.addView(buildKeyContainerView(sameLevelKeyContainer[0]));
+
+            String[] sameLevelKeyContainerId = keyContainer.containerId.split(", ");
+            String[] sameLevelKeyContainerName = keyContainer.containerName.split(", ");
+            container.addView(buildKeyContainerView(Integer.valueOf(sameLevelKeyContainerId[0]),
+                    sameLevelKeyContainerName[0]));
         }
 
-        private KeyContainerView buildKeyContainerView(String containerName) {
+        private KeyContainerView buildKeyContainerView(int containerId, String containerName) {
             KeyContainerView keyContainerView = new KeyContainerView(getContext());
-            keyContainerView.setContainerType(containerName);
+            keyContainerView.setContainerType(containerId, containerName);
             return keyContainerView;
         }
     }

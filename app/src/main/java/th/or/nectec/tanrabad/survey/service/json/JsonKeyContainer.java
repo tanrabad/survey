@@ -9,6 +9,9 @@ public class JsonKeyContainer {
     @JsonField
     public int rank;
 
+    @JsonField(name = "container_id")
+    public String containerId;
+
     @JsonField(name = "container_name")
     public String containerName;
 
@@ -16,6 +19,7 @@ public class JsonKeyContainer {
     public String toString() {
         return "JsonKeyContainer{" +
                 "rank=" + rank +
+                ", containerId='" + containerId + '\'' +
                 ", containerName='" + containerName + '\'' +
                 '}';
     }

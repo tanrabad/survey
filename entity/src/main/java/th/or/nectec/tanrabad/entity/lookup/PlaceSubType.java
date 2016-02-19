@@ -20,7 +20,7 @@ package th.or.nectec.tanrabad.entity.lookup;
 import th.or.nectec.tanrabad.entity.Entity;
 
 public class PlaceSubType extends Entity {
-
+    public static final int ชุมชนแออัด = 10;
     public static final int TEMPLE = 13;
     public static final int CHURCH = 14;
     public static final int MOSQUE = 15;

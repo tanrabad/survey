@@ -33,7 +33,9 @@ import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.entity.field.Location;
+import th.or.nectec.tanrabad.entity.lookup.PlaceSubType;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
+import th.or.nectec.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
 import th.or.nectec.tanrabad.survey.utils.time.ThaiDateTimeConverter;
 
 import java.util.ArrayList;
@@ -80,7 +82,9 @@ public class DbPlaceRepositoryTest {
         assertEquals(1, cursor.getCount());
         assertEquals(place.getId().toString(), cursor.getString(cursor.getColumnIndex(PlaceColumn.ID)));
         assertEquals(place.getName(), cursor.getString(cursor.getColumnIndex(PlaceColumn.NAME)));
-        assertEquals(place.getType(), PlaceTypeMapper.getInstance().findBySubType(cursor.getInt(cursor.getColumnIndex(PlaceColumn.SUBTYPE_ID))));
+        assertEquals(place.getType(), BrokerPlaceSubTypeRepository.getInstance()
+                .findById(cursor.getInt(cursor.getColumnIndex(PlaceColumn.SUBTYPE_ID)))
+                .getPlaceTypeId());
         assertEquals(place.getSubType(), cursor.getInt(cursor.getColumnIndex(PlaceColumn.SUBTYPE_ID)));
         assertEquals(stubUser().getUsername(), cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_BY)));
         assertEquals(updateTime, ThaiDateTimeConverter.convert(cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_TIME))));
@@ -92,7 +96,7 @@ public class DbPlaceRepositoryTest {
     private Place getPlace() {
         Place place = new Place(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5f"), "หมู่บ้านทดสอบ");
         place.setSubdistrictCode("120202");
-        place.setSubType(PlaceTypeMapper.ชุมชนแออัด);
+        place.setSubType(PlaceSubType.ชุมชนแออัด);
         place.setType(PlaceType.VILLAGE_COMMUNITY);
         place.setLocation(new Location(10.200000f, 100.100000f));
         place.setUpdateBy(stubUser());
@@ -131,7 +135,7 @@ public class DbPlaceRepositoryTest {
     public void testUpdate() throws Exception {
         Place place = new Place(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"), "หมู่บ้านทดสอบ");
         place.setSubdistrictCode("120202");
-        place.setSubType(PlaceTypeMapper.ชุมชนแออัด);
+        place.setSubType(PlaceSubType.ชุมชนแออัด);
         place.setType(PlaceType.VILLAGE_COMMUNITY);
         place.setLocation(new Location(10.200000f, 100.100000f));
         place.setUpdateBy(stubUser());

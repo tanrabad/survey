@@ -288,7 +288,8 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
 
         private void setSurveyNotFoundCount(JsonEntomology jsonEntomology) {
             surveyNotFoundCountView.setText(String.format(getString(R.string.survey_not_found_count),
-                    jsonEntomology.numSurveyedHouses - jsonEntomology.numFoundHouses));
+                    jsonEntomology.numSurveyedHouses - jsonEntomology.numFoundHouses
+                            - jsonEntomology.numNoContainerHouses));
         }
 
         private void setNoContainerHouseCount(JsonEntomology jsonEntomology) {

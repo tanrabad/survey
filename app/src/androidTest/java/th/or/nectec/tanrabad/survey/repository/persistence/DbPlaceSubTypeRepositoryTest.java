@@ -93,7 +93,7 @@ public class DbPlaceSubTypeRepositoryTest {
 
     @Test
     public void testFindByID() throws Exception {
-        PlaceSubType placeSubType = dbPlaceSubTypeRepository.findByID(13);
+        PlaceSubType placeSubType = dbPlaceSubTypeRepository.findById(13);
 
         assertEquals(13, placeSubType.getId());
         assertEquals("วัด", placeSubType.getName());
@@ -102,7 +102,7 @@ public class DbPlaceSubTypeRepositoryTest {
 
     @Test
     public void testFindByPlaceTypeID() throws Exception {
-        List<PlaceSubType> placeSubTypeList = dbPlaceSubTypeRepository.findByPlaceTypeID(4);
+        List<PlaceSubType> placeSubTypeList = dbPlaceSubTypeRepository.findByPlaceTypeId(4);
 
         assertEquals(9, placeSubTypeList.size());
         PlaceSubType placeType0 = placeSubTypeList.get(0);

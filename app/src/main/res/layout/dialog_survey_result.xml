@@ -1,58 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:contentDescription="@null"
-        android:src="@mipmap/ic_cloud"
-        android:id="@+id/cloud_icon"
-        android:padding="@dimen/wide_space_between_content"
-        android:layout_alignParentEnd="true"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/survey_result"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textIsSelectable="false"
-        android:paddingTop="@dimen/text_padding"
-        android:paddingLeft="@dimen/text_padding"
-        android:layout_toLeftOf="@id/cloud_icon"
-        android:id="@+id/survey_result_title" android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="14 ก.พ. 2559"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textIsSelectable="false"
-        android:paddingLeft="@dimen/text_padding"
-        android:paddingBottom="@dimen/text_padding"
-        android:layout_below="@id/survey_result_title"
-        android:id="@+id/survey_date"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+    <include layout="@layout/survey_result_header"/>
 
     <include layout="@layout/entomology_place_info"
              android:id="@+id/place_info_layout"/>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="450dp">
+        <include layout="@layout/entomology_data_info"/>
+        <include layout="@layout/entomology_loading"/>
+    </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="450dp"
-        android:layout_below="@id/place_info_layout">
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:id="@+id/report_update_layout">
 
-        <include layout="@layout/entomology_data_info"/>
-
-        <include layout="@layout/entomology_loading"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/report_update_title"
+            android:paddingRight="@dimen/space_between_content"
+            android:text="@string/process_time"/>
+        <th.or.nectec.tanrabad.survey.presenter.view.RelativeTimeAgoTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/report_update"
+            android:layout_toRightOf="@id/report_update_title"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            tools:text="เมื่อวานนี้ 21:30"/>
     </RelativeLayout>
 
     <Button
@@ -61,6 +44,5 @@
         android:minHeight="64dp"
         android:text="@string/got_it"
         android:id="@+id/got_it"
-        style="@style/ButtonTanrabad"
-        android:layout_below="@id/container"/>
-</RelativeLayout>
+        style="@style/ButtonTanrabad"/>
+</LinearLayout>

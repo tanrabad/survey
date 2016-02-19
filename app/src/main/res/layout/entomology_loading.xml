@@ -9,8 +9,10 @@
         android:layout_centerInParent="true"
         android:layout_height="100dp"/>
     <TextView
+        android:drawableTop="@drawable/sad_cloud"
         android:id="@+id/error_msg"
         style="@style/EntomologyText"
+        android:gravity="center"
         android:layout_centerInParent="true"
         android:textIsSelectable="false"
         tools:text="@string/cannot_view_survey_result"/>

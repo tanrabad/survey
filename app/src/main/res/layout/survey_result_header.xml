@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/text_padding"
+                android:paddingBottom="@dimen/text_padding"
+                tools:showIn="@layout/dialog_survey_result">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@null"
+        android:src="@mipmap/ic_cloud"
+        android:id="@+id/cloud_icon"
+        android:padding="@dimen/wide_space_between_content"
+        android:layout_centerVertical="true" android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                  android:layout_centerVertical="true"
+                  android:layout_toLeftOf="@id/cloud_icon">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/survey_result"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textIsSelectable="false"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="14 ก.พ. 2559"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textIsSelectable="false"
+            android:id="@+id/survey_date"/>
+    </LinearLayout>
+
+</RelativeLayout>

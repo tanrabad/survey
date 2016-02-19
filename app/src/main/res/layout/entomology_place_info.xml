@@ -6,7 +6,6 @@
     android:layout_height="wrap_content"
     android:layout_marginLeft="@dimen/screen_horizontal_margin"
     android:layout_marginRight="@dimen/screen_horizontal_margin"
-    android:layout_below="@id/survey_date"
     android:layout_marginBottom="@dimen/screen_vertical_margin"
     tools:showIn="@layout/dialog_survey_result">
     <ImageView

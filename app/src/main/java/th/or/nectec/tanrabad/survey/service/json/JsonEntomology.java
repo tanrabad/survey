@@ -62,6 +62,9 @@ public class JsonEntomology {
     @JsonField(name = "num_found_containers")
     public int numFoundContainers;
 
+    @JsonField(name = "report_update")
+    public String reportUpdate;
+
     @JsonField(name = "date_surveyed", typeConverter = UnixThaiDateTimeConverter.class)
     public DateTime dateSurveyed;
 

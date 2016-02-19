@@ -37,6 +37,7 @@ import th.or.nectec.tanrabad.survey.job.EntomologyJob;
 import th.or.nectec.tanrabad.survey.job.Job;
 import th.or.nectec.tanrabad.survey.job.SyncJobBuilder;
 import th.or.nectec.tanrabad.survey.presenter.view.KeyContainerView;
+import th.or.nectec.tanrabad.survey.presenter.view.RelativeTimeAgoTextView;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
 import th.or.nectec.tanrabad.survey.repository.persistence.DbDistrictRepository;
@@ -46,6 +47,7 @@ import th.or.nectec.tanrabad.survey.service.json.JsonEntomology;
 import th.or.nectec.tanrabad.survey.service.json.JsonKeyContainer;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
 import th.or.nectec.tanrabad.survey.utils.time.ThaiDatePrinter;
+import th.or.nectec.tanrabad.survey.utils.time.ThaiDateTimeConverter;
 import th.or.nectec.thai.address.AddressPrinter;
 
 import java.text.DecimalFormat;
@@ -59,9 +61,11 @@ public class SurveyResultDialogFragment extends DialogFragment {
     public static final String HOUSE = "บ้าน";
     LinearLayout placeInfoLayout;
     RelativeLayout surveyResultLayout;
+    RelativeLayout reportUpdateLayout;
     ImageView placeIconView;
     TextView placeSubTypeView;
     TextView surveyDateView;
+    RelativeTimeAgoTextView resultUpdateView;
     TextView placeNameView;
     TextView addressView;
     TextView houseIndexView;
@@ -98,6 +102,7 @@ public class SurveyResultDialogFragment extends DialogFragment {
 
     private void assignViews(View view) {
         surveyResultLayout = (RelativeLayout) view.findViewById(R.id.result_layout);
+        reportUpdateLayout = (RelativeLayout) view.findViewById(R.id.report_update_layout);
         placeInfoLayout = (LinearLayout) view.findViewById(R.id.place_info_layout);
         placeIconView = (ImageView) view.findViewById(R.id.place_icon);
         placeSubTypeView = (TextView) view.findViewById(R.id.place_type);
@@ -116,6 +121,7 @@ public class SurveyResultDialogFragment extends DialogFragment {
         progressBar = (ContentLoadingProgressBar) view.findViewById(R.id.loading);
         errorMsgView = (TextView) view.findViewById(R.id.error_msg);
         surveyDateView = (TextView) view.findViewById(R.id.survey_date);
+        resultUpdateView = (RelativeTimeAgoTextView) view.findViewById(R.id.report_update);
 
         gotIt = (Button) view.findViewById(R.id.got_it);
         gotIt.setOnClickListener(new View.OnClickListener() {
@@ -158,6 +164,7 @@ public class SurveyResultDialogFragment extends DialogFragment {
     }
 
     private void showErrorMessageView() {
+        reportUpdateLayout.setVisibility(View.INVISIBLE);
         surveyResultLayout.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
         errorMsgView.setVisibility(View.VISIBLE);
@@ -168,6 +175,7 @@ public class SurveyResultDialogFragment extends DialogFragment {
     }
 
     private void showProgressBar() {
+        reportUpdateLayout.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.VISIBLE);
         errorMsgView.setVisibility(View.GONE);
         surveyResultLayout.setVisibility(View.GONE);
@@ -175,7 +183,6 @@ public class SurveyResultDialogFragment extends DialogFragment {
     }
 
     private void hideKeyContainerLayout() {
-        getView().findViewById(R.id.key_container_title).setVisibility(View.GONE);
         getView().findViewById(R.id.indoor_title).setVisibility(View.GONE);
         getView().findViewById(R.id.outdoor_title).setVisibility(View.GONE);
         indoorContainerLayout.setVisibility(View.GONE);
@@ -210,6 +217,7 @@ public class SurveyResultDialogFragment extends DialogFragment {
             progressBar.setVisibility(View.GONE);
             gotIt.setEnabled(true);
             if (errorJobs() == 0 && entomology != null) {
+                reportUpdateLayout.setVisibility(View.VISIBLE);
                 surveyResultLayout.setVisibility(View.VISIBLE);
                 updateEntomologyInfo(entomology);
             } else {
@@ -221,6 +229,7 @@ public class SurveyResultDialogFragment extends DialogFragment {
         private void updateEntomologyInfo(JsonEntomology jsonEntomology) {
             boolean isVillage = isVillage(jsonEntomology);
             surveyDateView.setText(ThaiDatePrinter.print(jsonEntomology.dateSurveyed));
+            resultUpdateView.setTime(ThaiDateTimeConverter.convert(jsonEntomology.reportUpdate));
             setSurveyIndex(jsonEntomology, isVillage);
             setSurveyCount(jsonEntomology, isVillage);
             setSurveyFoundCount(jsonEntomology, isVillage);

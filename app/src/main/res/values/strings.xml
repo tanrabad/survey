@@ -168,6 +168,7 @@
         แล้วลองอีกครั้ง
     </string>
     <string name="error_rest_service">มีปัญหาภายในระบบ</string>
+    <string name="process_time">ประมวลผลเมื่อ</string>
 
 
 </resources>

@@ -62,6 +62,9 @@ public class JsonEntomology {
     @JsonField(name = "num_found_containers")
     public int numFoundContainers;
 
+    @JsonField(name = "duplicate_survey")
+    public int numDuplicateSurvey;
+
     @JsonField(name = "report_update")
     public String reportUpdate;
 

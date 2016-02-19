@@ -73,6 +73,8 @@ public class SurveyResultDialogFragment extends DialogFragment {
     TextView breteauIndexView;
     TextView surveyCountView;
     TextView surveyFoundCountView;
+    TextView surveyNotFoundCountView;
+    TextView surveyDuplicateView;
     TextView noContainerHousesView;
     TextView containerCountView;
     LinearLayout indoorContainerLayout;
@@ -114,7 +116,9 @@ public class SurveyResultDialogFragment extends DialogFragment {
         breteauIndexView = (TextView) view.findViewById(R.id.breteau_index);
         surveyCountView = (TextView) view.findViewById(R.id.survey_count);
         surveyFoundCountView = (TextView) view.findViewById(R.id.survey_found_count);
+        surveyNotFoundCountView = (TextView) view.findViewById(R.id.survey_not_found_count);
         noContainerHousesView = (TextView) view.findViewById(R.id.no_container_houses);
+        surveyDuplicateView = (TextView) view.findViewById(R.id.survey_duplicate_count);
         containerCountView = (TextView) view.findViewById(R.id.container_count);
         indoorContainerLayout = (LinearLayout) view.findViewById(R.id.indoor_container);
         outdoorContainerLayout = (LinearLayout) view.findViewById(R.id.outdoor_container);
@@ -183,6 +187,7 @@ public class SurveyResultDialogFragment extends DialogFragment {
     }
 
     private void hideKeyContainerLayout() {
+        getView().findViewById(R.id.key_container_title).setVisibility(View.GONE);
         getView().findViewById(R.id.indoor_title).setVisibility(View.GONE);
         getView().findViewById(R.id.outdoor_title).setVisibility(View.GONE);
         indoorContainerLayout.setVisibility(View.GONE);
@@ -232,8 +237,10 @@ public class SurveyResultDialogFragment extends DialogFragment {
             resultUpdateView.setTime(ThaiDateTimeConverter.convert(jsonEntomology.reportUpdate));
             setSurveyIndex(jsonEntomology, isVillage);
             setSurveyCount(jsonEntomology, isVillage);
-            setSurveyFoundCount(jsonEntomology, isVillage);
-            setNoContainerHouseCount(jsonEntomology, isVillage);
+            setSurveyFoundCount(jsonEntomology);
+            setSurveyNotFoundCount(jsonEntomology);
+            setNoContainerHouseCount(jsonEntomology);
+            setDuplicateSurveyCount(jsonEntomology);
             setSurveyContainerCount(jsonEntomology);
             setKeyContainerInfo(jsonEntomology);
         }
@@ -260,19 +267,29 @@ public class SurveyResultDialogFragment extends DialogFragment {
                     isVillage ? HOUSE : BUILDING, jsonEntomology.numSurveyedHouses));
         }
 
-        private void setSurveyFoundCount(JsonEntomology jsonEntomology, boolean isVillage) {
+        private void setSurveyFoundCount(JsonEntomology jsonEntomology) {
             surveyFoundCountView.setText(String.format(getString(R.string.survey_found_count),
-                    isVillage ? HOUSE : BUILDING, jsonEntomology.numFoundHouses));
+                    jsonEntomology.numFoundHouses));
         }
 
-        private void setNoContainerHouseCount(JsonEntomology jsonEntomology, boolean isVillage) {
+        private void setSurveyNotFoundCount(JsonEntomology jsonEntomology) {
+            surveyNotFoundCountView.setText(String.format(getString(R.string.survey_not_found_count),
+                    jsonEntomology.numSurveyedHouses - jsonEntomology.numFoundHouses));
+        }
+
+        private void setNoContainerHouseCount(JsonEntomology jsonEntomology) {
             noContainerHousesView.setText(String.format(getString(R.string.no_container_houses),
-                    isVillage ? HOUSE : BUILDING, jsonEntomology.numNoContainerHouses));
+                    jsonEntomology.numNoContainerHouses));
         }
 
         private void setSurveyContainerCount(JsonEntomology jsonEntomology) {
             containerCountView.setText(String.format(getString(R.string.survey_container_count),
                     jsonEntomology.numSurveyedContainer, jsonEntomology.numFoundContainers));
+        }
+
+        private void setDuplicateSurveyCount(JsonEntomology jsonEntomology) {
+            surveyDuplicateView.setText(String.format(getString(R.string.duplicate_survey_count),
+                    jsonEntomology.numDuplicateSurvey));
         }
 
         private void setKeyContainerInfo(JsonEntomology jsonEntomology) {

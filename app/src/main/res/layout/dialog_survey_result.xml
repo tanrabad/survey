@@ -11,7 +11,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="450dp">
+        android:layout_height="wrap_content"
+        android:minHeight="500dp">
         <include layout="@layout/entomology_data_info"/>
         <include layout="@layout/entomology_loading"/>
     </RelativeLayout>

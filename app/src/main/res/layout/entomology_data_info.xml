@@ -39,19 +39,34 @@
         tools:text="บ้านที่สำรวจทั้งหมด 100 หลัง"
         android:id="@+id/survey_count" android:layout_below="@id/house_index" style="@style/EntomologyText"/>
     <TextView
-        tools:text="บ้านที่พบลูกน้ำ 9 หลัง"
+        android:paddingLeft="@dimen/wide_space_between_content"
+        tools:text="- บ้านที่พบลูกน้ำ 9 หลัง"
         android:textIsSelectable="false"
         android:id="@+id/survey_found_count" android:layout_below="@+id/survey_count"
         style="@style/EntomologyText"/>
     <TextView
+        android:paddingLeft="@dimen/wide_space_between_content"
+        tools:text="- บ้านที่ไม่พบลูกน้ำ 9 หลัง"
         android:textIsSelectable="false"
-        tools:text="บ้านที่ไม่มีภาชนะขังน้ำ 10 หลัง"
-        android:id="@+id/no_container_houses" android:layout_below="@+id/survey_found_count"
+        android:id="@+id/survey_not_found_count" android:layout_below="@+id/survey_found_count"
         style="@style/EntomologyText"/>
     <TextView
+        android:paddingLeft="@dimen/wide_space_between_content"
+        android:textIsSelectable="false"
+        tools:text="- บ้านที่ไม่มีภาชนะขังน้ำ 10 หลัง"
+        android:id="@+id/no_container_houses" android:layout_below="@+id/survey_not_found_count"
+        style="@style/EntomologyText"/>
+    <TextView
+        android:paddingLeft="@dimen/wide_space_between_content"
+        android:textIsSelectable="false"
+        tools:text="- บ้านที่สำรวจซ้ำ 10 หลัง"
+        android:id="@+id/survey_duplicate_count" android:layout_below="@+id/no_container_houses"
+        style="@style/EntomologyText"/>
+    <TextView
+        android:paddingTop="@dimen/wide_space_between_content"
         tools:text="ภาชนะสำรวจทั้งหมด 1000 พบ 50"
         android:id="@+id/container_count"
-        android:layout_below="@+id/no_container_houses"
+        android:layout_below="@+id/survey_duplicate_count"
         android:textIsSelectable="false"
         android:layout_marginBottom="@dimen/screen_vertical_margin" style="@style/EntomologyText"/>
     <TextView

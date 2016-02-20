@@ -16,11 +16,13 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
           package="th.or.nectec.tanrabad.survey">
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
@@ -47,6 +49,10 @@
         <meta-data
                 android:name="io.fabric.ApiKey"
                 android:value="985b93fe45ed65dc37e25e81a8c5ce5ba9c217fa"/>
+
+        <meta-data
+                android:name="com.google.android.gms.analytics.globalConfigResource"
+                android:resource="@xml/analytics_global_config"/>
 
         <provider
                 android:name=".presenter.PlaceSuggestionProvider"

@@ -24,6 +24,7 @@ buildscript {
     dependencies {
         classpath "io.fabric.tools:gradle:1.20.1"
         classpath "com.neenbedankt.gradle.plugins:android-apt:1.8"
+        classpath 'com.google.gms:google-services:2.0.0-alpha6'
     }
 }
 
@@ -148,6 +149,7 @@ dependencies {
     compile "com.android.support:percent:$supportLibVersion"
     compile "com.google.android.gms:play-services-location:$playServicesVersion"
     compile "com.google.android.gms:play-services-maps:$playServicesVersion"
+    compile "com.google.android.gms:play-services-analytics:$playServicesVersion"
     compile("com.google.maps.android:android-maps-utils:$androidMapUtilsVersion") {
         exclude(group: "com.google.android.gms")
     }
@@ -181,5 +183,8 @@ dependencies {
         exclude module: "mockito-core"
     }
 }
+
+
+apply plugin: 'com.google.gms.google-services'
 
 configurations.all { resolutionStrategy.force "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"}

@@ -32,73 +32,90 @@ public class UserTest {
     public static final String AUSTIN_LASTNAME = "Kydd";
     public static final String AUSTIN_EMAIL = "austin.k@gmail.com";
     public static final int AUSTIN_ORGANIZATION_ID = 201;
-    private final User austin1 = new User(AUSTIN_USERNAME);
+    private final User austin = new User(AUSTIN_USERNAME);
     private final User austin2 = new User(AUSTIN_USERNAME);
 
     @Test
     public void testSetThenGetFirstname() {
-        austin1.setFirstname(AUSTIN_FIRSTNAME);
-        assertEquals(AUSTIN_FIRSTNAME, austin1.getFirstname());
+        austin.setFirstname(AUSTIN_FIRSTNAME);
+
+        assertEquals(AUSTIN_FIRSTNAME, austin.getFirstname());
     }
 
     @Test
     public void testSetThenGetLastname() {
-        austin1.setLastname(AUSTIN_LASTNAME);
-        assertEquals(AUSTIN_LASTNAME, austin1.getLastname());
+        austin.setLastname(AUSTIN_LASTNAME);
+
+        assertEquals(AUSTIN_LASTNAME, austin.getLastname());
     }
 
     @Test
     public void setThenGetEmail() {
-        austin1.setEmail(AUSTIN_EMAIL);
-        assertEquals(AUSTIN_EMAIL, austin1.getEmail());
+        austin.setEmail(AUSTIN_EMAIL);
+
+        assertEquals(AUSTIN_EMAIL, austin.getEmail());
     }
 
     @Test
     public void testSetThenGetOrganizationId() {
-        austin1.setOrganizationId(AUSTIN_ORGANIZATION_ID);
-        assertEquals(AUSTIN_ORGANIZATION_ID, austin1.getOrganizationId());
+        austin.setOrganizationId(AUSTIN_ORGANIZATION_ID);
+
+        assertEquals(AUSTIN_ORGANIZATION_ID, austin.getOrganizationId());
     }
 
     @Test
     public void getUsername() {
-        assertEquals(AUSTIN_USERNAME, austin1.getUsername());
+        assertEquals(AUSTIN_USERNAME, austin.getUsername());
     }
 
     @Test
     public void testFromUsername() {
         User austin = User.fromUsername(AUSTIN_USERNAME);
+
         assertEquals(AUSTIN_USERNAME, austin.getUsername());
     }
 
     @Test
     public void userWithDifferentFirstnameMustNotEqual() {
-        austin1.setFirstname(AUSTIN_FIRSTNAME);
+        austin.setFirstname(AUSTIN_FIRSTNAME);
         austin2.setFirstname("Austinno");
-        assertNotEquals(austin1, austin2);
+
+        assertNotEquals(austin, austin2);
     }
 
     @Test
     public void userWithDifferentLastnameMustNotEqual() {
-        austin1.setLastname(AUSTIN_LASTNAME);
+        austin.setLastname(AUSTIN_LASTNAME);
         austin2.setLastname("Butler");
-        assertNotEquals(austin1, austin2);
+
+        assertNotEquals(austin, austin2);
     }
 
     @Test
     public void userWithDifferentOrganizationMustNotEqual() {
-        austin1.setOrganizationId(AUSTIN_ORGANIZATION_ID);
+        austin.setOrganizationId(AUSTIN_ORGANIZATION_ID);
         austin2.setOrganizationId(408);
-        assertNotEquals(austin1, austin2);
+
+        assertNotEquals(austin, austin2);
     }
 
     @Test
     public void userWithTheSameUsernameFirstnameLastnameOrganizationIdMustEqual() {
-        austin1.setFirstname(AUSTIN_FIRSTNAME);
-        austin1.setLastname(AUSTIN_LASTNAME);
-        austin1.setOrganizationId(AUSTIN_ORGANIZATION_ID);
-        austin2.setFirstname(austin1.getFirstname());
-        austin2.setLastname(austin1.getLastname());
-        austin2.setOrganizationId(austin1.getOrganizationId());
-        assertEquals(austin1, austin2);
+        austin.setFirstname(AUSTIN_FIRSTNAME);
+        austin.setLastname(AUSTIN_LASTNAME);
+        austin.setOrganizationId(AUSTIN_ORGANIZATION_ID);
+        austin2.setFirstname(austin.getFirstname());
+        austin2.setLastname(austin.getLastname());
+        austin2.setOrganizationId(austin.getOrganizationId());
+
+        assertEquals(austin, austin2);
+    }
+
+    @Test
+    public void testHashcode() throws Exception {
+        assertEquals(AUSTIN_USERNAME.hashCode(), austin.hashCode());
+
+        User bob = User.fromUsername("bob");
+        assertNotEquals(austin.hashCode(), bob.hashCode());
     }
 }

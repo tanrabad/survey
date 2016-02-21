@@ -34,11 +34,10 @@ import th.or.nectec.tanrabad.survey.repository.BrokerPlaceTypeRepository;
 
 public class FabricTools implements ExceptionLogger, ActionLogger {
 
-    private static final String TAG = "FabricTools";
     private static FabricTools instance;
     private Answers answers;
 
-    private FabricTools(Context context) {
+    protected FabricTools(Context context) {
         init(context);
     }
 
@@ -132,7 +131,6 @@ public class FabricTools implements ExceptionLogger, ActionLogger {
                 .putCustomAttribute("Place Name", place.getName())
                 .putCustomAttribute("Place Type", getPlaceTypeName(place))
                 .putCustomAttribute("Place Sub Type", getPlaceSubTypeName(place)));
-
     }
 
     private String getPlaceTypeName(Place place) {

@@ -19,11 +19,9 @@ package th.or.nectec.tanrabad.survey;
 
 import android.app.Application;
 import android.content.Context;
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.Tracker;
 import th.or.nectec.tanrabad.survey.utils.tool.ActionLogger;
 import th.or.nectec.tanrabad.survey.utils.tool.ExceptionLogger;
-import th.or.nectec.tanrabad.survey.utils.tool.FabricTools;
+import th.or.nectec.tanrabad.survey.utils.tool.GoogleAnalyticsTool;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class TanrabadApp extends Application {
@@ -31,11 +29,6 @@ public class TanrabadApp extends Application {
     private static ExceptionLogger exceptionLogger;
     private static ActionLogger actionLogger;
     private static TanrabadApp instance;
-    private static Tracker tracker;
-
-    public static Tracker tracker() {
-        return tracker;
-    }
 
     public static ActionLogger action() {
         return actionLogger;
@@ -58,33 +51,15 @@ public class TanrabadApp extends Application {
         super.onCreate();
         instance = this;
         setupAnalysisTools();
-        setupTracker();
         setupDefaultFont();
     }
 
     private void setupAnalysisTools() {
-        FabricTools fabricTools = FabricTools.getInstance(this);
-        exceptionLogger = fabricTools;
-        actionLogger = fabricTools;
+        GoogleAnalyticsTool logger = GoogleAnalyticsTool.getInstance(this);
+        exceptionLogger = logger;
+        actionLogger = logger;
     }
 
-    private void setupTracker() {
-        GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
-        tracker = analytics.newTracker(BuildConfig.BUILD_TYPE.equals("beta")
-                ? R.xml.global_tracker
-                : R.xml.analytics_global_config);
-        tracker.setAppId(getString(R.string.google_app_id));
-        tracker.setAppVersion(getString(R.string.app_version));
-        tracker.setAppName(getString(R.string.app_name));
-        tracker.setSessionTimeout(15 * 60 * 1000);
-        tracker.enableAutoActivityTracking(true);
-
-        if (exceptionLogger != null) {
-            exceptionLogger.log(getString(R.string.ga_trackingId));
-            exceptionLogger.log(getString(R.string.gcm_defaultSenderId));
-            exceptionLogger.log(getString(R.string.google_app_id));
-        }
-    }
 
     private void setupDefaultFont() {
         // must call follow snippet on each activity to make it work!

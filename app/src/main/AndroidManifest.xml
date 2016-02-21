@@ -50,10 +50,6 @@
                 android:name="io.fabric.ApiKey"
                 android:value="985b93fe45ed65dc37e25e81a8c5ce5ba9c217fa"/>
 
-        <meta-data
-                android:name="com.google.android.gms.analytics.globalConfigResource"
-                android:resource="@xml/analytics_global_config"/>
-
         <provider
                 android:name=".presenter.PlaceSuggestionProvider"
                 android:authorities="th.or.nectec.tanrabad.survey.PlaceSuggestionProvider"

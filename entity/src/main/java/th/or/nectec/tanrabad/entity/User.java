@@ -25,7 +25,6 @@ public class User {
     private String email;
     private String healthRegionCode;
     private int organizationId;
-    private UserType type;
 
     public User(String username) {
         this.username = username;
@@ -83,6 +82,12 @@ public class User {
         return username;
     }
 
+
+    @Override
+    public int hashCode() {
+        return username.hashCode();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -112,4 +117,5 @@ public class User {
             return typeName;
         }
     }
+
 }

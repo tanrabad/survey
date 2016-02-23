@@ -13,6 +13,7 @@
         tools:src="@mipmap/ic_place_hospital"
         android:id="@+id/place_icon"
         android:contentDescription="@string/place_icon"
+        android:background="@drawable/bg_icon"
         android:layout_gravity="center_vertical"
         android:layout_marginRight="@dimen/space_between_content"/>
     <RelativeLayout

@@ -38,6 +38,8 @@
     <color name="pink">#F06292</color>
     <color name="pink_transparent_30">#4DF06292</color>
 
+    <color name="without_larvae">#99cb34</color>
+    <color name="have_larvae">#e64536</color>
     <color name="amber_500">#FFC107</color>
 
     <color name="header_place_in_db">#343467</color>

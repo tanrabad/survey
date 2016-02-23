@@ -17,6 +17,7 @@
 
 package th.or.nectec.tanrabad.survey.presenter;
 
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.widget.ContentLoadingProgressBar;
@@ -24,7 +25,15 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import java.text.DecimalFormat;
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.lookup.District;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
@@ -46,12 +55,10 @@ import th.or.nectec.tanrabad.survey.repository.persistence.DbSubdistrictReposito
 import th.or.nectec.tanrabad.survey.service.json.JsonEntomology;
 import th.or.nectec.tanrabad.survey.service.json.JsonKeyContainer;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
+import th.or.nectec.tanrabad.survey.utils.android.ResourceUtils;
 import th.or.nectec.tanrabad.survey.utils.time.ThaiDatePrinter;
 import th.or.nectec.tanrabad.survey.utils.time.ThaiDateTimeConverter;
 import th.or.nectec.thai.address.AddressPrinter;
-
-import java.text.DecimalFormat;
-import java.util.UUID;
 
 public class SurveyResultDialogFragment extends DialogFragment implements View.OnClickListener {
 
@@ -206,6 +213,25 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
         outdoorContainerLayout.setVisibility(View.GONE);
     }
 
+    private void setPlaceBackgroundIcon(JsonEntomology jsonEntomology) {
+        GradientDrawable background = (GradientDrawable) placeIconView.getBackground();
+        int color;
+        if (place.getType() == PlaceType.VILLAGE_COMMUNITY) {
+            if (jsonEntomology.ciValue <= 10)
+                color = ResourceUtils.from(getActivity()).getColor(R.color.without_larvae);
+            else if (jsonEntomology.ciValue <= 50)
+                color = ResourceUtils.from(getActivity()).getColor(R.color.amber_500);
+            else
+                color = ResourceUtils.from(getActivity()).getColor(R.color.have_larvae);
+        } else {
+            if (jsonEntomology.ciValue == 0)
+                color = ResourceUtils.from(getActivity()).getColor(R.color.without_larvae);
+            else
+                color = ResourceUtils.from(getActivity()).getColor(R.color.have_larvae);
+        }
+        background.setColor(color);
+    }
+
     public class SurveyResultJobRunner extends AbsJobRunner {
         private JsonEntomology entomology;
 
@@ -246,9 +272,11 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
         }
 
         private void updateEntomologyInfo(JsonEntomology jsonEntomology) {
-            boolean isVillage = isVillage(jsonEntomology);
+            final boolean isVillage = isVillage(jsonEntomology);
             surveyDateView.setText(ThaiDatePrinter.print(jsonEntomology.dateSurveyed));
             resultUpdateView.setTime(ThaiDateTimeConverter.convert(jsonEntomology.reportUpdate));
+
+            setPlaceBackgroundIcon(jsonEntomology);
             setSurveyIndex(jsonEntomology, isVillage);
             setSurveyCount(jsonEntomology, isVillage);
             setSurveyFoundCount(jsonEntomology);
@@ -324,7 +352,8 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
             }
         }
 
-        private void getFirstOfSameLevelKeyContainer(JsonKeyContainer keyContainer, LinearLayout container) {
+        private void getFirstOfSameLevelKeyContainer(JsonKeyContainer keyContainer,
+                                                     LinearLayout container) {
             if (keyContainer.containerId == null && keyContainer.containerName == null)
                 return;
 

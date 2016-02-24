@@ -32,14 +32,14 @@ public class SyncJobBuilder {
 
     public static AbsJobRunner build(AbsJobRunner runner) {
         SyncJobBuilder syncJobBuilder = new SyncJobBuilder();
-        runner.addJob(syncJobBuilder.placeUpdateJob);
-        runner.addJob(syncJobBuilder.buildingUpdateJob);
         runner.addJob(syncJobBuilder.placePostDataJob);
         runner.addJob(syncJobBuilder.buildingPostDataJob);
         runner.addJob(syncJobBuilder.surveyPostDataJob);
         runner.addJob(syncJobBuilder.placePutDataJob);
         runner.addJob(syncJobBuilder.buildingPutDataJob);
         runner.addJob(syncJobBuilder.surveyPutDataJob);
+        runner.addJob(syncJobBuilder.placeUpdateJob);
+        runner.addJob(syncJobBuilder.buildingUpdateJob);
         return runner;
     }
 }

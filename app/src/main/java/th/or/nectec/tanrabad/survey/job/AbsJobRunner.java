@@ -113,8 +113,5 @@ public abstract class AbsJobRunner implements JobRunner {
                     break;
             }
         }
-
     }
-
-
 }

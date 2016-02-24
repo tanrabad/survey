@@ -191,7 +191,6 @@ public class InitialActivity extends TanrabadActivity {
             showErrorMessage();
             MainActivity.open(InitialActivity.this);
             finish();
-
         }
 
         private void showErrorMessage() {
@@ -201,5 +200,4 @@ public class InitialActivity extends TanrabadActivity {
                 Alert.mediumLevel().show(R.string.error_rest_service);
         }
     }
-
 }

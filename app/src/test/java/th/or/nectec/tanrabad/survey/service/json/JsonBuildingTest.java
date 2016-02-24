@@ -38,26 +38,28 @@ import static org.junit.Assert.assertEquals;
 
 public class JsonBuildingTest {
 
-    private static final String rawBuildingString = "{" +
-            "\"building_id\":\"5cf5665b-5642-10fb-a3a0-5e612a842583\"," +
-            "\"place_id\":\"5cf5665b-5642-10fb-a3a0-5e612a842584\"," +
-            "\"place_type_id\":4," +
-            "\"name\":\"อาคาร 1\"," +
-            "\"location\":{ \"type\": \"Point\", \"coordinates\": [-73.15005, 39.745673]}," +
-            "\"updated_by\":\"dcp-user\"," +
-            "\"update_timestamp\": \"2015-12-24T05:05:19.626Z\"}";
+    private static final String rawBuildingString = "{"
+            + "\"building_id\":\"5cf5665b-5642-10fb-a3a0-5e612a842583\","
+            + "\"place_id\":\"5cf5665b-5642-10fb-a3a0-5e612a842584\","
+            + "\"place_type_id\":4,"
+            + "\"name\":\"อาคาร 1\","
+            + "\"location\":{ \"type\": \"Point\", \"coordinates\": [-73.15005, 39.745673]},"
+            + "\"updated_by\":\"dcp-user\","
+            + "\"active\": true,"
+            + "\"update_timestamp\": \"2015-12-24T05:05:19.626Z\"}";
 
     @Test
     public void testParseToJsonString() throws Exception {
         JsonBuilding jsonBuilding = LoganSquare.parse(rawBuildingString, JsonBuilding.class);
 
-        assertEquals("5cf5665b-5642-10fb-a3a0-5e612a842583", jsonBuilding.buildingID.toString());
-        assertEquals("5cf5665b-5642-10fb-a3a0-5e612a842584", jsonBuilding.placeID.toString());
-        assertEquals(4, jsonBuilding.placeTypeID);
+        assertEquals("5cf5665b-5642-10fb-a3a0-5e612a842583", jsonBuilding.buildingId.toString());
+        assertEquals("5cf5665b-5642-10fb-a3a0-5e612a842584", jsonBuilding.placeId.toString());
+        assertEquals(4, jsonBuilding.placeTypeId);
         assertEquals("อาคาร 1", jsonBuilding.buildingName);
         assertEquals(39.745673, jsonBuilding.location.getLatitude(), 0);
         assertEquals(-73.15005, jsonBuilding.location.getLongitude(), 0);
-        assertEquals(jsonBuilding.updatedBy, jsonBuilding.updatedBy);
+        assertEquals("dcp-user", jsonBuilding.updatedBy);
+        assertEquals(true, jsonBuilding.active);
     }
 
     @Test
@@ -70,15 +72,14 @@ public class JsonBuildingTest {
 
         JsonBuilding jsonBuilding = JsonBuilding.parse(buildingData);
 
-        assertEquals(UUID.nameUUIDFromBytes("123".getBytes()), jsonBuilding.buildingID);
-        assertEquals(stubPlace().getId(), jsonBuilding.placeID);
-        assertEquals(stubPlace().getType(), jsonBuilding.placeTypeID);
+        assertEquals(UUID.nameUUIDFromBytes("123".getBytes()), jsonBuilding.buildingId);
+        assertEquals(stubPlace().getId(), jsonBuilding.placeId);
+        assertEquals(stubPlace().getType(), jsonBuilding.placeTypeId);
         assertEquals("อาคาร 2", jsonBuilding.buildingName);
         assertEquals(39.745673, jsonBuilding.location.getLatitude(), 0);
         assertEquals(-73.15005, jsonBuilding.location.getLongitude(), 0);
-        assertEquals(jsonBuilding.updatedBy, stubUser().getUsername());
+        assertEquals(stubUser().getUsername(), jsonBuilding.updatedBy);
         assertEquals("2015-11-30T17:00:00.000Z", jsonBuilding.updateTime);
-        //assertEquals("", LoganSquare.serialize(jsonBuilding));
     }
 
     @NonNull

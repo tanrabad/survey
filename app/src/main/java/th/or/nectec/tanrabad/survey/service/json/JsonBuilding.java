@@ -34,13 +34,13 @@ import th.or.nectec.tanrabad.survey.utils.time.ThaiDateTimeConverter;
 public class JsonBuilding {
 
     @JsonField(name = "building_id", typeConverter = UuidTypeConverter.class)
-    public UUID buildingID;
+    public UUID buildingId;
 
     @JsonField(name = "place_id", typeConverter = UuidTypeConverter.class)
-    public UUID placeID;
+    public UUID placeId;
 
     @JsonField(name = "place_type_id")
-    public int placeTypeID;
+    public int placeTypeId;
 
     @JsonField(name = "name")
     public String buildingName;
@@ -54,12 +54,15 @@ public class JsonBuilding {
     @JsonField(name = "update_timestamp")
     public String updateTime;
 
+    @JsonField
+    public boolean active;
+
     public static JsonBuilding parse(Building building) {
         JsonBuilding jsonBuilding = new JsonBuilding();
-        jsonBuilding.buildingID = building.getId();
-        jsonBuilding.placeID = building.getPlace().getId();
+        jsonBuilding.buildingId = building.getId();
+        jsonBuilding.placeId = building.getPlace().getId();
         jsonBuilding.buildingName = building.getName();
-        jsonBuilding.placeTypeID = building.getPlace().getType();
+        jsonBuilding.placeTypeId = building.getPlace().getType();
         jsonBuilding.location = GeoJsonPoint.parse(building.getLocation());
         jsonBuilding.updatedBy = building.getUpdateBy();
         jsonBuilding.updateTime = building.getUpdateTimestamp().withZone(DateTimeZone.UTC).toString();
@@ -67,8 +70,8 @@ public class JsonBuilding {
     }
 
     public Building getEntity(PlaceRepository placeRepository, UserRepository userRepository) {
-        Building building = new Building(buildingID, buildingName);
-        building.setPlace(placeRepository.findByUUID(placeID));
+        Building building = new Building(buildingId, buildingName);
+        building.setPlace(placeRepository.findByUUID(placeId));
         Location location = this.location == null ? null : this.location.getEntity();
         building.setLocation(location);
         building.setUpdateBy(updatedBy);

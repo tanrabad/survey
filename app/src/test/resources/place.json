@@ -20,5 +20,6 @@
     ]
   },
   "update_timestamp": "2015-12-24T05:05:19.626Z",
-  "updated_by": "dcp-user"
+  "updated_by": "dcp-user",
+  "active": true
 }

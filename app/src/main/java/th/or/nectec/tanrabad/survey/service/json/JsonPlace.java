@@ -69,6 +69,9 @@ public class JsonPlace {
     @JsonField(name = "update_timestamp")
     public String updateTime;
 
+    @JsonField
+    public boolean active;
+
     public static JsonPlace parse(Place place) {
         JsonPlace jsonPlace = new JsonPlace();
         jsonPlace.placeId = place.getId();

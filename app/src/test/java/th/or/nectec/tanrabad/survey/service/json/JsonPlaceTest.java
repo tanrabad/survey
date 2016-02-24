@@ -56,6 +56,7 @@ public class JsonPlaceTest {
         assertEquals(39.745675, jsonPlace.location.getLatitude(), 0);
         assertEquals(-73.150055, jsonPlace.location.getLongitude(), 0);
         assertEquals("dcp-user", jsonPlace.updatedBy);
+        assertEquals(true, jsonPlace.active);
     }
 
     @Test

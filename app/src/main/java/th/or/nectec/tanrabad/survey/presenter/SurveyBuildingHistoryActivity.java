@@ -90,7 +90,7 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
         showSurveyBuildingHistoryList();
 
         if (InternetConnection.isAvailable(this))
-            SyncJobBuilder.build(new SurveyUpdateJob()).start();
+            new SyncJobBuilder().build(new SurveyUpdateJob()).start();
     }
 
     private void setupView() {

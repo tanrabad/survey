@@ -13,33 +13,32 @@ import th.or.nectec.tanrabad.survey.service.PlaceRestService;
 import th.or.nectec.tanrabad.survey.service.SurveyRestService;
 
 public class SyncJobBuilder {
-    WritableRepoUpdateJob<Place> placeUpdateJob = new WritableRepoUpdateJob<>(
+    public WritableRepoUpdateJob<Place> placeUpdateJob = new WritableRepoUpdateJob<>(
             new PlaceRestService(), BrokerPlaceRepository.getInstance());
-    WritableRepoUpdateJob<Building> buildingUpdateJob = new WritableRepoUpdateJob<>(
+    public WritableRepoUpdateJob<Building> buildingUpdateJob = new WritableRepoUpdateJob<>(
             new BuildingRestService(), BrokerBuildingRepository.getInstance());
-    PostDataJob placePostDataJob = new PostDataJob<>(
+    public PostDataJob placePostDataJob = new PostDataJob<>(
             new DbPlaceRepository(TanrabadApp.getInstance()), new PlaceRestService());
-    PostDataJob buildingPostDataJob = new PostDataJob<>(
+    public PostDataJob buildingPostDataJob = new PostDataJob<>(
             new DbBuildingRepository(TanrabadApp.getInstance()), new BuildingRestService());
-    PostDataJob surveyPostDataJob = new PostDataJob<>(
+    public PostDataJob surveyPostDataJob = new PostDataJob<>(
             new DbSurveyRepository(TanrabadApp.getInstance()), new SurveyRestService());
-    PutDataJob placePutDataJob = new PutDataJob<>(
+    public PutDataJob placePutDataJob = new PutDataJob<>(
             new DbPlaceRepository(TanrabadApp.getInstance()), new PlaceRestService());
-    PutDataJob buildingPutDataJob = new PutDataJob<>(
+    public PutDataJob buildingPutDataJob = new PutDataJob<>(
             new DbBuildingRepository(TanrabadApp.getInstance()), new BuildingRestService());
-    PutDataJob surveyPutDataJob = new PutDataJob<>(
+    public PutDataJob surveyPutDataJob = new PutDataJob<>(
             new DbSurveyRepository(TanrabadApp.getInstance()), new SurveyRestService());
 
-    public static AbsJobRunner build(AbsJobRunner runner) {
-        SyncJobBuilder syncJobBuilder = new SyncJobBuilder();
-        runner.addJob(syncJobBuilder.placePostDataJob);
-        runner.addJob(syncJobBuilder.buildingPostDataJob);
-        runner.addJob(syncJobBuilder.surveyPostDataJob);
-        runner.addJob(syncJobBuilder.placePutDataJob);
-        runner.addJob(syncJobBuilder.buildingPutDataJob);
-        runner.addJob(syncJobBuilder.surveyPutDataJob);
-        runner.addJob(syncJobBuilder.placeUpdateJob);
-        runner.addJob(syncJobBuilder.buildingUpdateJob);
+    public AbsJobRunner build(AbsJobRunner runner) {
+        runner.addJob(placePostDataJob);
+        runner.addJob(buildingPostDataJob);
+        runner.addJob(surveyPostDataJob);
+        runner.addJob(placePutDataJob);
+        runner.addJob(buildingPutDataJob);
+        runner.addJob(surveyPutDataJob);
+        runner.addJob(placeUpdateJob);
+        runner.addJob(buildingUpdateJob);
         return runner;
     }
 }

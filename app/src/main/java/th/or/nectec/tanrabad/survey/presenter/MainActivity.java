@@ -32,7 +32,11 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
+
+import java.util.List;
+
 import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyHistoryChooser;
 import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyHistoryListPresenter;
 import th.or.nectec.tanrabad.entity.Place;
@@ -46,8 +50,6 @@ import th.or.nectec.tanrabad.survey.repository.BrokerSurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.NetworkChangeReceiver;
-
-import java.util.List;
 
 public class MainActivity extends TanrabadActivity implements View.OnClickListener,
         PlaceWithSurveyHistoryListPresenter, AdapterView.OnItemClickListener {
@@ -170,7 +172,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
             case R.id.sync_data:
                 startOrResumeSyncAnimation();
                 findViewById(R.id.sync_data).setEnabled(false);
-                SyncJobBuilder.build(new SyncJobRunner()).start();
+                new SyncJobBuilder().build(new SyncJobRunner()).start();
                 break;
         }
     }

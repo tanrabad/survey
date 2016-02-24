@@ -157,7 +157,7 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
 
     private void startJob(Place place) {
         if (InternetConnection.isAvailable(getContext())) {
-            AbsJobRunner jobRunner = SyncJobBuilder.build(new SurveyResultJobRunner());
+            AbsJobRunner jobRunner = new SyncJobBuilder().build(new SurveyResultJobRunner());
             jsonEntomologyGetDataJob = new EntomologyJob(place);
             jobRunner.addJob(jsonEntomologyGetDataJob);
             jobRunner.start();

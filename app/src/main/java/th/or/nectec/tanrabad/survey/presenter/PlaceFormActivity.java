@@ -23,31 +23,37 @@ import android.os.Bundle;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.TextView;
+
 import com.google.android.gms.maps.SupportMapFragment;
+
 import org.joda.time.DateTime;
-import th.or.nectec.tanrabad.domain.place.*;
+
+import java.util.UUID;
+
+import th.or.nectec.tanrabad.domain.place.PlaceController;
+import th.or.nectec.tanrabad.domain.place.PlacePresenter;
+import th.or.nectec.tanrabad.domain.place.PlaceRepository;
+import th.or.nectec.tanrabad.domain.place.PlaceSavePresenter;
+import th.or.nectec.tanrabad.domain.place.PlaceSaver;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.entity.lookup.PlaceSubType;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
-import th.or.nectec.tanrabad.survey.job.AbsJobRunner;
-import th.or.nectec.tanrabad.survey.job.Job;
-import th.or.nectec.tanrabad.survey.job.PostDataJob;
-import th.or.nectec.tanrabad.survey.job.PutDataJob;
+import th.or.nectec.tanrabad.survey.job.SyncJobRunner;
 import th.or.nectec.tanrabad.survey.presenter.maps.LiteMapFragment;
 import th.or.nectec.tanrabad.survey.presenter.maps.LocationUtils;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.adapter.ThaiWidgetProvinceRepository;
-import th.or.nectec.tanrabad.survey.repository.persistence.DbPlaceRepository;
-import th.or.nectec.tanrabad.survey.service.PlaceRestService;
-import th.or.nectec.tanrabad.survey.service.RestServiceException;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
 import th.or.nectec.tanrabad.survey.utils.android.ResourceUtils;
@@ -58,9 +64,6 @@ import th.or.nectec.tanrabad.survey.validator.UpdatePlaceValidator;
 import th.or.nectec.tanrabad.survey.validator.ValidatorException;
 import th.or.nectec.thai.widget.address.AddressPicker;
 import th.or.nectec.thai.widget.address.AddressPickerDialog;
-
-import java.io.IOException;
-import java.util.UUID;
 
 public class PlaceFormActivity extends TanrabadActivity implements View.OnClickListener,
         PlaceSavePresenter, PlacePresenter {
@@ -222,8 +225,8 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
 
     private void getPlaceFieldData() {
         place.setName(placeNameView.getText().toString().trim());
-        int placeTypeID = ((PlaceType) placeTypeSelector.getSelectedItem()).getId();
-        place.setType(placeTypeID);
+        int placeTypeId = ((PlaceType) placeTypeSelector.getSelectedItem()).getId();
+        place.setType(placeTypeId);
         PlaceSubType placeSubType = ((PlaceSubType) placeSubtypeSelector.getSelectedItem());
         place.setSubType(placeSubType.getId());
         place.setSubdistrictCode(addressSelect.getAddress() == null ? null : addressSelect.getAddress().getCode());
@@ -283,18 +286,14 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
 
     @Override
     public void displaySaveSuccess() {
-        if (InternetConnection.isAvailable(this))
-            doPostData();
+        if (InternetConnection.isAvailable(this)) {
+            new SyncJobRunner().start();
+        }
+
         setResult(RESULT_OK);
         finish();
         SurveyBuildingHistoryActivity.open(PlaceFormActivity.this, place);
         TanrabadApp.action().addPlace(place);
-    }
-
-    private void doPostData() {
-        PlacePostJobRunner placePostJobRunner = new PlacePostJobRunner();
-        placePostJobRunner.addJob(new PostDataJob<>(new DbPlaceRepository(this), new PlaceRestService()));
-        placePostJobRunner.start();
     }
 
     @Override
@@ -310,17 +309,12 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     @Override
     public void displayUpdateSuccess() {
         if (InternetConnection.isAvailable(this))
-            doPutData();
+            new SyncJobRunner().start();
         setResult(RESULT_OK);
         finish();
         TanrabadApp.action().updatePlace(place);
     }
 
-    private void doPutData() {
-        PlacePostJobRunner placePostJobRunner = new PlacePostJobRunner();
-        placePostJobRunner.addJob(new PutDataJob<>(new DbPlaceRepository(this), new PlaceRestService()));
-        placePostJobRunner.start();
-    }
 
     @Override
     public void displayUpdateFail() {
@@ -349,34 +343,6 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     @Override
     public void alertPlaceNotFound() {
         this.place = Place.withName(null);
-    }
-
-    public class PlacePostJobRunner extends AbsJobRunner {
-
-        @Override
-        protected void onJobError(Job errorJob, Exception exception) {
-            super.onJobError(errorJob, exception);
-            Log.e(errorJob.toString(), exception.getMessage());
-
-            if (exception instanceof IOException) {
-                Alert.mediumLevel().show(R.string.error_server_problem);
-            } else if (exception instanceof RestServiceException) {
-                Alert.mediumLevel().show(R.string.error_rest_service);
-            }
-        }
-
-        @Override
-        protected void onJobStart(Job startingJob) {
-        }
-
-        @Override
-        protected void onRunFinish() {
-            if (errorJobs() == 0) {
-                Alert.mediumLevel().show(R.string.upload_data_success);
-            } else {
-                Alert.mediumLevel().show(R.string.upload_data_failure);
-            }
-        }
     }
 
     @Override

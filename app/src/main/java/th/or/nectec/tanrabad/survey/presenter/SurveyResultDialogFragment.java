@@ -263,6 +263,7 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
                 surveyResultLayout.setVisibility(View.VISIBLE);
                 updateEntomologyInfo(entomology);
             } else {
+                surveyResultLayout.setVisibility(View.INVISIBLE);
                 errorMsgView.setVisibility(View.VISIBLE);
                 errorMsgView.setText(R.string.cannot_view_survey_result);
             }

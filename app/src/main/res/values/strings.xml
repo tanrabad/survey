@@ -155,9 +155,9 @@
     <string name="container_index">CI %1$s%%</string>
     <string name="breteau_index">BI %1$s</string>
     <string name="survey_count">%1$sที่สำรวจทั้งหมด %2$d</string>
-    <string name="survey_found_count">- ที่พบลูกน้ำ %1$d</string>
-    <string name="survey_not_found_count">- ที่ไม่พบลูกน้ำ %1$d</string>
-    <string name="no_container_houses">- ที่ไม่มีภาชนะขังน้ำ %1$d</string>
+    <string name="survey_found_count">- พบลูกน้ำ %1$d</string>
+    <string name="survey_not_found_count">- ไม่พบลูกน้ำ %1$d</string>
+    <string name="no_container_houses">- ไม่มีภาชนะขังน้ำ %1$d</string>
     <string name="duplicate_survey_count">- สำรวจซ้ำ %1$d ครั้ง</string>
     <string name="survey_container_count">ภาชนะสำรวจทั้งหมด %1$s พบ %2$d</string>
     <string name="cannot_view_survey_result">ไม่สามารถดูผลการสำรวจได้</string>

@@ -1,24 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/text_padding"
-                android:paddingBottom="@dimen/text_padding"
+                android:layout_margin="@dimen/text_padding"
                 tools:showIn="@layout/dialog_survey_result">
-    <ImageView
+
+    <ImageButton
+        android:id="@+id/update_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/bg_button_flat_oval"
         android:contentDescription="@null"
-        android:src="@mipmap/ic_cloud"
-        android:id="@+id/update_button"
-        android:padding="@dimen/wide_space_between_content"
-        android:layout_centerVertical="true" android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"/>
+        android:padding="@dimen/list_icon_padding"
+        android:src="@mipmap/ic_cloud_reload"/>
 
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                  android:orientation="vertical"
-                  android:layout_centerVertical="true"
-                  android:layout_toLeftOf="@id/update_button">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/update_button"
+        android:orientation="vertical">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -27,12 +33,12 @@
             android:textIsSelectable="false"/>
 
         <TextView
+            android:id="@+id/survey_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="14 ก.พ. 2559"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textIsSelectable="false"
-            android:id="@+id/survey_date"/>
+            tools:text="14 ก.พ. 2559"/>
     </LinearLayout>
 
 </RelativeLayout>

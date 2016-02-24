@@ -169,8 +169,8 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
 
     private void showErrorMessageView() {
         reportUpdateLayout.setVisibility(View.INVISIBLE);
-        surveyResultLayout.setVisibility(View.GONE);
-        progressBar.setVisibility(View.GONE);
+        surveyResultLayout.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
         errorMsgView.setVisibility(View.VISIBLE);
     }
 
@@ -200,8 +200,7 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
     private void showProgressBar() {
         reportUpdateLayout.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.VISIBLE);
-        errorMsgView.setVisibility(View.GONE);
-        surveyResultLayout.setVisibility(View.GONE);
+        errorMsgView.setVisibility(View.INVISIBLE);
         gotIt.setEnabled(false);
     }
 
@@ -252,13 +251,11 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
 
         @Override
         protected void onJobStart(Job startingJob) {
-            syncDataView.setImageResource(R.mipmap.ic_cloud_reload);
             showProgressBar();
         }
 
         @Override
         protected void onRunFinish() {
-            syncDataView.setImageResource(R.mipmap.ic_cloud);
             progressBar.setVisibility(View.GONE);
             gotIt.setEnabled(true);
             if (errorJobs() == 0 && entomology != null) {

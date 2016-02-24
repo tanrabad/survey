@@ -41,15 +41,15 @@ repositories {
 }
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
         applicationId "th.or.nectec.tanrabad.survey"
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode rootProject.ext.genVersionCode
-        versionName rootProject.ext.genVersionName
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        versionCode rootProject.genVersionCode
+        versionName rootProject.genVersionName
         testApplicationId "th.or.nectec.tanrabad.survey.test"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         resValue "string", "app_build_time", "build $buildTime"
@@ -61,19 +61,13 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility rootProject.ext.javaSourceCompatibility
-        targetCompatibility rootProject.ext.javaTargetCompatibility
+        sourceCompatibility rootProject.javaSourceCompatibility
+        targetCompatibility rootProject.javaTargetCompatibility
     }
 
     signingConfigs {
         debug {
             storeFile file("debug.keystore")
-        }
-        beta {
-            storeFile file("release.keystore")
-            keyAlias System.getenv("TANRABAD_KEY_ALIAS")
-            keyPassword System.getenv("TANRABAD_KEY_PASSWORD")
-            storePassword System.getenv("TANRABAD_STORE_PASSWORD")
         }
         release {
             storeFile file("release.keystore")

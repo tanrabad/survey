@@ -271,9 +271,9 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
 
         private void updateEntomologyInfo(JsonEntomology jsonEntomology) {
             final boolean isVillage = isVillage(jsonEntomology);
-            surveyDateView.setText(ThaiDatePrinter.print(jsonEntomology.dateSurveyed));
-            resultUpdateView.setTime(ThaiDateTimeConverter.convert(jsonEntomology.reportUpdate));
 
+            setSurveyDate(jsonEntomology);
+            resultUpdateView.setTime(ThaiDateTimeConverter.convert(jsonEntomology.reportUpdate));
             setPlaceBackgroundIcon(jsonEntomology);
             setSurveyIndex(jsonEntomology, isVillage);
             setSurveyCount(jsonEntomology, isVillage);
@@ -366,5 +366,16 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
             keyContainerView.setContainerType(containerId, containerName);
             return keyContainerView;
         }
+    }
+
+    private void setSurveyDate(JsonEntomology jsonEntomology) {
+        String surveyDate;
+        if(jsonEntomology.surveyStartDate.equals(jsonEntomology.surveyEndDate)){
+            surveyDate = ThaiDatePrinter.print(jsonEntomology.surveyStartDate);
+        }else{
+            surveyDate = ThaiDatePrinter.print(jsonEntomology.surveyStartDate)
+                    + " - " +ThaiDatePrinter.print(jsonEntomology.surveyEndDate);
+        }
+        surveyDateView.setText(surveyDate);
     }
 }

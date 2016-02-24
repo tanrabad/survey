@@ -27,7 +27,8 @@ public class JsonEntomologyTest {
         assertEquals("นนทบุรี", jsonEntomology1.provinceName);
         assertEquals(119, jsonEntomology1.numSurveyedContainer);
         assertEquals(30, jsonEntomology1.numFoundContainers);
-        assertEquals("2015-07-03T00:00:00.000+07:00", jsonEntomology1.dateSurveyed.toString());
+        assertEquals("2015-07-03T00:00:00.000+07:00", jsonEntomology1.surveyStartDate.toString());
+        assertEquals("2015-07-03T00:00:00.000+07:00", jsonEntomology1.surveyEndDate.toString());
         assertEquals(54.00, jsonEntomology1.hiValue, 0);
         assertEquals(25.00, jsonEntomology1.ciValue, 0);
         assertEquals(125.00, jsonEntomology1.biValue, 0);
@@ -55,7 +56,8 @@ public class JsonEntomologyTest {
         assertEquals("นนทบุรี", jsonEntomology1.provinceName);
         assertEquals(119, jsonEntomology1.numSurveyedContainer);
         assertEquals(30, jsonEntomology1.numFoundContainers);
-        assertEquals("2015-07-03T00:00:00.000+07:00", jsonEntomology1.dateSurveyed.toString());
+        assertEquals("2015-07-03T00:00:00.000+07:00", jsonEntomology1.surveyStartDate.toString());
+        assertEquals("2015-07-03T00:00:00.000+07:00", jsonEntomology1.surveyEndDate.toString());
         assertEquals(54.00, jsonEntomology1.hiValue, 0);
         assertEquals(25.00, jsonEntomology1.ciValue, 0);
         assertEquals(125.00, jsonEntomology1.biValue, 0);
@@ -77,7 +79,8 @@ public class JsonEntomologyTest {
         assertEquals("นนทบุรี", jsonEntomology2.provinceName);
         assertEquals(77, jsonEntomology2.numSurveyedContainer);
         assertEquals(17, jsonEntomology2.numFoundContainers);
-        assertEquals("2014-07-16T00:00:00.000+07:00", jsonEntomology2.dateSurveyed.toString());
+        assertEquals("2015-07-03T00:00:00.000+07:00", jsonEntomology1.surveyStartDate.toString());
+        assertEquals("2015-07-03T00:00:00.000+07:00", jsonEntomology1.surveyEndDate.toString());
         assertEquals(75.0, jsonEntomology2.hiValue, 0);
         assertEquals(22.0, jsonEntomology2.ciValue, 0);
         assertEquals(425.0, jsonEntomology2.biValue, 0);
@@ -99,7 +102,8 @@ public class JsonEntomologyTest {
         assertEquals("กรุงเทพมหานคร", jsonEntomology3.provinceName);
         assertEquals(61, jsonEntomology3.numSurveyedContainer);
         assertEquals(15, jsonEntomology3.numFoundContainers);
-        assertEquals("2015-03-12T00:00:00.000+07:00", jsonEntomology3.dateSurveyed.toString());
+        assertEquals("2015-07-03T00:00:00.000+07:00", jsonEntomology1.surveyStartDate.toString());
+        assertEquals("2015-07-03T00:00:00.000+07:00", jsonEntomology1.surveyEndDate.toString());
         assertEquals(66.0, jsonEntomology3.hiValue, 0);
         assertEquals(6.0, jsonEntomology3.ciValue, 0);
         assertEquals(66.0, jsonEntomology3.biValue, 0);

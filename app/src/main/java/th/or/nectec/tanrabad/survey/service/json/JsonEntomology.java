@@ -68,8 +68,11 @@ public class JsonEntomology {
     @JsonField(name = "report_update")
     public String reportUpdate;
 
-    @JsonField(name = "date_surveyed", typeConverter = UnixThaiDateTimeConverter.class)
-    public DateTime dateSurveyed;
+    @JsonField(name = "survey_start", typeConverter = UnixThaiDateTimeConverter.class)
+    public DateTime surveyStartDate;
+
+    @JsonField(name = "survey_end", typeConverter = UnixThaiDateTimeConverter.class)
+    public DateTime surveyEndDate;
 
     @JsonField(name = "hi_value")
     public double hiValue;
@@ -88,22 +91,28 @@ public class JsonEntomology {
 
     @Override
     public String toString() {
-        return "JsonEntomology{"
-                + "placeId=" + placeId
-                + ", placeType=" + placeType
-                + ", placeName='" + placeName + '\''
-                + ", location=" + location
-                + ", tambonName='" + tambonName + '\''
-                + ", amphurName='" + amphurName + '\''
-                + ", provinceName='" + provinceName + '\''
-                + ", numSurveyedContainer=" + numSurveyedContainer
-                + ", numFoundContainers=" + numFoundContainers
-                + ", dateSurveyed=" + dateSurveyed
-                + ", hiValue=" + hiValue
-                + ", biValue=" + biValue
-                + ", ciValue=" + ciValue
-                + ", keyContainerIn=" + keyContainerIn
-                + ", keyContainerOut=" + keyContainerOut
-                + '}';
+        return "JsonEntomology{" +
+                "placeId=" + placeId +
+                ", placeType=" + placeType +
+                ", placeName='" + placeName + '\'' +
+                ", location=" + location +
+                ", tambonName='" + tambonName + '\'' +
+                ", amphurName='" + amphurName + '\'' +
+                ", provinceName='" + provinceName + '\'' +
+                ", numSurveyedHouses=" + numSurveyedHouses +
+                ", numFoundHouses=" + numFoundHouses +
+                ", numNoContainerHouses=" + numNoContainerHouses +
+                ", numSurveyedContainer=" + numSurveyedContainer +
+                ", numFoundContainers=" + numFoundContainers +
+                ", numDuplicateSurvey=" + numDuplicateSurvey +
+                ", reportUpdate='" + reportUpdate + '\'' +
+                ", surveyStartDate=" + surveyStartDate +
+                ", surveyEndDate=" + surveyEndDate +
+                ", hiValue=" + hiValue +
+                ", biValue=" + biValue +
+                ", ciValue=" + ciValue +
+                ", keyContainerIn=" + keyContainerIn +
+                ", keyContainerOut=" + keyContainerOut +
+                '}';
     }
 }

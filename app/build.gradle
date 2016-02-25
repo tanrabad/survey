@@ -135,6 +135,9 @@ android {
             preDexLibraries false
         }
     }
+
+    useLibrary "org.apache.http.legacy"
+
 }
 
 dependencies {

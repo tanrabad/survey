@@ -370,9 +370,12 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
 
     private void setSurveyDate(JsonEntomology jsonEntomology) {
         String surveyDate;
-        if(jsonEntomology.surveyStartDate.equals(jsonEntomology.surveyEndDate)){
+        if (jsonEntomology.surveyStartDate == null) {
+            surveyDate =  "ไม่มีข้อมูลวันเริ่มสำรวจ";
+        }
+        else if(jsonEntomology.surveyStartDate.equals(jsonEntomology.surveyEndDate)){
             surveyDate = ThaiDatePrinter.print(jsonEntomology.surveyStartDate);
-        }else{
+        } else{
             surveyDate = ThaiDatePrinter.print(jsonEntomology.surveyStartDate)
                     + " - " +ThaiDatePrinter.print(jsonEntomology.surveyEndDate);
         }

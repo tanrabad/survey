@@ -47,11 +47,11 @@ import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
-import th.or.nectec.tanrabad.survey.job.AbsJobRunner;
 import th.or.nectec.tanrabad.survey.job.Job;
 import th.or.nectec.tanrabad.survey.job.PostDataJob;
 import th.or.nectec.tanrabad.survey.job.PutDataJob;
 import th.or.nectec.tanrabad.survey.job.SyncJobBuilder;
+import th.or.nectec.tanrabad.survey.job.SyncJobRunner;
 import th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerSurveyRepository;
@@ -230,7 +230,7 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
         openMainActivity();
     }
 
-    public class SurveyUpdateJob extends AbsJobRunner {
+    public class SurveyUpdateJob extends SyncJobRunner {
 
         int successCount = 0;
 
@@ -257,7 +257,7 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
         @Override
         protected void onRunFinish() {
             if (errorJobs() == 0 && successCount > 0) {
-                Alert.mediumLevel().show(R.string.upload_data_success);
+                Alert.mediumLevel().show(getSyncStatusMessage());
                 showSurveyBuildingHistoryList();
             } else if (errorJobs() > 0) {
                 Alert.mediumLevel().show(R.string.upload_data_failure);

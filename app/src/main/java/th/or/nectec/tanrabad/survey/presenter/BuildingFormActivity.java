@@ -22,7 +22,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,8 +29,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
 import com.google.android.gms.maps.SupportMapFragment;
+
 import org.joda.time.DateTime;
+
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.domain.building.BuildingController;
 import th.or.nectec.tanrabad.domain.building.BuildingPresenter;
 import th.or.nectec.tanrabad.domain.building.BuildingSavePresenter;
@@ -44,18 +48,11 @@ import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
-import th.or.nectec.tanrabad.survey.job.AbsJobRunner;
-import th.or.nectec.tanrabad.survey.job.Job;
-import th.or.nectec.tanrabad.survey.job.PostDataJob;
-import th.or.nectec.tanrabad.survey.job.PutDataJob;
+import th.or.nectec.tanrabad.survey.job.SyncJobRunner;
 import th.or.nectec.tanrabad.survey.presenter.maps.LiteMapFragment;
 import th.or.nectec.tanrabad.survey.presenter.maps.LocationUtils;
 import th.or.nectec.tanrabad.survey.repository.BrokerBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
-import th.or.nectec.tanrabad.survey.repository.persistence.DbBuildingRepository;
-import th.or.nectec.tanrabad.survey.repository.persistence.DbPlaceRepository;
-import th.or.nectec.tanrabad.survey.service.BuildingRestService;
-import th.or.nectec.tanrabad.survey.service.PlaceRestService;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
@@ -63,8 +60,6 @@ import th.or.nectec.tanrabad.survey.utils.android.TwiceBackPressed;
 import th.or.nectec.tanrabad.survey.validator.SaveBuildingValidator;
 import th.or.nectec.tanrabad.survey.validator.UpdateBuildingValidator;
 import th.or.nectec.tanrabad.survey.validator.ValidatorException;
-
-import java.util.UUID;
 
 public class BuildingFormActivity extends TanrabadActivity implements PlacePresenter, BuildingPresenter,
         BuildingSavePresenter, View.OnClickListener {
@@ -89,16 +84,16 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
     private Button editLocationButton;
     private TwiceBackPressed twiceBackPressed;
 
-    public static void startEdit(Activity activity, String placeUUID, String buildingUUID) {
+    public static void startEdit(Activity activity, String placeUuid, String buildingUuid) {
         Intent intent = new Intent(activity, BuildingFormActivity.class);
-        intent.putExtra(PLACE_UUID_ARG, placeUUID);
-        intent.putExtra(BuildingFormActivity.BUILDING_UUID_ARG, buildingUUID);
+        intent.putExtra(PLACE_UUID_ARG, placeUuid);
+        intent.putExtra(BuildingFormActivity.BUILDING_UUID_ARG, buildingUuid);
         activity.startActivityForResult(intent, ADD_BUILDING_REQ_CODE);
     }
 
-    public static void startAdd(Activity activity, String placeUUID) {
+    public static void startAdd(Activity activity, String placeUuid) {
         Intent intent = new Intent(activity, BuildingFormActivity.class);
-        intent.putExtra(PLACE_UUID_ARG, placeUUID);
+        intent.putExtra(PLACE_UUID_ARG, placeUuid);
         activity.startActivityForResult(intent, ADD_BUILDING_REQ_CODE);
     }
 
@@ -110,7 +105,7 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
         setSupportActionBar(toolbar);
         setupHomeButton();
         setupTwiceBackPressed();
-        placeController.showPlace(UUID.fromString(getPlaceUUID()));
+        placeController.showPlace(UUID.fromString(getPlaceUuid()));
         loadBuildingData();
     }
 
@@ -130,20 +125,20 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
         twiceBackPressed = new TwiceBackPressed(this);
     }
 
-    private String getPlaceUUID() {
+    private String getPlaceUuid() {
         return getIntent().getStringExtra(PLACE_UUID_ARG);
     }
 
     private void loadBuildingData() {
-        if (TextUtils.isEmpty(getBuildingUUID())) {
+        if (TextUtils.isEmpty(getBuildingUuid())) {
             setupPreviewMap();
             building = Building.withName(null);
         } else {
-            buildingController.showBuilding(UUID.fromString(getBuildingUUID()));
+            buildingController.showBuilding(UUID.fromString(getBuildingUuid()));
         }
     }
 
-    private String getBuildingUUID() {
+    private String getBuildingUuid() {
         return getIntent().getStringExtra(BUILDING_UUID_ARG);
     }
 
@@ -168,7 +163,7 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
         building.setUpdateTimestamp(DateTime.now().toString());
         building.setUpdateBy(AccountUtils.getUser().getUsername());
         try {
-            if (TextUtils.isEmpty(getBuildingUUID())) {
+            if (TextUtils.isEmpty(getBuildingUuid())) {
                 BuildingSaver buildingSaver = new BuildingSaver(
                         BrokerBuildingRepository.getInstance(), new SaveBuildingValidator(), this);
                 buildingSaver.save(building);
@@ -177,8 +172,8 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
                         BrokerBuildingRepository.getInstance(), new UpdateBuildingValidator(), this);
                 buildingSaver.update(building);
             }
-        } catch (ValidatorException e) {
-            Alert.highLevel().show(e.getMessageId());
+        } catch (ValidatorException exception) {
+            Alert.highLevel().show(exception.getMessageId());
         }
     }
 
@@ -232,10 +227,10 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.add_marker:
-                BuildingMapMarkerActivity.startAdd(BuildingFormActivity.this, getPlaceUUID());
+                BuildingMapMarkerActivity.startAdd(BuildingFormActivity.this, getPlaceUuid());
                 break;
             case R.id.edit_location:
-                BuildingMapMarkerActivity.startEdit(BuildingFormActivity.this, getPlaceUUID(), building.getLocation());
+                BuildingMapMarkerActivity.startEdit(BuildingFormActivity.this, getPlaceUuid(), building.getLocation());
                 break;
         }
     }
@@ -270,18 +265,11 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
     @Override
     public void displaySaveSuccess() {
         if (InternetConnection.isAvailable(this))
-            doPostData();
+            new SyncJobRunner().start();
         setResult(RESULT_OK);
         finish();
         TanrabadApp.action().addBuilding(building);
         SurveyActivity.open(BuildingFormActivity.this, building);
-    }
-
-    private void doPostData() {
-        BuildingPostJobRunner buildingPostJobRunner = new BuildingPostJobRunner();
-        buildingPostJobRunner.addJob(new PostDataJob<>(new DbPlaceRepository(this), new PlaceRestService()));
-        buildingPostJobRunner.addJob(new PostDataJob<>(new DbBuildingRepository(this), new BuildingRestService()));
-        buildingPostJobRunner.start();
     }
 
     @Override
@@ -297,42 +285,13 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
     @Override
     public void displayUpdateSuccess() {
         if (InternetConnection.isAvailable(this))
-            doPutData();
+            new SyncJobRunner().start();
         setResult(RESULT_OK);
         finish();
         TanrabadApp.action().updateBuilding(building);
     }
 
-    private void doPutData() {
-        BuildingPostJobRunner buildingPostJobRunner = new BuildingPostJobRunner();
-        buildingPostJobRunner.addJob(new PostDataJob<>(new DbPlaceRepository(this), new PlaceRestService()));
-        buildingPostJobRunner.addJob(new PutDataJob<>(new DbBuildingRepository(this), new BuildingRestService()));
-        buildingPostJobRunner.start();
-    }
-
     public void onRootViewClick(View view) {
         SoftKeyboard.hideOn(this);
-    }
-
-    public class BuildingPostJobRunner extends AbsJobRunner {
-
-        @Override
-        protected void onJobError(Job errorJob, Exception exception) {
-            super.onJobError(errorJob, exception);
-            Log.e(errorJob.toString(), exception.getMessage());
-        }
-
-        @Override
-        protected void onJobStart(Job startingJob) {
-        }
-
-        @Override
-        protected void onRunFinish() {
-            if (errorJobs() == 0) {
-                Alert.mediumLevel().show(R.string.upload_data_success);
-            } else {
-                Alert.mediumLevel().show(R.string.upload_data_failure);
-            }
-        }
     }
 }

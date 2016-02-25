@@ -1,20 +1,26 @@
 package th.or.nectec.tanrabad.survey.job;
 
 import android.content.Context;
-import android.util.Log;
+
+import java.io.IOException;
 
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
+import th.or.nectec.tanrabad.survey.service.RestServiceException;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
+import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
 
 public class SyncJobRunner extends AbsJobRunner {
 
     private static final String PLACE = "สถานที่";
     private static final String SURVEY = "สำรวจ";
-    private static String BUILDING = "อาคาร";
+    private static final String BUILDING = "อาคาร";
     private final SyncJobBuilder syncJobBuilder;
     private final Context context;
-    String message = "";
+    String syncStatusMsg = "";
+
+    IOException ioException;
+    RestServiceException restServiceException;
 
     public SyncJobRunner() {
         syncJobBuilder = new SyncJobBuilder();
@@ -25,7 +31,12 @@ public class SyncJobRunner extends AbsJobRunner {
     @Override
     protected void onJobError(Job errorJob, Exception exception) {
         super.onJobError(errorJob, exception);
-        Log.e(errorJob.toString(), exception.getMessage());
+
+        if (exception instanceof IOException)
+            ioException = (IOException) exception;
+        else if (exception instanceof RestServiceException)
+            restServiceException = (RestServiceException) exception;
+        if (InternetConnection.isAvailable(context)) TanrabadApp.log(exception);
     }
 
     @Override
@@ -52,11 +63,21 @@ public class SyncJobRunner extends AbsJobRunner {
 
     @Override
     protected void onRunFinish() {
-        if (errorJobs() == finishedJobs()) {
-            Alert.mediumLevel().show(R.string.upload_data_failure);
-        } else {
-            Alert.mediumLevel().show(message.trim());
-        }
+        if (errorJobs() == finishedJobs())
+            showErrorMessage();
+        else
+            Alert.mediumLevel().show(getSyncStatusMessage());
+    }
+
+    public String getSyncStatusMessage() {
+        return syncStatusMsg.trim();
+    }
+
+    private void showErrorMessage() {
+        if (ioException != null)
+            Alert.mediumLevel().show(R.string.error_server_problem);
+        else if (restServiceException != null)
+            Alert.mediumLevel().show(R.string.error_rest_service);
     }
 
     private void buildUploadStatusMessage(Job job, String dataType) {
@@ -64,14 +85,29 @@ public class SyncJobRunner extends AbsJobRunner {
         if ((uploadJob).getSuccessCount() == 0 && (uploadJob).getFailCount() == 0)
             return;
 
-        if (job instanceof PostDataJob) {
-            PostDataJob postDataJob = (PostDataJob) job;
-            message += String.format(context.getString(R.string.upload_data_status),
-                    dataType, postDataJob.getSuccessCount(), postDataJob.getFailCount()) + "\n";
-        } else if (job instanceof PutDataJob) {
-            PutDataJob putDataJob = (PutDataJob) job;
-            message += String.format(context.getString(R.string.update_data_status),
-                    dataType, putDataJob.getSuccessCount(), putDataJob.getFailCount()) + "\n";
-        }
+        if (job instanceof PostDataJob)
+            syncStatusMsg += String.format(context.getString(R.string.upload_data_type), dataType)
+                    + appendUploadSuccessMessage(uploadJob) + appendUploadFailedMessage(uploadJob);
+        else if (job instanceof PutDataJob)
+            syncStatusMsg += String.format(context.getString(R.string.update_data_type), dataType)
+                    + appendUploadSuccessMessage(uploadJob) + appendUploadFailedMessage(uploadJob);
+    }
+
+    private String appendUploadSuccessMessage(UploadJob uploadJob) {
+        if (uploadJob.getSuccessCount() > 0)
+            return String.format(context.getString(R.string.upload_data_success),
+                    uploadJob.getSuccessCount());
+        else
+            return "";
+
+    }
+
+    private String appendUploadFailedMessage(UploadJob uploadJob) {
+        if (uploadJob.getFailCount() > 0)
+            return String.format(context.getString(R.string.upload_data_fail),
+                    uploadJob.getFailCount()) + "\n";
+        else
+            return "\n";
+
     }
 }

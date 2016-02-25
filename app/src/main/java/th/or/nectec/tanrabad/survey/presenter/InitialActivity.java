@@ -201,7 +201,7 @@ public class InitialActivity extends TanrabadActivity {
 
         private void showErrorMessage() {
             if (ioException != null)
-                Alert.mediumLevel().show(R.string.error_server_problem);
+                Alert.mediumLevel().show(R.string.error_connection_problem);
             else if (restServiceException != null)
                 Alert.mediumLevel().show(R.string.error_rest_service);
         }

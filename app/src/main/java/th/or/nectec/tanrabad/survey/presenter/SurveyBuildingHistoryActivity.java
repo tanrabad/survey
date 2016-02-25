@@ -48,10 +48,9 @@ import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.job.Job;
-import th.or.nectec.tanrabad.survey.job.PostDataJob;
-import th.or.nectec.tanrabad.survey.job.PutDataJob;
 import th.or.nectec.tanrabad.survey.job.SyncJobBuilder;
 import th.or.nectec.tanrabad.survey.job.SyncJobRunner;
+import th.or.nectec.tanrabad.survey.job.UploadJob;
 import th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerSurveyRepository;
@@ -237,19 +236,15 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
         @Override
         protected void onJobDone(Job job) {
             super.onJobDone(job);
-            if (job instanceof PostDataJob)
-                successCount += ((PostDataJob) job).getSuccessCount();
-            else if (job instanceof PutDataJob)
-                successCount += ((PutDataJob) job).getSuccessCount();
+            if (job instanceof UploadJob)
+                successCount += ((UploadJob) job).getSuccessCount();
         }
 
         @Override
         protected void onRunFinish() {
-            if (errorJobs() == 0 && successCount > 0) {
-                Alert.mediumLevel().show(getSyncStatusMessage());
+            if (successCount > 0) {
+                super.onRunFinish();
                 showSurveyBuildingHistoryList();
-            } else if (errorJobs() > 0) {
-                showErrorMessage();
             }
         }
     }

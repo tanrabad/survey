@@ -1,6 +1,7 @@
 package th.or.nectec.tanrabad.survey.job;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import java.io.IOException;
 
@@ -70,10 +71,12 @@ public class SyncJobRunner extends AbsJobRunner {
     }
 
     public String getSyncStatusMessage() {
-        return syncStatusMsg.trim();
+        return TextUtils.isEmpty(syncStatusMsg)
+                ? context.getString(R.string.no_data_update)
+                : syncStatusMsg.trim();
     }
 
-    private void showErrorMessage() {
+    protected void showErrorMessage() {
         if (ioException != null)
             Alert.mediumLevel().show(R.string.error_server_problem);
         else if (restServiceException != null)
@@ -99,7 +102,6 @@ public class SyncJobRunner extends AbsJobRunner {
                     uploadJob.getSuccessCount());
         else
             return "";
-
     }
 
     private String appendUploadFailedMessage(UploadJob uploadJob) {
@@ -108,6 +110,5 @@ public class SyncJobRunner extends AbsJobRunner {
                     uploadJob.getFailCount()) + "\n";
         else
             return "\n";
-
     }
 }

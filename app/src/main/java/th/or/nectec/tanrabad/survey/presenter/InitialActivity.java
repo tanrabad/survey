@@ -101,20 +101,26 @@ public class InitialActivity extends TanrabadActivity {
         setContentView(R.layout.activity_initial);
         loadingText = (TextView) findViewById(R.id.loading);
         startPleaseWaitBeansJump();
-        new InitialJobRunner()
-                .addJob(new CreateDatabaseJob(this))
-                .addJob(new InMemoryInitializeJob())
-                .addJob(new SetupScriptJob(this))
-                .addJob(containerLocationUpdateJob)
-                .addJob(containerTypeUpdateJob)
-                .addJob(provinceUpdateJob)
-                .addJob(districtUpdateJob)
-                .addJob(subDistrictUpdateJob)
-                .addJob(placeTypeUpdateJob)
-                .addJob(placeSubTypeUpdateJob)
-                .addJob(placeUpdateJob)
-                .addJob(buildingUpdateJob)
-                .start();
+
+        if (InternetConnection.isAvailable(this)) {
+            new InitialJobRunner()
+                    .addJob(new CreateDatabaseJob(this))
+                    .addJob(new InMemoryInitializeJob())
+                    .addJob(new SetupScriptJob(this))
+                    .addJob(containerLocationUpdateJob)
+                    .addJob(containerTypeUpdateJob)
+                    .addJob(provinceUpdateJob)
+                    .addJob(districtUpdateJob)
+                    .addJob(subDistrictUpdateJob)
+                    .addJob(placeTypeUpdateJob)
+                    .addJob(placeSubTypeUpdateJob)
+                    .addJob(placeUpdateJob)
+                    .addJob(buildingUpdateJob)
+                    .start();
+        } else {
+            MainActivity.open(InitialActivity.this);
+            finish();
+        }
     }
 
 

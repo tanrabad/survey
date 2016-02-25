@@ -142,6 +142,7 @@
     <string name="nectec">ศูนย์เทคโนโลยีอิเล็กทรอนิกส์และคอมพิวเตอร์แห่งชาติ</string>
     <string name="authentication">ยืนยันตัวตน</string>
     <string name="upload_data_failure">อัพโหลดข้อมูลไม่สำเร็จ</string>
+    <string name="no_data_update">ยังไม่มีข้อมูลที่เพิ่มหรือปรับปรุง</string>
     <string name="upload_data_type">อัพโหลด%1$s</string>
     <string name="update_data_type">ปรับปรุง%1$s</string>
     <string name="upload_data_success">สำเร็จ %1$d</string>

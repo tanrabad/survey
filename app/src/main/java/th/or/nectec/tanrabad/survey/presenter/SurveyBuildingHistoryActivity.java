@@ -235,12 +235,6 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
         int successCount = 0;
 
         @Override
-        protected void onJobError(Job errorJob, Exception exception) {
-            super.onJobError(errorJob, exception);
-            TanrabadApp.log(exception);
-        }
-
-        @Override
         protected void onJobDone(Job job) {
             super.onJobDone(job);
             if (job instanceof PostDataJob)
@@ -250,17 +244,12 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
         }
 
         @Override
-        protected void onJobStart(Job startingJob) {
-
-        }
-
-        @Override
         protected void onRunFinish() {
             if (errorJobs() == 0 && successCount > 0) {
                 Alert.mediumLevel().show(getSyncStatusMessage());
                 showSurveyBuildingHistoryList();
             } else if (errorJobs() > 0) {
-                Alert.mediumLevel().show(R.string.upload_data_failure);
+                showErrorMessage();
             }
         }
     }

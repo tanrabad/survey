@@ -42,10 +42,8 @@ import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyHistoryListPresenter;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.R;
-import th.or.nectec.tanrabad.survey.TanrabadApp;
-import th.or.nectec.tanrabad.survey.job.AbsJobRunner;
-import th.or.nectec.tanrabad.survey.job.Job;
 import th.or.nectec.tanrabad.survey.job.SyncJobBuilder;
+import th.or.nectec.tanrabad.survey.job.SyncJobRunner;
 import th.or.nectec.tanrabad.survey.repository.BrokerSurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
@@ -172,7 +170,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
             case R.id.sync_data:
                 startOrResumeSyncAnimation();
                 findViewById(R.id.sync_data).setEnabled(false);
-                new SyncJobBuilder().build(new SyncJobRunner()).start();
+                new SyncJobBuilder().build(new MainSyncJobRunner()).start();
                 break;
         }
     }
@@ -217,28 +215,12 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
         }
     }
 
-    public class SyncJobRunner extends AbsJobRunner {
-
-        @Override
-        protected void onJobError(Job errorJob, Exception exception) {
-            super.onJobError(errorJob, exception);
-            TanrabadApp.log(exception);
-        }
-
-        @Override
-        protected void onJobStart(Job startingJob) {
-
-        }
-
+    public class MainSyncJobRunner extends SyncJobRunner {
         @Override
         protected void onRunFinish() {
+            super.onRunFinish();
             findViewById(R.id.sync_data).setEnabled(true);
             stopSyncAnimation();
-            if (errorJobs() == 0) {
-                Alert.mediumLevel().show("ปรับปรุงข้อมูลเรียบร้อยแล้วนะ");
-            } else {
-                Alert.mediumLevel().show("ปรับปรุงข้อมูลไม่สำเร็จ ลองใหม่อีกครั้งนะ");
-            }
         }
     }
 }

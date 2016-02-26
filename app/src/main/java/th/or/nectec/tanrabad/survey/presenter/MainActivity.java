@@ -216,6 +216,10 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
     }
 
     public class MainSyncJobRunner extends SyncJobRunner {
+        public MainSyncJobRunner() {
+            super(true);
+        }
+
         @Override
         protected void onRunFinish() {
             super.onRunFinish();

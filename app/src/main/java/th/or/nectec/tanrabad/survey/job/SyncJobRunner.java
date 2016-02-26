@@ -28,8 +28,14 @@ public class SyncJobRunner extends AbsJobRunner {
 
     IOException ioException;
     RestServiceException restServiceException;
+    private boolean isManualSync;
 
     public SyncJobRunner() {
+        this(false);
+    }
+
+    public SyncJobRunner(boolean isManualSync) {
+        this.isManualSync = isManualSync;
         syncJobBuilder = new SyncJobBuilder();
         syncJobBuilder.build(this);
         context = TanrabadApp.getInstance();
@@ -73,13 +79,16 @@ public class SyncJobRunner extends AbsJobRunner {
         if (completelySuccessCount == dataUploadedCount) {
             showUploadCompletelySuccessMsg();
         } else if (completelyFailCount == dataUploadedCount) {
-            getErrorMessage();
+            showErrorMessage();
         } else {
             showUploadPartiallyFailMsg();
         }
     }
 
-    private void getErrorMessage() {
+    private void showErrorMessage() {
+        if (!isManualSync)
+            return;
+
         if (ioException != null)
             Alert.mediumLevel().show(R.string.error_connection_problem);
         else if (restServiceException != null) {

@@ -33,16 +33,30 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import th.or.nectec.tanrabad.domain.survey.*;
-import th.or.nectec.tanrabad.entity.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import th.or.nectec.tanrabad.domain.survey.ContainerController;
+import th.or.nectec.tanrabad.domain.survey.ContainerPresenter;
+import th.or.nectec.tanrabad.domain.survey.SurveyController;
+import th.or.nectec.tanrabad.domain.survey.SurveyPresenter;
+import th.or.nectec.tanrabad.domain.survey.SurveyRepository;
+import th.or.nectec.tanrabad.domain.survey.SurveySavePresenter;
+import th.or.nectec.tanrabad.domain.survey.SurveySaver;
+import th.or.nectec.tanrabad.entity.Building;
+import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.Survey;
+import th.or.nectec.tanrabad.entity.SurveyDetail;
+import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.entity.utils.UUIDUtils;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
-import th.or.nectec.tanrabad.survey.job.AbsJobRunner;
-import th.or.nectec.tanrabad.survey.job.Job;
 import th.or.nectec.tanrabad.survey.presenter.view.AdvanceStepperDialog;
 import th.or.nectec.tanrabad.survey.presenter.view.SurveyContainerView;
 import th.or.nectec.tanrabad.survey.presenter.view.TorchButton;
@@ -60,11 +74,6 @@ import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 import th.or.nectec.tanrabad.survey.validator.SaveSurveyValidator;
 import th.or.nectec.tanrabad.survey.validator.ValidatorException;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class SurveyActivity extends TanrabadActivity implements ContainerPresenter, SurveyPresenter,
         SurveySavePresenter {
@@ -430,28 +439,5 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     public void onRootViewClick(View view) {
         SoftKeyboard.hideOn(this);
-    }
-
-    public class SurveyUpdateJob extends AbsJobRunner {
-
-        @Override
-        protected void onJobError(Job errorJob, Exception exception) {
-            super.onJobError(errorJob, exception);
-            TanrabadApp.log(exception);
-        }
-
-        @Override
-        protected void onJobStart(Job startingJob) {
-
-        }
-
-        @Override
-        protected void onRunFinish() {
-            if (errorJobs() == 0) {
-                Alert.mediumLevel().show(R.string.upload_data_success);
-            } else {
-                Alert.mediumLevel().show(R.string.upload_data_failure);
-            }
-        }
     }
 }

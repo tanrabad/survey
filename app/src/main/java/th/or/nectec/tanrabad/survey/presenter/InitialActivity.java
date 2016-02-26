@@ -17,6 +17,7 @@
 
 package th.or.nectec.tanrabad.survey.presenter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -130,6 +131,7 @@ public class InitialActivity extends TanrabadActivity {
                 .build();
     }
 
+    @SuppressLint("SetTextI18n")
     public void updateLoadingText(Job startingJob) {
         switch (startingJob.id()) {
             case InMemoryInitializeJob.ID:
@@ -150,6 +152,7 @@ public class InitialActivity extends TanrabadActivity {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private void updateLoadingTextByWritableJobInstance(Job startingJob) {
         if (startingJob.equals(provinceUpdateJob))
             loadingText.setText("รอพบกับท่านผู้ว่า");

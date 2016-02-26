@@ -53,6 +53,11 @@ android {
         testApplicationId "th.or.nectec.tanrabad.survey.test"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         resValue "string", "app_build_time", "build $buildTime"
+        generatedDensities = []
+    }
+
+    aaptOptions {
+        additionalParameters "--no-version-vectors"
     }
 
     compileOptions {

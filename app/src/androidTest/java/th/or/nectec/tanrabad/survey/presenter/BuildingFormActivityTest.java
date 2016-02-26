@@ -94,11 +94,11 @@ public class BuildingFormActivityTest extends TanrabadEspressoTestBase {
     public void addBuildingNameSameBuildingNameInDatabaseShouldFoundPromptCanNotSaveThisBuilding() {
         onView(withId(R.id.building_name))
                 .perform(replaceText(" 214/43 "));
+        waitingFor(4000);
         onView(withId(R.id.add_marker))
                 .perform(click());
         onView(withId(R.id.save_marker_menu))
                 .perform(click());
-        clickConfirmButton();
         onView(withId(R.id.save))
                 .perform(click());
 

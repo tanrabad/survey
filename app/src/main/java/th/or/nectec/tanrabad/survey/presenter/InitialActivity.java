@@ -194,9 +194,9 @@ public class InitialActivity extends TanrabadActivity {
         @Override
         protected void onRunFinish() {
             pleaseWaitBeans.stopJumping();
-            showErrorMessage();
             MainActivity.open(InitialActivity.this);
             finish();
+            showErrorMessage();
         }
 
         private void showErrorMessage() {

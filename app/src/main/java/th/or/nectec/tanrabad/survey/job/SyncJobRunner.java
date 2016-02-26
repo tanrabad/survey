@@ -77,11 +77,11 @@ public class SyncJobRunner extends AbsJobRunner {
             return;
 
         if (completelySuccessCount == dataUploadedCount) {
-            showUploadCompletelySuccessMsg();
+            showUploadResultMsg();
         } else if (completelyFailCount == dataUploadedCount) {
             showErrorMessage();
         } else {
-            showUploadPartiallyFailMsg();
+            showUploadResultMsg();
         }
     }
 
@@ -96,7 +96,7 @@ public class SyncJobRunner extends AbsJobRunner {
         }
     }
 
-    private void showUploadCompletelySuccessMsg() {
+    private void showUploadResultMsg() {
         String message = "";
         for (UploadJob uploadJob : uploadJobs) {
             if (!uploadJob.isUploadData())
@@ -105,10 +105,10 @@ public class SyncJobRunner extends AbsJobRunner {
             String dataType = getDataType(uploadJob);
             if (uploadJob instanceof PostDataJob)
                 message += String.format(context.getString(R.string.upload_data_type), dataType)
-                        + appendUploadSuccessMessage(uploadJob) + "\n";
+                        + appendUploadSuccessMessage(uploadJob) + appendUploadFailedMessage(uploadJob);
             else if (uploadJob instanceof PutDataJob)
                 message += String.format(context.getString(R.string.update_data_type), dataType)
-                        + appendUploadSuccessMessage(uploadJob) + "\n";
+                        + appendUploadSuccessMessage(uploadJob) + appendUploadFailedMessage(uploadJob);
         }
 
         if (!TextUtils.isEmpty(message))
@@ -131,32 +131,18 @@ public class SyncJobRunner extends AbsJobRunner {
     }
 
     private String appendUploadSuccessMessage(UploadJob uploadJob) {
-        return String.format(context.getString(R.string.upload_data_success),
-                uploadJob.getSuccessCount());
-    }
-
-    private void showUploadPartiallyFailMsg() {
-        String message = "";
-        for (UploadJob uploadJob : uploadJobs) {
-            if (!uploadJob.isUploadData())
-                continue;
-
-            String dataType = getDataType(uploadJob);
-            if (uploadJob instanceof PostDataJob)
-                message += String.format(context.getString(R.string.upload_data_type), dataType)
-                        + appendUploadSuccessMessage(uploadJob) + appendUploadFailedMessage(uploadJob);
-            else if (uploadJob instanceof PutDataJob)
-                message += String.format(context.getString(R.string.update_data_type), dataType)
-                        + appendUploadSuccessMessage(uploadJob) + appendUploadFailedMessage(uploadJob);
-        }
-
-        if (!TextUtils.isEmpty(message))
-            Alert.mediumLevel().show(message.trim());
+        return uploadJob.getSuccessCount() > 0
+                ? String.format(context.getString(R.string.upload_data_success),
+                uploadJob.getSuccessCount())
+                : "";
     }
 
     private String appendUploadFailedMessage(UploadJob uploadJob) {
-        String space = uploadJob.getSuccessCount() > 0 ? " " : "";
-        return space + String.format(context.getString(R.string.upload_data_fail),
-                uploadJob.getFailCount()) + "\n";
+        String space = (uploadJob.getSuccessCount() > 0) ? " " : "\n";
+        String message = (uploadJob.getFailCount() > 0)
+                ? String.format(context.getString(R.string.upload_data_fail),
+                uploadJob.getFailCount()) + "\n"
+                : "";
+        return space + message;
     }
 }

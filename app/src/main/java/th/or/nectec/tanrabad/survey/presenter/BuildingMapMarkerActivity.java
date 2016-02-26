@@ -20,10 +20,14 @@ package th.or.nectec.tanrabad.survey.presenter;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+
+import java.text.DecimalFormat;
+
 import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.maps.BuildingMapMarkerFragment;
@@ -32,8 +36,6 @@ import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.TwiceBackPressed;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
-
-import java.text.DecimalFormat;
 
 public class BuildingMapMarkerActivity extends TanrabadActivity implements View.OnClickListener {
 
@@ -44,16 +46,17 @@ public class BuildingMapMarkerActivity extends TanrabadActivity implements View.
     DecimalFormat decimalFormat = new DecimalFormat("#.##");
     private TwiceBackPressed twiceBackPressed;
 
-    public static void startAdd(Activity activity, String placeUUID) {
+    public static void startAdd(Activity activity, String placeUuid) {
         Intent intent = new Intent(activity, BuildingMapMarkerActivity.class);
-        intent.putExtra(BuildingMapMarkerActivity.PLACE_UUID, placeUUID);
+        intent.putExtra(BuildingMapMarkerActivity.PLACE_UUID, placeUuid);
         activity.startActivityForResult(intent, MARK_LOCATION_REQUEST_CODE);
     }
 
-    public static void startEdit(Activity activity, String placeUUID, Location buildingLocation) {
+    public static void startEdit(Activity activity, String placeUuid, Location buildingLocation) {
         Intent intent = new Intent(activity, BuildingMapMarkerActivity.class);
-        intent.putExtra(BuildingMapMarkerActivity.PLACE_UUID, placeUUID);
-        intent.putExtra(BuildingMapMarkerActivity.BUILDING_LOCATION, LocationUtils.convertLocationToJson(buildingLocation));
+        intent.putExtra(BuildingMapMarkerActivity.PLACE_UUID, placeUuid);
+        intent.putExtra(BuildingMapMarkerActivity.BUILDING_LOCATION,
+                LocationUtils.convertLocationToJson(buildingLocation));
         activity.startActivityForResult(intent, MARK_LOCATION_REQUEST_CODE);
     }
 
@@ -61,6 +64,7 @@ public class BuildingMapMarkerActivity extends TanrabadActivity implements View.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_marker);
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         setupHomeButton();
         setupTwiceBackPressed();
         assignViews();
@@ -79,24 +83,20 @@ public class BuildingMapMarkerActivity extends TanrabadActivity implements View.
     private void setupMap() {
         Location buildingLocation = LocationUtils.convertJsonToLocation(getIntent().getStringExtra(BUILDING_LOCATION));
         if (buildingLocation == null) {
-            buildingMapMarkerFragment = BuildingMapMarkerFragment.newInstance(getPlaceUUID());
+            buildingMapMarkerFragment = BuildingMapMarkerFragment.newInstance(getPlaceUuid());
         } else {
             if (getSupportActionBar() != null)
                 getSupportActionBar().setTitle(R.string.edit_location);
-            buildingMapMarkerFragment = BuildingMapMarkerFragment.newInstanceWithLocation(getPlaceUUID(), buildingLocation);
+            buildingMapMarkerFragment = BuildingMapMarkerFragment
+                    .newInstanceWithLocation(getPlaceUuid(), buildingLocation);
         }
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.map_container, buildingMapMarkerFragment, BuildingMapMarkerFragment.FRAGMENT_TAG).commit();
+        getSupportFragmentManager().beginTransaction().replace(
+                R.id.map_container, buildingMapMarkerFragment, BuildingMapMarkerFragment.FRAGMENT_TAG).commit();
     }
 
-    public String getPlaceUUID() {
+    public String getPlaceUuid() {
         return getIntent().getStringExtra(PLACE_UUID);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.action_activity_map_marker, menu);
-        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -127,20 +127,29 @@ public class BuildingMapMarkerActivity extends TanrabadActivity implements View.
             }
         });
         promptMessage.setOnCancel(getString(R.string.cancel), null);
-        promptMessage.show(getString(R.string.confirm_add_building_location), getDistanceBetweenBuildingAndPlaceMessage());
+        promptMessage.show(getString(R.string.confirm_add_building_location),
+                getDistanceBetweenBuildingAndPlaceMessage());
     }
 
     private void sendMarkedLocationResult() {
         Intent data = new Intent();
-        data.putExtra(BUILDING_LOCATION, LocationUtils.convertLocationToJson(buildingMapMarkerFragment.getMarkedLocation()));
+        data.putExtra(BUILDING_LOCATION, LocationUtils
+                .convertLocationToJson(buildingMapMarkerFragment.getMarkedLocation()));
         setResult(RESULT_OK, data);
         finish();
     }
 
     private String getDistanceBetweenBuildingAndPlaceMessage() {
-        double distanceBetweenBuildingAndPlaceInKm = buildingMapMarkerFragment.getDistanceBetweenPlaceAndBuilding() / 1000.f;
+        double distanceBetweenBuildingAndPlaceInKm = buildingMapMarkerFragment
+                .getDistanceBetweenPlaceAndBuilding() / 1000.f;
         return String.format(getString(R.string.distance_between_place_and_building),
                 decimalFormat.format(distanceBetweenBuildingAndPlaceInKm));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.action_activity_map_marker, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override

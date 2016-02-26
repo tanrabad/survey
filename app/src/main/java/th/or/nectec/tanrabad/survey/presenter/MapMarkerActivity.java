@@ -20,10 +20,12 @@ package th.or.nectec.tanrabad.survey.presenter;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+
 import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.maps.LocationUtils;
@@ -53,6 +55,7 @@ public class MapMarkerActivity extends TanrabadActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_marker);
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         setupHomeButton();
         setupTwiceBackPressed();
         assignViews();
@@ -78,13 +81,8 @@ public class MapMarkerActivity extends TanrabadActivity implements View.OnClickL
             mapMarkerFragment = MapMarkerFragment.newInstance();
         }
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.map_container, mapMarkerFragment, MapMarkerFragment.FRAGMENT_TAG).commit();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.action_activity_map_marker, menu);
-        return super.onCreateOptionsMenu(menu);
+        getSupportFragmentManager().beginTransaction().replace(
+                R.id.map_container, mapMarkerFragment, MapMarkerFragment.FRAGMENT_TAG).commit();
     }
 
     @Override
@@ -107,6 +105,12 @@ public class MapMarkerActivity extends TanrabadActivity implements View.OnClickL
         data.putExtra(MAP_LOCATION, LocationUtils.convertLocationToJson(mapMarkerFragment.getMarkedLocation()));
         setResult(RESULT_OK, data);
         finish();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.action_activity_map_marker, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override

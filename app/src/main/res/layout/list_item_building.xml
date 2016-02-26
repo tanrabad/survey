@@ -58,4 +58,15 @@
         android:layout_centerVertical="true"
         android:text="@string/edit"
         tools:ignore="RelativeOverlap"/>
+
+    <ImageView
+        android:id="@+id/not_sync"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/edit_building"
+        android:layout_alignRight="@+id/edit_building"
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/description_survey_not_synced"
+        android:src="@mipmap/ic_not_sync"
+        tools:visibility="visible"/>
 </RelativeLayout>

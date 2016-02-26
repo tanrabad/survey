@@ -49,12 +49,14 @@ import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
+import th.or.nectec.tanrabad.survey.job.SyncJobRunner;
 import th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView;
 import th.or.nectec.tanrabad.survey.repository.BrokerBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerSurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
+import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 
@@ -76,6 +78,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
             BrokerSurveyRepository.getInstance(),
             this);
     private SearchView buildingSearchView;
+    private ActionMode actionMode;
 
     public static void open(Activity activity, String placeUuid) {
         Intent intent = new Intent(activity, BuildingListActivity.class);
@@ -253,7 +256,10 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         switch (requestCode) {
             case BuildingFormActivity.ADD_BUILDING_REQ_CODE:
                 if (resultCode == RESULT_OK) {
+                    if (InternetConnection.isAvailable(this))
+                        new BuildingUpdateJob().start();
                     loadSurveyBuildingList();
+                    stopActionMode();
                 }
                 break;
             case PlaceFormActivity.ADD_PLACE_REQ_CODE:
@@ -262,6 +268,11 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
                 }
                 break;
         }
+    }
+
+    private void stopActionMode() {
+        if (actionMode != null)
+            actionMode.finish();
     }
 
     @Override
@@ -311,6 +322,14 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         buildingAdapter.setEditButtonVisibility(false);
     }
 
+    public class BuildingUpdateJob extends SyncJobRunner {
+        @Override
+        protected void onRunFinish() {
+            super.onRunFinish();
+            loadSurveyBuildingList();
+        }
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -318,9 +337,11 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
                 PlaceFormActivity.startEdit(BuildingListActivity.this, place);
                 break;
             case R.id.edit_building:
-                BuildingListActivity.this.startSupportActionMode(BuildingListActivity.this);
+                actionMode = BuildingListActivity.this.startSupportActionMode(BuildingListActivity.this);
                 buildingAdapter.setEditButtonVisibility(true);
                 break;
         }
     }
+
+
 }

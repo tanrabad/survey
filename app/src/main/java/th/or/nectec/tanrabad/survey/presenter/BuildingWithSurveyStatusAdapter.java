@@ -28,12 +28,14 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.survey.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
+import th.or.nectec.tanrabad.entity.Building;
+import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.repository.persistence.BuildingWithChange;
 
 public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<BuildingWithSurveyStatusAdapter.ViewHolder>
         implements ListViewAdapter<BuildingWithSurveyStatus> {
@@ -105,9 +107,16 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
 
         if (isEditButtonVisible) {
             holder.editBuilding.setVisibility(View.VISIBLE);
+            holder.notSync.setVisibility(View.GONE);
         } else {
             holder.editBuilding.setVisibility(View.GONE);
+            setSyncStatus(holder, buildingWithSurveyStatus.building);
         }
+    }
+
+    private void setSyncStatus(ViewHolder holder, Building currentBuilding) {
+        BuildingWithChange bwc = (BuildingWithChange) currentBuilding;
+        holder.notSync.setVisibility(bwc.isNotSynced() ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -138,6 +147,7 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
         TextView buildingTextView;
         Button editBuilding;
         ImageView buildingIcon;
+        ImageView notSync;
         View surveyedStatus;
         View rootView;
 
@@ -148,6 +158,7 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
             buildingIcon = (ImageView) itemView.findViewById(R.id.building_icon);
             editBuilding = (Button) itemView.findViewById(R.id.edit_building);
             surveyedStatus = itemView.findViewById(R.id.surveyed);
+            notSync = (ImageView) itemView.findViewById(R.id.not_sync);
             editBuilding.setOnClickListener(this);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);

@@ -18,17 +18,15 @@
 package th.or.nectec.tanrabad.survey.repository.persistence;
 
 import android.database.Cursor;
-import th.or.nectec.tanrabad.domain.UserRepository;
+
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
 
-import java.util.UUID;
-
 class BuildingCursorMapper implements CursorMapper<Building> {
-
-    private final UserRepository userRepository;
     private final PlaceRepository placeRepository;
     private int idIndex;
     private int nameIndex;
@@ -36,12 +34,11 @@ class BuildingCursorMapper implements CursorMapper<Building> {
     private int lngIndex;
     private int updateByIndex;
     private int updateTimeIndex;
+    private int changedStatusIndex;
     private int placeId;
 
-    public BuildingCursorMapper(Cursor cursor, UserRepository userRepository, PlaceRepository placeRepository) {
-        this.userRepository = userRepository;
+    public BuildingCursorMapper(Cursor cursor, PlaceRepository placeRepository) {
         this.placeRepository = placeRepository;
-
         findColumnIndexOf(cursor);
     }
 
@@ -53,18 +50,18 @@ class BuildingCursorMapper implements CursorMapper<Building> {
         placeId = cursor.getColumnIndex(BuildingColumn.PLACE_ID);
         updateByIndex = cursor.getColumnIndex(BuildingColumn.UPDATE_BY);
         updateTimeIndex = cursor.getColumnIndex(BuildingColumn.UPDATE_TIME);
+        changedStatusIndex = cursor.getColumnIndex(BuildingColumn.CHANGED_STATUS);
     }
 
     @Override
-    public Building map(Cursor cursor) {
+    public BuildingWithChange map(Cursor cursor) {
         UUID uuid = UUID.fromString(cursor.getString(idIndex));
-        Building building = new Building(uuid, cursor.getString(nameIndex));
+        BuildingWithChange building = new BuildingWithChange(
+                uuid, cursor.getString(nameIndex), cursor.getInt(changedStatusIndex));
         building.setLocation(new Location(cursor.getDouble(latIndex), cursor.getDouble(lngIndex)));
         building.setUpdateBy(cursor.getString(updateByIndex));
         building.setPlace(placeRepository.findByUUID(UUID.fromString(cursor.getString(placeId))));
         building.setUpdateTimestamp(cursor.getString(updateTimeIndex));
         return building;
     }
-
-
 }

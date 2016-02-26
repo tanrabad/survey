@@ -36,6 +36,7 @@
         android:layout_height="wrap_content"
         android:textIsSelectable="false"
         android:textSize="@dimen/text_title"
+        tools:ignore="RelativeOverlap"
         tools:text="บ้านเลขที่ 1"/>
 
     <TextView
@@ -47,7 +48,8 @@
         android:layout_alignStart="@+id/building_name"
         android:layout_below="@+id/building_name"
         android:text="@string/building_already_survey"
-        android:textColor="@color/color_accent"/>
+        android:textColor="@color/color_accent"
+        tools:ignore="RelativeOverlap"/>
 
     <Button
         android:id="@+id/edit_building"
@@ -63,10 +65,11 @@
         android:id="@+id/not_sync"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/edit_building"
-        android:layout_alignRight="@+id/edit_building"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:contentDescription="@string/description_survey_not_synced"
         android:src="@mipmap/ic_not_sync"
+        tools:ignore="RelativeOverlap"
         tools:visibility="visible"/>
 </RelativeLayout>

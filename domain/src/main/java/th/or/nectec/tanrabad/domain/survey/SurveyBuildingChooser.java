@@ -17,6 +17,10 @@
 
 package th.or.nectec.tanrabad.domain.survey;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.domain.building.BuildingRepository;
 import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
@@ -26,10 +30,6 @@ import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.User;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 public class SurveyBuildingChooser {
 
@@ -54,22 +54,20 @@ public class SurveyBuildingChooser {
         this.surveyBuildingPresenter = surveyBuildingPresenter;
     }
 
-    public void displaySurveyBuildingOf(String placeUUID, User user) {
-        if (!isUserAndPlaceFound(placeUUID, user)) return;
-
+    public void displaySurveyBuildingOf(String placeUuid, User user) {
+        if (!isUserAndPlaceFound(placeUuid, user)) return;
         List<Building> buildings = buildingRepository.findByPlaceUUID(place.getId());
-
         checkBuildingAreFoundAndUpdateBuildingSurveyStatus(buildings);
     }
 
-    private boolean isUserAndPlaceFound(String placeUUID, User user) {
+    private boolean isUserAndPlaceFound(String placeUuid, User user) {
         this.user = userRepository.findByUsername(user.getUsername());
         if (this.user == null) {
             surveyBuildingPresenter.alertUserNotFound();
             return false;
         }
 
-        place = placeRepository.findByUUID(UUID.fromString(placeUUID));
+        place = placeRepository.findByUUID(UUID.fromString(placeUuid));
         if (place == null) {
             surveyBuildingPresenter.alertPlaceNotFound();
             return false;
@@ -104,8 +102,8 @@ public class SurveyBuildingChooser {
         return false;
     }
 
-    public void searchSurveyBuildingOfPlaceByName(String searchBuildingName, String placeUUID, User user) {
-        if (!isUserAndPlaceFound(placeUUID, user)) return;
+    public void searchSurveyBuildingOfPlaceByName(String searchBuildingName, String placeUuid, User user) {
+        if (!isUserAndPlaceFound(placeUuid, user)) return;
 
         List<Building> buildings = buildingRepository.findByPlaceUUIDAndBuildingName(place.getId(), searchBuildingName);
 

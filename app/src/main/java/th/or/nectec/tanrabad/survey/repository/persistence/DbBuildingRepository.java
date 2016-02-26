@@ -21,6 +21,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import java.util.List;
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.domain.building.BuildingRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
@@ -30,9 +34,6 @@ import th.or.nectec.tanrabad.survey.repository.ChangedRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorList;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
-
-import java.util.List;
-import java.util.UUID;
 
 public class DbBuildingRepository implements BuildingRepository, ChangedRepository<Building> {
 
@@ -99,7 +100,7 @@ public class DbBuildingRepository implements BuildingRepository, ChangedReposito
     }
 
     private CursorMapper<Building> getMapper(Cursor cursor) {
-        return new BuildingCursorMapper(cursor, userRepository, placeRepository);
+        return new BuildingCursorMapper(cursor, placeRepository);
     }
 
     @Override

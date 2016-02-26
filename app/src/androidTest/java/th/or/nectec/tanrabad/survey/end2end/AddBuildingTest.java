@@ -54,11 +54,11 @@ public class AddBuildingTest extends TanrabadEspressoTestBase {
         String buildingName = "ตึก1 สีม่วง";
         onView(withId(R.id.building_name))
                 .perform(replaceText(buildingName));
+        waitingFor(4000);
         onView(withId(R.id.add_marker))
                 .perform(click());
         onView(withText(R.string.save_location))
                 .perform(click());
-        clickConfirmButton();
         onView(withId(R.id.save))
                 .perform(click());
 

@@ -27,20 +27,26 @@ import android.provider.SearchRecentSuggestions;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
+
+import java.util.List;
+
 import th.or.nectec.tanrabad.domain.place.PlaceChooser;
 import th.or.nectec.tanrabad.domain.place.PlaceListPresenter;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
-
-import java.util.List;
 
 public class PlaceSearchActivity extends TanrabadActivity implements
         SearchView.OnQueryTextListener, PlaceListPresenter {
@@ -64,6 +70,7 @@ public class PlaceSearchActivity extends TanrabadActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_search);
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         emptyText = (TextView) findViewById(R.id.place_name_notfound);
         setupClearSearchHistoryButton();
         setupHomeButton();
@@ -84,15 +91,6 @@ public class PlaceSearchActivity extends TanrabadActivity implements
         });
     }
 
-    private void setupSearchHistoryList() {
-        searchHistoryAdapter = new SimpleCursorAdapter(this,
-                R.layout.list_item_search_history, null,
-                new String[]{SearchManager.SUGGEST_COLUMN_TEXT_1}, new int[]{R.id.text_item},
-                SimpleCursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
-        searchHistoryListView = (ListView) findViewById(R.id.place_search_history_list);
-        searchHistoryListView.setAdapter(searchHistoryAdapter);
-    }
-
     private void querySuggestion(String queryString) {
         Cursor recentQuery = PlaceSuggestionProvider.querySuggestion(this, queryString);
         searchHistoryAdapter.changeCursor(recentQuery);
@@ -109,6 +107,15 @@ public class PlaceSearchActivity extends TanrabadActivity implements
         } else {
             clearSearchHistory.setVisibility(View.GONE);
         }
+    }
+
+    private void setupSearchHistoryList() {
+        searchHistoryAdapter = new SimpleCursorAdapter(this,
+                R.layout.list_item_search_history, null,
+                new String[]{SearchManager.SUGGEST_COLUMN_TEXT_1}, new int[]{R.id.text_item},
+                SimpleCursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+        searchHistoryListView = (ListView) findViewById(R.id.place_search_history_list);
+        searchHistoryListView.setAdapter(searchHistoryAdapter);
     }
 
     private void setupPlaceList() {

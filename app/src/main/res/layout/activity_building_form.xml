@@ -16,12 +16,13 @@
   ~ limitations under the License.
   -->
 
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                 xmlns:tools="http://schemas.android.com/tools"
-                                                 android:layout_width="match_parent"
-                                                 android:layout_height="match_parent"
-                                                 android:onClick="onRootViewClick">
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:onClick="onRootViewClick">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -37,8 +38,6 @@
             app:layout_collapseMode="pin"
             app:popupTheme="@style/AppTheme.AppBarOverlay"
             app:theme="@style/AppTheme.AppBarOverlay"/>
-
-
     </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
@@ -50,11 +49,10 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <TextView
-                android:id="@+id/place_name"
-                style="@style/TextViewTanrabad.Header.Left"
-                android:textIsSelectable="false"
-                tools:text="หมู่ที่ 1 บ้านบางไผ่"/>
-
+            android:id="@+id/place_name"
+            style="@style/TextViewTanrabad.Header.Left"
+            android:textIsSelectable="false"
+            tools:text="หมู่ที่ 1 บ้านบางไผ่"/>
 
         <TextView
             android:id="@+id/building_name_label"

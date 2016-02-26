@@ -26,6 +26,7 @@
         <item name="actionModeCloseDrawable">@mipmap/ic_clear_white_24dp</item>
         <item name="toolbarStyle">@style/Toolbar</item>
         <item name="actionMenuTextAppearance">@style/ActionBarTitleTextAppearance</item>
+        <item name="windowActionModeOverlay">true</item>
 
         <!-- Defind Widget Theme -->
         <item name="android:textViewStyle">@style/TextViewTanrabad</item>
@@ -73,6 +74,11 @@
         <item name="actionBarStyle">@style/ActionBar.Alternate</item>
         <item name="colorPrimary">@color/darker_gray</item>
         <item name="colorPrimaryDark">@color/black</item>
+    </style>
+
+    <style name="AppTheme.Alternate.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

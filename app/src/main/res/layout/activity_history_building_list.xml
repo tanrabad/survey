@@ -22,9 +22,25 @@
        android:layout_height="match_parent">
 
 
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_size"
+            android:background="@color/shock_pink"
+            android:fitsSystemWindows="true"
+            app:layout_collapseMode="pin"
+            app:popupTheme="@style/AppTheme.AppBarOverlay"
+            app:theme="@style/AppTheme.AppBarOverlay"/>
+    </android.support.design.widget.AppBarLayout>
+
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/toolbar_size">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -44,6 +60,7 @@
                 android:textIsSelectable="true"
                 tools:text="หมู่ 1 บ้านบางไผ่"/>
         </RelativeLayout>
+
 
         <include layout="@layout/component_header_collapsing_transparent"/>
 
@@ -80,5 +97,5 @@
         android:contentDescription="@null"
         android:src="@drawable/bg_survey_more_building"
         android:text="@string/survey_more_building_button_text"
-    />
+        />
 </merge>

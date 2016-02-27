@@ -31,6 +31,7 @@ import java.util.List;
 
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.repository.persistence.PlaceWithChange;
 
 public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> implements ListViewAdapter<Place> {
 
@@ -83,6 +84,12 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> 
         Place place = places.get(position);
         holder.placeTextView.setText(place.getName());
         holder.placeIcon.setImageResource(PlaceIconMapping.getPlaceIcon(place));
+        setSyncStatus(holder, place);
+    }
+
+    private void setSyncStatus(ViewHolder holder, Place currentPlace) {
+        PlaceWithChange bwc = (PlaceWithChange) currentPlace;
+        holder.notSync.setVisibility(bwc.isNotSynced() ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -112,6 +119,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         TextView placeTextView;
         ImageView placeIcon;
+        ImageView notSync;
         private PlaceAdapter adapter;
 
         public ViewHolder(View itemView, PlaceAdapter adapter) {
@@ -121,6 +129,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> 
             itemView.setOnLongClickListener(this);
             placeTextView = (TextView) itemView.findViewById(R.id.place_name);
             placeIcon = (ImageView) itemView.findViewById(R.id.place_icon);
+            notSync = (ImageView) itemView.findViewById(R.id.not_sync);
         }
 
         @Override

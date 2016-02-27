@@ -29,27 +29,7 @@
         android:contentDescription="@string/building_icon"
         tools:src="@mipmap/ic_building_home_black"/>
 
-    <TextView
-        android:id="@+id/building_name"
-        style="@style/ListTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textIsSelectable="false"
-        android:textSize="@dimen/text_title"
-        tools:ignore="RelativeOverlap"
-        tools:text="บ้านเลขที่ 1"/>
 
-    <TextView
-        android:id="@+id/surveyed"
-        style="@style/TanrabadTextAppearance.Caption"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/building_name"
-        android:layout_alignStart="@+id/building_name"
-        android:layout_below="@+id/building_name"
-        android:text="@string/building_already_survey"
-        android:textColor="@color/color_accent"
-        tools:ignore="RelativeOverlap"/>
 
     <Button
         android:id="@+id/edit_building"
@@ -72,4 +52,27 @@
         android:src="@mipmap/ic_not_sync"
         tools:ignore="RelativeOverlap"
         tools:visibility="visible"/>
+
+    <TextView
+        android:id="@+id/building_name"
+        style="@style/ListTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@id/not_sync"
+        android:textIsSelectable="false"
+        android:textSize="@dimen/text_title"
+        tools:text="บ้านเลขที่ 1"/>
+
+    <TextView
+        android:id="@+id/surveyed"
+        style="@style/TanrabadTextAppearance.Caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/building_name"
+        android:layout_alignStart="@+id/building_name"
+        android:layout_below="@+id/building_name"
+        android:layout_toLeftOf="@id/not_sync"
+        android:text="@string/building_already_survey"
+        android:textColor="@color/color_accent"/>
 </RelativeLayout>

@@ -16,24 +16,39 @@
   ~ limitations under the License.
   -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/ListItem">
+<RelativeLayout
+    style="@style/ListItem"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <ImageView
-            style="@style/ListIcon"
-            tools:src="@mipmap/ic_place_hospital"
-            android:id="@+id/place_icon"
-            android:contentDescription="@string/place_icon"/>
+        android:id="@+id/place_icon"
+        style="@style/ListIcon"
+        android:contentDescription="@string/place_icon"
+        tools:src="@mipmap/ic_place_hospital"/>
 
     <TextView
-            style="@style/ListTitle"
-            android:id="@+id/place_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:textIsSelectable="false"
-            tools:text="หม่ที่ 1"/>
+        android:id="@+id/place_name"
+        style="@style/ListTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/not_sync"
+        android:textIsSelectable="false"
+        tools:text="หมู่ที่ 1"/>
+
+    <ImageView
+        android:id="@+id/not_sync"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/description_survey_not_synced"
+        android:src="@mipmap/ic_not_sync"
+        tools:ignore="RelativeOverlap"
+        tools:visibility="visible"/>
 </RelativeLayout>

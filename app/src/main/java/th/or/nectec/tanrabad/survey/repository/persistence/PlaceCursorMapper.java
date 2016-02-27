@@ -18,13 +18,14 @@
 package th.or.nectec.tanrabad.survey.repository.persistence;
 
 import android.database.Cursor;
+
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.entity.lookup.PlaceSubType;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
-
-import java.util.UUID;
 
 class PlaceCursorMapper implements CursorMapper<Place> {
 
@@ -36,6 +37,7 @@ class PlaceCursorMapper implements CursorMapper<Place> {
     private int lngIndex;
     private int updateByIndex;
     private int updateTimeIndex;
+    private int changedStatusIndex;
 
     public PlaceCursorMapper(Cursor cursor) {
         findColumnIndexOf(cursor);
@@ -50,12 +52,14 @@ class PlaceCursorMapper implements CursorMapper<Place> {
         lngIndex = cursor.getColumnIndex(PlaceColumn.LONGITUDE);
         updateByIndex = cursor.getColumnIndex(PlaceColumn.UPDATE_BY);
         updateTimeIndex = cursor.getColumnIndex(PlaceColumn.UPDATE_TIME);
+        changedStatusIndex = cursor.getColumnIndex(PlaceColumn.CHANGED_STATUS);
     }
 
     @Override
-    public Place map(Cursor cursor) {
+    public PlaceWithChange map(Cursor cursor) {
         UUID uuid = UUID.fromString(cursor.getString(idIndex));
-        Place place = new Place(uuid, cursor.getString(nameIndex));
+        PlaceWithChange place = new PlaceWithChange(
+                uuid, cursor.getString(nameIndex), cursor.getInt(changedStatusIndex));
         place.setSubdistrictCode(cursor.getString(subdistrictCodeIndex));
         PlaceSubType subType = getSubType(cursor);
         place.setType(subType.getPlaceTypeId());

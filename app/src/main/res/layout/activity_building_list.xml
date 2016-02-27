@@ -15,17 +15,15 @@
   ~ limitations under the License.
   -->
 
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:app="http://schemas.android.com/apk/res-auto"
+       xmlns:tools="http://schemas.android.com/tools"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onRootViewClick">
+        android:layout_height="wrap_content">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -38,10 +36,14 @@
             app:theme="@style/AppTheme.AppBarOverlay"/>
     </android.support.design.widget.AppBarLayout>
 
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/toolbar_size">
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/header_height_with_padding"
-        android:layout_marginTop="@dimen/toolbar_size"
         android:background="@color/header_building">
 
         <ImageView
@@ -112,4 +114,6 @@
             android:layout_height="wrap_content"/>
     </android.support.v7.widget.CardView>
 
-</android.support.design.widget.CoordinatorLayout>
+    </android.support.design.widget.CoordinatorLayout>
+
+</merge>

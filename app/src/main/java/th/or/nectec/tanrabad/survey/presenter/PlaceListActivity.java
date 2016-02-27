@@ -28,8 +28,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.github.amlcurran.showcaseview.ShowcaseView;
+
 import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.job.SyncJobRunner;
+import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
 import th.or.nectec.tanrabad.survey.utils.showcase.BaseShowcase;
 import th.or.nectec.tanrabad.survey.utils.showcase.Showcase;
 import th.or.nectec.tanrabad.survey.utils.showcase.ShowcaseFactory;
@@ -129,15 +133,24 @@ public class PlaceListActivity extends TanrabadActivity {
         switch (requestCode) {
             case PlaceFormActivity.ADD_PLACE_REQ_CODE:
                 if (resultCode == RESULT_OK)
-                    placePagerAdapter.refreshPlaceListData();
+                    if (InternetConnection.isAvailable(this))
+                        new PlaceUpdateJob().start();
+                placePagerAdapter.refreshPlaceListData();
                 break;
         }
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.action_activity_place_search, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    public class PlaceUpdateJob extends SyncJobRunner {
+        @Override
+        protected void onRunFinish() {
+            super.onRunFinish();
+            placePagerAdapter.refreshPlaceListData();
+        }
     }
 }

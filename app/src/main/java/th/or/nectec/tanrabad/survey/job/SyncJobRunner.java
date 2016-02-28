@@ -132,17 +132,15 @@ public class SyncJobRunner extends AbsJobRunner {
 
     private String appendUploadSuccessMessage(UploadJob uploadJob) {
         return uploadJob.getSuccessCount() > 0
-                ? String.format(context.getString(R.string.upload_data_success),
-                uploadJob.getSuccessCount())
+                ? String.format(context.getString(R.string.upload_data_success), uploadJob.getSuccessCount())
                 : "";
     }
 
     private String appendUploadFailedMessage(UploadJob uploadJob) {
-        String space = (uploadJob.getSuccessCount() > 0) ? " " : "\n";
+        String space = (uploadJob.getSuccessCount() > 0) ? " " : "";
         String message = (uploadJob.getFailCount() > 0)
-                ? String.format(context.getString(R.string.upload_data_fail),
-                uploadJob.getFailCount()) + "\n"
-                : "";
+                ? String.format(context.getString(R.string.upload_data_fail), uploadJob.getFailCount()) + "\n"
+                : "\n";
         return space + message;
     }
 }

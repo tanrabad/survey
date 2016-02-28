@@ -104,6 +104,9 @@ public class PlaceListActivity extends TanrabadActivity {
             case R.id.action_search:
                 PlaceSearchActivity.open(this);
                 break;
+            case android.R.id.home:
+                MainActivity.open(this);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -130,14 +133,23 @@ public class PlaceListActivity extends TanrabadActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode != RESULT_OK)
+            return;
+
+        placePagerAdapter.refreshPlaceListData();
         switch (requestCode) {
             case PlaceFormActivity.ADD_PLACE_REQ_CODE:
-                if (resultCode == RESULT_OK)
-                    if (InternetConnection.isAvailable(this))
-                        new PlaceUpdateJob().start();
-                placePagerAdapter.refreshPlaceListData();
+                if (InternetConnection.isAvailable(this))
+                    new PlaceUpdateJob().start();
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        MainActivity.open(this);
     }
 
     @Override

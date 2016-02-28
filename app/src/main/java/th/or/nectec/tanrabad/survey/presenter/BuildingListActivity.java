@@ -57,14 +57,12 @@ import th.or.nectec.tanrabad.survey.repository.BrokerSurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
-import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
-import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 
 public class BuildingListActivity extends TanrabadActivity implements BuildingWithSurveyStatusListPresenter,
         PlacePresenter, ActionMode.Callback, View.OnClickListener {
 
     public static final String PLACE_UUID_ARG = "place_uuid_arg";
-    public static final String IS_NEW_SURVEY_ARG = "is_new_survey_arg";
+    public static final int NEED_REFRESH_REQ_CODE = 31000;
     Button editPlaceButton;
     ImageButton editBuildingButton;
     private RecyclerView buildingList;
@@ -83,7 +81,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     public static void open(Activity activity, String placeUuid) {
         Intent intent = new Intent(activity, BuildingListActivity.class);
         intent.putExtra(BuildingListActivity.PLACE_UUID_ARG, placeUuid);
-        activity.startActivity(intent);
+        activity.startActivityForResult(intent, NEED_REFRESH_REQ_CODE);
     }
 
     @Override
@@ -253,19 +251,19 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_OK)
+            return;
+
+        setResult(RESULT_OK);
         switch (requestCode) {
             case BuildingFormActivity.ADD_BUILDING_REQ_CODE:
-                if (resultCode == RESULT_OK) {
-                    if (InternetConnection.isAvailable(this))
-                        new BuildingUpdateJob().start();
-                    loadSurveyBuildingList();
-                    stopActionMode();
-                }
+                if (InternetConnection.isAvailable(this))
+                    new BuildingUpdateJob().start();
+                loadSurveyBuildingList();
+                stopActionMode();
                 break;
             case PlaceFormActivity.ADD_PLACE_REQ_CODE:
-                if (resultCode == RESULT_OK) {
-                    showPlaceName();
-                }
+                showPlaceName();
                 break;
         }
     }
@@ -273,32 +271,6 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     private void stopActionMode() {
         if (actionMode != null)
             actionMode.finish();
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (isNewSurvey()) {
-            showFinishSurveyPrompt();
-        } else {
-            finish();
-        }
-    }
-
-    private boolean isNewSurvey() {
-        return getIntent().getBooleanExtra(IS_NEW_SURVEY_ARG, false);
-    }
-
-    private void showFinishSurveyPrompt() {
-        PromptMessage promptMessage = new AlertDialogPromptMessage(this);
-        promptMessage.setOnConfirm(getString(R.string.yes), new PromptMessage.OnConfirmListener() {
-            @Override
-            public void onConfirm() {
-                PlaceListActivity.open(BuildingListActivity.this);
-                finish();
-            }
-        });
-        promptMessage.setOnCancel(getString(R.string.no), null);
-        promptMessage.show(getString(R.string.abort_survey), place.getName());
     }
 
     @Override
@@ -342,6 +314,4 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
                 break;
         }
     }
-
-
 }

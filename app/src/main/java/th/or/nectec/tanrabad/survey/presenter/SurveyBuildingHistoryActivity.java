@@ -64,10 +64,9 @@ import th.or.nectec.tanrabad.survey.utils.showcase.ShowcaseFactory;
 public class SurveyBuildingHistoryActivity extends TanrabadActivity implements SurveyBuildingPresenter, PlacePresenter {
 
     public static final String PLACE_UUID_ARG = "place_uuid_arg";
-
+    public static final int NEED_REFRESH_REQ_CODE = 30001;
     private TextView placeName;
     private ImageButton surveyMoreBuildingButton;
-
     private SurveyBuildingHistoryAdapter surveyBuildingHistoryAdapter;
     private Place place;
     private EmptyLayoutView emptyLayoutView;
@@ -75,7 +74,7 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
     public static void open(Activity activity, Place placeData) {
         Intent intent = new Intent(activity, SurveyBuildingHistoryActivity.class);
         intent.putExtra(SurveyBuildingHistoryActivity.PLACE_UUID_ARG, placeData.getId().toString());
-        activity.startActivity(intent);
+        activity.startActivityForResult(intent, NEED_REFRESH_REQ_CODE);
     }
 
     @Override
@@ -169,19 +168,14 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
         switch (item.getItemId()) {
             case R.id.finish:
                 TanrabadApp.action().finishSurvey(place, true);
-                openMainActivity();
+                MainActivity.open(this);
                 break;
             case android.R.id.home:
                 TanrabadApp.action().finishSurvey(place, false);
-                openMainActivity();
+                MainActivity.open(this);
                 break;
         }
         return true;
-    }
-
-    private void openMainActivity() {
-        Intent intent = new Intent(SurveyBuildingHistoryActivity.this, MainActivity.class);
-        startActivity(intent);
     }
 
     @Override
@@ -204,6 +198,7 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
 
     @Override
     public void displaySurveyBuildingsNotFound() {
+        setResult(RESULT_OK);
         finish();
         BuildingListActivity.open(SurveyBuildingHistoryActivity.this, getPlaceUuidFromIntent());
     }
@@ -226,9 +221,18 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_OK)
+            return;
+        showPlaceInfo();
+        showSurveyBuildingHistoryList();
+    }
+
+    @Override
     public void onBackPressed() {
         TanrabadApp.action().finishSurvey(place, false);
-        openMainActivity();
+        MainActivity.open(this);
     }
 
     public class SurveyUpdateJob extends SyncJobRunner {

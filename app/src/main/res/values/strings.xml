@@ -168,7 +168,7 @@
     <string name="show_tutorial">แสดงคำแนะนำการใช้งาน</string>
     <string name="showcase_survey_more_building">ถ้าต้องการจะสำรวจอาคารอื่น ๆ เพิ่มเติม ให้กดปุ่มนี้นะ</string>
     <string name="showcase_survey_more_building_title">การสำรวจสถานที่เพิ่มเติม</string>
-    <string name="error_connection_problem">กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ตก่อนที่จะส่งข้อมูล</string>
+    <string name="error_connection_problem">พบปัญหาการเชื่อมต่ออินเทอร์เน็ต กรุณาตรวจสอบ</string>
     <string name="error_rest_service">มีปัญหาภายในระบบ</string>
     <string name="process_time">ประมวลผลเมื่อ</string>
 

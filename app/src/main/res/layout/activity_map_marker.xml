@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-       xmlns:tools="http://schemas.android.com/tools"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       tools:context="th.or.nectec.tanrabad.survey.presenter.MapMarkerActivity">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="th.or.nectec.tanrabad.survey.presenter.MapMarkerActivity">
 
-    <include layout="@layout/toolbar"/>
+    <include
+        android:id="@+id/toolbar_layout"
+        layout="@layout/toolbar"/>
 
     <FrameLayout
         android:id="@+id/map_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar_layout"/>
 
     <Button
         android:id="@+id/remove_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="left|bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
         android:layout_marginBottom="32dp"
         android:layout_marginLeft="16dp"
         android:drawableLeft="@mipmap/ic_clear_white_24dp"
-        android:text="@string/remove_location" />
+        android:text="@string/remove_location"/>
 
-</merge>
+</RelativeLayout>

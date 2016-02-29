@@ -20,17 +20,20 @@ package th.or.nectec.tanrabad.survey.presenter.maps;
 import android.annotation.SuppressLint;
 import android.location.Location;
 import android.os.Bundle;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
+
 import th.or.nectec.tanrabad.survey.utils.GpsUtils;
 import th.or.nectec.tanrabad.survey.utils.LocationPermissionPrompt;
 import th.or.nectec.tanrabad.survey.utils.PlayLocationService;
 
 @SuppressLint("ValidFragment")
-class BaseMapFragment extends com.google.android.gms.maps.SupportMapFragment
+class BaseMapFragment extends SupportMapFragment
         implements MapFragmentInterface, OnMapReadyCallback {
 
     protected GoogleMap googleMap;

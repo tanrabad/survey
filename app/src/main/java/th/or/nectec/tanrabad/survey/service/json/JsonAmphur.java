@@ -2,6 +2,7 @@ package th.or.nectec.tanrabad.survey.service.json;
 
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
+
 import th.or.nectec.tanrabad.entity.lookup.District;
 
 @JsonObject
@@ -24,7 +25,8 @@ public class JsonAmphur {
         district.setName(amphurName);
         district.setCode(amphurCode);
         district.setProvinceCode(provinceCode);
-        district.setBoundary(boundary.getEntities());
+        if (boundary != null)
+            district.setBoundary(boundary.getEntities());
         return district;
     }
 }

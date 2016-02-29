@@ -2,6 +2,7 @@ package th.or.nectec.tanrabad.survey.service.json;
 
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
+
 import th.or.nectec.tanrabad.entity.lookup.Subdistrict;
 
 @JsonObject
@@ -24,7 +25,8 @@ public class JsonTambon {
         subdistrict.setName(tambonName);
         subdistrict.setCode(tambonCode);
         subdistrict.setDistrictCode(amphurCode);
-        subdistrict.setBoundary(boundary.getEntities());
+        if (boundary != null)
+            subdistrict.setBoundary(boundary.getEntities());
         return subdistrict;
     }
 }

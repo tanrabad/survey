@@ -2,6 +2,7 @@ package th.or.nectec.tanrabad.survey.service.json;
 
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
+
 import th.or.nectec.tanrabad.entity.lookup.Province;
 
 @JsonObject
@@ -20,7 +21,8 @@ public class JsonProvince {
         Province province = new Province();
         province.setName(provinceName);
         province.setCode(provinceCode);
-        province.setBoundary(boundary.getEntities());
+        if (boundary != null)
+            province.setBoundary(boundary.getEntities());
         return province;
     }
 }

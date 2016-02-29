@@ -22,27 +22,27 @@
                 android:orientation="vertical">
 
     <ImageView
-        tools:src="@mipmap/ic_container_pot_saucer"
+        android:id="@+id/container_icon"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:id="@+id/container_icon"
-        android:layout_centerVertical="true"
-        android:background="@null"
-        android:scaleType="centerInside"
-        android:layout_marginRight="@dimen/space_between_content"
-        android:layout_marginEnd="@dimen/space_between_content"
         android:layout_marginBottom="@dimen/space_between_content"
-        android:contentDescription="@string/survey_container_description"/>
+        android:layout_marginEnd="@dimen/space_between_content"
+        android:layout_marginRight="@dimen/space_between_content"
+        android:background="@null"
+        android:contentDescription="@string/survey_container_description"
+        android:scaleType="centerInside"
+        tools:src="@mipmap/ic_container_pot_saucer"/>
 
     <TextView
         android:id="@+id/container_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textIsSelectable="false"
-        tools:text="ประเภทภาชนะ" android:singleLine="true"
         android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/container_icon"
+        android:layout_toRightOf="@+id/container_icon"
         android:textAppearance="?android:attr/textAppearance"
-        android:layout_toRightOf="@+id/container_icon" android:layout_toEndOf="@+id/container_icon"/>
+        android:textIsSelectable="false"
+        tools:text="ประเภทภาชนะ"/>
 
 
 </RelativeLayout>

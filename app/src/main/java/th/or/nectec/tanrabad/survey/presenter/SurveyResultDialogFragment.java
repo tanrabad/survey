@@ -20,7 +20,6 @@ package th.or.nectec.tanrabad.survey.presenter;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.widget.ContentLoadingProgressBar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +27,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -87,7 +87,7 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
     TextView containerCountView;
     LinearLayout indoorContainerLayout;
     LinearLayout outdoorContainerLayout;
-    ContentLoadingProgressBar progressBar;
+    ProgressBar progressBar;
     TextView errorMsgView;
     Button gotIt;
     private EntomologyJob jsonEntomologyGetDataJob;
@@ -131,7 +131,7 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
         containerCountView = (TextView) view.findViewById(R.id.container_count);
         indoorContainerLayout = (LinearLayout) view.findViewById(R.id.indoor_container);
         outdoorContainerLayout = (LinearLayout) view.findViewById(R.id.outdoor_container);
-        progressBar = (ContentLoadingProgressBar) view.findViewById(R.id.loading);
+        progressBar = (ProgressBar) view.findViewById(R.id.loading);
         errorMsgView = (TextView) view.findViewById(R.id.error_msg);
         surveyDateView = (TextView) view.findViewById(R.id.survey_date);
         resultUpdateView = (RelativeTimeAgoTextView) view.findViewById(R.id.report_update);
@@ -229,6 +229,19 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
                 color = ResourceUtils.from(getActivity()).getColor(R.color.have_larvae);
         }
         background.setColor(color);
+    }
+
+    private void setSurveyDate(JsonEntomology jsonEntomology) {
+        String surveyDate;
+        if (jsonEntomology.surveyStartDate == null) {
+            surveyDate = getString(R.string.no_survey_start_date);
+        } else if (jsonEntomology.surveyStartDate.equals(jsonEntomology.surveyEndDate)) {
+            surveyDate = ThaiDatePrinter.print(jsonEntomology.surveyStartDate);
+        } else {
+            surveyDate = ThaiDatePrinter.print(jsonEntomology.surveyStartDate)
+                    + " - " + ThaiDatePrinter.print(jsonEntomology.surveyEndDate);
+        }
+        surveyDateView.setText(surveyDate);
     }
 
     public class SurveyResultJobRunner extends AbsJobRunner {
@@ -344,21 +357,20 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
                         && TextUtils.isEmpty(outdoorKeyContainer.containerName)) {
                     hideKeyContainerLayout();
                 } else {
-                    getFirstOfSameLevelKeyContainer(indoorKeyContainer, indoorContainerLayout);
-                    getFirstOfSameLevelKeyContainer(outdoorKeyContainer, outdoorContainerLayout);
+                    setupKeyContainer(indoorKeyContainer, indoorContainerLayout);
+                    setupKeyContainer(outdoorKeyContainer, outdoorContainerLayout);
                 }
             }
         }
 
-        private void getFirstOfSameLevelKeyContainer(JsonKeyContainer keyContainer,
-                                                     LinearLayout container) {
+        private void setupKeyContainer(JsonKeyContainer keyContainer,
+                                       LinearLayout container) {
             if (keyContainer.containerId == null && keyContainer.containerName == null)
                 return;
 
             String[] sameLevelKeyContainerId = keyContainer.containerId.split(", ");
-            String[] sameLevelKeyContainerName = keyContainer.containerName.split(", ");
             container.addView(buildKeyContainerView(Integer.valueOf(sameLevelKeyContainerId[0]),
-                    sameLevelKeyContainerName[0]));
+                    keyContainer.containerName.replace(", ", ",\n")));
         }
 
         private KeyContainerView buildKeyContainerView(int containerId, String containerName) {
@@ -366,19 +378,5 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
             keyContainerView.setContainerType(containerId, containerName);
             return keyContainerView;
         }
-    }
-
-    private void setSurveyDate(JsonEntomology jsonEntomology) {
-        String surveyDate;
-        if (jsonEntomology.surveyStartDate == null) {
-            surveyDate =  "ไม่มีข้อมูลวันเริ่มสำรวจ";
-        }
-        else if(jsonEntomology.surveyStartDate.equals(jsonEntomology.surveyEndDate)){
-            surveyDate = ThaiDatePrinter.print(jsonEntomology.surveyStartDate);
-        } else{
-            surveyDate = ThaiDatePrinter.print(jsonEntomology.surveyStartDate)
-                    + " - " +ThaiDatePrinter.print(jsonEntomology.surveyEndDate);
-        }
-        surveyDateView.setText(surveyDate);
     }
 }

@@ -169,8 +169,9 @@
     <string name="showcase_survey_more_building">ถ้าต้องการจะสำรวจอาคารอื่น ๆ เพิ่มเติม ให้กดปุ่มนี้นะ</string>
     <string name="showcase_survey_more_building_title">การสำรวจสถานที่เพิ่มเติม</string>
     <string name="error_connection_problem">พบปัญหาการเชื่อมต่ออินเทอร์เน็ต กรุณาตรวจสอบ</string>
-    <string name="error_rest_service">พบข้อมูลบางอย่างผิดพลาด ลองอีกครั้ง หรือแจ้ง 02-5646900ต่อ2513</string>
+    <string name="error_rest_service">พบข้อมูลบางอย่างผิดพลาด ลองอีกครั้ง หรือแจ้ง 02&#8211;5646900ต่อ2513</string>
     <string name="process_time">ประมวลผลเมื่อ</string>
+    <string name="no_survey_start_date">ไม่มีข้อมูลวันเริ่มสำรวจ</string>
 
 
 </resources>

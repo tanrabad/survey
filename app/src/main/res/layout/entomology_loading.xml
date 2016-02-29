@@ -2,18 +2,19 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
        xmlns:tools="http://schemas.android.com/tools"
        tools:showIn="@layout/dialog_survey_result">
-    <android.support.v4.widget.ContentLoadingProgressBar
+
+    <ProgressBar
         android:id="@+id/loading"
-        style="?android:attr/progressBarStyleSmall"
+        style="@style/Base.Widget.AppCompat.ProgressBar"
         android:layout_width="100dp"
-        android:layout_centerInParent="true"
-        android:layout_height="100dp"/>
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"/>
     <TextView
-        android:drawableTop="@drawable/sad_cloud"
         android:id="@+id/error_msg"
         style="@style/EntomologyText"
-        android:gravity="center"
         android:layout_centerInParent="true"
+        android:drawableTop="@drawable/sad_cloud"
+        android:gravity="center"
         android:textIsSelectable="false"
         tools:text="@string/cannot_view_survey_result"/>
 </merge>

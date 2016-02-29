@@ -244,6 +244,14 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
         surveyDateView.setText(surveyDate);
     }
 
+    private LinearLayout.LayoutParams addSpace() {
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(0, 0, 0, 16);
+
+        return layoutParams;
+    }
+
     public class SurveyResultJobRunner extends AbsJobRunner {
         private JsonEntomology entomology;
 
@@ -369,8 +377,19 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
                 return;
 
             String[] sameLevelKeyContainerId = keyContainer.containerId.split(", ");
-            container.addView(buildKeyContainerView(Integer.valueOf(sameLevelKeyContainerId[0]),
-                    keyContainer.containerName.replace(", ", ",\n")));
+            String[] sameLevelKeyContainerName = keyContainer.containerName.split(", ");
+            int sameLevelSize = sameLevelKeyContainerId.length;
+
+            for (int i = 0; i < sameLevelSize; i++) {
+                KeyContainerView keyContainerView = buildKeyContainerView(
+                        Integer.valueOf(sameLevelKeyContainerId[i]),
+                        sameLevelKeyContainerName[i]);
+
+                if (i == sameLevelSize - 1)
+                    keyContainerView.setLayoutParams(addSpace());
+
+                container.addView(keyContainerView);
+            }
         }
 
         private KeyContainerView buildKeyContainerView(int containerId, String containerName) {

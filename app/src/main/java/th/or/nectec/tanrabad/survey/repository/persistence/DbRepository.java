@@ -6,9 +6,9 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class DbRepository {
 
+    private static SQLiteDatabase readableDatabase;
+    private static SQLiteDatabase writableDatabase;
     private Context context;
-    private SQLiteDatabase readableDatabase;
-    private SQLiteDatabase writableDatabase;
 
     public DbRepository(Context context) {
         this.context = context;

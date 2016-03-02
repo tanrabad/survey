@@ -17,25 +17,20 @@
 
 package th.or.nectec.tanrabad.domain.survey;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import th.or.nectec.tanrabad.domain.UserRepository;
-import th.or.nectec.tanrabad.domain.building.BuildingRepository;
 import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
 import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatusListPresenter;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
-import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.User;
 
 public class SurveyBuildingChooser {
 
     private UserRepository userRepository;
     private PlaceRepository placeRepository;
-    private BuildingRepository buildingRepository;
     private SurveyRepository surveyRepository;
     private BuildingWithSurveyStatusListPresenter surveyBuildingPresenter;
     private User user;
@@ -44,20 +39,19 @@ public class SurveyBuildingChooser {
     public SurveyBuildingChooser(
             UserRepository userRepository,
             PlaceRepository placeRepository,
-            BuildingRepository buildingRepository,
             SurveyRepository surveyRepository,
             BuildingWithSurveyStatusListPresenter surveyBuildingPresenter) {
         this.userRepository = userRepository;
         this.placeRepository = placeRepository;
-        this.buildingRepository = buildingRepository;
         this.surveyRepository = surveyRepository;
         this.surveyBuildingPresenter = surveyBuildingPresenter;
     }
 
     public void displaySurveyBuildingOf(String placeUuid, User user) {
         if (!isUserAndPlaceFound(placeUuid, user)) return;
-        List<Building> buildings = buildingRepository.findByPlaceUUID(place.getId());
-        checkBuildingAreFoundAndUpdateBuildingSurveyStatus(buildings);
+
+        List<BuildingWithSurveyStatus> buildings = surveyRepository.findSurveyBuilding(place, user);
+        displaySurveyBuildingList(buildings);
     }
 
     private boolean isUserAndPlaceFound(String placeUuid, User user) {
@@ -75,38 +69,19 @@ public class SurveyBuildingChooser {
         return true;
     }
 
-    private void checkBuildingAreFoundAndUpdateBuildingSurveyStatus(List<Building> buildings) {
-        if (buildings == null) {
+    private void displaySurveyBuildingList(List<BuildingWithSurveyStatus> buildings) {
+        if (buildings.isEmpty()) {
             surveyBuildingPresenter.alertBuildingsNotFound();
-            return;
+        } else {
+            surveyBuildingPresenter.displayAllSurveyBuildingList(buildings);
         }
-        List<Survey> surveys = surveyRepository.findByPlaceAndUserIn7Days(place, user);
-        List<BuildingWithSurveyStatus> buildingsWithSurveyStatuses = new ArrayList<>();
-        for (Building eachBuilding : buildings) {
-            BuildingWithSurveyStatus buildingWithSurveyStatus = new BuildingWithSurveyStatus(
-                    eachBuilding, isBuildingSurveyed(surveys, eachBuilding));
-            buildingsWithSurveyStatuses.add(buildingWithSurveyStatus);
-        }
-        surveyBuildingPresenter.displayAllSurveyBuildingList(buildingsWithSurveyStatuses);
-    }
-
-    private boolean isBuildingSurveyed(List<Survey> surveys, Building eachBuilding) {
-        if (surveys == null) {
-            return false;
-        }
-        for (Survey eachSurvey : surveys) {
-            if (eachSurvey.getSurveyBuilding().equals(eachBuilding)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public void searchSurveyBuildingOfPlaceByName(String searchBuildingName, String placeUuid, User user) {
         if (!isUserAndPlaceFound(placeUuid, user)) return;
 
-        List<Building> buildings = buildingRepository.findByPlaceUUIDAndBuildingName(place.getId(), searchBuildingName);
-
-        checkBuildingAreFoundAndUpdateBuildingSurveyStatus(buildings);
+        List<BuildingWithSurveyStatus> buildings = surveyRepository
+                .findSurveyBuildingByBuildingName(place, user, searchBuildingName);
+        displaySurveyBuildingList(buildings);
     }
 }

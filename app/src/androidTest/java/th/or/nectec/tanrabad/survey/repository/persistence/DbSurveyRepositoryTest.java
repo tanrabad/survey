@@ -21,29 +21,41 @@ import android.content.Context;
 import android.database.Cursor;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.domain.building.BuildingRepository;
+import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.domain.survey.ContainerTypeRepository;
 import th.or.nectec.tanrabad.entity.Building;
+import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.SurveyDetail;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static th.or.nectec.tanrabad.survey.repository.persistence.SurveyColumn.*;
+import static th.or.nectec.tanrabad.survey.repository.persistence.SurveyColumn.CHANGED_STATUS;
+import static th.or.nectec.tanrabad.survey.repository.persistence.SurveyColumn.CREATE_TIME;
+import static th.or.nectec.tanrabad.survey.repository.persistence.SurveyColumn.ID;
+import static th.or.nectec.tanrabad.survey.repository.persistence.SurveyColumn.LATITUDE;
+import static th.or.nectec.tanrabad.survey.repository.persistence.SurveyColumn.LONGITUDE;
+import static th.or.nectec.tanrabad.survey.repository.persistence.SurveyColumn.PERSON_COUNT;
+import static th.or.nectec.tanrabad.survey.repository.persistence.SurveyColumn.SURVEYOR;
+import static th.or.nectec.tanrabad.survey.repository.persistence.SurveyColumn.UPDATE_TIME;
+import static th.or.nectec.tanrabad.survey.repository.persistence.SurveyColumn.wildcard;
 
 @RunWith(AndroidJUnit4.class)
 public class DbSurveyRepositoryTest {
@@ -60,12 +72,16 @@ public class DbSurveyRepositoryTest {
         when(buildingRepository.findByUUID(UUID.fromString("f5bfd399-8fb2-4a69-874a-b40495f7786f")))
                 .thenReturn(stubBuilding());
 
+        PlaceRepository placeRepository = mock(PlaceRepository.class);
+        when(placeRepository.findByUUID(UUID.fromString("f5bfd399-8fb2-4a69-674a-b40495f7686f")))
+                .thenReturn(stubPlace());
+
         ContainerTypeRepository containerTypeRepository = mock(ContainerTypeRepository.class);
         when(containerTypeRepository.findByID(1)).thenReturn(getWater());
         when(containerTypeRepository.findByID(2)).thenReturn(getDrinkingWater());
 
         Context context = InstrumentationRegistry.getTargetContext();
-        surveyRepository = new DbSurveyRepository(context, userRepository, buildingRepository,
+        surveyRepository = new DbSurveyRepository(context, userRepository, placeRepository, buildingRepository,
                 containerTypeRepository);
     }
 
@@ -75,6 +91,10 @@ public class DbSurveyRepositoryTest {
 
     private Building stubBuilding() {
         return new Building(UUID.fromString("f5bfd399-8fb2-4a69-874a-b40495f7786f"), "ABC");
+    }
+
+    private Place stubPlace() {
+        return new Place(UUID.fromString("f5bfd399-8fb2-4a69-674a-b40495f7686f"), "ABCD");
     }
 
     private ContainerType getWater() {

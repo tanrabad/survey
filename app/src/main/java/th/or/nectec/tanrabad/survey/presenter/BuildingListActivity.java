@@ -51,7 +51,6 @@ import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.job.SyncJobRunner;
 import th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView;
-import th.or.nectec.tanrabad.survey.repository.BrokerBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerSurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
@@ -72,7 +71,6 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     private SurveyBuildingChooser surveyBuildingChooser = new SurveyBuildingChooser(
             new StubUserRepository(),
             BrokerPlaceRepository.getInstance(),
-            BrokerBuildingRepository.getInstance(),
             BrokerSurveyRepository.getInstance(),
             this);
     private SearchView buildingSearchView;

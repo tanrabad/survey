@@ -21,19 +21,33 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import th.or.nectec.tanrabad.domain.UserRepository;
-import th.or.nectec.tanrabad.domain.building.BuildingRepository;
-import th.or.nectec.tanrabad.domain.survey.ContainerTypeRepository;
-import th.or.nectec.tanrabad.domain.survey.SurveyRepository;
-import th.or.nectec.tanrabad.entity.*;
-import th.or.nectec.tanrabad.survey.TanrabadApp;
-import th.or.nectec.tanrabad.survey.repository.*;
-import th.or.nectec.tanrabad.survey.utils.collection.CursorList;
-import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
+import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import th.or.nectec.tanrabad.domain.UserRepository;
+import th.or.nectec.tanrabad.domain.building.BuildingRepository;
+import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
+import th.or.nectec.tanrabad.domain.place.PlaceRepository;
+import th.or.nectec.tanrabad.domain.survey.ContainerTypeRepository;
+import th.or.nectec.tanrabad.domain.survey.SurveyRepository;
+import th.or.nectec.tanrabad.entity.Building;
+import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.Survey;
+import th.or.nectec.tanrabad.entity.SurveyDetail;
+import th.or.nectec.tanrabad.entity.User;
+import th.or.nectec.tanrabad.survey.TanrabadApp;
+import th.or.nectec.tanrabad.survey.repository.BrokerBuildingRepository;
+import th.or.nectec.tanrabad.survey.repository.BrokerContainerTypeRepository;
+import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
+import th.or.nectec.tanrabad.survey.repository.ChangedRepository;
+import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
+import th.or.nectec.tanrabad.survey.repository.SurveyRepositoryException;
+import th.or.nectec.tanrabad.survey.utils.collection.CursorList;
+import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
 
 public class DbSurveyRepository extends DbRepository implements SurveyRepository, ChangedRepository<Survey> {
 
@@ -43,20 +57,25 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
     public static String TABLE_NAME = "survey";
     public static String DETAIL_TABLE_NAME = "survey_detail";
     private UserRepository userRepository;
+    private PlaceRepository placeRepository;
     private BuildingRepository buildingRepository;
     private ContainerTypeRepository containerTypeRepository;
 
     public DbSurveyRepository(Context context) {
-        this(context, new StubUserRepository(), BrokerBuildingRepository.getInstance(),
+        this(context, new StubUserRepository(),
+                BrokerPlaceRepository.getInstance(),
+                BrokerBuildingRepository.getInstance(),
                 BrokerContainerTypeRepository.getInstance());
     }
 
     public DbSurveyRepository(Context context,
                               UserRepository userRepository,
+                              PlaceRepository placeRepository,
                               BuildingRepository buildingRepository,
                               ContainerTypeRepository containerTypeRepository) {
         super(context);
         this.userRepository = userRepository;
+        this.placeRepository = placeRepository;
         this.buildingRepository = buildingRepository;
         this.containerTypeRepository = containerTypeRepository;
     }
@@ -259,6 +278,34 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
     }
 
     @Override
+    public List<BuildingWithSurveyStatus> findSurveyBuilding(Place place, User user) {
+        String[] columns = buildingSurveyColumn();
+        Cursor cursor = readableDatabase().query(DbBuildingRepository.TABLE_NAME
+                        + " LEFT JOIN " + TABLE_NAME + " USING(building_id)",
+                columns,
+                BuildingColumn.PLACE_ID + "=? "
+                        + "AND (" + SurveyColumn.SURVEYOR + "=? OR " + SurveyColumn.SURVEYOR + " IS NULL)",
+                new String[]{place.getId().toString(), user.getUsername()},
+                null, null, null);
+        return mapSurveyBuildingStatus(cursor);
+    }
+
+    @Override
+    public List<BuildingWithSurveyStatus> findSurveyBuildingByBuildingName(
+            Place place, User user, String buildingName) {
+        String[] columns = buildingSurveyColumn();
+        Cursor cursor = readableDatabase().query(DbBuildingRepository.TABLE_NAME
+                        + " LEFT JOIN " + TABLE_NAME + " USING(building_id)",
+                columns,
+                BuildingColumn.PLACE_ID + "=? "
+                        + "AND (" + SurveyColumn.SURVEYOR + "=? OR " + SurveyColumn.SURVEYOR + " IS NULL)"
+                        + "AND " + BuildingColumn.NAME + "LIKE ? ",
+                new String[]{place.getId().toString(), user.getUsername(), "%" + buildingName + "%"},
+                null, null, null);
+        return mapSurveyBuildingStatus(cursor);
+    }
+
+    @Override
     public List<SurveyDetail> findSurveyDetail(UUID surveyId, int containerLocationId) {
         SQLiteDatabase db = readableDatabase();
         Cursor cursor = db.query(DETAIL_TABLE_NAME,
@@ -307,6 +354,40 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
 
     private CursorMapper<Place> getPlaceSurveyMapper(Cursor cursor) {
         return new PlaceCursorMapper(cursor);
+    }
+
+    @NonNull
+    private List<BuildingWithSurveyStatus> mapSurveyBuildingStatus(Cursor cursor) {
+        List<BuildingWithSurveyStatus> surveyBuilding = new ArrayList<>();
+        if (cursor.moveToFirst()) {
+            CursorMapper<Building> mapper = getBuildingSurveyMapper(cursor);
+            do {
+                boolean isSurvey = !TextUtils.isEmpty(cursor.getString(cursor.getColumnIndex(SurveyColumn.ID)));
+                BuildingWithSurveyStatus buildingWithSurveyStatus =
+                        new BuildingWithSurveyStatus(mapper.map(cursor), isSurvey);
+                surveyBuilding.add(buildingWithSurveyStatus);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return surveyBuilding;
+    }
+
+    private CursorMapper<Building> getBuildingSurveyMapper(Cursor cursor) {
+        return new BuildingCursorMapper(cursor, placeRepository);
+    }
+
+    @NonNull
+    private String[] buildingSurveyColumn() {
+        return new String[]{
+                DbBuildingRepository.TABLE_NAME + "." + BuildingColumn.ID,
+                BuildingColumn.NAME,
+                BuildingColumn.PLACE_ID,
+                DbBuildingRepository.TABLE_NAME + "." + SurveyColumn.LATITUDE,
+                DbBuildingRepository.TABLE_NAME + "." + SurveyColumn.LONGITUDE,
+                DbBuildingRepository.TABLE_NAME + "." + SurveyColumn.UPDATE_TIME,
+                BuildingColumn.UPDATE_BY,
+                DbBuildingRepository.TABLE_NAME + "." + SurveyColumn.CHANGED_STATUS,
+                SurveyColumn.ID};
     }
 
     private Survey getSurvey(Cursor cursor) {

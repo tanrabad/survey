@@ -1,12 +1,17 @@
 package th.or.nectec.tanrabad.survey.repository;
 
-import th.or.nectec.tanrabad.domain.survey.SurveyRepository;
-import th.or.nectec.tanrabad.entity.*;
-import th.or.nectec.tanrabad.survey.TanrabadApp;
-import th.or.nectec.tanrabad.survey.repository.persistence.DbSurveyRepository;
-
 import java.util.List;
 import java.util.UUID;
+
+import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
+import th.or.nectec.tanrabad.domain.survey.SurveyRepository;
+import th.or.nectec.tanrabad.entity.Building;
+import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.Survey;
+import th.or.nectec.tanrabad.entity.SurveyDetail;
+import th.or.nectec.tanrabad.entity.User;
+import th.or.nectec.tanrabad.survey.TanrabadApp;
+import th.or.nectec.tanrabad.survey.repository.persistence.DbSurveyRepository;
 
 public class BrokerSurveyRepository implements SurveyRepository {
 
@@ -34,6 +39,16 @@ public class BrokerSurveyRepository implements SurveyRepository {
     @Override
     public List<Survey> findByPlaceAndUserIn7Days(Place place, User user) {
         return persistent.findByPlaceAndUserIn7Days(place, user);
+    }
+
+    @Override
+    public List<BuildingWithSurveyStatus> findSurveyBuilding(Place place, User user) {
+        return persistent.findSurveyBuilding(place, user);
+    }
+
+    @Override
+    public List<BuildingWithSurveyStatus> findSurveyBuildingByBuildingName(Place place, User user, String buildingName) {
+        return persistent.findSurveyBuildingByBuildingName(place, user, buildingName);
     }
 
     @Override

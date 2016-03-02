@@ -17,17 +17,26 @@
 
 package th.or.nectec.tanrabad.domain.survey;
 
-import th.or.nectec.tanrabad.domain.WritableRepository;
-import th.or.nectec.tanrabad.entity.*;
-
 import java.util.List;
 import java.util.UUID;
+
+import th.or.nectec.tanrabad.domain.WritableRepository;
+import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
+import th.or.nectec.tanrabad.entity.Building;
+import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.Survey;
+import th.or.nectec.tanrabad.entity.SurveyDetail;
+import th.or.nectec.tanrabad.entity.User;
 
 public interface SurveyRepository extends WritableRepository<Survey> {
 
     Survey findByBuildingAndUserIn7Day(Building building, User user);
 
     List<Survey> findByPlaceAndUserIn7Days(Place place, User user);
+
+    List<BuildingWithSurveyStatus> findSurveyBuilding(Place place, User user);
+
+    List<BuildingWithSurveyStatus> findSurveyBuildingByBuildingName(Place place, User user, String buildingName);
 
     List<SurveyDetail> findSurveyDetail(UUID surveyId, int containerLocationID);
 

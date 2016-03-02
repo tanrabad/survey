@@ -17,13 +17,18 @@
 
 package th.or.nectec.tanrabad.survey.repository;
 
-import th.or.nectec.tanrabad.domain.place.PlaceRepositoryException;
-import th.or.nectec.tanrabad.domain.survey.SurveyRepository;
-import th.or.nectec.tanrabad.entity.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
+import th.or.nectec.tanrabad.domain.place.PlaceRepositoryException;
+import th.or.nectec.tanrabad.domain.survey.SurveyRepository;
+import th.or.nectec.tanrabad.entity.Building;
+import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.Survey;
+import th.or.nectec.tanrabad.entity.SurveyDetail;
+import th.or.nectec.tanrabad.entity.User;
 
 public class InMemorySurveyRepository implements SurveyRepository {
 
@@ -59,6 +64,16 @@ public class InMemorySurveyRepository implements SurveyRepository {
             }
         }
         return surveyBuilding.isEmpty() ? null : surveyBuilding;
+    }
+
+    @Override
+    public List<BuildingWithSurveyStatus> findSurveyBuilding(Place place, User user) {
+        return null;
+    }
+
+    @Override
+    public List<BuildingWithSurveyStatus> findSurveyBuildingByBuildingName(Place place, User user, String buildingName) {
+        return null;
     }
 
     @Override

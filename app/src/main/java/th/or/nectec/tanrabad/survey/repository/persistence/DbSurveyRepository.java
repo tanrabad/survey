@@ -27,10 +27,7 @@ import th.or.nectec.tanrabad.domain.survey.ContainerTypeRepository;
 import th.or.nectec.tanrabad.domain.survey.SurveyRepository;
 import th.or.nectec.tanrabad.entity.*;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
-import th.or.nectec.tanrabad.survey.repository.BrokerBuildingRepository;
-import th.or.nectec.tanrabad.survey.repository.ChangedRepository;
-import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
-import th.or.nectec.tanrabad.survey.repository.SurveyRepositoryException;
+import th.or.nectec.tanrabad.survey.repository.*;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorList;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
 
@@ -38,28 +35,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class DbSurveyRepository implements SurveyRepository, ChangedRepository<Survey> {
+public class DbSurveyRepository extends DbRepository implements SurveyRepository, ChangedRepository<Survey> {
 
     public static final int INDOOR_CONTAINER_LOCATION = 1;
     public static final int OUTDOOR_CONTAINER_LOCATION = 2;
     public static final int ERROR_INSERT_ID = -1;
     public static String TABLE_NAME = "survey";
     public static String DETAIL_TABLE_NAME = "survey_detail";
-    private Context context;
     private UserRepository userRepository;
     private BuildingRepository buildingRepository;
     private ContainerTypeRepository containerTypeRepository;
 
     public DbSurveyRepository(Context context) {
         this(context, new StubUserRepository(), BrokerBuildingRepository.getInstance(),
-                new DbContainerTypeRepository(context));
+                BrokerContainerTypeRepository.getInstance());
     }
 
     public DbSurveyRepository(Context context,
                               UserRepository userRepository,
                               BuildingRepository buildingRepository,
                               ContainerTypeRepository containerTypeRepository) {
-        this.context = context;
+        super(context);
         this.userRepository = userRepository;
         this.buildingRepository = buildingRepository;
         this.containerTypeRepository = containerTypeRepository;
@@ -132,10 +128,6 @@ public class DbSurveyRepository implements SurveyRepository, ChangedRepository<S
         return changedStatus;
     }
 
-    private SQLiteDatabase readableDatabase() {
-        return new SurveyLiteDatabase(context).getReadableDatabase();
-    }
-
     private boolean updateByContentValues(SQLiteDatabase db, ContentValues survey) {
         int update = db.update(TABLE_NAME,
                 survey,
@@ -186,9 +178,6 @@ public class DbSurveyRepository implements SurveyRepository, ChangedRepository<S
         return values;
     }
 
-    private SQLiteDatabase writableDatabase() {
-        return new SurveyLiteDatabase(context).getWritableDatabase();
-    }
 
     private boolean saveByContentValues(SQLiteDatabase db, ContentValues survey) {
         if (db.insert(TABLE_NAME, null, survey) == ERROR_INSERT_ID)

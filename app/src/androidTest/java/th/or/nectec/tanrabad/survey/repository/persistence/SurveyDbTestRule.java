@@ -38,7 +38,7 @@ public class SurveyDbTestRule extends ExternalResource {
 
     @Override
     protected void before() throws Throwable {
-        sqLiteOpenHelper = new SurveyLiteDatabase(getContext());
+        sqLiteOpenHelper = SurveyLiteDatabase.getInstance(getContext());
         SqlScript.readAndExecute(getContext(), sqLiteOpenHelper.getWritableDatabase(), R.raw.teardown);
         SqlScript.readAndExecute(getContext(), sqLiteOpenHelper.getWritableDatabase(), R.raw.test_setup);
     }

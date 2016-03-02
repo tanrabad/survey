@@ -43,7 +43,7 @@ public class DbContainerLocationRepositoryTest {
         DbContainerLocationRepository repository = new DbContainerLocationRepository(context);
         boolean success = repository.save(new ContainerLocation(0, "ภายในอาคาร"));
 
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        SQLiteDatabase db = SurveyLiteDatabase.getInstance(context).getReadableDatabase();
         Cursor cursor = db.query(DbContainerLocationRepository.TABLE_NAME,
                 ContainerLocationColumn.wildcard(),
                 ContainerLocationColumn.ID + "=?",
@@ -63,7 +63,7 @@ public class DbContainerLocationRepositoryTest {
         DbContainerLocationRepository repository = new DbContainerLocationRepository(context);
         boolean success = repository.update(new ContainerLocation(1, "ภายในอาคาร 555"));
 
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        SQLiteDatabase db = SurveyLiteDatabase.getInstance(context).getReadableDatabase();
         Cursor cursor = db.query(DbContainerLocationRepository.TABLE_NAME,
                 ContainerLocationColumn.wildcard(),
                 ContainerLocationColumn.ID + "=?",

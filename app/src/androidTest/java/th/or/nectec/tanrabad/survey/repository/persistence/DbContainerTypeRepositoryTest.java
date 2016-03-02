@@ -43,7 +43,7 @@ public class DbContainerTypeRepositoryTest {
         DbContainerTypeRepository dbContainerTypeRepository = new DbContainerTypeRepository(context);
         boolean success = dbContainerTypeRepository.save(new ContainerType(0, "น้ำดื่ม"));
 
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        SQLiteDatabase db = SurveyLiteDatabase.getInstance(context).getReadableDatabase();
         Cursor cursor = db.query(DbContainerTypeRepository.TABLE_NAME,
                 ContainerTypeColumn.wildcard(),
                 ContainerTypeColumn.ID + "=?",
@@ -63,7 +63,7 @@ public class DbContainerTypeRepositoryTest {
         DbContainerTypeRepository dbContainerTypeRepository = new DbContainerTypeRepository(context);
         boolean success = dbContainerTypeRepository.update(new ContainerType(1, "แจกัน"));
 
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        SQLiteDatabase db = SurveyLiteDatabase.getInstance(context).getReadableDatabase();
         Cursor cursor = db.query(DbContainerTypeRepository.TABLE_NAME,
                 ContainerTypeColumn.wildcard(),
                 ContainerTypeColumn.ID + "=?",

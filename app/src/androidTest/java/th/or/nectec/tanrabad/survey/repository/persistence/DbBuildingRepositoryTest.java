@@ -81,7 +81,7 @@ public class DbBuildingRepositoryTest {
         DbBuildingRepository dbBuildngRepository = new DbBuildingRepository(context);
         boolean saveResult = dbBuildngRepository.save(building);
 
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        SQLiteDatabase db = SurveyLiteDatabase.getInstance(context).getReadableDatabase();
         Cursor cursor = db.query(DbBuildingRepository.TABLE_NAME,
                 BuildingColumn.wildcard(),
                 BuildingColumn.ID + "=?",
@@ -113,7 +113,7 @@ public class DbBuildingRepositoryTest {
         DbBuildingRepository dbBuildngRepository = new DbBuildingRepository(context);
         boolean success = dbBuildngRepository.update(building);
 
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        SQLiteDatabase db = SurveyLiteDatabase.getInstance(context).getReadableDatabase();
         Cursor cursor = db.query(DbBuildingRepository.TABLE_NAME,
                 BuildingColumn.wildcard(),
                 BuildingColumn.ID + "=?",
@@ -147,7 +147,7 @@ public class DbBuildingRepositoryTest {
         building.setName("No. 1/2");
         boolean success = dbBuildngRepository.update(building);
 
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        SQLiteDatabase db = SurveyLiteDatabase.getInstance(context).getReadableDatabase();
         Cursor cursor = db.query(DbBuildingRepository.TABLE_NAME,
                 BuildingColumn.wildcard(),
                 BuildingColumn.ID + "=?",
@@ -168,7 +168,7 @@ public class DbBuildingRepositoryTest {
 
     @Test
     public void testFindByPlaceUUID() throws Exception {
-        DbBuildingRepository repository = new DbBuildingRepository(context, userRepository, placeRepository);
+        DbBuildingRepository repository = new DbBuildingRepository(context, placeRepository);
 
         List<Building> buildingList = repository.findByPlaceUUID(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"));
         Building building = buildingList.get(0);
@@ -184,7 +184,7 @@ public class DbBuildingRepositoryTest {
     @Test
     public void testFindByPlaceUUIDAndBuildingName() throws Exception {
         Place place = stubPlace();
-        DbBuildingRepository dbBuildingRepository = new DbBuildingRepository(context, userRepository, placeRepository);
+        DbBuildingRepository dbBuildingRepository = new DbBuildingRepository(context, placeRepository);
 
         List<Building> buildingList = dbBuildingRepository.findByPlaceUUIDAndBuildingName(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"), "23/2");
         Building building = buildingList.get(0);
@@ -200,7 +200,7 @@ public class DbBuildingRepositoryTest {
     @Test
     public void testFindByBuildingUUID() throws Exception {
         Place place = stubPlace();
-        DbBuildingRepository dbBuildingRepository = new DbBuildingRepository(context, userRepository, placeRepository);
+        DbBuildingRepository dbBuildingRepository = new DbBuildingRepository(context, placeRepository);
 
         Building building = dbBuildingRepository.findByUUID(UUID.fromString("00001db8-7207-8a65-152f-ad208cb99b01"));
 

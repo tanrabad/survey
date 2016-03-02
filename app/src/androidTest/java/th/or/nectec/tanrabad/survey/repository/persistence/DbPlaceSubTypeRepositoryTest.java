@@ -39,7 +39,7 @@ public class DbPlaceSubTypeRepositoryTest {
 
     Context context = InstrumentationRegistry.getTargetContext();
     DbPlaceSubTypeRepository dbPlaceSubTypeRepository = new DbPlaceSubTypeRepository(context);
-    SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+    SQLiteDatabase db = SurveyLiteDatabase.getInstance(context).getReadableDatabase();
 
     @Test
     public void testSave() throws Exception {

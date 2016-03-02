@@ -43,7 +43,7 @@ public class DbPlaceTypeRepositoryTest {
         DbPlaceTypeRepository dbContainerTypeRepository = new DbPlaceTypeRepository(context);
         boolean success = dbContainerTypeRepository.save(new PlaceType(0, "ไม่ระบุ"));
 
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        SQLiteDatabase db = SurveyLiteDatabase.getInstance(context).getReadableDatabase();
         Cursor cursor = db.query(DbPlaceTypeRepository.TABLE_NAME,
                 PlaceTypeColumn.wildcard(),
                 PlaceTypeColumn.ID + "=?",
@@ -63,7 +63,7 @@ public class DbPlaceTypeRepositoryTest {
         DbPlaceTypeRepository dbPlaceTypeRepository = new DbPlaceTypeRepository(context);
         boolean success = dbPlaceTypeRepository.update(new PlaceType(1, "ชุมชน"));
 
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        SQLiteDatabase db = SurveyLiteDatabase.getInstance(context).getReadableDatabase();
         Cursor cursor = db.query(DbPlaceTypeRepository.TABLE_NAME,
                 PlaceTypeColumn.wildcard(),
                 PlaceTypeColumn.ID + "=?",

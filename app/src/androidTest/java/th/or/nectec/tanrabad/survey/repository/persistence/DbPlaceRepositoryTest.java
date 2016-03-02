@@ -70,7 +70,7 @@ public class DbPlaceRepositoryTest {
         DbPlaceRepository dbPlaceRepository = new DbPlaceRepository(context);
         boolean success = dbPlaceRepository.save(place);
 
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        SQLiteDatabase db = SurveyLiteDatabase.getInstance(context).getReadableDatabase();
         Cursor cursor = db.query(DbPlaceRepository.TABLE_NAME,
                 PlaceColumn.wildcard(),
                 PlaceColumn.ID + "=?",
@@ -113,7 +113,7 @@ public class DbPlaceRepositoryTest {
         places.add(place);
         dbPlaceRepository.updateOrInsert(places);
 
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        SQLiteDatabase db = SurveyLiteDatabase.getInstance(context).getReadableDatabase();
         Cursor cursor = db.query(DbPlaceRepository.TABLE_NAME,
                 PlaceColumn.wildcard(),
                 PlaceColumn.ID + "=?",
@@ -145,7 +145,7 @@ public class DbPlaceRepositoryTest {
         DbPlaceRepository dbPlaceRepository = new DbPlaceRepository(context);
         boolean success = dbPlaceRepository.update(place);
 
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        SQLiteDatabase db = SurveyLiteDatabase.getInstance(context).getReadableDatabase();
         Cursor cursor = db.query(DbPlaceRepository.TABLE_NAME,
                 PlaceColumn.wildcard(),
                 PlaceColumn.ID + "=?",
@@ -173,7 +173,7 @@ public class DbPlaceRepositoryTest {
         place.setName("หมู่บ้านทดสอบบบบบ");
         boolean success = dbPlaceRepository.update(place);
 
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        SQLiteDatabase db = SurveyLiteDatabase.getInstance(context).getReadableDatabase();
         Cursor cursor = db.query(DbPlaceRepository.TABLE_NAME,
                 PlaceColumn.wildcard(),
                 PlaceColumn.ID + "=?",

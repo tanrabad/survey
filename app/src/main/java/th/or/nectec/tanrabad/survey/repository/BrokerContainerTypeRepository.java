@@ -34,6 +34,7 @@ public class BrokerContainerTypeRepository implements ContainerTypeRepository {
     protected BrokerContainerTypeRepository(ContainerTypeRepository cache, ContainerTypeRepository persistence) {
         this.cache = cache;
         this.persistence = persistence;
+        cache.updateOrInsert(persistence.find());
     }
 
     public static BrokerContainerTypeRepository getInstance() {
@@ -54,8 +55,13 @@ public class BrokerContainerTypeRepository implements ContainerTypeRepository {
     }
 
     @Override
-    public ContainerType findByID(int containerTypeID) {
-        return persistence.findByID(containerTypeID);
+    public ContainerType findByID(int containerTypeId) {
+        ContainerType containerType = cache.findByID(containerTypeId);
+        if (containerType == null) {
+            containerType = persistence.findByID(containerTypeId);
+            cache.save(containerType);
+        }
+        return containerType;
     }
 
     @Override

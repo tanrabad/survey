@@ -34,6 +34,7 @@ import th.or.nectec.tanrabad.survey.repository.SurveyRepositoryException;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorList;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -268,6 +269,7 @@ public class DbSurveyRepository implements SurveyRepository, ChangedRepository<S
         return new CursorList<>(cursor, getSurveyMapper(cursor));
     }
 
+    @Override
     public List<SurveyDetail> findSurveyDetail(UUID surveyId, int containerLocationId) {
         SQLiteDatabase db = readableDatabase();
         Cursor cursor = db.query(DETAIL_TABLE_NAME,
@@ -275,7 +277,16 @@ public class DbSurveyRepository implements SurveyRepository, ChangedRepository<S
                 SurveyDetailColumn.SURVEY_ID + "=? AND " + SurveyDetailColumn.CONTAINER_LOCATION_ID + "=?",
                 new String[]{surveyId.toString(), String.valueOf(containerLocationId)},
                 null, null, null);
-        return new CursorList<>(cursor, getSurveyDetailMapper(cursor));
+        List<SurveyDetail> detailList = new ArrayList<>();
+        if (cursor.moveToFirst()) {
+            CursorMapper<SurveyDetail> mapper = getSurveyDetailMapper(cursor);
+            do {
+                SurveyDetail detail = mapper.map(cursor);
+                detailList.add(detail);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return detailList;
     }
 
     private CursorMapper<SurveyDetail> getSurveyDetailMapper(Cursor cursor) {

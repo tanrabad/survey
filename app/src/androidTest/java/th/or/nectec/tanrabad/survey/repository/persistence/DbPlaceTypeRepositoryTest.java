@@ -89,7 +89,7 @@ public class DbPlaceTypeRepositoryTest {
         assertEquals("หมู่บ้าน/ชุมชน", placeType0.getName());
         PlaceType placeType6 = placeTypeList.get(5);
         assertEquals(6, placeType6.getId());
-        assertEquals("ที่พักชั่วคราว", placeType6.getName());
+        assertEquals("โรงแรม/รีสอร์ท", placeType6.getName());
     }
 
     @Test

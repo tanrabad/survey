@@ -88,7 +88,6 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
         setupBuildingHistoryList();
         setupEmptyLayout();
         showSurveyBuildingHistoryList();
-
         if (InternetConnection.isAvailable(this))
             new SyncJobBuilder().build(new SurveyUpdateJob()).start();
     }
@@ -233,6 +232,14 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
     public void onBackPressed() {
         TanrabadApp.action().finishSurvey(place, false);
         MainActivity.open(this);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        showSurveyBuildingHistoryList();
+        if (InternetConnection.isAvailable(this))
+            new SyncJobBuilder().build(new SurveyUpdateJob()).start();
     }
 
     public class SurveyUpdateJob extends SyncJobRunner {

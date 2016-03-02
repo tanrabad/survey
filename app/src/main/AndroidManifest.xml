@@ -89,7 +89,8 @@
         </activity>
         <activity
             android:name=".presenter.SurveyBuildingHistoryActivity"
-            android:label="@string/survey_building_history"/>
+            android:label="@string/survey_building_history"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".presenter.BuildingFormActivity"
             android:label="@string/add_building"

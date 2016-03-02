@@ -298,8 +298,8 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
                         + " LEFT JOIN " + TABLE_NAME + " USING(building_id)",
                 columns,
                 BuildingColumn.PLACE_ID + "=? "
-                        + "AND (" + SurveyColumn.SURVEYOR + "=? OR " + SurveyColumn.SURVEYOR + " IS NULL)"
-                        + "AND " + BuildingColumn.NAME + "LIKE ? ",
+                        + "AND (" + SurveyColumn.SURVEYOR + "=? OR " + SurveyColumn.SURVEYOR + " IS NULL) "
+                        + "AND " + BuildingColumn.NAME + " LIKE ? ",
                 new String[]{place.getId().toString(), user.getUsername(), "%" + buildingName + "%"},
                 null, null, null);
         return mapSurveyBuildingStatus(cursor);

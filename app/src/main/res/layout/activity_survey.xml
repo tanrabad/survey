@@ -33,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
-                app:contentScrim="@color/shock_pink"
+                app:contentScrim="@color/header_survey"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:titleEnabled="false">
 
@@ -190,7 +190,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:minHeight="1520dp"
-                    android:background="@color/white"
                     android:onClick="onRootViewClick">
 
                 <LinearLayout
@@ -198,7 +197,6 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:minHeight="1200dp"
-                        android:background="@color/lighter_gray"
                         android:orientation="vertical"
                         app:layout_widthPercent="50%"/>
 
@@ -211,6 +209,7 @@
                         android:layout_toRightOf="@id/indoor_container"
                         android:layout_toEndOf="@id/indoor_container"
                         android:layout_weight="1"
+                        android:background="@color/white"
                         android:orientation="vertical"
                         app:layout_widthPercent="50%"/>
 
@@ -218,7 +217,6 @@
                 <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/soft_keyboard_height"
-                        android:background="@color/dark_gray"
                         android:layout_below="@id/indoor_container">
 
                     <View

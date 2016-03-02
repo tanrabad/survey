@@ -59,23 +59,21 @@ public class PlaceFormActivityDoSaveDataTest extends TanrabadEspressoTestBase {
     public void addPlaceThatNameAndAddressSamePlaceInDatabaseButDifferenTypeShouldSaveSuccess() {
         onView(withId(R.id.place_name))
                 .perform(replaceText("ธรรมศาสตร์"));
+        onView(withText("โรงพยาบาล"))
+                .perform(click());
+        onView(withText("สถานศึกษา"))
+                .perform(click());
         onView(withId(R.id.address_select))
                 .perform(click());
+
         onView(withText("นนทบุรี"))
                 .perform(click());
         onView(withText("บางกรวย"))
                 .perform(click());
         onView(withText("บางกรวย"))
                 .perform(click());
-        onView(withId(R.id.add_marker))
-                .perform(click());
-        onView(withId(R.id.save_marker_menu))
-                .perform(click());
 
-        onView(withText("โรงพยาบาล"))
-                .perform(click());
-        onView(withText("สถานศึกษา"))
-                .perform(click());
+        waitingFor(2000);
 
         onView(withId(R.id.save))
                 .perform(click());
@@ -88,19 +86,17 @@ public class PlaceFormActivityDoSaveDataTest extends TanrabadEspressoTestBase {
     public void addPlaceThatNameAndTypeSamePlaceInDatabaseButDifferenAddressShouldSaveSuccess() {
         onView(withId(R.id.place_name))
                 .perform(replaceText("ธรรมศาสตร์"));
-        onView(withId(R.id.add_marker))
-                .perform(click());
-        onView(withId(R.id.save_marker_menu))
-                .perform(click());
-
         onView(withId(R.id.address_select))
                 .perform(click());
+
         onView(withText("นนทบุรี"))
                 .perform(click());
         onView(withText("ปากเกร็ด"))
                 .perform(click());
         onView(withText("ปากเกร็ด"))
                 .perform(click());
+
+        waitingFor(2000);
 
         onView(withId(R.id.save))
                 .perform(click());

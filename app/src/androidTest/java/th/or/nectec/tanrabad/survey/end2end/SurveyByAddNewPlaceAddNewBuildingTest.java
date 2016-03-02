@@ -56,7 +56,11 @@ public class SurveyByAddNewPlaceAddNewBuildingTest extends TanrabadEspressoTestB
         onView(withId(R.id.add_place_menu))
                 .perform(click());
         onView(withId(R.id.place_name))
-                .perform(replaceText("เนคเทค"));
+                .perform(replaceText("โรงงานพรทิพา"));
+        onView(withText("ศาสนสถาน"))
+                .perform(click());
+        onView(withText("โรงงาน"))
+                .perform(click());
         onView(withId(R.id.address_select))
                 .perform(click());
         onView(withText("นนทบุรี"))
@@ -65,20 +69,12 @@ public class SurveyByAddNewPlaceAddNewBuildingTest extends TanrabadEspressoTestB
                 .perform(click());
         onView(withText("ปากเกร็ด"))
                 .perform(click());
-        onView(withText("ศาสนสถาน"))
-                .perform(click());
-        onView(withText("โรงงาน"))
-                .perform(click());
-        onView(withId(R.id.add_marker))
-                .perform(click());
-        onView(withId(R.id.save_marker_menu))
-                .perform(click());
         onView(withId(R.id.save))
                 .perform(click());
         onView(withId(R.id.add_building_menu))
                 .perform(click());
         onView(withId(R.id.building_name))
-                .perform(replaceText("ตึกหลัก"));
+                .perform(replaceText("อาคารพรทิพา"));
         onView(withId(R.id.add_marker))
                 .perform(click());
         onView(withText(R.string.save_location))
@@ -91,6 +87,6 @@ public class SurveyByAddNewPlaceAddNewBuildingTest extends TanrabadEspressoTestB
         onView(withId(R.id.save))
                 .perform(click());
 
-        textDisplayed("ตึกหลัก");
+        textDisplayed("อาคารพรทิพา");
     }
 }

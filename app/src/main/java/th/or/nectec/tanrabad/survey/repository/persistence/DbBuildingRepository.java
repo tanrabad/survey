@@ -21,36 +21,29 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
-import java.util.List;
-import java.util.UUID;
-
-import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.domain.building.BuildingRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.ChangedRepository;
-import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorList;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
 
-public class DbBuildingRepository implements BuildingRepository, ChangedRepository<Building> {
+import java.util.List;
+import java.util.UUID;
+
+public class DbBuildingRepository extends DbRepository implements BuildingRepository, ChangedRepository<Building> {
 
     public static final String TABLE_NAME = "building";
     public static final int ERROR_INSERT_ID = -1;
-    private Context context;
-    private UserRepository userRepository;
     private PlaceRepository placeRepository;
 
-
     public DbBuildingRepository(Context context) {
-        this(context, new StubUserRepository(), BrokerPlaceRepository.getInstance());
+        this(context, BrokerPlaceRepository.getInstance());
     }
 
-    public DbBuildingRepository(Context context, UserRepository userRepository, PlaceRepository placeRepository) {
-        this.context = context;
-        this.userRepository = userRepository;
+    public DbBuildingRepository(Context context, PlaceRepository placeRepository) {
+        super(context);
         this.placeRepository = placeRepository;
     }
 
@@ -90,9 +83,6 @@ public class DbBuildingRepository implements BuildingRepository, ChangedReposito
         }
     }
 
-    private SQLiteDatabase readableDatabase() {
-        return new SurveyLiteDatabase(context).getReadableDatabase();
-    }
 
     private List<Building> getBuildingList(Cursor cursor) {
         List<Building> buildingList = new CursorList<>(cursor, getMapper(cursor));
@@ -169,10 +159,6 @@ public class DbBuildingRepository implements BuildingRepository, ChangedReposito
 
     private boolean saveByContentValues(SQLiteDatabase db, ContentValues building) {
         return db.insert(TABLE_NAME, null, building) != ERROR_INSERT_ID;
-    }
-
-    private SQLiteDatabase writableDatabase() {
-        return new SurveyLiteDatabase(context).getWritableDatabase();
     }
 
     @Override

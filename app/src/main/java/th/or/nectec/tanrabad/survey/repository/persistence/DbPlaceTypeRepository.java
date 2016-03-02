@@ -11,30 +11,28 @@ import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
 
 import java.util.List;
 
-public class DbPlaceTypeRepository implements PlaceTypeRepository {
+public class DbPlaceTypeRepository extends DbRepository implements PlaceTypeRepository {
 
     public static final String TABLE_NAME = "place_type";
     public static final int ERROR_INSERT_ID = -1;
 
-    private Context context;
-
     public DbPlaceTypeRepository(Context context) {
-        this.context = context;
+        super(context);
     }
 
     @Override
     public List<PlaceType> find() {
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        SQLiteDatabase db = readableDatabase();
         Cursor placeTypeCursor = db.query(TABLE_NAME, PlaceTypeColumn.wildcard(),
                 null, null, null, null, null);
         return new CursorList<>(placeTypeCursor, getMapper(placeTypeCursor));
     }
 
     @Override
-    public PlaceType findByID(int placeTypeID) {
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+    public PlaceType findByID(int placeTypeId) {
+        SQLiteDatabase db = readableDatabase();
         Cursor placeTypeCursor = db.query(TABLE_NAME, PlaceTypeColumn.wildcard(),
-                PlaceTypeColumn.ID + "=?", new String[]{String.valueOf(placeTypeID)}, null, null, null);
+                PlaceTypeColumn.ID + "=?", new String[]{String.valueOf(placeTypeId)}, null, null, null);
         return getPlaceType(placeTypeCursor);
     }
 
@@ -55,19 +53,19 @@ public class DbPlaceTypeRepository implements PlaceTypeRepository {
 
     @Override
     public boolean save(PlaceType placeType) {
-        return saveByContentValues(new SurveyLiteDatabase(context).getWritableDatabase(),
+        return saveByContentValues(writableDatabase(),
                 placeTypeContentValues(placeType));
     }
 
     @Override
     public boolean update(PlaceType placeType) {
-        return updateByContentValues(new SurveyLiteDatabase(context).getWritableDatabase(),
+        return updateByContentValues(writableDatabase(),
                 placeTypeContentValues(placeType));
     }
 
     @Override
     public void updateOrInsert(List<PlaceType> updateList) {
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getWritableDatabase();
+        SQLiteDatabase db = writableDatabase();
         db.beginTransaction();
         for (PlaceType eachPlaceType : updateList) {
             ContentValues values = placeTypeContentValues(eachPlaceType);

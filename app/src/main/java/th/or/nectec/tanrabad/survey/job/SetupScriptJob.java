@@ -33,7 +33,7 @@ public class SetupScriptJob implements Job {
 
     public SetupScriptJob(Context context) {
         this.context = context;
-        this.sqLiteOpenHelper = new SurveyLiteDatabase(context);
+        this.sqLiteOpenHelper = SurveyLiteDatabase.getInstance(context);
     }
 
     @Override

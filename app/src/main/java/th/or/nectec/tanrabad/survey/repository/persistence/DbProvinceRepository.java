@@ -30,14 +30,13 @@ import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
 
 import java.util.List;
 
-public class DbProvinceRepository implements ProvinceRepository {
+public class DbProvinceRepository extends DbRepository implements ProvinceRepository {
 
     public static final String TABLE_NAME = "province";
     private static DbProvinceRepository instance;
-    private Context context;
 
     private DbProvinceRepository(Context context) {
-        this.context = context;
+        super(context);
     }
 
     public static DbProvinceRepository getInstance() {
@@ -48,7 +47,7 @@ public class DbProvinceRepository implements ProvinceRepository {
 
     @Override
     public List<Province> find() {
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        SQLiteDatabase db = readableDatabase();
         Cursor provinceCursor = db.query(TABLE_NAME, ProvinceColumn.WILDCARD,
                 null, null, null, null, ProvinceColumn.CODE);
         return new CursorList<>(provinceCursor, getMapper(provinceCursor));
@@ -60,7 +59,7 @@ public class DbProvinceRepository implements ProvinceRepository {
 
     @Override
     public Province findByCode(String provinceCode) {
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        SQLiteDatabase db = readableDatabase();
         Cursor provinceCursor = db.query(TABLE_NAME, ProvinceColumn.WILDCARD, ProvinceColumn.CODE + "=?",
                 new String[]{provinceCode}, null, null, null);
         if (provinceCursor.moveToFirst()) {
@@ -81,7 +80,7 @@ public class DbProvinceRepository implements ProvinceRepository {
 
     @Override
     public void updateOrInsert(List<Province> provinces) {
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getWritableDatabase();
+        SQLiteDatabase db = writableDatabase();
         db.beginTransaction();
         for (Province province : provinces) {
             ContentValues cv = provinceContentValues(province);

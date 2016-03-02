@@ -29,14 +29,14 @@ import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
 
 import java.util.List;
 
-public class DbSubdistrictRepository implements SubdistrictRepository {
+public class DbSubdistrictRepository extends DbRepository implements SubdistrictRepository {
 
     public static final String TABLE_NAME = "subdistrict";
     private static DbSubdistrictRepository instance;
-    private Context context;
+
 
     private DbSubdistrictRepository(Context context) {
-        this.context = context;
+        super(context);
     }
 
     public static DbSubdistrictRepository getInstance() {
@@ -47,7 +47,7 @@ public class DbSubdistrictRepository implements SubdistrictRepository {
 
     @Override
     public List<Subdistrict> findByDistrictCode(String districtCode) {
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        SQLiteDatabase db = readableDatabase();
         Cursor subdistrictCursor = db.query(TABLE_NAME, SubdistrictColumn.WILDCARD,
                 SubdistrictColumn.DISTRICT_CODE + "=?", new String[]{districtCode}, null, null, null);
         return new CursorList<>(subdistrictCursor, getMapper(subdistrictCursor));
@@ -55,7 +55,7 @@ public class DbSubdistrictRepository implements SubdistrictRepository {
 
     @Override
     public Subdistrict findByCode(String subdistrictCode) {
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        SQLiteDatabase db = readableDatabase();
         Cursor subdistrictCursor = db.query(TABLE_NAME, SubdistrictColumn.WILDCARD, SubdistrictColumn.CODE + "=?",
                 new String[]{subdistrictCode}, null, null, null);
         if (subdistrictCursor.moveToFirst()) {
@@ -80,7 +80,7 @@ public class DbSubdistrictRepository implements SubdistrictRepository {
 
     @Override
     public void updateOrInsert(List<Subdistrict> subdistricts) {
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getWritableDatabase();
+        SQLiteDatabase db = writableDatabase();
         db.beginTransaction();
         for (Subdistrict district : subdistricts) {
             ContentValues cv = provinceContentValues(district);

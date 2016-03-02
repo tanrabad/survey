@@ -27,11 +27,18 @@ public class SurveyLiteDatabase extends SQLiteOpenHelper {
 
     public static final String DB_NAME = "trb_survey.db";
     public static final int DB_VERSION = 1;
+    private static SurveyLiteDatabase instance;
     private Context context;
 
-    public SurveyLiteDatabase(Context context) {
+    private SurveyLiteDatabase(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
         this.context = context;
+    }
+
+    public static SurveyLiteDatabase getInstance(Context context) {
+        if (instance == null)
+            instance = new SurveyLiteDatabase(context);
+        return instance;
     }
 
     @Override

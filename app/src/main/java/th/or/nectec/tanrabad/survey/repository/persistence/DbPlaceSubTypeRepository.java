@@ -11,20 +11,18 @@ import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
 
 import java.util.List;
 
-public class DbPlaceSubTypeRepository implements PlaceSubTypeRepository {
+public class DbPlaceSubTypeRepository extends DbRepository implements PlaceSubTypeRepository {
 
     public static final String TABLE_NAME = "place_subtype";
     public static final int ERROR_INSERT_ID = -1;
 
-    private Context context;
-
     public DbPlaceSubTypeRepository(Context context) {
-        this.context = context;
+        super(context);
     }
 
     @Override
     public List<PlaceSubType> find() {
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        SQLiteDatabase db = readableDatabase();
         Cursor placeTypeCursor = db.query(TABLE_NAME, PlaceSubTypeColumn.wildcard(),
                 null, null, null, null, null);
         return new CursorList<>(placeTypeCursor, getMapper(placeTypeCursor));
@@ -32,7 +30,7 @@ public class DbPlaceSubTypeRepository implements PlaceSubTypeRepository {
 
     @Override
     public PlaceSubType findById(int placeSubTypeId) {
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        SQLiteDatabase db = readableDatabase();
         Cursor placeTypeCursor = db.query(TABLE_NAME, PlaceSubTypeColumn.wildcard(),
                 PlaceSubTypeColumn.ID + " =?", new String[]{String.valueOf(placeSubTypeId)}, null, null, null);
         return getPlaceSubType(placeTypeCursor);
@@ -40,7 +38,7 @@ public class DbPlaceSubTypeRepository implements PlaceSubTypeRepository {
 
     @Override
     public List<PlaceSubType> findByPlaceTypeId(int placeTypeId) {
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        SQLiteDatabase db = readableDatabase();
         Cursor placeTypeCursor = db.query(TABLE_NAME, PlaceSubTypeColumn.wildcard(),
                 PlaceSubTypeColumn.TYPE_ID + " =?", new String[]{String.valueOf(placeTypeId)}, null, null, null);
         return new CursorList<>(placeTypeCursor, getMapper(placeTypeCursor));
@@ -69,19 +67,19 @@ public class DbPlaceSubTypeRepository implements PlaceSubTypeRepository {
 
     @Override
     public boolean save(PlaceSubType placeType) {
-        return saveByContentValues(new SurveyLiteDatabase(context).getWritableDatabase(),
+        return saveByContentValues(writableDatabase(),
                 placeTypeContentValues(placeType));
     }
 
     @Override
     public boolean update(PlaceSubType placeType) {
-        return updateByContentValues(new SurveyLiteDatabase(context).getWritableDatabase(),
+        return updateByContentValues(writableDatabase(),
                 placeTypeContentValues(placeType));
     }
 
     @Override
     public void updateOrInsert(List<PlaceSubType> updateList) {
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getWritableDatabase();
+        SQLiteDatabase db = writableDatabase();
         db.beginTransaction();
         for (PlaceSubType eachPlaceSubtype : updateList) {
             ContentValues values = placeTypeContentValues(eachPlaceSubtype);

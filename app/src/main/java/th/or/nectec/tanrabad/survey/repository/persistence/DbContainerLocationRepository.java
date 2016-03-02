@@ -28,28 +28,26 @@ import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
 
 import java.util.List;
 
-public class DbContainerLocationRepository implements ContainerLocationRepository {
+public class DbContainerLocationRepository extends DbRepository implements ContainerLocationRepository {
 
     public static final String TABLE_NAME = "container_location";
     public static final int ERROR_INSERT_ID = -1;
 
-    private Context context;
-
     public DbContainerLocationRepository(Context context) {
-        this.context = context;
+        super(context);
     }
 
     @Override
     public List<ContainerLocation> find() {
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        SQLiteDatabase db = readableDatabase();
         Cursor cursor = db.query(TABLE_NAME, ContainerLocationColumn.wildcard(),
                 null, null, null, null, ContainerLocationColumn.ID);
         return new CursorList<>(cursor, getMapper(cursor));
     }
 
     @Override
-    public ContainerLocation findByID(int containerTypeID) {
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+    public ContainerLocation findByID(int containerTypeId) {
+        SQLiteDatabase db = readableDatabase();
         Cursor cursor = db.query(TABLE_NAME, ContainerLocationColumn.wildcard(),
                 null, null, null, null, ContainerLocationColumn.ID);
         return getContainerLocation(cursor);
@@ -72,19 +70,19 @@ public class DbContainerLocationRepository implements ContainerLocationRepositor
 
     @Override
     public boolean save(ContainerLocation containerLocation) {
-        return saveByContentValues(new SurveyLiteDatabase(context).getWritableDatabase(),
+        return saveByContentValues(writableDatabase(),
                 containerLocationContentValues(containerLocation));
     }
 
     @Override
     public boolean update(ContainerLocation containerLocation) {
-        return updateByContentValues(new SurveyLiteDatabase(context).getWritableDatabase(),
+        return updateByContentValues(writableDatabase(),
                 containerLocationContentValues(containerLocation));
     }
 
     @Override
     public void updateOrInsert(List<ContainerLocation> updateList) {
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getWritableDatabase();
+        SQLiteDatabase db = writableDatabase();
         db.beginTransaction();
         for (ContainerLocation containerLocation : updateList) {
             ContentValues values = containerLocationContentValues(containerLocation);

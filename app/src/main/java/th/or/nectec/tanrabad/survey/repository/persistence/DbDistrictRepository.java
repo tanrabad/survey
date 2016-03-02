@@ -29,14 +29,12 @@ import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
 
 import java.util.List;
 
-public class DbDistrictRepository implements DistrictRepository {
+public class DbDistrictRepository extends DbRepository implements DistrictRepository {
 
     public static final String TABLE_NAME = "district";
     private static DbDistrictRepository instance;
-    private Context context;
-
     private DbDistrictRepository(Context context) {
-        this.context = context;
+        super(context);
     }
 
     public static DbDistrictRepository getInstance() {
@@ -48,7 +46,7 @@ public class DbDistrictRepository implements DistrictRepository {
 
     @Override
     public List<District> findByProvinceCode(String provinceCode) {
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        SQLiteDatabase db = readableDatabase();
         Cursor districtCursor = db.query(TABLE_NAME, DistrictColumn.WILDCARD, DistrictColumn.PROVINCE_CODE + "=?",
                 new String[]{provinceCode}, null, null, null);
         return new CursorList<>(districtCursor, getMapper(districtCursor));
@@ -60,7 +58,7 @@ public class DbDistrictRepository implements DistrictRepository {
 
     @Override
     public District findByCode(String districtCode) {
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        SQLiteDatabase db = readableDatabase();
         Cursor districtCursor = db.query(TABLE_NAME, DistrictColumn.WILDCARD, DistrictColumn.CODE + "=?",
                 new String[]{districtCode}, null, null, null);
         if (districtCursor.moveToFirst()) {
@@ -81,7 +79,7 @@ public class DbDistrictRepository implements DistrictRepository {
 
     @Override
     public void updateOrInsert(List<District> districts) {
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getWritableDatabase();
+        SQLiteDatabase db = writableDatabase();
         db.beginTransaction();
         for (District district : districts) {
             ContentValues cv = provinceContentValues(district);

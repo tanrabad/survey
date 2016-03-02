@@ -11,30 +11,29 @@ import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
 
 import java.util.List;
 
-public class DbContainerTypeRepository implements ContainerTypeRepository {
+public class DbContainerTypeRepository extends DbRepository implements ContainerTypeRepository {
 
     public static final String TABLE_NAME = "container_type";
     public static final int ERROR_INSERT_ID = -1;
 
-    private Context context;
-
     public DbContainerTypeRepository(Context context) {
-        this.context = context;
+        super(context);
     }
 
     @Override
     public List<ContainerType> find() {
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+        SQLiteDatabase db = readableDatabase();
         Cursor containerTypeCursor = db.query(TABLE_NAME, ContainerTypeColumn.wildcard(),
                 null, null, null, null, ContainerTypeColumn.ID);
         return new CursorList<>(containerTypeCursor, getMapper(containerTypeCursor));
     }
 
     @Override
-    public ContainerType findByID(int containerTypeID) {
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
+    public ContainerType findByID(int containerTypeId) {
+        SQLiteDatabase db = readableDatabase();
         Cursor containerTypeCursor = db.query(TABLE_NAME, ContainerTypeColumn.wildcard(),
-                ContainerTypeColumn.ID + "=?", new String[]{String.valueOf(containerTypeID)}, null, null, ContainerTypeColumn.ID);
+                ContainerTypeColumn.ID + "=?", new String[]{String.valueOf(containerTypeId)}, null, null,
+                ContainerTypeColumn.ID);
         return getContainerType(containerTypeCursor);
     }
 
@@ -55,17 +54,17 @@ public class DbContainerTypeRepository implements ContainerTypeRepository {
 
     @Override
     public boolean save(ContainerType containerType) {
-        return saveByContentValues(new SurveyLiteDatabase(context).getWritableDatabase(), containerTypeContentValues(containerType));
+        return saveByContentValues(writableDatabase(), containerTypeContentValues(containerType));
     }
 
     @Override
     public boolean update(ContainerType containerType) {
-        return updateByContentValues(new SurveyLiteDatabase(context).getWritableDatabase(), containerTypeContentValues(containerType));
+        return updateByContentValues(writableDatabase(), containerTypeContentValues(containerType));
     }
 
     @Override
     public void updateOrInsert(List<ContainerType> updateList) {
-        SQLiteDatabase db = new SurveyLiteDatabase(context).getWritableDatabase();
+        SQLiteDatabase db = writableDatabase();
         db.beginTransaction();
         for (ContainerType eachContainerType : updateList) {
             ContentValues values = containerTypeContentValues(eachContainerType);
@@ -79,7 +78,8 @@ public class DbContainerTypeRepository implements ContainerTypeRepository {
     }
 
     private boolean updateByContentValues(SQLiteDatabase db, ContentValues containerType) {
-        return db.update(TABLE_NAME, containerType, ContainerTypeColumn.ID + "=?", new String[]{containerType.getAsString(ContainerTypeColumn.ID)}) > 0;
+        return db.update(TABLE_NAME, containerType,
+                ContainerTypeColumn.ID + "=?", new String[]{containerType.getAsString(ContainerTypeColumn.ID)}) > 0;
     }
 
     private boolean saveByContentValues(SQLiteDatabase db, ContentValues containerType) {

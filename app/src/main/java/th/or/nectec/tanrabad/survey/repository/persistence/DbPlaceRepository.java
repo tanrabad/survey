@@ -30,14 +30,13 @@ import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
 import java.util.List;
 import java.util.UUID;
 
-public class DbPlaceRepository implements PlaceRepository, ChangedRepository<Place> {
+public class DbPlaceRepository extends DbRepository implements PlaceRepository, ChangedRepository<Place> {
 
     public static final String TABLE_NAME = "place";
     public static final int ERROR_INSERT_ID = -1;
-    private final Context context;
 
     public DbPlaceRepository(Context context) {
-        this.context = context;
+        super(context);
     }
 
     @Override
@@ -90,9 +89,6 @@ public class DbPlaceRepository implements PlaceRepository, ChangedRepository<Pla
         return getPlaceList(placeCursor);
     }
 
-    private SQLiteDatabase readableDatabase() {
-        return new SurveyLiteDatabase(context).getReadableDatabase();
-    }
 
     private List<Place> getPlaceList(Cursor placeCursor) {
         List<Place> placeList = new CursorList<>(placeCursor, getMapper(placeCursor));
@@ -169,10 +165,6 @@ public class DbPlaceRepository implements PlaceRepository, ChangedRepository<Pla
 
     private boolean saveByContentValues(SQLiteDatabase db, ContentValues place) {
         return db.insert(TABLE_NAME, null, place) != ERROR_INSERT_ID;
-    }
-
-    private SQLiteDatabase writableDatabase() {
-        return new SurveyLiteDatabase(context).getWritableDatabase();
     }
 
     @Override

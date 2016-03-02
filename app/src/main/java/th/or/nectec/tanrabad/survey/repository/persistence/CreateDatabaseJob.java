@@ -41,7 +41,8 @@ public class CreateDatabaseJob implements Job {
     }
 
     private void createDatabaseIfNotExist() {
-        SurveyLiteDatabase surveyLiteDatabase = new SurveyLiteDatabase(context);
+        SurveyLiteDatabase surveyLiteDatabase = SurveyLiteDatabase.getInstance(context);
         surveyLiteDatabase.getReadableDatabase();
+        surveyLiteDatabase.close();
     }
 }

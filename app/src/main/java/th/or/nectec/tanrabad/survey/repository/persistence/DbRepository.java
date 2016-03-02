@@ -20,13 +20,13 @@ public class DbRepository {
 
     protected SQLiteDatabase readableDatabase() {
         if (readableDatabase == null || !readableDatabase.isOpen())
-            readableDatabase = new SurveyLiteDatabase(context).getReadableDatabase();
+            readableDatabase = SurveyLiteDatabase.getInstance(context).getReadableDatabase();
         return readableDatabase;
     }
 
     protected SQLiteDatabase writableDatabase() {
         if (writableDatabase == null || !writableDatabase.isOpen())
-            writableDatabase = new SurveyLiteDatabase(context).getReadableDatabase();
+            writableDatabase = SurveyLiteDatabase.getInstance(context).getReadableDatabase();
         return writableDatabase;
     }
 }

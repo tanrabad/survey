@@ -19,6 +19,7 @@ package th.or.nectec.tanrabad.survey.repository.persistence;
 
 import android.database.Cursor;
 
+import th.or.nectec.tanrabad.domain.organization.OrganizationRepository;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
 
@@ -32,8 +33,10 @@ class UserCursorMapper implements CursorMapper<User> {
     private int emailIndex;
     private int avatarIndex;
     private int phoneNumberIndex;
+    private OrganizationRepository organizationRepository;
 
-    public UserCursorMapper(Cursor cursor) {
+    public UserCursorMapper(Cursor cursor, OrganizationRepository organizationRepository) {
+        this.organizationRepository = organizationRepository;
         findColumnIndexOf(cursor);
     }
 
@@ -54,10 +57,12 @@ class UserCursorMapper implements CursorMapper<User> {
         user.setFirstname(cursor.getString(firstNameIndex));
         user.setLastname(cursor.getString(lastNameIndex));
         user.setPassword(cursor.getString(passwordIndex));
-        user.setOrganizationId(cursor.getInt(orgIdIndex));
         user.setEmail(cursor.getString(emailIndex));
         user.setPhoneNumber(cursor.getString(phoneNumberIndex));
         user.setAvatarFileName(cursor.getString(avatarIndex));
+        int orgId = cursor.getInt(orgIdIndex);
+        user.setOrganizationId(orgId);
+        user.setHealthRegionCode(organizationRepository.findById(orgId).getHealthRegionCode());
         return user;
     }
 }

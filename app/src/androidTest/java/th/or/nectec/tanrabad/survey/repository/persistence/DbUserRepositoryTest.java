@@ -24,10 +24,14 @@ import android.support.annotation.NonNull;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 
+import th.or.nectec.tanrabad.domain.organization.OrganizationRepository;
+import th.or.nectec.tanrabad.entity.Organization;
 import th.or.nectec.tanrabad.entity.User;
 
 import static org.junit.Assert.assertEquals;
@@ -38,6 +42,20 @@ public class DbUserRepositoryTest {
     public static final String DPC_USER = "dpc-user";
     @Rule
     public SurveyDbTestRule dbTestRule = new SurveyDbTestRule();
+    private OrganizationRepository organizationRepository;
+
+
+    @Before
+    public void setup() {
+        organizationRepository = Mockito.mock(OrganizationRepository.class);
+        Mockito.when(organizationRepository.findById(100)).thenReturn(stubOrganization());
+    }
+
+    private Organization stubOrganization() {
+        Organization organization = new Organization(100, "กรมควบคุมโรค");
+        organization.setHealthRegionCode("dpc-13");
+        return organization;
+    }
 
     @Test
     public void testSave() throws Exception {
@@ -64,13 +82,13 @@ public class DbUserRepositoryTest {
         assertEquals(true, cursor.moveToFirst());
         assertEquals(1, cursor.getCount());
 
-        assertEquals("hkn-user", user.getUsername());
-        assertEquals("ทดสอบ", user.getFirstname());
-        assertEquals("ทดสอบหน่อย", user.getLastname());
-        assertEquals("55557", user.getPassword());
-        assertEquals("hhk@gmail.com", user.getEmail());
-        assertEquals("081-2242612", user.getPhoneNumber());
-        assertEquals(100, user.getOrganizationId());
+        assertEquals("hkn-user", cursor.getString(cursor.getColumnIndex(UserColumn.USERNAME)));
+        assertEquals("ทดสอบ", cursor.getString(cursor.getColumnIndex(UserColumn.FIRSTNAME)));
+        assertEquals("ทดสอบหน่อย", cursor.getString(cursor.getColumnIndex(UserColumn.LASTNAME)));
+        assertEquals("55557", cursor.getString(cursor.getColumnIndex(UserColumn.PASSWORD)));
+        assertEquals("hhk@gmail.com", cursor.getString(cursor.getColumnIndex(UserColumn.EMAIL)));
+        assertEquals("081-2242612", cursor.getString(cursor.getColumnIndex(UserColumn.PHONE_NUMBER)));
+        assertEquals(100, cursor.getInt(cursor.getColumnIndex(UserColumn.ORG_ID)));
         cursor.close();
     }
 
@@ -94,13 +112,13 @@ public class DbUserRepositoryTest {
         assertEquals(true, success);
         assertEquals(true, cursor.moveToFirst());
         assertEquals(1, cursor.getCount());
-        assertEquals(DPC_USER, user.getUsername());
-        assertEquals("ซาร่า", user.getFirstname());
-        assertEquals("คิดส์", user.getLastname());
-        assertEquals("5555", user.getPassword());
-        assertEquals("a.555@gmail.com", user.getEmail());
-        assertEquals("081-2345678", user.getPhoneNumber());
-        assertEquals(100, user.getOrganizationId());
+        assertEquals(DPC_USER, cursor.getString(cursor.getColumnIndex(UserColumn.USERNAME)));
+        assertEquals("ซาร่า", cursor.getString(cursor.getColumnIndex(UserColumn.FIRSTNAME)));
+        assertEquals("คิดส์", cursor.getString(cursor.getColumnIndex(UserColumn.LASTNAME)));
+        assertEquals("5555", cursor.getString(cursor.getColumnIndex(UserColumn.PASSWORD)));
+        assertEquals("a.555@gmail.com", cursor.getString(cursor.getColumnIndex(UserColumn.EMAIL)));
+        assertEquals("081-2345678", cursor.getString(cursor.getColumnIndex(UserColumn.PHONE_NUMBER)));
+        assertEquals(100, cursor.getInt(cursor.getColumnIndex(UserColumn.ORG_ID)));
         cursor.close();
     }
 
@@ -119,7 +137,7 @@ public class DbUserRepositoryTest {
     @Test
     public void testFindByUserName() throws Exception {
         Context context = InstrumentationRegistry.getTargetContext();
-        DbUserRepository dbUserRepository = new DbUserRepository(context);
+        DbUserRepository dbUserRepository = new DbUserRepository(context, organizationRepository);
 
         User user = dbUserRepository.findByUsername(DPC_USER);
         assertEquals(DPC_USER, user.getUsername());
@@ -128,6 +146,7 @@ public class DbUserRepositoryTest {
         assertEquals("5555", user.getPassword());
         assertEquals("sara.k@gmail.com", user.getEmail());
         assertEquals("081-2345678", user.getPhoneNumber());
+        assertEquals("dpc-13", user.getHealthRegionCode());
         assertEquals(100, user.getOrganizationId());
     }
 }

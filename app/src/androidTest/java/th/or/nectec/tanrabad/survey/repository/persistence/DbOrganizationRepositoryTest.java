@@ -59,11 +59,11 @@ public class DbOrganizationRepositoryTest {
         assertEquals(true, success);
         assertEquals(true, cursor.moveToFirst());
         assertEquals(1, cursor.getCount());
-        assertEquals(101, organization.getOrganizationId());
-        assertEquals("สคร.13", organization.getName());
-        assertEquals("22/7", organization.getAddress());
-        assertEquals("120102", organization.getSubdistrictCode());
-        assertEquals("dpc-13", organization.getHealthRegionCode());
+        assertEquals(101, cursor.getInt(cursor.getColumnIndex(OrganizationColumn.ID)));
+        assertEquals("สคร.13", cursor.getString(cursor.getColumnIndex(OrganizationColumn.NAME)));
+        assertEquals("22/7", cursor.getString(cursor.getColumnIndex(OrganizationColumn.ADDRESS)));
+        assertEquals("120102", cursor.getString(cursor.getColumnIndex(OrganizationColumn.SUBDISTRICT_CODE)));
+        assertEquals("dpc-13", cursor.getString(cursor.getColumnIndex(OrganizationColumn.HEALTH_REGION_CODE)));
         cursor.close();
     }
 
@@ -86,11 +86,11 @@ public class DbOrganizationRepositoryTest {
         assertEquals(true, success);
         assertEquals(true, cursor.moveToFirst());
         assertEquals(1, cursor.getCount());
-        assertEquals(100, organization.getOrganizationId());
-        assertEquals("สคร.13", organization.getName());
-        assertEquals("30/9", organization.getAddress());
-        assertEquals("120102", organization.getSubdistrictCode());
-        assertEquals("dpc-13", organization.getHealthRegionCode());
+        assertEquals(100, cursor.getInt(cursor.getColumnIndex(OrganizationColumn.ID)));
+        assertEquals("สคร.13", cursor.getString(cursor.getColumnIndex(OrganizationColumn.NAME)));
+        assertEquals("30/9", cursor.getString(cursor.getColumnIndex(OrganizationColumn.ADDRESS)));
+        assertEquals("120102", cursor.getString(cursor.getColumnIndex(OrganizationColumn.SUBDISTRICT_CODE)));
+        assertEquals("dpc-13", cursor.getString(cursor.getColumnIndex(OrganizationColumn.HEALTH_REGION_CODE)));
         cursor.close();
     }
 

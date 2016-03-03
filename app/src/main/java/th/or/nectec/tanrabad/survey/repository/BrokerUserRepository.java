@@ -45,28 +45,28 @@ public class BrokerUserRepository implements UserRepository {
 
     @Override
     public User findByUsername(String username) {
-        User place = cache.findByUsername(username);
-        if (place == null) {
-            place = persistence.findByUsername(username);
-            cache.save(place);
+        User user = cache.findByUsername(username);
+        if (user == null) {
+            user = persistence.findByUsername(username);
+            cache.save(user);
         }
-        return place;
+        return user;
     }
 
     @Override
-    public boolean save(User place) {
-        boolean success = persistence.save(place);
+    public boolean save(User user) {
+        boolean success = persistence.save(user);
         if (success) {
-            cache.save(place);
+            cache.save(user);
         }
         return success;
     }
 
     @Override
-    public boolean update(User place) {
-        boolean success = persistence.update(place);
+    public boolean update(User user) {
+        boolean success = persistence.update(user);
         if (success) {
-            cache.update(place);
+            cache.update(user);
         }
         return success;
     }

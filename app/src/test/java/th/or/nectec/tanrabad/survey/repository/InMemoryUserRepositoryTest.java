@@ -20,7 +20,7 @@ package th.or.nectec.tanrabad.survey.repository;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import th.or.nectec.tanrabad.domain.place.PlaceRepositoryException;
+import th.or.nectec.tanrabad.domain.UserRepositoryException;
 import th.or.nectec.tanrabad.entity.User;
 
 import static org.junit.Assert.assertEquals;
@@ -46,7 +46,7 @@ public class InMemoryUserRepositoryTest {
         return dpcUser;
     }
 
-    @Test(expected = PlaceRepositoryException.class)
+    @Test(expected = UserRepositoryException.class)
     public void testSaveExistPlaceMustThrowException() throws Exception {
         userRepository.save(getDpcUser());
     }
@@ -69,7 +69,7 @@ public class InMemoryUserRepositoryTest {
         assertEquals(user, userRepository.findByUsername(DPC_USER));
     }
 
-    @Test(expected = PlaceRepositoryException.class)
+    @Test(expected = UserRepositoryException.class)
     public void testUpdateNotExistPlaceMustThrowException() throws Exception {
         userRepository.update(new User("dpc-xxx"));
     }

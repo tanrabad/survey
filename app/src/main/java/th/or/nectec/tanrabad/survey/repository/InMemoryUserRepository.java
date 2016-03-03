@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import th.or.nectec.tanrabad.domain.UserRepository;
-import th.or.nectec.tanrabad.domain.place.PlaceRepositoryException;
+import th.or.nectec.tanrabad.domain.UserRepositoryException;
 import th.or.nectec.tanrabad.entity.User;
 
 public class InMemoryUserRepository implements UserRepository {
@@ -48,7 +48,7 @@ public class InMemoryUserRepository implements UserRepository {
     @Override
     public boolean save(User user) {
         if (userMapping.containsKey(user.getUsername())) {
-            throw new PlaceRepositoryException();
+            throw new UserRepositoryException();
         }
         userMapping.put(user.getUsername(), user);
         return true;
@@ -57,7 +57,7 @@ public class InMemoryUserRepository implements UserRepository {
     @Override
     public boolean update(User user) {
         if (!userMapping.containsKey(user.getUsername())) {
-            throw new PlaceRepositoryException();
+            throw new UserRepositoryException();
         }
         userMapping.put(user.getUsername(), user);
         return true;

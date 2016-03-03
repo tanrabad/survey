@@ -216,9 +216,9 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
         GradientDrawable background = (GradientDrawable) placeIconView.getBackground();
         int color;
         if (place.getType() == PlaceType.VILLAGE_COMMUNITY) {
-            if (jsonEntomology.ciValue <= 10)
+            if (jsonEntomology.hiValue <= 10)
                 color = ResourceUtils.from(getActivity()).getColor(R.color.without_larvae);
-            else if (jsonEntomology.ciValue <= 50)
+            else if (jsonEntomology.hiValue <= 50)
                 color = ResourceUtils.from(getActivity()).getColor(R.color.amber_500);
             else
                 color = ResourceUtils.from(getActivity()).getColor(R.color.have_larvae);
@@ -373,7 +373,7 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
 
         private void setupKeyContainer(JsonKeyContainer keyContainer,
                                        LinearLayout container) {
-            if (keyContainer.containerId == null && keyContainer.containerName == null)
+            if (keyContainer.containerId == null || keyContainer.containerName == null)
                 return;
 
             String[] sameLevelKeyContainerId = keyContainer.containerId.split(", ");

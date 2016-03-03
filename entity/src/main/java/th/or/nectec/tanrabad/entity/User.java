@@ -22,7 +22,10 @@ public class User {
     private final String username;
     private String firstname;
     private String lastname;
+    private String password;
+    private String phoneNumber;
     private String email;
+    private String avatarFileName;
     private String healthRegionCode;
     private int organizationId;
 
@@ -76,6 +79,30 @@ public class User {
 
     public void setHealthRegionCode(String healthRegionCode) {
         this.healthRegionCode = healthRegionCode;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getAvatarFileName() {
+        return avatarFileName;
+    }
+
+    public void setAvatarFileName(String avatarFileName) {
+        this.avatarFileName = avatarFileName;
     }
 
     public String getUsername() {

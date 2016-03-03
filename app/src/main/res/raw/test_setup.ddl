@@ -75,9 +75,9 @@ VALUES
   ("100", "กรมควบคุมโรค", "120105", "1");
 
 INSERT INTO
-  user_profile (username, org_id)
+  user_profile (username, org_id, password, firstname, lastname, email, phone_number)
 VALUES
-  ("dpc-user", "100");
+  ("dpc-user", "100", "5555", "ซาร่า", "คิดส์", "sara.k@gmail.com", "081-2345678");
 
 INSERT INTO
   container_type (container_type_id, name)

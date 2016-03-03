@@ -20,8 +20,8 @@ package th.or.nectec.tanrabad.survey.repository;
 import java.util.HashMap;
 import java.util.List;
 
-import th.or.nectec.tanrabad.domain.UserRepository;
-import th.or.nectec.tanrabad.domain.UserRepositoryException;
+import th.or.nectec.tanrabad.domain.user.UserRepository;
+import th.or.nectec.tanrabad.domain.user.UserRepositoryException;
 import th.or.nectec.tanrabad.entity.User;
 
 public class InMemoryUserRepository implements UserRepository {

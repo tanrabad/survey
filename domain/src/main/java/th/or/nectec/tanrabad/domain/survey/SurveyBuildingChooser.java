@@ -20,10 +20,10 @@ package th.or.nectec.tanrabad.domain.survey;
 import java.util.List;
 import java.util.UUID;
 
-import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
 import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatusListPresenter;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
+import th.or.nectec.tanrabad.domain.user.UserRepository;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
 

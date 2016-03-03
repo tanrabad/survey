@@ -17,12 +17,12 @@
 
 package th.or.nectec.tanrabad.domain.place;
 
-import th.or.nectec.tanrabad.domain.UserRepository;
+import java.util.List;
+
 import th.or.nectec.tanrabad.domain.survey.SurveyRepository;
+import th.or.nectec.tanrabad.domain.user.UserRepository;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
-
-import java.util.List;
 
 public class PlaceWithSurveyHistoryChooser {
     private UserRepository userRepository;

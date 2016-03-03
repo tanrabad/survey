@@ -17,13 +17,13 @@
 
 package th.or.nectec.tanrabad.domain.survey;
 
-import th.or.nectec.tanrabad.domain.UserRepository;
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.domain.building.BuildingRepository;
+import th.or.nectec.tanrabad.domain.user.UserRepository;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.User;
-
-import java.util.UUID;
 
 public class SurveyController {
     private SurveyRepository surveyRepository;

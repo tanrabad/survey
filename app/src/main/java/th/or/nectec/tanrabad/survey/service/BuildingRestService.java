@@ -18,17 +18,18 @@
 package th.or.nectec.tanrabad.survey.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
-import th.or.nectec.tanrabad.domain.UserRepository;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
+import th.or.nectec.tanrabad.domain.user.UserRepository;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.service.json.JsonBuilding;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class BuildingRestService extends AbsUploadRestService<Building> {
 

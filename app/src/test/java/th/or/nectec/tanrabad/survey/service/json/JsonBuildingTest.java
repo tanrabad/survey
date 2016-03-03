@@ -18,18 +18,21 @@
 package th.or.nectec.tanrabad.survey.service.json;
 
 import android.support.annotation.NonNull;
+
 import com.bluelinelabs.logansquare.LoganSquare;
+
 import org.junit.Test;
 import org.mockito.Mockito;
-import th.or.nectec.tanrabad.domain.UserRepository;
+
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
+import th.or.nectec.tanrabad.domain.user.UserRepository;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
-
-import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 

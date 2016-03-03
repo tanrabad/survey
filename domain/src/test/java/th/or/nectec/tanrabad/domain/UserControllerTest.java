@@ -23,6 +23,9 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
+import th.or.nectec.tanrabad.domain.user.UserPresenter;
+import th.or.nectec.tanrabad.domain.user.UserRepository;
 import th.or.nectec.tanrabad.entity.User;
 
 public class UserControllerTest {
@@ -31,8 +34,8 @@ public class UserControllerTest {
     public JUnitRuleMockery context = new JUnitRuleMockery();
     User user = User.fromUsername(userName);
 
-    private UserRepository userRepository;
-    private UserPresenter userPresenter;
+    private th.or.nectec.tanrabad.domain.user.UserRepository userRepository;
+    private th.or.nectec.tanrabad.domain.user.UserPresenter userPresenter;
 
     @Before
     public void setUp() throws Exception {
@@ -50,7 +53,7 @@ public class UserControllerTest {
                 oneOf(userPresenter).displayUserName(user);
             }
         });
-        UserController userController = new UserController(userRepository, userPresenter);
+        th.or.nectec.tanrabad.domain.user.UserController userController = new th.or.nectec.tanrabad.domain.user.UserController(userRepository, userPresenter);
         userController.showUserOf(userName);
     }
 
@@ -64,7 +67,7 @@ public class UserControllerTest {
                 oneOf(userPresenter).displayNotFoundUser();
             }
         });
-        UserController userController = new UserController(userRepository, userPresenter);
+        th.or.nectec.tanrabad.domain.user.UserController userController = new th.or.nectec.tanrabad.domain.user.UserController(userRepository, userPresenter);
         userController.showUserOf(userName);
     }
 }

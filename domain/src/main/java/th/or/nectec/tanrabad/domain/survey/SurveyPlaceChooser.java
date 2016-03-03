@@ -17,15 +17,15 @@
 
 package th.or.nectec.tanrabad.domain.survey;
 
-import th.or.nectec.tanrabad.domain.UserRepository;
+import java.util.ArrayList;
+import java.util.List;
+
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyStatus;
 import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyStatusListPresenter;
+import th.or.nectec.tanrabad.domain.user.UserRepository;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class SurveyPlaceChooser {
 

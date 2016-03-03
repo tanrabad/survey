@@ -24,7 +24,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.List;
 
-import th.or.nectec.tanrabad.domain.UserRepository;
+import th.or.nectec.tanrabad.domain.user.UserRepository;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
 

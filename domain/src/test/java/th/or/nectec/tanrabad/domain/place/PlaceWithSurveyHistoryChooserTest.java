@@ -22,12 +22,13 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import th.or.nectec.tanrabad.domain.UserRepository;
-import th.or.nectec.tanrabad.domain.survey.SurveyRepository;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.User;
 
 import java.util.ArrayList;
+
+import th.or.nectec.tanrabad.domain.survey.SurveyRepository;
+import th.or.nectec.tanrabad.domain.user.UserRepository;
+import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.User;
 
 public class PlaceWithSurveyHistoryChooserTest {
 

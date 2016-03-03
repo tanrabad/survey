@@ -1,4 +1,4 @@
-package th.or.nectec.tanrabad.domain;
+package th.or.nectec.tanrabad.domain.user;
 
 import th.or.nectec.tanrabad.entity.User;
 

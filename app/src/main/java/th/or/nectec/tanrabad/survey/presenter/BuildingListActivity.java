@@ -266,6 +266,12 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         }
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        loadSurveyBuildingList();
+    }
+
     private void stopActionMode() {
         if (actionMode != null)
             actionMode.finish();

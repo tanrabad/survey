@@ -19,6 +19,6 @@ package th.or.nectec.tanrabad.domain;
 
 import th.or.nectec.tanrabad.entity.User;
 
-public interface UserRepository {
+public interface UserRepository extends WritableRepository<User> {
     User findByUsername(String userName);
 }

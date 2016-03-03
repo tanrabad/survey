@@ -18,10 +18,11 @@
 package th.or.nectec.tanrabad.survey.repository;
 
 
+import java.util.HashMap;
+import java.util.List;
+
 import th.or.nectec.tanrabad.domain.UserRepository;
 import th.or.nectec.tanrabad.entity.User;
-
-import java.util.HashMap;
 
 public class StubUserRepository implements UserRepository {
 
@@ -74,5 +75,20 @@ public class StubUserRepository implements UserRepository {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public boolean save(User user) {
+        return false;
+    }
+
+    @Override
+    public boolean update(User user) {
+        return false;
+    }
+
+    @Override
+    public void updateOrInsert(List<User> users) {
+
     }
 }

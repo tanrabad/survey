@@ -26,6 +26,9 @@ public class Organization {
     private int organizationId;
     private String name;
     private int areaLevelId;
+    private String address;
+    private String subdistrictCode;
+    private String healthRegionCode;
 
     public Organization(int organizationId, String name) {
         this.organizationId = organizationId;
@@ -46,6 +49,30 @@ public class Organization {
 
     public void setAreaLevelId(int areaLevelId) {
         this.areaLevelId = areaLevelId;
+    }
+
+    public String getHealthRegionCode() {
+        return healthRegionCode;
+    }
+
+    public void setHealthRegionCode(String healthRegionCode) {
+        this.healthRegionCode = healthRegionCode;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getSubdistrictCode() {
+        return subdistrictCode;
+    }
+
+    public void setSubdistrictCode(String subdistrictCode) {
+        this.subdistrictCode = subdistrictCode;
     }
 
     @Override

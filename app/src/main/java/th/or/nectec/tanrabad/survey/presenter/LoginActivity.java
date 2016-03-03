@@ -17,6 +17,7 @@
 
 package th.or.nectec.tanrabad.survey.presenter;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -25,6 +26,7 @@ import android.widget.CheckBox;
 import th.or.nectec.tanrabad.survey.BuildConfig;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
+import th.or.nectec.tanrabad.survey.presenter.authen.AuthenActivity;
 import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
 import th.or.nectec.tanrabad.survey.service.PlaceRestService;
 import th.or.nectec.tanrabad.survey.service.ServiceLastUpdatePreference;
@@ -36,6 +38,7 @@ import static android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN;
 import static android.view.animation.AnimationUtils.loadAnimation;
 
 public class LoginActivity extends TanrabadActivity {
+    private static final int AUTHEN_REQUEST_CODE = 1232;
     private CheckBox needShowcase;
     private ShowcasePreference showcasePreference;
 
@@ -50,15 +53,8 @@ public class LoginActivity extends TanrabadActivity {
         findViewById(R.id.authentication_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isFirstTime() && !InternetConnection.isAvailable(LoginActivity.this)) {
-                    Alert.highLevel().show(R.string.connect_internet_when_use_for_first_time);
-                    TanrabadApp.action().firstTimeWithoutInternet();
-                } else {
-                    AccountUtils.setUser(new StubUserRepository().findByUsername(BuildConfig.USER));
-                    showcasePreference.save(needShowcase.isChecked());
-                    InitialActivity.open(LoginActivity.this);
-                    finish();
-                }
+                // anonymousLogin();
+                openAuthenWeb();
             }
         });
         startAnimation();
@@ -70,10 +66,9 @@ public class LoginActivity extends TanrabadActivity {
         needShowcase.setChecked(showcasePreference.get());
     }
 
-
-    private boolean isFirstTime() {
-        String placeTimeStamp = new ServiceLastUpdatePreference(LoginActivity.this, PlaceRestService.PATH).get();
-        return TextUtils.isEmpty(placeTimeStamp);
+    private void openAuthenWeb() {
+        Intent intent = new Intent(this, AuthenActivity.class);
+        startActivityForResult(intent, AUTHEN_REQUEST_CODE);
     }
 
     private void startAnimation() {
@@ -81,5 +76,22 @@ public class LoginActivity extends TanrabadActivity {
         Animation dropIn = loadAnimation(this, R.anim.logo);
         dropIn.setStartOffset(1200);
         findViewById(R.id.logo_tabrabad).startAnimation(dropIn);
+    }
+
+    private void anonymousLogin() {
+        if (isFirstTime() && !InternetConnection.isAvailable(LoginActivity.this)) {
+            Alert.highLevel().show(R.string.connect_internet_when_use_for_first_time);
+            TanrabadApp.action().firstTimeWithoutInternet();
+        } else {
+            AccountUtils.setUser(new StubUserRepository().findByUsername(BuildConfig.USER));
+            showcasePreference.save(needShowcase.isChecked());
+            InitialActivity.open(LoginActivity.this);
+            finish();
+        }
+    }
+
+    private boolean isFirstTime() {
+        String placeTimeStamp = new ServiceLastUpdatePreference(LoginActivity.this, PlaceRestService.PATH).get();
+        return TextUtils.isEmpty(placeTimeStamp);
     }
 }

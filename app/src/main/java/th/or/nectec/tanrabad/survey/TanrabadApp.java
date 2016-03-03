@@ -19,6 +19,7 @@ package th.or.nectec.tanrabad.survey;
 
 import android.app.Application;
 import android.content.Context;
+import org.trb.authen.client.TRBAuthenUtil;
 import th.or.nectec.tanrabad.survey.utils.tool.ActionLogger;
 import th.or.nectec.tanrabad.survey.utils.tool.ExceptionLogger;
 import th.or.nectec.tanrabad.survey.utils.tool.GoogleAnalyticsTool;
@@ -50,8 +51,15 @@ public class TanrabadApp extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+        setupAuthenUtils();
         setupAnalysisTools();
         setupDefaultFont();
+    }
+
+    private void setupAuthenUtils() {
+        TRBAuthenUtil authenUtil = TRBAuthenUtil.getInstance();
+        authenUtil.initTRBAuthenUtil(this, BuildConfig.TRB_AUTHEN_CLIENT_ID,
+                BuildConfig.TRB_AUTHEN_CLIENT_SECRET);
     }
 
     private void setupAnalysisTools() {

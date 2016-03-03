@@ -20,6 +20,7 @@ package th.or.nectec.tanrabad.survey.presenter.authen;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
@@ -27,57 +28,69 @@ import android.webkit.WebViewClient;
 import android.widget.Toast;
 import org.trb.authen.client.TRBAuthenUtil;
 import org.trb.authen.client.TRBCallback;
+import org.trb.authen.model.UserProfile;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.TanrabadActivity;
 import th.or.nectec.tanrabad.survey.utils.android.CookieUtils;
 
 public class AuthenActivity extends TanrabadActivity {
 
+    private WebView webView;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authen);
 
-        WebView webView = (WebView) findViewById(R.id.webView);
-        webView.setWebViewClient(new TBRWebViewClient());
         CookieUtils.clearCookies(this);
+        webView = (WebView) findViewById(R.id.webView);
+        webView.setWebViewClient(new AuthenWebViewClient());
+        loadAuthenticationPage(webView);
+    }
+
+    private void loadAuthenticationPage(WebView webView) {
         try {
-            webView.loadUrl(TRBAuthenUtil.getInstance().getAuthorizationUri());
-        } catch (Exception e) {
-            e.printStackTrace();
+            String authenUrl = TRBAuthenUtil.getInstance().getAuthorizationUri();
+            webView.loadUrl(authenUrl);
+        } catch (Exception expect) {
+            expect.printStackTrace();
         }
     }
 
-    public class TBRWebViewClient extends WebViewClient {
+    public class AuthenWebViewClient extends WebViewClient {
+
+        private static final String PARAM_CODE = "code";
+        private static final String AUTHORIZED_CALLBACK_URL = "http://localhost/?";
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            if (url.startsWith("http://localhost/?")) {
+            if (url.startsWith(AUTHORIZED_CALLBACK_URL)) {
                 Uri uri = Uri.parse(url);
-                String code = uri.getQueryParameter("code");
-                //Toast.makeText(AuthenActivity.this, "code =" + code, Toast.LENGTH_SHORT).show();
-                TRBAuthenUtil.getInstance().onAuthorizationResult(code, new TRBCallback() {
-                    @Override
-                    public void onPostLogin() {
-                        String user = TRBAuthenUtil.getInstance().getUser();
-                        Toast.makeText(AuthenActivity.this, "user =" + user, Toast.LENGTH_LONG).show();
-                        finish();
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-                        throw new RuntimeException(e);
-                    }
-
-                });
+                String code = uri.getQueryParameter(PARAM_CODE);
+                TRBAuthenUtil.getInstance().onAuthorizationResult(code, new AuthenticationCallback());
+                webView.stopLoading();
+                return true;
             }
             return super.shouldOverrideUrlLoading(view, url);
         }
 
         @Override
-        public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+        public void onReceivedSslError(WebView view, @NonNull SslErrorHandler handler, SslError error) {
             handler.proceed();
         }
     }
 
+    private class AuthenticationCallback implements TRBCallback {
+        @Override
+        public void onPostLogin() {
+            UserProfile user = TRBAuthenUtil.getInstance().getUserProfile();
+            Toast.makeText(AuthenActivity.this, "user =" + user, Toast.LENGTH_LONG).show();
+            finish();
+        }
+
+        @Override
+        public void onError(Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

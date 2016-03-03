@@ -202,6 +202,8 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
             public void onConfirm() {
                 TanrabadApp.action().finishSurvey(survey, false);
                 finish();
+                if (!isEditSurvey)
+                    BuildingListActivity.open(SurveyActivity.this, survey.getSurveyBuilding().getPlaceId().toString());
             }
         });
         promptMessage.show(getString(R.string.abort_survey), getBuildingNameWithPrefix(survey.getSurveyBuilding()));

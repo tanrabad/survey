@@ -251,6 +251,8 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
     public void onBackPressed() {
         if (twiceBackPressed.onTwiceBackPressed()) {
             finish();
+            if (TextUtils.isEmpty(getBuildingUuid()))
+                BuildingListActivity.open(this, getPlaceUuid());
         }
     }
 

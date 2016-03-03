@@ -78,8 +78,7 @@
             android:label="@string/define_place_survey"/>
         <activity
             android:name=".presenter.BuildingListActivity"
-            android:label="@string/define_building_survey"
-            android:launchMode="singleTask"/>
+            android:label="@string/define_building_survey"/>
         <activity
             android:name=".presenter.SurveyActivity"
             android:label="@string/title_activity_survey">

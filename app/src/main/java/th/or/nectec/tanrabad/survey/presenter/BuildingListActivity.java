@@ -160,7 +160,6 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
 
             @Override
             public boolean onQueryTextChange(String searchString) {
-
                 surveyBuildingChooser.searchSurveyBuildingOfPlaceByName(searchString,
                         getPlaceUuidFromIntent().toString(),
                         AccountUtils.getUser());
@@ -191,6 +190,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         switch (item.getItemId()) {
             case R.id.add_building_menu:
                 BuildingFormActivity.startAdd(BuildingListActivity.this, getPlaceUuidFromIntent().toString());
+                finish();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -264,12 +264,6 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
                 showPlaceName();
                 break;
         }
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        loadSurveyBuildingList();
     }
 
     private void stopActionMode() {

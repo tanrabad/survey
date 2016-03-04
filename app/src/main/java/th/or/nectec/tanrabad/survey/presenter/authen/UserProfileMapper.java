@@ -22,11 +22,11 @@ import org.trb.authen.model.UserProfile;
 import th.or.nectec.tanrabad.entity.Organization;
 import th.or.nectec.tanrabad.entity.User;
 
-public class UserMapper {
+public class UserProfileMapper {
 
     private final UserProfile profile;
 
-    public UserMapper(UserProfile profile) {
+    public UserProfileMapper(UserProfile profile) {
         this.profile = profile;
     }
 

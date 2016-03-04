@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -33,7 +33,7 @@ import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView;
 import th.or.nectec.tanrabad.survey.repository.BrokerSurveyRepository;
-import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
+import th.or.nectec.tanrabad.survey.repository.BrokerUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 
 import java.util.List;
@@ -45,7 +45,8 @@ public class PlaceSurveyListFragment extends Fragment implements PlaceWithSurvey
     private String username;
 
     private PlaceSurveyAdapter placeAdapter;
-    private PlaceWithSurveyHistoryChooser placeChooser = new PlaceWithSurveyHistoryChooser(new StubUserRepository(),
+    private PlaceWithSurveyHistoryChooser placeChooser = new PlaceWithSurveyHistoryChooser(
+            BrokerUserRepository.getInstance(),
             BrokerSurveyRepository.getInstance(), this);
     private TextView placeCountView;
     private RecyclerView placeListView;

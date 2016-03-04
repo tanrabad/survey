@@ -28,7 +28,7 @@ import th.or.nectec.tanrabad.survey.BuildConfig;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.presenter.authen.AuthenActivity;
-import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
+import th.or.nectec.tanrabad.survey.repository.BrokerUserRepository;
 import th.or.nectec.tanrabad.survey.service.PlaceRestService;
 import th.or.nectec.tanrabad.survey.service.ServiceLastUpdatePreference;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
@@ -82,7 +82,7 @@ public class LoginActivity extends TanrabadActivity {
             Alert.highLevel().show(R.string.connect_internet_when_use_for_first_time);
             TanrabadApp.action().firstTimeWithoutInternet();
         } else {
-            AccountUtils.setUser(new StubUserRepository().findByUsername(BuildConfig.USER));
+            AccountUtils.setUser(BrokerUserRepository.getInstance().findByUsername(BuildConfig.USER));
             showcasePreference.save(needShowcase.isChecked());
             InitialActivity.open(LoginActivity.this);
             finish();
@@ -99,5 +99,15 @@ public class LoginActivity extends TanrabadActivity {
     private boolean isFirstTime() {
         String placeTimeStamp = new ServiceLastUpdatePreference(LoginActivity.this, PlaceRestService.PATH).get();
         return TextUtils.isEmpty(placeTimeStamp);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == AUTHEN_REQUEST_CODE && resultCode == RESULT_OK) {
+            showcasePreference.save(needShowcase.isChecked());
+            InitialActivity.open(LoginActivity.this);
+            finish();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

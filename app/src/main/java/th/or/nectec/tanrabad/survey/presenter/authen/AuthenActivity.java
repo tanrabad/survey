@@ -114,27 +114,17 @@ public class AuthenActivity extends TanrabadActivity {
         @Override
         public void onPostLogin() {
             UserProfile profile = TRBAuthenUtil.getInstance().getUserProfile();
-            UserMapper userMapper = new UserMapper(profile);
+            UserProfileMapper userProfileMapper = new UserProfileMapper(profile);
 
-            Organization org = userMapper.getOrganization();
+            Organization org = userProfileMapper.getOrganization();
             saveOrUpdate(org);
 
-            User user = userMapper.getUser();
+            User user = userProfileMapper.getUser();
             saveOrUpdate(user);
 
             AccountUtils.setUser(user);
             setResult(RESULT_OK);
             finish();
-        }
-
-        private void saveOrUpdate(User user) {
-            userRepository = BrokerUserRepository.getInstance();
-            User userInRepo = userRepository.findByUsername(user.getUsername());
-            if (userInRepo == null) {
-                userRepository.save(user);
-            } else {
-                userRepository.update(user);
-            }
         }
 
         private void saveOrUpdate(Organization org) {
@@ -144,6 +134,16 @@ public class AuthenActivity extends TanrabadActivity {
                 organizationRepository.save(org);
             } else {
                 organizationRepository.update(org);
+            }
+        }
+
+        private void saveOrUpdate(User user) {
+            userRepository = BrokerUserRepository.getInstance();
+            User userInRepo = userRepository.findByUsername(user.getUsername());
+            if (userInRepo == null) {
+                userRepository.save(user);
+            } else {
+                userRepository.update(user);
             }
         }
 

@@ -32,11 +32,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
-
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
-
-import java.util.List;
-
 import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyHistoryChooser;
 import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyHistoryListPresenter;
 import th.or.nectec.tanrabad.entity.Place;
@@ -45,9 +41,11 @@ import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.job.SyncJobBuilder;
 import th.or.nectec.tanrabad.survey.job.SyncJobRunner;
 import th.or.nectec.tanrabad.survey.repository.BrokerSurveyRepository;
-import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
+import th.or.nectec.tanrabad.survey.repository.BrokerUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.NetworkChangeReceiver;
+
+import java.util.List;
 
 public class MainActivity extends TanrabadActivity implements View.OnClickListener,
         PlaceWithSurveyHistoryListPresenter, AdapterView.OnItemClickListener {
@@ -120,7 +118,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
     private void showRecentSurveyCard() {
         cardView = (CardView) findViewById(R.id.card_layout);
         placeWithSurveyHistoryChooser = new PlaceWithSurveyHistoryChooser(
-                new StubUserRepository(),
+                BrokerUserRepository.getInstance(),
                 BrokerSurveyRepository.getInstance(),
                 this);
     }

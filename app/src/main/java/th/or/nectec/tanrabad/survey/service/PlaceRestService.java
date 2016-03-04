@@ -18,18 +18,17 @@
 package th.or.nectec.tanrabad.survey.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import th.or.nectec.tanrabad.domain.place.PlaceSubTypeRepository;
 import th.or.nectec.tanrabad.domain.user.UserRepository;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
-import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
+import th.or.nectec.tanrabad.survey.repository.BrokerUserRepository;
 import th.or.nectec.tanrabad.survey.service.json.JsonPlace;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlaceRestService extends AbsUploadRestService<Place> {
 
@@ -39,7 +38,7 @@ public class PlaceRestService extends AbsUploadRestService<Place> {
 
     public PlaceRestService() {
         this(BASE_API, new ServiceLastUpdatePreference(TanrabadApp.getInstance(), PATH),
-                new StubUserRepository(), BrokerPlaceSubTypeRepository.getInstance());
+                BrokerUserRepository.getInstance(), BrokerPlaceSubTypeRepository.getInstance());
     }
 
     public PlaceRestService(String apiBaseUrl, ServiceLastUpdate serviceLastUpdate, UserRepository userRepository,

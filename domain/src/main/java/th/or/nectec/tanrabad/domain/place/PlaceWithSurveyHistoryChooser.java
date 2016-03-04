@@ -17,12 +17,12 @@
 
 package th.or.nectec.tanrabad.domain.place;
 
-import java.util.List;
-
 import th.or.nectec.tanrabad.domain.survey.SurveyRepository;
 import th.or.nectec.tanrabad.domain.user.UserRepository;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
+
+import java.util.List;
 
 public class PlaceWithSurveyHistoryChooser {
     private UserRepository userRepository;
@@ -40,7 +40,7 @@ public class PlaceWithSurveyHistoryChooser {
 
     public void showSurveyPlaceList(String username) {
         User user = userRepository.findByUsername(username);
-        if(user==null){
+        if (user == null) {
             placeWithSurveyStatusChooserPresenter.alertUserNotFound();
             return;
         }
@@ -49,7 +49,7 @@ public class PlaceWithSurveyHistoryChooser {
 
         if (surveyPlaces != null && !surveyPlaces.isEmpty()) {
             placeWithSurveyStatusChooserPresenter.displaySurveyPlaceList(surveyPlaces);
-        }else{
+        } else {
             placeWithSurveyStatusChooserPresenter.displaySurveyPlacesNotFound();
         }
     }

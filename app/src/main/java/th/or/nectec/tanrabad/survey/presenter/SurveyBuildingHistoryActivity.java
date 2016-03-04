@@ -33,12 +33,7 @@ import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
-
-import java.util.List;
-import java.util.UUID;
-
 import th.or.nectec.tanrabad.domain.entomology.HouseIndex;
 import th.or.nectec.tanrabad.domain.place.PlaceController;
 import th.or.nectec.tanrabad.domain.place.PlacePresenter;
@@ -55,11 +50,14 @@ import th.or.nectec.tanrabad.survey.job.UploadJob;
 import th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerSurveyRepository;
-import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
+import th.or.nectec.tanrabad.survey.repository.BrokerUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
 import th.or.nectec.tanrabad.survey.utils.showcase.BaseShowcase;
 import th.or.nectec.tanrabad.survey.utils.showcase.ShowcaseFactory;
+
+import java.util.List;
+import java.util.UUID;
 
 public class SurveyBuildingHistoryActivity extends TanrabadActivity implements SurveyBuildingPresenter, PlacePresenter {
 
@@ -106,22 +104,6 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
         displaySurveyMoreBuildingShowcase();
     }
 
-    private String getPlaceUuidFromIntent() {
-        return getIntent().getStringExtra(PLACE_UUID_ARG);
-    }
-
-    private void startSurveyMoreBuildingButtonAnimation() {
-        Animation moreBuildingAnim = AnimationUtils.loadAnimation(this, R.anim.survey_more_building_button);
-        surveyMoreBuildingButton.startAnimation(moreBuildingAnim);
-    }
-
-    private void displaySurveyMoreBuildingShowcase() {
-        BaseShowcase showcase = ShowcaseFactory.viewShowcase(R.id.survey_more_building_button);
-        showcase.setTitle(getString(R.string.showcase_survey_more_building_title));
-        showcase.setMessage(getString(R.string.showcase_survey_more_building));
-        //showcase.display();
-    }
-
     private void showPlaceInfo() {
         PlaceController placeController = new PlaceController(BrokerPlaceRepository.getInstance(), this);
         placeController.showPlace(UUID.fromString(getPlaceUuidFromIntent()));
@@ -154,12 +136,28 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
 
     private void showSurveyBuildingHistoryList() {
         SurveyBuildingHistoryController surveyBuildingHistoryController = new SurveyBuildingHistoryController(
-                new StubUserRepository(),
+                BrokerUserRepository.getInstance(),
                 BrokerPlaceRepository.getInstance(),
                 BrokerSurveyRepository.getInstance(),
                 this);
         surveyBuildingHistoryController.showSurveyBuildingOf(getPlaceUuidFromIntent(),
                 AccountUtils.getUser().getUsername());
+    }
+
+    private String getPlaceUuidFromIntent() {
+        return getIntent().getStringExtra(PLACE_UUID_ARG);
+    }
+
+    private void startSurveyMoreBuildingButtonAnimation() {
+        Animation moreBuildingAnim = AnimationUtils.loadAnimation(this, R.anim.survey_more_building_button);
+        surveyMoreBuildingButton.startAnimation(moreBuildingAnim);
+    }
+
+    private void displaySurveyMoreBuildingShowcase() {
+        BaseShowcase showcase = ShowcaseFactory.viewShowcase(R.id.survey_more_building_button);
+        showcase.setTitle(getString(R.string.showcase_survey_more_building_title));
+        showcase.setMessage(getString(R.string.showcase_survey_more_building));
+        //showcase.display();
     }
 
     @Override

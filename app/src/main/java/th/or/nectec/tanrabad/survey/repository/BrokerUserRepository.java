@@ -17,19 +17,18 @@
 
 package th.or.nectec.tanrabad.survey.repository;
 
-import java.util.List;
-
 import th.or.nectec.tanrabad.domain.user.UserRepository;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.repository.persistence.DbUserRepository;
+
+import java.util.List;
 
 public class BrokerUserRepository implements UserRepository {
 
     private static BrokerUserRepository instance;
     private UserRepository cache;
     private UserRepository persistence;
-
 
     protected BrokerUserRepository(UserRepository cache, UserRepository persistence) {
         this.cache = cache;
@@ -48,7 +47,7 @@ public class BrokerUserRepository implements UserRepository {
         User user = cache.findByUsername(username);
         if (user == null) {
             user = persistence.findByUsername(username);
-            cache.save(user);
+            if (user != null) cache.save(user);
         }
         return user;
     }

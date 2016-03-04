@@ -23,31 +23,21 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
 import th.or.nectec.tanrabad.domain.building.BuildingRepository;
 import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.domain.survey.ContainerTypeRepository;
 import th.or.nectec.tanrabad.domain.survey.SurveyRepository;
 import th.or.nectec.tanrabad.domain.user.UserRepository;
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.Survey;
-import th.or.nectec.tanrabad.entity.SurveyDetail;
-import th.or.nectec.tanrabad.entity.User;
+import th.or.nectec.tanrabad.entity.*;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
-import th.or.nectec.tanrabad.survey.repository.BrokerBuildingRepository;
-import th.or.nectec.tanrabad.survey.repository.BrokerContainerTypeRepository;
-import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
-import th.or.nectec.tanrabad.survey.repository.ChangedRepository;
-import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
-import th.or.nectec.tanrabad.survey.repository.SurveyRepositoryException;
+import th.or.nectec.tanrabad.survey.repository.*;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorList;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class DbSurveyRepository extends DbRepository implements SurveyRepository, ChangedRepository<Survey> {
 
@@ -62,7 +52,7 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
     private ContainerTypeRepository containerTypeRepository;
 
     public DbSurveyRepository(Context context) {
-        this(context, new StubUserRepository(),
+        this(context, BrokerUserRepository.getInstance(),
                 BrokerPlaceRepository.getInstance(),
                 BrokerBuildingRepository.getInstance(),
                 BrokerContainerTypeRepository.getInstance());
@@ -357,6 +347,20 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
     }
 
     @NonNull
+    private String[] buildingSurveyColumn() {
+        return new String[]{
+                DbBuildingRepository.TABLE_NAME + "." + BuildingColumn.ID,
+                BuildingColumn.NAME,
+                BuildingColumn.PLACE_ID,
+                DbBuildingRepository.TABLE_NAME + "." + SurveyColumn.LATITUDE,
+                DbBuildingRepository.TABLE_NAME + "." + SurveyColumn.LONGITUDE,
+                DbBuildingRepository.TABLE_NAME + "." + SurveyColumn.UPDATE_TIME,
+                BuildingColumn.UPDATE_BY,
+                DbBuildingRepository.TABLE_NAME + "." + SurveyColumn.CHANGED_STATUS,
+                SurveyColumn.ID};
+    }
+
+    @NonNull
     private List<BuildingWithSurveyStatus> mapSurveyBuildingStatus(Cursor cursor) {
         List<BuildingWithSurveyStatus> surveyBuilding = new ArrayList<>();
         if (cursor.moveToFirst()) {
@@ -374,20 +378,6 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
 
     private CursorMapper<Building> getBuildingSurveyMapper(Cursor cursor) {
         return new BuildingCursorMapper(cursor, placeRepository);
-    }
-
-    @NonNull
-    private String[] buildingSurveyColumn() {
-        return new String[]{
-                DbBuildingRepository.TABLE_NAME + "." + BuildingColumn.ID,
-                BuildingColumn.NAME,
-                BuildingColumn.PLACE_ID,
-                DbBuildingRepository.TABLE_NAME + "." + SurveyColumn.LATITUDE,
-                DbBuildingRepository.TABLE_NAME + "." + SurveyColumn.LONGITUDE,
-                DbBuildingRepository.TABLE_NAME + "." + SurveyColumn.UPDATE_TIME,
-                BuildingColumn.UPDATE_BY,
-                DbBuildingRepository.TABLE_NAME + "." + SurveyColumn.CHANGED_STATUS,
-                SurveyColumn.ID};
     }
 
     private Survey getSurvey(Cursor cursor) {

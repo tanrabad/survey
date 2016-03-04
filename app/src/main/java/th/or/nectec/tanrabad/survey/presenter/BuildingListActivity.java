@@ -33,13 +33,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
-
 import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
 import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatusListPresenter;
 import th.or.nectec.tanrabad.domain.place.PlaceController;
@@ -53,9 +47,13 @@ import th.or.nectec.tanrabad.survey.job.SyncJobRunner;
 import th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerSurveyRepository;
-import th.or.nectec.tanrabad.survey.repository.StubUserRepository;
+import th.or.nectec.tanrabad.survey.repository.BrokerUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
 public class BuildingListActivity extends TanrabadActivity implements BuildingWithSurveyStatusListPresenter,
         PlacePresenter, ActionMode.Callback, View.OnClickListener {
@@ -69,7 +67,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     private Place place;
     private EmptyLayoutView emptyLayoutView;
     private SurveyBuildingChooser surveyBuildingChooser = new SurveyBuildingChooser(
-            new StubUserRepository(),
+            BrokerUserRepository.getInstance(),
             BrokerPlaceRepository.getInstance(),
             BrokerSurveyRepository.getInstance(),
             this);
@@ -110,11 +108,6 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     private void showPlaceName() {
         PlaceController placeController = new PlaceController(BrokerPlaceRepository.getInstance(), this);
         placeController.showPlace(getPlaceUuidFromIntent());
-    }
-
-    private UUID getPlaceUuidFromIntent() {
-        String uuid = getIntent().getStringExtra(PLACE_UUID_ARG);
-        return UUID.fromString(uuid);
     }
 
     private void setupBuildingList() {
@@ -183,6 +176,11 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
 
     private void loadSurveyBuildingList() {
         surveyBuildingChooser.displaySurveyBuildingOf(getPlaceUuidFromIntent().toString(), AccountUtils.getUser());
+    }
+
+    private UUID getPlaceUuidFromIntent() {
+        String uuid = getIntent().getStringExtra(PLACE_UUID_ARG);
+        return UUID.fromString(uuid);
     }
 
     @Override

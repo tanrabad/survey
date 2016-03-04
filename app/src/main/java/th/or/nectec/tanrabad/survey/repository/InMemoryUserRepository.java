@@ -17,17 +17,56 @@
 
 package th.or.nectec.tanrabad.survey.repository;
 
-import java.util.HashMap;
-import java.util.List;
-
 import th.or.nectec.tanrabad.domain.user.UserRepository;
 import th.or.nectec.tanrabad.domain.user.UserRepositoryException;
 import th.or.nectec.tanrabad.entity.User;
 
-public class InMemoryUserRepository implements UserRepository {
-    public static InMemoryUserRepository instance;
+import java.util.HashMap;
+import java.util.List;
 
+public class InMemoryUserRepository implements UserRepository {
+
+    public static final String DEV_USERNAME = "dpc-user";
+    public static final String DEMO_USERNAME = "dpc-13-beta";
+    public static final String RELEASE_USERNAME = "dpc-13";
+    public static InMemoryUserRepository instance;
     HashMap<String, User> userMapping = new HashMap<>();
+
+    public InMemoryUserRepository() {
+        userMapping.put(DEV_USERNAME, devUser());
+        userMapping.put(DEMO_USERNAME, betaUser());
+        userMapping.put(RELEASE_USERNAME, ReleaseUser());
+    }
+
+    private User devUser() {
+        User dev = new User(DEV_USERNAME);
+        dev.setFirstname("ซาร่า");
+        dev.setLastname("คิดส์");
+        dev.setEmail("dev@tanrabad.org");
+        dev.setOrganizationId(1);
+        dev.setHealthRegionCode("dpc-13");
+        return dev;
+    }
+
+    private User betaUser() {
+        User beta = new User(DEMO_USERNAME);
+        beta.setFirstname("ทดสอบ");
+        beta.setLastname("ทดสอบ");
+        beta.setEmail("dpc13@gmail.com");
+        beta.setOrganizationId(5);
+        beta.setHealthRegionCode("dpc-13");
+        return beta;
+    }
+
+    private User ReleaseUser() {
+        User release = new User(RELEASE_USERNAME);
+        release.setFirstname("ทดสอบ");
+        release.setLastname("ทดสอบ");
+        release.setEmail("dpc13@gmail.com");
+        release.setOrganizationId(5);
+        release.setHealthRegionCode("dpc-13");
+        return release;
+    }
 
     protected static InMemoryUserRepository getInstance() {
         if (instance == null) {

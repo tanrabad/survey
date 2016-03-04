@@ -17,9 +17,7 @@
 
 package th.or.nectec.tanrabad.survey.repository;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
-
 import th.or.nectec.tanrabad.domain.user.UserRepositoryException;
 import th.or.nectec.tanrabad.entity.User;
 
@@ -31,8 +29,8 @@ public class InMemoryUserRepositoryTest {
     public static final String DPC_USER = "dpc-user";
     private static InMemoryUserRepository userRepository = InMemoryUserRepository.getInstance();
 
-    @BeforeClass
-    public static void setUp() throws Exception {
+    @Test(expected = UserRepositoryException.class)
+    public void testSaveExistPlaceMustThrowException() throws Exception {
         userRepository.save(getDpcUser());
     }
 
@@ -44,11 +42,6 @@ public class InMemoryUserRepositoryTest {
         dpcUser.setOrganizationId(1);
         dpcUser.setHealthRegionCode("dpc-13");
         return dpcUser;
-    }
-
-    @Test(expected = UserRepositoryException.class)
-    public void testSaveExistPlaceMustThrowException() throws Exception {
-        userRepository.save(getDpcUser());
     }
 
     @Test

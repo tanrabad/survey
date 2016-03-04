@@ -85,8 +85,8 @@ android {
             manifestPlaceholders = [google_map_key: System.getenv("TANRABAD_GOOGLE_DEBUG_KEY")]
             buildConfigField "String", "API_URL", "\"http://tanrabad.igridproject.info/v1\""
             buildConfigField "String", "USER", "\"dpc-user\""
-            buildConfigField "String", "TRB_AUTHEN_CLIENT_ID", System.getenv("TANRABAD_AUTHEN_CLIENT_ID")
-            buildConfigField "String", "TRB_AUTHEN_CLIENT_SECRET", System.getenv("TANRABAD_AUTHEN_CLIENT_SECRET")
+            buildConfigField "String", "TRB_AUTHEN_CLIENT_ID", "\"$clientId\""
+            buildConfigField "String", "TRB_AUTHEN_CLIENT_SECRET", "\"$clientSecret\""
             resValue "string", "app_version", "version $genVersionName-Debug"
         }
         beta {
@@ -98,8 +98,8 @@ android {
             manifestPlaceholders = [google_map_key: System.getenv("TANRABAD_GOOGLE_RELEASE_KEY")]
             buildConfigField "String", "API_URL", "\"http://tanrabad.igridproject.info/v1\""
             buildConfigField "String", "USER", "\"dpc-13-beta\""
-            buildConfigField "String", "TRB_AUTHEN_CLIENT_ID", System.getenv("TANRABAD_AUTHEN_CLIENT_ID")
-            buildConfigField "String", "TRB_AUTHEN_CLIENT_SECRET", System.getenv("TANRABAD_AUTHEN_CLIENT_SECRET")
+            buildConfigField "String", "TRB_AUTHEN_CLIENT_ID", "\"$clientId\""
+            buildConfigField "String", "TRB_AUTHEN_CLIENT_SECRET", "\"$clientSecret\""
             resValue "string", "app_version", "version $genVersionName-Beta"
         }
         release {
@@ -110,8 +110,8 @@ android {
             manifestPlaceholders = [google_map_key: System.getenv("TANRABAD_GOOGLE_RELEASE_KEY")]
             buildConfigField "String", "API_URL", "\"http://tanrabad.igridproject.info/v1\""
             buildConfigField "String", "USER", "\"dpc-13\""
-            buildConfigField "String", "TRB_AUTHEN_CLIENT_ID", System.getenv("TANRABAD_AUTHEN_CLIENT_ID")
-            buildConfigField "String", "TRB_AUTHEN_CLIENT_SECRET", System.getenv("TANRABAD_AUTHEN_CLIENT_SECRET")
+            buildConfigField "String", "TRB_AUTHEN_CLIENT_ID", "\"$clientId\""
+            buildConfigField "String", "TRB_AUTHEN_CLIENT_SECRET", "\"$clientSecret\""
             resValue "string", "app_version", "version $genVersionName"
         }
     }

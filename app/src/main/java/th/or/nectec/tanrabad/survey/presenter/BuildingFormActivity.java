@@ -154,9 +154,13 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
             case R.id.save:
                 saveBuildingData();
                 break;
+            case android.R.id.home:
+                backToBuildingList();
+                break;
         }
-        return super.onOptionsItemSelected(item);
+        return true;
     }
+
 
     private void saveBuildingData() {
         building.setName(buildingNameView.getText().toString().trim());
@@ -176,6 +180,12 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
         } catch (ValidatorException exception) {
             Alert.highLevel().show(exception.getMessageId());
         }
+    }
+
+    private void backToBuildingList() {
+        finish();
+        if (TextUtils.isEmpty(getBuildingUuid()))
+            BuildingListActivity.open(this, getPlaceUuid());
     }
 
     @Override
@@ -257,9 +267,7 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
     @Override
     public void onBackPressed() {
         if (twiceBackPressed.onTwiceBackPressed()) {
-            finish();
-            if (TextUtils.isEmpty(getBuildingUuid()))
-                BuildingListActivity.open(this, getPlaceUuid());
+            backToBuildingList();
         }
     }
 

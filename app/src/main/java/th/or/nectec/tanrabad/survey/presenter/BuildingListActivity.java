@@ -33,7 +33,13 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
 import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatusListPresenter;
 import th.or.nectec.tanrabad.domain.place.PlaceController;
@@ -50,10 +56,6 @@ import th.or.nectec.tanrabad.survey.repository.BrokerSurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
 
 public class BuildingListActivity extends TanrabadActivity implements BuildingWithSurveyStatusListPresenter,
         PlacePresenter, ActionMode.Callback, View.OnClickListener {
@@ -110,6 +112,11 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         placeController.showPlace(getPlaceUuidFromIntent());
     }
 
+    private UUID getPlaceUuidFromIntent() {
+        String uuid = getIntent().getStringExtra(PLACE_UUID_ARG);
+        return UUID.fromString(uuid);
+    }
+
     private void setupBuildingList() {
         buildingAdapter = new BuildingWithSurveyStatusAdapter(this, BuildingIcon.get(place));
         buildingList = (RecyclerView) findViewById(R.id.building_list);
@@ -120,6 +127,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 BuildingWithSurveyStatus building = buildingAdapter.getItem(position);
+                finish();
                 SurveyActivity.open(BuildingListActivity.this, building.building);
                 if (!TextUtils.isEmpty(buildingSearchView.getQuery()))
                     TanrabadApp.action().filterBuilding(buildingSearchView.getQuery().toString());
@@ -176,11 +184,6 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
 
     private void loadSurveyBuildingList() {
         surveyBuildingChooser.displaySurveyBuildingOf(getPlaceUuidFromIntent().toString(), AccountUtils.getUser());
-    }
-
-    private UUID getPlaceUuidFromIntent() {
-        String uuid = getIntent().getStringExtra(PLACE_UUID_ARG);
-        return UUID.fromString(uuid);
     }
 
     @Override

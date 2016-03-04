@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,31 +15,31 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey.utils;
+package th.or.nectec.tanrabad.survey.presenter.view;
 
-import android.app.Activity;
+import android.annotation.SuppressLint;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.runner.AndroidJUnit4;
 import android.text.InputType;
 import android.widget.EditText;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
-import org.robolectric.RobolectricGradleTestRunner;
-import th.or.nectec.tanrabad.survey.RobolectricTestBase;
+import th.or.nectec.tanrabad.survey.utils.EditTextStepper;
 
 import static org.junit.Assert.assertEquals;
 
-@RunWith(RobolectricGradleTestRunner.class)
-public class EditTextStepperTest extends RobolectricTestBase {
+@RunWith(AndroidJUnit4.class)
+@SuppressLint("SetTextI18n")
+public class EditTextStepperTest {
 
     private EditText editText;
     private EditTextStepper editTextStepper;
 
     @Before
     public void setUp() throws Exception {
-        editText = new EditText(getContext());
+        editText = new EditText(InstrumentationRegistry.getContext());
         editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-
         editTextStepper = new EditTextStepper(editText);
     }
 
@@ -78,7 +78,7 @@ public class EditTextStepperTest extends RobolectricTestBase {
 
     @Test(expected = EditTextStepper.NotSupportEditTextInputTypeException.class)
     public void testSupportOnlyNumberClassInputType() {
-        new EditTextStepper(new EditText(getContext()));
+        new EditTextStepper(new EditText(InstrumentationRegistry.getContext()));
     }
 
     @Test(expected = NullPointerException.class)
@@ -100,6 +100,4 @@ public class EditTextStepperTest extends RobolectricTestBase {
         EditTextStepper.stepDown(editText);
         assertEquals("0", editText.getText().toString());
     }
-
-
 }

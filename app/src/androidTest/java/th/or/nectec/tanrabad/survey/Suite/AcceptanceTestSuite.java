@@ -20,6 +20,8 @@ package th.or.nectec.tanrabad.survey.suite;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import th.or.nectec.tanrabad.survey.presenter.*;
+import th.or.nectec.tanrabad.survey.presenter.view.EditTextStepperTest;
+import th.or.nectec.tanrabad.survey.presenter.view.TorchButtonTest;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
@@ -38,6 +40,9 @@ import th.or.nectec.tanrabad.survey.presenter.*;
         UpdateBuildingTest.class,
 
         SurveyActivityTest.class,
+
+        EditTextStepperTest.class,
+        TorchButtonTest.class,
         })
 public class AcceptanceTestSuite {
 }

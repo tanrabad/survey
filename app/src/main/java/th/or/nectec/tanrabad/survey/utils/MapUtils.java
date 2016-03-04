@@ -20,8 +20,15 @@ package th.or.nectec.tanrabad.survey.utils;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.ColorRes;
+
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+
+import th.or.nectec.tanrabad.entity.field.Location;
+import th.or.nectec.tanrabad.survey.presenter.maps.LocationUtils;
 import th.or.nectec.tanrabad.survey.utils.android.ResourceUtils;
 
 public class MapUtils {
@@ -30,5 +37,10 @@ public class MapUtils {
         float[] hsv = new float[3];
         Color.colorToHSV(color, hsv);
         return BitmapDescriptorFactory.defaultMarker(hsv[0]);
+    }
+
+    public static CameraUpdate locationZoom(Location location, int zoomLevel) {
+        LatLng position = LocationUtils.convertLocationToLatLng(location);
+        return CameraUpdateFactory.newLatLngZoom(position, zoomLevel);
     }
 }

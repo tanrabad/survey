@@ -19,16 +19,16 @@ package th.or.nectec.tanrabad.survey.presenter.maps;
 
 import android.location.Location;
 import android.os.Bundle;
-import android.support.annotation.ColorRes;
 import android.support.annotation.Nullable;
+
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-import th.or.nectec.tanrabad.survey.R;
+
 import th.or.nectec.tanrabad.survey.utils.MapUtils;
+import th.or.nectec.tanrabad.survey.utils.map.MarkerUtil;
 
 public class MapMarkerFragment extends BaseMapFragment implements MapMarkerInterface, GoogleMap.OnMapLongClickListener,
         GoogleMap.OnMarkerDragListener, OnMapReadyCallback {
@@ -40,17 +40,15 @@ public class MapMarkerFragment extends BaseMapFragment implements MapMarkerInter
     private GoogleApiClient.ConnectionCallbacks locationServiceCallback = new GoogleApiClient.ConnectionCallbacks() {
         @Override
         public void onConnected(@Nullable Bundle bundle) {
-            LatLng targetLocation;
             if (markedLocation != null) {
-                targetLocation = LocationUtils.convertLocationToLatLng(markedLocation);
-                marker = addDraggableMarker(targetLocation);
-                moveToLocation(targetLocation);
+                marker = googleMap.addMarker(MarkerUtil.buildDragableMarkerOption(markedLocation));
+                googleMap.moveCamera(MapUtils.locationZoom(markedLocation, 15));
             } else {
                 Location lastLocation = playLocationService.getLastKnowLocation();
                 if (lastLocation != null && marker == null) {
-                    targetLocation = LocationUtils.convertLocationToLatLng(lastLocation);
-                    marker = addDraggableMarker(targetLocation);
-                    moveToLocation(targetLocation);
+                    LatLng latLng = LocationUtils.convertLocationToLatLng(lastLocation);
+                    marker = googleMap.addMarker(MarkerUtil.buildDragableMarkerOption(latLng));
+                    googleMap.moveCamera(MapUtils.locationZoom(markedLocation, 15));
                 }
             }
         }
@@ -91,7 +89,7 @@ public class MapMarkerFragment extends BaseMapFragment implements MapMarkerInter
     @Override
     public void onMapLongClick(LatLng latLng) {
         removeMarkedLocation();
-        marker = addDraggableMarker(latLng);
+        marker = googleMap.addMarker(MarkerUtil.buildDragableMarkerOption(latLng));
     }
 
     public void removeMarkedLocation() {
@@ -101,23 +99,9 @@ public class MapMarkerFragment extends BaseMapFragment implements MapMarkerInter
         marker = null;
     }
 
-    public Marker addDraggableMarker(LatLng position) {
-        return addMarker(position, R.color.shock_pink, true);
-    }
-
-    protected Marker addMarker(LatLng position, @ColorRes int color, boolean draggable) {
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.draggable(draggable);
-        markerOptions.icon(MapUtils.getIconBitmapDescriptor(getActivity(), color));
-        markerOptions.position(position);
-        Marker pinnedMarker = googleMap.addMarker(markerOptions);
-        new MarkerDropInAnimator(this, pinnedMarker).start();
-        return pinnedMarker;
-    }
-
     @Override
     public void onMarkerDragStart(Marker marker) {
-        getMap().getUiSettings().setScrollGesturesEnabled(false);
+        googleMap.getUiSettings().setScrollGesturesEnabled(false);
     }
 
     @Override
@@ -126,7 +110,7 @@ public class MapMarkerFragment extends BaseMapFragment implements MapMarkerInter
 
     @Override
     public void onMarkerDragEnd(Marker marker) {
-        getMap().getUiSettings().setScrollGesturesEnabled(true);
+        googleMap.getUiSettings().setScrollGesturesEnabled(true);
     }
 
     public th.or.nectec.tanrabad.entity.field.Location getMarkedLocation() {

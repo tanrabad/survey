@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -32,10 +33,16 @@
         android:layout_height="match_parent"
         android:minHeight="500dp">
 
-        <FrameLayout
+        <fragment
             android:id="@+id/map_container"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            map:cameraTargetLng="100.538268"
+            map:cameraZoom="7"
+            map:liteMode="true"
+            map:mapType="satellite"
+            tools:ignore="MissingPrefix"/>
 
         <FrameLayout
             android:id="@+id/add_location_background"

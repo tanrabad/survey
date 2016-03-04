@@ -30,6 +30,8 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 
 import org.joda.time.DateTime;
@@ -48,13 +50,14 @@ import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
-import th.or.nectec.tanrabad.survey.presenter.maps.LiteMapFragment;
 import th.or.nectec.tanrabad.survey.presenter.maps.LocationUtils;
 import th.or.nectec.tanrabad.survey.repository.BrokerBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
+import th.or.nectec.tanrabad.survey.utils.MapUtils;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
 import th.or.nectec.tanrabad.survey.utils.android.TwiceBackPressed;
+import th.or.nectec.tanrabad.survey.utils.map.MarkerUtil;
 import th.or.nectec.tanrabad.survey.validator.SaveBuildingValidator;
 import th.or.nectec.tanrabad.survey.validator.UpdateBuildingValidator;
 import th.or.nectec.tanrabad.survey.validator.ValidatorException;
@@ -66,7 +69,6 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
     public static final String BUILDING_UUID_ARG = "building_uuid_arg";
 
     public static final int ADD_BUILDING_REQ_CODE = 40000;
-
 
     private TextView placeName;
     private Toolbar toolbar;
@@ -81,6 +83,7 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
     private Building building;
     private Button editLocationButton;
     private TwiceBackPressed twiceBackPressed;
+    private SupportMapFragment mapFragment;
 
     public static void startEdit(Activity activity, String placeUuid, String buildingUuid) {
         Intent intent = new Intent(activity, BuildingFormActivity.class);
@@ -102,9 +105,15 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
         assignViews();
         setSupportActionBar(toolbar);
         setupHomeButton();
+        setupMap();
         setupTwiceBackPressed();
         placeController.showPlace(UUID.fromString(getPlaceUuid()));
         loadBuildingData();
+    }
+
+    private void setupMap() {
+        mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map_container);
     }
 
     private void assignViews() {
@@ -129,7 +138,6 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
 
     private void loadBuildingData() {
         if (TextUtils.isEmpty(getBuildingUuid())) {
-            setupPreviewMap();
             building = Building.withName(null);
         } else {
             buildingController.showBuilding(UUID.fromString(getBuildingUuid()));
@@ -138,11 +146,6 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
 
     private String getBuildingUuid() {
         return getIntent().getStringExtra(BUILDING_UUID_ARG);
-    }
-
-    private void setupPreviewMap() {
-        SupportMapFragment supportMapFragment = LiteMapFragment.newInstance();
-        getSupportFragmentManager().beginTransaction().replace(R.id.map_container, supportMapFragment).commit();
     }
 
     @Override
@@ -199,9 +202,7 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
         this.building = building;
         buildingNameView.setText(this.building.getName());
 
-        if (this.building.getLocation() == null) {
-            setupPreviewMap();
-        } else {
+        if (this.building.getLocation() != null) {
             setupPreviewMapWithPosition(building.getLocation());
         }
     }
@@ -213,12 +214,18 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
         Alert.mediumLevel().show(R.string.building_not_found);
     }
 
-    private void setupPreviewMapWithPosition(Location location) {
+    private void setupPreviewMapWithPosition(final Location location) {
         addLocationBackground.setVisibility(View.GONE);
         editLocationButton.setVisibility(View.VISIBLE);
         editLocationButton.setOnClickListener(this);
-        SupportMapFragment supportMapFragment = LiteMapFragment.newInstance(location);
-        getSupportFragmentManager().beginTransaction().replace(R.id.map_container, supportMapFragment).commit();
+        mapFragment.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                googleMap.clear();
+                googleMap.addMarker(MarkerUtil.buildMarkerOption(location));
+                googleMap.moveCamera(MapUtils.locationZoom(location, 15));
+            }
+        });
     }
 
     @Override

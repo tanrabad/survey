@@ -32,6 +32,8 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 
 import org.joda.time.DateTime;
@@ -49,14 +51,14 @@ import th.or.nectec.tanrabad.entity.lookup.PlaceSubType;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
-import th.or.nectec.tanrabad.survey.presenter.maps.LiteMapFragment;
 import th.or.nectec.tanrabad.survey.presenter.maps.LocationUtils;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.adapter.ThaiWidgetProvinceRepository;
+import th.or.nectec.tanrabad.survey.utils.MapUtils;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
-import th.or.nectec.tanrabad.survey.utils.android.ResourceUtils;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
 import th.or.nectec.tanrabad.survey.utils.android.TwiceBackPressed;
+import th.or.nectec.tanrabad.survey.utils.map.MarkerUtil;
 import th.or.nectec.tanrabad.survey.validator.SavePlaceValidator;
 import th.or.nectec.tanrabad.survey.validator.UpdatePlaceValidator;
 import th.or.nectec.tanrabad.survey.validator.ValidatorException;
@@ -83,7 +85,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     private FrameLayout addLocationBackground;
     private Button addMarkerButton;
     private TwiceBackPressed twiceBackPressed;
-
+    private SupportMapFragment mapFragment;
 
     public static void startAdd(Activity activity, int placeTypeId) {
         Intent intent = new Intent(activity, PlaceFormActivity.class);
@@ -105,9 +107,14 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         setupViews();
         setupHomeButton();
         setupTwiceBackPressed();
-        setupPreviewMap();
         setupPlaceTypeSelector();
+        setupMap();
         loadPlaceData();
+    }
+
+    private void setupMap() {
+        mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map_container);
     }
 
     private void setupViews() {
@@ -140,11 +147,6 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
 
     private void setupTwiceBackPressed() {
         twiceBackPressed = new TwiceBackPressed(this);
-    }
-
-    private void setupPreviewMap() {
-        SupportMapFragment supportMapFragment = LiteMapFragment.newInstance();
-        getSupportFragmentManager().beginTransaction().replace(R.id.map_container, supportMapFragment).commit();
     }
 
     private void setupPlaceTypeSelector() {
@@ -262,13 +264,18 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         }
     }
 
-    private void setupPreviewMapWithPosition(Location location) {
-        addLocationBackground.setBackgroundColor(ResourceUtils.from(this).getColor(R.color.transparent));
-        addMarkerButton.setVisibility(View.GONE);
+    private void setupPreviewMapWithPosition(final Location location) {
+        addLocationBackground.setVisibility(View.GONE);
         editLocationButton.setVisibility(View.VISIBLE);
         editLocationButton.setOnClickListener(this);
-        SupportMapFragment supportMapFragment = LiteMapFragment.newInstance(location);
-        getSupportFragmentManager().beginTransaction().replace(R.id.map_container, supportMapFragment).commit();
+        mapFragment.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                googleMap.clear();
+                googleMap.addMarker(MarkerUtil.buildMarkerOption(location));
+                googleMap.moveCamera(MapUtils.locationZoom(location, 15));
+            }
+        });
     }
 
     @Override

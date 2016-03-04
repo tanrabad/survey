@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.widget.CheckBox;
 import th.or.nectec.tanrabad.survey.BuildConfig;
@@ -50,11 +51,16 @@ public class LoginActivity extends TanrabadActivity {
 
         setupShowcaseOption();
 
-        findViewById(R.id.authentication_button).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.authentication_button).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                // anonymousLogin();
                 openAuthenWeb();
+            }
+        });
+        findViewById(R.id.trial).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                anonymousLogin();
             }
         });
         startAnimation();
@@ -71,13 +77,6 @@ public class LoginActivity extends TanrabadActivity {
         startActivityForResult(intent, AUTHEN_REQUEST_CODE);
     }
 
-    private void startAnimation() {
-        findViewById(R.id.bg_blue).startAnimation(loadAnimation(this, R.anim.login_bg_blue));
-        Animation dropIn = loadAnimation(this, R.anim.logo);
-        dropIn.setStartOffset(1200);
-        findViewById(R.id.logo_tabrabad).startAnimation(dropIn);
-    }
-
     private void anonymousLogin() {
         if (isFirstTime() && !InternetConnection.isAvailable(LoginActivity.this)) {
             Alert.highLevel().show(R.string.connect_internet_when_use_for_first_time);
@@ -88,6 +87,13 @@ public class LoginActivity extends TanrabadActivity {
             InitialActivity.open(LoginActivity.this);
             finish();
         }
+    }
+
+    private void startAnimation() {
+        findViewById(R.id.bg_blue).startAnimation(loadAnimation(this, R.anim.login_bg_blue));
+        Animation dropIn = loadAnimation(this, R.anim.logo);
+        dropIn.setStartOffset(1200);
+        findViewById(R.id.logo_tabrabad).startAnimation(dropIn);
     }
 
     private boolean isFirstTime() {

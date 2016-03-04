@@ -174,7 +174,6 @@ dependencies {
 
     testCompile "junit:junit:$junitVersion"
     testCompile "org.mockito:mockito-core:$mockitoVersion"
-    testCompile "org.robolectric:robolectric:$robolectricVersion"
     testCompile "org.slf4j:slf4j-simple:$slf4jVersion"
     testCompile "com.github.tomakehurst:wiremock:$wiremockVersion"
 

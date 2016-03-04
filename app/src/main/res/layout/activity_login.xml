@@ -18,93 +18,93 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
-                tools:ignore="RelativeOverlap"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                tools:ignore="RelativeOverlap">
     <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:orientation="vertical"
-            android:gravity="bottom"
             android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:layout_marginLeft="16dp">
+            android:gravity="bottom"
+            android:orientation="vertical">
 
         <TextView
-                tools:ignore="MissingPrefix"
                 fontPath="fonts/RobotoCondensed-Regular.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/powered_by"
                 android:textColor="@color/dark_gray"
                 android:textSize="@dimen/text_micro"
-                android:text="@string/powered_by"/>
+                tools:ignore="MissingPrefix"/>
 
         <ImageView
+            android:layout_width="125dp"
+            android:layout_height="39dp"
                 android:layout_marginBottom="@dimen/space_between_content"
-                android:layout_width="125dp"
-                android:layout_height="39dp"
-                android:src="@drawable/logo_nectec"
-                android:contentDescription="@string/nectec"/>
+            android:contentDescription="@string/nectec"
+            android:src="@drawable/logo_nectec"/>
 
         <TextView
-                tools:ignore="MissingPrefix"
                 fontPath="fonts/RobotoCondensed-Regular.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:textSize="@dimen/text_micro"
                 android:text="@string/copyright"
-                android:textColor="@color/dark_gray"/>
+                android:textColor="@color/dark_gray"
+                android:textSize="@dimen/text_micro"
+                tools:ignore="MissingPrefix"/>
     </LinearLayout>
     <Button
             android:id="@+id/authentication_button"
             android:layout_width="420dp"
             android:layout_height="60dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
+            android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/text_padding"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/rounded_button"
             android:layout_marginTop="500dp"
+            android:background="@drawable/rounded_button"
+            android:contentDescription="@string/authentication"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/authentication"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_title"
-            android:text="@string/authenticate"
-            android:contentDescription="@string/authentication"/>
+            android:textSize="@dimen/text_title"/>
     <Button
-            style="?android:attr/borderlessButtonStyle"
             android:id="@+id/trial"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/authentication_button"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/space_between_content"
-            android:layout_centerHorizontal="true"
             android:text="@string/trial"
-            android:textColor="@color/black"
-            android:layout_gravity="center_horizontal"/>
+            android:textColor="@color/black"/>
     <CheckBox
+        android:id="@+id/need_showcase"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/show_tutorial"
             android:layout_below="@id/authentication_button"
             android:layout_centerHorizontal="true"
-            android:visibility="invisible"
-            android:id="@+id/need_showcase"/>
+        android:text="@string/show_tutorial"
+        android:visibility="invisible"/>
     <ImageView
+        android:id="@+id/bg_blue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+        android:contentDescription="@null"
             android:scaleType="fitXY"
-            android:id="@+id/bg_blue"
-            android:src="@drawable/bg_blue_login_page"
-            android:contentDescription="@null"/>
+        android:src="@drawable/bg_blue_login_page"/>
 
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginRight="@dimen/screen_horizontal_margin"
+            android:layout_alignParentRight="true"
             android:layout_marginEnd="@dimen/screen_horizontal_margin"
+            android:layout_marginRight="@dimen/screen_horizontal_margin"
             android:layout_marginTop="@dimen/screen_vertical_margin"
             android:text="@string/app_version"
             android:textColor="@color/light_gray"/>
@@ -112,46 +112,46 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginRight="@dimen/screen_horizontal_margin"
+            android:layout_alignParentRight="true"
             android:layout_marginEnd="@dimen/screen_horizontal_margin"
+            android:layout_marginRight="@dimen/screen_horizontal_margin"
             android:layout_marginTop="52dp"
+            android:text="@string/app_build_time"
             android:textColor="@color/light_gray"
-            android:textSize="@dimen/text_caption"
-            android:text="@string/app_build_time"/>
+            android:textSize="@dimen/text_caption"/>
 
     <ImageView
-            android:contentDescription="@null"
+        android:id="@+id/logo_tabrabad"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
             android:layout_centerHorizontal="true"
-            android:id="@+id/logo_tabrabad"
+        android:layout_marginTop="30dp"
+        android:contentDescription="@null"
             android:src="@drawable/logo_tanrabad"/>
 
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginTop="30dp"
+            android:layout_below="@+id/logo_tabrabad"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/logo_tabrabad">
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:orientation="horizontal">
 
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/app_name"
-                android:textSize="@dimen/text_headline"
-                android:textColor="#ffffff"/>
+                android:textColor="#ffffff"
+                android:textSize="@dimen/text_headline"/>
 
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/survey"
-                android:textSize="@dimen/text_title"
-                android:textColor="#ffffff"/>
+                android:textColor="#ffffff"
+                android:textSize="@dimen/text_title"/>
     </LinearLayout>
 
 

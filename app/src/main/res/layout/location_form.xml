@@ -38,6 +38,7 @@
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            map:cameraTargetLat="13.764922"
             map:cameraTargetLng="100.538268"
             map:cameraZoom="7"
             map:liteMode="true"

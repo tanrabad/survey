@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
@@ -48,7 +49,7 @@ public class MapMarkerFragment extends BaseMapFragment implements MapMarkerInter
                 if (lastLocation != null && marker == null) {
                     LatLng latLng = LocationUtils.convertLocationToLatLng(lastLocation);
                     marker = googleMap.addMarker(MarkerUtil.buildDragableMarkerOption(latLng));
-                    googleMap.moveCamera(MapUtils.locationZoom(markedLocation, 15));
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
                 }
             }
         }

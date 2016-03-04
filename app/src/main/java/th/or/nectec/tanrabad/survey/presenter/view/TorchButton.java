@@ -19,6 +19,7 @@ package th.or.nectec.tanrabad.survey.presenter.view;
 
 import android.content.Context;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageButton;
@@ -31,7 +32,7 @@ import th.or.nectec.tanrabad.survey.utils.time.JodaCurrentTime;
 public class TorchButton extends ImageButton {
 
     private final Torch torch;
-    private final Handler uiThread = new Handler();
+    private Handler uiThread;
     long startTime = 0;
 
     public TorchButton(Context context) {
@@ -50,6 +51,8 @@ public class TorchButton extends ImageButton {
         super(context, attrs, defStyleAttr);
         this.torch = torch;
         setupView();
+
+
     }
 
     private void setupView() {
@@ -63,11 +66,13 @@ public class TorchButton extends ImageButton {
         setContentDescription(getContext().getString(R.string.torch));
 
         if (!isInEditMode()) {
+
             hideIfNotAvailable();
         }
     }
 
     private void hideIfNotAvailable() {
+        uiThread = new Handler(Looper.getMainLooper());
         new Thread(new Runnable() {
             @Override
             public void run() {

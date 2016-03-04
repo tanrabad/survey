@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,23 +17,24 @@
 
 package th.or.nectec.tanrabad.survey.presenter.view;
 
+import android.support.test.InstrumentationRegistry;
+import android.support.test.runner.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.robolectric.RobolectricGradleTestRunner;
-import th.or.nectec.tanrabad.survey.RobolectricTestBase;
 import th.or.nectec.tanrabad.survey.utils.Torch;
 
 import static android.view.View.GONE;
-import static org.junit.Assert.assertEquals;
+import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(RobolectricGradleTestRunner.class)
-public class TorchButtonTest extends RobolectricTestBase {
+@RunWith(AndroidJUnit4.class)
+public class TorchButtonTest {
 
     private Torch mockedTorch = Mockito.mock(Torch.class);
-    private TorchButton torchButton = new TorchButton(getContext(), null, 0, mockedTorch);
+    private TorchButton torchButton = new TorchButton(InstrumentationRegistry.getTargetContext(),
+            null, android.R.attr.imageButtonStyle, mockedTorch);
 
     @Test
     public void testGoneWhenTorchIsNotAvailable() throws Exception {

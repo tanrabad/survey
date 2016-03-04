@@ -31,9 +31,15 @@ import android.webkit.WebViewClient;
 import org.trb.authen.client.TRBAuthenUtil;
 import org.trb.authen.client.TRBCallback;
 import org.trb.authen.model.UserProfile;
+import th.or.nectec.tanrabad.domain.organization.OrganizationRepository;
+import th.or.nectec.tanrabad.domain.user.UserRepository;
+import th.or.nectec.tanrabad.entity.Organization;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.presenter.AccountUtils;
 import th.or.nectec.tanrabad.survey.presenter.TanrabadActivity;
+import th.or.nectec.tanrabad.survey.repository.BrokerOrganizationRepository;
+import th.or.nectec.tanrabad.survey.repository.BrokerUserRepository;
 import th.or.nectec.tanrabad.survey.utils.android.CookieUtils;
 
 public class AuthenActivity extends TanrabadActivity {
@@ -101,11 +107,44 @@ public class AuthenActivity extends TanrabadActivity {
     }
 
     private class AuthenticationCallback implements TRBCallback {
+
+        private OrganizationRepository organizationRepository;
+        private UserRepository userRepository;
+
         @Override
         public void onPostLogin() {
             UserProfile profile = TRBAuthenUtil.getInstance().getUserProfile();
-            User user = new UserMapper(profile).getUser();
+            UserMapper userMapper = new UserMapper(profile);
+
+            Organization org = userMapper.getOrganization();
+            saveOrUpdate(org);
+
+            User user = userMapper.getUser();
+            saveOrUpdate(user);
+
+            AccountUtils.setUser(user);
+            setResult(RESULT_OK);
             finish();
+        }
+
+        private void saveOrUpdate(User user) {
+            userRepository = BrokerUserRepository.getInstance();
+            User userInRepo = userRepository.findByUsername(user.getUsername());
+            if (userInRepo == null) {
+                userRepository.save(user);
+            } else {
+                userRepository.update(user);
+            }
+        }
+
+        private void saveOrUpdate(Organization org) {
+            organizationRepository = BrokerOrganizationRepository.getInstance();
+            Organization organization = organizationRepository.findById(org.getOrganizationId());
+            if (organization == null) {
+                organizationRepository.save(org);
+            } else {
+                organizationRepository.update(org);
+            }
         }
 
         @Override

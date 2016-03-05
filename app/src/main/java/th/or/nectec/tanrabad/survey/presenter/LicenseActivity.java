@@ -6,12 +6,15 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
+
 import com.artitk.licensefragment.RecyclerViewLicenseFragment;
 import com.artitk.licensefragment.model.License;
 import com.artitk.licensefragment.model.LicenseID;
-import th.or.nectec.tanrabad.survey.R;
 
 import java.util.ArrayList;
+
+import th.or.nectec.tanrabad.survey.R;
 
 import static com.artitk.licensefragment.model.LicenseType.APACHE_LICENSE_20;
 import static com.artitk.licensefragment.model.LicenseType.MIT_LICENSE;
@@ -22,7 +25,7 @@ public class LicenseActivity extends TanrabadActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_license);
-
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         RecyclerViewLicenseFragment licenseFragment = RecyclerViewLicenseFragment.newInstance(getLicense());
         licenseFragment.addCustomLicense(getCustomLicenses());
 

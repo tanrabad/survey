@@ -18,9 +18,9 @@
   -->
 
 <manifest
+    package="th.or.nectec.tanrabad.survey"
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        package="th.or.nectec.tanrabad.survey">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -44,8 +44,8 @@
             android:largeHeap="true"
             android:supportsRtl="false"
             android:theme="@style/AppTheme"
-            tools:replace="android:allowBackup"
-            tools:ignore="UnusedAttribute,GoogleAppIndexingWarning">
+            tools:ignore="UnusedAttribute,GoogleAppIndexingWarning"
+            tools:replace="android:allowBackup">
         <meta-data
                 android:name="com.google.android.geo.API_KEY"
                 android:value="${google_map_key}"/>
@@ -77,15 +77,12 @@
                 android:launchMode="singleTask"
                 android:theme="@style/AppTheme.Blue.Water"/>
         <activity
-                android:theme="@style/AppTheme.NoActionBar"
                 android:name=".presenter.PlaceListActivity"
                 android:label="@string/define_place_survey"/>
         <activity
-                android:theme="@style/AppTheme.NoActionBar"
                 android:name=".presenter.BuildingListActivity"
                 android:label="@string/define_building_survey"/>
         <activity
-                android:theme="@style/AppTheme.NoActionBar"
                 android:name=".presenter.SurveyActivity"
                 android:label="@string/title_activity_survey">
             <intent-filter>
@@ -94,25 +91,20 @@
             </intent-filter>
         </activity>
         <activity
-                android:theme="@style/AppTheme.NoActionBar"
                 android:name=".presenter.SurveyBuildingHistoryActivity"
                 android:label="@string/survey_building_history"
                 android:launchMode="singleTask"/>
         <activity
-                android:theme="@style/AppTheme.NoActionBar"
                 android:name=".presenter.BuildingFormActivity"
                 android:label="@string/add_building"
                 android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity
                 android:name=".presenter.MapMarkerActivity"
-                android:theme="@style/AppTheme.NoActionBar"
                 android:label="@string/add_location"/>
         <activity
                 android:name=".presenter.BuildingMapMarkerActivity"
-                android:theme="@style/AppTheme.NoActionBar"
                 android:label="@string/add_location"/>
         <activity
-                android:theme="@style/AppTheme.NoActionBar"
                 android:name=".presenter.PlaceFormActivity"
                 android:label="@string/add_place"
                 android:windowSoftInputMode="stateAlwaysHidden"/>
@@ -120,7 +112,7 @@
                 android:name=".presenter.PlaceSearchActivity"
                 android:icon="@mipmap/ic_launcher_inverse"
                 android:label="@string/search_place"
-                android:theme="@style/AppTheme.Alternate.NoActionBar">
+                android:theme="@style/AppTheme.Alternate">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>
@@ -135,5 +127,4 @@
                 android:name=".presenter.LicenseActivity"
                 android:label="@string/about_license"/>
     </application>
-
 </manifest>

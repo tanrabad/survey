@@ -2,8 +2,10 @@ package th.or.nectec.tanrabad.survey.presenter;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.View.OnClickListener;
+
 import th.or.nectec.tanrabad.survey.R;
 
 public class AboutActivity extends TanrabadActivity {
@@ -27,7 +29,7 @@ public class AboutActivity extends TanrabadActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         findViewById(R.id.about_contributor).setOnClickListener(onClickListener);
         findViewById(R.id.about_license).setOnClickListener(onClickListener);
         findViewById(R.id.about_eula).setOnClickListener(onClickListener);

@@ -242,10 +242,12 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.add_marker:
-                BuildingMapMarkerActivity.startAdd(BuildingFormActivity.this, getPlaceUuid());
+                BuildingMapMarkerActivity.startAdd(
+                        BuildingFormActivity.this, getPlaceUuid(), building.getId().toString());
                 break;
             case R.id.edit_location:
-                BuildingMapMarkerActivity.startEdit(BuildingFormActivity.this, getPlaceUuid(), building.getLocation());
+                BuildingMapMarkerActivity.startEdit(
+                        BuildingFormActivity.this, getPlaceUuid(), building.getId().toString(), building.getLocation());
                 break;
         }
     }

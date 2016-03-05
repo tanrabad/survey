@@ -42,19 +42,22 @@ public class BuildingMapMarkerActivity extends TanrabadActivity implements View.
     public static final String PLACE_UUID = "place_uuid";
     public static final String BUILDING_LOCATION = "building_location";
     public static final int MARK_LOCATION_REQUEST_CODE = 50000;
+    private static final String BUILDING_UUID = "building_uuid";
     BuildingMapMarkerFragment buildingMapMarkerFragment;
     DecimalFormat decimalFormat = new DecimalFormat("#.##");
     private TwiceBackPressed twiceBackPressed;
 
-    public static void startAdd(Activity activity, String placeUuid) {
+    public static void startAdd(Activity activity, String placeUuid, String buildingUuid) {
         Intent intent = new Intent(activity, BuildingMapMarkerActivity.class);
         intent.putExtra(BuildingMapMarkerActivity.PLACE_UUID, placeUuid);
+        intent.putExtra(BuildingMapMarkerActivity.BUILDING_UUID, buildingUuid);
         activity.startActivityForResult(intent, MARK_LOCATION_REQUEST_CODE);
     }
 
-    public static void startEdit(Activity activity, String placeUuid, Location buildingLocation) {
+    public static void startEdit(Activity activity, String placeUuid, String buildingUuid, Location buildingLocation) {
         Intent intent = new Intent(activity, BuildingMapMarkerActivity.class);
         intent.putExtra(BuildingMapMarkerActivity.PLACE_UUID, placeUuid);
+        intent.putExtra(BuildingMapMarkerActivity.BUILDING_UUID, buildingUuid);
         intent.putExtra(BuildingMapMarkerActivity.BUILDING_LOCATION,
                 LocationUtils.convertLocationToJson(buildingLocation));
         activity.startActivityForResult(intent, MARK_LOCATION_REQUEST_CODE);
@@ -83,12 +86,12 @@ public class BuildingMapMarkerActivity extends TanrabadActivity implements View.
     private void setupMap() {
         Location buildingLocation = LocationUtils.convertJsonToLocation(getIntent().getStringExtra(BUILDING_LOCATION));
         if (buildingLocation == null) {
-            buildingMapMarkerFragment = BuildingMapMarkerFragment.newInstance(getPlaceUuid());
+            buildingMapMarkerFragment = BuildingMapMarkerFragment.newInstance(getPlaceUuid(), getBuildingUuid());
         } else {
             if (getSupportActionBar() != null)
                 getSupportActionBar().setTitle(R.string.edit_location);
             buildingMapMarkerFragment = BuildingMapMarkerFragment
-                    .newInstanceWithLocation(getPlaceUuid(), buildingLocation);
+                    .newInstanceWithLocation(getPlaceUuid(), getBuildingUuid(), buildingLocation);
         }
 
         getSupportFragmentManager().beginTransaction().replace(
@@ -97,6 +100,10 @@ public class BuildingMapMarkerActivity extends TanrabadActivity implements View.
 
     public String getPlaceUuid() {
         return getIntent().getStringExtra(PLACE_UUID);
+    }
+
+    public String getBuildingUuid() {
+        return getIntent().getStringExtra(BUILDING_UUID);
     }
 
     @Override

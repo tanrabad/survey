@@ -37,7 +37,7 @@
 
     <application
             android:name=".TanrabadApp"
-            android:allowBackup="false"
+            android:allowBackup="true"
             android:fullBackupContent="false"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
@@ -109,6 +109,7 @@
                 android:label="@string/add_location"/>
         <activity
                 android:name=".presenter.BuildingMapMarkerActivity"
+                android:theme="@style/AppTheme.NoActionBar"
                 android:label="@string/add_location"/>
         <activity
                 android:theme="@style/AppTheme.NoActionBar"

@@ -101,6 +101,16 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/screen_vertical_margin"
+            android:layout_marginLeft="@dimen/screen_horizontal_margin"
+            android:textColor="@color/light_gray"
+            android:text="@string/about"
+            android:id="@+id/about"
+            />
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_marginEnd="@dimen/screen_horizontal_margin"

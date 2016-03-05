@@ -18,9 +18,9 @@
   -->
 
 <manifest
-    package="th.or.nectec.tanrabad.survey"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        package="th.or.nectec.tanrabad.survey">
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -32,34 +32,35 @@
 
     <uses-feature android:name="android.hardware.camera"/>
     <uses-feature
-        android:name="android.hardware.camera.flash"
-        android:required="false"/>
+            android:name="android.hardware.camera.flash"
+            android:required="false"/>
 
     <application
-        android:name=".TanrabadApp"
-        android:allowBackup="false"
-        android:fullBackupContent="false"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:largeHeap="true"
-        android:supportsRtl="false"
-        android:theme="@style/AppTheme.NoActionBar"
-        tools:ignore="UnusedAttribute,GoogleAppIndexingWarning">
+            android:name=".TanrabadApp"
+            android:allowBackup="true"
+            android:fullBackupContent="false"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:largeHeap="true"
+            android:supportsRtl="false"
+            android:theme="@style/AppTheme"
+            tools:replace="android:allowBackup"
+            tools:ignore="UnusedAttribute,GoogleAppIndexingWarning">
         <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="${google_map_key}"/>
+                android:name="com.google.android.geo.API_KEY"
+                android:value="${google_map_key}"/>
         <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="985b93fe45ed65dc37e25e81a8c5ce5ba9c217fa"/>
+                android:name="io.fabric.ApiKey"
+                android:value="985b93fe45ed65dc37e25e81a8c5ce5ba9c217fa"/>
 
         <provider
-            android:name=".presenter.PlaceSuggestionProvider"
-            android:authorities="th.or.nectec.tanrabad.survey.PlaceSuggestionProvider"
-            android:exported="false"/>
+                android:name=".presenter.PlaceSuggestionProvider"
+                android:authorities="th.or.nectec.tanrabad.survey.PlaceSuggestionProvider"
+                android:exported="false"/>
 
         <activity
-            android:name=".presenter.LoginActivity"
-            android:theme="@style/AppTheme.Blue">
+                android:name=".presenter.LoginActivity"
+                android:theme="@style/AppTheme.Blue">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -68,57 +69,69 @@
         </activity>
         <activity android:name=".presenter.authen.AuthenActivity"/>
         <activity
-            android:name=".presenter.InitialActivity"
-            android:theme="@style/AppTheme.Blue.Water"/>
+                android:name=".presenter.InitialActivity"
+                android:theme="@style/AppTheme.Blue.Water"/>
         <activity
-            android:name=".presenter.MainActivity"
-            android:label="@string/app_name"
-            android:launchMode="singleTask"
-            android:theme="@style/AppTheme.Blue.Water"/>
+                android:name=".presenter.MainActivity"
+                android:label="@string/app_name"
+                android:launchMode="singleTask"
+                android:theme="@style/AppTheme.Blue.Water"/>
         <activity
-            android:name=".presenter.PlaceListActivity"
-            android:label="@string/define_place_survey"/>
+                android:theme="@style/AppTheme.NoActionBar"
+                android:name=".presenter.PlaceListActivity"
+                android:label="@string/define_place_survey"/>
         <activity
-            android:name=".presenter.BuildingListActivity"
-            android:label="@string/define_building_survey"/>
+                android:theme="@style/AppTheme.NoActionBar"
+                android:name=".presenter.BuildingListActivity"
+                android:label="@string/define_building_survey"/>
         <activity
-            android:name=".presenter.SurveyActivity"
-            android:label="@string/title_activity_survey">
+                android:theme="@style/AppTheme.NoActionBar"
+                android:name=".presenter.SurveyActivity"
+                android:label="@string/title_activity_survey">
             <intent-filter>
                 <action android:name="android.intent.action.EDIT"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
         <activity
-            android:name=".presenter.SurveyBuildingHistoryActivity"
-            android:label="@string/survey_building_history"
-            android:launchMode="singleTask"/>
+                android:theme="@style/AppTheme.NoActionBar"
+                android:name=".presenter.SurveyBuildingHistoryActivity"
+                android:label="@string/survey_building_history"
+                android:launchMode="singleTask"/>
         <activity
-            android:name=".presenter.BuildingFormActivity"
-            android:label="@string/add_building"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+                android:theme="@style/AppTheme.NoActionBar"
+                android:name=".presenter.BuildingFormActivity"
+                android:label="@string/add_building"
+                android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity
-            android:name=".presenter.MapMarkerActivity"
-            android:label="@string/add_location"/>
+                android:name=".presenter.MapMarkerActivity"
+                android:label="@string/add_location"/>
         <activity
-            android:name=".presenter.BuildingMapMarkerActivity"
-            android:label="@string/add_location"/>
+                android:name=".presenter.BuildingMapMarkerActivity"
+                android:label="@string/add_location"/>
         <activity
-            android:name=".presenter.PlaceFormActivity"
-            android:label="@string/add_place"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+                android:theme="@style/AppTheme.NoActionBar"
+                android:name=".presenter.PlaceFormActivity"
+                android:label="@string/add_place"
+                android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity
-            android:name=".presenter.PlaceSearchActivity"
-            android:icon="@mipmap/ic_launcher_inverse"
-            android:label="@string/search_place"
-            android:theme="@style/AppTheme.Alternate.NoActionBar">
+                android:name=".presenter.PlaceSearchActivity"
+                android:icon="@mipmap/ic_launcher_inverse"
+                android:label="@string/search_place"
+                android:theme="@style/AppTheme.Alternate.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>
             <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/places_searchable"/>
+                    android:name="android.app.searchable"
+                    android:resource="@xml/places_searchable"/>
         </activity>
+        <activity
+                android:name=".presenter.AboutActivity"
+                android:label="@string/about"/>
+        <activity
+                android:name=".presenter.LicenseActivity"
+                android:label="@string/about_license"/>
     </application>
 
 </manifest>

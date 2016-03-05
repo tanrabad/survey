@@ -121,4 +121,13 @@
         <item name="android:textColorPrimary">@color/white</item>
     </style>
 
+    <style name="AboutItem">
+        <item name="android:background">@drawable/bg_list_item</item>
+        <item name="android:paddingLeft">@dimen/screen_vertical_margin</item>
+        <item name="android:minHeight">@dimen/list_item_min_height</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_marginTop">@dimen/space_between_content</item>
+        <item name="android:textColor">@color/color_accent</item>
+    </style>
+
 </resources>

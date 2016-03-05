@@ -63,7 +63,18 @@ public class LoginActivity extends TanrabadActivity {
                 anonymousLogin();
             }
         });
+        findViewById(R.id.about).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openAboutActivity();
+            }
+        });
         startAnimation();
+    }
+
+    private void openAuthenWeb() {
+        Intent intent = new Intent(this, AuthenActivity.class);
+        startActivityForResult(intent, AUTHEN_REQUEST_CODE);
     }
 
     private void setupShowcaseOption() {
@@ -72,9 +83,9 @@ public class LoginActivity extends TanrabadActivity {
         needShowcase.setChecked(showcasePreference.get());
     }
 
-    private void openAuthenWeb() {
-        Intent intent = new Intent(this, AuthenActivity.class);
-        startActivityForResult(intent, AUTHEN_REQUEST_CODE);
+    private void openAboutActivity() {
+        Intent intent = new Intent(this, AboutActivity.class);
+        startActivity(intent);
     }
 
     private void anonymousLogin() {
@@ -89,16 +100,16 @@ public class LoginActivity extends TanrabadActivity {
         }
     }
 
+    private boolean isFirstTime() {
+        String placeTimeStamp = new ServiceLastUpdatePreference(LoginActivity.this, PlaceRestService.PATH).get();
+        return TextUtils.isEmpty(placeTimeStamp);
+    }
+
     private void startAnimation() {
         findViewById(R.id.bg_blue).startAnimation(loadAnimation(this, R.anim.login_bg_blue));
         Animation dropIn = loadAnimation(this, R.anim.logo);
         dropIn.setStartOffset(1200);
         findViewById(R.id.logo_tabrabad).startAnimation(dropIn);
-    }
-
-    private boolean isFirstTime() {
-        String placeTimeStamp = new ServiceLastUpdatePreference(LoginActivity.this, PlaceRestService.PATH).get();
-        return TextUtils.isEmpty(placeTimeStamp);
     }
 
     @Override

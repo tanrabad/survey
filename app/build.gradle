@@ -171,6 +171,7 @@ dependencies {
     compile "net.frakbot:jumpingbeans:$jumpingbeansVersion"
     compile "th.or.nectec.android:thai-widget:$thaiWidgetVersion"
     compile "uk.co.chrisjenx:calligraphy:$calligraphyVersion"
+    compile "com.artit-k:license-fragment:$licenseFragmentVersion"
 
     testCompile "junit:junit:$junitVersion"
     testCompile "org.mockito:mockito-core:$mockitoVersion"

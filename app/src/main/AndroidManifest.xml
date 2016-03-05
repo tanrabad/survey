@@ -105,6 +105,7 @@
                 android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity
                 android:name=".presenter.MapMarkerActivity"
+                android:theme="@style/AppTheme.NoActionBar"
                 android:label="@string/add_location"/>
         <activity
                 android:name=".presenter.BuildingMapMarkerActivity"

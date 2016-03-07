@@ -83,7 +83,7 @@ android {
             testCoverageEnabled true
             ext.enableCrashlytics = false
             manifestPlaceholders = [google_map_key: System.getenv("TANRABAD_GOOGLE_DEBUG_KEY")]
-            buildConfigField "String", "API_URL", "\"http://tanrabad.igridproject.info/v1\""
+            buildConfigField "String", "API_URL", "\"http://trb-test.igridproject.info/v1\""
             buildConfigField "String", "USER", "\"dpc-user\""
             buildConfigField "String", "TRB_AUTHEN_CLIENT_ID", "\"$clientId\""
             buildConfigField "String", "TRB_AUTHEN_CLIENT_SECRET", "\"$clientSecret\""
@@ -96,7 +96,7 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             manifestPlaceholders = [google_map_key: System.getenv("TANRABAD_GOOGLE_RELEASE_KEY")]
-            buildConfigField "String", "API_URL", "\"http://tanrabad.igridproject.info/v1\""
+            buildConfigField "String", "API_URL", "\"http://api.tanrabad.org/v1\""
             buildConfigField "String", "USER", "\"dpc-13-beta\""
             buildConfigField "String", "TRB_AUTHEN_CLIENT_ID", "\"$clientId\""
             buildConfigField "String", "TRB_AUTHEN_CLIENT_SECRET", "\"$clientSecret\""
@@ -108,7 +108,7 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             manifestPlaceholders = [google_map_key: System.getenv("TANRABAD_GOOGLE_RELEASE_KEY")]
-            buildConfigField "String", "API_URL", "\"http://tanrabad.igridproject.info/v1\""
+            buildConfigField "String", "API_URL", "\"http://api.tanrabad.org/v1\""
             buildConfigField "String", "USER", "\"dpc-13\""
             buildConfigField "String", "TRB_AUTHEN_CLIENT_ID", "\"$clientId\""
             buildConfigField "String", "TRB_AUTHEN_CLIENT_SECRET", "\"$clientSecret\""

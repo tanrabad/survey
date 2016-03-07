@@ -17,6 +17,7 @@
 
 package th.or.nectec.tanrabad.survey.presenter.authen;
 
+import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Bundle;
@@ -42,6 +43,7 @@ import th.or.nectec.tanrabad.survey.repository.BrokerOrganizationRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerUserRepository;
 import th.or.nectec.tanrabad.survey.utils.android.CookieUtils;
 
+@SuppressLint("SetJavaScriptEnabled")
 public class AuthenActivity extends TanrabadActivity {
 
     private WebView webView;
@@ -62,6 +64,7 @@ public class AuthenActivity extends TanrabadActivity {
         webView = (WebView) findViewById(R.id.webView);
         webView.setWebViewClient(new AuthenWebViewClient());
         webView.setWebChromeClient(webChromeClient);
+        webView.getSettings().setJavaScriptEnabled(true);
         loadAuthenticationPage();
     }
 

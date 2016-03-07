@@ -31,14 +31,13 @@ public class UserProfileMapper {
     }
 
     public User getUser() {
-        User user = new User(profile.getGiven_name());
-        user.setFirstname(profile.getGiven_name());
-        user.setLastname(profile.getFamily_name());
+        User user = new User(profile.getUid());
+        user.setFirstname(profile.getGivenName());
+        user.setLastname(profile.getSn());
 
         Organization organization = getOrganization();
         user.setOrganizationId(organization.getOrganizationId());
         user.setHealthRegionCode(organization.getHealthRegionCode());
-
         return user;
     }
 
@@ -49,6 +48,7 @@ public class UserProfileMapper {
         org.setSubdistrictCode(profileAddress.getOrgTambonCode());
         org.setHealthRegionCode(profileAddress.getOrgHealthRegionCode());
         org.setAddress(profileAddress.getOrgAddress());
+        profileAddress.getOrgQueryString();
         return org;
     }
 

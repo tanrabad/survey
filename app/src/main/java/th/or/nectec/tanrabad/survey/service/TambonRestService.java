@@ -18,13 +18,14 @@
 package th.or.nectec.tanrabad.survey.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
-import th.or.nectec.tanrabad.entity.lookup.Subdistrict;
-import th.or.nectec.tanrabad.survey.TanrabadApp;
-import th.or.nectec.tanrabad.survey.service.json.JsonTambon;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import th.or.nectec.tanrabad.entity.lookup.Subdistrict;
+import th.or.nectec.tanrabad.survey.TanrabadApp;
+import th.or.nectec.tanrabad.survey.service.json.JsonTambon;
 
 public class TambonRestService extends AbsRestService<Subdistrict> {
 
@@ -40,7 +41,7 @@ public class TambonRestService extends AbsRestService<Subdistrict> {
 
     @Override
     public String getDefaultParams() {
-        return "geostd=4326&" + getHealthRegionCodeParam();
+        return "geostd=4326&" + getApiFilterParam();
     }
 
     protected String getPath() {

@@ -28,6 +28,7 @@ public class User {
     private String avatarFileName;
     private String healthRegionCode;
     private int organizationId;
+    private String apiFilter;
 
     public User(String username) {
         this.username = username;
@@ -109,6 +110,13 @@ public class User {
         return username;
     }
 
+    public String getApiFilter() {
+        return apiFilter;
+    }
+
+    public void setApiFilter(String apiFilter) {
+        this.apiFilter = apiFilter;
+    }
 
     @Override
     public int hashCode() {

@@ -18,6 +18,10 @@
 package th.or.nectec.tanrabad.survey.service;
 
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -26,11 +30,11 @@ import th.or.nectec.tanrabad.survey.BuildConfig;
 import th.or.nectec.tanrabad.survey.presenter.AccountUtils;
 import th.or.nectec.tanrabad.survey.service.http.Status;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import static th.or.nectec.tanrabad.survey.service.http.Header.*;
+import static th.or.nectec.tanrabad.survey.service.http.Header.ACCEPT;
+import static th.or.nectec.tanrabad.survey.service.http.Header.ACCEPT_CHARSET;
+import static th.or.nectec.tanrabad.survey.service.http.Header.IF_MODIFIED_SINCE;
+import static th.or.nectec.tanrabad.survey.service.http.Header.LAST_MODIFIED;
+import static th.or.nectec.tanrabad.survey.service.http.Header.LINK;
 
 public abstract class AbsRestService<T> implements RestService<T> {
 
@@ -51,8 +55,8 @@ public abstract class AbsRestService<T> implements RestService<T> {
         this.user = user;
     }
 
-    protected String getHealthRegionCodeParam() {
-        return "hr_code=" + user.getHealthRegionCode();
+    protected String getApiFilterParam() {
+        return user.getApiFilter();
     }
 
     @Override

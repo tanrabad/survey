@@ -18,13 +18,14 @@
 package th.or.nectec.tanrabad.survey.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
-import th.or.nectec.tanrabad.entity.lookup.Province;
-import th.or.nectec.tanrabad.survey.TanrabadApp;
-import th.or.nectec.tanrabad.survey.service.json.JsonProvince;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import th.or.nectec.tanrabad.entity.lookup.Province;
+import th.or.nectec.tanrabad.survey.TanrabadApp;
+import th.or.nectec.tanrabad.survey.service.json.JsonProvince;
 
 public class ProvinceRestService extends AbsRestService<Province> {
 
@@ -40,7 +41,7 @@ public class ProvinceRestService extends AbsRestService<Province> {
 
     @Override
     public String getDefaultParams() {
-        return "geostd=4326&" + getHealthRegionCodeParam();
+        return "geostd=4326&" + getApiFilterParam();
     }
 
     @Override

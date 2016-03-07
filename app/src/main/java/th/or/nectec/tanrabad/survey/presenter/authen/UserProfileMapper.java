@@ -19,6 +19,7 @@ package th.or.nectec.tanrabad.survey.presenter.authen;
 
 import org.trb.authen.model.Address;
 import org.trb.authen.model.UserProfile;
+
 import th.or.nectec.tanrabad.entity.Organization;
 import th.or.nectec.tanrabad.entity.User;
 
@@ -38,6 +39,7 @@ public class UserProfileMapper {
         Organization organization = getOrganization();
         user.setOrganizationId(organization.getOrganizationId());
         user.setHealthRegionCode(organization.getHealthRegionCode());
+        user.setApiFilter(profile.getAddress().getOrgQueryString());
         return user;
     }
 
@@ -48,7 +50,6 @@ public class UserProfileMapper {
         org.setSubdistrictCode(profileAddress.getOrgTambonCode());
         org.setHealthRegionCode(profileAddress.getOrgHealthRegionCode());
         org.setAddress(profileAddress.getOrgAddress());
-        profileAddress.getOrgQueryString();
         return org;
     }
 

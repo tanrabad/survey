@@ -17,12 +17,12 @@
 
 package th.or.nectec.tanrabad.survey.repository;
 
+import java.util.HashMap;
+import java.util.List;
+
 import th.or.nectec.tanrabad.domain.user.UserRepository;
 import th.or.nectec.tanrabad.domain.user.UserRepositoryException;
 import th.or.nectec.tanrabad.entity.User;
-
-import java.util.HashMap;
-import java.util.List;
 
 public class InMemoryUserRepository implements UserRepository {
 
@@ -45,6 +45,7 @@ public class InMemoryUserRepository implements UserRepository {
         dev.setEmail("dev@tanrabad.org");
         dev.setOrganizationId(1);
         dev.setHealthRegionCode("dpc-13");
+        dev.setApiFilter("hr_code=dpc-13");
         return dev;
     }
 
@@ -55,6 +56,7 @@ public class InMemoryUserRepository implements UserRepository {
         beta.setEmail("dpc13@gmail.com");
         beta.setOrganizationId(5);
         beta.setHealthRegionCode("dpc-13");
+        beta.setApiFilter("hr_code=dpc-13");
         return beta;
     }
 
@@ -65,6 +67,7 @@ public class InMemoryUserRepository implements UserRepository {
         release.setEmail("dpc13@gmail.com");
         release.setOrganizationId(5);
         release.setHealthRegionCode("dpc-13");
+        release.setApiFilter("hr_code=dpc-13");
         return release;
     }
 

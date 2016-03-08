@@ -70,6 +70,7 @@ public class SurveyContainerView extends RelativeLayout {
 
     private void initInflate() {
         inflate(getContext(), R.layout.view_survey_container,  this);
+        setMinimumHeight(getContext().getResources().getDimensionPixelOffset(R.dimen.container_view_height));
     }
 
     private void initInstances() {

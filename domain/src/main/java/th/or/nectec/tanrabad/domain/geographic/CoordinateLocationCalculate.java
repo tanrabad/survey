@@ -38,8 +38,10 @@ public class CoordinateLocationCalculate implements CoordinateLocationCalculator
         double newMaximumLatitudeRadian = Math.asin(Math.sin(lat1Radian) * Math.cos(distanceInKm / RADIUS)
                 + Math.cos(lat1Radian) * Math.sin(distanceInKm / RADIUS) * Math.cos(brng));
 
-        double newMaximumLongitudeRadian = Math.toRadians(lon1) + Math.atan2(Math.sin(brng) * Math.sin(distanceInKm / RADIUS) * Math.cos(lon1Radian),
-                Math.cos(distanceInKm / RADIUS) - Math.sin(lon1Radian) * Math.sin(Math.toRadians(newMaximumLatitudeRadian)));
+        double newMaximumLongitudeRadian = Math.toRadians(lon1)
+                + Math.atan2(Math.sin(brng) * Math.sin(distanceInKm / RADIUS) * Math.cos(lon1Radian),
+                Math.cos(distanceInKm / RADIUS)
+                        - Math.sin(lon1Radian) * Math.sin(Math.toRadians(newMaximumLatitudeRadian)));
 
         double newMaximumLatitude = Math.toDegrees(newMaximumLatitudeRadian);
         double newMaximumLongitude = Math.toDegrees(newMaximumLongitudeRadian);
@@ -58,15 +60,17 @@ public class CoordinateLocationCalculate implements CoordinateLocationCalculator
 
         double brng = Math.toRadians(225); //Bearing is 225 degrees converted to radians. brng = (degree*pi)/180
 
-        double newMinimumLatitudeRadian = Math.asin(Math.sin(lat1Radian) * Math.cos(distanceInKm / RADIUS) +
-                Math.cos(lat1Radian) * Math.sin(distanceInKm / RADIUS) * Math.cos(brng));
+        double newMinimumLatitudeRadian = Math.asin(Math.sin(lat1Radian) * Math.cos(distanceInKm / RADIUS)
+                + Math.cos(lat1Radian) * Math.sin(distanceInKm / RADIUS) * Math.cos(brng));
 
-        double newMinimumLongitudeRadian = Math.toRadians(lon1) + Math.atan2(Math.sin(brng) * Math.sin(distanceInKm / RADIUS) * Math.cos(lon1Radian),
-                Math.cos(distanceInKm / RADIUS) - Math.sin(lon1Radian) * Math.sin(Math.toRadians(newMinimumLatitudeRadian)));
+        double newMinimumLongitudeRadian = Math.toRadians(lon1) + Math.atan2(Math.sin(brng)
+                        * Math.sin(distanceInKm / RADIUS) * Math.cos(lon1Radian),
+                Math.cos(distanceInKm / RADIUS) - Math.sin(lon1Radian)
+                        * Math.sin(Math.toRadians(newMinimumLatitudeRadian)));
 
         double newMinimumLatitude = Math.toDegrees(newMinimumLatitudeRadian);
         double newMinimumLongitude = Math.toDegrees(newMinimumLongitudeRadian);
-        
+
         return new Location(newMinimumLatitude, newMinimumLongitude);
     }
 }

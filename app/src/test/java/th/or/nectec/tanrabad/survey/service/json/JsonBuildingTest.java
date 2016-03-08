@@ -102,7 +102,7 @@ public class JsonBuildingTest {
         UserRepository userRepository = Mockito.mock(UserRepository.class);
         Mockito.when(userRepository.findByUsername("dcp-user")).thenReturn(stubUser());
         PlaceRepository placeRepository = Mockito.mock(PlaceRepository.class);
-        Mockito.when(placeRepository.findByUUID(stubPlace().getId())).thenReturn(stubPlace());
+        Mockito.when(placeRepository.findByUuid(stubPlace().getId())).thenReturn(stubPlace());
         Building buildingData = new Building(UUID.fromString("5cf5665b-5642-10fb-a3a0-5e612a842583"), "อาคาร 1");
         buildingData.setPlace(stubPlace());
         buildingData.setLocation(stubLocation());

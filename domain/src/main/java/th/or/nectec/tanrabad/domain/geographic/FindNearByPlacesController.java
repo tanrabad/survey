@@ -17,10 +17,10 @@
 
 package th.or.nectec.tanrabad.domain.geographic;
 
+import java.util.List;
+
 import th.or.nectec.tanrabad.entity.LocationEntity;
 import th.or.nectec.tanrabad.entity.field.Location;
-
-import java.util.List;
 
 public class FindNearByPlacesController {
     private FilterBoundaryCalculator filterBoundaryCalculator;
@@ -30,7 +30,8 @@ public class FindNearByPlacesController {
     private NearbyPlacePresenter nearbyPlacePresenter;
 
     public FindNearByPlacesController(FilterBoundaryCalculator filterBoundaryCalculator,
-                                      CoordinateLocationCalculator coordinateLocationCalculate, LocationRepository locationRepository,
+                                      CoordinateLocationCalculator coordinateLocationCalculate,
+                                      LocationRepository locationRepository,
                                       DistanceSorter distanceSorter,
                                       NearbyPlacePresenter nearbyPlacePresenter) {
         this.filterBoundaryCalculator = filterBoundaryCalculator;
@@ -47,7 +48,8 @@ public class FindNearByPlacesController {
         Location insideMinimumLocation = coordinateLocationCalculate.getNewMinLocation(currentLocation, distanceInKm);
         Location insideMaximumLocation = coordinateLocationCalculate.getNewMaxLocation(currentLocation, distanceInKm);
 
-        List<LocationEntity> placeFiltered = locationRepository.findTrimmedInBoundaryLocation(insideMinimumLocation, outsideMinimumLocation, insideMaximumLocation, outsideMaximumLocation);
+        List<LocationEntity> placeFiltered = locationRepository.findTrimmedInBoundaryLocation(
+                insideMinimumLocation, outsideMinimumLocation, insideMaximumLocation, outsideMaximumLocation);
 
         if (placeFiltered == null) {
             nearbyPlacePresenter.displayPlaceNotFound();

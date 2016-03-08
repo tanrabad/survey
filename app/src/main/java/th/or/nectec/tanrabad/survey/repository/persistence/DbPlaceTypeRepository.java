@@ -21,12 +21,13 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import java.util.List;
+
 import th.or.nectec.tanrabad.domain.place.PlaceTypeRepository;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorList;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
-
-import java.util.List;
 
 public class DbPlaceTypeRepository extends DbRepository implements PlaceTypeRepository {
 
@@ -45,7 +46,7 @@ public class DbPlaceTypeRepository extends DbRepository implements PlaceTypeRepo
     }
 
     @Override
-    public PlaceType findByID(int placeTypeId) {
+    public PlaceType findById(int placeTypeId) {
         SQLiteDatabase db = readableDatabase();
         Cursor placeTypeCursor = db.query(TABLE_NAME, PlaceTypeColumn.wildcard(),
                 PlaceTypeColumn.ID + "=?", new String[]{String.valueOf(placeTypeId)}, null, null, null);

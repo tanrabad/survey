@@ -178,7 +178,7 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         String placeId = getArguments().getString(ARG_PLACE_ID);
-        place = BrokerPlaceRepository.getInstance().findByUUID(UUID.fromString(placeId));
+        place = BrokerPlaceRepository.getInstance().findByUuid(UUID.fromString(placeId));
         setPlaceInfo(place);
         startJob(place);
     }

@@ -80,7 +80,7 @@ public class BuildingMapMarkerFragment extends MapMarkerFragment implements Goog
     }
 
     private void loadPlaceData(String placeUuid) {
-        place = BrokerPlaceRepository.getInstance().findByUUID(UUID.fromString(placeUuid));
+        place = BrokerPlaceRepository.getInstance().findByUuid(UUID.fromString(placeUuid));
     }
 
     public static BuildingMapMarkerFragment newInstanceWithLocation(
@@ -112,7 +112,7 @@ public class BuildingMapMarkerFragment extends MapMarkerFragment implements Goog
     }
 
     private void queryAndAddAnotherBuildingMarker() {
-        List<Building> buildingsInPlaceList = BrokerBuildingRepository.getInstance().findByPlaceUUID(place.getId());
+        List<Building> buildingsInPlaceList = BrokerBuildingRepository.getInstance().findByPlaceUuid(place.getId());
         if (buildingsInPlaceList == null)
             return;
         for (Building eachBuilding : buildingsInPlaceList) {

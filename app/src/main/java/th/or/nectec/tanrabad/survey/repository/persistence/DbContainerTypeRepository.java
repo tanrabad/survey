@@ -21,12 +21,13 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import java.util.List;
+
 import th.or.nectec.tanrabad.domain.survey.ContainerTypeRepository;
 import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorList;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
-
-import java.util.List;
 
 public class DbContainerTypeRepository extends DbRepository implements ContainerTypeRepository {
 
@@ -45,7 +46,7 @@ public class DbContainerTypeRepository extends DbRepository implements Container
     }
 
     @Override
-    public ContainerType findByID(int containerTypeId) {
+    public ContainerType findById(int containerTypeId) {
         SQLiteDatabase db = readableDatabase();
         Cursor containerTypeCursor = db.query(TABLE_NAME, ContainerTypeColumn.wildcard(),
                 ContainerTypeColumn.ID + "=?", new String[]{String.valueOf(containerTypeId)}, null, null,

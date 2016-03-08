@@ -22,9 +22,10 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import th.or.nectec.tanrabad.entity.Building;
 
 import java.util.UUID;
+
+import th.or.nectec.tanrabad.entity.Building;
 
 public class BuildingControllerTest {
 
@@ -52,7 +53,7 @@ public class BuildingControllerTest {
 
         context.checking(new Expectations() {
             {
-                allowing(buildingRepository).findByUUID(buildingUUID);
+                allowing(buildingRepository).findByUuid(buildingUUID);
                 will(returnValue(building));
                 oneOf(buildingPresenter).displayBuilding(building);
             }
@@ -67,7 +68,7 @@ public class BuildingControllerTest {
 
         context.checking(new Expectations() {
             {
-                allowing(buildingRepository).findByUUID(buildingUUID);
+                allowing(buildingRepository).findByUuid(buildingUUID);
                 will(returnValue(null));
                 oneOf(buildingPresenter).alertBuildingNotFound();
             }

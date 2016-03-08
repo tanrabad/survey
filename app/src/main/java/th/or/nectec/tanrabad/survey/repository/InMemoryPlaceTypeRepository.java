@@ -17,12 +17,12 @@
 
 package th.or.nectec.tanrabad.survey.repository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import th.or.nectec.tanrabad.domain.place.PlaceTypeRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceTypeRepositoryException;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
-
-import java.util.ArrayList;
-import java.util.List;
 
 class InMemoryPlaceTypeRepository implements PlaceTypeRepository {
 
@@ -45,7 +45,7 @@ class InMemoryPlaceTypeRepository implements PlaceTypeRepository {
     }
 
     @Override
-    public PlaceType findByID(int placeTypeId) {
+    public PlaceType findById(int placeTypeId) {
         for (PlaceType placeType : placeTypes) {
             if (placeType.getId() == placeTypeId)
                 return placeType;

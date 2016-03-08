@@ -17,11 +17,15 @@
 
 package th.or.nectec.tanrabad.survey.repository;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import th.or.nectec.tanrabad.domain.survey.ContainerTypeRepository;
 import th.or.nectec.tanrabad.domain.survey.ContainerTypeRepositoryException;
 import th.or.nectec.tanrabad.entity.lookup.ContainerType;
-
-import java.util.*;
 
 public class InMemoryContainerTypeRepository implements ContainerTypeRepository {
 
@@ -47,8 +51,8 @@ public class InMemoryContainerTypeRepository implements ContainerTypeRepository 
     }
 
     @Override
-    public ContainerType findByID(int containerTypeID) {
-        return containerTypes.get(containerTypeID);
+    public ContainerType findById(int containerTypeId) {
+        return containerTypes.get(containerTypeId);
     }
 
     @Override

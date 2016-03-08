@@ -23,8 +23,8 @@ public class FilterBoundaryCalculate implements FilterBoundaryCalculator {
 
     @Override
     public Location getMinLocation(Location currentLocation, double distanceInKm) {
-        double longitudeDegreeFromKm  = distanceInKm/111.699;
-        double latitudeDegreeFromKm = distanceInKm/110.567;
+        double longitudeDegreeFromKm = distanceInKm / 111.699;
+        double latitudeDegreeFromKm = distanceInKm / 110.567;
         double minimumLongitude = currentLocation.getLongitude() - longitudeDegreeFromKm;
         double minimumLatitude = currentLocation.getLatitude() - latitudeDegreeFromKm;
 
@@ -33,8 +33,8 @@ public class FilterBoundaryCalculate implements FilterBoundaryCalculator {
 
     @Override
     public Location getMaxLocation(Location currentLocation, double distanceInKm) {
-        double longitudeDegreeFromKm  = distanceInKm/111.699;
-        double latitudeDegreeFromKm = distanceInKm/110.567;
+        double longitudeDegreeFromKm = distanceInKm / 111.699;
+        double latitudeDegreeFromKm = distanceInKm / 110.567;
         double maximumLongitude = currentLocation.getLongitude() + longitudeDegreeFromKm;
         double maximumLatitude = currentLocation.getLatitude() + latitudeDegreeFromKm;
 

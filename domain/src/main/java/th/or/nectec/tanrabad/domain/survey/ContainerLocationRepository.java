@@ -17,14 +17,14 @@
 
 package th.or.nectec.tanrabad.domain.survey;
 
+import java.util.List;
+
 import th.or.nectec.tanrabad.domain.WritableRepository;
 import th.or.nectec.tanrabad.entity.lookup.ContainerLocation;
-
-import java.util.List;
 
 public interface ContainerLocationRepository extends WritableRepository<ContainerLocation> {
 
     List<ContainerLocation> find();
 
-    ContainerLocation findByID(int containerTypeID);
+    ContainerLocation findById(int containerTypeId);
 }

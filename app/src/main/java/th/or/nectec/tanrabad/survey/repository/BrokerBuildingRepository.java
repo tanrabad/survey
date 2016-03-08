@@ -18,13 +18,13 @@
 package th.or.nectec.tanrabad.survey.repository;
 
 
+import java.util.List;
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.domain.building.BuildingRepository;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.repository.persistence.DbBuildingRepository;
-
-import java.util.List;
-import java.util.UUID;
 
 public class BrokerBuildingRepository implements BuildingRepository {
     private static BrokerBuildingRepository instance;
@@ -45,20 +45,20 @@ public class BrokerBuildingRepository implements BuildingRepository {
     }
 
     @Override
-    public List<Building> findByPlaceUUID(UUID placeUuid) {
-        return database.findByPlaceUUID(placeUuid);
+    public List<Building> findByPlaceUuid(UUID placeUuid) {
+        return database.findByPlaceUuid(placeUuid);
     }
 
     @Override
-    public List<Building> findByPlaceUUIDAndBuildingName(UUID placeUuid, String buildingName) {
-        return database.findByPlaceUUIDAndBuildingName(placeUuid, buildingName);
+    public List<Building> findByPlaceUuidAndBuildingName(UUID placeUuid, String buildingName) {
+        return database.findByPlaceUuidAndBuildingName(placeUuid, buildingName);
     }
 
     @Override
-    public Building findByUUID(UUID uuid) {
-        Building building = cache.findByUUID(uuid);
+    public Building findByUuid(UUID uuid) {
+        Building building = cache.findByUuid(uuid);
         if (building == null) {
-            building = database.findByUUID(uuid);
+            building = database.findByUuid(uuid);
             cache.save(building);
         }
         return building;

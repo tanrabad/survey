@@ -17,9 +17,9 @@
 
 package th.or.nectec.tanrabad.domain.building;
 
-import th.or.nectec.tanrabad.entity.Building;
-
 import java.util.UUID;
+
+import th.or.nectec.tanrabad.entity.Building;
 
 public class BuildingController {
     private BuildingRepository buildingRepository;
@@ -30,12 +30,12 @@ public class BuildingController {
         this.buildingPresenter = buildingPresenter;
     }
 
-    public void showBuilding(UUID buildingUUID) {
-        Building buildingByUUID = buildingRepository.findByUUID(buildingUUID);
-        if (buildingByUUID == null) {
+    public void showBuilding(UUID buildingUuid) {
+        Building buildingByUuid = buildingRepository.findByUuid(buildingUuid);
+        if (buildingByUuid == null) {
             buildingPresenter.alertBuildingNotFound();
         } else {
-            buildingPresenter.displayBuilding(buildingByUUID);
+            buildingPresenter.displayBuilding(buildingByUuid);
         }
     }
 

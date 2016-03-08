@@ -61,7 +61,7 @@ public class SurveyBuildingChooser {
             return false;
         }
 
-        place = placeRepository.findByUUID(UUID.fromString(placeUuid));
+        place = placeRepository.findByUuid(UUID.fromString(placeUuid));
         if (place == null) {
             surveyBuildingPresenter.alertPlaceNotFound();
             return false;

@@ -23,12 +23,18 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.domain.user.UserRepository;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
@@ -38,10 +44,6 @@ import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.base.SurveyDbTestRule;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
 import th.or.nectec.tanrabad.survey.utils.time.ThaiDateTimeConverter;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 
@@ -198,7 +200,7 @@ public class DbPlaceRepositoryTest {
         Context context = InstrumentationRegistry.getTargetContext();
         DbPlaceRepository dbPlaceRepository = new DbPlaceRepository(context);
 
-        Place place = dbPlaceRepository.findByUUID(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"));
+        Place place = dbPlaceRepository.findByUuid(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"));
 
         assertEquals("abc01db8-7207-8a65-152f-ad208cb99b5e", place.getId().toString());
         assertEquals("หมู่บ้านทดสอบ", place.getName());

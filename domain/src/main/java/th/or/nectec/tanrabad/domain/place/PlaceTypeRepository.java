@@ -17,14 +17,14 @@
 
 package th.or.nectec.tanrabad.domain.place;
 
+import java.util.List;
+
 import th.or.nectec.tanrabad.domain.WritableRepository;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
-
-import java.util.List;
 
 public interface PlaceTypeRepository extends WritableRepository<PlaceType> {
 
     List<PlaceType> find();
 
-    PlaceType findByID(int placeTypeID);
+    PlaceType findById(int placeTypeId);
 }

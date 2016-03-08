@@ -17,17 +17,17 @@
 
 package th.or.nectec.tanrabad.domain.place;
 
-import th.or.nectec.tanrabad.domain.WritableRepository;
-import th.or.nectec.tanrabad.entity.Place;
-
 import java.util.List;
 import java.util.UUID;
+
+import th.or.nectec.tanrabad.domain.WritableRepository;
+import th.or.nectec.tanrabad.entity.Place;
 
 public interface PlaceRepository extends WritableRepository<Place> {
 
     List<Place> find();
 
-    Place findByUUID(UUID placeUUID);
+    Place findByUuid(UUID placeUuid);
 
     List<Place> findByPlaceType(int placeType);
 

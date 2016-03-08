@@ -64,7 +64,7 @@ public class SurveyControllerTest {
 
         context.checking(new Expectations() {
             {
-                allowing(buildingRepository).findByUUID(with(UUID.fromString(buildingUUID)));
+                allowing(buildingRepository).findByUuid(with(UUID.fromString(buildingUUID)));
                 will(returnValue(building));
                 allowing(userRepository).findByUsername(with(username));
                 will(returnValue(user));
@@ -82,7 +82,7 @@ public class SurveyControllerTest {
     public void testStartNewSurvey() throws Exception {
         context.checking(new Expectations() {
             {
-                allowing(buildingRepository).findByUUID(with(UUID.fromString(buildingUUID)));
+                allowing(buildingRepository).findByUuid(with(UUID.fromString(buildingUUID)));
                 will(returnValue(building));
                 allowing(userRepository).findByUsername(with(username));
                 will(returnValue(user));
@@ -120,7 +120,7 @@ public class SurveyControllerTest {
             {
                 allowing(userRepository).findByUsername(with(username));
                 will(returnValue(user));
-                allowing(buildingRepository).findByUUID(with(notExistBuildingUUID));
+                allowing(buildingRepository).findByUuid(with(notExistBuildingUUID));
                 will(returnValue(null));
                 never(surveyRepository);
                 oneOf(surveyPresenter).alertBuildingNotFound();

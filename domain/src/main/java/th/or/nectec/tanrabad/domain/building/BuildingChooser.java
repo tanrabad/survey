@@ -17,10 +17,10 @@
 
 package th.or.nectec.tanrabad.domain.building;
 
-import th.or.nectec.tanrabad.entity.Building;
-
 import java.util.List;
 import java.util.UUID;
+
+import th.or.nectec.tanrabad.entity.Building;
 
 public class BuildingChooser {
     private final BuildingRepository buildingRepository;
@@ -38,7 +38,7 @@ public class BuildingChooser {
             return;
         }
 
-        List<Building> buildingInPlace = buildingRepository.findByPlaceUUID(placeUuid);
+        List<Building> buildingInPlace = buildingRepository.findByPlaceUuid(placeUuid);
         if (buildingInPlace != null)
             presenter.displayBuildingsList(buildingInPlace);
         else

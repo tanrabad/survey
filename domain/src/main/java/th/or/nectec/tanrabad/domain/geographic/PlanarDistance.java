@@ -20,7 +20,7 @@ package th.or.nectec.tanrabad.domain.geographic;
 import th.or.nectec.tanrabad.entity.field.Location;
 
 public class PlanarDistance implements DistanceCalculator {
-    private double Radius = 6371;
+    private static final double RADIUS = 6371;
 
     @Override
     public double calculate(Location currentLocation, Location targetLocation) {
@@ -39,7 +39,7 @@ public class PlanarDistance implements DistanceCalculator {
 
         x = dLon * Math.cos(Math.toRadians(lat1));
         y = dLat;
-        d = Radius * Math.sqrt(((x * x) + (y * y)));
+        d = RADIUS * Math.sqrt(((x * x) + (y * y)));
 
         return d;
     }

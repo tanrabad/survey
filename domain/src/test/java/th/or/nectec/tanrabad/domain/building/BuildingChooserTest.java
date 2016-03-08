@@ -23,11 +23,12 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import th.or.nectec.tanrabad.entity.Building;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import th.or.nectec.tanrabad.entity.Building;
 
 public class BuildingChooserTest {
     @Rule
@@ -50,7 +51,7 @@ public class BuildingChooserTest {
                 List<Building> buildings = new ArrayList<>();
                 buildings.add(Building.withName("214/43"));
 
-                allowing(buildingRepository).findByPlaceUUID(placeUuid);
+                allowing(buildingRepository).findByPlaceUuid(placeUuid);
                 will(returnValue(buildings));
 
                 oneOf(presenter).displayBuildingsList(buildings);
@@ -64,7 +65,7 @@ public class BuildingChooserTest {
     public void notFoundBuilding() {
         context.checking(new Expectations() {
             {
-                allowing(buildingRepository).findByPlaceUUID(placeUuid);
+                allowing(buildingRepository).findByPlaceUuid(placeUuid);
                 will(returnValue(null));
 
                 oneOf(presenter).alertBuildingsNotFound();

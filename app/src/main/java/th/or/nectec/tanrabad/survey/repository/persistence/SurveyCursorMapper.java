@@ -76,7 +76,7 @@ class SurveyCursorMapper implements CursorMapper<Survey> {
     public Survey map(Cursor cursor) {
         UUID surveyId = UUID.fromString(cursor.getString(idIndex));
         User user = userRepository.findByUsername(cursor.getString(surveyorIndex));
-        Building building = buildingRepository.findByUUID(UUID.fromString(cursor.getString(buildingIdIndex)));
+        Building building = buildingRepository.findByUuid(UUID.fromString(cursor.getString(buildingIdIndex)));
         int changeStatus = cursor.getInt(changeStatusIndex);
         Survey survey = new SurveyWithChange(surveyId, user, building, changeStatus);
         survey.setLocation(getLocation(cursor));

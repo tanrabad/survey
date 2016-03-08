@@ -53,16 +53,16 @@ public class InMemoryPlaceRepositoryTest {
 
     @Test
     public void testFindPlaceByUuid() throws Exception {
-        assertEquals(hospital, placeRepository.findByUUID(hospital.getId()));
-        assertEquals(school, placeRepository.findByUUID(school.getId()));
-        assertEquals(null, placeRepository.findByUUID(UUID.randomUUID()));
+        assertEquals(hospital, placeRepository.findByUuid(hospital.getId()));
+        assertEquals(school, placeRepository.findByUuid(school.getId()));
+        assertEquals(null, placeRepository.findByUuid(UUID.randomUUID()));
     }
 
     @Test
     public void testUpdate() throws Exception {
         Place racha1NewName = new Place(school.getId(), "โรงเรียนบางปะอิน");
         placeRepository.update(racha1NewName);
-        assertEquals(racha1NewName, placeRepository.findByUUID(school.getId()));
+        assertEquals(racha1NewName, placeRepository.findByUuid(school.getId()));
     }
 
     @Test(expected = PlaceRepositoryException.class)

@@ -17,12 +17,12 @@
 
 package th.or.nectec.tanrabad.survey.repository;
 
+import java.util.List;
+
 import th.or.nectec.tanrabad.domain.place.PlaceTypeRepository;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.repository.persistence.DbPlaceTypeRepository;
-
-import java.util.List;
 
 public class BrokerPlaceTypeRepository implements PlaceTypeRepository {
 
@@ -54,10 +54,10 @@ public class BrokerPlaceTypeRepository implements PlaceTypeRepository {
     }
 
     @Override
-    public PlaceType findByID(int placeTypeId) {
-        PlaceType placeType = cache.findByID(placeTypeId);
+    public PlaceType findById(int placeTypeId) {
+        PlaceType placeType = cache.findById(placeTypeId);
         if (placeType == null) {
-            placeType = persistence.findByID(placeTypeId);
+            placeType = persistence.findById(placeTypeId);
             cache.save(placeType);
         }
         return placeType;

@@ -35,8 +35,7 @@ public class BuildingWithSurveyStatus implements Comparable<BuildingWithSurveySt
 
         BuildingWithSurveyStatus that = (BuildingWithSurveyStatus) other;
 
-        if (isSurvey != that.isSurvey) return false;
-        return building.equals(that.building);
+        return isSurvey == that.isSurvey && building.equals(that.building);
     }
 
     @Override

@@ -32,18 +32,20 @@ public class SurveyController {
     private BuildingRepository buildingRepository;
     private UserRepository userRepository;
 
-    public SurveyController(SurveyRepository surveyRepository, BuildingRepository buildingRepository, UserRepository userRepository, SurveyPresenter surveyPresenter) {
+    public SurveyController(
+            SurveyRepository surveyRepository, BuildingRepository buildingRepository,
+            UserRepository userRepository, SurveyPresenter surveyPresenter) {
         this.surveyRepository = surveyRepository;
         this.buildingRepository = buildingRepository;
         this.userRepository = userRepository;
         this.surveyPresenter = surveyPresenter;
     }
 
-    public void checkThisBuildingAndUserCanSurvey(String buildingUUID, String username) {
+    public void checkThisBuildingAndUserCanSurvey(String buildingUuid, String username) {
         User user = checkUserExist(username);
         if (user == null) return;
 
-        Building building = checkBuildingExist(buildingUUID);
+        Building building = checkBuildingExist(buildingUuid);
         if (building == null) return;
 
         Survey survey = surveyRepository.findByBuildingAndUserIn7Day(building, user);
@@ -63,8 +65,8 @@ public class SurveyController {
         return user;
     }
 
-    private Building checkBuildingExist(String buildingUUID) {
-        Building building = buildingRepository.findByUUID(UUID.fromString(buildingUUID));
+    private Building checkBuildingExist(String buildingUuid) {
+        Building building = buildingRepository.findByUuid(UUID.fromString(buildingUuid));
         if (building == null) {
             surveyPresenter.alertBuildingNotFound();
             return null;

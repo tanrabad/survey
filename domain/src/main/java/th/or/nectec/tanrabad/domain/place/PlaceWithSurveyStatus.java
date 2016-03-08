@@ -36,8 +36,7 @@ public class PlaceWithSurveyStatus {
 
         PlaceWithSurveyStatus that = (PlaceWithSurveyStatus) o;
 
-        if (isSurvey != that.isSurvey) return false;
-        return place.equals(that.place);
+        return isSurvey == that.isSurvey && place.equals(that.place);
 
     }
 }

@@ -17,10 +17,10 @@
 
 package th.or.nectec.tanrabad.domain.geographic;
 
+import java.util.List;
+
 import th.or.nectec.tanrabad.entity.LocationEntity;
 import th.or.nectec.tanrabad.entity.field.Location;
-
-import java.util.List;
 
 public class FilterTrimmedBoundaryController {
     private FilterBoundaryCalculator filterBoundaryCalculator;
@@ -45,7 +45,8 @@ public class FilterTrimmedBoundaryController {
         Location insideMinimumLocation = coordinateLocationCalculate.getNewMinLocation(currentLocation, distanceInKm);
         Location insideMaximumLocation = coordinateLocationCalculate.getNewMaxLocation(currentLocation, distanceInKm);
 
-        List<LocationEntity> placeFiltered = placeRepository.findTrimmedInBoundaryLocation(insideMinimumLocation, outsideMinimumLocation, insideMaximumLocation, outsideMaximumLocation);
+        List<LocationEntity> placeFiltered = placeRepository.findTrimmedInBoundaryLocation(
+                insideMinimumLocation, outsideMinimumLocation, insideMaximumLocation, outsideMaximumLocation);
 
         if (placeFiltered == null) {
             nearbyPlacePresenter.displayPlaceNotFound();

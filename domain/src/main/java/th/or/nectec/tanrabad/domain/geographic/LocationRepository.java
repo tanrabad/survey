@@ -17,15 +17,17 @@
 
 package th.or.nectec.tanrabad.domain.geographic;
 
+import java.util.List;
+
 import th.or.nectec.tanrabad.entity.LocationEntity;
 import th.or.nectec.tanrabad.entity.field.Location;
-
-import java.util.List;
 
 public interface LocationRepository {
 
     List<LocationEntity> findInBoundaryLocation(Location minimumLocation, Location maximumLocation);
 
-    List<LocationEntity> findTrimmedInBoundaryLocation(Location insideMinimumLocation, Location outsideMinimumLocation, Location insideMaximumLocation, Location outsideMaximumLocation);
+    List<LocationEntity> findTrimmedInBoundaryLocation(
+            Location insideMinimumLocation, Location outsideMinimumLocation,
+            Location insideMaximumLocation, Location outsideMaximumLocation);
 
 }

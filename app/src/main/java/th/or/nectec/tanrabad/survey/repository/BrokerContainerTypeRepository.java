@@ -17,12 +17,12 @@
 
 package th.or.nectec.tanrabad.survey.repository;
 
+import java.util.List;
+
 import th.or.nectec.tanrabad.domain.survey.ContainerTypeRepository;
 import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.repository.persistence.DbContainerTypeRepository;
-
-import java.util.List;
 
 public class BrokerContainerTypeRepository implements ContainerTypeRepository {
 
@@ -55,10 +55,10 @@ public class BrokerContainerTypeRepository implements ContainerTypeRepository {
     }
 
     @Override
-    public ContainerType findByID(int containerTypeId) {
-        ContainerType containerType = cache.findByID(containerTypeId);
+    public ContainerType findById(int containerTypeId) {
+        ContainerType containerType = cache.findById(containerTypeId);
         if (containerType == null) {
-            containerType = persistence.findByID(containerTypeId);
+            containerType = persistence.findById(containerTypeId);
             cache.save(containerType);
         }
         return containerType;

@@ -18,13 +18,14 @@
 package th.or.nectec.tanrabad.survey.validator;
 
 import android.text.TextUtils;
+
+import java.util.List;
+
 import th.or.nectec.tanrabad.domain.building.BuildingRepository;
 import th.or.nectec.tanrabad.domain.building.BuildingValidator;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.R;
-
-import java.util.List;
 
 public class SaveBuildingValidator implements BuildingValidator {
     private BuildingRepository buildingRepository;
@@ -42,7 +43,7 @@ public class SaveBuildingValidator implements BuildingValidator {
             throw new ValidatorException(R.string.please_define_building_location);
         }
 
-        List<Building> buildingInPlace = buildingRepository.findByPlaceUUID(building.getPlace().getId());
+        List<Building> buildingInPlace = buildingRepository.findByPlaceUuid(building.getPlace().getId());
         if (buildingInPlace != null) {
             for (Building eachBuilding : buildingInPlace) {
                 if (eachBuilding.getName().equals(building.getName())) {

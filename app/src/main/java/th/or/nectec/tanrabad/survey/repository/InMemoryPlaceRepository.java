@@ -18,11 +18,16 @@
 package th.or.nectec.tanrabad.survey.repository;
 
 import android.text.TextUtils;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceRepositoryException;
 import th.or.nectec.tanrabad.entity.Place;
-
-import java.util.*;
 
 public class InMemoryPlaceRepository implements PlaceRepository {
 
@@ -43,7 +48,7 @@ public class InMemoryPlaceRepository implements PlaceRepository {
     }
 
     @Override
-    public Place findByUUID(UUID placeUuid) {
+    public Place findByUuid(UUID placeUuid) {
         for (Place eachPlace : placesMap.values()) {
             if (eachPlace.getId().equals(placeUuid)) {
                 return eachPlace;

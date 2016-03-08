@@ -17,13 +17,13 @@
 
 package th.or.nectec.tanrabad.survey.repository;
 
+import java.util.List;
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.repository.persistence.DbPlaceRepository;
-
-import java.util.List;
-import java.util.UUID;
 
 public class BrokerPlaceRepository implements PlaceRepository {
 
@@ -50,10 +50,10 @@ public class BrokerPlaceRepository implements PlaceRepository {
     }
 
     @Override
-    public Place findByUUID(UUID placeUuid) {
-        Place place = cache.findByUUID(placeUuid);
+    public Place findByUuid(UUID placeUuid) {
+        Place place = cache.findByUuid(placeUuid);
         if (place == null) {
-            place = persistence.findByUUID(placeUuid);
+            place = persistence.findByUuid(placeUuid);
             cache.save(place);
         }
         return place;

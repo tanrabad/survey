@@ -57,9 +57,9 @@ public class InMemoryBuildingRepositoryTest {
 
     @Test
     public void testFindBuildingByUuid() throws Exception {
-        assertEquals(towerA, buildingRepo.findByUUID(towerA.getId()));
-        assertEquals(towerB, buildingRepo.findByUUID(towerB.getId()));
-        assertEquals(null, buildingRepo.findByUUID(UUID.randomUUID()));
+        assertEquals(towerA, buildingRepo.findByUuid(towerA.getId()));
+        assertEquals(towerB, buildingRepo.findByUuid(towerB.getId()));
+        assertEquals(null, buildingRepo.findByUuid(UUID.randomUUID()));
     }
 
     @Test
@@ -69,7 +69,7 @@ public class InMemoryBuildingRepositoryTest {
 
         buildingRepo.update(towerANewName);
 
-        assertEquals(towerANewName, buildingRepo.findByUUID(towerA.getId()));
+        assertEquals(towerANewName, buildingRepo.findByUuid(towerA.getId()));
     }
 
     @Test(expected = BuildingRepositoryException.class)
@@ -79,7 +79,7 @@ public class InMemoryBuildingRepositoryTest {
 
     @Test
     public void testFindBuildingInPlace() throws Exception {
-        List<Building> buildingInPlace = buildingRepo.findByPlaceUUID(nationalPark.getId());
+        List<Building> buildingInPlace = buildingRepo.findByPlaceUuid(nationalPark.getId());
 
         assertTrue(buildingInPlace.size() == 2);
         assertTrue(buildingInPlace.contains(towerA));
@@ -88,12 +88,12 @@ public class InMemoryBuildingRepositoryTest {
 
     @Test
     public void testFindBuildingInPlaceByName() throws Exception {
-        List<Building> buildingInPlace = buildingRepo.findByPlaceUUIDAndBuildingName(nationalPark.getId(), "A");
+        List<Building> buildingInPlace = buildingRepo.findByPlaceUuidAndBuildingName(nationalPark.getId(), "A");
 
         assertTrue(buildingInPlace.size() == 1);
         assertTrue(buildingInPlace.contains(towerA));
 
-        List<Building> emptyBuildingList = buildingRepo.findByPlaceUUIDAndBuildingName(nationalPark.getId(), "C");
+        List<Building> emptyBuildingList = buildingRepo.findByPlaceUuidAndBuildingName(nationalPark.getId(), "C");
 
         assertTrue(emptyBuildingList == null);
     }

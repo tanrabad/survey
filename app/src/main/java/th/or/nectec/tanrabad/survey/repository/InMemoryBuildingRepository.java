@@ -17,11 +17,15 @@
 
 package th.or.nectec.tanrabad.survey.repository;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.domain.building.BuildingRepository;
 import th.or.nectec.tanrabad.domain.building.BuildingRepositoryException;
 import th.or.nectec.tanrabad.entity.Building;
-
-import java.util.*;
 
 public class InMemoryBuildingRepository implements BuildingRepository {
 
@@ -35,7 +39,7 @@ public class InMemoryBuildingRepository implements BuildingRepository {
     }
 
     @Override
-    public List<Building> findByPlaceUUID(UUID placeUuid) {
+    public List<Building> findByPlaceUuid(UUID placeUuid) {
 
         ArrayList<Building> newBuildingList = new ArrayList<>();
         for (Building eachBuilding : buildingMap.values()) {
@@ -47,7 +51,7 @@ public class InMemoryBuildingRepository implements BuildingRepository {
     }
 
     @Override
-    public List<Building> findByPlaceUUIDAndBuildingName(UUID placeUuid, String buildingName) {
+    public List<Building> findByPlaceUuidAndBuildingName(UUID placeUuid, String buildingName) {
         ArrayList<Building> newBuildingList = new ArrayList<>();
         for (Building eachBuilding : buildingMap.values()) {
             if (eachBuilding.getPlace().getId().equals(placeUuid) && eachBuilding.getName().contains(buildingName)) {
@@ -58,7 +62,7 @@ public class InMemoryBuildingRepository implements BuildingRepository {
     }
 
     @Override
-    public Building findByUUID(UUID buildingUuid) {
+    public Building findByUuid(UUID buildingUuid) {
         for (Building eachBuilding : buildingMap.values()) {
             if (eachBuilding.getId().equals(buildingUuid)) {
                 return eachBuilding;

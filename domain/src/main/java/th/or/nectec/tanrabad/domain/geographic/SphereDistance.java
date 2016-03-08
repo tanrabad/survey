@@ -21,7 +21,7 @@ import th.or.nectec.tanrabad.entity.field.Location;
 
 public class SphereDistance implements DistanceCalculator {
 
-    private double Radius = 6371;
+    private static final double RADIUS = 6371;
 
     @Override
     public double calculate(Location currentLocation, Location targetLocation) {
@@ -31,10 +31,10 @@ public class SphereDistance implements DistanceCalculator {
         double lon2 = targetLocation.getLongitude();
         double dLat = Math.toRadians(lat2 - lat1);
         double dLon = Math.toRadians(lon2 - lon1);
-        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
-                        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+                * Math.sin(dLon / 2) * Math.sin(dLon / 2);
         double c = 2 * Math.asin(Math.sqrt(a));
-        return Radius * c;
+        return RADIUS * c;
     }
 }

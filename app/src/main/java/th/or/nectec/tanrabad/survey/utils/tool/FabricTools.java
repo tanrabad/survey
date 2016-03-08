@@ -19,9 +19,16 @@ package th.or.nectec.tanrabad.survey.utils.tool;
 
 import android.content.Context;
 import android.util.Log;
+
 import com.crashlytics.android.Crashlytics;
-import com.crashlytics.android.answers.*;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.CustomEvent;
+import com.crashlytics.android.answers.LevelEndEvent;
+import com.crashlytics.android.answers.LevelStartEvent;
+import com.crashlytics.android.answers.LoginEvent;
+import com.crashlytics.android.answers.SearchEvent;
 import com.crashlytics.android.core.CrashlyticsCore;
+
 import io.fabric.sdk.android.Fabric;
 import th.or.nectec.tanrabad.domain.entomology.ContainerIndex;
 import th.or.nectec.tanrabad.entity.Building;
@@ -134,7 +141,7 @@ public class FabricTools implements ExceptionLogger, ActionLogger {
     }
 
     private String getPlaceTypeName(Place place) {
-        return BrokerPlaceTypeRepository.getInstance().findByID(place.getType()).getName();
+        return BrokerPlaceTypeRepository.getInstance().findById(place.getType()).getName();
     }
 
     private String getPlaceSubTypeName(Place place) {

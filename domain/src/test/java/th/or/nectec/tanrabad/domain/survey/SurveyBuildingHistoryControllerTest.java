@@ -60,7 +60,7 @@ public class SurveyBuildingHistoryControllerTest {
         surveys.add(new Survey(UUID.randomUUID(), user, building));
         context.checking(new Expectations() {
             {
-                allowing(placeRepository).findByUUID(with(UUID.fromString(placeUUID)));
+                allowing(placeRepository).findByUuid(with(UUID.fromString(placeUUID)));
                 will(returnValue(place));
                 allowing(userRepository).findByUsername(with(USERNAME));
                 will(returnValue(user));
@@ -78,7 +78,7 @@ public class SurveyBuildingHistoryControllerTest {
     public void testNotFoundSurveyPlace() throws Exception {
         context.checking(new Expectations() {
             {
-                allowing(placeRepository).findByUUID(with(UUID.fromString(placeUUID)));
+                allowing(placeRepository).findByUuid(with(UUID.fromString(placeUUID)));
                 will(returnValue(null));
                 oneOf(presenter).alertPlaceNotFound();
                 allowing(userRepository).findByUsername(with(USERNAME));
@@ -108,7 +108,7 @@ public class SurveyBuildingHistoryControllerTest {
             {
                 allowing(userRepository).findByUsername(with(USERNAME));
                 will(returnValue(user));
-                allowing(placeRepository).findByUUID(with(UUID.fromString(placeUUID)));
+                allowing(placeRepository).findByUuid(with(UUID.fromString(placeUUID)));
                 will(returnValue(place));
                 allowing(SurveyBuildingHistoryControllerTest.this.surveyRepository).findByPlaceAndUserIn7Days(with(place), with(user));
                 will(returnValue(null));

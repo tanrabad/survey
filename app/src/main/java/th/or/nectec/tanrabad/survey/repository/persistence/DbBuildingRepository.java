@@ -21,6 +21,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import java.util.List;
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.domain.building.BuildingRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Building;
@@ -28,9 +32,6 @@ import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.ChangedRepository;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorList;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
-
-import java.util.List;
-import java.util.UUID;
 
 public class DbBuildingRepository extends DbRepository implements BuildingRepository, ChangedRepository<Building> {
 
@@ -47,7 +48,7 @@ public class DbBuildingRepository extends DbRepository implements BuildingReposi
     }
 
     @Override
-    public List<Building> findByPlaceUUID(UUID placeUuid) {
+    public List<Building> findByPlaceUuid(UUID placeUuid) {
         SQLiteDatabase db = readableDatabase();
         Cursor buildingCursor = db.query(TABLE_NAME, BuildingColumn.wildcard(),
                 BuildingColumn.PLACE_ID + "=?", new String[]{placeUuid.toString()}, null, null, BuildingColumn.NAME);
@@ -55,7 +56,7 @@ public class DbBuildingRepository extends DbRepository implements BuildingReposi
     }
 
     @Override
-    public List<Building> findByPlaceUUIDAndBuildingName(UUID placeUuid, String buildingName) {
+    public List<Building> findByPlaceUuidAndBuildingName(UUID placeUuid, String buildingName) {
         SQLiteDatabase db = readableDatabase();
         Cursor cursor = db.query(TABLE_NAME, BuildingColumn.wildcard(),
                 BuildingColumn.PLACE_ID + "=? AND " + BuildingColumn.NAME + " LIKE ?",
@@ -64,7 +65,7 @@ public class DbBuildingRepository extends DbRepository implements BuildingReposi
     }
 
     @Override
-    public Building findByUUID(UUID uuid) {
+    public Building findByUuid(UUID uuid) {
         SQLiteDatabase db = readableDatabase();
         Cursor cursor = db.query(TABLE_NAME, BuildingColumn.wildcard(),
                 BuildingColumn.ID + "=?", new String[]{uuid.toString()}, null, null, null);

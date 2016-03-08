@@ -19,6 +19,7 @@ package th.or.nectec.tanrabad.survey.suite;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import th.or.nectec.tanrabad.survey.base.SurveyDbTestRule;
 import th.or.nectec.tanrabad.survey.repository.persistence.*;
 
 @RunWith(Suite.class)
@@ -32,7 +33,6 @@ import th.or.nectec.tanrabad.survey.repository.persistence.*;
         DbSurveyRepositoryTest.class,
         SurveyDbTestRule.class,
         SurveyLiteDatabaseTest.class
-})
-
+        })
 public class RepositoryTestSuite {
 }

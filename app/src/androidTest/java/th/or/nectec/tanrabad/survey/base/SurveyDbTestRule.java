@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey.repository.persistence;
+package th.or.nectec.tanrabad.survey.base;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -23,6 +23,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.support.test.InstrumentationRegistry;
 import org.junit.rules.ExternalResource;
 import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.repository.persistence.SqlScript;
+import th.or.nectec.tanrabad.survey.repository.persistence.SurveyLiteDatabase;
 
 public class SurveyDbTestRule extends ExternalResource {
 

@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey;
+package th.or.nectec.tanrabad.survey.base;
 
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.view.View;
 import org.hamcrest.Matcher;
 import org.junit.Rule;
-import th.or.nectec.tanrabad.survey.presenter.SurveyAccountTestRule;
-import th.or.nectec.tanrabad.survey.repository.persistence.SurveyDbTestRule;
+import th.or.nectec.tanrabad.survey.R;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -50,7 +50,7 @@ public class TanrabadEspressoTestBase {
     }
 
     protected void clickSurveyButton() {
-        onView(withText((R.string.survey)))
+        onView(ViewMatchers.withText((R.string.survey)))
                 .perform(click());
     }
 

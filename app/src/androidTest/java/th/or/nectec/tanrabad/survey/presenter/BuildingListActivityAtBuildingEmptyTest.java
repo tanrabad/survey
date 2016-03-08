@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,18 +24,13 @@ import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-
 import org.hamcrest.Matchers;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import th.or.nectec.tanrabad.survey.R;
-import th.or.nectec.tanrabad.survey.TanrabadEspressoTestBase;
-
-import java.util.UUID;
+import th.or.nectec.tanrabad.survey.base.TanrabadEspressoTestBase;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -48,6 +43,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 @RunWith(AndroidJUnit4.class)
 public class BuildingListActivityAtBuildingEmptyTest extends TanrabadEspressoTestBase {
 
+    private static final String PLACE_UUID = "e5ce769e-f397-4409-bec2-818f7bd02464";
     @Rule
     public ActivityTestRule<BuildingListActivity> mActivityTestRule
             = new IntentsTestRule<>(BuildingListActivity.class, false, false);
@@ -56,7 +52,7 @@ public class BuildingListActivityAtBuildingEmptyTest extends TanrabadEspressoTes
     @Before
     public void setUp() {
         Intent intent = new Intent();
-        intent.putExtra("place_uuid_arg", "e5ce769e-f397-4409-bec2-818f7bd02464");
+        intent.putExtra("place_uuid_arg", PLACE_UUID);
         mActivity = mActivityTestRule.launchActivity(intent);
     }
 
@@ -74,7 +70,7 @@ public class BuildingListActivityAtBuildingEmptyTest extends TanrabadEspressoTes
 
         Intents.intended(Matchers.allOf(
                 hasComponent(new ComponentName(mActivity, BuildingFormActivity.class)),
-                hasExtra(BuildingFormActivity.PLACE_UUID_ARG, "e5ce769e-f397-4409-bec2-818f7bd02464".toString())
+                hasExtra(BuildingFormActivity.PLACE_UUID_ARG, PLACE_UUID)
         ));
     }
 

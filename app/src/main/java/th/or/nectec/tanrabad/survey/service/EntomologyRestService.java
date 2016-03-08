@@ -30,7 +30,7 @@ import java.util.List;
 public class EntomologyRestService extends AbsRestService<JsonEntomology> {
 
     public static final String PATH = "/entomology";
-    private Place place;
+    private final Place place;
 
     public EntomologyRestService(Place place) {
         this(BASE_API, new ServiceLastUpdatePreference(TanrabadApp.getInstance(), PATH), place);
@@ -42,25 +42,6 @@ public class EntomologyRestService extends AbsRestService<JsonEntomology> {
     }
 
     @Override
-    public String getDefaultParams() {
-        return "geostd=4326&place_id=" + place.getId() + getWeekIntervalParam()
-                + getOrgIdParam();
-    }
-
-    private String getOrgIdParam() {
-        return "&org_id=" + AccountUtils.getUser().getOrganizationId();
-    }
-
-    public String getWeekIntervalParam() {
-        DateTime dateTime = new DateTime();
-        return "&startdate=" + getUnixTime(dateTime.minusDays(7)) + "&enddate=" + getUnixTime(dateTime);
-    }
-
-    public long getUnixTime(DateTime dateTime) {
-        return dateTime.getMillis() / 1000;
-    }
-
-    @Override
     protected String getPath() {
         return PATH;
     }
@@ -68,5 +49,30 @@ public class EntomologyRestService extends AbsRestService<JsonEntomology> {
     @Override
     protected List<JsonEntomology> jsonToEntityList(String responseBody) throws IOException {
         return LoganSquare.parseList(responseBody, JsonEntomology.class);
+    }
+
+    @Override
+    public String getDefaultParams() {
+        return "geostd=4326"
+                + "&" + placeIdParam()
+                + "&" + OrgIdParam()
+                + "&" + oneWeekIntervalParam();
+    }
+
+    private String placeIdParam() {
+        return "place_id=" + place.getId();
+    }
+
+    private String OrgIdParam() {
+        return "org_id=" + AccountUtils.getUser().getOrganizationId();
+    }
+
+    private String oneWeekIntervalParam() {
+        DateTime dateTime = new DateTime();
+        return "startdate=" + unixTime(dateTime.minusDays(7)) + "&enddate=" + unixTime(dateTime);
+    }
+
+    private long unixTime(DateTime dateTime) {
+        return dateTime.getMillis() / 1000;
     }
 }

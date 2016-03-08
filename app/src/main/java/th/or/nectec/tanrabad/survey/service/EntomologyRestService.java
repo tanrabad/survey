@@ -55,7 +55,7 @@ public class EntomologyRestService extends AbsRestService<JsonEntomology> {
     public String getDefaultParams() {
         return "geostd=4326"
                 + "&" + placeIdParam()
-                + "&" + OrgIdParam()
+                + "&" + orgIdParam()
                 + "&" + oneWeekIntervalParam();
     }
 
@@ -63,7 +63,7 @@ public class EntomologyRestService extends AbsRestService<JsonEntomology> {
         return "place_id=" + place.getId();
     }
 
-    private String OrgIdParam() {
+    private String orgIdParam() {
         return "org_id=" + AccountUtils.getUser().getOrganizationId();
     }
 

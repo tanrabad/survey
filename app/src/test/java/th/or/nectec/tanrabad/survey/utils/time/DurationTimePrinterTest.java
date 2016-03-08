@@ -23,6 +23,7 @@ import org.joda.time.format.DateTimeFormatter;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static th.or.nectec.tanrabad.survey.utils.time.DurationTimePrinter.print;
 
 public class DurationTimePrinterTest {
 
@@ -31,15 +32,15 @@ public class DurationTimePrinterTest {
 
     @Test
     public void testPrintDurationUnder60Minute() throws Exception {
-        assertEquals("00:30", DurationTimePrinter.print(START_DATE, START_DATE.plusSeconds(30)));
-        assertEquals("01:30", DurationTimePrinter.print(START_DATE, START_DATE.plusMinutes(1).plusSeconds(30)));
-        assertEquals("59:59", DurationTimePrinter.print(START_DATE, START_DATE.plusMinutes(59).plusSeconds(59)));
+        assertEquals("00:30", print(START_DATE, START_DATE.plusSeconds(30)));
+        assertEquals("01:30", print(START_DATE, START_DATE.plusMinutes(1).plusSeconds(30)));
+        assertEquals("59:59", print(START_DATE, START_DATE.plusMinutes(59).plusSeconds(59)));
     }
 
     @Test
     public void testPrintDurationOver60Minute() throws Exception {
-        assertEquals("1:00:00", DurationTimePrinter.print(START_DATE, START_DATE.plusHours(1)));
-        assertEquals("10:06:15", DurationTimePrinter.print(START_DATE, START_DATE.plusHours(10).plusMinutes(5).plusSeconds(75)));
+        assertEquals("1:00:00", print(START_DATE, START_DATE.plusHours(1)));
+        assertEquals("10:06:15", print(START_DATE, START_DATE.plusHours(10).plusMinutes(5).plusSeconds(75)));
 
     }
 }

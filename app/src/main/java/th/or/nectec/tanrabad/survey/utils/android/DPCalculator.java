@@ -35,11 +35,11 @@ public class DPCalculator {
         return instance;
     }
 
-    public int toPX(int dp) {
+    public int toPx(int dp) {
         return (int) (dp * context.getResources().getDisplayMetrics().density + 0.5f);
     }
 
-    public int toDP(int px) {
+    public int toDp(int px) {
         return (int) (px / (context.getResources().getDisplayMetrics().densityDpi / 160f));
     }
 }

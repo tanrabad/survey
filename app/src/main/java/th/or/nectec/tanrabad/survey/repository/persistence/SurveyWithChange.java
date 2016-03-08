@@ -23,9 +23,6 @@ import th.or.nectec.tanrabad.entity.User;
 
 import java.util.UUID;
 
-/**
- * Created by blaze on 2/14/2016 AD.
- */
 public class SurveyWithChange extends Survey {
 
     public final int changeStatus;

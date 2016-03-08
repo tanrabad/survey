@@ -52,8 +52,8 @@ public class BrokerSurveyRepository implements SurveyRepository {
     }
 
     @Override
-    public List<SurveyDetail> findSurveyDetail(UUID surveyId, int containerLocationID) {
-        return persistent.findSurveyDetail(surveyId, containerLocationID);
+    public List<SurveyDetail> findSurveyDetail(UUID surveyId, int containerLocationId) {
+        return persistent.findSurveyDetail(surveyId, containerLocationId);
     }
 
     @Override

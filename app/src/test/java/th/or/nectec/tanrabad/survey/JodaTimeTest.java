@@ -31,7 +31,7 @@ public class JodaTimeTest {
             DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss 'GMT'");
 
     @Test
-    public void testParseFromRFC1123() throws Exception {
+    public void testParseFromRfc1123() throws Exception {
         DateTime dateTime = RFC1123_FORMATTER.parseDateTime("Tue, 01 Dec 2015 17:00:00 GMT");
         assertEquals(1, dateTime.getDayOfMonth());
         assertEquals(12, dateTime.getMonthOfYear());
@@ -42,7 +42,7 @@ public class JodaTimeTest {
     }
 
     @Test
-    public void testToRFC1123() throws Exception {
+    public void testToRfc1123() throws Exception {
         DateTime rfc1123 = RFC1123_FORMATTER.parseDateTime("Tue, 01 Dec 2015 17:00:00 GMT");
         DateTime dateTime = new DateTime(rfc1123.toString());
 

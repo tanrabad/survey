@@ -33,14 +33,14 @@ public class CursorListTest {
     private List<String> cursorList = new CursorList<>(mockedCursor, mockedMapper);
 
     @Test
-    public void testGetSize(){
+    public void testGetSize() {
         when(mockedCursor.getCount()).thenReturn(30);
 
         assertEquals(30, cursorList.size());
     }
 
     @Test
-    public void testGet(){
+    public void testGet() {
         when(mockedMapper.map(mockedCursor)).thenReturn("Test String");
 
         assertEquals("Test String", cursorList.get(1));
@@ -48,8 +48,8 @@ public class CursorListTest {
     }
 
     @Test
-    public void testGetCursor(){
-        assertEquals(mockedCursor, ((CursorList)cursorList).getCursor());
+    public void testGetCursor() {
+        assertEquals(mockedCursor, ((CursorList) cursorList).getCursor());
     }
 
     @Test

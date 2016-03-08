@@ -52,7 +52,7 @@ public class MarkerDropInAnimator {
 
     private long calculateDropInDuration(Marker targetLatLng) {
         Point targetPoint = map.getProjection().toScreenLocation(targetLatLng.getPosition());
-        return (long) (200 + DPCalculator.from(context).toDP(targetPoint.y));
+        return (long) (200 + DPCalculator.from(context).toDp(targetPoint.y));
     }
 
     private LatLng startLatLng(Marker marker) {

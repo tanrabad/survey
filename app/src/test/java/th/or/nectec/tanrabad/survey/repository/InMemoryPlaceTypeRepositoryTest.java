@@ -63,7 +63,7 @@ public class InMemoryPlaceTypeRepositoryTest {
     }
 
     @Test
-    public void testFindByID() throws Exception {
+    public void testFindById() throws Exception {
         assertEquals(village, placeTypeRepository.findByID(1));
     }
 }

@@ -30,7 +30,7 @@ public class ResourceFile {
 
     private String readStringFromFile(String filename) {
         try {
-            String result = "";
+
             BufferedReader br = new BufferedReader(new FileReader(getResourceFile(filename)));
             StringBuilder sb = new StringBuilder();
             String line = br.readLine();
@@ -38,8 +38,7 @@ public class ResourceFile {
                 sb.append(line);
                 line = br.readLine();
             }
-            result = sb.toString();
-            return result;
+            return sb.toString();
         } catch (Exception exception) {
             exception.printStackTrace();
             return null;

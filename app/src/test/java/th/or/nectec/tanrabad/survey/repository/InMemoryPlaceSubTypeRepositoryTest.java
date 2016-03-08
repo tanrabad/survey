@@ -63,12 +63,12 @@ public class InMemoryPlaceSubTypeRepositoryTest {
     }
 
     @Test
-    public void testFindByID() throws Exception {
+    public void testFindById() throws Exception {
         assertEquals(pst1, placeSubTypeRepository.findById(1));
     }
 
     @Test
-    public void testFindByPlaceTypeID() throws Exception {
+    public void testFindByPlaceTypeId() throws Exception {
         List<PlaceSubType> placeSubTypes = placeSubTypeRepository.findByPlaceTypeId(4);
         assertEquals(2, placeSubTypes.size());
         assertEquals(pst1, placeSubTypes.get(0));

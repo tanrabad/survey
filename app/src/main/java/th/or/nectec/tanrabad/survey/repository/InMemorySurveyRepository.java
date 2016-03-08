@@ -77,7 +77,7 @@ public class InMemorySurveyRepository implements SurveyRepository {
     }
 
     @Override
-    public List<SurveyDetail> findSurveyDetail(UUID surveyId, int containerLocationID) {
+    public List<SurveyDetail> findSurveyDetail(UUID surveyId, int containerLocationId) {
         return null;
     }
 

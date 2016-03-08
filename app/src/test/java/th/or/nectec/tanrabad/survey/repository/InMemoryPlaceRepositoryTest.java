@@ -52,7 +52,7 @@ public class InMemoryPlaceRepositoryTest {
     }
 
     @Test
-    public void testFindPlaceByUUID() throws Exception {
+    public void testFindPlaceByUuid() throws Exception {
         assertEquals(hospital, placeRepository.findByUUID(hospital.getId()));
         assertEquals(school, placeRepository.findByUUID(school.getId()));
         assertEquals(null, placeRepository.findByUUID(UUID.randomUUID()));

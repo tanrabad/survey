@@ -51,8 +51,8 @@ public class ContainerLocationRestService extends AbsRestService<ContainerLocati
             for (JsonContainerLocation eachJsonContainerLocation : jsonContainerTypeList) {
                 containerLocations.add(eachJsonContainerLocation.getEntity());
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException exception) {
+            exception.printStackTrace();
         }
         return containerLocations;
     }

@@ -83,7 +83,6 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     private AppCompatSpinner placeSubtypeSelector;
     private Button editLocationButton;
     private FrameLayout addLocationBackground;
-    private Button addMarkerButton;
     private TwiceBackPressed twiceBackPressed;
     private SupportMapFragment mapFragment;
 
@@ -134,15 +133,13 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
                 SoftKeyboard.hideOn(PlaceFormActivity.this);
             }
         });
-        addMarkerButton = (Button) findViewById(R.id.add_marker);
-
         editLocationButton = (Button) findViewById(R.id.edit_location);
         editLocationButton.setVisibility(View.GONE);
+        editLocationButton.setOnClickListener(this);
+        findViewById(R.id.add_marker).setOnClickListener(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        addMarkerButton.setOnClickListener(this);
-        editLocationButton.setOnClickListener(this);
     }
 
     private void setupTwiceBackPressed() {

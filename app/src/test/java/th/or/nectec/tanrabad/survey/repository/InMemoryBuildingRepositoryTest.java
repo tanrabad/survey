@@ -35,12 +35,12 @@ public class InMemoryBuildingRepositoryTest {
     private final Building towerA = new Building(UUID.randomUUID(), "Tower A");
     private final Building towerB = new Building(UUID.randomUUID(), "Tower B");
     private InMemoryBuildingRepository buildingRepo = InMemoryBuildingRepository.getInstance();
-    private Place NationalPark = Place.withName("Bangkok Tower Park");
+    private Place nationalPark = Place.withName("Bangkok Tower Park");
 
     @Before
     public void setUp() throws Exception {
-        towerA.setPlace(NationalPark);
-        towerB.setPlace(NationalPark);
+        towerA.setPlace(nationalPark);
+        towerB.setPlace(nationalPark);
         buildingRepo.save(towerA);
         buildingRepo.save(towerB);
     }
@@ -56,7 +56,7 @@ public class InMemoryBuildingRepositoryTest {
     }
 
     @Test
-    public void testFindBuildingByUUID() throws Exception {
+    public void testFindBuildingByUuid() throws Exception {
         assertEquals(towerA, buildingRepo.findByUUID(towerA.getId()));
         assertEquals(towerB, buildingRepo.findByUUID(towerB.getId()));
         assertEquals(null, buildingRepo.findByUUID(UUID.randomUUID()));
@@ -65,7 +65,7 @@ public class InMemoryBuildingRepositoryTest {
     @Test
     public void testUpdate() throws Exception {
         Building towerANewName = new Building(towerA.getId(), "Tower I");
-        towerANewName.setPlace(NationalPark);
+        towerANewName.setPlace(nationalPark);
 
         buildingRepo.update(towerANewName);
 
@@ -79,7 +79,7 @@ public class InMemoryBuildingRepositoryTest {
 
     @Test
     public void testFindBuildingInPlace() throws Exception {
-        List<Building> buildingInPlace = buildingRepo.findByPlaceUUID(NationalPark.getId());
+        List<Building> buildingInPlace = buildingRepo.findByPlaceUUID(nationalPark.getId());
 
         assertTrue(buildingInPlace.size() == 2);
         assertTrue(buildingInPlace.contains(towerA));
@@ -88,12 +88,12 @@ public class InMemoryBuildingRepositoryTest {
 
     @Test
     public void testFindBuildingInPlaceByName() throws Exception {
-        List<Building> buildingInPlace = buildingRepo.findByPlaceUUIDAndBuildingName(NationalPark.getId(), "A");
+        List<Building> buildingInPlace = buildingRepo.findByPlaceUUIDAndBuildingName(nationalPark.getId(), "A");
 
         assertTrue(buildingInPlace.size() == 1);
         assertTrue(buildingInPlace.contains(towerA));
 
-        List<Building> emptyBuildingList = buildingRepo.findByPlaceUUIDAndBuildingName(NationalPark.getId(), "C");
+        List<Building> emptyBuildingList = buildingRepo.findByPlaceUUIDAndBuildingName(nationalPark.getId(), "C");
 
         assertTrue(emptyBuildingList == null);
     }

@@ -20,10 +20,11 @@ package th.or.nectec.tanrabad.entity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import th.or.nectec.tanrabad.entity.field.Location;
-import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 
 import java.util.UUID;
+
+import th.or.nectec.tanrabad.entity.field.Location;
+import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -31,12 +32,12 @@ import static org.junit.Assert.assertNotEquals;
 @RunWith(JUnit4.class)
 public class PlaceTest {
 
-    public static final UUID BANGPHAI_UUID = UUID.randomUUID();
-    public static final String BANGPHAI_NAME = "บางไผ่";
-    public static final int BANGPHAI_TYPE = PlaceType.VILLAGE_COMMUNITY;
+    private static final UUID BANGPHAI_UUID = UUID.randomUUID();
+    private static final String BANGPHAI_NAME = "บางไผ่";
+    private static final int BANGPHAI_TYPE = PlaceType.VILLAGE_COMMUNITY;
     private final Place place1 = new Place(BANGPHAI_UUID, BANGPHAI_NAME);
     private final Place place2 = new Place(BANGPHAI_UUID, BANGPHAI_NAME);
-    private Location location = new Location(14.078606, 100.603120);
+    private final Location location = new Location(14.078606, 100.603120);
 
     @Test
     public void testWithName() {

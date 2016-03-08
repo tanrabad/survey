@@ -18,15 +18,17 @@
 package th.or.nectec.tanrabad.entity;
 
 import org.joda.time.DateTime;
-import th.or.nectec.tanrabad.entity.field.Location;
-import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import th.or.nectec.tanrabad.entity.field.Location;
+import th.or.nectec.tanrabad.entity.lookup.ContainerType;
+
 public class Survey extends Entity implements LocationEntity, Comparable<Survey> {
-    private User user;
+    private final User user;
+    private final UUID surveyId;
     private Building surveyBuilding;
     private int residentCount;
     private List<SurveyDetail> indoorDetails;
@@ -34,7 +36,6 @@ public class Survey extends Entity implements LocationEntity, Comparable<Survey>
     private DateTime startTimestamp;
     private DateTime finishTimestamp;
     private Location location;
-    private UUID surveyId;
 
     public Survey(UUID surveyId, User user, Building surveyBuilding) {
         this.surveyId = surveyId;
@@ -168,11 +169,11 @@ public class Survey extends Entity implements LocationEntity, Comparable<Survey>
 
         public static final Building DEFAULT_BUILDING = Building.withName("default");
         public static final User TESTER = User.fromUsername("tester");
-        private List<SurveyDetail> indoor = new ArrayList<>();
-        private List<SurveyDetail> outdoor = new ArrayList<>();
+        private final List<SurveyDetail> indoor = new ArrayList<>();
+        private final List<SurveyDetail> outdoor = new ArrayList<>();
+        private final UUID surveyId;
         private int resident = 0;
         private User surveyor = TESTER;
-        private UUID surveyId;
         private Building building = DEFAULT_BUILDING;
         private Location location;
         private DateTime startTimeStamp;

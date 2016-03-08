@@ -27,11 +27,11 @@ import static org.junit.Assert.assertNotEquals;
 @RunWith(JUnit4.class)
 public class UserTest {
 
-    public static final String AUSTIN_USERNAME = "austin1023";
-    public static final String AUSTIN_FIRSTNAME = "Austin";
-    public static final String AUSTIN_LASTNAME = "Kydd";
-    public static final String AUSTIN_EMAIL = "austin.k@gmail.com";
-    public static final int AUSTIN_ORGANIZATION_ID = 201;
+    private static final String AUSTIN_USERNAME = "austin1023";
+    private static final String AUSTIN_FIRSTNAME = "Austin";
+    private static final String AUSTIN_LASTNAME = "Kydd";
+    private static final String AUSTIN_EMAIL = "austin.k@gmail.com";
+    private static final int AUSTIN_ORGANIZATION_ID = 201;
     private final User austin = new User(AUSTIN_USERNAME);
     private final User austin2 = new User(AUSTIN_USERNAME);
 

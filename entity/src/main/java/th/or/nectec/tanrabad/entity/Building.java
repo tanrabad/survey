@@ -17,13 +17,13 @@
 
 package th.or.nectec.tanrabad.entity;
 
-import th.or.nectec.tanrabad.entity.field.Location;
-
 import java.util.UUID;
+
+import th.or.nectec.tanrabad.entity.field.Location;
 
 public class Building extends Entity implements LocationEntity, Comparable<Building> {
 
-    private UUID id;
+    private final UUID id;
     private String name;
     private UUID placeId;
     private Place place;

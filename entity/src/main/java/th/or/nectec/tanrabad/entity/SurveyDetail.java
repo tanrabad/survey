@@ -17,19 +17,19 @@
 
 package th.or.nectec.tanrabad.entity;
 
-import th.or.nectec.tanrabad.entity.lookup.ContainerType;
-
 import java.util.UUID;
 
+import th.or.nectec.tanrabad.entity.lookup.ContainerType;
+
 public class SurveyDetail implements Comparable {
-    private final UUID surveyDetailID;
+    private final UUID surveyDetailId;
     private final ContainerType containerType;
     private int totalContainer;
     private int foundLarvaContainer;
 
-    public SurveyDetail(UUID surveyDetailID, ContainerType containerType, int totalContainer, int foundLarvaContainer) {
+    public SurveyDetail(UUID surveyDetailId, ContainerType containerType, int totalContainer, int foundLarvaContainer) {
         this.containerType = containerType;
-        this.surveyDetailID = surveyDetailID;
+        this.surveyDetailId = surveyDetailId;
         setContainerCount(totalContainer, foundLarvaContainer);
     }
 
@@ -41,7 +41,7 @@ public class SurveyDetail implements Comparable {
     }
 
     public UUID getId() {
-        return surveyDetailID;
+        return surveyDetailId;
     }
 
     public ContainerType getContainerType() {
@@ -71,18 +71,18 @@ public class SurveyDetail implements Comparable {
         if (foundLarvaContainer != that.foundLarvaContainer) return false;
         if (containerType != null ? !containerType.equals(that.containerType) : that.containerType != null)
             return false;
-        return surveyDetailID != null ? surveyDetailID.equals(that.surveyDetailID) : that.surveyDetailID == null;
+        return surveyDetailId != null ? surveyDetailId.equals(that.surveyDetailId) : that.surveyDetailId == null;
 
     }
 
     @Override
     public String toString() {
-        return "SurveyDetail{" +
-                "containerType=" + containerType +
-                ", totalContainer=" + totalContainer +
-                ", foundLarvaContainer=" + foundLarvaContainer +
-                ", surveyDetailID=" + surveyDetailID +
-                '}';
+        return "SurveyDetail{"
+                + "containerType=" + containerType
+                + ", totalContainer=" + totalContainer
+                + ", foundLarvaContainer=" + foundLarvaContainer
+                + ", surveyDetailId=" + surveyDetailId
+                + '}';
     }
 
     @Override

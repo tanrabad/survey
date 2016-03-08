@@ -22,7 +22,7 @@ import org.joda.time.DateTime;
 
 public class Entity {
 
-    protected DateTime updateTimestamp;
+    DateTime updateTimestamp;
 
     public DateTime getUpdateTimestamp() {
         return updateTimestamp;

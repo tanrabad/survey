@@ -21,17 +21,18 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 
 import java.util.UUID;
+
+import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 
 @RunWith(JUnit4.class)
 public class SurveyDetailTest {
 
-    private ContainerType น้ำใช้ = new ContainerType(1, "น้ำใช้");
+    private final ContainerType น้ำใช้ = new ContainerType(1, "น้ำใช้");
 
     @Test(expected = SurveyDetail.ContainerFoundLarvaOverTotalException.class)
-    public void ContainerFoundLarvaMoreThanTotalMustThrowException() throws Exception {
+    public void ContainerFoundLarvaMoreThanTotalMustThrowException() {
         new SurveyDetail(UUID.randomUUID(), น้ำใช้, 2, 10);
     }
 

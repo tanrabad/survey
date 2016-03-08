@@ -21,9 +21,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import th.or.nectec.tanrabad.entity.field.Location;
 
 import java.util.UUID;
+
+import th.or.nectec.tanrabad.entity.field.Location;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -31,14 +32,14 @@ import static org.junit.Assert.assertNotEquals;
 @RunWith(JUnit4.class)
 public class BuildingTest {
 
-    public static final UUID BUILDING_UUID = UUID.randomUUID();
-    public static final String BUILDING_NAME = "โบสถ์ใหญ่";
+    private static final UUID BUILDING_UUID = UUID.randomUUID();
+    private static final String BUILDING_NAME = "โบสถ์ใหญ่";
 
     private Place saintMarry;
     private Building mainChurch;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         saintMarry = Place.withName("วิหารเซนต์เมรี่");
         mainChurch = new Building(BUILDING_UUID, BUILDING_NAME);
         mainChurch.setPlace(saintMarry);

@@ -18,8 +18,8 @@
 package th.or.nectec.tanrabad.entity.field;
 
 public class Location {
-    double latitude;
-    double longitude;
+    private double latitude;
+    private double longitude;
 
     public Location(double latitude, double longitude) {
         setLatitude(latitude);
@@ -30,7 +30,7 @@ public class Location {
         return latitude;
     }
 
-    protected void setLatitude(double latitude) {
+    private void setLatitude(double latitude) {
         if (latitude < -90f || latitude > 90f)
             throw new IllegalArgumentException("-90 <= Latitude <= 90, Your values is " + latitude);
         this.latitude = latitude;
@@ -40,7 +40,7 @@ public class Location {
         return longitude;
     }
 
-    protected void setLongitude(double longitude) {
+    private void setLongitude(double longitude) {
         if (longitude < -180f || longitude > 180f)
             throw new IllegalArgumentException("-180 <= longitude <= 180, Your value is " + longitude);
         this.longitude = longitude;
@@ -57,9 +57,9 @@ public class Location {
 
     @Override
     public String toString() {
-        return "Location{" +
-                "latitude=" + latitude +
-                ", longitude=" + longitude +
-                '}';
+        return "Location{"
+                + "latitude=" + latitude
+                + ", longitude=" + longitude
+                + '}';
     }
 }

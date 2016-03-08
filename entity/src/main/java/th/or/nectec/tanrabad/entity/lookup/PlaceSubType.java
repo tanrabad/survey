@@ -25,9 +25,9 @@ public class PlaceSubType extends Entity implements ReferenceEntity {
     public static final int TEMPLE = 13;
     public static final int CHURCH = 14;
     public static final int MOSQUE = 15;
-    private int id;
-    private String name;
-    private int placeTypeId;
+    private final int id;
+    private final String name;
+    private final int placeTypeId;
 
     public PlaceSubType(int id, String name, int placeTypeId) {
         this.id = id;

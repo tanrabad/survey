@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Polygon {
-    private List<Location> boundary;
-    private List<Location>[] holes;
+    private final List<Location> boundary;
+    private final List<Location>[] holes;
 
     public Polygon(List<Location> boundary, List<Location>[] holes) {
         this.boundary = boundary;
@@ -41,9 +41,9 @@ public class Polygon {
 
     @Override
     public String toString() {
-        return "Polygon{" +
-                "boundary=" + boundary +
-                ", holes=" + Arrays.toString(holes) +
-                '}';
+        return "Polygon{"
+                + "boundary=" + boundary
+                + ", holes=" + Arrays.toString(holes)
+                + '}';
     }
 }

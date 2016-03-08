@@ -27,8 +27,8 @@ public class PlaceType extends Entity implements ReferenceEntity {
     public static final int SCHOOL = 3;
     public static final int HOSPITAL = 4;
     public static final int FACTORY = 5;
-    private int id;
-    private String name;
+    private final int id;
+    private final String name;
 
     public PlaceType(int id, String name) {
         this.id = id;

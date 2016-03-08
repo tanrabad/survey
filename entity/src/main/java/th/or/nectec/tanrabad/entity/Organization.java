@@ -23,8 +23,8 @@ public class Organization {
     public static final int AREA_LEVEL_ID_AMPHUR = 2;
     public static final int AREA_LEVEL_ID_TUMBON = 3;
 
-    private int organizationId;
-    private String name;
+    private final int organizationId;
+    private final String name;
     private int areaLevelId;
     private String address;
     private String subdistrictCode;

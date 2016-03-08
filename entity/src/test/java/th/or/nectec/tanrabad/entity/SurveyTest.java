@@ -20,12 +20,13 @@ package th.or.nectec.tanrabad.entity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import th.or.nectec.tanrabad.entity.field.Location;
-import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import th.or.nectec.tanrabad.entity.field.Location;
+import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 
 import static org.junit.Assert.assertEquals;
 
@@ -34,11 +35,10 @@ public class SurveyTest {
 
     private final User user1 = User.fromUsername("Tom50");
     private final Building building1 = Building.withName("โรงเรียนเซนต์เมรี่");
-    private final int resident = 2250;
     private final Survey survey1 = new Survey(UUID.randomUUID(), user1, building1);
     private final ContainerType น้ำใช้ = new ContainerType(1, "น้ำใช้");
     private final ContainerType น้ำดื่ม = new ContainerType(2, "น้ำดื่ม");
-    private Location location = new Location(14.078606, 100.603120);
+    private final Location location = new Location(14.078606, 100.603120);
 
     @Test
     public void testGetUser() {
@@ -47,8 +47,8 @@ public class SurveyTest {
 
     @Test
     public void testSetThenGetResidentCount() {
-        survey1.setResidentCount(resident);
-        assertEquals(resident, survey1.getResidentCount());
+        survey1.setResidentCount(2250);
+        assertEquals(2250, survey1.getResidentCount());
     }
 
     @Test

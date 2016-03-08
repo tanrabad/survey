@@ -29,14 +29,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import java.util.HashMap;
+
 import th.or.nectec.tanrabad.entity.SurveyDetail;
 import th.or.nectec.tanrabad.entity.lookup.ContainerType;
-import th.or.nectec.tanrabad.entity.utils.UUIDUtils;
+import th.or.nectec.tanrabad.entity.utils.UuidUtils;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.utils.MacAddressUtils;
 import th.or.nectec.tanrabad.survey.utils.android.ResourceUtils;
-
-import java.util.HashMap;
 
 public class SurveyContainerView extends RelativeLayout {
     SurveyDetail surveyDetail;
@@ -153,7 +154,7 @@ public class SurveyContainerView extends RelativeLayout {
             if (getTotalValue() == 0 && getFoundValue() == 0) {
                 return null;
             }
-            return new SurveyDetail(UUIDUtils.generateOrdered(MacAddressUtils.getMacAddress(getContext())),
+            return new SurveyDetail(UuidUtils.generateOrdered(MacAddressUtils.getMacAddress(getContext())),
                     containerType, getTotalValue(), getFoundValue());
         }
     }

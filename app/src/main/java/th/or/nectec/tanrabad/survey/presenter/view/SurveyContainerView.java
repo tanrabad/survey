@@ -19,6 +19,7 @@ package th.or.nectec.tanrabad.survey.presenter.view;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.annotation.DrawableRes;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -51,6 +52,10 @@ public class SurveyContainerView extends RelativeLayout {
             return true;
         }
     };
+
+    public SurveyContainerView(Context context) {
+        this(context, new ContainerType(1, "น้ำใช้")); //this for Layout Tool of Android Studio
+    }
 
     public SurveyContainerView(Context context, ContainerType containerType) {
         this(context, null, containerType);
@@ -134,6 +139,8 @@ public class SurveyContainerView extends RelativeLayout {
         containerType = container;
         containerTypeView.setText(container.getName());
         containerIconView.setImageResource(ContainerIconMapping.getContainerIcon(container));
+        foundContainerView.setContentDescription(container.getName());
+        totalContainerView.setContentDescription(container.getName());
     }
 
 
@@ -189,6 +196,7 @@ public class SurveyContainerView extends RelativeLayout {
             return iconMapper;
         }
 
+        @DrawableRes
         private static int getContainerIcon(ContainerType containerType) {
             if (!containerIconMapper.containsKey(containerType.getId()))
                 return R.mipmap.ic_building_home_black;

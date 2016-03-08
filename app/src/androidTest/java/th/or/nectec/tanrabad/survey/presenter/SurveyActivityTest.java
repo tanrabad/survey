@@ -23,7 +23,10 @@ import android.support.test.espresso.intent.Intents;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.view.View;
+import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
+import org.hamcrest.core.AllOf;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -92,7 +95,13 @@ public class SurveyActivityTest extends TanrabadEspressoTestBase {
     public void surveySuccessThenTouchSaveShouldOpenIntentSurveyBuildingHistoryPage() {
         onView(withId(R.id.resident_count))
                 .perform(replaceText("9"));
-        waitingFor(4000);
+
+        onView(container(Location.INDOOR, "น้ำใช้", Field.TOTAL))
+                .perform(replaceText("100"));
+        onView(container(Location.OUTDOOR, "น้ำดื่ม", Field.FOUND))
+                .perform(replaceText("20"));
+        waitingFor(2000);
+
         onView(withId(R.id.save))
                 .perform(click());
 
@@ -100,5 +109,35 @@ public class SurveyActivityTest extends TanrabadEspressoTestBase {
                 hasComponent(new ComponentName(mActivity, SurveyBuildingHistoryActivity.class)),
                 hasExtra(SurveyBuildingHistoryActivity.PLACE_UUID_ARG, "935b9aeb-6522-461e-994f-f9e9006c4a33")
         ));
+    }
+
+    private Matcher<View> container(Location location, String containerType, Field field) {
+        return AllOf.allOf(
+                withParent(withParent(withParent(withId(location.locationLayoutId)))),
+                withId(field.editTextId),
+                withContentDescription(containerType)
+        );
+    }
+
+    enum Location {
+        INDOOR(R.id.indoor_container),
+        OUTDOOR(R.id.outdoor_container);
+
+        final int locationLayoutId;
+
+        Location(int locationLayoutId) {
+            this.locationLayoutId = locationLayoutId;
+        }
+    }
+
+    enum Field {
+        TOTAL(R.id.total_container),
+        FOUND(R.id.found_larvae_container),;
+
+        final int editTextId;
+
+        Field(int editTextId) {
+            this.editTextId = editTextId;
+        }
     }
 }

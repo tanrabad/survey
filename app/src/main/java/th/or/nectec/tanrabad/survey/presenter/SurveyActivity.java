@@ -21,7 +21,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -32,25 +31,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import th.or.nectec.tanrabad.domain.survey.ContainerController;
-import th.or.nectec.tanrabad.domain.survey.ContainerPresenter;
-import th.or.nectec.tanrabad.domain.survey.SurveyController;
-import th.or.nectec.tanrabad.domain.survey.SurveyPresenter;
-import th.or.nectec.tanrabad.domain.survey.SurveyRepository;
-import th.or.nectec.tanrabad.domain.survey.SurveySavePresenter;
-import th.or.nectec.tanrabad.domain.survey.SurveySaver;
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.Survey;
-import th.or.nectec.tanrabad.entity.SurveyDetail;
-import th.or.nectec.tanrabad.entity.User;
+import th.or.nectec.tanrabad.domain.survey.*;
+import th.or.nectec.tanrabad.entity.*;
 import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
@@ -74,6 +56,11 @@ import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 import th.or.nectec.tanrabad.survey.validator.SaveSurveyValidator;
 import th.or.nectec.tanrabad.survey.validator.ValidatorException;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class SurveyActivity extends TanrabadActivity implements ContainerPresenter, SurveyPresenter,
         SurveySavePresenter {
@@ -106,11 +93,6 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         setupToolbar();
         setupHomeButton();
         enableGps();
-    }
-
-    private void setupToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
     }
 
     private void enableGps() {
@@ -290,17 +272,17 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     @Override
     public void alertUserNotFound() {
-        Toast.makeText(SurveyActivity.this, R.string.user_not_found, Toast.LENGTH_LONG).show();
+        Alert.highLevel().show(R.string.user_not_found);
     }
 
     @Override
     public void alertBuildingNotFound() {
-        Toast.makeText(SurveyActivity.this, R.string.building_not_found, Toast.LENGTH_LONG).show();
+        Alert.highLevel().show(R.string.building_not_found);
     }
 
     @Override
     public void alertPlaceNotFound() {
-        Toast.makeText(SurveyActivity.this, "ไม่พบข้อมูลสถานที่", Toast.LENGTH_LONG).show();
+        Alert.highLevel().show(R.string.place_not_found);
     }
 
     private void setBuildingInfo() {
@@ -325,50 +307,35 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     @Override
     public void displayContainerList(List<ContainerType> containers) {
-        initContainerView();
+        indoorContainerLayout.removeAllViews();
+        outdoorContainerLayout.removeAllViews();
+        indoorContainerViews = new HashMap<>();
+        outdoorContainerViews = new HashMap<>();
+
         for (ContainerType eachContainerType : containers) {
-            buildIndoorContainerView(eachContainerType);
-            buildOutdoorContainerView(eachContainerType);
+            displayContainerView(eachContainerType, indoorContainerViews, indoorContainerLayout);
+            displayContainerView(eachContainerType, outdoorContainerViews, outdoorContainerLayout);
         }
     }
 
     @Override
     public void alertContainerNotFound() {
-        Toast.makeText(SurveyActivity.this, R.string.container_not_found, Toast.LENGTH_LONG).show();
+        Alert.highLevel().show(R.string.container_not_found);
     }
 
-    private void initContainerView() {
-        indoorContainerLayout.removeAllViews();
-        outdoorContainerLayout.removeAllViews();
-        indoorContainerViews = new HashMap<>();
-        outdoorContainerViews = new HashMap<>();
+    private void displayContainerView(ContainerType containerType, HashMap<Integer, SurveyContainerView> containerViews,
+                                      LinearLayout layout) {
+        SurveyContainerView view = new SurveyContainerView(this, containerType);
+        layout.addView(view);
+        containerViews.put(containerType.getId(), view);
+        view.startAnimation(containerViewEnterAnimation());
     }
 
-    private void buildIndoorContainerView(ContainerType containerType) {
-        SurveyContainerView surveyContainerView = buildContainerView(containerType);
-        indoorContainerViews.put(containerType.getId(), surveyContainerView);
-        indoorContainerLayout.addView(surveyContainerView);
-        surveyContainerView.startAnimation(getContainerViewAnimation());
-    }
-
-    private SurveyContainerView buildContainerView(ContainerType containerType) {
-        SurveyContainerView surveyContainerView = new SurveyContainerView(SurveyActivity.this);
-        surveyContainerView.setContainerType(containerType);
-        return surveyContainerView;
-    }
-
-    private Animation getContainerViewAnimation() {
+    private Animation containerViewEnterAnimation() {
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.scale_in);
         animation.setStartOffset(containerViewAnimOffset);
         containerViewAnimOffset += offsetStep;
         return animation;
-    }
-
-    private void buildOutdoorContainerView(ContainerType containerType) {
-        SurveyContainerView surveyContainerView = buildContainerView(containerType);
-        outdoorContainerViews.put(containerType.getId(), surveyContainerView);
-        outdoorContainerLayout.addView(surveyContainerView);
-        surveyContainerView.startAnimation(getContainerViewAnimation());
     }
 
     @Override

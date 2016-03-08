@@ -17,23 +17,23 @@
 
 package th.or.nectec.tanrabad.survey.presenter.view;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Color;
-import android.os.Build;
-import android.support.annotation.ColorRes;
-import android.support.annotation.DrawableRes;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.*;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import th.or.nectec.tanrabad.entity.SurveyDetail;
 import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 import th.or.nectec.tanrabad.entity.utils.UUIDUtils;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.utils.MacAddressUtils;
+import th.or.nectec.tanrabad.survey.utils.android.ResourceUtils;
 
 import java.util.HashMap;
 
@@ -52,14 +52,15 @@ public class SurveyContainerView extends RelativeLayout {
         }
     };
 
-    public SurveyContainerView(Context context) {
-        this(context, null);
+    public SurveyContainerView(Context context, ContainerType containerType) {
+        this(context, null, containerType);
     }
 
-    public SurveyContainerView(Context context, AttributeSet attrs) {
+    public SurveyContainerView(Context context, AttributeSet attrs, ContainerType containerType) {
         super(context, attrs);
         initInflate();
         initInstances();
+        setContainerType(containerType);
     }
 
     private void initInflate() {
@@ -129,15 +130,12 @@ public class SurveyContainerView extends RelativeLayout {
         }
     }
 
-    public void setContainerType(ContainerType container) {
+    private void setContainerType(ContainerType container) {
         containerType = container;
         containerTypeView.setText(container.getName());
-        setContainerIcon(ContainerIconMapping.getContainerIcon(container));
+        containerIconView.setImageResource(ContainerIconMapping.getContainerIcon(container));
     }
 
-    public void setContainerIcon(@DrawableRes int iconResource) {
-        containerIconView.setImageResource(iconResource);
-    }
 
     public SurveyDetail getSurveyDetail() {
         if (surveyDetail != null) {
@@ -165,21 +163,12 @@ public class SurveyContainerView extends RelativeLayout {
 
     public boolean isValid() {
         if (getFoundValue() > getTotalValue()) {
-            setBackgroundColor(getColor(R.color.pink_transparent_30));
+            setBackgroundColor(ResourceUtils.from(getContext()).getColor(R.color.pink_transparent_30));
             return false;
         } else {
             setBackgroundColor(Color.TRANSPARENT);
             return true;
         }
-    }
-
-    @TargetApi(Build.VERSION_CODES.M)
-    private int getColor(@ColorRes int color) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            return getResources().getColor(color, getContext().getTheme());
-        else
-            //noinspection deprecation
-            return getResources().getColor(color);
     }
 
     private static class ContainerIconMapping {

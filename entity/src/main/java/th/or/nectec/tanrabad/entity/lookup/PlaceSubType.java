@@ -18,8 +18,9 @@
 package th.or.nectec.tanrabad.entity.lookup;
 
 import th.or.nectec.tanrabad.entity.Entity;
+import th.or.nectec.tanrabad.entity.ReferenceEntity;
 
-public class PlaceSubType extends Entity {
+public class PlaceSubType extends Entity implements ReferenceEntity {
     public static final int ชุมชนแออัด = 10;
     public static final int TEMPLE = 13;
     public static final int CHURCH = 14;
@@ -34,10 +35,12 @@ public class PlaceSubType extends Entity {
         this.placeTypeId = placeTypeId;
     }
 
+    @Override
     public int getId() {
         return id;
     }
 
+    @Override
     public String getName() {
         return name;
     }
@@ -59,10 +62,10 @@ public class PlaceSubType extends Entity {
 
     @Override
     public String toString() {
-        return "PlaceSubType{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", placeTypeId=" + placeTypeId +
-                '}';
+        return "PlaceSubType{"
+                + "id=" + id
+                + ", name='" + name + '\''
+                + ", placeTypeId=" + placeTypeId
+                + '}';
     }
 }

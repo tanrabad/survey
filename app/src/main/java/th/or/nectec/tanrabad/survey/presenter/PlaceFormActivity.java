@@ -147,13 +147,13 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     }
 
     private void setupPlaceTypeSelector() {
-        final PlaceTypeForAddAdapter placeAdapter = new PlaceTypeForAddAdapter(
-                this, AccountUtils.canAddOrEditVillage());
+        final ReferenceEntityAdapter placeAdapter =
+                ReferenceEntityAdapter.buildPlaceTypeForAdd(this, AccountUtils.canAddOrEditVillage());
         placeTypeSelector.setAdapter(placeAdapter);
         placeTypeSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                setupPlaceSubtypeSpinner(placeAdapter.getItem(i));
+                setupPlaceSubtypeSpinner((PlaceType) placeAdapter.getItem(i));
             }
 
             @Override
@@ -162,13 +162,13 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
             }
         });
 
-        placeTypeSelector.setSelection(placeAdapter.getPlaceTypePosition(getPlaceTypeId()));
+        placeTypeSelector.setSelection(placeAdapter.getPosition(getPlaceTypeId()));
     }
 
     private void setupPlaceSubtypeSpinner(PlaceType selectedPlaceType) {
         placeSubtypeLabel.setText(String.format(getString(R.string.place_subtype_label), selectedPlaceType.getName()));
-        PlaceSubTypeAdapter placeSubTypeAdapter = new PlaceSubTypeAdapter(
-                PlaceFormActivity.this, selectedPlaceType.getId());
+        ReferenceEntityAdapter placeSubTypeAdapter =
+                ReferenceEntityAdapter.buildPlaceSubType(this, selectedPlaceType.getId());
         placeSubtypeSelector.setAdapter(placeSubTypeAdapter);
         if (placeSubTypeAdapter.getCount() > 0) {
             placeSubtypeLayout.setVisibility(View.VISIBLE);

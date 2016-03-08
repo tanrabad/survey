@@ -23,40 +23,61 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import th.or.nectec.tanrabad.entity.lookup.PlaceType;
-import th.or.nectec.tanrabad.survey.R;
-import th.or.nectec.tanrabad.survey.repository.BrokerPlaceTypeRepository;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class PlaceTypeAdapter extends BaseAdapter {
+import th.or.nectec.tanrabad.entity.ReferenceEntity;
+import th.or.nectec.tanrabad.entity.lookup.PlaceType;
+import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
+import th.or.nectec.tanrabad.survey.repository.BrokerPlaceTypeRepository;
+
+public class ReferenceEntityAdapter extends BaseAdapter {
 
     Context context;
 
-    ArrayList<PlaceType> placeTypes = new ArrayList<>();
+    List<ReferenceEntity> listData = new ArrayList<>();
 
-    public PlaceTypeAdapter(Context context) {
+    public ReferenceEntityAdapter(Context context, List<ReferenceEntity> data) {
         this.context = context;
+        listData = data;
+    }
 
-        ArrayList<PlaceType> placeTypes = new ArrayList<>();
+    public static ReferenceEntityAdapter buildPlaceType(Context context) {
+        List<ReferenceEntity> placeTypes = new ArrayList<>();
         placeTypes.add(new PlaceType(-1, context.getString(R.string.not_define_place_type)));
         placeTypes.addAll(BrokerPlaceTypeRepository.getInstance().find());
-        this.placeTypes.addAll(placeTypes);
+        return new ReferenceEntityAdapter(context, placeTypes);
+    }
+
+    public static ReferenceEntityAdapter buildPlaceTypeForAdd(Context context, boolean canAddVillage) {
+        List<ReferenceEntity> placeTypes = new ArrayList<>();
+        placeTypes.addAll(BrokerPlaceTypeRepository.getInstance().find());
+        if (!canAddVillage)
+            placeTypes.remove(new PlaceType(1, "หมู่บ้าน/ชุมชน"));
+        return new ReferenceEntityAdapter(context, placeTypes);
+    }
+
+    public static ReferenceEntityAdapter buildPlaceSubType(Context context, int placeTypeId) {
+        List<ReferenceEntity> placeSubTypes = new ArrayList<>();
+        placeSubTypes.addAll(BrokerPlaceSubTypeRepository.getInstance().findByPlaceTypeId(placeTypeId));
+        return new ReferenceEntityAdapter(context, placeSubTypes);
     }
 
     @Override
     public int getCount() {
-        return placeTypes.size();
+        return listData.size();
     }
 
     @Override
-    public PlaceType getItem(int i) {
-        return placeTypes.get(i);
+    public ReferenceEntity getItem(int i) {
+        return listData.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return placeTypes.get(i).getId();
+        return listData.get(i).getId();
     }
 
     @Override
@@ -68,15 +89,23 @@ public class PlaceTypeAdapter extends BaseAdapter {
             view = inflater.inflate(R.layout.list_item_spinner, parent, false);
             holder = new ViewHolder();
             holder.nameView = (TextView) view.findViewById(R.id.text_item);
-
             view.setTag(holder);
         } else {
             holder = (ViewHolder) view.getTag();
         }
-        holder.nameView.setText(placeTypes.get(i).getName());
+        holder.nameView.setText(listData.get(i).getName());
         view.setTag(holder);
 
         return view;
+    }
+
+    public int getPosition(int id) {
+        for (ReferenceEntity placeSubType : listData) {
+            if (placeSubType.getId() == id) {
+                return listData.indexOf(placeSubType);
+            }
+        }
+        return -1;
     }
 
     public class ViewHolder {

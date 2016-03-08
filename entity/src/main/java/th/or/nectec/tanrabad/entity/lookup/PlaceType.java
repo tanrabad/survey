@@ -18,8 +18,9 @@
 package th.or.nectec.tanrabad.entity.lookup;
 
 import th.or.nectec.tanrabad.entity.Entity;
+import th.or.nectec.tanrabad.entity.ReferenceEntity;
 
-public class PlaceType extends Entity {
+public class PlaceType extends Entity implements ReferenceEntity {
 
     public static final int VILLAGE_COMMUNITY = 1;
     public static final int WORSHIP = 2;
@@ -34,10 +35,12 @@ public class PlaceType extends Entity {
         this.name = name;
     }
 
+    @Override
     public int getId() {
         return id;
     }
 
+    @Override
     public String getName() {
         return name;
     }

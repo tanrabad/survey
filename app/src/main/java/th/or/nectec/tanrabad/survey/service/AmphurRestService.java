@@ -44,10 +44,12 @@ public class AmphurRestService extends AbsRestService<District> {
         return "geostd=4326&" + getApiFilterParam();
     }
 
+    @Override
     protected String getPath() {
         return PATH;
     }
 
+    @Override
     protected List<District> jsonToEntityList(String responseBody) throws IOException {
         ArrayList<District> districtList = new ArrayList<>();
         List<JsonAmphur> jsonAmphurList = LoganSquare.parseList(responseBody, JsonAmphur.class);

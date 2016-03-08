@@ -35,6 +35,7 @@ import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.entity.lookup.PlaceSubType;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
+import th.or.nectec.tanrabad.survey.base.SurveyDbTestRule;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
 import th.or.nectec.tanrabad.survey.utils.time.ThaiDateTimeConverter;
 

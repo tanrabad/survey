@@ -23,16 +23,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-
 import th.or.nectec.tanrabad.domain.organization.OrganizationRepository;
 import th.or.nectec.tanrabad.entity.Organization;
 import th.or.nectec.tanrabad.entity.User;
+import th.or.nectec.tanrabad.survey.base.SurveyDbTestRule;
 
 import static org.junit.Assert.assertEquals;
 

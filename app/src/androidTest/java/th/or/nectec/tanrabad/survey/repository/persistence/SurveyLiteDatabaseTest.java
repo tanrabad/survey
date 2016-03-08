@@ -22,6 +22,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import org.junit.Rule;
 import org.junit.Test;
+import th.or.nectec.tanrabad.survey.base.SurveyDbTestRule;
 
 import java.io.File;
 

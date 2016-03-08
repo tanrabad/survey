@@ -21,41 +21,28 @@ import android.content.Context;
 import android.database.Cursor;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
-
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import th.or.nectec.tanrabad.domain.building.BuildingRepository;
+import th.or.nectec.tanrabad.domain.place.PlaceRepository;
+import th.or.nectec.tanrabad.domain.survey.ContainerTypeRepository;
+import th.or.nectec.tanrabad.domain.user.UserRepository;
+import th.or.nectec.tanrabad.entity.*;
+import th.or.nectec.tanrabad.entity.field.Location;
+import th.or.nectec.tanrabad.entity.lookup.ContainerType;
+import th.or.nectec.tanrabad.survey.base.SurveyDbTestRule;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import th.or.nectec.tanrabad.domain.user.UserRepository;
-import th.or.nectec.tanrabad.domain.building.BuildingRepository;
-import th.or.nectec.tanrabad.domain.place.PlaceRepository;
-import th.or.nectec.tanrabad.domain.survey.ContainerTypeRepository;
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.Survey;
-import th.or.nectec.tanrabad.entity.SurveyDetail;
-import th.or.nectec.tanrabad.entity.User;
-import th.or.nectec.tanrabad.entity.field.Location;
-import th.or.nectec.tanrabad.entity.lookup.ContainerType;
-
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static th.or.nectec.tanrabad.survey.repository.persistence.SurveyColumn.CHANGED_STATUS;
-import static th.or.nectec.tanrabad.survey.repository.persistence.SurveyColumn.CREATE_TIME;
-import static th.or.nectec.tanrabad.survey.repository.persistence.SurveyColumn.ID;
-import static th.or.nectec.tanrabad.survey.repository.persistence.SurveyColumn.LATITUDE;
-import static th.or.nectec.tanrabad.survey.repository.persistence.SurveyColumn.LONGITUDE;
-import static th.or.nectec.tanrabad.survey.repository.persistence.SurveyColumn.PERSON_COUNT;
-import static th.or.nectec.tanrabad.survey.repository.persistence.SurveyColumn.SURVEYOR;
-import static th.or.nectec.tanrabad.survey.repository.persistence.SurveyColumn.UPDATE_TIME;
-import static th.or.nectec.tanrabad.survey.repository.persistence.SurveyColumn.wildcard;
+import static th.or.nectec.tanrabad.survey.repository.persistence.SurveyColumn.*;
 
 @RunWith(AndroidJUnit4.class)
 public class DbSurveyRepositoryTest {

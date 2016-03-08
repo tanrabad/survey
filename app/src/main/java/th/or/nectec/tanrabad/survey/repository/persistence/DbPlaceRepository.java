@@ -33,7 +33,6 @@ import java.util.UUID;
 public class DbPlaceRepository extends DbRepository implements PlaceRepository, ChangedRepository<Place> {
 
     public static final String TABLE_NAME = "place";
-    public static final int ERROR_INSERT_ID = -1;
 
     public DbPlaceRepository(Context context) {
         super(context);
@@ -193,8 +192,6 @@ public class DbPlaceRepository extends DbRepository implements PlaceRepository, 
 
     private boolean updateByContentValues(ContentValues place) {
         SQLiteDatabase db = writableDatabase();
-        boolean isSuccess = updateByContentValues(db, place);
-        db.close();
-        return isSuccess;
+        return updateByContentValues(db, place);
     }
 }

@@ -21,17 +21,15 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
-import java.util.List;
-
 import th.or.nectec.tanrabad.domain.organization.OrganizationRepository;
 import th.or.nectec.tanrabad.entity.Organization;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
 
+import java.util.List;
+
 public class DbOrganizationRepository extends DbRepository implements OrganizationRepository {
 
     public static final String TABLE_NAME = "organization";
-    public static final int ERROR_INSERT_ID = -1;
 
     public DbOrganizationRepository(Context context) {
         super(context);

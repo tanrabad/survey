@@ -31,7 +31,6 @@ import java.util.List;
 public class DbContainerLocationRepository extends DbRepository implements ContainerLocationRepository {
 
     public static final String TABLE_NAME = "container_location";
-    public static final int ERROR_INSERT_ID = -1;
 
     public DbContainerLocationRepository(Context context) {
         super(context);

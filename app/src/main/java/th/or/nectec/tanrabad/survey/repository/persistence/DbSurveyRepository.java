@@ -43,7 +43,6 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
 
     public static final int INDOOR_CONTAINER_LOCATION = 1;
     public static final int OUTDOOR_CONTAINER_LOCATION = 2;
-    public static final int ERROR_INSERT_ID = -1;
     public static String TABLE_NAME = "survey";
     public static String DETAIL_TABLE_NAME = "survey_detail";
     private UserRepository userRepository;
@@ -88,7 +87,6 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
             surveySaveSuccess = false;
         } finally {
             db.endTransaction();
-            db.close();
         }
         return surveySaveSuccess;
     }
@@ -111,7 +109,6 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
             surveyUpdateSuccess = false;
         } finally {
             db.endTransaction();
-            db.close();
         }
         return surveyUpdateSuccess;
     }
@@ -422,8 +419,6 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
 
     private boolean updateByContentValues(ContentValues survey) {
         SQLiteDatabase db = writableDatabase();
-        boolean isSuccess = updateByContentValues(db, survey);
-        db.close();
-        return isSuccess;
+        return updateByContentValues(db, survey);
     }
 }

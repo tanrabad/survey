@@ -35,7 +35,6 @@ import java.util.UUID;
 public class DbBuildingRepository extends DbRepository implements BuildingRepository, ChangedRepository<Building> {
 
     public static final String TABLE_NAME = "building";
-    public static final int ERROR_INSERT_ID = -1;
     private PlaceRepository placeRepository;
 
     public DbBuildingRepository(Context context) {
@@ -188,8 +187,6 @@ public class DbBuildingRepository extends DbRepository implements BuildingReposi
 
     private boolean updateByContentValues(ContentValues place) {
         SQLiteDatabase db = writableDatabase();
-        boolean isSuccess = updateByContentValues(db, place);
-        db.close();
-        return isSuccess;
+        return updateByContentValues(db, place);
     }
 }

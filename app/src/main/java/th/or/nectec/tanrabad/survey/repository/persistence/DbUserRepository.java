@@ -21,19 +21,17 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
-import java.util.List;
-
 import th.or.nectec.tanrabad.domain.organization.OrganizationRepository;
 import th.or.nectec.tanrabad.domain.user.UserRepository;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.repository.BrokerOrganizationRepository;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
 
+import java.util.List;
+
 public class DbUserRepository extends DbRepository implements UserRepository {
 
     public static final String TABLE_NAME = "user_profile";
-    public static final int ERROR_INSERT_ID = -1;
     private OrganizationRepository organizationRepository;
 
     public DbUserRepository(Context context) {

@@ -330,9 +330,8 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
 
         placeTypeSelector.setEnabled(false);
 
-        if (!TextUtils.isEmpty(place.getSubdistrictCode())) {
+        if (!TextUtils.isEmpty(place.getSubdistrictCode()))
             addressSelect.setAddressCode(place.getSubdistrictCode());
-        }
 
         if (place.getLocation() != null)
             setupPreviewMapWithPosition(place.getLocation());

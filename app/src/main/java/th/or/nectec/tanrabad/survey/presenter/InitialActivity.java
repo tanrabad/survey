@@ -138,9 +138,9 @@ public class InitialActivity extends TanrabadActivity {
         else if (startingJob.equals(containerTypeUpdateJob))
             loadingText.setText("ค้นกระเป๋าโดเรม่อน");
         else if (startingJob.equals(containerLocationUpdateJob))
-            loadingText.setText("หาตำแหน่ง Dragon Ball");
+            loadingText.setText("หาตำแหน่งเป้าหมาย");
         else if (startingJob.equals(placeUpdateJob))
-            loadingText.setText("แสกนพื้นที่");
+            loadingText.setText("สแกนพื้นที่ปฎิบัติงาน");
         else if (startingJob.equals(buildingUpdateJob))
             loadingText.setText("เตรียมตัวกำจัดเหล่าร้าย");
     }

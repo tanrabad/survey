@@ -18,7 +18,7 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
        xmlns:tools="http://schemas.android.com/tools"
        android:layout_width="wrap_content"
-       android:layout_height="@dimen/container_view_min_height">
+       android:layout_height="@dimen/container_view_height">
 
     <View android:layout_width="match_parent"
           android:layout_height="1dp"

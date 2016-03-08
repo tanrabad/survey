@@ -114,6 +114,8 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     private void setupMap() {
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map_container);
+        if (mapFragment.getView() != null)
+            mapFragment.getView().setClickable(false);
     }
 
     private void setupViews() {
@@ -136,8 +138,9 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         editLocationButton = (Button) findViewById(R.id.edit_location);
         editLocationButton.setVisibility(View.GONE);
         editLocationButton.setOnClickListener(this);
-        findViewById(R.id.add_marker).setOnClickListener(this);
-
+        Button addMarker = (Button) findViewById(R.id.add_marker);
+        addMarker.setOnClickListener(this);
+        addMarker.setText(R.string.define_place_location);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }

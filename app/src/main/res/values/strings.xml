@@ -63,6 +63,7 @@
     <string name="add_location">เพิ่มพิกัด</string>
     <string name="edit_location">แก้ไขพิกัด</string>
     <string name="define_building_location">ระบุพิกัดอาคาร</string>
+    <string name="define_place_location">ระบุพิกัดสถานที่</string>
     <string name="remove_location">ลบพิกัด</string>
     <string name="please_define_location">กรุณาระบุพิกัด</string>
     <string name="please_define_building_location">กรุณาระบุพิกัดของอาคาร</string>

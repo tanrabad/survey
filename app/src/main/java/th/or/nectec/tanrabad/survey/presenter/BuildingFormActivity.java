@@ -114,6 +114,8 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
     private void setupMap() {
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map_container);
+        if (mapFragment.getView() != null)
+            mapFragment.getView().setClickable(false);
     }
 
     private void assignViews() {

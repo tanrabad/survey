@@ -17,11 +17,6 @@
 
 package th.or.nectec.tanrabad.survey.service;
 
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -30,16 +25,21 @@ import th.or.nectec.tanrabad.survey.BuildConfig;
 import th.or.nectec.tanrabad.survey.presenter.AccountUtils;
 import th.or.nectec.tanrabad.survey.service.http.Status;
 
-import static th.or.nectec.tanrabad.survey.service.http.Header.ACCEPT;
-import static th.or.nectec.tanrabad.survey.service.http.Header.ACCEPT_CHARSET;
-import static th.or.nectec.tanrabad.survey.service.http.Header.IF_MODIFIED_SINCE;
-import static th.or.nectec.tanrabad.survey.service.http.Header.LAST_MODIFIED;
-import static th.or.nectec.tanrabad.survey.service.http.Header.LINK;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static th.or.nectec.tanrabad.survey.service.http.Header.*;
 
 public abstract class AbsRestService<T> implements RestService<T> {
 
     public static final String BASE_API = BuildConfig.API_URL;
-    protected final OkHttpClient client = new OkHttpClient();
+    private static final int READ_WRITE_TIMEOUT = 10; //second
+    private static final int CONNECT_TIMEOUT = 5; //second
+
+    protected final OkHttpClient client;
     protected ServiceLastUpdate serviceLastUpdate;
     protected String baseApi;
     private User user;
@@ -53,6 +53,11 @@ public abstract class AbsRestService<T> implements RestService<T> {
         this.baseApi = baseApi;
         this.serviceLastUpdate = serviceLastUpdate;
         this.user = user;
+        client = new OkHttpClient.Builder()
+                .readTimeout(READ_WRITE_TIMEOUT, SECONDS)
+                .writeTimeout(READ_WRITE_TIMEOUT, SECONDS)
+                .connectTimeout(CONNECT_TIMEOUT, SECONDS)
+                .build();
     }
 
     protected String getApiFilterParam() {

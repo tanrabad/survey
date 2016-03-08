@@ -33,8 +33,24 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import th.or.nectec.tanrabad.domain.survey.*;
-import th.or.nectec.tanrabad.entity.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import th.or.nectec.tanrabad.domain.survey.ContainerController;
+import th.or.nectec.tanrabad.domain.survey.ContainerPresenter;
+import th.or.nectec.tanrabad.domain.survey.SurveyController;
+import th.or.nectec.tanrabad.domain.survey.SurveyPresenter;
+import th.or.nectec.tanrabad.domain.survey.SurveyRepository;
+import th.or.nectec.tanrabad.domain.survey.SurveySavePresenter;
+import th.or.nectec.tanrabad.domain.survey.SurveySaver;
+import th.or.nectec.tanrabad.entity.Building;
+import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.Survey;
+import th.or.nectec.tanrabad.entity.SurveyDetail;
+import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
@@ -58,11 +74,6 @@ import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 import th.or.nectec.tanrabad.survey.validator.SaveSurveyValidator;
 import th.or.nectec.tanrabad.survey.validator.ValidatorException;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class SurveyActivity extends TanrabadActivity implements ContainerPresenter, SurveyPresenter,
         SurveySavePresenter {
@@ -117,6 +128,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save:
+                SoftKeyboard.hideOn(this);
                 saveSurveyData();
                 break;
             case android.R.id.home:
@@ -152,21 +164,6 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         }
     }
 
-    private void showAbortSurveyPrompt() {
-        PromptMessage promptMessage = new AlertDialogPromptMessage(this);
-        promptMessage.setOnCancel(getString(R.string.no), null);
-        promptMessage.setOnConfirm(getString(R.string.yes), new PromptMessage.OnConfirmListener() {
-            @Override
-            public void onConfirm() {
-                TanrabadApp.action().finishSurvey(survey, false);
-                finish();
-                if (!isEditSurvey)
-                    BuildingListActivity.open(SurveyActivity.this, survey.getSurveyBuilding().getPlaceId().toString());
-            }
-        });
-        promptMessage.show(getString(R.string.abort_survey), getBuildingNameWithPrefix(survey.getSurveyBuilding()));
-    }
-
     private int getResidentCount() {
         String residentCountStr = residentCountView.getText().toString();
         return TextUtils.isEmpty(residentCountStr) ? 0 : Integer.valueOf(residentCountStr);
@@ -196,6 +193,21 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
             if (!eachView.getValue().isValid()) isValid = false;
         }
         return isValid;
+    }
+
+    private void showAbortSurveyPrompt() {
+        PromptMessage promptMessage = new AlertDialogPromptMessage(this);
+        promptMessage.setOnCancel(getString(R.string.no), null);
+        promptMessage.setOnConfirm(getString(R.string.yes), new PromptMessage.OnConfirmListener() {
+            @Override
+            public void onConfirm() {
+                TanrabadApp.action().finishSurvey(survey, false);
+                finish();
+                if (!isEditSurvey)
+                    BuildingListActivity.open(SurveyActivity.this, survey.getSurveyBuilding().getPlaceId().toString());
+            }
+        });
+        promptMessage.show(getString(R.string.abort_survey), getBuildingNameWithPrefix(survey.getSurveyBuilding()));
     }
 
     private String getBuildingNameWithPrefix(Building building) {
@@ -339,13 +351,6 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         surveyContainerView.startAnimation(getContainerViewAnimation());
     }
 
-    private void buildOutdoorContainerView(ContainerType containerType) {
-        SurveyContainerView surveyContainerView = buildContainerView(containerType);
-        outdoorContainerViews.put(containerType.getId(), surveyContainerView);
-        outdoorContainerLayout.addView(surveyContainerView);
-        surveyContainerView.startAnimation(getContainerViewAnimation());
-    }
-
     private SurveyContainerView buildContainerView(ContainerType containerType) {
         SurveyContainerView surveyContainerView = new SurveyContainerView(SurveyActivity.this);
         surveyContainerView.setContainerType(containerType);
@@ -359,6 +364,13 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         return animation;
     }
 
+    private void buildOutdoorContainerView(ContainerType containerType) {
+        SurveyContainerView surveyContainerView = buildContainerView(containerType);
+        outdoorContainerViews.put(containerType.getId(), surveyContainerView);
+        outdoorContainerLayout.addView(surveyContainerView);
+        surveyContainerView.startAnimation(getContainerViewAnimation());
+    }
+
     @Override
     public void displaySaveSuccess() {
         TanrabadApp.action().finishSurvey(survey, true);
@@ -368,7 +380,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     @Override
     public void displaySaveFail() {
-        Alert.mediumLevel().show(R.string.save_fail);
+        Alert.highLevel().show(R.string.save_survey_failed);
     }
 
     @Override
@@ -379,7 +391,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
 
     @Override
     public void displayUpdateFail() {
-        Alert.mediumLevel().show(R.string.save_fail);
+        Alert.highLevel().show(R.string.save_survey_failed);
     }
 
     @Override

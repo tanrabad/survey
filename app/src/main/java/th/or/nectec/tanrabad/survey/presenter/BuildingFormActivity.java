@@ -289,12 +289,12 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
 
     @Override
     public void displaySaveFail() {
-        Alert.lowLevel().show(R.string.save_fail);
+        Alert.highLevel().show(R.string.save_building_failed);
     }
 
     @Override
     public void displayUpdateFail() {
-
+        Alert.highLevel().show(R.string.save_building_failed);
     }
 
     @Override

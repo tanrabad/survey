@@ -299,7 +299,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
 
     @Override
     public void displaySaveFail() {
-
+        Alert.highLevel().show(R.string.save_place_failed);
     }
 
     @Override
@@ -317,7 +317,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
 
     @Override
     public void displayUpdateFail() {
-
+        Alert.highLevel().show(R.string.save_place_failed);
     }
 
     @Override

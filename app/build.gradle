@@ -34,7 +34,6 @@ apply plugin: "io.fabric"
 apply plugin: "com.neenbedankt.android-apt"
 apply plugin: "com.noveogroup.android.check"
 apply from: "../gradle/versionGenerator.gradle"
-apply from: "jacoco.gradle"
 
 repositories {
     maven { url "https://maven.fabric.io/public" }
@@ -199,7 +198,8 @@ configurations.all { resolutionStrategy.force "com.fasterxml.jackson.core:jackso
 
 check {
     checkstyle {
-        abortOnError false
+        abortOnError true
+        config "$project.projectDir/config/checkstyle/checkstyle.xml"
     }
     findbugs {
         skip true
@@ -208,5 +208,4 @@ check {
     pmd {
         config hard()
     }
-
 }

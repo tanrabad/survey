@@ -22,12 +22,17 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+
+import java.util.List;
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.domain.user.UserRepository;
 import th.or.nectec.tanrabad.entity.Building;
@@ -37,9 +42,6 @@ import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.survey.base.SurveyDbTestRule;
 import th.or.nectec.tanrabad.survey.utils.time.ThaiDateTimeConverter;
 
-import java.util.List;
-import java.util.UUID;
-
 import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
@@ -48,7 +50,6 @@ public class DbBuildingRepositoryTest {
     private final Context context = InstrumentationRegistry.getTargetContext();
     @Rule
     public SurveyDbTestRule dbTestRule = new SurveyDbTestRule();
-    private UserRepository userRepository;
     private PlaceRepository placeRepository;
 
     @Before
@@ -57,7 +58,7 @@ public class DbBuildingRepositoryTest {
         placeRepository = Mockito.mock(PlaceRepository.class);
         Mockito.when(placeRepository.findByUuid(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"))).thenReturn(place);
         User user = stubUser();
-        userRepository = Mockito.mock(UserRepository.class);
+        UserRepository userRepository = Mockito.mock(UserRepository.class);
         Mockito.when(userRepository.findByUsername("dpc-user")).thenReturn(user);
     }
 

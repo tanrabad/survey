@@ -19,11 +19,12 @@ package th.or.nectec.tanrabad.survey.service.json;
 
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
-import th.or.nectec.tanrabad.entity.SurveyDetail;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import th.or.nectec.tanrabad.entity.SurveyDetail;
 
 @JsonObject
 public class JsonSurveyDetail {
@@ -32,10 +33,10 @@ public class JsonSurveyDetail {
     public static final int OUTDOOR_BUILDING = 2;
 
     @JsonField(name = "survey_detail_id", typeConverter = UuidTypeConverter.class)
-    UUID surveyDetailID;
+    UUID surveyDetailId;
 
     @JsonField(name = "container_location_id")
-    int containerLocationID;
+    int containerLocationId;
 
     @JsonField(name = "container_type")
     int containerType;
@@ -46,7 +47,8 @@ public class JsonSurveyDetail {
     @JsonField(name = "container_have_larva")
     int containerHaveLarva;
 
-    public static ArrayList<JsonSurveyDetail> parseList(List<SurveyDetail> indoorDetailList, List<SurveyDetail> outdoorDetailList) {
+    public static ArrayList<JsonSurveyDetail> parseList(
+            List<SurveyDetail> indoorDetailList, List<SurveyDetail> outdoorDetailList) {
         ArrayList<JsonSurveyDetail> jsonSurveyDetailList = new ArrayList<>();
         for (SurveyDetail jsonSurveyDetail : indoorDetailList) {
             jsonSurveyDetailList.add(JsonSurveyDetail.parse(INDOOR_BUILDING, jsonSurveyDetail));
@@ -58,10 +60,10 @@ public class JsonSurveyDetail {
         return jsonSurveyDetailList;
     }
 
-    public static JsonSurveyDetail parse(int containerLocationID, SurveyDetail surveyDetail) {
+    public static JsonSurveyDetail parse(int containerLocationId, SurveyDetail surveyDetail) {
         JsonSurveyDetail jsonSurveyDetail = new JsonSurveyDetail();
-        jsonSurveyDetail.surveyDetailID = surveyDetail.getId();
-        jsonSurveyDetail.containerLocationID = containerLocationID;
+        jsonSurveyDetail.surveyDetailId = surveyDetail.getId();
+        jsonSurveyDetail.containerLocationId = containerLocationId;
         jsonSurveyDetail.containerCount = surveyDetail.getTotalContainer();
         jsonSurveyDetail.containerHaveLarva = surveyDetail.getFoundLarvaContainer();
         jsonSurveyDetail.containerType = surveyDetail.getContainerType().getId();

@@ -17,7 +17,7 @@ public class JsonPlaceTypeTest {
     public void testParseToJsonString() throws Exception {
         List<JsonPlaceType> jsonPlaceTypes = LoganSquare.parseList(placeTypeList, JsonPlaceType.class);
         JsonPlaceType placeType1 = jsonPlaceTypes.get(0);
-        assertEquals(1, placeType1.placeTypeID);
+        assertEquals(1, placeType1.placeTypeId);
         assertEquals("หมู่บ้าน/ชุมชน", placeType1.placeTypeName);
     }
 
@@ -25,13 +25,13 @@ public class JsonPlaceTypeTest {
     public void testParseToMultipleItem() throws Exception {
         List<JsonPlaceType> jsonPlaceTypes = LoganSquare.parseList(placeTypeList, JsonPlaceType.class);
         JsonPlaceType placeType1 = jsonPlaceTypes.get(0);
-        assertEquals(1, placeType1.placeTypeID);
+        assertEquals(1, placeType1.placeTypeId);
         assertEquals("หมู่บ้าน/ชุมชน", placeType1.placeTypeName);
         JsonPlaceType placeType3 = jsonPlaceTypes.get(2);
-        assertEquals(3, placeType3.placeTypeID);
+        assertEquals(3, placeType3.placeTypeId);
         assertEquals("สถานศึกษา", placeType3.placeTypeName);
         JsonPlaceType placeType6 = jsonPlaceTypes.get(5);
-        assertEquals(6, placeType6.placeTypeID);
+        assertEquals(6, placeType6.placeTypeId);
         assertEquals("ที่พักชั่วคราว", placeType6.placeTypeName);
     }
 

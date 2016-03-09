@@ -58,7 +58,9 @@ public class CameraFlashLight implements Torch {
             return false;
         }
         List<String> supportedFlashModes = parameters.getSupportedFlashModes();
-        return !(supportedFlashModes == null || supportedFlashModes.isEmpty() || hasOnlyFlashOffMode(supportedFlashModes));
+        return !(supportedFlashModes == null
+                || supportedFlashModes.isEmpty()
+                || hasOnlyFlashOffMode(supportedFlashModes));
     }
 
     private Camera getCamera() {

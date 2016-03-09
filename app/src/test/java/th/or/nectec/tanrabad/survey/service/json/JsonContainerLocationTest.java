@@ -16,7 +16,7 @@ public class JsonContainerLocationTest {
     @Test
     public void testParseToJsonString() throws Exception {
         JsonContainerLocation jsonContainerLocation = LoganSquare.parse(containerLocationJson, JsonContainerLocation.class);
-        assertEquals(1, jsonContainerLocation.containerLocationID);
+        assertEquals(1, jsonContainerLocation.containerLocationId);
         assertEquals("ภายในอาคาร", jsonContainerLocation.containerLocationName);
     }
 

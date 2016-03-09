@@ -24,12 +24,14 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.view.animation.Interpolator;
+
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
-import th.or.nectec.tanrabad.survey.utils.android.DPCalculator;
+
+import th.or.nectec.tanrabad.survey.utils.android.DpCalculator;
 
 public class MarkerDropInAnimator {
 
@@ -52,7 +54,7 @@ public class MarkerDropInAnimator {
 
     private long calculateDropInDuration(Marker targetLatLng) {
         Point targetPoint = map.getProjection().toScreenLocation(targetLatLng.getPosition());
-        return (long) (200 + DPCalculator.from(context).toDp(targetPoint.y));
+        return (long) (200 + DpCalculator.from(context).toDp(targetPoint.y));
     }
 
     private LatLng startLatLng(Marker marker) {

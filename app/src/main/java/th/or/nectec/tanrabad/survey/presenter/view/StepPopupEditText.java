@@ -29,10 +29,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.utils.EditTextStepper;
 import th.or.nectec.tanrabad.survey.utils.android.BackgroundSetter;
-import th.or.nectec.tanrabad.survey.utils.android.DPCalculator;
+import th.or.nectec.tanrabad.survey.utils.android.DpCalculator;
 import th.or.nectec.tanrabad.survey.utils.android.ResourceUtils;
 
 public class StepPopupEditText extends EditText {
@@ -115,6 +116,10 @@ public class StepPopupEditText extends EditText {
             return button;
         }
 
+        private int getButtonPadding() {
+            return DpCalculator.from(context).toPx(BUTTON_PADDING);
+        }
+
         private LinearLayout getLayout(ImageButton... imageButtons) {
             ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(getButtonWidth(), getButtonHeight());
             LinearLayout layout = new LinearLayout(context);
@@ -126,20 +131,16 @@ public class StepPopupEditText extends EditText {
             return layout;
         }
 
-        private int getButtonPadding() {
-            return DPCalculator.from(context).toPx(BUTTON_PADDING);
-        }
-
         private int getButtonWidth() {
-            return DPCalculator.from(context).toPx(BUTTON_WIDTH);
+            return DpCalculator.from(context).toPx(BUTTON_WIDTH);
         }
 
         private int getButtonHeight() {
-            return DPCalculator.from(context).toPx(BUTTON_HEIGHT);
+            return DpCalculator.from(context).toPx(BUTTON_HEIGHT);
         }
 
         private int getPopupPadding() {
-            return DPCalculator.from(context).toPx(POPUP_PADDING);
+            return DpCalculator.from(context).toPx(POPUP_PADDING);
         }
 
         @Override
@@ -159,7 +160,7 @@ public class StepPopupEditText extends EditText {
         }
 
         private int getYoffset() {
-            return DPCalculator.from(context).toPx(8);
+            return DpCalculator.from(context).toPx(8);
         }
 
         private int getPopupWidth() {

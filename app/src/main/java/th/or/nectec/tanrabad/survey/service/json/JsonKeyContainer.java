@@ -19,8 +19,8 @@ public class JsonKeyContainer {
     public String toString() {
         return "JsonKeyContainer{" +
                 "rank=" + rank +
-                ", containerId='" + containerId + '\'' +
-                ", containerName='" + containerName + '\'' +
-                '}';
+                ", containerId='" + containerId + '\''
+                + ", containerName='" + containerName + '\''
+                + '}';
     }
 }

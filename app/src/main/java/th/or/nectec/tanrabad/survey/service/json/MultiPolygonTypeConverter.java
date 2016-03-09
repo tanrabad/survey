@@ -4,11 +4,12 @@ import com.bluelinelabs.logansquare.typeconverters.TypeConverter;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
-import th.or.nectec.tanrabad.entity.field.Location;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import th.or.nectec.tanrabad.entity.field.Location;
 
 
 public class MultiPolygonTypeConverter implements TypeConverter<List<JsonPolygon>> {
@@ -50,7 +51,8 @@ public class MultiPolygonTypeConverter implements TypeConverter<List<JsonPolygon
             ArrayList<Double> point = new ArrayList<>();
             while (jsonParser.nextToken() != JsonToken.END_ARRAY) {
                 Double coordinate;
-                coordinate = jsonParser.getCurrentToken() == JsonToken.VALUE_NULL ? null : jsonParser.getValueAsDouble();
+                coordinate = jsonParser.getCurrentToken() == JsonToken.VALUE_NULL
+                        ? null : jsonParser.getValueAsDouble();
                 point.add(coordinate);
             }
             value3 = new Location(point.get(1), point.get(0));
@@ -77,7 +79,9 @@ public class MultiPolygonTypeConverter implements TypeConverter<List<JsonPolygon
     }
 
     @Override
-    public void serialize(List<JsonPolygon> coordinateMultiPolygon, String fieldName, boolean writeFieldNameForObject, JsonGenerator jsonGenerator) throws IOException {
+    public void serialize(
+            List<JsonPolygon> coordinateMultiPolygon, String fieldName,
+            boolean writeFieldNameForObject, JsonGenerator jsonGenerator) throws IOException {
 
         if (coordinateMultiPolygon != null) {
             jsonGenerator.writeFieldName("coordinates");

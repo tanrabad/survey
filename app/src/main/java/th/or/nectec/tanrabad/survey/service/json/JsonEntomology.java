@@ -19,6 +19,7 @@ package th.or.nectec.tanrabad.survey.service.json;
 
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
+
 import org.joda.time.DateTime;
 
 import java.util.List;
@@ -91,28 +92,28 @@ public class JsonEntomology {
 
     @Override
     public String toString() {
-        return "JsonEntomology{" +
-                "placeId=" + placeId +
-                ", placeType=" + placeType +
-                ", placeName='" + placeName + '\'' +
-                ", location=" + location +
-                ", tambonName='" + tambonName + '\'' +
-                ", amphurName='" + amphurName + '\'' +
-                ", provinceName='" + provinceName + '\'' +
-                ", numSurveyedHouses=" + numSurveyedHouses +
-                ", numFoundHouses=" + numFoundHouses +
-                ", numNoContainerHouses=" + numNoContainerHouses +
-                ", numSurveyedContainer=" + numSurveyedContainer +
-                ", numFoundContainers=" + numFoundContainers +
-                ", numDuplicateSurvey=" + numDuplicateSurvey +
-                ", reportUpdate='" + reportUpdate + '\'' +
-                ", surveyStartDate=" + surveyStartDate +
-                ", surveyEndDate=" + surveyEndDate +
-                ", hiValue=" + hiValue +
-                ", biValue=" + biValue +
-                ", ciValue=" + ciValue +
-                ", keyContainerIn=" + keyContainerIn +
-                ", keyContainerOut=" + keyContainerOut +
-                '}';
+        return "JsonEntomology{"
+                + "placeId=" + placeId
+                + ", placeType=" + placeType
+                + ", placeName='" + placeName + '\''
+                + ", location=" + location
+                + ", tambonName='" + tambonName + '\''
+                + ", amphurName='" + amphurName + '\''
+                + ", provinceName='" + provinceName + '\''
+                + ", numSurveyedHouses=" + numSurveyedHouses
+                + ", numFoundHouses=" + numFoundHouses
+                + ", numNoContainerHouses=" + numNoContainerHouses
+                + ", numSurveyedContainer=" + numSurveyedContainer
+                + ", numFoundContainers=" + numFoundContainers
+                + ", numDuplicateSurvey=" + numDuplicateSurvey
+                + ", reportUpdate='" + reportUpdate + '\''
+                + ", surveyStartDate=" + surveyStartDate
+                + ", surveyEndDate=" + surveyEndDate
+                + ", hiValue=" + hiValue
+                + ", biValue=" + biValue
+                + ", ciValue=" + ciValue
+                + ", keyContainerIn=" + keyContainerIn
+                + ", keyContainerOut=" + keyContainerOut
+                + '}';
     }
 }

@@ -13,7 +13,7 @@ public class JsonContainerTypeTest {
     @Test
     public void testParseToJsonString() throws Exception {
         JsonContainerType jsonContainerType = LoganSquare.parse(containerTypeJson, JsonContainerType.class);
-        assertEquals(1, jsonContainerType.containerTypeID);
+        assertEquals(1, jsonContainerType.containerTypeId);
         assertEquals("น้ำใช้", jsonContainerType.containerTypeName);
     }
 

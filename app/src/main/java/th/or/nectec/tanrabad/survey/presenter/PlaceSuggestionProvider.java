@@ -35,7 +35,9 @@ public class PlaceSuggestionProvider extends SearchRecentSuggestionsProvider {
     public static Cursor querySuggestion(Context context, String queryString) {
         if (TextUtils.isEmpty(queryString))
             queryString = "";
-        Uri queryUri = Uri.parse("content://" + PlaceSuggestionProvider.AUTHORITY + "/" + SearchManager.SUGGEST_URI_PATH_QUERY);
+        Uri queryUri = Uri.parse(
+                "content://" + PlaceSuggestionProvider.AUTHORITY
+                        + "/" + SearchManager.SUGGEST_URI_PATH_QUERY);
         return context.getContentResolver().query(queryUri, null, "word MATCH ?", new String[]{queryString}, null);
     }
 }

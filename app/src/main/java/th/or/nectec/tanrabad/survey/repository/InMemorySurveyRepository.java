@@ -72,7 +72,8 @@ public class InMemorySurveyRepository implements SurveyRepository {
     }
 
     @Override
-    public List<BuildingWithSurveyStatus> findSurveyBuildingByBuildingName(Place place, User user, String buildingName) {
+    public List<BuildingWithSurveyStatus> findSurveyBuildingByBuildingName(
+            Place place, User user, String buildingName) {
         return null;
     }
 

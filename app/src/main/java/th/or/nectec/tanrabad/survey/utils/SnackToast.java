@@ -6,6 +6,7 @@ import android.content.Context;
 import android.view.Gravity;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import th.or.nectec.tanrabad.survey.R;
 
 public class SnackToast {
@@ -14,7 +15,8 @@ public class SnackToast {
         Toast toast = new Toast(context);
         toast.setGravity(Gravity.FILL_HORIZONTAL | Gravity.BOTTOM, 0, 0);
         toast.setDuration(duration);
-        TextView toastMsg = (TextView) ((Activity) context).getLayoutInflater().inflate(R.layout.view_custom_toast, null);
+        TextView toastMsg = (TextView) ((Activity) context).getLayoutInflater()
+                .inflate(R.layout.view_custom_toast, null);
         toastMsg.setText(message);
         toast.setView(toastMsg);
         return toast;

@@ -53,12 +53,11 @@ public class DbPlaceRepositoryTest {
     @Rule
     public SurveyDbTestRule dbTestRule = new SurveyDbTestRule();
     DateTime updateTime = DateTime.now();
-    private UserRepository userRepository;
 
     @Before
     public void setup() {
         User user = stubUser();
-        userRepository = Mockito.mock(UserRepository.class);
+        UserRepository userRepository = Mockito.mock(UserRepository.class);
         Mockito.when(userRepository.findByUsername("dpc-user")).thenReturn(user);
     }
 

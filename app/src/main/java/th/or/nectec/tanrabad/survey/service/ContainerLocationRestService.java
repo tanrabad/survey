@@ -18,13 +18,14 @@
 package th.or.nectec.tanrabad.survey.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
-import th.or.nectec.tanrabad.entity.lookup.ContainerLocation;
-import th.or.nectec.tanrabad.survey.TanrabadApp;
-import th.or.nectec.tanrabad.survey.service.json.JsonContainerLocation;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import th.or.nectec.tanrabad.entity.lookup.ContainerLocation;
+import th.or.nectec.tanrabad.survey.TanrabadApp;
+import th.or.nectec.tanrabad.survey.service.json.JsonContainerLocation;
 
 public class ContainerLocationRestService extends AbsRestService<ContainerLocation> {
 
@@ -47,7 +48,8 @@ public class ContainerLocationRestService extends AbsRestService<ContainerLocati
     protected List<ContainerLocation> jsonToEntityList(String responseBody) {
         ArrayList<ContainerLocation> containerLocations = new ArrayList<>();
         try {
-            List<JsonContainerLocation> jsonContainerTypeList = LoganSquare.parseList(responseBody, JsonContainerLocation.class);
+            List<JsonContainerLocation> jsonContainerTypeList = LoganSquare.parseList(
+                    responseBody, JsonContainerLocation.class);
             for (JsonContainerLocation eachJsonContainerLocation : jsonContainerTypeList) {
                 containerLocations.add(eachJsonContainerLocation.getEntity());
             }

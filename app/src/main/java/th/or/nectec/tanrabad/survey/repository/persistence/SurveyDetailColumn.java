@@ -27,6 +27,8 @@ public class SurveyDetailColumn {
     public static final String CONTAINER_HAVE_LARVA = "container_have_larva";
 
     public static String[] wildcard() {
-        return new String[]{ID, SURVEY_ID, CONTAINER_TYPE_ID, CONTAINER_LOCATION_ID, CONTAINER_COUNT, CONTAINER_HAVE_LARVA};
+        return new String[]{
+                ID, SURVEY_ID,
+                CONTAINER_TYPE_ID, CONTAINER_LOCATION_ID, CONTAINER_COUNT, CONTAINER_HAVE_LARVA};
     }
 }

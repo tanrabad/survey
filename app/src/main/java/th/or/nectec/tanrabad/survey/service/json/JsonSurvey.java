@@ -19,20 +19,22 @@ package th.or.nectec.tanrabad.survey.service.json;
 
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
+
 import org.joda.time.DateTimeZone;
-import th.or.nectec.tanrabad.entity.Survey;
 
 import java.util.List;
 import java.util.UUID;
+
+import th.or.nectec.tanrabad.entity.Survey;
 
 @JsonObject(serializeNullObjects = true)
 public class JsonSurvey {
 
     @JsonField(name = "survey_id", typeConverter = UuidTypeConverter.class)
-    public UUID surveyID;
+    public UUID surveyId;
 
     @JsonField(name = "building_id", typeConverter = UuidTypeConverter.class)
-    public UUID buildingID;
+    public UUID buildingId;
 
     @JsonField(name = "person_count")
     public int personCount;
@@ -51,8 +53,8 @@ public class JsonSurvey {
 
     public static JsonSurvey parse(Survey survey) {
         JsonSurvey jsonSurvey = new JsonSurvey();
-        jsonSurvey.surveyID = survey.getId();
-        jsonSurvey.buildingID = survey.getSurveyBuilding().getId();
+        jsonSurvey.surveyId = survey.getId();
+        jsonSurvey.buildingId = survey.getSurveyBuilding().getId();
         jsonSurvey.personCount = survey.getResidentCount();
         jsonSurvey.details = JsonSurveyDetail.parseList(survey.getIndoorDetail(), survey.getOutdoorDetail());
         jsonSurvey.location = survey.getLocation() == null ? null : GeoJsonPoint.parse(survey.getLocation());

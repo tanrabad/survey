@@ -42,12 +42,12 @@ public class EmptyLayoutView extends LinearLayout {
         emptyTextView.setText(emptyText);
     }
 
-    public void setEmptyText(@StringRes int emptyTextID) {
-        emptyTextView.setText(emptyTextID);
+    public void setEmptyText(@StringRes int emptyTextId) {
+        emptyTextView.setText(emptyTextId);
     }
 
-    public void setEmptyIcon(@DrawableRes int drawableID) {
-        emptyIconView.setImageResource(drawableID);
+    public void setEmptyIcon(@DrawableRes int drawableId) {
+        emptyIconView.setImageResource(drawableId);
     }
 
     public void setEmptyButtonText(String emptyButtonText) {
@@ -59,12 +59,12 @@ public class EmptyLayoutView extends LinearLayout {
         emptyButtonView.setOnClickListener(onClickListener);
     }
 
-    public void setEmptyButtonText(@StringRes int emptyButtonTextID) {
-        emptyButtonView.setText(emptyButtonTextID);
+    public void setEmptyButtonText(@StringRes int emptyButtonTextId) {
+        emptyButtonView.setText(emptyButtonTextId);
     }
 
-    public void setEmptyButtonText(@StringRes int emptyButtonTextID, OnClickListener onClickListener) {
-        emptyButtonView.setText(emptyButtonTextID);
+    public void setEmptyButtonText(@StringRes int emptyButtonTextId, OnClickListener onClickListener) {
+        emptyButtonView.setText(emptyButtonTextId);
         emptyButtonView.setOnClickListener(onClickListener);
     }
 

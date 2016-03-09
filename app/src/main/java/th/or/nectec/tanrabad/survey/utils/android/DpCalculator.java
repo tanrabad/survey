@@ -19,19 +19,18 @@ package th.or.nectec.tanrabad.survey.utils.android;
 
 import android.content.Context;
 
-public class DPCalculator {
+public class DpCalculator {
 
-    private static DPCalculator instance;
-    private int dp;
+    private static DpCalculator instance;
     private Context context;
 
-    public DPCalculator(Context context) {
+    public DpCalculator(Context context) {
         this.context = context;
     }
 
-    public static DPCalculator from(Context context) {
+    public static DpCalculator from(Context context) {
         if (instance == null)
-            instance = new DPCalculator(context);
+            instance = new DpCalculator(context);
         return instance;
     }
 

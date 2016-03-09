@@ -17,26 +17,26 @@ public class JsonPlaceSubTypeTest {
     public void testParseToJsonString() throws Exception {
         List<JsonPlaceSubType> jsonPlaceTypes = LoganSquare.parseList(placeTypeList, JsonPlaceSubType.class);
         JsonPlaceSubType placeType1 = jsonPlaceTypes.get(0);
-        assertEquals(1, placeType1.placeSubTypeID);
+        assertEquals(1, placeType1.placeSubTypeId);
         assertEquals("สำนักงานสาธารณสุขจังหวัด", placeType1.placeSubTypeName);
-        assertEquals(4, placeType1.placeTypeID);
+        assertEquals(4, placeType1.placeTypeId);
     }
 
     @Test
     public void testParseToMultipleItem() throws Exception {
         List<JsonPlaceSubType> jsonPlaceTypes = LoganSquare.parseList(placeTypeList, JsonPlaceSubType.class);
         JsonPlaceSubType placeSubType1 = jsonPlaceTypes.get(0);
-        assertEquals(1, placeSubType1.placeSubTypeID);
+        assertEquals(1, placeSubType1.placeSubTypeId);
         assertEquals("สำนักงานสาธารณสุขจังหวัด", placeSubType1.placeSubTypeName);
-        assertEquals(4, placeSubType1.placeTypeID);
+        assertEquals(4, placeSubType1.placeTypeId);
         JsonPlaceSubType placeSubType8 = jsonPlaceTypes.get(7);
-        assertEquals(8, placeSubType8.placeSubTypeID);
+        assertEquals(8, placeSubType8.placeSubTypeId);
         assertEquals("ศูนย์สุขภาพชุมชน/บริการสาธารณสุข", placeSubType8.placeSubTypeName);
-        assertEquals(4, placeSubType8.placeTypeID);
+        assertEquals(4, placeSubType8.placeTypeId);
         JsonPlaceSubType placeSubType17 = jsonPlaceTypes.get(16);
-        assertEquals(17, placeSubType17.placeSubTypeID);
+        assertEquals(17, placeSubType17.placeSubTypeId);
         assertEquals("โรงงาน", placeSubType17.placeSubTypeName);
-        assertEquals(5, placeSubType17.placeTypeID);
+        assertEquals(5, placeSubType17.placeTypeId);
     }
 
     @Test

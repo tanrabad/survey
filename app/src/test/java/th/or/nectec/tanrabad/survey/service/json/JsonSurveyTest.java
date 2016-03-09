@@ -1,16 +1,18 @@
 package th.or.nectec.tanrabad.survey.service.json;
 
 import com.bluelinelabs.logansquare.LoganSquare;
+
 import org.joda.time.DateTime;
 import org.junit.Test;
+
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 import th.or.nectec.tanrabad.survey.utils.ResourceFile;
-
-import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 
@@ -20,14 +22,14 @@ public class JsonSurveyTest {
     public void testParseFromJsonString() throws Exception {
         JsonSurvey jsonSurvey = LoganSquare.parse(ResourceFile.read("survey.json"), JsonSurvey.class);
 
-        assertEquals("6af5225b-5642-10fb-a3a0-4e000a842583", jsonSurvey.surveyID.toString());
+        assertEquals("6af5225b-5642-10fb-a3a0-4e000a842583", jsonSurvey.surveyId.toString());
         assertEquals(5, jsonSurvey.personCount);
         assertEquals(39.745675, jsonSurvey.location.getLatitude(), 0);
         assertEquals(-73.150055, jsonSurvey.location.getLongitude(), 0);
         assertEquals("2015-01-11T03:00:00.000Z", jsonSurvey.createTimestamp);
         assertEquals("dcp-user", jsonSurvey.surveyor);
 
-        assertEquals(1, jsonSurvey.details.get(0).containerLocationID);
+        assertEquals(1, jsonSurvey.details.get(0).containerLocationId);
         assertEquals(1, jsonSurvey.details.get(0).containerType);
         assertEquals(24, jsonSurvey.details.get(0).containerCount);
         assertEquals(10, jsonSurvey.details.get(0).containerHaveLarva);

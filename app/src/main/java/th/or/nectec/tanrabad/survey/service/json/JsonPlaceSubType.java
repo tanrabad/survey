@@ -2,21 +2,22 @@ package th.or.nectec.tanrabad.survey.service.json;
 
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
+
 import th.or.nectec.tanrabad.entity.lookup.PlaceSubType;
 
 @JsonObject
 public class JsonPlaceSubType {
 
     @JsonField(name = "place_subtype_id")
-    public int placeSubTypeID;
+    public int placeSubTypeId;
 
     @JsonField(name = "place_subtype_name")
     public String placeSubTypeName;
 
     @JsonField(name = "place_type_id")
-    public int placeTypeID;
+    public int placeTypeId;
 
     public PlaceSubType getEntity() {
-        return new PlaceSubType(placeSubTypeID, placeSubTypeName, placeTypeID);
+        return new PlaceSubType(placeSubTypeId, placeSubTypeName, placeTypeId);
     }
 }

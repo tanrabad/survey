@@ -73,7 +73,6 @@ public class PlaceRestServiceTest extends WireMockTestBase {
         restService = new PlaceRestService(
                 localHost(),
                 lastUpdate,
-                userRepository,
                 placeSubTypeRepository);
     }
 
@@ -101,9 +100,9 @@ public class PlaceRestServiceTest extends WireMockTestBase {
                         .withStatus(304)
                         .withBody("")));
 
-        List<Place> buildings = restService.getUpdate();
+        List<Place> places = restService.getUpdate();
 
-        assertEquals(0, buildings.size());
+        assertEquals(0, places.size());
         verify(getRequestedFor(urlPathEqualTo(PATH))
                 .withHeader(Header.IF_MODIFIED_SINCE, equalTo(MON_30_NOV_2015_17_00_00_GMT)));
         Mockito.verify(lastUpdate, Mockito.never()).save(Mockito.anyString());

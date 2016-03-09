@@ -32,6 +32,9 @@ public class PlaceColumn {
 
 
     public static String[] wildcard() {
-        return new String[]{ID, NAME, SUBTYPE_ID, SUBDISTRICT_CODE, LATITUDE, LONGITUDE, UPDATE_BY, UPDATE_TIME, CHANGED_STATUS};
+        return new String[]{
+                ID, NAME, SUBTYPE_ID,
+                SUBDISTRICT_CODE, LATITUDE, LONGITUDE,
+                UPDATE_BY, UPDATE_TIME, CHANGED_STATUS};
     }
 }

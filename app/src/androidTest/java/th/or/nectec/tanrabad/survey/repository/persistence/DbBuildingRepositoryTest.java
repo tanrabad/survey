@@ -56,7 +56,8 @@ public class DbBuildingRepositoryTest {
     public void setup() {
         Place place = stubPlace();
         placeRepository = Mockito.mock(PlaceRepository.class);
-        Mockito.when(placeRepository.findByUuid(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"))).thenReturn(place);
+        Mockito.when(placeRepository.findByUuid(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e")))
+                .thenReturn(place);
         User user = stubUser();
         UserRepository userRepository = Mockito.mock(UserRepository.class);
         Mockito.when(userRepository.findByUsername("dpc-user")).thenReturn(user);
@@ -97,7 +98,8 @@ public class DbBuildingRepositoryTest {
         assertEquals(building.getName(), cursor.getString(cursor.getColumnIndex(BuildingColumn.NAME)));
         assertEquals(place.getId().toString(), cursor.getString(cursor.getColumnIndex(BuildingColumn.PLACE_ID)));
         assertEquals(updateBy.getUsername(), cursor.getString(cursor.getColumnIndex(BuildingColumn.UPDATE_BY)));
-        assertEquals(updateTime, ThaiDateTimeConverter.convert(cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_TIME))));
+        assertEquals(updateTime, ThaiDateTimeConverter.convert(
+                cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_TIME))));
         assertEquals(ChangedStatus.ADD, cursor.getInt(cursor.getColumnIndex(PlaceColumn.CHANGED_STATUS)));
         cursor.close();
     }
@@ -129,7 +131,8 @@ public class DbBuildingRepositoryTest {
         assertEquals(building.getName(), cursor.getString(cursor.getColumnIndex(BuildingColumn.NAME)));
         assertEquals(place.getId().toString(), cursor.getString(cursor.getColumnIndex(BuildingColumn.PLACE_ID)));
         assertEquals(updateBy.getUsername(), cursor.getString(cursor.getColumnIndex(BuildingColumn.UPDATE_BY)));
-        assertEquals(updateTime, ThaiDateTimeConverter.convert(cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_TIME))));
+        assertEquals(updateTime, ThaiDateTimeConverter.convert(
+                cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_TIME))));
         assertEquals(ChangedStatus.CHANGED, cursor.getInt(cursor.getColumnIndex(PlaceColumn.CHANGED_STATUS)));
         cursor.close();
     }
@@ -163,16 +166,18 @@ public class DbBuildingRepositoryTest {
         assertEquals(building.getName(), cursor.getString(cursor.getColumnIndex(BuildingColumn.NAME)));
         assertEquals(place.getId().toString(), cursor.getString(cursor.getColumnIndex(BuildingColumn.PLACE_ID)));
         assertEquals(updateBy.getUsername(), cursor.getString(cursor.getColumnIndex(BuildingColumn.UPDATE_BY)));
-        assertEquals(updateTime, ThaiDateTimeConverter.convert(cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_TIME))));
+        assertEquals(updateTime, ThaiDateTimeConverter.convert(
+                cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_TIME))));
         assertEquals(ChangedStatus.ADD, cursor.getInt(cursor.getColumnIndex(PlaceColumn.CHANGED_STATUS)));
         cursor.close();
     }
 
     @Test
-    public void testFindByPlaceUUID() throws Exception {
+    public void testFindByPlaceUuid() throws Exception {
         DbBuildingRepository repository = new DbBuildingRepository(context, placeRepository);
 
-        List<Building> buildingList = repository.findByPlaceUuid(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"));
+        List<Building> buildingList = repository
+                .findByPlaceUuid(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"));
         Building building = buildingList.get(0);
 
         assertEquals(1, buildingList.size());
@@ -184,11 +189,12 @@ public class DbBuildingRepositoryTest {
     }
 
     @Test
-    public void testFindByPlaceUUIDAndBuildingName() throws Exception {
-        Place place = stubPlace();
+    public void testFindByPlaceUuidAndBuildingName() throws Exception {
         DbBuildingRepository dbBuildingRepository = new DbBuildingRepository(context, placeRepository);
+        final Place place = stubPlace();
 
-        List<Building> buildingList = dbBuildingRepository.findByPlaceUuidAndBuildingName(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"), "23/2");
+        List<Building> buildingList = dbBuildingRepository.findByPlaceUuidAndBuildingName(
+                UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"), "23/2");
         Building building = buildingList.get(0);
 
         assertEquals(1, buildingList.size());
@@ -200,7 +206,7 @@ public class DbBuildingRepositoryTest {
     }
 
     @Test
-    public void testFindByBuildingUUID() throws Exception {
+    public void testFindByBuildingUuid() throws Exception {
         Place place = stubPlace();
         DbBuildingRepository dbBuildingRepository = new DbBuildingRepository(context, placeRepository);
 

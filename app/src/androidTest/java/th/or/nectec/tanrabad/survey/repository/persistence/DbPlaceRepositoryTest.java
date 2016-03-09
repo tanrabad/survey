@@ -89,7 +89,8 @@ public class DbPlaceRepositoryTest {
                 .getPlaceTypeId());
         assertEquals(place.getSubType(), cursor.getInt(cursor.getColumnIndex(PlaceColumn.SUBTYPE_ID)));
         assertEquals(stubUser().getUsername(), cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_BY)));
-        assertEquals(updateTime, ThaiDateTimeConverter.convert(cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_TIME))));
+        assertEquals(updateTime, ThaiDateTimeConverter.convert(
+                cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_TIME))));
         assertEquals(ChangedStatus.ADD, cursor.getInt(cursor.getColumnIndex(PlaceColumn.CHANGED_STATUS)));
         cursor.close();
     }
@@ -128,7 +129,8 @@ public class DbPlaceRepositoryTest {
         assertEquals(place.getName(), cursor.getString(cursor.getColumnIndex(PlaceColumn.NAME)));
         assertEquals(place.getSubType(), cursor.getInt(cursor.getColumnIndex(PlaceColumn.SUBTYPE_ID)));
         assertEquals(stubUser().getUsername(), cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_BY)));
-        assertEquals(updateTime, ThaiDateTimeConverter.convert(cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_TIME))));
+        assertEquals(updateTime, ThaiDateTimeConverter.convert(
+                cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_TIME))));
         assertEquals(ChangedStatus.UNCHANGED, cursor.getInt(cursor.getColumnIndex(PlaceColumn.CHANGED_STATUS)));
         cursor.close();
     }
@@ -161,7 +163,8 @@ public class DbPlaceRepositoryTest {
         assertEquals(place.getName(), cursor.getString(cursor.getColumnIndex(PlaceColumn.NAME)));
         assertEquals(place.getSubType(), cursor.getInt(cursor.getColumnIndex(PlaceColumn.SUBTYPE_ID)));
         assertEquals(stubUser().getUsername(), cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_BY)));
-        assertEquals(updateTime, ThaiDateTimeConverter.convert(cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_TIME))));
+        assertEquals(updateTime, ThaiDateTimeConverter.convert(
+                cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_TIME))));
         assertEquals(ChangedStatus.CHANGED, cursor.getInt(cursor.getColumnIndex(PlaceColumn.CHANGED_STATUS)));
         cursor.close();
     }
@@ -189,13 +192,14 @@ public class DbPlaceRepositoryTest {
         assertEquals(place.getName(), cursor.getString(cursor.getColumnIndex(PlaceColumn.NAME)));
         assertEquals(place.getSubType(), cursor.getInt(cursor.getColumnIndex(PlaceColumn.SUBTYPE_ID)));
         assertEquals(stubUser().getUsername(), cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_BY)));
-        assertEquals(updateTime, ThaiDateTimeConverter.convert(cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_TIME))));
+        assertEquals(updateTime, ThaiDateTimeConverter.convert(
+                cursor.getString(cursor.getColumnIndex(PlaceColumn.UPDATE_TIME))));
         assertEquals(ChangedStatus.ADD, cursor.getInt(cursor.getColumnIndex(PlaceColumn.CHANGED_STATUS)));
         cursor.close();
     }
 
     @Test
-    public void testFindByUUID() throws Exception {
+    public void testFindByUuid() throws Exception {
         Context context = InstrumentationRegistry.getTargetContext();
         DbPlaceRepository dbPlaceRepository = new DbPlaceRepository(context);
 

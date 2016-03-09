@@ -20,11 +20,13 @@ package th.or.nectec.tanrabad.survey.repository.persistence;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
 import org.junit.Rule;
 import org.junit.Test;
-import th.or.nectec.tanrabad.survey.base.SurveyDbTestRule;
 
 import java.io.File;
+
+import th.or.nectec.tanrabad.survey.base.SurveyDbTestRule;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -46,7 +48,8 @@ public class SurveyLiteDatabaseTest {
     public void testGetReadable() throws Exception {
         SQLiteDatabase db = dbTestRule.getReadable();
         Cursor province = db.query("province", new String[]{"province_code", "name"}, null, null, null, null, null);
-        Cursor subdistricts = db.query("subdistrict", new String[]{"subdistrict_code", "name", "district_code"}, null, null, null, null, null);
+        Cursor subdistricts = db.query(
+                "subdistrict", new String[]{"subdistrict_code", "name", "district_code"}, null, null, null, null, null);
 
         assertEquals(52, subdistricts.getCount());
         assertEquals(true, province.moveToFirst());

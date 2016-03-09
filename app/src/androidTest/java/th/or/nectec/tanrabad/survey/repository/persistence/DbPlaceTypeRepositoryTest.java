@@ -22,13 +22,15 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import th.or.nectec.tanrabad.entity.lookup.PlaceType;
-import th.or.nectec.tanrabad.survey.base.SurveyDbTestRule;
 
 import java.util.List;
+
+import th.or.nectec.tanrabad.entity.lookup.PlaceType;
+import th.or.nectec.tanrabad.survey.base.SurveyDbTestRule;
 
 import static org.junit.Assert.assertEquals;
 
@@ -94,7 +96,7 @@ public class DbPlaceTypeRepositoryTest {
     }
 
     @Test
-    public void testFindByID() throws Exception {
+    public void testFindById() throws Exception {
         Context context = InstrumentationRegistry.getTargetContext();
         DbPlaceTypeRepository dbPlaceTypeRepository = new DbPlaceTypeRepository(context);
         PlaceType placeType = dbPlaceTypeRepository.findById(1);

@@ -18,6 +18,7 @@
 package th.or.nectec.tanrabad.survey.service;
 
 import android.support.test.InstrumentationRegistry;
+
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -28,7 +29,8 @@ public class ServiceLastUpdatePreferenceTest {
 
     @Test
     public void testSaveThenGet() throws Exception {
-        ServiceLastUpdatePreference lastUpdatePreference = new ServiceLastUpdatePreference(InstrumentationRegistry.getTargetContext(), "test");
+        ServiceLastUpdatePreference lastUpdatePreference = new ServiceLastUpdatePreference(
+                InstrumentationRegistry.getTargetContext(), "test");
         lastUpdatePreference.save("Mon, 30 Nov 2015 17:00:00 GMT");
 
         assertEquals("Mon, 30 Nov 2015 17:00:00 GMT", lastUpdatePreference.get());

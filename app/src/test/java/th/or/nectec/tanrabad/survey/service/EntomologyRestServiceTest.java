@@ -113,6 +113,4 @@ public class EntomologyRestServiceTest extends WireMockTestBase {
         assertEquals("แจกัน", jsonEntomology1.keyContainerIn.get(0).containerName);
         assertEquals("ภาชนะที่ไม่ใช้", jsonEntomology1.keyContainerOut.get(0).containerName);
     }
-
-
 }

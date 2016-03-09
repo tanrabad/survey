@@ -116,3 +116,4 @@ public class DbPlaceSubTypeRepositoryTest {
         assertEquals("ศูนย์วิชาการ", placeSubType16.getName());
     }
 }
+

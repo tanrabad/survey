@@ -41,6 +41,5 @@ public class DurationTimePrinterTest {
     public void testPrintDurationOver60Minute() throws Exception {
         assertEquals("1:00:00", print(START_DATE, START_DATE.plusHours(1)));
         assertEquals("10:06:15", print(START_DATE, START_DATE.plusHours(10).plusMinutes(5).plusSeconds(75)));
-
     }
 }

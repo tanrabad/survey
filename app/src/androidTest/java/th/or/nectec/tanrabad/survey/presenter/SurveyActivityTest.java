@@ -132,7 +132,7 @@ public class SurveyActivityTest extends TanrabadEspressoTestBase {
 
     enum Field {
         TOTAL(R.id.total_container),
-        FOUND(R.id.found_larvae_container),;
+        FOUND(R.id.found_larvae_container);
 
         final int editTextId;
 

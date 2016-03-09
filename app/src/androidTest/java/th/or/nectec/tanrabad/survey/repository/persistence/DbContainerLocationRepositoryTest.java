@@ -92,5 +92,4 @@ public class DbContainerLocationRepositoryTest {
         assertEquals(2, containerType10.id);
         assertEquals("ภายนอกอาคาร", containerType10.name);
     }
-
 }

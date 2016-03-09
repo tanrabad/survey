@@ -92,5 +92,4 @@ public class DbContainerTypeRepositoryTest {
         assertEquals(10, containerType10.getId());
         assertEquals("อื่นๆ (ที่ใช้ประโยชน์)", containerType10.getName());
     }
-
 }

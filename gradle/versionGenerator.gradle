@@ -19,7 +19,7 @@ import java.text.SimpleDateFormat
 
 def versionMajor = 1
 def versionMinor = 0
-def versionPatch = 3
+def versionPatch = 4
 
 def buildNumber = "$versionMajor.$versionMinor.$versionPatch"
 

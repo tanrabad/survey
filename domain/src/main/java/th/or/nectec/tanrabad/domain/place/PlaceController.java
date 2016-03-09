@@ -23,8 +23,8 @@ import th.or.nectec.tanrabad.entity.Place;
 
 public class PlaceController {
 
-    private PlaceRepository placeRepository;
-    private  PlacePresenter placePresenter;
+    private final PlaceRepository placeRepository;
+    private final PlacePresenter placePresenter;
 
     public PlaceController(PlaceRepository placeRepository, PlacePresenter placePresenter) {
         this.placeRepository = placeRepository;

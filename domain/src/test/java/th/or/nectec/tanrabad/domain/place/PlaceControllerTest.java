@@ -28,12 +28,10 @@ import java.util.UUID;
 import th.or.nectec.tanrabad.entity.Place;
 
 public class PlaceControllerTest {
-    public final String placeName = "New York";
-
+    private final String placeName = "New York";
+    private final Place place = Place.withName(placeName);
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
-
-    Place place = Place.withName(placeName);
     private PlaceRepository placeRepository;
     private PlacePresenter placePresenter;
     private UUID placeUUID;

@@ -4,26 +4,26 @@ package th.or.nectec.tanrabad.domain.geographic;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import th.or.nectec.tanrabad.entity.field.Location;
 
 import java.util.Arrays;
 import java.util.Collection;
+
+import th.or.nectec.tanrabad.entity.field.Location;
 
 import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
 public class SphereDistanceWithDummyTest {
 
-    public static final double DELTA = 0.5;
+    private static final double DELTA = 0.5;
 
-    SphereDistance sphereDistance = new SphereDistance();
+    private final SphereDistance sphereDistance = new SphereDistance();
 
-    Location startLocation = new Location(40.6892, -74.0444);
-
+    private final Location startLocation = new Location(40.6892, -74.0444);
+    private final Location destinationLocation;
+    private final double distanceBetweenPoint;
+    private final boolean expectValue;
     boolean testExpectResult;
-    private Location destinationLocation;
-    private double distanceBetweenPoint;
-    private boolean expectValue;
 
     public SphereDistanceWithDummyTest(Location destinationLocation, double distanceBetweenPoint, boolean expectValue) {
         this.destinationLocation = destinationLocation;

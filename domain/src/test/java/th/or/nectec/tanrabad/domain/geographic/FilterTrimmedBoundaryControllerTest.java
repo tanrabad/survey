@@ -22,21 +22,21 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
+import java.util.ArrayList;
+
 import th.or.nectec.tanrabad.entity.LocationEntity;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.field.Location;
 
-import java.util.ArrayList;
-
 public class FilterTrimmedBoundaryControllerTest {
 
+    private final double currentLatitude = 40.6892;
+    private final double currentLongitude = -74.0444;
+    private final Location currentLocation = new Location(currentLatitude, currentLongitude);
+    private final double distanceInKm = 100;
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
-    double currentLatitude = 40.6892;
-    double currentLongitude = -74.0444;
-    final Location currentLocation = new Location(currentLatitude, currentLongitude);
-    double distanceInKm = 100;
-
     private LocationRepository locationRepository;
     private NearbyPlacePresenter nearbyPlacePresenter;
     private FilterBoundaryCalculator filterBoundaryCalculate;

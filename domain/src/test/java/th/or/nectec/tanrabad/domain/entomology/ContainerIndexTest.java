@@ -18,13 +18,14 @@
 package th.or.nectec.tanrabad.domain.entomology;
 
 import org.junit.Test;
+
 import th.or.nectec.tanrabad.entity.stub.ContainerTypeStub;
 
 import static org.junit.Assert.assertEquals;
 
 public class ContainerIndexTest {
 
-    public static final float DELTA = 0.01f;
+    private static final float DELTA = 0.01f;
 
     @Test
     public void testCalculateWithOneSurvey() throws Exception {

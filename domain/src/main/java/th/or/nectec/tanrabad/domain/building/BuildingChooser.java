@@ -22,7 +22,7 @@ import java.util.UUID;
 
 import th.or.nectec.tanrabad.entity.Building;
 
-public class BuildingChooser {
+class BuildingChooser {
     private final BuildingRepository buildingRepository;
     private final BuildingListPresenter presenter;
 

@@ -22,7 +22,7 @@ import java.util.List;
 import th.or.nectec.tanrabad.entity.LocationEntity;
 import th.or.nectec.tanrabad.entity.field.Location;
 
-public interface LocationRepository {
+interface LocationRepository {
 
     List<LocationEntity> findInBoundaryLocation(Location minimumLocation, Location maximumLocation);
 

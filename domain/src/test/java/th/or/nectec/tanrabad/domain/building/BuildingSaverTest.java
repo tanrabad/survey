@@ -22,23 +22,22 @@ import org.jmock.auto.Mock;
 import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Rule;
 import org.junit.Test;
-import th.or.nectec.tanrabad.entity.Building;
 
 import java.util.UUID;
 
+import th.or.nectec.tanrabad.entity.Building;
+
 
 public class BuildingSaverTest {
+    private final Building building = new Building(UUID.randomUUID(), "MockBuilding");
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
-
     @Mock
-    protected BuildingValidator validator;
+    private BuildingValidator validator;
     @Mock
-    protected BuildingSavePresenter presenter;
+    private BuildingSavePresenter presenter;
     @Mock
-    protected BuildingRepository repository;
-
-    private Building building = new Building(UUID.randomUUID(), "MockBuilding");
+    private BuildingRepository repository;
 
     @Test
     public void testSaveSuccess() throws Exception {

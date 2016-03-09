@@ -22,8 +22,8 @@ import java.util.UUID;
 import th.or.nectec.tanrabad.entity.Building;
 
 public class BuildingController {
-    private BuildingRepository buildingRepository;
-    private BuildingPresenter buildingPresenter;
+    private final BuildingRepository buildingRepository;
+    private final BuildingPresenter buildingPresenter;
 
     public BuildingController(BuildingRepository buildingRepository, BuildingPresenter buildingPresenter) {
         this.buildingRepository = buildingRepository;

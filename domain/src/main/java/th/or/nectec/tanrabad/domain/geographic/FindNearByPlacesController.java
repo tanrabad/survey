@@ -22,12 +22,12 @@ import java.util.List;
 import th.or.nectec.tanrabad.entity.LocationEntity;
 import th.or.nectec.tanrabad.entity.field.Location;
 
-public class FindNearByPlacesController {
-    private FilterBoundaryCalculator filterBoundaryCalculator;
-    private CoordinateLocationCalculator coordinateLocationCalculate;
-    private LocationRepository locationRepository;
-    private DistanceSorter distanceSorter;
-    private NearbyPlacePresenter nearbyPlacePresenter;
+class FindNearByPlacesController {
+    private final FilterBoundaryCalculator filterBoundaryCalculator;
+    private final CoordinateLocationCalculator coordinateLocationCalculate;
+    private final LocationRepository locationRepository;
+    private final DistanceSorter distanceSorter;
+    private final NearbyPlacePresenter nearbyPlacePresenter;
 
     public FindNearByPlacesController(FilterBoundaryCalculator filterBoundaryCalculator,
                                       CoordinateLocationCalculator coordinateLocationCalculate,

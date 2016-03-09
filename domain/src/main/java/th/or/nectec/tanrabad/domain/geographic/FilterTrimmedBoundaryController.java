@@ -22,11 +22,11 @@ import java.util.List;
 import th.or.nectec.tanrabad.entity.LocationEntity;
 import th.or.nectec.tanrabad.entity.field.Location;
 
-public class FilterTrimmedBoundaryController {
-    private FilterBoundaryCalculator filterBoundaryCalculator;
-    private LocationRepository placeRepository;
-    private NearbyPlacePresenter nearbyPlacePresenter;
-    private CoordinateLocationCalculator coordinateLocationCalculate;
+class FilterTrimmedBoundaryController {
+    private final FilterBoundaryCalculator filterBoundaryCalculator;
+    private final LocationRepository placeRepository;
+    private final NearbyPlacePresenter nearbyPlacePresenter;
+    private final CoordinateLocationCalculator coordinateLocationCalculate;
 
     public FilterTrimmedBoundaryController(FilterBoundaryCalculator filterBoundaryCalculator,
                                            CoordinateLocationCalculator coordinateLocationCalculate,

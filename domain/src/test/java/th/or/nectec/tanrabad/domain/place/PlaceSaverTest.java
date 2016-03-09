@@ -22,21 +22,21 @@ import org.jmock.auto.Mock;
 import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Rule;
 import org.junit.Test;
-import th.or.nectec.tanrabad.entity.Place;
 
 import java.util.UUID;
 
+import th.or.nectec.tanrabad.entity.Place;
+
 public class PlaceSaverTest {
+    private final Place place = new Place(UUID.randomUUID(), "test Place");
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
     @Mock
-    protected PlaceValidator validator;
+    private PlaceValidator validator;
     @Mock
-    protected PlaceSavePresenter presenter;
+    private PlaceSavePresenter presenter;
     @Mock
-    protected PlaceRepository repository;
-
-    private Place place = new Place(UUID.randomUUID(), "test Place");
+    private PlaceRepository repository;
 
     @Test
     public void testSaveSuccess() throws Exception {

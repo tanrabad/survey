@@ -19,6 +19,6 @@ package th.or.nectec.tanrabad.domain.geographic;
 
 import th.or.nectec.tanrabad.entity.field.Location;
 
-public interface DistanceCalculator {
+interface DistanceCalculator {
     double calculate(Location currentLocation, Location targetLocation);
 }

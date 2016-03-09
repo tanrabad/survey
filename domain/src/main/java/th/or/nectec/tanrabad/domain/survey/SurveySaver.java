@@ -22,7 +22,7 @@ import th.or.nectec.tanrabad.entity.Survey;
 public class SurveySaver {
     private final SurveyValidator saveValidator;
     private final SurveyRepository surveyRepository;
-    private SurveySavePresenter surveySavePresenter;
+    private final SurveySavePresenter surveySavePresenter;
 
     public SurveySaver(SurveySavePresenter surveySavePresenter,
                        SurveyValidator validator,

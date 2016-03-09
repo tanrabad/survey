@@ -17,13 +17,13 @@
 
 package th.or.nectec.tanrabad.domain.survey;
 
-import th.or.nectec.tanrabad.entity.lookup.ContainerType;
-
 import java.util.List;
 
+import th.or.nectec.tanrabad.entity.lookup.ContainerType;
+
 public class ContainerController {
-    private ContainerTypeRepository containerTypeRepository;
-    private ContainerPresenter containerPresenter;
+    private final ContainerTypeRepository containerTypeRepository;
+    private final ContainerPresenter containerPresenter;
 
     public ContainerController(ContainerTypeRepository containerTypeRepository,
                                ContainerPresenter containerPresenter) {

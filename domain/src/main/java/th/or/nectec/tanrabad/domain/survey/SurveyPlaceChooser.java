@@ -29,10 +29,10 @@ import th.or.nectec.tanrabad.entity.User;
 
 public class SurveyPlaceChooser {
 
-    private UserRepository userRepository;
-    private PlaceRepository placeRepository;
-    private SurveyRepository surveyRepository;
-    private PlaceWithSurveyStatusListPresenter surveyPlacePresenter;
+    private final UserRepository userRepository;
+    private final PlaceRepository placeRepository;
+    private final SurveyRepository surveyRepository;
+    private final PlaceWithSurveyStatusListPresenter surveyPlacePresenter;
 
     public SurveyPlaceChooser(UserRepository userRepository,
                               PlaceRepository placeRepository,

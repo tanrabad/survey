@@ -17,14 +17,14 @@
 
 package th.or.nectec.tanrabad.domain.place;
 
-import th.or.nectec.tanrabad.entity.Place;
-
 import java.util.List;
+
+import th.or.nectec.tanrabad.entity.Place;
 
 public class PlaceChooser {
 
-    private PlaceRepository placeRepository;
-    private PlaceListPresenter placeListPresenter;
+    private final PlaceRepository placeRepository;
+    private final PlaceListPresenter placeListPresenter;
 
     public PlaceChooser(PlaceRepository placeRepository, PlaceListPresenter placeListPresenter) {
         this.placeRepository = placeRepository;

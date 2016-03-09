@@ -17,11 +17,11 @@
 
 package th.or.nectec.tanrabad.domain.geographic;
 
-import th.or.nectec.tanrabad.entity.LocationEntity;
-
 import java.util.List;
 
-public interface NearbyPlacePresenter {
+import th.or.nectec.tanrabad.entity.LocationEntity;
+
+interface NearbyPlacePresenter {
     void displayPlaceNotFound();
 
     void displayNearByPlaces(List<LocationEntity> placeFilter);

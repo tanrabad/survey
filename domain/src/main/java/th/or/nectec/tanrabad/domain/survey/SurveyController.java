@@ -26,11 +26,11 @@ import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.User;
 
 public class SurveyController {
-    private SurveyRepository surveyRepository;
-    private SurveyPresenter surveyPresenter;
+    private final SurveyRepository surveyRepository;
+    private final SurveyPresenter surveyPresenter;
 
-    private BuildingRepository buildingRepository;
-    private UserRepository userRepository;
+    private final BuildingRepository buildingRepository;
+    private final UserRepository userRepository;
 
     public SurveyController(
             SurveyRepository surveyRepository, BuildingRepository buildingRepository,

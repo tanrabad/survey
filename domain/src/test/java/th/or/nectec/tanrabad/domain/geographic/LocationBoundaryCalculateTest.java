@@ -18,13 +18,14 @@
 package th.or.nectec.tanrabad.domain.geographic;
 
 import org.junit.Test;
+
 import th.or.nectec.tanrabad.entity.field.Location;
 
 import static org.junit.Assert.assertEquals;
 
 public class LocationBoundaryCalculateTest {
 
-    public static final int DISTANCE_IN_KM = 100;
+    private static final int DISTANCE_IN_KM = 100;
     private final Location myLocation = new Location(40.6892, -74.0444);
 
     @Test

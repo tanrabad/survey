@@ -17,19 +17,25 @@
 
 package th.or.nectec.tanrabad.domain.entomology;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.SurveyDetail;
 import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 
-import java.util.*;
-
-public class KeyContainer {
+class KeyContainer {
 
     private final List<Survey> surveys;
-    protected List<SurveyDetail> indoorKey;
-    protected List<SurveyDetail> outdoorKey;
-    Map<ContainerType, Integer> indoorMap = new HashMap<>();
-    Map<ContainerType, Integer> outdoorMap = new HashMap<>();
+    private final Map<ContainerType, Integer> indoorMap = new HashMap<>();
+    private final Map<ContainerType, Integer> outdoorMap = new HashMap<>();
+    List<SurveyDetail> outdoorKey;
+    private List<SurveyDetail> indoorKey;
 
     public KeyContainer(Survey survey) {
         surveys = new ArrayList<>();

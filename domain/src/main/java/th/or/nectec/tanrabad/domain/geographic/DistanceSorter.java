@@ -17,11 +17,11 @@
 
 package th.or.nectec.tanrabad.domain.geographic;
 
-import th.or.nectec.tanrabad.entity.LocationEntity;
-
 import java.util.List;
 
-public interface DistanceSorter {
+import th.or.nectec.tanrabad.entity.LocationEntity;
+
+interface DistanceSorter {
 
     List<LocationEntity> sort(List<LocationEntity> locationEntity);
 }

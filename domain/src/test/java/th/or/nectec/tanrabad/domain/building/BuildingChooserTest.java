@@ -31,10 +31,9 @@ import java.util.UUID;
 import th.or.nectec.tanrabad.entity.Building;
 
 public class BuildingChooserTest {
+    private final UUID placeUuid = UUID.randomUUID();
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
-
-    private UUID placeUuid = UUID.randomUUID();
     private BuildingRepository buildingRepository;
     private BuildingListPresenter presenter;
 

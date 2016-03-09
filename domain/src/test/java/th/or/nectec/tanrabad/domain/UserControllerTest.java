@@ -29,11 +29,10 @@ import th.or.nectec.tanrabad.domain.user.UserRepository;
 import th.or.nectec.tanrabad.entity.User;
 
 public class UserControllerTest {
-    public final String userName = "ice";
+    private final String userName = "ice";
+    private final User user = User.fromUsername(userName);
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
-    User user = User.fromUsername(userName);
-
     private th.or.nectec.tanrabad.domain.user.UserRepository userRepository;
     private th.or.nectec.tanrabad.domain.user.UserPresenter userPresenter;
 

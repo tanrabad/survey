@@ -19,7 +19,7 @@ package th.or.nectec.tanrabad.domain.geographic;
 
 import th.or.nectec.tanrabad.entity.field.Location;
 
-public interface CoordinateLocationCalculator {
+interface CoordinateLocationCalculator {
 
     Location getNewMaxLocation(Location currentLocation, double distanceInKm);
 

@@ -29,12 +29,10 @@ import th.or.nectec.tanrabad.entity.Building;
 
 public class BuildingControllerTest {
 
-    public final String buildingName = "123";
-
+    private final String buildingName = "123";
+    private final Building building = Building.withName(buildingName);
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
-
-    Building building = Building.withName(buildingName);
     private BuildingRepository buildingRepository;
     private BuildingPresenter buildingPresenter;
     private UUID buildingUUID;

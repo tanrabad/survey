@@ -17,17 +17,17 @@
 
 package th.or.nectec.tanrabad.domain.entomology;
 
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 import th.or.nectec.tanrabad.entity.stub.ContainerTypeStub;
 
-import java.util.UUID;
+class SurveyStub {
 
-public class SurveyStub {
-
-    public static final User SURVEYOR = User.fromUsername("surveyor");
+    private static final User SURVEYOR = User.fromUsername("surveyor");
 
     public static Survey withoutLarvae(Building building) {
         return new Survey.Builder(UUID.randomUUID(), SURVEYOR).setBuilding(building)

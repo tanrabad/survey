@@ -22,24 +22,24 @@ import org.jmock.auto.Mock;
 import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Rule;
 import org.junit.Test;
+
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.User;
 
-import java.util.UUID;
-
 public class SurveySaverTest {
 
+    private final Survey survey = new Survey(UUID.randomUUID(), User.fromUsername("blaze"), Building.withName("214/2"));
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
     @Mock
-    protected SurveyValidator validator;
+    private SurveyValidator validator;
     @Mock
-    protected SurveySavePresenter presenter;
+    private SurveySavePresenter presenter;
     @Mock
-    protected SurveyRepository repository;
-
-    private Survey survey = new Survey(UUID.randomUUID(), User.fromUsername("blaze"), Building.withName("214/2"));
+    private SurveyRepository repository;
     
     @Test
     public void testSaveSuccess() {

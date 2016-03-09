@@ -21,8 +21,8 @@ import th.or.nectec.tanrabad.entity.Place;
 
 
 public class PlaceWithSurveyStatus {
-    public final Place place;
-    public final boolean isSurvey;
+    private final Place place;
+    private final boolean isSurvey;
 
     public PlaceWithSurveyStatus(Place place, boolean isSurvey) {
         this.place = place;

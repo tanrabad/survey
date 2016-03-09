@@ -17,11 +17,11 @@
 
 package th.or.nectec.tanrabad.domain.building;
 
-import th.or.nectec.tanrabad.entity.Building;
-
 import java.util.List;
 
-public interface BuildingListPresenter {
+import th.or.nectec.tanrabad.entity.Building;
+
+interface BuildingListPresenter {
     void alertBuildingsNotFound();
 
     void displayBuildingsList(List<Building> buildingsWithSurveyStatuses);

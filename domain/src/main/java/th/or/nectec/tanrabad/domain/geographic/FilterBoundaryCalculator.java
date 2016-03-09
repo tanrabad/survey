@@ -19,7 +19,7 @@ package th.or.nectec.tanrabad.domain.geographic;
 
 import th.or.nectec.tanrabad.entity.field.Location;
 
-public interface FilterBoundaryCalculator {
+interface FilterBoundaryCalculator {
     Location getMinLocation(Location currentLocation, double distanceInKm);
     Location getMaxLocation(Location currentLocation, double distanceInKm);
 }

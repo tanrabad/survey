@@ -38,19 +38,18 @@ public class SurveyBuildingHistoryControllerTest {
 
     private static final String USERNAME = "test-user";
     private static final String placeUUID = UUID.nameUUIDFromBytes("1abc".getBytes()).toString();
+    private final Place place = new Place(UUID.fromString(placeUUID), "1/1");
+    private final User user = User.fromUsername(USERNAME);
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
     @Mock
-    protected SurveyRepository surveyRepository;
+    private SurveyRepository surveyRepository;
     @Mock
-    protected PlaceRepository placeRepository;
+    private PlaceRepository placeRepository;
     @Mock
-    protected UserRepository userRepository;
+    private UserRepository userRepository;
     @Mock
-    protected SurveyBuildingPresenter presenter;
-
-    private Place place = new Place(UUID.fromString(placeUUID), "1/1");
-    private User user = User.fromUsername(USERNAME);
+    private SurveyBuildingPresenter presenter;
 
     @Test
     public void testShowSurveyBuildingList() throws Exception {

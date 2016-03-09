@@ -29,11 +29,10 @@ import th.or.nectec.tanrabad.entity.User;
 
 public class SurveyBuildingChooser {
 
-    private UserRepository userRepository;
-    private PlaceRepository placeRepository;
-    private SurveyRepository surveyRepository;
-    private BuildingWithSurveyStatusListPresenter surveyBuildingPresenter;
-    private User user;
+    private final UserRepository userRepository;
+    private final PlaceRepository placeRepository;
+    private final SurveyRepository surveyRepository;
+    private final BuildingWithSurveyStatusListPresenter surveyBuildingPresenter;
     private Place place;
 
     public SurveyBuildingChooser(
@@ -55,8 +54,8 @@ public class SurveyBuildingChooser {
     }
 
     private boolean isUserAndPlaceFound(String placeUuid, User user) {
-        this.user = userRepository.findByUsername(user.getUsername());
-        if (this.user == null) {
+        User queryUser = userRepository.findByUsername(user.getUsername());
+        if (queryUser == null) {
             surveyBuildingPresenter.alertUserNotFound();
             return false;
         }

@@ -22,20 +22,19 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
+import java.util.ArrayList;
+
 import th.or.nectec.tanrabad.entity.LocationEntity;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.field.Location;
 
-import java.util.ArrayList;
-
 public class FindNearByPlacesControllerTest {
 
+    private final double distanceInKm = 100;
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
-    double currentLatitude = 40.6892;
-    double currentLongitude = -74.0444;
-    Location currentLocation;
-    double distanceInKm = 100;
+    private Location currentLocation;
     private LocationRepository locationRepository;
     private NearbyPlacePresenter nearbyPlacePresenter;
     private FilterBoundaryCalculator filterBoundaryCalculate;
@@ -71,6 +70,8 @@ public class FindNearByPlacesControllerTest {
         place5.setLocation(new Location(41.500, -74.500));
         places.add(place5);*/
 
+        double currentLatitude = 40.6892;
+        double currentLongitude = -74.0444;
         currentLocation = new Location(currentLatitude, currentLongitude);
 
         ArrayList<Place> places = new ArrayList<>();

@@ -17,14 +17,14 @@
 
 package th.or.nectec.tanrabad.domain.entomology;
 
-import th.or.nectec.tanrabad.entity.Survey;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import th.or.nectec.tanrabad.entity.Survey;
+
 public class HouseIndex {
 
-    private List<Survey> surveys;
+    private final List<Survey> surveys;
     private int foundLarvaeCount;
 
     public HouseIndex() {

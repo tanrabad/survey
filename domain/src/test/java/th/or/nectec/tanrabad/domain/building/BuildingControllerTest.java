@@ -35,11 +35,11 @@ public class BuildingControllerTest {
     public JUnitRuleMockery context = new JUnitRuleMockery();
     private BuildingRepository buildingRepository;
     private BuildingPresenter buildingPresenter;
-    private UUID buildingUUID;
+    private UUID buildingUuid;
 
     @Before
-    public void setUp() throws Exception {
-        buildingUUID = UUID.nameUUIDFromBytes("3xyz".getBytes());
+    public void setUp() {
+        buildingUuid = UUID.nameUUIDFromBytes("3xyz".getBytes());
 
         buildingRepository = context.mock(BuildingRepository.class);
         buildingPresenter = context.mock(BuildingPresenter.class);
@@ -51,13 +51,13 @@ public class BuildingControllerTest {
 
         context.checking(new Expectations() {
             {
-                allowing(buildingRepository).findByUuid(buildingUUID);
+                allowing(buildingRepository).findByUuid(buildingUuid);
                 will(returnValue(building));
                 oneOf(buildingPresenter).displayBuilding(building);
             }
         });
         BuildingController buildingController = new BuildingController(buildingRepository, buildingPresenter);
-        buildingController.showBuilding(buildingUUID);
+        buildingController.showBuilding(buildingUuid);
     }
 
 
@@ -66,13 +66,13 @@ public class BuildingControllerTest {
 
         context.checking(new Expectations() {
             {
-                allowing(buildingRepository).findByUuid(buildingUUID);
+                allowing(buildingRepository).findByUuid(buildingUuid);
                 will(returnValue(null));
                 oneOf(buildingPresenter).alertBuildingNotFound();
             }
         });
         BuildingController buildingController = new BuildingController(buildingRepository, buildingPresenter);
-        buildingController.showBuilding(buildingUUID);
+        buildingController.showBuilding(buildingUuid);
     }
 
 }

@@ -21,9 +21,10 @@ import org.jmock.Expectations;
 import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Rule;
 import org.junit.Test;
-import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 
 import java.util.ArrayList;
+
+import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 
 public class ContainerTypeControllerTest {
     @Rule
@@ -38,11 +39,12 @@ public class ContainerTypeControllerTest {
         containerTypes.add(new ContainerType(1, "น้ำใช้"));
         containerTypes.add(new ContainerType(2, "น้ำดื่ม"));
 
-        context.checking(new Expectations() {{
-            allowing(containerTypeRepository).find();
-            will(returnValue(containerTypes));
-            oneOf(containerPresenter).displayContainerList(with(containerTypes));
-        }
+        context.checking(new Expectations() {
+            {
+                allowing(containerTypeRepository).find();
+                will(returnValue(containerTypes));
+                oneOf(containerPresenter).displayContainerList(with(containerTypes));
+            }
         });
 
         ContainerController containerController = new ContainerController(containerTypeRepository, containerPresenter);
@@ -54,11 +56,6 @@ public class ContainerTypeControllerTest {
     public void testNotFoundPath() throws Exception {
         final ContainerTypeRepository containerTypeRepository = context.mock(ContainerTypeRepository.class);
         final ContainerPresenter containerPresenter = context.mock(ContainerPresenter.class);
-
-        final ArrayList<ContainerType> containerTypes = new ArrayList<>();
-        containerTypes.add(new ContainerType(1, "น้ำใช้"));
-        containerTypes.add(new ContainerType(2, "น้ำดื่ม"));
-
         context.checking(new Expectations() {
             {
                 allowing(containerTypeRepository).find();

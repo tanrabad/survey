@@ -22,9 +22,10 @@ public class EllipsoidDistanceWithDummyTest {
     private final Location destinationLocation;
     private final double distanceBetweenPoint;
     private final boolean expectValue;
-    boolean testExpectResult;
 
-    public EllipsoidDistanceWithDummyTest(Location destinationLocation, double distanceBetweenPoint, boolean expectValue) {
+    public EllipsoidDistanceWithDummyTest(Location destinationLocation,
+                                          double distanceBetweenPoint,
+                                          boolean expectValue) {
         this.destinationLocation = destinationLocation;
         this.distanceBetweenPoint = distanceBetweenPoint;
         this.expectValue = expectValue;
@@ -103,8 +104,6 @@ public class EllipsoidDistanceWithDummyTest {
 
     @Test
     public void testDistanceCalculateEllipsoid() throws Exception {
-        //Location destinationLocation = new Location(39.7802, -74.9453);
-
         assertEquals(distanceBetweenPoint, ellipsoidDistance.calculate(startLocation, destinationLocation), DELTA);
     }
 

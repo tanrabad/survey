@@ -20,6 +20,7 @@ package th.or.nectec.tanrabad.domain.entomology;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+
 import th.or.nectec.tanrabad.entity.Building;
 
 import static org.junit.Assert.assertEquals;
@@ -30,7 +31,7 @@ public class HouseIndexTest {
     private static final float DELTA = 0.01f;
 
     @Test
-    public void test50PercentHI() throws Exception {
+    public void test50PercentHi() throws Exception {
         HouseIndex hi = new HouseIndex();
         hi.addSurvey(SurveyStub.withLarvae(Building.withName("5")));
         hi.addSurvey(SurveyStub.withoutLarvae(Building.withName("1")));
@@ -39,7 +40,7 @@ public class HouseIndexTest {
     }
 
     @Test
-    public void test25PercentHI() throws Exception {
+    public void test25PercentHi() throws Exception {
         HouseIndex hi = new HouseIndex();
         hi.addSurvey(SurveyStub.withoutLarvae(Building.withName("1")));
         hi.addSurvey(SurveyStub.withoutLarvae(Building.withName("12")));
@@ -50,7 +51,7 @@ public class HouseIndexTest {
     }
 
     @Test
-    public void test0PercentHI() throws Exception {
+    public void test0PercentHi() throws Exception {
         HouseIndex hi = new HouseIndex();
         hi.addSurvey(SurveyStub.withoutLarvae(Building.withName("1")));
         hi.addSurvey(SurveyStub.withoutLarvae(Building.withName("12")));
@@ -60,7 +61,7 @@ public class HouseIndexTest {
     }
 
     @Test
-    public void test33PercentHI() throws Exception {
+    public void test33PercentHi() throws Exception {
 
         HouseIndex hi = new HouseIndex();
         hi.addSurvey(SurveyStub.withoutLarvae(Building.withName("1")));

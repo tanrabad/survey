@@ -43,7 +43,9 @@ public class PlaceWithSurveyStatusChooserTest {
     private PlaceWithSurveyStatusListPresenter placeWithSurveyStatusListPresenter;
     private User user;
     private String username;
-    private Place place1, place2, place3;
+    private Place place1;
+    private Place place2;
+    private Place place3;
 
     @Before
     public void setUp() {
@@ -90,7 +92,8 @@ public class PlaceWithSurveyStatusChooserTest {
                 allowing(placeWithSurveyStatusListPresenter).displayAllSurveyPlaceList(with(placeWithSurveyStatuses));
             }
         });
-        SurveyPlaceChooser surveyPlaceHistoryController = new SurveyPlaceChooser(userRepository, placeRepository, surveyRepository, placeWithSurveyStatusListPresenter);
+        SurveyPlaceChooser surveyPlaceHistoryController = new SurveyPlaceChooser(
+                userRepository, placeRepository, surveyRepository, placeWithSurveyStatusListPresenter);
         surveyPlaceHistoryController.displaySurveyedPlaceOf(username);
     }
 
@@ -121,7 +124,8 @@ public class PlaceWithSurveyStatusChooserTest {
                 allowing(placeWithSurveyStatusListPresenter).displayAllSurveyPlaceList(with(placeWithSurveyStatuses));
             }
         });
-        SurveyPlaceChooser surveyPlaceHistoryController = new SurveyPlaceChooser(userRepository, placeRepository, surveyRepository, placeWithSurveyStatusListPresenter);
+        SurveyPlaceChooser surveyPlaceHistoryController = new SurveyPlaceChooser(
+                userRepository, placeRepository, surveyRepository, placeWithSurveyStatusListPresenter);
         surveyPlaceHistoryController.displaySurveyedPlaceOf(username);
     }
 
@@ -142,7 +146,8 @@ public class PlaceWithSurveyStatusChooserTest {
                 never(placeWithSurveyStatusListPresenter);
             }
         });
-        SurveyPlaceChooser surveyPlaceHistoryController = new SurveyPlaceChooser(userRepository, placeRepository, surveyRepository, placeWithSurveyStatusListPresenter);
+        SurveyPlaceChooser surveyPlaceHistoryController = new SurveyPlaceChooser(
+                userRepository, placeRepository, surveyRepository, placeWithSurveyStatusListPresenter);
         surveyPlaceHistoryController.displaySurveyedPlaceOf(username);
     }
 
@@ -157,7 +162,8 @@ public class PlaceWithSurveyStatusChooserTest {
                 oneOf(placeWithSurveyStatusListPresenter).alertUserNotFound();
             }
         });
-        SurveyPlaceChooser surveyPlaceHistoryController = new SurveyPlaceChooser(userRepository, placeRepository, surveyRepository, placeWithSurveyStatusListPresenter);
+        SurveyPlaceChooser surveyPlaceHistoryController = new SurveyPlaceChooser(
+                userRepository, placeRepository, surveyRepository, placeWithSurveyStatusListPresenter);
         surveyPlaceHistoryController.displaySurveyedPlaceOf(username);
     }
 

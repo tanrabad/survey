@@ -34,13 +34,11 @@ public class PlaceControllerTest {
     public JUnitRuleMockery context = new JUnitRuleMockery();
     private PlaceRepository placeRepository;
     private PlacePresenter placePresenter;
-    private UUID placeUUID;
-    private PlaceController placeController;
+    private UUID placeUuid;
 
     @Before
-    public void setUp() throws Exception {
-        placeUUID = UUID.nameUUIDFromBytes("3zyx".getBytes());
-
+    public void setUp() {
+        placeUuid = UUID.nameUUIDFromBytes("3zyx".getBytes());
         placeRepository = context.mock(PlaceRepository.class);
         placePresenter = context.mock(PlacePresenter.class);
     }
@@ -49,26 +47,26 @@ public class PlaceControllerTest {
     public void testFoundPlace() throws Exception {
         context.checking(new Expectations() {
             {
-                allowing(placeRepository).findByUuid(placeUUID);
+                allowing(placeRepository).findByUuid(placeUuid);
                 will(returnValue(place));
                 oneOf(placePresenter).displayPlace(place);
             }
         });
         PlaceController placeController = new PlaceController(placeRepository, placePresenter);
-        placeController.showPlace(placeUUID);
+        placeController.showPlace(placeUuid);
     }
 
     @Test
     public void testNotFoundPlace() throws Exception {
         context.checking(new Expectations() {
             {
-                allowing(placeRepository).findByUuid(placeUUID);
+                allowing(placeRepository).findByUuid(placeUuid);
                 will(returnValue(null));
                 oneOf(placePresenter).alertPlaceNotFound();
             }
         });
         PlaceController placeController = new PlaceController(placeRepository, placePresenter);
-        placeController.showPlace(placeUUID);
+        placeController.showPlace(placeUuid);
     }
 
 }

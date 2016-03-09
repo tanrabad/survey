@@ -38,22 +38,22 @@ public class SurveyControllerTest {
     private SurveyPresenter surveyPresenter;
     private Building building;
     private User user;
-    private String buildingUUID;
+    private String buildingUuid;
     private String username;
     private UserRepository userRepository;
     private BuildingRepository buildingRepository;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         surveyRepository = context.mock(SurveyRepository.class);
         buildingRepository = context.mock(BuildingRepository.class);
         userRepository = context.mock(UserRepository.class);
         surveyPresenter = context.mock(SurveyPresenter.class);
 
-        buildingUUID = UUID.nameUUIDFromBytes("2xyz".getBytes()).toString();
+        buildingUuid = UUID.nameUUIDFromBytes("2xyz".getBytes()).toString();
         username = "chncs23";
 
-        building = new Building(UUID.fromString(buildingUUID), "33/5");
+        building = new Building(UUID.fromString(buildingUuid), "33/5");
         user = User.fromUsername(username);
     }
 
@@ -64,7 +64,7 @@ public class SurveyControllerTest {
 
         context.checking(new Expectations() {
             {
-                allowing(buildingRepository).findByUuid(with(UUID.fromString(buildingUUID)));
+                allowing(buildingRepository).findByUuid(with(UUID.fromString(buildingUuid)));
                 will(returnValue(building));
                 allowing(userRepository).findByUsername(with(username));
                 will(returnValue(user));
@@ -74,15 +74,16 @@ public class SurveyControllerTest {
             }
         });
 
-        SurveyController surveyController = new SurveyController(surveyRepository, buildingRepository, userRepository, surveyPresenter);
-        surveyController.checkThisBuildingAndUserCanSurvey(buildingUUID, username);
+        SurveyController surveyController = new SurveyController(
+                surveyRepository, buildingRepository, userRepository, surveyPresenter);
+        surveyController.checkThisBuildingAndUserCanSurvey(buildingUuid, username);
     }
 
     @Test
     public void testStartNewSurvey() throws Exception {
         context.checking(new Expectations() {
             {
-                allowing(buildingRepository).findByUuid(with(UUID.fromString(buildingUUID)));
+                allowing(buildingRepository).findByUuid(with(UUID.fromString(buildingUuid)));
                 will(returnValue(building));
                 allowing(userRepository).findByUsername(with(username));
                 will(returnValue(user));
@@ -92,8 +93,9 @@ public class SurveyControllerTest {
             }
         });
 
-        SurveyController surveyController = new SurveyController(surveyRepository, buildingRepository, userRepository, surveyPresenter);
-        surveyController.checkThisBuildingAndUserCanSurvey(buildingUUID, username);
+        SurveyController surveyController = new SurveyController(
+                surveyRepository, buildingRepository, userRepository, surveyPresenter);
+        surveyController.checkThisBuildingAndUserCanSurvey(buildingUuid, username);
     }
 
     @Test
@@ -109,25 +111,27 @@ public class SurveyControllerTest {
             }
         });
 
-        SurveyController surveyController = new SurveyController(surveyRepository, buildingRepository, userRepository, surveyPresenter);
-        surveyController.checkThisBuildingAndUserCanSurvey(buildingUUID, notExistUsername);
+        SurveyController surveyController = new SurveyController(
+                surveyRepository, buildingRepository, userRepository, surveyPresenter);
+        surveyController.checkThisBuildingAndUserCanSurvey(buildingUuid, notExistUsername);
     }
 
     @Test
     public void testNotFoundBuilding() throws Exception {
-        final UUID notExistBuildingUUID = UUID.nameUUIDFromBytes("2xyk".getBytes());
+        final UUID notExistBuildingUuid = UUID.nameUUIDFromBytes("2xyk".getBytes());
         context.checking(new Expectations() {
             {
                 allowing(userRepository).findByUsername(with(username));
                 will(returnValue(user));
-                allowing(buildingRepository).findByUuid(with(notExistBuildingUUID));
+                allowing(buildingRepository).findByUuid(with(notExistBuildingUuid));
                 will(returnValue(null));
                 never(surveyRepository);
                 oneOf(surveyPresenter).alertBuildingNotFound();
             }
         });
 
-        SurveyController surveyController = new SurveyController(surveyRepository, buildingRepository, userRepository, surveyPresenter);
-        surveyController.checkThisBuildingAndUserCanSurvey(notExistBuildingUUID.toString(), username);
+        SurveyController surveyController = new SurveyController(
+                surveyRepository, buildingRepository, userRepository, surveyPresenter);
+        surveyController.checkThisBuildingAndUserCanSurvey(notExistBuildingUuid.toString(), username);
     }
 }

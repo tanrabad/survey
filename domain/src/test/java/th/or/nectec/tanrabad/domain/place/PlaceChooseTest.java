@@ -22,11 +22,12 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 
 public class PlaceChooseTest {
 
@@ -78,7 +79,7 @@ public class PlaceChooseTest {
     }
 
     @Test
-    public void getPlaceListWithFilterBuildingType() throws Exception {
+    public void getPlaceListWithFilterBuildingType() {
         Place villageA = Place.withName("Village A");
         villageA.setType(PlaceType.VILLAGE_COMMUNITY);
 

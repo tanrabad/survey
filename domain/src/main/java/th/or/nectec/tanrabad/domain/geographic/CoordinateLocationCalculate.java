@@ -31,15 +31,15 @@ public class CoordinateLocationCalculate implements CoordinateLocationCalculator
         double lat1Radian = Math.toRadians(lat1);
         double lon1Radian = Math.toRadians(lon1);
 
-        double brng = Math.toRadians(45); //Bearing is 45 degrees converted to radians. brng = (degree*pi)/180
+        double bearing = Math.toRadians(45); //Bearing is 45 degrees converted to radians. brng = (degree*pi)/180
 
-        //d/Redius called angular distance in radians.
+        //d/Radius called angular distance in radians.
 
         double newMaximumLatitudeRadian = Math.asin(Math.sin(lat1Radian) * Math.cos(distanceInKm / RADIUS)
-                + Math.cos(lat1Radian) * Math.sin(distanceInKm / RADIUS) * Math.cos(brng));
+                + Math.cos(lat1Radian) * Math.sin(distanceInKm / RADIUS) * Math.cos(bearing));
 
         double newMaximumLongitudeRadian = Math.toRadians(lon1)
-                + Math.atan2(Math.sin(brng) * Math.sin(distanceInKm / RADIUS) * Math.cos(lon1Radian),
+                + Math.atan2(Math.sin(bearing) * Math.sin(distanceInKm / RADIUS) * Math.cos(lon1Radian),
                 Math.cos(distanceInKm / RADIUS)
                         - Math.sin(lon1Radian) * Math.sin(Math.toRadians(newMaximumLatitudeRadian)));
 
@@ -58,12 +58,12 @@ public class CoordinateLocationCalculate implements CoordinateLocationCalculator
         double lat1Radian = Math.toRadians(lat1);
         double lon1Radian = Math.toRadians(lon1);
 
-        double brng = Math.toRadians(225); //Bearing is 225 degrees converted to radians. brng = (degree*pi)/180
+        double bearing = Math.toRadians(225); //Bearing is 225 degrees converted to radians. bearing = (degree*pi)/180
 
         double newMinimumLatitudeRadian = Math.asin(Math.sin(lat1Radian) * Math.cos(distanceInKm / RADIUS)
-                + Math.cos(lat1Radian) * Math.sin(distanceInKm / RADIUS) * Math.cos(brng));
+                + Math.cos(lat1Radian) * Math.sin(distanceInKm / RADIUS) * Math.cos(bearing));
 
-        double newMinimumLongitudeRadian = Math.toRadians(lon1) + Math.atan2(Math.sin(brng)
+        double newMinimumLongitudeRadian = Math.toRadians(lon1) + Math.atan2(Math.sin(bearing)
                         * Math.sin(distanceInKm / RADIUS) * Math.cos(lon1Radian),
                 Math.cos(distanceInKm / RADIUS) - Math.sin(lon1Radian)
                         * Math.sin(Math.toRadians(newMinimumLatitudeRadian)));

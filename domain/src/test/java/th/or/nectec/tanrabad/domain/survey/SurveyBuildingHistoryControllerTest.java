@@ -69,7 +69,8 @@ public class SurveyBuildingHistoryControllerTest {
                 oneOf(presenter).displaySurveyBuildingList(surveys);
             }
         });
-        SurveyBuildingHistoryController controller = new SurveyBuildingHistoryController(userRepository, placeRepository, this.surveyRepository, presenter);
+        SurveyBuildingHistoryController controller = new SurveyBuildingHistoryController(
+                userRepository, placeRepository, this.surveyRepository, presenter);
         controller.showSurveyBuildingOf(placeUUID, USERNAME);
     }
 
@@ -84,7 +85,8 @@ public class SurveyBuildingHistoryControllerTest {
                 will(returnValue(user));
             }
         });
-        SurveyBuildingHistoryController controller = new SurveyBuildingHistoryController(userRepository, placeRepository, this.surveyRepository, presenter);
+        SurveyBuildingHistoryController controller = new SurveyBuildingHistoryController(
+                userRepository, placeRepository, this.surveyRepository, presenter);
         controller.showSurveyBuildingOf(placeUUID, USERNAME);
     }
 
@@ -97,7 +99,8 @@ public class SurveyBuildingHistoryControllerTest {
                 oneOf(presenter).alertUserNotFound();
             }
         });
-        SurveyBuildingHistoryController controller = new SurveyBuildingHistoryController(userRepository, placeRepository, this.surveyRepository, presenter);
+        SurveyBuildingHistoryController controller = new SurveyBuildingHistoryController(
+                userRepository, placeRepository, this.surveyRepository, presenter);
         controller.showSurveyBuildingOf(placeUUID, USERNAME);
     }
 
@@ -109,12 +112,14 @@ public class SurveyBuildingHistoryControllerTest {
                 will(returnValue(user));
                 allowing(placeRepository).findByUuid(with(UUID.fromString(placeUUID)));
                 will(returnValue(place));
-                allowing(SurveyBuildingHistoryControllerTest.this.surveyRepository).findByPlaceAndUserIn7Days(with(place), with(user));
+                allowing(SurveyBuildingHistoryControllerTest.this.surveyRepository)
+                        .findByPlaceAndUserIn7Days(with(place), with(user));
                 will(returnValue(null));
                 oneOf(presenter).displaySurveyBuildingsNotFound();
             }
         });
-        SurveyBuildingHistoryController controller = new SurveyBuildingHistoryController(userRepository, placeRepository, this.surveyRepository, presenter);
+        SurveyBuildingHistoryController controller = new SurveyBuildingHistoryController(
+                userRepository, placeRepository, this.surveyRepository, presenter);
         controller.showSurveyBuildingOf(placeUUID, USERNAME);
     }
 }

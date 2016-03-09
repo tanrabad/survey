@@ -67,7 +67,8 @@ public class PlaceWithSurveyHistoryChooserTest {
             }
         });
 
-        PlaceWithSurveyHistoryChooser placeWithSurveyHistoryChooser = new PlaceWithSurveyHistoryChooser(userRepository, surveyRepository, placeWithSurveyHistoryListPresenter);
+        PlaceWithSurveyHistoryChooser placeWithSurveyHistoryChooser = new PlaceWithSurveyHistoryChooser(
+                userRepository, surveyRepository, placeWithSurveyHistoryListPresenter);
         placeWithSurveyHistoryChooser.showSurveyPlaceList(username);
     }
 
@@ -83,7 +84,8 @@ public class PlaceWithSurveyHistoryChooserTest {
             }
         });
 
-        PlaceWithSurveyHistoryChooser placeWithSurveyHistoryChooser = new PlaceWithSurveyHistoryChooser(userRepository, surveyRepository, placeWithSurveyHistoryListPresenter);
+        PlaceWithSurveyHistoryChooser placeWithSurveyHistoryChooser = new PlaceWithSurveyHistoryChooser(
+                userRepository, surveyRepository, placeWithSurveyHistoryListPresenter);
         placeWithSurveyHistoryChooser.showSurveyPlaceList(username);
     }
 
@@ -97,7 +99,8 @@ public class PlaceWithSurveyHistoryChooserTest {
             }
         });
 
-        PlaceWithSurveyHistoryChooser placeWithSurveyHistoryChooser = new PlaceWithSurveyHistoryChooser(userRepository, surveyRepository, placeWithSurveyHistoryListPresenter);
+        PlaceWithSurveyHistoryChooser placeWithSurveyHistoryChooser = new PlaceWithSurveyHistoryChooser(
+                userRepository, surveyRepository, placeWithSurveyHistoryListPresenter);
         placeWithSurveyHistoryChooser.showSurveyPlaceList(username);
     }
 }

@@ -20,9 +20,9 @@ package th.or.nectec.tanrabad.domain.geographic;
 import th.or.nectec.tanrabad.entity.field.Location;
 
 public class EllipsoidDistance implements DistanceCalculator {
-    private final double a = 6378.137;
-    private final double b = 6356.752314;
-    private final double f = 0.003039;
+    private static final double a = 6378.137;
+    private static final double b = 6356.752314;
+    private static final double f = 0.003039;
 
     @Override
     public double calculate(Location currentLocation, Location targetLocation) {

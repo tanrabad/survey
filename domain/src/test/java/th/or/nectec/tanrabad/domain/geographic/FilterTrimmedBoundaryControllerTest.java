@@ -140,14 +140,15 @@ public class FilterTrimmedBoundaryControllerTest {
                 will(returnValue(outsideMaximumLocation));
                 oneOf(coordinateLocationCalculate).getNewMaxLocation(with(currentLocation), with(distanceInKm));
                 will(returnValue(insideMaximumLocation));
-                oneOf(locationRepository).findTrimmedInBoundaryLocation(insideMinimumLocation, outsideMinimumLocation, insideMaximumLocation, outsideMaximumLocation);
+                oneOf(locationRepository).findTrimmedInBoundaryLocation(
+                        insideMinimumLocation, outsideMinimumLocation, insideMaximumLocation, outsideMaximumLocation);
                 will(returnValue(locationEntities));
                 oneOf(nearbyPlacePresenter).displayNearByPlaces(locationEntities);
             }
         });
-        FilterTrimmedBoundaryController filterTrimmedBoundaryController = new FilterTrimmedBoundaryController(filterBoundaryCalculate, coordinateLocationCalculate,
-                locationRepository,
-                nearbyPlacePresenter);
+        FilterTrimmedBoundaryController filterTrimmedBoundaryController = new FilterTrimmedBoundaryController(
+                filterBoundaryCalculate, coordinateLocationCalculate,
+                locationRepository, nearbyPlacePresenter);
         filterTrimmedBoundaryController.findNearByFilterTrimmedBoundary(currentLocation, distanceInKm);
     }
 
@@ -180,14 +181,16 @@ public class FilterTrimmedBoundaryControllerTest {
                 will(returnValue(outsideMaximumLocation));
                 oneOf(coordinateLocationCalculate).getNewMaxLocation(with(currentLocation), with(distanceInKm));
                 will(returnValue(insideMaximumLocation));
-                oneOf(locationRepository).findTrimmedInBoundaryLocation(insideMinimumLocation, outsideMinimumLocation, insideMaximumLocation, outsideMaximumLocation);
+                oneOf(locationRepository).findTrimmedInBoundaryLocation(
+                        insideMinimumLocation, outsideMinimumLocation, insideMaximumLocation, outsideMaximumLocation);
                 will(returnValue(null));
                 oneOf(nearbyPlacePresenter).displayPlaceNotFound();
             }
         });
-        FilterTrimmedBoundaryController filterTrimmedBoundaryController = new FilterTrimmedBoundaryController(filterBoundaryCalculate, coordinateLocationCalculate,
-                locationRepository,
-                nearbyPlacePresenter);
+        FilterTrimmedBoundaryController filterTrimmedBoundaryController =
+                new FilterTrimmedBoundaryController(
+                        filterBoundaryCalculate, coordinateLocationCalculate,
+                        locationRepository, nearbyPlacePresenter);
         filterTrimmedBoundaryController.findNearByFilterTrimmedBoundary(currentLocation, distanceInKm);
     }
 }

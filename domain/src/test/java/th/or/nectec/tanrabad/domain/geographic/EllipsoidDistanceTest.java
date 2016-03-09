@@ -35,6 +35,6 @@ public class EllipsoidDistanceTest {
 
         EllipsoidDistance ellipsoidDistance = new EllipsoidDistance();
 
-        assertEquals(125, ellipsoidDistance.calculate(startLocation,destinationLocation), DELTA);
+        assertEquals(125, ellipsoidDistance.calculate(startLocation, destinationLocation), DELTA);
     }
 }

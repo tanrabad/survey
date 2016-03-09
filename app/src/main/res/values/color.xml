@@ -49,4 +49,7 @@
 
     <color name="water_blue">#1B7FDD</color>
     <color name="dark_blue">#0066cc</color>
+
+    <color name="purple_dark">#690780</color>
+    <color name="purple">#7a0e95</color>
 </resources>

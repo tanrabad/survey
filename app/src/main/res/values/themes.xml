@@ -64,6 +64,14 @@
         <item name="colorPrimary">@color/water_blue</item>
         <item name="colorPrimaryDark">@color/dark_blue</item>
     </style>
+
+    <style name="AppTheme.Purple">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="colorPrimary">@color/purple</item>
+        <item name="colorPrimaryDark">@color/purple_dark</item>
+    </style>
+
     <style name="AppTheme.Blue.Water">
         <item name="android:windowBackground">@drawable/bg_water</item>
     </style>

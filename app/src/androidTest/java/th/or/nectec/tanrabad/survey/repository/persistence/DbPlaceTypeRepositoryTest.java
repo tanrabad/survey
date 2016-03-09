@@ -97,7 +97,7 @@ public class DbPlaceTypeRepositoryTest {
     public void testFindByID() throws Exception {
         Context context = InstrumentationRegistry.getTargetContext();
         DbPlaceTypeRepository dbPlaceTypeRepository = new DbPlaceTypeRepository(context);
-        PlaceType placeType = dbPlaceTypeRepository.findByID(1);
+        PlaceType placeType = dbPlaceTypeRepository.findById(1);
         assertEquals(1, placeType.getId());
         assertEquals("หมู่บ้าน/ชุมชน", placeType.getName());
     }

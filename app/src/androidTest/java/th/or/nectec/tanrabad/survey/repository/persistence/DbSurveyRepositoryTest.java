@@ -56,16 +56,16 @@ public class DbSurveyRepositoryTest {
         when(userRepository.findByUsername("dpc-user")).thenReturn(stubUser());
 
         BuildingRepository buildingRepository = mock(BuildingRepository.class);
-        when(buildingRepository.findByUUID(UUID.fromString("f5bfd399-8fb2-4a69-874a-b40495f7786f")))
+        when(buildingRepository.findByUuid(UUID.fromString("f5bfd399-8fb2-4a69-874a-b40495f7786f")))
                 .thenReturn(stubBuilding());
 
         PlaceRepository placeRepository = mock(PlaceRepository.class);
-        when(placeRepository.findByUUID(UUID.fromString("f5bfd399-8fb2-4a69-674a-b40495f7686f")))
+        when(placeRepository.findByUuid(UUID.fromString("f5bfd399-8fb2-4a69-674a-b40495f7686f")))
                 .thenReturn(stubPlace());
 
         ContainerTypeRepository containerTypeRepository = mock(ContainerTypeRepository.class);
-        when(containerTypeRepository.findByID(1)).thenReturn(getWater());
-        when(containerTypeRepository.findByID(2)).thenReturn(getDrinkingWater());
+        when(containerTypeRepository.findById(1)).thenReturn(getWater());
+        when(containerTypeRepository.findById(2)).thenReturn(getDrinkingWater());
 
         Context context = InstrumentationRegistry.getTargetContext();
         surveyRepository = new DbSurveyRepository(context, userRepository, placeRepository, buildingRepository,

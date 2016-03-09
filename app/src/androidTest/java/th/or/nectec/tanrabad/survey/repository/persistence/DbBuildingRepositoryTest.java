@@ -55,7 +55,7 @@ public class DbBuildingRepositoryTest {
     public void setup() {
         Place place = stubPlace();
         placeRepository = Mockito.mock(PlaceRepository.class);
-        Mockito.when(placeRepository.findByUUID(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"))).thenReturn(place);
+        Mockito.when(placeRepository.findByUuid(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"))).thenReturn(place);
         User user = stubUser();
         userRepository = Mockito.mock(UserRepository.class);
         Mockito.when(userRepository.findByUsername("dpc-user")).thenReturn(user);
@@ -171,7 +171,7 @@ public class DbBuildingRepositoryTest {
     public void testFindByPlaceUUID() throws Exception {
         DbBuildingRepository repository = new DbBuildingRepository(context, placeRepository);
 
-        List<Building> buildingList = repository.findByPlaceUUID(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"));
+        List<Building> buildingList = repository.findByPlaceUuid(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"));
         Building building = buildingList.get(0);
 
         assertEquals(1, buildingList.size());
@@ -187,7 +187,7 @@ public class DbBuildingRepositoryTest {
         Place place = stubPlace();
         DbBuildingRepository dbBuildingRepository = new DbBuildingRepository(context, placeRepository);
 
-        List<Building> buildingList = dbBuildingRepository.findByPlaceUUIDAndBuildingName(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"), "23/2");
+        List<Building> buildingList = dbBuildingRepository.findByPlaceUuidAndBuildingName(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"), "23/2");
         Building building = buildingList.get(0);
 
         assertEquals(1, buildingList.size());
@@ -203,7 +203,7 @@ public class DbBuildingRepositoryTest {
         Place place = stubPlace();
         DbBuildingRepository dbBuildingRepository = new DbBuildingRepository(context, placeRepository);
 
-        Building building = dbBuildingRepository.findByUUID(UUID.fromString("00001db8-7207-8a65-152f-ad208cb99b01"));
+        Building building = dbBuildingRepository.findByUuid(UUID.fromString("00001db8-7207-8a65-152f-ad208cb99b01"));
 
         assertEquals("00001db8-7207-8a65-152f-ad208cb99b01", building.getId().toString());
         assertEquals("23/2", building.getName());

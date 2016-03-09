@@ -21,18 +21,20 @@ package th.or.nectec.tanrabad.entity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 
 import java.util.ArrayList;
 import java.util.UUID;
+
+import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 
 import static org.junit.Assert.assertEquals;
 
 @RunWith(JUnit4.class)
 
 public class SurveyIndoorOutdoorDetailTest {
-    private final Survey survey1 = new Survey(UUID.randomUUID(), User.fromUsername("Janie09")
-            , Building.withName("โรงพยาบาลเซนต์เมรี่"));
+    private final Survey survey1 = new Survey(UUID.randomUUID(),
+            User.fromUsername("Janie09"),
+            Building.withName("โรงพยาบาลเซนต์เมรี่"));
 
     @Test
     public void testSetThenGetIndoorDetail() {

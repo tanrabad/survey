@@ -29,17 +29,17 @@ import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 @RunWith(JUnit4.class)
 public class SurveyDetailTest {
 
-    private final ContainerType น้ำใช้ = new ContainerType(1, "น้ำใช้");
+    private final ContainerType water = new ContainerType(1, "water");
 
     @Test(expected = SurveyDetail.ContainerFoundLarvaOverTotalException.class)
     public void ContainerFoundLarvaMoreThanTotalMustThrowException() {
-        new SurveyDetail(UUID.randomUUID(), น้ำใช้, 2, 10);
+        new SurveyDetail(UUID.randomUUID(), water, 2, 10);
     }
 
     @Test
     public void testIsFoundLarvae() throws Exception {
-        Assert.assertEquals(false, new SurveyDetail(UUID.randomUUID(), น้ำใช้, 10, 0).isFoundLarva());
-        Assert.assertEquals(true, new SurveyDetail(UUID.randomUUID(), น้ำใช้, 10, 3).isFoundLarva());
-        Assert.assertEquals(true, new SurveyDetail(UUID.randomUUID(), น้ำใช้, 10, 10).isFoundLarva());
+        Assert.assertEquals(false, new SurveyDetail(UUID.randomUUID(), water, 10, 0).isFoundLarva());
+        Assert.assertEquals(true, new SurveyDetail(UUID.randomUUID(), water, 10, 3).isFoundLarva());
+        Assert.assertEquals(true, new SurveyDetail(UUID.randomUUID(), water, 10, 10).isFoundLarva());
     }
 }

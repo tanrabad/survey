@@ -32,7 +32,7 @@ public class UserProfileMapper {
     }
 
     public User getUser() {
-        User user = new User(profile.getUid());
+        User user = new User(profile.getUserName());
         user.setFirstname(profile.getGivenName());
         user.setLastname(profile.getSn());
 

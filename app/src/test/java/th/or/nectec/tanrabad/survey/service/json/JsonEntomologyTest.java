@@ -1,10 +1,12 @@
 package th.or.nectec.tanrabad.survey.service.json;
 
 import com.bluelinelabs.logansquare.LoganSquare;
+
 import org.junit.Test;
-import th.or.nectec.tanrabad.survey.utils.ResourceFile;
 
 import java.util.List;
+
+import th.or.nectec.tanrabad.survey.utils.ResourceFile;
 
 import static org.junit.Assert.assertEquals;
 
@@ -109,7 +111,8 @@ public class JsonEntomologyTest {
         assertEquals(66.0, jsonEntomology3.biValue, 0);
         assertEquals("แจกัน,น้ำใช้", jsonEntomology3.keyContainerIn.get(0).containerName);
         assertEquals("ที่รองกันมด,จานรองกระถาง,น้ำดื่ม", jsonEntomology3.keyContainerIn.get(1).containerName);
-        assertEquals("ภาชนะที่ไม่ใช้,ยางรถยนต์เก่า,อื่น ๆ (ที่ใช้ประโยชน์)", jsonEntomology3.keyContainerIn.get(2).containerName);
+        assertEquals("ภาชนะที่ไม่ใช้,ยางรถยนต์เก่า,อื่น ๆ (ที่ใช้ประโยชน์)",
+                jsonEntomology3.keyContainerIn.get(2).containerName);
         assertEquals("แจกัน", jsonEntomology3.keyContainerOut.get(0).containerName);
         assertEquals("น้ำใช้", jsonEntomology3.keyContainerOut.get(1).containerName);
         assertEquals("ที่รองกันมด", jsonEntomology3.keyContainerOut.get(2).containerName);

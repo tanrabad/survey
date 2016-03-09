@@ -106,7 +106,8 @@ public class GeoJsonMultipolygonTest {
 
     @Test
     public void testGetMultiplePolygonList() throws Exception {
-        List<GeoJsonMultipolygon> multipolygonList = LoganSquare.parseList(ResourceFile.read("multiPolygon10Item.json"), GeoJsonMultipolygon.class);
+        List<GeoJsonMultipolygon> multipolygonList = LoganSquare.parseList(
+                ResourceFile.read("multiPolygon10Item.json"), GeoJsonMultipolygon.class);
         assertEquals(10, multipolygonList.size());
         assertEquals(new Location(40, 40), multipolygonList.get(0).getPolygon(0).getBoundary().get(0));
         assertEquals(new Location(45, 20), multipolygonList.get(0).getPolygon(0).getBoundary().get(1));

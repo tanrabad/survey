@@ -37,8 +37,8 @@ public class JodaTimeTest {
         assertEquals(12, dateTime.getMonthOfYear());
         assertEquals(2015, dateTime.getYear());
         assertEquals(17, dateTime.getHourOfDay());
-        assertEquals(00, dateTime.getMinuteOfHour());
-        assertEquals(00, dateTime.getSecondOfMinute());
+        assertEquals(0, dateTime.getMinuteOfHour());
+        assertEquals(0, dateTime.getSecondOfMinute());
     }
 
     @Test

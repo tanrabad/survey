@@ -2,9 +2,15 @@ package th.or.nectec.tanrabad.survey.service;
 
 
 import com.bluelinelabs.logansquare.LoganSquare;
+
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.mockito.Mockito;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.SurveyDetail;
@@ -14,11 +20,13 @@ import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 import th.or.nectec.tanrabad.survey.WireMockTestBase;
 import th.or.nectec.tanrabad.survey.service.json.JsonSurvey;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
-import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
+import static com.github.tomakehurst.wiremock.client.WireMock.equalToJson;
+import static com.github.tomakehurst.wiremock.client.WireMock.post;
+import static com.github.tomakehurst.wiremock.client.WireMock.postRequestedFor;
+import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
+import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
+import static com.github.tomakehurst.wiremock.client.WireMock.verify;
 import static junit.framework.Assert.assertEquals;
 
 public class SurveyRestServiceTest extends WireMockTestBase {
@@ -44,12 +52,12 @@ public class SurveyRestServiceTest extends WireMockTestBase {
         survey.setResidentCount(15);
         SurveyDetail surveyDetail1 = new SurveyDetail(UUID.randomUUID(), getWater(), 3, 2);
         SurveyDetail surveyDetail3 = new SurveyDetail(UUID.randomUUID(), getWater(), 6, 5);
-        SurveyDetail surveyDetail4 = new SurveyDetail(UUID.randomUUID(), getDrinkingWater(), 4, 1);
         List<SurveyDetail> indoorDetail = new ArrayList<>();
         indoorDetail.add(surveyDetail1);
         survey.setIndoorDetail(indoorDetail);
         List<SurveyDetail> outdoorDetail = new ArrayList<>();
         outdoorDetail.add(surveyDetail3);
+        SurveyDetail surveyDetail4 = new SurveyDetail(UUID.randomUUID(), getDrinkingWater(), 4, 1);
         outdoorDetail.add(surveyDetail4);
         survey.setOutdoorDetail(outdoorDetail);
         survey.setStartTimestamp(new DateTime("2015-12-24T12:19:20.626+07:00"));

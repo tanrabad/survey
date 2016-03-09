@@ -45,42 +45,54 @@ public class PrettyTimeAgoPrinterTest {
     public void testShowInSecondAgo() {
         TimePrettyPrinter inSecondAgoPretty = new SecondsAgoPrinter(currentTimer);
 
-        assertEquals("1 วินาทีที่แล้ว", inSecondAgoPretty.print(CURRENT_TIME_MILLS - (TimePrettyPrinter.SECOND_IN_MILLS)));
-        assertEquals("59 วินาทีที่แล้ว", inSecondAgoPretty.print(CURRENT_TIME_MILLS - (TimePrettyPrinter.SECOND_IN_MILLS * 59)));
+        assertEquals("1 วินาทีที่แล้ว", inSecondAgoPretty.print(
+                CURRENT_TIME_MILLS - (TimePrettyPrinter.SECOND_IN_MILLS)));
+        assertEquals("59 วินาทีที่แล้ว", inSecondAgoPretty.print(
+                CURRENT_TIME_MILLS - (TimePrettyPrinter.SECOND_IN_MILLS * 59)));
     }
 
     @Test
     public void testShowInMinuteAgo() {
         TimePrettyPrinter inMiniteAgoPretty = new MinuteAgoPrinter(currentTimer);
 
-        assertEquals("1 นาทีที่แล้ว", inMiniteAgoPretty.print(CURRENT_TIME_MILLS - (TimePrettyPrinter.MINITE_IN_MILLS)));
-        assertEquals("59 นาทีที่แล้ว", inMiniteAgoPretty.print(CURRENT_TIME_MILLS - (TimePrettyPrinter.MINITE_IN_MILLS * 59)));
+        assertEquals("1 นาทีที่แล้ว", inMiniteAgoPretty.print(
+                CURRENT_TIME_MILLS - (TimePrettyPrinter.MINITE_IN_MILLS)));
+        assertEquals("59 นาทีที่แล้ว", inMiniteAgoPretty.print(
+                CURRENT_TIME_MILLS - (TimePrettyPrinter.MINITE_IN_MILLS * 59)));
     }
 
     @Test
     public void testShowInHouseAgo() throws Exception {
         TimePrettyPrinter inHoursAgoPrinter = new HoursAgoPrinter(currentTimer);
 
-        assertEquals("0 ชั่วโมงที่แล้ว", inHoursAgoPrinter.print(CURRENT_TIME_MILLS - (TimePrettyPrinter.HOUR_IN_MILLS - TimePrettyPrinter.MINITE_IN_MILLS)));
-        assertEquals("1 ชั่วโมงที่แล้ว", inHoursAgoPrinter.print(CURRENT_TIME_MILLS - (TimePrettyPrinter.HOUR_IN_MILLS)));
-        assertEquals("23 ชั่วโมงที่แล้ว", inHoursAgoPrinter.print(CURRENT_TIME_MILLS - (TimePrettyPrinter.HOUR_IN_MILLS * 23)));
+        assertEquals("0 ชั่วโมงที่แล้ว", inHoursAgoPrinter.print(
+                CURRENT_TIME_MILLS - (TimePrettyPrinter.HOUR_IN_MILLS - TimePrettyPrinter.MINITE_IN_MILLS)));
+        assertEquals("1 ชั่วโมงที่แล้ว", inHoursAgoPrinter.print(
+                CURRENT_TIME_MILLS - (TimePrettyPrinter.HOUR_IN_MILLS)));
+        assertEquals("23 ชั่วโมงที่แล้ว", inHoursAgoPrinter.print(
+                CURRENT_TIME_MILLS - (TimePrettyPrinter.HOUR_IN_MILLS * 23)));
     }
 
     @Test
     public void testShowInDayAgo() throws Exception {
         TimePrettyPrinter daysAgoPrinter = new DaysAgoPrinter(currentTimer);
 
-        assertEquals("เมื่อวาน 14:04", daysAgoPrinter.print(CURRENT_DATETIME.minusDays(1).minusHours(1).getMillis()));
-        assertEquals(null, daysAgoPrinter.print(CURRENT_DATETIME.minusHours(15).getMillis()));
-        assertEquals("เมื่อวาน 23:04", daysAgoPrinter.print(CURRENT_DATETIME.minusHours(16).getMillis()));
+        assertEquals("เมื่อวาน 14:04", daysAgoPrinter.print(
+                CURRENT_DATETIME.minusDays(1).minusHours(1).getMillis()));
+        assertEquals(null, daysAgoPrinter.print(
+                CURRENT_DATETIME.minusHours(15).getMillis()));
+        assertEquals("เมื่อวาน 23:04", daysAgoPrinter.print(
+                CURRENT_DATETIME.minusHours(16).getMillis()));
     }
 
     @Test
     public void testShowfullDay() throws Exception {
         TimePrettyPrinter fulldatetimePrinter = new DateTimePrinter(currentTimer);
 
-        assertEquals("10 ส.ค. 15:04", fulldatetimePrinter.print(CURRENT_DATETIME.minusMonths(1).minusDays(2).getMillis()));
-        assertEquals("10 ก.ค. 2554 15:04", fulldatetimePrinter.print(CURRENT_DATETIME.minusYears(1).minusMonths(2).minusDays(2).getMillis()));
+        assertEquals("10 ส.ค. 15:04", fulldatetimePrinter.print(
+                CURRENT_DATETIME.minusMonths(1).minusDays(2).getMillis()));
+        assertEquals("10 ก.ค. 2554 15:04", fulldatetimePrinter.print(
+                CURRENT_DATETIME.minusYears(1).minusMonths(2).minusDays(2).getMillis()));
     }
 
     @Test

@@ -41,6 +41,8 @@ ext {
     compileSdkVersion = 23
     buildToolsVersion = "23.0.2"
 
+    checkstyleVersion = "6.16.1"
+
     supportLibVersion = "23.2.0"
     playServicesVersion = "8.4.0"
     androidMapUtilsVersion = "0.4.3"
@@ -74,7 +76,12 @@ ext {
 task testBeforePush(
         group: "Verification",
         description: "Run all process like on CI-Server",
-        dependsOn: [":entity:test", ":domain:test", ":app:test", ":app:build"]) {
+        dependsOn: [":app:test",
+                    ":app:build",
+                    ":domain:test",
+                    ":domain:build",
+                    ":entity:test",
+                    ":entity:build",]) {
 }
 
 task fullTest(

@@ -214,10 +214,6 @@
                      value="Class type name ''{0}'' must match pattern UpperCamelCase."/>
         </module>
 
-        <module name="CatchParameterName">
-            <property name="format" value="^[a-z][a-zA-Z0-9]+$"/>
-        </module>
-
     </module>
 
 </module>

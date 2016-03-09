@@ -17,15 +17,15 @@
 
 package th.or.nectec.tanrabad.survey.repository.persistence;
 
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.User;
 
-import java.util.UUID;
-
 public class SurveyWithChange extends Survey {
 
-    public final int changeStatus;
+    private final int changeStatus;
 
     public SurveyWithChange(UUID surveyId, User user, Building surveyBuilding, int changeStatus) {
         super(surveyId, user, surveyBuilding);

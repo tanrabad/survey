@@ -22,11 +22,12 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.widget.TextView;
+
 import th.or.nectec.tanrabad.survey.R;
 
 public class AlertDialogPromptMessage implements PromptMessage {
 
-    AlertDialog.Builder alertDialog;
+    private AlertDialog.Builder alertDialog;
 
     public AlertDialogPromptMessage(Context context) {
         alertDialog = new AlertDialog.Builder(context);

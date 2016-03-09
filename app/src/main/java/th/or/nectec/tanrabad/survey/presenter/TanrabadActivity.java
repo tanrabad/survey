@@ -26,6 +26,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.showcase.ShowcaseFactory;
@@ -52,14 +53,14 @@ public class TanrabadActivity extends AppCompatActivity {
         ShowcaseFactory.init(this);
     }
 
-    protected void setupHomeButton() {
+    void setupHomeButton() {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
         }
     }
 
-    public boolean isUiTesting() {
+    boolean isUiTesting() {
         return getIntent().getBooleanExtra("isUiTesting", false);
     }
 
@@ -84,7 +85,7 @@ public class TanrabadActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    protected void setupToolbar() {
+    void setupToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }

@@ -19,7 +19,7 @@ package th.or.nectec.tanrabad.survey.presenter.maps;
 
 import th.or.nectec.tanrabad.entity.field.Location;
 
-public interface MapMarkerInterface extends MapFragmentInterface {
+interface MapMarkerInterface extends MapFragmentInterface {
 
     Location getMarkedLocation();
 

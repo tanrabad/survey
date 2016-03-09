@@ -77,7 +77,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         SurveySavePresenter {
 
     public static final String BUILDING_UUID_ARG = "building_uuid";
-    public static final String HOUSE_NO_PREFIX = "บ้านเลขที่ ";
+    private static final String HOUSE_NO_PREFIX = "บ้านเลขที่ ";
     private static final int offsetStep = 80;
     private boolean firstLoad = true;
     private int containerViewAnimOffset = 240;
@@ -139,10 +139,10 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
             survey.setLocation(getCurrentLocation());
             survey.finishSurvey();
             if (isEditSurvey) {
-                SurveySaver surveySaver = new SurveySaver(this, new SaveSurveyValidator(this), surveyRepository);
+                SurveySaver surveySaver = new SurveySaver(this, new SaveSurveyValidator(), surveyRepository);
                 surveySaver.update(survey);
             } else {
-                SurveySaver surveySaver = new SurveySaver(this, new SaveSurveyValidator(this), surveyRepository);
+                SurveySaver surveySaver = new SurveySaver(this, new SaveSurveyValidator(), surveyRepository);
                 surveySaver.save(survey);
             }
         } catch (SurveyDetail.ContainerFoundLarvaOverTotalException exception) {

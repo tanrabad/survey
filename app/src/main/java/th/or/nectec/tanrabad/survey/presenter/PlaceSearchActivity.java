@@ -51,7 +51,7 @@ import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 public class PlaceSearchActivity extends TanrabadActivity implements
         SearchView.OnQueryTextListener, PlaceListPresenter {
 
-    PlaceChooser placeChooser = new PlaceChooser(BrokerPlaceRepository.getInstance(), this);
+    private PlaceChooser placeChooser = new PlaceChooser(BrokerPlaceRepository.getInstance(), this);
     private SearchRecentSuggestions suggestions;
     private PlaceAdapter placeAdapter;
     private SearchView searchView;

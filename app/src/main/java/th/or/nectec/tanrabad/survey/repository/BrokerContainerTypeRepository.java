@@ -31,7 +31,7 @@ public class BrokerContainerTypeRepository implements ContainerTypeRepository {
     private ContainerTypeRepository persistence;
 
 
-    protected BrokerContainerTypeRepository(ContainerTypeRepository cache, ContainerTypeRepository persistence) {
+    private BrokerContainerTypeRepository(ContainerTypeRepository cache, ContainerTypeRepository persistence) {
         this.cache = cache;
         this.persistence = persistence;
         cache.updateOrInsert(persistence.find());

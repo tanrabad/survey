@@ -46,11 +46,11 @@ import static org.junit.Assert.assertEquals;
 
 public class BuildingRestServiceTest extends WireMockTestBase {
 
-    public static final String MON_30_NOV_2015_17_00_00_GMT = "Mon, 30 Nov 2015 17:00:00 GMT";
-    UserRepository userRepository = Mockito.mock(UserRepository.class);
-    PlaceRepository placeRepository = Mockito.mock(PlaceRepository.class);
-    ServiceLastUpdate lastUpdate = Mockito.mock(ServiceLastUpdate.class);
-    BuildingRestService restService;
+    private static final String MON_30_NOV_2015_17_00_00_GMT = "Mon, 30 Nov 2015 17:00:00 GMT";
+    private UserRepository userRepository = Mockito.mock(UserRepository.class);
+    private PlaceRepository placeRepository = Mockito.mock(PlaceRepository.class);
+    private ServiceLastUpdate lastUpdate = Mockito.mock(ServiceLastUpdate.class);
+    private BuildingRestService restService;
 
     @Before
     public void setUp() throws Exception {

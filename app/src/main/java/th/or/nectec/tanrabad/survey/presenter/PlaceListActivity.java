@@ -158,7 +158,7 @@ public class PlaceListActivity extends TanrabadActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    public class PlaceUpdateJob extends SyncJobRunner {
+    protected class PlaceUpdateJob extends SyncJobRunner {
         @Override
         protected void onRunFinish() {
             super.onRunFinish();

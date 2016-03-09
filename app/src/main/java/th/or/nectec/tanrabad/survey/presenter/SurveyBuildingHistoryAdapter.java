@@ -43,8 +43,8 @@ import th.or.nectec.tanrabad.survey.utils.time.DurationTimePrinter;
 public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBuildingHistoryAdapter.ViewHolder>
         implements ListViewAdapter<Survey> {
 
-    Context context;
-    ArrayList<Survey> surveyBuildings = new ArrayList<>();
+    private Context context;
+    private ArrayList<Survey> surveyBuildings = new ArrayList<>();
     private int buildingIcon;
     private AdapterView.OnItemClickListener onItemClickListener;
 

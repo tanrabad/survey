@@ -17,7 +17,7 @@
 
 package th.or.nectec.tanrabad.survey.utils.time;
 
-public interface TimePrettyPrinter {
+interface TimePrettyPrinter {
     int SECOND_IN_MILLS = 1000;
     int MINITE_IN_MILLS = SECOND_IN_MILLS * 60;
     int HOUR_IN_MILLS = MINITE_IN_MILLS * 60;

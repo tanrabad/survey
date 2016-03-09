@@ -29,13 +29,13 @@ import th.or.nectec.tanrabad.survey.service.json.JsonContainerLocation;
 
 public class ContainerLocationRestService extends AbsRestService<ContainerLocation> {
 
-    public static final String PATH = "/containerlocation";
+    private static final String PATH = "/containerlocation";
 
     public ContainerLocationRestService() {
         this(BASE_API, new ServiceLastUpdatePreference(TanrabadApp.getInstance(), PATH));
     }
 
-    public ContainerLocationRestService(String apiBaseUrl, ServiceLastUpdate serviceLastUpdate) {
+    private ContainerLocationRestService(String apiBaseUrl, ServiceLastUpdate serviceLastUpdate) {
         super(apiBaseUrl, serviceLastUpdate);
     }
 

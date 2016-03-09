@@ -23,6 +23,7 @@ import android.os.Looper;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageButton;
+
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.utils.CameraFlashLight;
@@ -33,7 +34,7 @@ public class TorchButton extends ImageButton {
 
     private final Torch torch;
     private Handler uiThread;
-    long startTime = 0;
+    private long startTime = 0;
 
     public TorchButton(Context context) {
         this(context, null);
@@ -111,14 +112,14 @@ public class TorchButton extends ImageButton {
         setImageResource(R.drawable.torch_off);
     }
 
+    private int calculateUsageDuration() {
+        return (int) ((new JodaCurrentTime().getInMills() - startTime) / 1000);
+    }
+
     private void turnOn() {
         startTime = new JodaCurrentTime().getInMills();
         torch.turnOn();
         setImageResource(R.drawable.torch_on);
-    }
-
-    private int calculateUsageDuration() {
-        return (int) ((new JodaCurrentTime().getInMills() - startTime) / 1000);
     }
 
     public void safeTurnOff() {

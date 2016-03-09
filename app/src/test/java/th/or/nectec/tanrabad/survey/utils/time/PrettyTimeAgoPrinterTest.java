@@ -29,10 +29,10 @@ import static org.mockito.Mockito.when;
 
 public class PrettyTimeAgoPrinterTest {
 
-    public static final String CURRENT_TIME = "2012-09-12 15:04:01";
+    private static final String CURRENT_TIME = "2012-09-12 15:04:01";
     private static final DateTimeFormatter dateStringFormat = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
     private static final DateTime CURRENT_DATETIME = DateTime.parse(CURRENT_TIME, dateStringFormat);
-    public static final long CURRENT_TIME_MILLS = CURRENT_DATETIME.getMillis();
+    private static final long CURRENT_TIME_MILLS = CURRENT_DATETIME.getMillis();
 
     private CurrentTimer currentTimer = mock(CurrentTimer.class);
 

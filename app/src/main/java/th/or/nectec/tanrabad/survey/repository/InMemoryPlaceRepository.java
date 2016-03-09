@@ -31,11 +31,11 @@ import th.or.nectec.tanrabad.entity.Place;
 
 public class InMemoryPlaceRepository implements PlaceRepository {
 
-    public static InMemoryPlaceRepository instance;
+    private static InMemoryPlaceRepository instance;
 
-    Map<UUID, Place> placesMap = new HashMap<>();
+    private Map<UUID, Place> placesMap = new HashMap<>();
 
-    protected static InMemoryPlaceRepository getInstance() {
+    static InMemoryPlaceRepository getInstance() {
         if (instance == null) {
             instance = new InMemoryPlaceRepository();
         }

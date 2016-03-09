@@ -61,9 +61,9 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         PlacePresenter, ActionMode.Callback, View.OnClickListener {
 
     public static final String PLACE_UUID_ARG = "place_uuid_arg";
-    public static final int NEED_REFRESH_REQ_CODE = 31000;
-    Button editPlaceButton;
-    ImageButton editBuildingButton;
+    private static final int NEED_REFRESH_REQ_CODE = 31000;
+    private Button editPlaceButton;
+    private ImageButton editBuildingButton;
     private RecyclerView buildingList;
     private BuildingWithSurveyStatusAdapter buildingAdapter;
     private Place place;
@@ -293,7 +293,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         buildingAdapter.setEditButtonVisibility(false);
     }
 
-    public class BuildingUpdateJob extends SyncJobRunner {
+    protected class BuildingUpdateJob extends SyncJobRunner {
         @Override
         protected void onRunFinish() {
             super.onRunFinish();

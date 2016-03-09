@@ -44,11 +44,11 @@ public class FabricTools implements ExceptionLogger, ActionLogger {
     private static FabricTools instance;
     private Answers answers;
 
-    protected FabricTools(Context context) {
+    FabricTools(Context context) {
         init(context);
     }
 
-    public void init(Context context) {
+    private void init(Context context) {
         Crashlytics crashlytics = new Crashlytics.Builder()
                 .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
                 .build();

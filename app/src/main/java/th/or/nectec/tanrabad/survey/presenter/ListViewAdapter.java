@@ -4,7 +4,7 @@ import android.widget.AdapterView;
 
 import java.util.List;
 
-public interface ListViewAdapter<T> {
+interface ListViewAdapter<T> {
     void updateData(List<T> dataList);
 
     void clearData();

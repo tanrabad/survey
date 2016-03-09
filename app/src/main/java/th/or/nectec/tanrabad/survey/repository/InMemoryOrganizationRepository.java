@@ -25,11 +25,11 @@ import th.or.nectec.tanrabad.domain.organization.OrganizationRepositoryException
 import th.or.nectec.tanrabad.entity.Organization;
 
 public class InMemoryOrganizationRepository implements OrganizationRepository {
-    public static InMemoryOrganizationRepository instance;
+    private static InMemoryOrganizationRepository instance;
 
-    HashMap<Integer, Organization> organizationMapping = new HashMap<>();
+    private HashMap<Integer, Organization> organizationMapping = new HashMap<>();
 
-    protected static InMemoryOrganizationRepository getInstance() {
+    static InMemoryOrganizationRepository getInstance() {
         if (instance == null) {
             instance = new InMemoryOrganizationRepository();
         }

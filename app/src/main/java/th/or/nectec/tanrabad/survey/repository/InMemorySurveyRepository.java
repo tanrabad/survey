@@ -33,7 +33,7 @@ import th.or.nectec.tanrabad.entity.User;
 public class InMemorySurveyRepository implements SurveyRepository {
 
     private static InMemorySurveyRepository instance;
-    ArrayList<Survey> surveys;
+    private ArrayList<Survey> surveys;
 
     private InMemorySurveyRepository() {
         this.surveys = new ArrayList<>();

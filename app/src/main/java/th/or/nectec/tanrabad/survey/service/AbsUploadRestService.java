@@ -17,6 +17,8 @@
 
 package th.or.nectec.tanrabad.survey.service;
 
+import java.io.IOException;
+
 import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -24,14 +26,12 @@ import okhttp3.Response;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.service.http.Status;
 
-import java.io.IOException;
-
 import static th.or.nectec.tanrabad.survey.service.http.Header.USER_AGENT;
 
 public abstract class AbsUploadRestService<T> extends AbsRestService implements UploadRestService<T> {
 
-    public static final String TRB_USER_AGENT = "tanrabad-survey-app";
-    public static final MediaType JSON_MEDIA_TYPE = MediaType.parse("application/json");
+    private static final String TRB_USER_AGENT = "tanrabad-survey-app";
+    private static final MediaType JSON_MEDIA_TYPE = MediaType.parse("application/json");
 
     public AbsUploadRestService(String baseApi, ServiceLastUpdate serviceLastUpdate) {
         super(baseApi, serviceLastUpdate);

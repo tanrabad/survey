@@ -29,13 +29,13 @@ import th.or.nectec.tanrabad.survey.service.json.JsonProvince;
 
 public class ProvinceRestService extends AbsRestService<Province> {
 
-    public static final String PATH = "/province";
+    private static final String PATH = "/province";
 
     public ProvinceRestService() {
         this(BASE_API, new ServiceLastUpdatePreference(TanrabadApp.getInstance(), PATH));
     }
 
-    public ProvinceRestService(String apiBaseUrl, ServiceLastUpdate serviceLastUpdate) {
+    private ProvinceRestService(String apiBaseUrl, ServiceLastUpdate serviceLastUpdate) {
         super(apiBaseUrl, serviceLastUpdate);
     }
 

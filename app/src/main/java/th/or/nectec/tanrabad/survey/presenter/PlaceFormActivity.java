@@ -72,8 +72,8 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     public static final String PLACE_UUID_ARG = "place_uuid_arg";
 
     public static final int ADD_PLACE_REQ_CODE = 30000;
-    Place place;
-    PlaceRepository placeRepository = BrokerPlaceRepository.getInstance();
+    private Place place;
+    private PlaceRepository placeRepository = BrokerPlaceRepository.getInstance();
 
     private EditText placeNameView;
     private AddressPicker addressSelect;
@@ -195,7 +195,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         }
     }
 
-    public String getPlaceUuid() {
+    private String getPlaceUuid() {
         return getIntent().getStringExtra(PLACE_UUID_ARG);
     }
 
@@ -213,7 +213,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         return super.onOptionsItemSelected(item);
     }
 
-    public void doSaveData() {
+    private void doSaveData() {
         try {
             getPlaceFieldData();
             PlaceSaver placeSaver = new PlaceSaver(placeRepository, new SavePlaceValidator(), this);
@@ -234,7 +234,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         place.setUpdateBy(AccountUtils.getUser().getUsername());
     }
 
-    public void doUpdateData() {
+    private void doUpdateData() {
         getPlaceFieldData();
         try {
             PlaceSaver placeSaver = new PlaceSaver(placeRepository, new UpdatePlaceValidator(), this);

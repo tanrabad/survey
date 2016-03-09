@@ -28,7 +28,7 @@ import static org.junit.Assert.assertEquals;
 
 public class InMemoryOrganizationRepositoryTest {
 
-    public static final int ORGANIZATION_ID = 1;
+    private static final int ORGANIZATION_ID = 1;
     private static InMemoryOrganizationRepository repository = InMemoryOrganizationRepository.getInstance();
 
     @BeforeClass

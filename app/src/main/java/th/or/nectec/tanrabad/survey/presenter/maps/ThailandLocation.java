@@ -19,14 +19,15 @@ package th.or.nectec.tanrabad.survey.presenter.maps;
 
 import android.app.Activity;
 import android.util.DisplayMetrics;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 
-public class ThailandLocation {
+class ThailandLocation {
 
-    public static LatLngBounds BOUND = new LatLngBounds(new LatLng(5, 97),
+    private static LatLngBounds BOUND = new LatLngBounds(new LatLng(5, 97),
             new LatLng(21, 105));
 
     public static void move(Activity activity, GoogleMap map) {

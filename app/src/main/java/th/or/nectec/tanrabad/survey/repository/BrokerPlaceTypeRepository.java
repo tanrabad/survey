@@ -30,7 +30,7 @@ public class BrokerPlaceTypeRepository implements PlaceTypeRepository {
     private PlaceTypeRepository persistence;
     private PlaceTypeRepository cache;
 
-    public BrokerPlaceTypeRepository(PlaceTypeRepository persistence, PlaceTypeRepository cache) {
+    private BrokerPlaceTypeRepository(PlaceTypeRepository persistence, PlaceTypeRepository cache) {
         this.persistence = persistence;
         this.cache = cache;
         cache.updateOrInsert(persistence.find());

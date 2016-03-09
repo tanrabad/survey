@@ -1,7 +1,9 @@
 package th.or.nectec.tanrabad.survey.service.json;
 
 import com.bluelinelabs.logansquare.LoganSquare;
+
 import org.junit.Test;
+
 import th.or.nectec.tanrabad.entity.field.Location;
 
 import static org.junit.Assert.assertEquals;
@@ -9,7 +11,7 @@ import static org.junit.Assert.assertEquals;
 
 public class GeoJsonPointTest {
 
-    String rawPointGeoJson = "{ \"type\": \"Point\", \"coordinates\": [30.0, 10.0]}";
+    private String rawPointGeoJson = "{ \"type\": \"Point\", \"coordinates\": [30.0, 10.0]}";
 
     @Test
     public void testParseArray() throws Exception {

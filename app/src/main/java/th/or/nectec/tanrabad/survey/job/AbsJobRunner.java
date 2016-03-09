@@ -24,10 +24,10 @@ import java.util.List;
 
 public abstract class AbsJobRunner implements JobRunner {
 
-    List<Job> jobList = new ArrayList<>();
-    boolean running = false;
-    int jobFinishCount = 0;
-    int jobErrorCount = 0;
+    private List<Job> jobList = new ArrayList<>();
+    private boolean running = false;
+    private int jobFinishCount = 0;
+    private int jobErrorCount = 0;
 
     @Override
     public JobRunner addJob(Job job) {

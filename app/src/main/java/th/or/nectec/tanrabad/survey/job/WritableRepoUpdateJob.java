@@ -17,17 +17,17 @@
 
 package th.or.nectec.tanrabad.survey.job;
 
-import th.or.nectec.tanrabad.domain.WritableRepository;
-import th.or.nectec.tanrabad.survey.service.RestService;
-
 import java.io.IOException;
 import java.util.List;
+
+import th.or.nectec.tanrabad.domain.WritableRepository;
+import th.or.nectec.tanrabad.survey.service.RestService;
 
 public class WritableRepoUpdateJob<T> implements Job {
 
     public static final int ID = 192384;
-    WritableRepository<T> repository;
-    RestService<T> restService;
+    private WritableRepository<T> repository;
+    private RestService<T> restService;
 
     public WritableRepoUpdateJob(RestService<T> restService, WritableRepository<T> repository) {
         this.restService = restService;

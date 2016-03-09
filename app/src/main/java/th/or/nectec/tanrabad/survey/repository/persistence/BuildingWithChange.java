@@ -23,7 +23,7 @@ import th.or.nectec.tanrabad.entity.Building;
 
 public class BuildingWithChange extends Building {
 
-    public final int changeStatus;
+    private final int changeStatus;
 
     public BuildingWithChange(UUID buildingId, String buildingName, int changeStatus) {
         super(buildingId, buildingName);

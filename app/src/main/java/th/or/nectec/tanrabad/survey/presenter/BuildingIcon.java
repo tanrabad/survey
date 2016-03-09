@@ -18,11 +18,12 @@
 package th.or.nectec.tanrabad.survey.presenter;
 
 import android.support.annotation.DrawableRes;
+
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.R;
 
-public class BuildingIcon {
+class BuildingIcon {
 
     @DrawableRes
     public static int get(Place place) {

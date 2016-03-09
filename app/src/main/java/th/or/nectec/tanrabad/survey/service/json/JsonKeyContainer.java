@@ -17,9 +17,9 @@ public class JsonKeyContainer {
 
     @Override
     public String toString() {
-        return "JsonKeyContainer{" +
-                "rank=" + rank +
-                ", containerId='" + containerId + '\''
+        return "JsonKeyContainer{"
+                + "rank=" + rank
+                + ", containerId='" + containerId + '\''
                 + ", containerName='" + containerName + '\''
                 + '}';
     }

@@ -43,7 +43,7 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
     private final Context context;
     private final int buildingIcon;
 
-    ArrayList<BuildingWithSurveyStatus> buildingsWithSurveyStatusList = new ArrayList<>();
+    private ArrayList<BuildingWithSurveyStatus> buildingsWithSurveyStatusList = new ArrayList<>();
     private AdapterView.OnItemClickListener onItemClickListener;
     private AdapterView.OnItemLongClickListener onItemLongClickListener;
     private boolean isEditButtonVisible;

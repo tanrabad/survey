@@ -22,40 +22,69 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+
 import net.frakbot.jumpingbeans.JumpingBeans;
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.lookup.*;
-import th.or.nectec.tanrabad.survey.R;
-import th.or.nectec.tanrabad.survey.TanrabadApp;
-import th.or.nectec.tanrabad.survey.job.*;
-import th.or.nectec.tanrabad.survey.repository.*;
-import th.or.nectec.tanrabad.survey.repository.persistence.*;
-import th.or.nectec.tanrabad.survey.service.*;
-import th.or.nectec.tanrabad.survey.utils.alert.Alert;
-import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
 
 import java.io.IOException;
 
+import th.or.nectec.tanrabad.entity.Building;
+import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.lookup.ContainerLocation;
+import th.or.nectec.tanrabad.entity.lookup.ContainerType;
+import th.or.nectec.tanrabad.entity.lookup.District;
+import th.or.nectec.tanrabad.entity.lookup.PlaceSubType;
+import th.or.nectec.tanrabad.entity.lookup.PlaceType;
+import th.or.nectec.tanrabad.entity.lookup.Province;
+import th.or.nectec.tanrabad.entity.lookup.Subdistrict;
+import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.TanrabadApp;
+import th.or.nectec.tanrabad.survey.job.AbsJobRunner;
+import th.or.nectec.tanrabad.survey.job.InMemoryInitializeJob;
+import th.or.nectec.tanrabad.survey.job.Job;
+import th.or.nectec.tanrabad.survey.job.SetupScriptJob;
+import th.or.nectec.tanrabad.survey.job.WritableRepoUpdateJob;
+import th.or.nectec.tanrabad.survey.repository.BrokerBuildingRepository;
+import th.or.nectec.tanrabad.survey.repository.BrokerContainerTypeRepository;
+import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
+import th.or.nectec.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
+import th.or.nectec.tanrabad.survey.repository.BrokerPlaceTypeRepository;
+import th.or.nectec.tanrabad.survey.repository.persistence.CreateDatabaseJob;
+import th.or.nectec.tanrabad.survey.repository.persistence.DbContainerLocationRepository;
+import th.or.nectec.tanrabad.survey.repository.persistence.DbDistrictRepository;
+import th.or.nectec.tanrabad.survey.repository.persistence.DbProvinceRepository;
+import th.or.nectec.tanrabad.survey.repository.persistence.DbSubdistrictRepository;
+import th.or.nectec.tanrabad.survey.service.AmphurRestService;
+import th.or.nectec.tanrabad.survey.service.BuildingRestService;
+import th.or.nectec.tanrabad.survey.service.ContainerLocationRestService;
+import th.or.nectec.tanrabad.survey.service.ContainerTypeRestService;
+import th.or.nectec.tanrabad.survey.service.PlaceRestService;
+import th.or.nectec.tanrabad.survey.service.PlaceSubTypeRestService;
+import th.or.nectec.tanrabad.survey.service.PlaceTypeRestService;
+import th.or.nectec.tanrabad.survey.service.ProvinceRestService;
+import th.or.nectec.tanrabad.survey.service.RestServiceException;
+import th.or.nectec.tanrabad.survey.service.TambonRestService;
+import th.or.nectec.tanrabad.survey.utils.alert.Alert;
+import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
+
 public class InitialActivity extends TanrabadActivity {
 
-    WritableRepoUpdateJob<Province> provinceUpdateJob = new WritableRepoUpdateJob<>(
+    private WritableRepoUpdateJob<Province> provinceUpdateJob = new WritableRepoUpdateJob<>(
             new ProvinceRestService(), DbProvinceRepository.getInstance());
-    WritableRepoUpdateJob<District> districtUpdateJob = new WritableRepoUpdateJob<>(
+    private WritableRepoUpdateJob<District> districtUpdateJob = new WritableRepoUpdateJob<>(
             new AmphurRestService(), DbDistrictRepository.getInstance());
-    WritableRepoUpdateJob<Subdistrict> subDistrictUpdateJob = new WritableRepoUpdateJob<>(
+    private WritableRepoUpdateJob<Subdistrict> subDistrictUpdateJob = new WritableRepoUpdateJob<>(
             new TambonRestService(), DbSubdistrictRepository.getInstance());
-    WritableRepoUpdateJob<PlaceType> placeTypeUpdateJob = new WritableRepoUpdateJob<>(
+    private WritableRepoUpdateJob<PlaceType> placeTypeUpdateJob = new WritableRepoUpdateJob<>(
             new PlaceTypeRestService(), BrokerPlaceTypeRepository.getInstance());
-    WritableRepoUpdateJob<PlaceSubType> placeSubTypeUpdateJob = new WritableRepoUpdateJob<>(
+    private WritableRepoUpdateJob<PlaceSubType> placeSubTypeUpdateJob = new WritableRepoUpdateJob<>(
             new PlaceSubTypeRestService(), BrokerPlaceSubTypeRepository.getInstance());
-    WritableRepoUpdateJob<ContainerType> containerTypeUpdateJob = new WritableRepoUpdateJob<>(
+    private WritableRepoUpdateJob<ContainerType> containerTypeUpdateJob = new WritableRepoUpdateJob<>(
             new ContainerTypeRestService(), BrokerContainerTypeRepository.getInstance());
-    WritableRepoUpdateJob<ContainerLocation> containerLocationUpdateJob = new WritableRepoUpdateJob<>(
+    private WritableRepoUpdateJob<ContainerLocation> containerLocationUpdateJob = new WritableRepoUpdateJob<>(
             new ContainerLocationRestService(), new DbContainerLocationRepository(TanrabadApp.getInstance()));
-    WritableRepoUpdateJob<Place> placeUpdateJob = new WritableRepoUpdateJob<>(
+    private WritableRepoUpdateJob<Place> placeUpdateJob = new WritableRepoUpdateJob<>(
             new PlaceRestService(), BrokerPlaceRepository.getInstance());
-    WritableRepoUpdateJob<Building> buildingUpdateJob = new WritableRepoUpdateJob<>(
+    private WritableRepoUpdateJob<Building> buildingUpdateJob = new WritableRepoUpdateJob<>(
             new BuildingRestService(), BrokerBuildingRepository.getInstance());
 
     private TextView loadingText;
@@ -103,7 +132,7 @@ public class InitialActivity extends TanrabadActivity {
     }
 
     @SuppressLint("SetTextI18n")
-    public void updateLoadingText(Job startingJob) {
+    private void updateLoadingText(Job startingJob) {
         switch (startingJob.id()) {
             case InMemoryInitializeJob.ID:
                 loadingText.setText("ทำสมาธิ");

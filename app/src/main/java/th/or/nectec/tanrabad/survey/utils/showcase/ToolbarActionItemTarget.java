@@ -3,6 +3,7 @@ package th.or.nectec.tanrabad.survey.utils.showcase;
 import android.graphics.Point;
 import android.support.annotation.IdRes;
 import android.support.v7.widget.Toolbar;
+
 import com.github.amlcurran.showcaseview.targets.Target;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
 
@@ -27,7 +28,7 @@ import com.github.amlcurran.showcaseview.targets.ViewTarget;
  *
  * @see ToolbarActionItemTarget
  */
-public class ToolbarActionItemTarget implements Target {
+class ToolbarActionItemTarget implements Target {
 
     private final Toolbar toolbar;
     private final int menuItemId;

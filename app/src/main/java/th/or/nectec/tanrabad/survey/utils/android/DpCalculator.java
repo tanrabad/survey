@@ -24,7 +24,7 @@ public class DpCalculator {
     private static DpCalculator instance;
     private Context context;
 
-    public DpCalculator(Context context) {
+    private DpCalculator(Context context) {
         this.context = context;
     }
 

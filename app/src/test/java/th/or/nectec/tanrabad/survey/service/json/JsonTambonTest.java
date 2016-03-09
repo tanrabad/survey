@@ -1,13 +1,15 @@
 package th.or.nectec.tanrabad.survey.service.json;
 
 import com.bluelinelabs.logansquare.LoganSquare;
+
 import org.junit.Test;
+
+import java.util.ArrayList;
+
 import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.entity.field.Polygon;
 import th.or.nectec.tanrabad.entity.lookup.Subdistrict;
 import th.or.nectec.tanrabad.survey.utils.ResourceFile;
-
-import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 
@@ -32,7 +34,7 @@ public class JsonTambonTest {
         assertEquals(stubTambonPolygon(), subdistrict.getBoundary().get(0));
     }
 
-    public Polygon stubTambonPolygon() {
+    private Polygon stubTambonPolygon() {
         ArrayList<Location> boundary = new ArrayList<>();
         boundary.add(new Location(9.10229074425328, 99.3916034624674));
         boundary.add(new Location(9.10146829966842, 99.3925836929561));

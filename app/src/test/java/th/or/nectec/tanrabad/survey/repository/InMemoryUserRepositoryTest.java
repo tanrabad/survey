@@ -18,6 +18,7 @@
 package th.or.nectec.tanrabad.survey.repository;
 
 import org.junit.Test;
+
 import th.or.nectec.tanrabad.domain.user.UserRepositoryException;
 import th.or.nectec.tanrabad.entity.User;
 
@@ -26,7 +27,7 @@ import static org.junit.Assert.assertEquals;
 
 public class InMemoryUserRepositoryTest {
 
-    public static final String DPC_USER = "dpc-user";
+    private static final String DPC_USER = "dpc-user";
     private static InMemoryUserRepository userRepository = InMemoryUserRepository.getInstance();
 
     @Test(expected = UserRepositoryException.class)

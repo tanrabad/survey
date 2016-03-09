@@ -1,14 +1,16 @@
 package th.or.nectec.tanrabad.survey.service.json;
 
 import com.bluelinelabs.logansquare.LoganSquare;
+
 import org.junit.Test;
+
 import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 
 import static org.junit.Assert.assertEquals;
 
 public class JsonContainerTypeTest {
 
-    String containerTypeJson = "{\"container_type_id\":1,\"container_type_name\":\"น้ำใช้\"}";
+    private String containerTypeJson = "{\"container_type_id\":1,\"container_type_name\":\"น้ำใช้\"}";
 
     @Test
     public void testParseToJsonString() throws Exception {

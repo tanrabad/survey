@@ -20,14 +20,14 @@ public class SyncJobRunner extends AbsJobRunner {
     private final SyncJobBuilder syncJobBuilder;
     private final Context context;
 
-    int completelySuccessCount = 0;
-    int completelyFailCount = 0;
-    int dataUploadedCount = 0;
+    private int completelySuccessCount = 0;
+    private int completelyFailCount = 0;
+    private int dataUploadedCount = 0;
 
-    ArrayList<UploadJob> uploadJobs = new ArrayList<>();
+    private ArrayList<UploadJob> uploadJobs = new ArrayList<>();
 
-    IOException ioException;
-    RestServiceException restServiceException;
+    private IOException ioException;
+    private RestServiceException restServiceException;
     private boolean isManualSync;
 
     public SyncJobRunner() {

@@ -7,23 +7,23 @@ import th.or.nectec.tanrabad.survey.R;
 
 public class TwiceBackPressed {
 
-    public static final int DURATION_SHORT = 0;
-    public static final int DURATION_LONG = 1;
+    private static final int DURATION_SHORT = 0;
+    private static final int DURATION_LONG = 1;
 
     private static final int TIMEOUT_SHORT = 2500;
     private static final int TIMEOUT_LONG = 4000;
-    int mTimeout = TIMEOUT_SHORT;
-    int mDelay = 500;
-    long time1 = 0;
-    long time2 = 0;
+    private int mTimeout = TIMEOUT_SHORT;
+    private int mDelay = 500;
+    private long time1 = 0;
+    private long time2 = 0;
 
-    String mMessage;
+    private String message;
 
-    Context mContext;
+    private Context mContext;
 
     public TwiceBackPressed(Context context) {
         mContext = context;
-        mMessage = mContext.getString(R.string.press_back_again_to_exit);
+        message = mContext.getString(R.string.press_back_again_to_exit);
     }
 
     /**
@@ -45,14 +45,14 @@ public class TwiceBackPressed {
      * @param message set message to notify before press button again.
      */
     public void setToastMessage(String message) {
-        mMessage = message;
+        this.message = message;
     }
 
     /**
      * @param stringResource set message to notify before press button again by using resource id.
      */
     public void setToastMessage(int stringResource) {
-        mMessage = mContext.getResources().getString(stringResource);
+        message = mContext.getResources().getString(stringResource);
     }
 
     /**
@@ -63,7 +63,7 @@ public class TwiceBackPressed {
         if (time1 == 0) {
             time1 = System.currentTimeMillis();
             int toastTimeOut = (mTimeout == TIMEOUT_SHORT) ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG;
-            Toast.makeText(mContext, mMessage, toastTimeOut).show();
+            Toast.makeText(mContext, message, toastTimeOut).show();
             return false;
         } else {
             time2 = System.currentTimeMillis();

@@ -39,12 +39,12 @@ import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 
 public class BuildingMapMarkerActivity extends TanrabadActivity implements View.OnClickListener {
 
-    public static final String PLACE_UUID = "place_uuid";
     public static final String BUILDING_LOCATION = "building_location";
     public static final int MARK_LOCATION_REQUEST_CODE = 50000;
+    private static final String PLACE_UUID = "place_uuid";
     private static final String BUILDING_UUID = "building_uuid";
-    BuildingMapMarkerFragment buildingMapMarkerFragment;
-    DecimalFormat decimalFormat = new DecimalFormat("#.##");
+    private BuildingMapMarkerFragment buildingMapMarkerFragment;
+    private DecimalFormat decimalFormat = new DecimalFormat("#.##");
     private TwiceBackPressed twiceBackPressed;
 
     public static void startAdd(Activity activity, String placeUuid, String buildingUuid) {
@@ -98,11 +98,11 @@ public class BuildingMapMarkerActivity extends TanrabadActivity implements View.
                 R.id.map_container, buildingMapMarkerFragment, BuildingMapMarkerFragment.FRAGMENT_TAG).commit();
     }
 
-    public String getPlaceUuid() {
+    private String getPlaceUuid() {
         return getIntent().getStringExtra(PLACE_UUID);
     }
 
-    public String getBuildingUuid() {
+    private String getBuildingUuid() {
         return getIntent().getStringExtra(BUILDING_UUID);
     }
 

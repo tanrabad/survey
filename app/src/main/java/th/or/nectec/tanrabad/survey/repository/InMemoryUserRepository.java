@@ -26,13 +26,13 @@ import th.or.nectec.tanrabad.entity.User;
 
 public class InMemoryUserRepository implements UserRepository {
 
-    public static final String DEV_USERNAME = "dpc-user";
-    public static final String DEMO_USERNAME = "dpc-13-beta";
-    public static final String RELEASE_USERNAME = "dpc-13";
-    public static InMemoryUserRepository instance;
-    HashMap<String, User> userMapping = new HashMap<>();
+    private static final String DEV_USERNAME = "dpc-user";
+    private static final String DEMO_USERNAME = "dpc-13-beta";
+    private static final String RELEASE_USERNAME = "dpc-13";
+    private static InMemoryUserRepository instance;
+    private HashMap<String, User> userMapping = new HashMap<>();
 
-    public InMemoryUserRepository() {
+    private InMemoryUserRepository() {
         userMapping.put(DEV_USERNAME, devUser());
         userMapping.put(DEMO_USERNAME, betaUser());
         userMapping.put(RELEASE_USERNAME, ReleaseUser());

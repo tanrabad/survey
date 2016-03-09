@@ -36,8 +36,8 @@ import th.or.nectec.tanrabad.survey.utils.PlayLocationService;
 class BaseMapFragment extends SupportMapFragment
         implements MapFragmentInterface, OnMapReadyCallback {
 
-    protected GoogleMap googleMap;
-    protected PlayLocationService playLocationService = PlayLocationService.getInstance();
+    GoogleMap googleMap;
+    PlayLocationService playLocationService = PlayLocationService.getInstance();
     private Boolean isLocked = false;
     private Boolean isZoomable = false;
     private Boolean isMoveToMyLocation = false;
@@ -64,7 +64,7 @@ class BaseMapFragment extends SupportMapFragment
         playLocationService.disconnect();
     }
 
-    public void moveToLocation(LatLng position) {
+    void moveToLocation(LatLng position) {
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
     }
 

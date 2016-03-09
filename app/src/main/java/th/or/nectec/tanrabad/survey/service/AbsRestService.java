@@ -17,6 +17,10 @@
 
 package th.or.nectec.tanrabad.survey.service;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -25,30 +29,30 @@ import th.or.nectec.tanrabad.survey.BuildConfig;
 import th.or.nectec.tanrabad.survey.presenter.AccountUtils;
 import th.or.nectec.tanrabad.survey.service.http.Status;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import static java.util.concurrent.TimeUnit.SECONDS;
-import static th.or.nectec.tanrabad.survey.service.http.Header.*;
+import static th.or.nectec.tanrabad.survey.service.http.Header.ACCEPT;
+import static th.or.nectec.tanrabad.survey.service.http.Header.ACCEPT_CHARSET;
+import static th.or.nectec.tanrabad.survey.service.http.Header.IF_MODIFIED_SINCE;
+import static th.or.nectec.tanrabad.survey.service.http.Header.LAST_MODIFIED;
+import static th.or.nectec.tanrabad.survey.service.http.Header.LINK;
 
 public abstract class AbsRestService<T> implements RestService<T> {
 
-    public static final String BASE_API = BuildConfig.API_URL;
+    static final String BASE_API = BuildConfig.API_URL;
     private static final int READ_WRITE_TIMEOUT = 10; //second
     private static final int CONNECT_TIMEOUT = 5; //second
 
-    protected final OkHttpClient client;
-    protected ServiceLastUpdate serviceLastUpdate;
-    protected String baseApi;
+    final OkHttpClient client;
+    String baseApi;
+    private ServiceLastUpdate serviceLastUpdate;
     private User user;
     private String nextUrl = null;
 
-    public AbsRestService(String baseApi, ServiceLastUpdate serviceLastUpdate) {
+    AbsRestService(String baseApi, ServiceLastUpdate serviceLastUpdate) {
         this(baseApi, serviceLastUpdate, AccountUtils.getUser());
     }
 
-    public AbsRestService(String baseApi, ServiceLastUpdate serviceLastUpdate, User user) {
+    private AbsRestService(String baseApi, ServiceLastUpdate serviceLastUpdate, User user) {
         this.baseApi = baseApi;
         this.serviceLastUpdate = serviceLastUpdate;
         this.user = user;
@@ -59,7 +63,7 @@ public abstract class AbsRestService<T> implements RestService<T> {
                 .build();
     }
 
-    protected String getApiFilterParam() {
+    String getApiFilterParam() {
         return user.getApiFilter();
     }
 
@@ -94,11 +98,11 @@ public abstract class AbsRestService<T> implements RestService<T> {
         }
     }
 
-    public boolean isNotSuccess(Response response) {
+    boolean isNotSuccess(Response response) {
         return !response.isSuccessful();
     }
 
-    public boolean isNotModified(Response response) {
+    private boolean isNotModified(Response response) {
         return response.code() == Status.NOT_MODIFIED;
     }
 
@@ -122,7 +126,7 @@ public abstract class AbsRestService<T> implements RestService<T> {
         return url;
     }
 
-    public String getDefaultParams() {
+    String getDefaultParams() {
         return null;
     }
 

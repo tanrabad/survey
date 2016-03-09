@@ -37,7 +37,7 @@ public class MapMarkerActivity extends TanrabadActivity implements View.OnClickL
 
     public static final String MAP_LOCATION = "map_location";
     public static final int MARK_LOCATION_REQUEST_CODE = 50000;
-    MapMarkerFragment mapMarkerFragment;
+    private MapMarkerFragment mapMarkerFragment;
     private TwiceBackPressed twiceBackPressed;
 
     public static void startAdd(Activity activity) {

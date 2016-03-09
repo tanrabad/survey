@@ -33,7 +33,7 @@ import com.google.android.gms.maps.model.Marker;
 
 import th.or.nectec.tanrabad.survey.utils.android.DpCalculator;
 
-public class MarkerDropInAnimator {
+class MarkerDropInAnimator {
 
     private GoogleMap map;
     private Context context;

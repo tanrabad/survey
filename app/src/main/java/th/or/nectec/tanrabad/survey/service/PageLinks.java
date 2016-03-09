@@ -22,7 +22,7 @@ package th.or.nectec.tanrabad.survey.service;
  * responses encoded in the current response. These will be present if the
  * result set size exceeds the per page limit.
  */
-public class PageLinks {
+class PageLinks {
 
     private static final String DELIM_LINKS = ","; //$NON-NLS-1$
 

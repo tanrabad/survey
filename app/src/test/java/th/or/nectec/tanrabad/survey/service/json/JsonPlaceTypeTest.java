@@ -1,17 +1,19 @@
 package th.or.nectec.tanrabad.survey.service.json;
 
 import com.bluelinelabs.logansquare.LoganSquare;
+
 import org.junit.Test;
-import th.or.nectec.tanrabad.entity.lookup.PlaceType;
-import th.or.nectec.tanrabad.survey.utils.ResourceFile;
 
 import java.util.List;
+
+import th.or.nectec.tanrabad.entity.lookup.PlaceType;
+import th.or.nectec.tanrabad.survey.utils.ResourceFile;
 
 import static org.junit.Assert.assertEquals;
 
 public class JsonPlaceTypeTest {
 
-    String placeTypeList = ResourceFile.read("placeTypeList.json");
+    private String placeTypeList = ResourceFile.read("placeTypeList.json");
 
     @Test
     public void testParseToJsonString() throws Exception {

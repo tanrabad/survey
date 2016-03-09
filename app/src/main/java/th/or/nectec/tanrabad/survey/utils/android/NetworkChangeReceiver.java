@@ -7,7 +7,7 @@ import android.content.IntentFilter;
 
 public class NetworkChangeReceiver extends BroadcastReceiver {
 
-    OnNetworkChangedListener listener;
+    private OnNetworkChangedListener listener;
 
     public NetworkChangeReceiver(OnNetworkChangedListener listener) {
         this.listener = listener;

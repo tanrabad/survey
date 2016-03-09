@@ -23,7 +23,7 @@ import android.content.SharedPreferences;
 
 public class ServiceLastUpdatePreference implements ServiceLastUpdate {
 
-    public static final String PREF_NAME = "api-last-update";
+    private static final String PREF_NAME = "api-last-update";
     private final Context context;
     private final String path;
 

@@ -13,10 +13,6 @@ import th.or.nectec.tanrabad.survey.service.PlaceRestService;
 import th.or.nectec.tanrabad.survey.service.SurveyRestService;
 
 public class SyncJobBuilder {
-    public WritableRepoUpdateJob<Place> placeUpdateJob = new WritableRepoUpdateJob<>(
-            new PlaceRestService(), BrokerPlaceRepository.getInstance());
-    public WritableRepoUpdateJob<Building> buildingUpdateJob = new WritableRepoUpdateJob<>(
-            new BuildingRestService(), BrokerBuildingRepository.getInstance());
     public PostDataJob placePostDataJob = new PostDataJob<>(
             new DbPlaceRepository(TanrabadApp.getInstance()), new PlaceRestService());
     public PostDataJob buildingPostDataJob = new PostDataJob<>(
@@ -29,6 +25,10 @@ public class SyncJobBuilder {
             new DbBuildingRepository(TanrabadApp.getInstance()), new BuildingRestService());
     public PutDataJob surveyPutDataJob = new PutDataJob<>(
             new DbSurveyRepository(TanrabadApp.getInstance()), new SurveyRestService());
+    private WritableRepoUpdateJob<Place> placeUpdateJob = new WritableRepoUpdateJob<>(
+            new PlaceRestService(), BrokerPlaceRepository.getInstance());
+    private WritableRepoUpdateJob<Building> buildingUpdateJob = new WritableRepoUpdateJob<>(
+            new BuildingRestService(), BrokerBuildingRepository.getInstance());
 
     public AbsJobRunner build(AbsJobRunner runner) {
         runner.addJob(placePostDataJob);

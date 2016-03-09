@@ -35,9 +35,9 @@ import th.or.nectec.tanrabad.survey.repository.persistence.PlaceWithChange;
 
 public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> implements ListViewAdapter<Place> {
 
-    Context context;
+    private Context context;
 
-    ArrayList<Place> places = new ArrayList<>();
+    private ArrayList<Place> places = new ArrayList<>();
     private AdapterView.OnItemClickListener onItemClickListener;
     private AdapterView.OnItemLongClickListener onItemLongClickListener;
 
@@ -75,7 +75,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> 
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_place, parent, false);
+        View v = LayoutInflater.from(context).inflate(R.layout.list_item_place, parent, false);
         return new ViewHolder(v, this);
     }
 

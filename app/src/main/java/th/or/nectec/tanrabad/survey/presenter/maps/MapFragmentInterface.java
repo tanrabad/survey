@@ -1,6 +1,6 @@
 package th.or.nectec.tanrabad.survey.presenter.maps;
 
-public interface MapFragmentInterface {
+interface MapFragmentInterface {
     void setMapCanScrolled(boolean isCanScroll);
 
     void setMoveToMyLocation(boolean isMoved);

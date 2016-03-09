@@ -18,19 +18,21 @@
 package th.or.nectec.tanrabad.survey;
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
+
 import org.junit.Before;
 import org.junit.ClassRule;
+
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.presenter.AccountUtils;
 
 public class WireMockTestBase {
 
-    public static final String IF_MODIFIED_SINCE = "if-Modified-Since";
-    public static final String LAST_UPDATE = "Last-Update";
-    public static final String CONTENT_LENGTH = "Content-Length";
+    static final String IF_MODIFIED_SINCE = "if-Modified-Since";
+    static final String LAST_UPDATE = "Last-Update";
+    static final String CONTENT_LENGTH = "Content-Length";
 
-    public static final int HTTP_PORT = 8089;
-    public static final String HTTP_LOCALHOST_8089 = "http://localhost:" + HTTP_PORT;
+    private static final int HTTP_PORT = 8089;
+    static final String HTTP_LOCALHOST_8089 = "http://localhost:" + HTTP_PORT;
 
     @ClassRule
     public static WireMockRule wireMockRule = new WireMockRule(HTTP_PORT);
@@ -46,7 +48,7 @@ public class WireMockTestBase {
         return user;
     }
 
-    public String localHost() {
+    protected String localHost() {
         return HTTP_LOCALHOST_8089;
     }
 }

@@ -21,8 +21,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public class ShowcasePreference {
-    public static final String PREF_NAME = "showcase";
-    public static final String NEED_SHOWCASE_OPTION = "need-showcase";
+    private static final String PREF_NAME = "showcase";
+    private static final String NEED_SHOWCASE_OPTION = "need-showcase";
     private Context context;
 
     public ShowcasePreference(Context context) {

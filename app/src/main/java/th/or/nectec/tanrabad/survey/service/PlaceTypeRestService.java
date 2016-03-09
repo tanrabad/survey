@@ -18,23 +18,24 @@
 package th.or.nectec.tanrabad.survey.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
-import th.or.nectec.tanrabad.entity.lookup.PlaceType;
-import th.or.nectec.tanrabad.survey.TanrabadApp;
-import th.or.nectec.tanrabad.survey.service.json.JsonPlaceType;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import th.or.nectec.tanrabad.entity.lookup.PlaceType;
+import th.or.nectec.tanrabad.survey.TanrabadApp;
+import th.or.nectec.tanrabad.survey.service.json.JsonPlaceType;
+
 public class PlaceTypeRestService extends AbsRestService<PlaceType> {
 
-    public static final String PATH = "/placetype";
+    private static final String PATH = "/placetype";
 
     public PlaceTypeRestService() {
         this(BASE_API, new ServiceLastUpdatePreference(TanrabadApp.getInstance(), PATH));
     }
 
-    public PlaceTypeRestService(String apiBaseUrl, ServiceLastUpdate serviceLastUpdate) {
+    private PlaceTypeRestService(String apiBaseUrl, ServiceLastUpdate serviceLastUpdate) {
         super(apiBaseUrl, serviceLastUpdate);
     }
 

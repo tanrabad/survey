@@ -92,7 +92,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements
         loadPlaceList();
     }
 
-    protected void loadPlaceList() {
+    void loadPlaceList() {
         if (placeTypeId > 0) {
             placeChooser.getPlaceListWithPlaceTypeFilter(this.placeTypeId);
         } else {

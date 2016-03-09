@@ -29,7 +29,7 @@ import th.or.nectec.tanrabad.survey.service.json.JsonAmphur;
 
 public class AmphurRestService extends AbsRestService<District> {
 
-    public static final String PATH = "/amphur";
+    private static final String PATH = "/amphur";
 
     public AmphurRestService() {
         this(BASE_API, new ServiceLastUpdatePreference(TanrabadApp.getInstance(), PATH));

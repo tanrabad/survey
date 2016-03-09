@@ -47,7 +47,7 @@ public class BuildingMapMarkerFragment extends MapMarkerFragment implements Goog
         GoogleMap.OnMarkerDragListener, OnMapReadyCallback {
 
     public static final String FRAGMENT_TAG = "building_map_marker_fragment";
-    public static final int DISTANCE_LIMIT_IN_METER = 4000;
+    private static final int DISTANCE_LIMIT_IN_METER = 4000;
     private static String buildingUuid;
     private Place place;
     private Marker placeMarker;

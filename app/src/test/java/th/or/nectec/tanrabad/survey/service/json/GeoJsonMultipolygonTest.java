@@ -1,19 +1,21 @@
 package th.or.nectec.tanrabad.survey.service.json;
 
 import com.bluelinelabs.logansquare.LoganSquare;
+
 import org.junit.Test;
-import th.or.nectec.tanrabad.entity.field.Location;
-import th.or.nectec.tanrabad.entity.field.Polygon;
-import th.or.nectec.tanrabad.survey.utils.ResourceFile;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import th.or.nectec.tanrabad.entity.field.Location;
+import th.or.nectec.tanrabad.entity.field.Polygon;
+import th.or.nectec.tanrabad.survey.utils.ResourceFile;
 
 import static junit.framework.Assert.assertEquals;
 
 public class GeoJsonMultipolygonTest {
 
-    String rawMultipolygonGeoJson = "{"
+    private String rawMultipolygonGeoJson = "{"
             + "\"coordinates\":["
             + "[[[40.0,40.0],[20.0,45.0],[45.0,30.0],[40.0,40.0]]],"
             + "[[[20.0,35.0],[10.0,30.0],[10.0,10.0],[30.0,5.0],[45.0,20.0],[20.0,35.0]],"

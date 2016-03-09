@@ -40,7 +40,7 @@ import th.or.nectec.tanrabad.survey.utils.MacAddressUtils;
 import th.or.nectec.tanrabad.survey.utils.android.ResourceUtils;
 
 public class SurveyContainerView extends RelativeLayout {
-    SurveyDetail surveyDetail;
+    private SurveyDetail surveyDetail;
     private ContainerType containerType;
     private TextView containerTypeView;
     private EditText totalContainerView;
@@ -62,7 +62,7 @@ public class SurveyContainerView extends RelativeLayout {
         this(context, null, containerType);
     }
 
-    public SurveyContainerView(Context context, AttributeSet attrs, ContainerType containerType) {
+    private SurveyContainerView(Context context, AttributeSet attrs, ContainerType containerType) {
         super(context, attrs);
         initInflate();
         initInstances();

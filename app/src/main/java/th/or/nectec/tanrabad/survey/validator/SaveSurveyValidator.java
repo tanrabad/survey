@@ -17,17 +17,11 @@
 
 package th.or.nectec.tanrabad.survey.validator;
 
-import android.content.Context;
 import th.or.nectec.tanrabad.domain.survey.SurveyValidator;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.survey.R;
 
 public class SaveSurveyValidator implements SurveyValidator {
-    Context context;
-
-    public SaveSurveyValidator(Context context) {
-        this.context = context;
-    }
 
     @Override
     public boolean validate(Survey survey) {

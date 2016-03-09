@@ -13,7 +13,7 @@ import th.or.nectec.tanrabad.survey.utils.android.ResourceUtils;
 import static android.support.v7.widget.RecyclerView.ItemDecoration;
 import static android.support.v7.widget.RecyclerView.State;
 
-public class SimpleDividerItemDecoration extends ItemDecoration {
+class SimpleDividerItemDecoration extends ItemDecoration {
     private Drawable mDivider;
 
     public SimpleDividerItemDecoration(Context context) {

@@ -66,10 +66,8 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
         BuildingSavePresenter, View.OnClickListener {
 
     public static final String PLACE_UUID_ARG = "place_uuid_arg";
-    public static final String BUILDING_UUID_ARG = "building_uuid_arg";
-
     public static final int ADD_BUILDING_REQ_CODE = 40000;
-
+    private static final String BUILDING_UUID_ARG = "building_uuid_arg";
     private TextView placeName;
     private Toolbar toolbar;
     private TextView buildingNameTitle;

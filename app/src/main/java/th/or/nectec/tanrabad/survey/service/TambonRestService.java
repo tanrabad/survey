@@ -29,7 +29,7 @@ import th.or.nectec.tanrabad.survey.service.json.JsonTambon;
 
 public class TambonRestService extends AbsRestService<Subdistrict> {
 
-    public static final String PATH = "/tambon";
+    private static final String PATH = "/tambon";
 
     public TambonRestService() {
         this(BASE_API, new ServiceLastUpdatePreference(TanrabadApp.getInstance(), PATH));

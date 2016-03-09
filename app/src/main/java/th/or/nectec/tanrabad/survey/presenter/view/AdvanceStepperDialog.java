@@ -23,12 +23,13 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
+
 import th.or.nectec.tanrabad.survey.R;
 
 public class AdvanceStepperDialog extends Dialog implements View.OnClickListener {
 
     private final TextView callerView;
-    boolean safeMode = true;
+    private boolean safeMode = true;
     private TextView textOperator;
     private TextView textOperand2nd;
     private int operand1st = 0;
@@ -141,7 +142,7 @@ public class AdvanceStepperDialog extends Dialog implements View.OnClickListener
         setSecondOperand(current + newDigit);
     }
 
-    public void setSecondOperand(String secondOperand) {
+    private void setSecondOperand(String secondOperand) {
         try {
             operand2nd = Integer.parseInt(secondOperand);
             textOperand2nd.setText(String.valueOf(operand2nd));

@@ -18,17 +18,18 @@
 package th.or.nectec.tanrabad.survey.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
-import th.or.nectec.tanrabad.entity.lookup.ContainerType;
-import th.or.nectec.tanrabad.survey.TanrabadApp;
-import th.or.nectec.tanrabad.survey.service.json.JsonContainerType;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import th.or.nectec.tanrabad.entity.lookup.ContainerType;
+import th.or.nectec.tanrabad.survey.TanrabadApp;
+import th.or.nectec.tanrabad.survey.service.json.JsonContainerType;
+
 public class ContainerTypeRestService extends AbsRestService<ContainerType> {
 
-    public static final String PATH = "/containertype";
+    private static final String PATH = "/containertype";
 
     public ContainerTypeRestService() {
         this(BASE_API, new ServiceLastUpdatePreference(TanrabadApp.getInstance(), PATH));

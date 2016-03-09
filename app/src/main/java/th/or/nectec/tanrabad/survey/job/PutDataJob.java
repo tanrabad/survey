@@ -10,8 +10,8 @@ import th.or.nectec.tanrabad.survey.utils.collection.CursorList;
 
 public class PutDataJob<T> extends UploadJob {
 
-    public static final int ID = 90001;
-    UploadRestService<T> uploadRestService;
+    private static final int ID = 90001;
+    private UploadRestService<T> uploadRestService;
     private ChangedRepository<T> changedRepository;
     private IOException ioException;
     private RestServiceException restServiceException;

@@ -17,14 +17,14 @@
 
 package th.or.nectec.tanrabad.survey.presenter;
 
+import java.util.HashMap;
+
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.lookup.PlaceSubType;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.R;
 
-import java.util.HashMap;
-
-public class PlaceIconMapping {
+class PlaceIconMapping {
     private static final HashMap<Integer, Integer> PLACE_ICON_MAP = new HashMap<>();
 
     static {

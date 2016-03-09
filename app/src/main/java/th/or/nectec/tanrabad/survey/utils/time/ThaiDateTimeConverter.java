@@ -7,7 +7,7 @@ import java.util.TimeZone;
 
 public class ThaiDateTimeConverter {
 
-    public static final String ASIA_BANGKOK = "Asia/Bangkok";
+    private static final String ASIA_BANGKOK = "Asia/Bangkok";
 
     public static DateTime convert(String time) {
         return DateTime.parse(time).withZone(getThaiDateTimeZone());

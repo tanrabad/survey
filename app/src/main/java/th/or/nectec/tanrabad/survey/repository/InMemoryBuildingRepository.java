@@ -30,9 +30,9 @@ import th.or.nectec.tanrabad.entity.Building;
 public class InMemoryBuildingRepository implements BuildingRepository {
 
     private static InMemoryBuildingRepository instance;
-    Map<UUID, Building> buildingMap = new HashMap<>();
+    private Map<UUID, Building> buildingMap = new HashMap<>();
 
-    protected static InMemoryBuildingRepository getInstance() {
+    static InMemoryBuildingRepository getInstance() {
         if (instance == null)
             instance = new InMemoryBuildingRepository();
         return instance;

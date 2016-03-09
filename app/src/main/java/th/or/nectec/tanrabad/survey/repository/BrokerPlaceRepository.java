@@ -32,7 +32,7 @@ public class BrokerPlaceRepository implements PlaceRepository {
     private PlaceRepository persistence;
 
 
-    protected BrokerPlaceRepository(PlaceRepository cache, PlaceRepository persistence) {
+    private BrokerPlaceRepository(PlaceRepository cache, PlaceRepository persistence) {
         this.cache = cache;
         this.persistence = persistence;
     }

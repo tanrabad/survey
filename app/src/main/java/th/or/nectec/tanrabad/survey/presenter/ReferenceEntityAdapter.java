@@ -35,11 +35,11 @@ import th.or.nectec.tanrabad.survey.repository.BrokerPlaceTypeRepository;
 
 public class ReferenceEntityAdapter extends BaseAdapter {
 
-    Context context;
+    private Context context;
 
-    List<ReferenceEntity> listData = new ArrayList<>();
+    private List<ReferenceEntity> listData = new ArrayList<>();
 
-    public ReferenceEntityAdapter(Context context, List<ReferenceEntity> data) {
+    private ReferenceEntityAdapter(Context context, List<ReferenceEntity> data) {
         this.context = context;
         listData = data;
     }

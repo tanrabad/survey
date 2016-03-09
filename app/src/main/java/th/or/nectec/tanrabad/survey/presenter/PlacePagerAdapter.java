@@ -25,11 +25,11 @@ import android.support.v4.app.FragmentPagerAdapter;
 import th.or.nectec.tanrabad.survey.R;
 
 
-public class PlacePagerAdapter extends FragmentPagerAdapter {
+class PlacePagerAdapter extends FragmentPagerAdapter {
 
-    private Context context;
     private final PlaceListInDatabaseFragment placeListInDatabaseFragment;
     private final PlaceSurveyListFragment placeSurveyListFragment;
+    private Context context;
 
     public PlacePagerAdapter(FragmentManager fm, Context context, String username) {
         super(fm);
@@ -44,6 +44,17 @@ public class PlacePagerAdapter extends FragmentPagerAdapter {
         return 2;
     }
 
+    @Override
+    public CharSequence getPageTitle(int position) {
+        switch (position) {
+            case 0:
+                return context.getResources().getString(R.string.find_place_by_database);
+            case 1:
+                return context.getResources().getString(R.string.find_place_by_recent_survey);
+            default:
+                return null;
+        }
+    }
 
     @Override
     public Fragment getItem(int position) {
@@ -52,18 +63,6 @@ public class PlacePagerAdapter extends FragmentPagerAdapter {
                 return placeListInDatabaseFragment;
             case 1:
                 return placeSurveyListFragment;
-            default:
-                return null;
-        }
-    }
-
-    @Override
-    public CharSequence getPageTitle(int position) {
-        switch (position) {
-            case 0:
-                return context.getResources().getString(R.string.find_place_by_database);
-            case 1:
-                return context.getResources().getString(R.string.find_place_by_recent_survey);
             default:
                 return null;
         }

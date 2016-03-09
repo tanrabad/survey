@@ -31,7 +31,7 @@ public class BrokerBuildingRepository implements BuildingRepository {
     private BuildingRepository cache;
     private BuildingRepository database;
 
-    protected BrokerBuildingRepository(BuildingRepository cache, BuildingRepository database) {
+    private BrokerBuildingRepository(BuildingRepository cache, BuildingRepository database) {
         this.cache = cache;
         this.database = database;
     }

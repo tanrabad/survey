@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.text.TextPaint;
 
-public class ShowcaseFontStyle {
+class ShowcaseFontStyle {
 
     public static TextPaint getTitleStyle(Context context) {
         TextPaint textPaint = new TextPaint();

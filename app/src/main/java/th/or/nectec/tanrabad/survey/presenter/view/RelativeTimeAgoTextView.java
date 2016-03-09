@@ -25,7 +25,9 @@ import android.text.format.DateUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
+
 import org.joda.time.DateTime;
+
 import th.or.nectec.tanrabad.survey.utils.time.CurrentTimer;
 import th.or.nectec.tanrabad.survey.utils.time.JodaCurrentTime;
 import th.or.nectec.tanrabad.survey.utils.time.TimePrettyPrinterFactory;
@@ -107,7 +109,7 @@ public class RelativeTimeAgoTextView extends TextView implements TimeAgoView {
         setReferenceTime(dateTime.getMillis());
     }
 
-    public void setReferenceTime(long referenceTime) {
+    private void setReferenceTime(long referenceTime) {
         this.referenceTime = referenceTime;
         stopTaskForPeriodicallyUpdatingRelativeTime();
         updateTimeTask = new UpdateTimeRunnable(this.referenceTime);

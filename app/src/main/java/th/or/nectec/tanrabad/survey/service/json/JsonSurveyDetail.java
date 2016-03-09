@@ -29,8 +29,8 @@ import th.or.nectec.tanrabad.entity.SurveyDetail;
 @JsonObject
 public class JsonSurveyDetail {
 
-    public static final int INDOOR_BUILDING = 1;
-    public static final int OUTDOOR_BUILDING = 2;
+    private static final int INDOOR_BUILDING = 1;
+    private static final int OUTDOOR_BUILDING = 2;
 
     @JsonField(name = "survey_detail_id", typeConverter = UuidTypeConverter.class)
     UUID surveyDetailId;
@@ -60,7 +60,7 @@ public class JsonSurveyDetail {
         return jsonSurveyDetailList;
     }
 
-    public static JsonSurveyDetail parse(int containerLocationId, SurveyDetail surveyDetail) {
+    private static JsonSurveyDetail parse(int containerLocationId, SurveyDetail surveyDetail) {
         JsonSurveyDetail jsonSurveyDetail = new JsonSurveyDetail();
         jsonSurveyDetail.surveyDetailId = surveyDetail.getId();
         jsonSurveyDetail.containerLocationId = containerLocationId;

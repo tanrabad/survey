@@ -60,10 +60,10 @@ import static th.or.nectec.tanrabad.survey.service.http.Header.USER_AGENT;
 public class PlaceRestServiceTest extends WireMockTestBase {
 
     public static final String MON_30_NOV_2015_17_00_00_GMT = "Mon, 30 Nov 2015 17:00:00 GMT";
-    UserRepository userRepository = Mockito.mock(UserRepository.class);
-    PlaceSubTypeRepository placeSubTypeRepository = Mockito.mock(PlaceSubTypeRepository.class);
-    ServiceLastUpdate lastUpdate = Mockito.mock(ServiceLastUpdate.class);
-    PlaceRestService restService;
+    private UserRepository userRepository = Mockito.mock(UserRepository.class);
+    private PlaceSubTypeRepository placeSubTypeRepository = Mockito.mock(PlaceSubTypeRepository.class);
+    private ServiceLastUpdate lastUpdate = Mockito.mock(ServiceLastUpdate.class);
+    private PlaceRestService restService;
 
     @Before
     public void setUp() throws Exception {

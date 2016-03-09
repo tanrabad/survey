@@ -23,7 +23,7 @@ import th.or.nectec.tanrabad.entity.Place;
 
 public class PlaceWithChange extends Place {
 
-    public final int changeStatus;
+    private final int changeStatus;
 
     public PlaceWithChange(UUID buildingId, String placeName, int changeStatus) {
         super(buildingId, placeName);

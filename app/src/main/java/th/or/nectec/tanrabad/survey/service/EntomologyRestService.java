@@ -45,7 +45,7 @@ public class EntomologyRestService extends AbsRestService<JsonEntomology> {
 
     @Override
     public String getDefaultParams() {
-        return new QueryStringBuilder("geostd=4326", placeIdParam(), oneWeekIntervalParam()).build();
+        return new QueryStringBuilder("geostd=4326", placeIdParam(), oneWeekIntervalParam(), orgIdParam()).build();
     }
 
     @Override

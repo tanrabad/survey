@@ -132,6 +132,11 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
                 .perform(click());
 
         Intents.intended(Matchers.allOf(
+                hasComponent(new ComponentName(mActivity, SurveyBuildingHistoryActivity.class)),
+                hasExtra(SurveyBuildingHistoryActivity.PLACE_UUID_ARG, "febb0058-3007-41ae-91d8-de2c3160c935")
+        ));
+
+        Intents.intended(Matchers.allOf(
                 hasComponent(new ComponentName(mActivity, BuildingListActivity.class)),
                 hasExtra(BuildingListActivity.PLACE_UUID_ARG, "febb0058-3007-41ae-91d8-de2c3160c935")
         ));

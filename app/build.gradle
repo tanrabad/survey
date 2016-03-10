@@ -203,7 +203,6 @@ check {
     }
     findbugs {
         skip true
-        config hard()
     }
     pmd {
         config pmdRuleSetFiles.getAt(0)

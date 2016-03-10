@@ -43,6 +43,7 @@ ext {
 
     checkstyleVersion = "6.16.1"
     checkstyleConfigFile = file("$rootDir/config/checkstyle.xml")
+    pmdRuleSetFiles = files("$rootDir/config/pmd.xml")
 
     supportLibVersion = "23.2.0"
     playServicesVersion = "8.4.0"

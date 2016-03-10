@@ -52,7 +52,10 @@ android {
         versionName rootProject.genVersionName
         testApplicationId "th.or.nectec.tanrabad.survey.test"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
         resValue "string", "app_build_time", "build $buildTime"
+        buildConfigField "String", "TRB_AUTHEN_CLIENT_ID", "\"$clientId\""
+        buildConfigField "String", "TRB_AUTHEN_CLIENT_SECRET", "\"$clientSecret\""
         generatedDensities = []
     }
 
@@ -82,11 +85,10 @@ android {
             debuggable true
             testCoverageEnabled true
             ext.enableCrashlytics = false
+
             manifestPlaceholders = [google_map_key: System.getenv("TANRABAD_GOOGLE_DEBUG_KEY")]
             buildConfigField "String", "API_URL", "\"http://trb-test.igridproject.info/v1\""
             buildConfigField "String", "USER", "\"dpc-user\""
-            buildConfigField "String", "TRB_AUTHEN_CLIENT_ID", "\"$clientId\""
-            buildConfigField "String", "TRB_AUTHEN_CLIENT_SECRET", "\"$clientSecret\""
             resValue "string", "app_version", "version $genVersionName-Debug"
         }
         beta {
@@ -95,11 +97,10 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+
             manifestPlaceholders = [google_map_key: System.getenv("TANRABAD_GOOGLE_RELEASE_KEY")]
             buildConfigField "String", "API_URL", "\"http://api.tanrabad.org/v1\""
             buildConfigField "String", "USER", "\"dpc-13-beta\""
-            buildConfigField "String", "TRB_AUTHEN_CLIENT_ID", "\"$clientId\""
-            buildConfigField "String", "TRB_AUTHEN_CLIENT_SECRET", "\"$clientSecret\""
             resValue "string", "app_version", "version $genVersionName-Beta"
         }
         release {
@@ -107,11 +108,10 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+
             manifestPlaceholders = [google_map_key: System.getenv("TANRABAD_GOOGLE_RELEASE_KEY")]
             buildConfigField "String", "API_URL", "\"http://api.tanrabad.org/v1\""
             buildConfigField "String", "USER", "\"dpc-13\""
-            buildConfigField "String", "TRB_AUTHEN_CLIENT_ID", "\"$clientId\""
-            buildConfigField "String", "TRB_AUTHEN_CLIENT_SECRET", "\"$clientSecret\""
             resValue "string", "app_version", "version $genVersionName"
         }
     }
@@ -206,6 +206,6 @@ check {
         config hard()
     }
     pmd {
-        config hard()
+        config pmdRuleSetFiles.getAt(0)
     }
 }

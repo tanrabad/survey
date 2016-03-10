@@ -17,6 +17,7 @@
 
 apply plugin: 'java'
 apply plugin: 'checkstyle'
+apply plugin: 'pmd'
 
 //noinspection GroovyUnusedAssignment
 sourceCompatibility = rootProject.ext.javaSourceCompatibility
@@ -34,4 +35,9 @@ dependencies {
 checkstyle {
     configFile checkstyleConfigFile
     toolVersion = checkstyleVersion
+}
+
+pmd {
+    ignoreFailures = true
+    ruleSetFiles = pmdRuleSetFiles
 }

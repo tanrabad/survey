@@ -20,6 +20,7 @@ package th.or.nectec.tanrabad.entity;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
 import th.or.nectec.tanrabad.entity.field.Location;
 
 import static org.junit.Assert.assertEquals;

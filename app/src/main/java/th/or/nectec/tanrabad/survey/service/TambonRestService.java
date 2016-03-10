@@ -41,7 +41,7 @@ public class TambonRestService extends AbsRestService<Subdistrict> {
 
     @Override
     public String getDefaultParams() {
-        return "geostd=4326&" + getApiFilterParam();
+        return new QueryStringBuilder("geostd=4326", getApiFilterParam()).build();
     }
 
     protected String getPath() {

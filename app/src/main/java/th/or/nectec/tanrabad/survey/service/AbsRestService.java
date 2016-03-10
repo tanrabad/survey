@@ -122,7 +122,7 @@ public abstract class AbsRestService<T> implements RestService<T> {
         }
         String url = baseApi + getPath();
         if (getDefaultParams() != null)
-            url += "?" + getDefaultParams();
+            url += getDefaultParams();
         return url;
     }
 

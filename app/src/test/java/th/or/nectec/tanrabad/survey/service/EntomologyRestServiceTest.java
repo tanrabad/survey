@@ -64,7 +64,7 @@ public class EntomologyRestServiceTest extends WireMockTestBase {
 
     @Test
     public void testGetUrl() throws Exception {
-        assertEquals(localHost() + EntomologyRestService.PATH + "?" + restService.getDefaultParams(),
+        assertEquals(localHost() + EntomologyRestService.PATH + restService.getDefaultParams(),
                 restService.getUrl());
     }
 

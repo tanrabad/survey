@@ -18,14 +18,16 @@
 package th.or.nectec.tanrabad.survey.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
+
 import org.joda.time.DateTime;
+
+import java.io.IOException;
+import java.util.List;
+
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.presenter.AccountUtils;
 import th.or.nectec.tanrabad.survey.service.json.JsonEntomology;
-
-import java.io.IOException;
-import java.util.List;
 
 public class EntomologyRestService extends AbsRestService<JsonEntomology> {
 
@@ -42,6 +44,11 @@ public class EntomologyRestService extends AbsRestService<JsonEntomology> {
     }
 
     @Override
+    public String getDefaultParams() {
+        return new QueryStringBuilder("geostd=4326", placeIdParam(), oneWeekIntervalParam()).build();
+    }
+
+    @Override
     protected String getPath() {
         return PATH;
     }
@@ -51,20 +58,8 @@ public class EntomologyRestService extends AbsRestService<JsonEntomology> {
         return LoganSquare.parseList(responseBody, JsonEntomology.class);
     }
 
-    @Override
-    public String getDefaultParams() {
-        return "geostd=4326"
-                + "&" + placeIdParam()
-                + "&" + orgIdParam()
-                + "&" + oneWeekIntervalParam();
-    }
-
     private String placeIdParam() {
         return "place_id=" + place.getId();
-    }
-
-    private String orgIdParam() {
-        return "org_id=" + AccountUtils.getUser().getOrganizationId();
     }
 
     private String oneWeekIntervalParam() {
@@ -74,5 +69,9 @@ public class EntomologyRestService extends AbsRestService<JsonEntomology> {
 
     private long unixTime(DateTime dateTime) {
         return dateTime.getMillis() / 1000;
+    }
+
+    private String orgIdParam() {
+        return "org_id=" + AccountUtils.getUser().getOrganizationId();
     }
 }

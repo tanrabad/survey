@@ -78,7 +78,7 @@ public class PlaceRestServiceTest extends WireMockTestBase {
 
     @Test
     public void testGetUrl() throws Exception {
-        assertEquals(localHost() + PATH + "?" + restService.getDefaultParams(), restService.getUrl());
+        assertEquals(localHost() + PATH + restService.getDefaultParams(), restService.getUrl());
     }
 
     @Test(expected = RestServiceException.class)

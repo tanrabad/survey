@@ -73,6 +73,11 @@ ext {
     clientSecret = System.getenv("TANRABAD_AUTHEN_CLIENT_SECRET")
 }
 
+task wrapper(type: Wrapper) {
+    description 'Creates the gradle wrapper.'
+    gradleVersion '2.11'
+}
+
 task testBeforePush(
         group: "Verification",
         description: "Run all process like on CI-Server",

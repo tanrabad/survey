@@ -22,8 +22,6 @@
 
 <module name = "Checker">
 
-    <module name="NewlineAtEndOfFile" />
-
     <property name="charset" value="UTF-8"/>
 
     <property name="severity" value="error"/>

@@ -31,3 +31,7 @@ dependencies {
 
     testCompile "junit:junit:$junitVersion"
 }
+
+checkstyle {
+    configFile = file("$project.rootDir/config/checkstyle.xml")
+}

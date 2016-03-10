@@ -199,7 +199,7 @@ configurations.all { resolutionStrategy.force "com.fasterxml.jackson.core:jackso
 check {
     checkstyle {
         abortOnError true
-        config file("$project.rootDir/config/checkstyle.xml")
+        config checkstyleConfigFile
     }
     findbugs {
         skip true

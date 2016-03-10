@@ -42,6 +42,7 @@ ext {
     buildToolsVersion = "23.0.2"
 
     checkstyleVersion = "6.16.1"
+    checkstyleConfigFile = file("$rootDir/config/checkstyle.xml")
 
     supportLibVersion = "23.2.0"
     playServicesVersion = "8.4.0"

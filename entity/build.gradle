@@ -24,8 +24,6 @@ sourceCompatibility = rootProject.ext.javaSourceCompatibility
 targetCompatibility = rootProject.ext.javaTargetCompatibility
 
 dependencies {
-    checkstyle "com.puppycrawl.tools:checkstyle:$checkstyleVersion"
-
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile "joda-time:joda-time:$jodaTimeVersion"
 
@@ -33,5 +31,6 @@ dependencies {
 }
 
 checkstyle {
-    configFile = file("$project.rootDir/config/checkstyle.xml")
+    configFile checkstyleConfigFile
+    toolVersion = checkstyleVersion
 }

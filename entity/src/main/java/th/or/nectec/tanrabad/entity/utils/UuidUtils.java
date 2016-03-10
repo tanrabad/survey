@@ -56,19 +56,13 @@ public class UuidUtils {
     public static UUID order(UUID uuid) {
         String[] listUuid = uuid.toString().split("-");
         String temp = listUuid[2] + listUuid[1] + listUuid[0] + listUuid[3] + listUuid[4];
-        String uuidStr = "";
+        StringBuilder uuidString = new StringBuilder();
         for (int i = 0; i < temp.length(); i++) {
-            if (i == 8 | i == 12 | i == 16 | i == 20) {  //add '-' into index 8,12,16,20
-                uuidStr += "-";
-                char c = temp.charAt(i);
-                uuidStr += c;
-            } else {
-                char c = temp.charAt(i);
-                uuidStr += c;
+            if (i == 8 | i == 12 | i == 16 | i == 20) {
+                uuidString.append("-");
             }
+            uuidString.append(temp.charAt(i));
         }
-        uuid = UUID.fromString(uuidStr);
-        return uuid;
-
+        return UUID.fromString(uuidString.toString());
     }
 }

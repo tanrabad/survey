@@ -78,7 +78,7 @@ public class PlaceSurveyAdapter extends RecyclerView.Adapter<PlaceSurveyAdapter.
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_place_survey, parent, false);
+        View v = LayoutInflater.from(context).inflate(R.layout.list_item_place_survey, parent, false);
         return new ViewHolder(v, this);
     }
 

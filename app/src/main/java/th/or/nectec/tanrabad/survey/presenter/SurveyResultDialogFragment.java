@@ -66,11 +66,10 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
     private static final String ARG_PLACE_ID = "place_id";
     private static final String BUILDING = "อาคาร";
     private static final String HOUSE = "บ้าน";
-    private LinearLayout placeInfoLayout;
     private RelativeLayout surveyResultLayout;
     private RelativeLayout reportUpdateLayout;
     private ImageView placeIconView;
-    private ImageView syncDataView;
+    private ImageView syncDataButton;
     private TextView placeSubTypeView;
     private TextView surveyDateView;
     private RelativeTimeAgoTextView resultUpdateView;
@@ -87,9 +86,9 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
     private TextView containerCountView;
     private LinearLayout indoorContainerLayout;
     private LinearLayout outdoorContainerLayout;
-    private ProgressBar progressBar;
+    private ProgressBar surveyResultProgressBar;
     private TextView errorMsgView;
-    private Button gotIt;
+    private Button gotItButton;
     private EntomologyJob jsonEntomologyGetDataJob;
     private Place place;
 
@@ -114,7 +113,6 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
     private void assignViews(View view) {
         surveyResultLayout = (RelativeLayout) view.findViewById(R.id.result_layout);
         reportUpdateLayout = (RelativeLayout) view.findViewById(R.id.report_update_layout);
-        placeInfoLayout = (LinearLayout) view.findViewById(R.id.place_info_layout);
         placeIconView = (ImageView) view.findViewById(R.id.place_icon);
         placeSubTypeView = (TextView) view.findViewById(R.id.place_type);
         placeNameView = (TextView) view.findViewById(R.id.place_name);
@@ -131,16 +129,16 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
         containerCountView = (TextView) view.findViewById(R.id.container_count);
         indoorContainerLayout = (LinearLayout) view.findViewById(R.id.indoor_container);
         outdoorContainerLayout = (LinearLayout) view.findViewById(R.id.outdoor_container);
-        progressBar = (ProgressBar) view.findViewById(R.id.loading);
+        surveyResultProgressBar = (ProgressBar) view.findViewById(R.id.loading);
         errorMsgView = (TextView) view.findViewById(R.id.error_msg);
         surveyDateView = (TextView) view.findViewById(R.id.survey_date);
         resultUpdateView = (RelativeTimeAgoTextView) view.findViewById(R.id.report_update);
 
-        gotIt = (Button) view.findViewById(R.id.got_it);
-        gotIt.setOnClickListener(this);
+        gotItButton = (Button) view.findViewById(R.id.got_it);
+        gotItButton.setOnClickListener(this);
 
-        syncDataView = (ImageView) view.findViewById(R.id.update_button);
-        syncDataView.setOnClickListener(this);
+        syncDataButton = (ImageView) view.findViewById(R.id.update_button);
+        syncDataButton.setOnClickListener(this);
     }
 
     @Override
@@ -170,7 +168,7 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
     private void showErrorMessageView() {
         reportUpdateLayout.setVisibility(View.INVISIBLE);
         surveyResultLayout.setVisibility(View.INVISIBLE);
-        progressBar.setVisibility(View.INVISIBLE);
+        surveyResultProgressBar.setVisibility(View.INVISIBLE);
         errorMsgView.setVisibility(View.VISIBLE);
     }
 
@@ -199,9 +197,9 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
 
     private void showProgressBar() {
         reportUpdateLayout.setVisibility(View.INVISIBLE);
-        progressBar.setVisibility(View.VISIBLE);
+        surveyResultProgressBar.setVisibility(View.VISIBLE);
         errorMsgView.setVisibility(View.INVISIBLE);
-        gotIt.setEnabled(false);
+        gotItButton.setEnabled(false);
     }
 
     private void hideKeyContainerLayout() {
@@ -277,8 +275,8 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
 
         @Override
         protected void onRunFinish() {
-            progressBar.setVisibility(View.GONE);
-            gotIt.setEnabled(true);
+            surveyResultProgressBar.setVisibility(View.GONE);
+            gotItButton.setEnabled(true);
             if (errorJobs() == 0 && entomology != null) {
                 reportUpdateLayout.setVisibility(View.VISIBLE);
                 surveyResultLayout.setVisibility(View.VISIBLE);

@@ -23,21 +23,31 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.domain.building.BuildingRepository;
 import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.domain.survey.ContainerTypeRepository;
 import th.or.nectec.tanrabad.domain.survey.SurveyRepository;
 import th.or.nectec.tanrabad.domain.user.UserRepository;
-import th.or.nectec.tanrabad.entity.*;
+import th.or.nectec.tanrabad.entity.Building;
+import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.Survey;
+import th.or.nectec.tanrabad.entity.SurveyDetail;
+import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
-import th.or.nectec.tanrabad.survey.repository.*;
+import th.or.nectec.tanrabad.survey.repository.BrokerBuildingRepository;
+import th.or.nectec.tanrabad.survey.repository.BrokerContainerTypeRepository;
+import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
+import th.or.nectec.tanrabad.survey.repository.BrokerUserRepository;
+import th.or.nectec.tanrabad.survey.repository.ChangedRepository;
+import th.or.nectec.tanrabad.survey.repository.SurveyRepositoryException;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorList;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 public class DbSurveyRepository extends DbRepository implements SurveyRepository, ChangedRepository<Survey> {
 
@@ -281,8 +291,8 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
     public List<BuildingWithSurveyStatus> findSurveyBuildingByBuildingName(
             Place place, User user, String buildingName) {
         String[] columns = buildingSurveyColumn();
-        Cursor cursor = readableDatabase().query(DbBuildingRepository.TABLE_NAME
-                        + " LEFT JOIN " + TABLE_NAME + " USING(building_id)",
+        Cursor cursor = readableDatabase().query(
+                DbBuildingRepository.TABLE_NAME + " LEFT JOIN " + TABLE_NAME + " USING(building_id)",
                 columns,
                 BuildingColumn.PLACE_ID + "=? "
                         + "AND (" + SurveyColumn.SURVEYOR + "=? OR " + SurveyColumn.SURVEYOR + " IS NULL) "

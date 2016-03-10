@@ -32,7 +32,11 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
+
+import java.util.List;
+
 import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyHistoryChooser;
 import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyHistoryListPresenter;
 import th.or.nectec.tanrabad.entity.Place;
@@ -45,16 +49,14 @@ import th.or.nectec.tanrabad.survey.repository.BrokerUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.NetworkChangeReceiver;
 
-import java.util.List;
-
 public class MainActivity extends TanrabadActivity implements View.OnClickListener,
         PlaceWithSurveyHistoryListPresenter, AdapterView.OnItemClickListener {
 
-    private PlaceSurveyAdapter placeSurveyAdapter;
-    private CardView cardView;
+    private PlaceSurveyAdapter recentSurveyPlaceAdapter;
+    private CardView recentSurveyPlaceCardView;
     private NetworkChangeReceiver networkChangeReceiver;
     private ObjectAnimator syncProgressAnimator;
-    private PlaceWithSurveyHistoryChooser placeWithSurveyHistoryChooser;
+    private PlaceWithSurveyHistoryChooser recentSurveyPlaceChooser;
 
     public static void open(Activity activity) {
         Intent intent = new Intent(activity, MainActivity.class);
@@ -99,14 +101,14 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
     }
 
     private void setupList() {
-        RecyclerView placeHistoryList = (RecyclerView) findViewById(R.id.place_history_list);
-        placeSurveyAdapter = new PlaceSurveyAdapter(this, getSupportFragmentManager());
-        placeHistoryList.setAdapter(placeSurveyAdapter);
-        placeHistoryList.setLayoutManager(new LinearLayoutManager(this));
-        placeHistoryList.addItemDecoration(new SimpleDividerItemDecoration(this));
-        placeSurveyAdapter.setOnItemClickListener(this);
+        RecyclerView recentSurveyList = (RecyclerView) findViewById(R.id.place_history_list);
+        recentSurveyPlaceAdapter = new PlaceSurveyAdapter(this, getSupportFragmentManager());
+        recentSurveyList.setAdapter(recentSurveyPlaceAdapter);
+        recentSurveyList.setLayoutManager(new LinearLayoutManager(this));
+        recentSurveyList.addItemDecoration(new SimpleDividerItemDecoration(this));
+        recentSurveyPlaceAdapter.setOnItemClickListener(this);
         RecyclerViewHeader recyclerViewHeader = (RecyclerViewHeader) findViewById(R.id.card_header);
-        recyclerViewHeader.attachTo(placeHistoryList, true);
+        recyclerViewHeader.attachTo(recentSurveyList, true);
     }
 
     private void setupSyncAnimator() {
@@ -116,8 +118,8 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
     }
 
     private void showRecentSurveyCard() {
-        cardView = (CardView) findViewById(R.id.card_layout);
-        placeWithSurveyHistoryChooser = new PlaceWithSurveyHistoryChooser(
+        recentSurveyPlaceCardView = (CardView) findViewById(R.id.card_layout);
+        recentSurveyPlaceChooser = new PlaceWithSurveyHistoryChooser(
                 BrokerUserRepository.getInstance(),
                 BrokerSurveyRepository.getInstance(),
                 this);
@@ -126,7 +128,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
     private void doLoadingRecentSurveyData() {
         User user = AccountUtils.getUser();
         if (user != null)
-            placeWithSurveyHistoryChooser.showSurveyPlaceList(user.getUsername());
+            recentSurveyPlaceChooser.showSurveyPlaceList(user.getUsername());
         else finish();
     }
 
@@ -184,8 +186,8 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
 
     @Override
     public void displaySurveyPlaceList(List<Place> surveyPlace) {
-        placeSurveyAdapter.updateData(surveyPlace);
-        cardView.setVisibility(View.VISIBLE);
+        recentSurveyPlaceAdapter.updateData(surveyPlace);
+        recentSurveyPlaceCardView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -195,13 +197,13 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
 
     @Override
     public void displaySurveyPlacesNotFound() {
-        placeSurveyAdapter.clearData();
-        cardView.setVisibility(View.GONE);
+        recentSurveyPlaceAdapter.clearData();
+        recentSurveyPlaceCardView.setVisibility(View.GONE);
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-        Place place = placeSurveyAdapter.getItem(position);
+        Place place = recentSurveyPlaceAdapter.getItem(position);
         SurveyBuildingHistoryActivity.open(this, place);
     }
 

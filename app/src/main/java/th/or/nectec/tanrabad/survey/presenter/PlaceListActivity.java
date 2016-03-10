@@ -42,7 +42,7 @@ import uk.co.chrisjenx.calligraphy.TypefaceUtils;
 
 public class PlaceListActivity extends TanrabadActivity {
 
-    private TabLayout tabLayout;
+    private TabLayout placeListTabLayout;
     private ViewPager placePager;
     private PlacePagerAdapter placePagerAdapter;
     private Toolbar toolbar;
@@ -67,7 +67,7 @@ public class PlaceListActivity extends TanrabadActivity {
 
     private void setupViews() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        placeListTabLayout = (TabLayout) findViewById(R.id.tab_layout);
         placePager = (ViewPager) findViewById(R.id.place_pager);
         setSupportActionBar(toolbar);
     }
@@ -78,11 +78,11 @@ public class PlaceListActivity extends TanrabadActivity {
                 PlaceListActivity.this,
                 AccountUtils.getUser().getUsername());
         placePager.setAdapter(placePagerAdapter);
-        tabLayout.setupWithViewPager(placePager);
+        placeListTabLayout.setupWithViewPager(placePager);
     }
 
     private void changeTabsFont() {
-        ViewGroup vg = (ViewGroup) tabLayout.getChildAt(0);
+        ViewGroup vg = (ViewGroup) placeListTabLayout.getChildAt(0);
         int tabsCount = vg.getChildCount();
         for (int j = 0; j < tabsCount; j++) {
             ViewGroup vgTab = (ViewGroup) vg.getChildAt(j);

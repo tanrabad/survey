@@ -68,9 +68,8 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
     public static final String PLACE_UUID_ARG = "place_uuid_arg";
     public static final int ADD_BUILDING_REQ_CODE = 40000;
     private static final String BUILDING_UUID_ARG = "building_uuid_arg";
-    private TextView placeName;
-    private Toolbar toolbar;
-    private TextView buildingNameTitle;
+    private TextView placeNameView;
+    private TextView buildingNameTitleView;
     private EditText buildingNameView;
     private FrameLayout addLocationBackground;
     private PlaceController placeController = new PlaceController(BrokerPlaceRepository.getInstance(), this);
@@ -101,7 +100,7 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_building_form);
         assignViews();
-        setSupportActionBar(toolbar);
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         setupHomeButton();
         setupMap();
         setupTwiceBackPressed();
@@ -117,9 +116,8 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
     }
 
     private void assignViews() {
-        placeName = (TextView) findViewById(R.id.place_name);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        buildingNameTitle = (TextView) findViewById(R.id.building_name_label);
+        placeNameView = (TextView) findViewById(R.id.place_name);
+        buildingNameTitleView = (TextView) findViewById(R.id.building_name_label);
         buildingNameView = (EditText) findViewById(R.id.building_name);
         addLocationBackground = (FrameLayout) findViewById(R.id.add_location_background);
         editLocationButton = (Button) findViewById(R.id.edit_location);
@@ -191,11 +189,11 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
     @Override
     public void displayPlace(Place place) {
         this.place = place;
-        placeName.setText(place.getName());
+        placeNameView.setText(place.getName());
         if (place.getType() == PlaceType.VILLAGE_COMMUNITY) {
-            buildingNameTitle.setText(R.string.house_no);
+            buildingNameTitleView.setText(R.string.house_no);
         } else {
-            buildingNameTitle.setText(R.string.building_name);
+            buildingNameTitleView.setText(R.string.building_name);
             buildingNameView.setHint(R.string.touch_to_type_building_name);
         }
     }

@@ -18,10 +18,11 @@
 package th.or.nectec.tanrabad.survey.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
-import okhttp3.Request;
-import okhttp3.Response;
 
 import java.io.IOException;
+
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class RestServiceException extends RuntimeException {
 
@@ -48,7 +49,7 @@ public class RestServiceException extends RuntimeException {
             errorResponse = LoganSquare.parse(response.body().string(), ErrorResponse.class);
         }
 
-        public ErrorResponseException(Request request, Response response) throws IOException {
+        public ErrorResponseException(Request request, Response response) {
             super(request, response);
         }
 

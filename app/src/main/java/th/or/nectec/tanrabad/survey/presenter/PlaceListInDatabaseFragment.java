@@ -58,8 +58,8 @@ public class PlaceListInDatabaseFragment extends Fragment implements
     private TextView placeCountView;
     private RecyclerView placeListView;
     private AppCompatSpinner placeTypeFilterView;
-    private RecyclerViewHeader recyclerViewHeader;
-    private EmptyLayoutView emptyLayoutView;
+    private RecyclerViewHeader placeListHeader;
+    private EmptyLayoutView emptyPlacesView;
 
     private int placeTypeId = -1;
 
@@ -76,14 +76,14 @@ public class PlaceListInDatabaseFragment extends Fragment implements
         placeAdapter.updateData(places);
         placeCountView.setText(getString(R.string.format_place_count, places.size()));
         placeCountView.setVisibility(View.VISIBLE);
-        emptyLayoutView.setVisibility(View.GONE);
+        emptyPlacesView.setVisibility(View.GONE);
     }
 
     @Override
     public void displayPlaceNotFound() {
         placeAdapter.clearData();
         placeCountView.setVisibility(View.GONE);
-        emptyLayoutView.setVisibility(View.VISIBLE);
+        emptyPlacesView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -106,11 +106,6 @@ public class PlaceListInDatabaseFragment extends Fragment implements
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
@@ -127,19 +122,19 @@ public class PlaceListInDatabaseFragment extends Fragment implements
         this.placeListView = (RecyclerView) view.findViewById(R.id.place_list);
         this.placeCountView = (TextView) view.findViewById(R.id.place_count);
         this.placeTypeFilterView = (AppCompatSpinner) view.findViewById(R.id.place_filter);
-        recyclerViewHeader = (RecyclerViewHeader) view.findViewById(R.id.card_header);
-        emptyLayoutView = (EmptyLayoutView) view.findViewById(R.id.empty_layout);
-        emptyLayoutView.setEmptyIcon(R.mipmap.ic_place);
+        placeListHeader = (RecyclerViewHeader) view.findViewById(R.id.card_header);
+        emptyPlacesView = (EmptyLayoutView) view.findViewById(R.id.empty_layout);
+        emptyPlacesView.setEmptyIcon(R.mipmap.ic_place);
     }
 
     private void setupEmptyList() {
-        emptyLayoutView.setEmptyButtonText(R.string.add_place, new View.OnClickListener() {
+        emptyPlacesView.setEmptyButtonText(R.string.add_place, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 PlaceFormActivity.startAdd(getActivity(), placeTypeId);
             }
         });
-        emptyLayoutView.setEmptyText(R.string.places_not_found);
+        emptyPlacesView.setEmptyText(R.string.places_not_found);
     }
 
     private void setupPlaceFilterSpinner() {
@@ -157,7 +152,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(
                 getContext(), LinearLayoutManager.VERTICAL, false);
         placeListView.setLayoutManager(linearLayoutManager);
-        recyclerViewHeader.attachTo(placeListView, true);
+        placeListHeader.attachTo(placeListView, true);
     }
 
     @Override

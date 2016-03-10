@@ -96,7 +96,6 @@ class KeyContainer {
         Iterator<Map.Entry<ContainerType, Integer>> outdoorItr = outdoorMap.entrySet().iterator();
         outdoorKey = new ArrayList<>();
         while (outdoorItr.hasNext()) {
-
             Map.Entry<ContainerType, Integer> containerTypeIntegerEntry = outdoorItr.next();
             outdoorKey.add(new SurveyDetail(UUID.randomUUID(), containerTypeIntegerEntry.getKey(),
                     containerTypeIntegerEntry.getValue(), containerTypeIntegerEntry.getValue()));

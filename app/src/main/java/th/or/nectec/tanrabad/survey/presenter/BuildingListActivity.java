@@ -67,7 +67,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     private RecyclerView buildingList;
     private BuildingWithSurveyStatusAdapter buildingAdapter;
     private Place place;
-    private EmptyLayoutView emptyLayoutView;
+    private EmptyLayoutView emptyBuildingsView;
     private SurveyBuildingChooser surveyBuildingChooser = new SurveyBuildingChooser(
             BrokerUserRepository.getInstance(),
             BrokerPlaceRepository.getInstance(),
@@ -170,11 +170,11 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     }
 
     private void setupEmptyLayout() {
-        emptyLayoutView = (EmptyLayoutView) findViewById(R.id.empty_layout);
-        emptyLayoutView.setEmptyIcon(place.getType() == PlaceType.VILLAGE_COMMUNITY
+        emptyBuildingsView = (EmptyLayoutView) findViewById(R.id.empty_layout);
+        emptyBuildingsView.setEmptyIcon(place.getType() == PlaceType.VILLAGE_COMMUNITY
                 ? R.mipmap.ic_building_home_black : R.mipmap.ic_building_black);
-        emptyLayoutView.setEmptyText(R.string.building_list_not_found);
-        emptyLayoutView.setEmptyButtonText(R.string.add_building, new View.OnClickListener() {
+        emptyBuildingsView.setEmptyText(R.string.building_list_not_found);
+        emptyBuildingsView.setEmptyButtonText(R.string.add_building, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 BuildingFormActivity.startAdd(BuildingListActivity.this, getPlaceUuidFromIntent().toString());
@@ -211,7 +211,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
 
     @Override
     public void alertBuildingsNotFound() {
-        emptyLayoutView.setVisibility(View.VISIBLE);
+        emptyBuildingsView.setVisibility(View.VISIBLE);
         TextView buildingCountView = (TextView) findViewById(R.id.building_count);
         buildingCountView.setVisibility(View.GONE);
         editBuildingButton.setVisibility(View.GONE);
@@ -221,7 +221,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     @Override
     public void displayAllSurveyBuildingList(List<BuildingWithSurveyStatus> buildingsWithSurveyStatuses) {
         Collections.sort(buildingsWithSurveyStatuses);
-        emptyLayoutView.setVisibility(View.GONE);
+        emptyBuildingsView.setVisibility(View.GONE);
         editBuildingButton.setVisibility(View.VISIBLE);
         buildingSearchView.setVisibility(View.VISIBLE);
         buildingAdapter.updateData(buildingsWithSurveyStatuses);

@@ -34,9 +34,6 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 @SuppressLint("Registered")
 public class TanrabadActivity extends AppCompatActivity {
-
-    protected static final String USER_NAME_ARG = "user_name_arg";
-
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));

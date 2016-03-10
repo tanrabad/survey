@@ -26,7 +26,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
+
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
+
+import java.util.List;
+
 import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyHistoryChooser;
 import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyHistoryListPresenter;
 import th.or.nectec.tanrabad.entity.Place;
@@ -35,8 +39,6 @@ import th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView;
 import th.or.nectec.tanrabad.survey.repository.BrokerSurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
-
-import java.util.List;
 
 public class PlaceSurveyListFragment extends Fragment implements PlaceWithSurveyHistoryListPresenter,
         AdapterView.OnItemClickListener {
@@ -50,8 +52,8 @@ public class PlaceSurveyListFragment extends Fragment implements PlaceWithSurvey
             BrokerSurveyRepository.getInstance(), this);
     private TextView placeCountView;
     private RecyclerView placeListView;
-    private RecyclerViewHeader recyclerViewHeader;
-    private EmptyLayoutView emptyLayoutView;
+    private RecyclerViewHeader surveyPlaceListHeader;
+    private EmptyLayoutView emptySurveyPlaceListView;
 
     public static PlaceSurveyListFragment newInstance(String username) {
         PlaceSurveyListFragment fragment = new PlaceSurveyListFragment();
@@ -83,9 +85,9 @@ public class PlaceSurveyListFragment extends Fragment implements PlaceWithSurvey
     private void setupViews(View view) {
         placeListView = (RecyclerView) view.findViewById(R.id.place_list);
         placeCountView = (TextView) view.findViewById(R.id.place_count);
-        emptyLayoutView = (EmptyLayoutView) view.findViewById(R.id.empty_layout);
-        emptyLayoutView.setEmptyIcon(R.mipmap.ic_place);
-        recyclerViewHeader = (RecyclerViewHeader) view.findViewById(R.id.card_header);
+        emptySurveyPlaceListView = (EmptyLayoutView) view.findViewById(R.id.empty_layout);
+        emptySurveyPlaceListView.setEmptyIcon(R.mipmap.ic_place);
+        surveyPlaceListHeader = (RecyclerViewHeader) view.findViewById(R.id.card_header);
     }
 
     private void setupPlaceList() {
@@ -96,17 +98,17 @@ public class PlaceSurveyListFragment extends Fragment implements PlaceWithSurvey
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false);
         placeListView.setLayoutManager(linearLayoutManager);
-        recyclerViewHeader.attachTo(placeListView, true);
+        surveyPlaceListHeader.attachTo(placeListView, true);
     }
 
     private void setupEmptyLayout() {
-        emptyLayoutView.setEmptyButtonVisibility(false);
-        emptyLayoutView.setEmptyText(R.string.survey_place_not_found);
+        emptySurveyPlaceListView.setEmptyButtonVisibility(false);
+        emptySurveyPlaceListView.setEmptyText(R.string.survey_place_not_found);
     }
 
     @Override
     public void displaySurveyPlaceList(List<Place> surveyPlace) {
-        emptyLayoutView.setVisibility(View.GONE);
+        emptySurveyPlaceListView.setVisibility(View.GONE);
         placeAdapter.updateData(surveyPlace);
         placeCountView.setText(getString(R.string.format_place_count, surveyPlace.size()));
         placeCountView.setVisibility(View.VISIBLE);
@@ -119,7 +121,7 @@ public class PlaceSurveyListFragment extends Fragment implements PlaceWithSurvey
 
     @Override
     public void displaySurveyPlacesNotFound() {
-        emptyLayoutView.setVisibility(View.VISIBLE);
+        emptySurveyPlaceListView.setVisibility(View.VISIBLE);
         placeAdapter.clearData();
         placeCountView.setVisibility(View.GONE);
     }

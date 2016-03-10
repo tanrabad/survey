@@ -18,25 +18,25 @@
 package th.or.nectec.tanrabad.survey.repository.adapter;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import th.or.nectec.tanrabad.survey.repository.persistence.DbProvinceRepository;
 import th.or.nectec.thai.address.AddressRepository;
 import th.or.nectec.thai.address.Province;
 import th.or.nectec.thai.address.Region;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ThaiWidgetProvinceRepository implements AddressRepository<Province> {
 
     @Override
     public List<Province> find() {
         List<th.or.nectec.tanrabad.entity.lookup.Province> provinces = DbProvinceRepository.getInstance().find();
-        List<Province> thaiWidgetProvicnes = new ArrayList<>();
+        List<Province> thaiWidgetProvinces = new ArrayList<>();
         for (th.or.nectec.tanrabad.entity.lookup.Province province : provinces) {
             Province widgetProvince = new Province(province.getCode(), province.getName(), Region.CENTER);
-            thaiWidgetProvicnes.add(widgetProvince);
+            thaiWidgetProvinces.add(widgetProvince);
         }
-        return thaiWidgetProvicnes;
+        return thaiWidgetProvinces;
     }
 
     @Override

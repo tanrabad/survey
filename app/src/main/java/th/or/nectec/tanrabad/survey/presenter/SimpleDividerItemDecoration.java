@@ -14,10 +14,10 @@ import static android.support.v7.widget.RecyclerView.ItemDecoration;
 import static android.support.v7.widget.RecyclerView.State;
 
 class SimpleDividerItemDecoration extends ItemDecoration {
-    private Drawable mDivider;
+    private Drawable divider;
 
     public SimpleDividerItemDecoration(Context context) {
-        mDivider = new ResourceUtils(context).getDrawable(R.drawable.line_divider);
+        divider = new ResourceUtils(context).getDrawable(R.drawable.line_divider);
     }
 
     @Override
@@ -31,10 +31,10 @@ class SimpleDividerItemDecoration extends ItemDecoration {
 
             RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
             int top = child.getBottom() + params.bottomMargin;
-            int bottom = top + mDivider.getIntrinsicHeight();
+            int bottom = top + divider.getIntrinsicHeight();
 
-            mDivider.setBounds(left, top, right, bottom);
-            mDivider.draw(c);
+            divider.setBounds(left, top, right, bottom);
+            divider.draw(c);
         }
     }
 }

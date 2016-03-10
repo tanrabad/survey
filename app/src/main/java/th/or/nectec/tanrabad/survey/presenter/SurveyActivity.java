@@ -409,7 +409,6 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         locationService.disconnect();
     }
 
-
     public void onRootViewClick(View view) {
         SoftKeyboard.hideOn(this);
     }

@@ -32,6 +32,7 @@ import th.or.nectec.tanrabad.survey.base.TanrabadEspressoTestBase;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.longClick;
 import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -88,9 +89,10 @@ public class BuildingFormActivityTest extends TanrabadEspressoTestBase {
     public void addBuildingNameSameBuildingNameInDatabaseShouldFoundPromptCanNotSaveThisBuilding() {
         onView(withId(R.id.building_name))
                 .perform(replaceText(" 214/43 "));
-        waitingFor(4000);
         onView(withId(R.id.add_marker))
                 .perform(click());
+        onView(withId(R.id.map_container))
+                .perform(longClick());
         onView(withId(R.id.save_marker_menu))
                 .perform(click());
         onView(withId(R.id.save))

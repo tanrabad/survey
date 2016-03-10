@@ -29,6 +29,7 @@ import th.or.nectec.tanrabad.survey.presenter.BuildingFormActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.longClick;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.*;
 
@@ -47,9 +48,10 @@ public class EditBuildingLocationTest extends TanrabadEspressoTestBase {
 
     @Test
     public void touchDefineLocationThentouchSaveShouldFoundTextEditLocationButton() {
-        waitingFor(4000);
         onView(withId(R.id.add_marker))
                 .perform(click());
+        onView(withId(R.id.map_container))
+                .perform(longClick());
         onView(withText(R.string.save_location))
                 .perform(click());
         onView(withId(R.id.edit_location))
@@ -58,9 +60,10 @@ public class EditBuildingLocationTest extends TanrabadEspressoTestBase {
 
     @Test
     public void touchEditLocationThenSaveShouldNotFoundPromptCanNotSaveLocation() {
-        waitingFor(4000);
         onView(withId(R.id.add_marker))
                 .perform(click());
+        onView(withId(R.id.map_container))
+                .perform(longClick());
         onView(withText(R.string.save_location))
                 .perform(click());
         onView(withId(R.id.edit_location))

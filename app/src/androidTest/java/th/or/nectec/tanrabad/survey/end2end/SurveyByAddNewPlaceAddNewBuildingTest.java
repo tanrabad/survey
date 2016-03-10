@@ -29,6 +29,7 @@ import th.or.nectec.tanrabad.survey.presenter.MainActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.longClick;
 import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -75,13 +76,14 @@ public class SurveyByAddNewPlaceAddNewBuildingTest extends TanrabadEspressoTestB
                 .perform(replaceText("อาคารพรทิพา"));
         onView(withId(R.id.add_marker))
                 .perform(click());
+        onView(withId(R.id.map_container))
+                .perform(longClick());
         onView(withText(R.string.save_location))
                 .perform(click());
         onView(withId(R.id.save))
                 .perform(click());
         onView(withId(R.id.resident_count))
                 .perform(replaceText("4"));
-        waitingFor(4000);
         onView(withId(R.id.save))
                 .perform(click());
 

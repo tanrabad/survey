@@ -33,6 +33,7 @@ import th.or.nectec.tanrabad.survey.base.TanrabadEspressoTestBase;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.longClick;
 import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
@@ -105,6 +106,8 @@ public class PlaceFormActivityByPutExtraPlaceTypeSchoolTest extends TanrabadEspr
                 .perform(click());
         onView(withId(R.id.add_marker))
                 .perform(click());
+        onView(withId(R.id.map_container))
+                .perform(longClick());
         onView(withId(R.id.save_marker_menu))
                 .perform(click());
         onView(withId(R.id.save))

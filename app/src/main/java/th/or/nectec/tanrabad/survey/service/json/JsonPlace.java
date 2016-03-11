@@ -70,7 +70,7 @@ public class JsonPlace {
     public String updateTime;
 
     @JsonField
-    public boolean active;
+    public boolean active = true;
 
     public static JsonPlace parse(Place place) {
         JsonPlace jsonPlace = new JsonPlace();

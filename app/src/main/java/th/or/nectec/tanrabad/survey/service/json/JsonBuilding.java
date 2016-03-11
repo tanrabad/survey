@@ -19,16 +19,14 @@ package th.or.nectec.tanrabad.survey.service.json;
 
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
-
 import org.joda.time.DateTimeZone;
-
-import java.util.UUID;
-
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.domain.user.UserRepository;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.survey.utils.time.ThaiDateTimeConverter;
+
+import java.util.UUID;
 
 @JsonObject
 public class JsonBuilding {
@@ -55,7 +53,7 @@ public class JsonBuilding {
     public String updateTime;
 
     @JsonField
-    public boolean active;
+    public boolean active = true;
 
     public static JsonBuilding parse(Building building) {
         JsonBuilding jsonBuilding = new JsonBuilding();

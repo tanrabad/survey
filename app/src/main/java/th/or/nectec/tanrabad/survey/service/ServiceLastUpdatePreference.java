@@ -32,6 +32,10 @@ public class ServiceLastUpdatePreference implements ServiceLastUpdate {
         this.path = path;
     }
 
+    public static void clear(Context context) {
+        context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE).edit().clear().apply();
+    }
+
     @Override
     public void save(String dateTime) {
         SharedPreferences.Editor spEditor = getSharedPreferences().edit();

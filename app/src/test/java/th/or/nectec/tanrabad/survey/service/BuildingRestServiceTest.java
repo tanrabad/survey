@@ -163,7 +163,7 @@ public class BuildingRestServiceTest extends WireMockTestBase {
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader(Header.LAST_MODIFIED, MON_30_NOV_2015_17_00_00_GMT)
-                        .withBody(ResourceFile.read("buildingList4Delete1Item.json"))));
+                        .withBody(ResourceFile.read("buildingList4AndDelete1Item.json"))));
 
         List<Building> buildingList = restService.getUpdate();
         assertEquals(3, buildingList.size());

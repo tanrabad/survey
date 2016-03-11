@@ -17,12 +17,12 @@
 
 package th.or.nectec.tanrabad.survey.repository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import th.or.nectec.tanrabad.domain.place.PlaceSubTypeRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceSubTypeRepositoryException;
 import th.or.nectec.tanrabad.entity.lookup.PlaceSubType;
-
-import java.util.ArrayList;
-import java.util.List;
 
 class InMemoryPlaceSubTypeRepository implements PlaceSubTypeRepository {
 
@@ -98,6 +98,15 @@ class InMemoryPlaceSubTypeRepository implements PlaceSubTypeRepository {
         } else {
             placeSubTypes.set(placeSubTypes.indexOf(placeSubType), placeSubType);
         }
+        return true;
+    }
+
+    @Override
+    public boolean delete(PlaceSubType placeSubType) {
+        if (!placeSubTypes.contains(placeSubType)) {
+            throw new PlaceSubTypeRepositoryException();
+        }
+        placeSubTypes.remove(placeSubType);
         return true;
     }
 }

@@ -106,6 +106,15 @@ public class InMemoryUserRepository implements UserRepository {
     }
 
     @Override
+    public boolean delete(User user) {
+        if (!userMapping.containsKey(user.getUsername())) {
+            throw new UserRepositoryException();
+        }
+        userMapping.remove(user.getUsername());
+        return true;
+    }
+
+    @Override
     public void updateOrInsert(List<User> update) {
     }
 }

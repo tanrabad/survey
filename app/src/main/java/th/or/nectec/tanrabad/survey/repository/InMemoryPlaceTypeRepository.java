@@ -81,4 +81,13 @@ class InMemoryPlaceTypeRepository implements PlaceTypeRepository {
         }
         return true;
     }
+
+    @Override
+    public boolean delete(PlaceType placeType) {
+        if (!placeTypes.contains(placeType)) {
+            throw new PlaceTypeRepositoryException();
+        }
+        placeTypes.remove(placeType.getId());
+        return true;
+    }
 }

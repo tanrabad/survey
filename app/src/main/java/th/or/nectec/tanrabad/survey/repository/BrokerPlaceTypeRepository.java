@@ -80,6 +80,15 @@ public class BrokerPlaceTypeRepository implements PlaceTypeRepository {
     }
 
     @Override
+    public boolean delete(PlaceType placeType) {
+        boolean success = persistence.delete(placeType);
+        if (success) {
+            cache.delete(placeType);
+        }
+        return success;
+    }
+
+    @Override
     public void updateOrInsert(List<PlaceType> placeTypes) {
         persistence.updateOrInsert(placeTypes);
         cache.updateOrInsert(placeTypes);

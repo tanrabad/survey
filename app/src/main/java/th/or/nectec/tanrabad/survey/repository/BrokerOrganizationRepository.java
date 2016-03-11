@@ -17,12 +17,12 @@
 
 package th.or.nectec.tanrabad.survey.repository;
 
+import java.util.List;
+
 import th.or.nectec.tanrabad.domain.organization.OrganizationRepository;
 import th.or.nectec.tanrabad.entity.Organization;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.repository.persistence.DbOrganizationRepository;
-
-import java.util.List;
 
 public class BrokerOrganizationRepository implements OrganizationRepository {
 
@@ -66,6 +66,15 @@ public class BrokerOrganizationRepository implements OrganizationRepository {
         boolean success = database.update(organization);
         if (success) {
             cache.update(organization);
+        }
+        return success;
+    }
+
+    @Override
+    public boolean delete(Organization organization) {
+        boolean success = database.delete(organization);
+        if (success) {
+            cache.delete(organization);
         }
         return success;
     }

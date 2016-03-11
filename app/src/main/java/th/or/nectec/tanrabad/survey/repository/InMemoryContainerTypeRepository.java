@@ -79,4 +79,13 @@ public class InMemoryContainerTypeRepository implements ContainerTypeRepository 
         }
         return true;
     }
+
+    @Override
+    public boolean delete(ContainerType containerType) {
+        if (!containerTypes.containsKey(containerType.getId())) {
+            throw new ContainerTypeRepositoryException();
+        }
+        containerTypes.remove(containerType.getId());
+        return true;
+    }
 }

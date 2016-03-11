@@ -90,6 +90,15 @@ public class InMemoryBuildingRepository implements BuildingRepository {
     }
 
     @Override
+    public boolean delete(Building building) {
+        if (!buildingMap.containsKey(building.getId())) {
+            throw new BuildingRepositoryException();
+        }
+        buildingMap.remove(building.getId());
+        return true;
+    }
+
+    @Override
     public void updateOrInsert(List<Building> buildings) {
         for (Building building : buildings) {
             try {

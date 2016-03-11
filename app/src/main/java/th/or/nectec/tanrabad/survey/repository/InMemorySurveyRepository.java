@@ -108,7 +108,13 @@ public class InMemorySurveyRepository implements SurveyRepository {
         if (surveys.contains(survey)) {
             surveys.set(surveys.indexOf(survey), survey);
         }
+        surveys.set(surveys.indexOf(survey), survey);
         return true;
+    }
+
+    @Override
+    public boolean delete(Survey data) {
+        return surveys.remove(data);
     }
 
 
@@ -122,8 +128,4 @@ public class InMemorySurveyRepository implements SurveyRepository {
             }
         }
     }
-
-
-
-
 }

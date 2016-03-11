@@ -83,6 +83,15 @@ public class BrokerContainerTypeRepository implements ContainerTypeRepository {
     }
 
     @Override
+    public boolean delete(ContainerType containerType) {
+        boolean success = persistence.delete(containerType);
+        if (success) {
+            cache.delete(containerType);
+        }
+        return success;
+    }
+
+    @Override
     public void updateOrInsert(List<ContainerType> containerTypes) {
         persistence.updateOrInsert(containerTypes);
         cache.updateOrInsert(containerTypes);

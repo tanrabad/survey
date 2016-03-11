@@ -21,13 +21,14 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import java.util.List;
+
 import th.or.nectec.tanrabad.domain.organization.OrganizationRepository;
 import th.or.nectec.tanrabad.domain.user.UserRepository;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.repository.BrokerOrganizationRepository;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
-
-import java.util.List;
 
 public class DbUserRepository extends DbRepository implements UserRepository {
 
@@ -95,13 +96,18 @@ public class DbUserRepository extends DbRepository implements UserRepository {
         return updateByContentValues(writableDatabase(), values);
     }
 
-    private boolean updateByContentValues(SQLiteDatabase db, ContentValues user) {
-        return db.update(
-                TABLE_NAME, user, UserColumn.USERNAME + "=?", new String[]{user.getAsString(UserColumn.USERNAME)}) > 0;
+    @Override
+    public boolean delete(User data) {
+        return false;
     }
 
     @Override
     public void updateOrInsert(List<User> users) {
 
+    }
+
+    private boolean updateByContentValues(SQLiteDatabase db, ContentValues user) {
+        return db.update(
+                TABLE_NAME, user, UserColumn.USERNAME + "=?", new String[]{user.getAsString(UserColumn.USERNAME)}) > 0;
     }
 }

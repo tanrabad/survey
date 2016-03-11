@@ -20,9 +20,11 @@ package th.or.nectec.tanrabad.domain;
 import java.util.List;
 
 public interface WritableRepository<T> {
-    boolean save(T t);
+    boolean save(T data);
 
-    boolean update(T t);
+    boolean update(T data);
 
-    void updateOrInsert(List<T> tList);
+    boolean delete(T data);
+
+    void updateOrInsert(List<T> dataList);
 }

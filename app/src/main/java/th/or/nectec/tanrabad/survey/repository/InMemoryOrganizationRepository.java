@@ -65,6 +65,15 @@ public class InMemoryOrganizationRepository implements OrganizationRepository {
     }
 
     @Override
+    public boolean delete(Organization organization) {
+        if (!organizationMapping.containsKey(organization.getOrganizationId())) {
+            throw new OrganizationRepositoryException();
+        }
+        organizationMapping.remove(organization.getOrganizationId());
+        return true;
+    }
+
+    @Override
     public void updateOrInsert(List<Organization> organizations) {
     }
 }

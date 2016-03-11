@@ -43,8 +43,17 @@ public class WritableRepoUpdateJob<T> implements Job {
     public void execute() throws IOException {
         do {
             List<T> update = restService.getUpdate();
-            if (!update.isEmpty())
+            List<T> delete = restService.getDelete();
+            if (!update.isEmpty()) {
                 repository.updateOrInsert(update);
+            }
+
+            if (!delete.isEmpty()) {
+                for (T deleteData : delete) {
+                    repository.delete(deleteData);
+                }
+            }
+
         } while (restService.hasNextRequest());
     }
 }

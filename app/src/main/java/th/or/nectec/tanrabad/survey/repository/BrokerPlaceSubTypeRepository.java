@@ -17,12 +17,12 @@
 
 package th.or.nectec.tanrabad.survey.repository;
 
+import java.util.List;
+
 import th.or.nectec.tanrabad.domain.place.PlaceSubTypeRepository;
 import th.or.nectec.tanrabad.entity.lookup.PlaceSubType;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.repository.persistence.DbPlaceSubTypeRepository;
-
-import java.util.List;
 
 public class BrokerPlaceSubTypeRepository implements PlaceSubTypeRepository {
 
@@ -90,6 +90,14 @@ public class BrokerPlaceSubTypeRepository implements PlaceSubTypeRepository {
         boolean success = persistance.update(placeSubType);
         if (success)
             cache.update(placeSubType);
+        return success;
+    }
+
+    @Override
+    public boolean delete(PlaceSubType placeSubType) {
+        boolean success = persistance.delete(placeSubType);
+        if (success)
+            cache.delete(placeSubType);
         return success;
     }
 

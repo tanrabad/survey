@@ -79,6 +79,15 @@ public class BrokerSurveyRepository implements SurveyRepository {
     }
 
     @Override
+    public boolean delete(Survey survey) {
+        boolean success = persistent.delete(survey);
+        if (success) {
+            cache.delete(survey);
+        }
+        return success;
+    }
+
+    @Override
     public void updateOrInsert(List<Survey> surveys) {
         persistent.updateOrInsert(surveys);
         cache.updateOrInsert(surveys);

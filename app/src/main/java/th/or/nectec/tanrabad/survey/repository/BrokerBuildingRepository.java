@@ -81,6 +81,15 @@ public class BrokerBuildingRepository implements BuildingRepository {
     }
 
     @Override
+    public boolean delete(Building building) {
+        boolean success = database.delete(building);
+        if (success) {
+            cache.delete(building);
+        }
+        return success;
+    }
+
+    @Override
     public void updateOrInsert(List<Building> buildings) {
         database.updateOrInsert(buildings);
     }

@@ -17,12 +17,12 @@
 
 package th.or.nectec.tanrabad.survey.repository;
 
+import java.util.List;
+
 import th.or.nectec.tanrabad.domain.user.UserRepository;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.repository.persistence.DbUserRepository;
-
-import java.util.List;
 
 public class BrokerUserRepository implements UserRepository {
 
@@ -66,6 +66,15 @@ public class BrokerUserRepository implements UserRepository {
         boolean success = persistence.update(user);
         if (success) {
             cache.update(user);
+        }
+        return success;
+    }
+
+    @Override
+    public boolean delete(User user) {
+        boolean success = persistence.delete(user);
+        if (success) {
+            cache.delete(user);
         }
         return success;
     }

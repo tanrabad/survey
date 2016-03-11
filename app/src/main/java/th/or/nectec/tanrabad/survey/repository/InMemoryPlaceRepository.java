@@ -99,6 +99,15 @@ public class InMemoryPlaceRepository implements PlaceRepository {
     }
 
     @Override
+    public boolean delete(Place place) {
+        if (!placesMap.containsKey(place.getId())) {
+            throw new PlaceRepositoryException();
+        }
+        placesMap.remove(place.getId());
+        return true;
+    }
+
+    @Override
     public void updateOrInsert(List<Place> update) {
         for (Place place : update) {
             try {

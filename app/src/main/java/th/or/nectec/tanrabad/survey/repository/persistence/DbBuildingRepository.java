@@ -107,22 +107,11 @@ public class DbBuildingRepository extends DbRepository implements BuildingReposi
         return updateByContentValues(writableDatabase(), values);
     }
 
-    private int getAddOrChangedStatus(Building building) {
-        Cursor placeCursor = readableDatabase().query(TABLE_NAME, new String[]{BuildingColumn.CHANGED_STATUS},
-                BuildingColumn.ID + "=?", new String[]{building.getId().toString()}, null, null, null);
-        if (placeCursor.moveToNext()) {
-            if (placeCursor.getInt(0) == ChangedStatus.ADD)
-                return ChangedStatus.ADD;
-            else
-                return ChangedStatus.CHANGED;
-        }
-        placeCursor.close();
-        return ChangedStatus.CHANGED;
-    }
-
-    private boolean updateByContentValues(SQLiteDatabase db, ContentValues place) {
-        return db.update(TABLE_NAME, place, BuildingColumn.ID + "=?",
-                new String[]{place.getAsString(BuildingColumn.ID)}) > 0;
+    @Override
+    public boolean delete(Building data) {
+        int deleteCount = writableDatabase().delete(
+                TABLE_NAME, BuildingColumn.ID + "=?", new String[]{data.getId().toString()});
+        return deleteCount > 0;
     }
 
     @Override
@@ -139,6 +128,24 @@ public class DbBuildingRepository extends DbRepository implements BuildingReposi
         db.setTransactionSuccessful();
         db.endTransaction();
         db.close();
+    }
+
+    private int getAddOrChangedStatus(Building building) {
+        Cursor placeCursor = readableDatabase().query(TABLE_NAME, new String[]{BuildingColumn.CHANGED_STATUS},
+                BuildingColumn.ID + "=?", new String[]{building.getId().toString()}, null, null, null);
+        if (placeCursor.moveToNext()) {
+            if (placeCursor.getInt(0) == ChangedStatus.ADD)
+                return ChangedStatus.ADD;
+            else
+                return ChangedStatus.CHANGED;
+        }
+        placeCursor.close();
+        return ChangedStatus.CHANGED;
+    }
+
+    private boolean updateByContentValues(SQLiteDatabase db, ContentValues place) {
+        return db.update(TABLE_NAME, place, BuildingColumn.ID + "=?",
+                new String[]{place.getAsString(BuildingColumn.ID)}) > 0;
     }
 
     private ContentValues buildingContentValues(Building building) {

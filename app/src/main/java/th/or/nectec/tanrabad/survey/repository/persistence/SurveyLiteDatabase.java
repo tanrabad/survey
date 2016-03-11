@@ -22,11 +22,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 import th.or.nectec.tanrabad.survey.R;
+import th.or.nectec.tanrabad.survey.service.ServiceLastUpdatePreference;
 
 public class SurveyLiteDatabase extends SQLiteOpenHelper {
 
     public static final String DB_NAME = "trb_survey.db";
-    public static final int DB_VERSION = 1;
+    public static final int DB_VERSION = 2;
     private static SurveyLiteDatabase instance;
     private Context context;
 
@@ -55,11 +56,13 @@ public class SurveyLiteDatabase extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         SqlScript.readAndExecute(context, db, R.raw.create);
+        SqlScript.readAndExecute(context, db, R.raw.setup);
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-
+    public void onUpgrade(SQLiteDatabase db, int fromVersion, int newVersion) {
+        onCreate(db);
+        ServiceLastUpdatePreference.clear(context);
     }
 
 }

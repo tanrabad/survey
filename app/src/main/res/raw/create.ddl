@@ -1,3 +1,17 @@
+DROP TABLE IF EXISTS survey_detail;
+DROP TABLE IF EXISTS container_location;
+DROP TABLE IF EXISTS container_type;
+DROP TABLE IF EXISTS survey;
+DROP TABLE IF EXISTS user_profile;
+DROP TABLE IF EXISTS organization;
+DROP TABLE IF EXISTS building;
+DROP TABLE IF EXISTS place;
+DROP TABLE IF EXISTS place_subtype;
+DROP TABLE IF EXISTS place_type;
+DROP TABLE IF EXISTS subdistrict;
+DROP TABLE IF EXISTS district;
+DROP TABLE IF EXISTS province;
+
 CREATE TABLE building (
   building_id VARCHAR(36)  NOT NULL,
   name        VARCHAR(254) NOT NULL,

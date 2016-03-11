@@ -20,7 +20,6 @@ package th.or.nectec.tanrabad.survey.service;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-
 public class ServiceLastUpdatePreference implements ServiceLastUpdate {
 
     private static final String PREF_NAME = "api-last-update";

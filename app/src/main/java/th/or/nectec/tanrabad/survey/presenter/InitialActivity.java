@@ -22,49 +22,23 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
-
 import net.frakbot.jumpingbeans.JumpingBeans;
-
-import java.io.IOException;
-
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.lookup.ContainerLocation;
-import th.or.nectec.tanrabad.entity.lookup.ContainerType;
-import th.or.nectec.tanrabad.entity.lookup.District;
-import th.or.nectec.tanrabad.entity.lookup.PlaceSubType;
-import th.or.nectec.tanrabad.entity.lookup.PlaceType;
-import th.or.nectec.tanrabad.entity.lookup.Province;
-import th.or.nectec.tanrabad.entity.lookup.Subdistrict;
+import th.or.nectec.tanrabad.entity.lookup.*;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.job.AbsJobRunner;
 import th.or.nectec.tanrabad.survey.job.InMemoryInitializeJob;
 import th.or.nectec.tanrabad.survey.job.Job;
-import th.or.nectec.tanrabad.survey.job.SetupScriptJob;
 import th.or.nectec.tanrabad.survey.job.WritableRepoUpdateJob;
-import th.or.nectec.tanrabad.survey.repository.BrokerBuildingRepository;
-import th.or.nectec.tanrabad.survey.repository.BrokerContainerTypeRepository;
-import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
-import th.or.nectec.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
-import th.or.nectec.tanrabad.survey.repository.BrokerPlaceTypeRepository;
-import th.or.nectec.tanrabad.survey.repository.persistence.CreateDatabaseJob;
-import th.or.nectec.tanrabad.survey.repository.persistence.DbContainerLocationRepository;
-import th.or.nectec.tanrabad.survey.repository.persistence.DbDistrictRepository;
-import th.or.nectec.tanrabad.survey.repository.persistence.DbProvinceRepository;
-import th.or.nectec.tanrabad.survey.repository.persistence.DbSubdistrictRepository;
-import th.or.nectec.tanrabad.survey.service.AmphurRestService;
-import th.or.nectec.tanrabad.survey.service.BuildingRestService;
-import th.or.nectec.tanrabad.survey.service.ContainerLocationRestService;
-import th.or.nectec.tanrabad.survey.service.ContainerTypeRestService;
-import th.or.nectec.tanrabad.survey.service.PlaceRestService;
-import th.or.nectec.tanrabad.survey.service.PlaceSubTypeRestService;
-import th.or.nectec.tanrabad.survey.service.PlaceTypeRestService;
-import th.or.nectec.tanrabad.survey.service.ProvinceRestService;
-import th.or.nectec.tanrabad.survey.service.RestServiceException;
-import th.or.nectec.tanrabad.survey.service.TambonRestService;
+import th.or.nectec.tanrabad.survey.repository.*;
+import th.or.nectec.tanrabad.survey.repository.persistence.*;
+import th.or.nectec.tanrabad.survey.service.*;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
+
+import java.io.IOException;
 
 public class InitialActivity extends TanrabadActivity {
 
@@ -107,7 +81,6 @@ public class InitialActivity extends TanrabadActivity {
             new InitialJobRunner()
                     .addJob(new CreateDatabaseJob(this))
                     .addJob(new InMemoryInitializeJob())
-                    .addJob(new SetupScriptJob(this))
                     .addJob(containerLocationUpdateJob)
                     .addJob(containerTypeUpdateJob)
                     .addJob(provinceUpdateJob)
@@ -136,9 +109,6 @@ public class InitialActivity extends TanrabadActivity {
         switch (startingJob.id()) {
             case InMemoryInitializeJob.ID:
                 loadingText.setText("ทำสมาธิ");
-                break;
-            case SetupScriptJob.ID:
-                loadingText.setText("หยิบกล่องดินสอ");
                 break;
             case CreateDatabaseJob.ID:
                 loadingText.setText("เตรียมกระดาษสำหรับจดข้อมูล");

@@ -18,16 +18,15 @@
 package th.or.nectec.tanrabad.survey.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import th.or.nectec.tanrabad.domain.place.PlaceSubTypeRepository;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
 import th.or.nectec.tanrabad.survey.service.json.JsonPlace;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlaceRestService extends AbsUploadRestService<Place> {
 
@@ -60,8 +59,14 @@ public class PlaceRestService extends AbsUploadRestService<Place> {
     protected List<Place> jsonToEntityList(String responseBody) throws IOException {
         ArrayList<Place> places = new ArrayList<>();
         List<JsonPlace> jsonPlaces = LoganSquare.parseList(responseBody, JsonPlace.class);
-        for (JsonPlace eachJsonPlace : jsonPlaces)
-            places.add(eachJsonPlace.getEntity(placeSubTypeRepository));
+        for (JsonPlace eachJsonPlace : jsonPlaces) {
+            Place place = eachJsonPlace.getEntity(placeSubTypeRepository);
+            if (eachJsonPlace.active) {
+                places.add(place);
+            } else {
+                addDeleteData(place);
+            }
+        }
         return places;
     }
 

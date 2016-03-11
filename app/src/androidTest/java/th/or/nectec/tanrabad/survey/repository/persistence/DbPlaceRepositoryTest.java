@@ -23,19 +23,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
-
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
 import th.or.nectec.tanrabad.domain.user.UserRepository;
+import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.entity.field.Location;
@@ -45,20 +40,30 @@ import th.or.nectec.tanrabad.survey.base.SurveyDbTestRule;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
 import th.or.nectec.tanrabad.survey.utils.time.ThaiDateTimeConverter;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 @RunWith(AndroidJUnit4.class)
 public class DbPlaceRepositoryTest {
 
+    private final DateTime updateTime = DateTime.now();
     @Rule
     public SurveyDbTestRule dbTestRule = new SurveyDbTestRule();
-    DateTime updateTime = DateTime.now();
+    private Context context;
+    private DbPlaceRepository dbPlaceRepository;
 
     @Before
     public void setup() {
         User user = stubUser();
         UserRepository userRepository = Mockito.mock(UserRepository.class);
         Mockito.when(userRepository.findByUsername("dpc-user")).thenReturn(user);
+
+        context = InstrumentationRegistry.getTargetContext();
+        dbPlaceRepository = new DbPlaceRepository(context);
     }
 
     private User stubUser() {
@@ -68,8 +73,7 @@ public class DbPlaceRepositoryTest {
     @Test
     public void testSave() throws Exception {
         Place place = getPlace();
-        Context context = InstrumentationRegistry.getTargetContext();
-        DbPlaceRepository dbPlaceRepository = new DbPlaceRepository(context);
+
         boolean success = dbPlaceRepository.save(place);
 
         SQLiteDatabase db = SurveyLiteDatabase.getInstance(context).getReadableDatabase();
@@ -110,8 +114,6 @@ public class DbPlaceRepositoryTest {
     @Test
     public void testInsertOrUpdate() throws Exception {
         Place place = getPlace();
-        Context context = InstrumentationRegistry.getTargetContext();
-        DbPlaceRepository dbPlaceRepository = new DbPlaceRepository(context);
         ArrayList<Place> places = new ArrayList<>();
         places.add(place);
         dbPlaceRepository.updateOrInsert(places);
@@ -145,8 +147,6 @@ public class DbPlaceRepositoryTest {
         place.setUpdateBy(stubUser());
         place.setUpdateTimestamp(updateTime.toString());
 
-        Context context = InstrumentationRegistry.getTargetContext();
-        DbPlaceRepository dbPlaceRepository = new DbPlaceRepository(context);
         boolean success = dbPlaceRepository.update(place);
 
         SQLiteDatabase db = SurveyLiteDatabase.getInstance(context).getReadableDatabase();
@@ -172,8 +172,6 @@ public class DbPlaceRepositoryTest {
     @Test
     public void testSaveAndUpdate() throws Exception {
         Place place = getPlace();
-        Context context = InstrumentationRegistry.getTargetContext();
-        DbPlaceRepository dbPlaceRepository = new DbPlaceRepository(context);
         dbPlaceRepository.save(place);
         place.setName("หมู่บ้านทดสอบบบบบ");
         boolean success = dbPlaceRepository.update(place);
@@ -200,9 +198,6 @@ public class DbPlaceRepositoryTest {
 
     @Test
     public void testFindByUuid() throws Exception {
-        Context context = InstrumentationRegistry.getTargetContext();
-        DbPlaceRepository dbPlaceRepository = new DbPlaceRepository(context);
-
         Place place = dbPlaceRepository.findByUuid(UUID.fromString("abc01db8-7207-8a65-152f-ad208cb99b5e"));
 
         assertEquals("abc01db8-7207-8a65-152f-ad208cb99b5e", place.getId().toString());
@@ -213,9 +208,6 @@ public class DbPlaceRepositoryTest {
 
     @Test
     public void testFindByPlaceType() throws Exception {
-        Context context = InstrumentationRegistry.getTargetContext();
-        DbPlaceRepository dbPlaceRepository = new DbPlaceRepository(context);
-
         List<Place> placeList = dbPlaceRepository.findByPlaceType(PlaceType.VILLAGE_COMMUNITY);
         Place place = placeList.get(0);
 
@@ -228,9 +220,6 @@ public class DbPlaceRepositoryTest {
 
     @Test
     public void testFindAllPlace() throws Exception {
-        Context context = InstrumentationRegistry.getTargetContext();
-        DbPlaceRepository dbPlaceRepository = new DbPlaceRepository(context);
-
         List<Place> placeList = dbPlaceRepository.find();
         Place place = placeList.get(0);
 
@@ -239,5 +228,15 @@ public class DbPlaceRepositoryTest {
         assertEquals("ชุมชนกอล์ฟวิว", place.getName());
         assertEquals("120202", place.getSubdistrictCode());
         assertEquals("dpc-user", place.getUpdateBy());
+    }
+
+    @Test
+    public void testDeletePlaceThenBuildingShouldDeleteCascade() throws Exception {
+        Place place = new Place(UUID.fromString("935b9aeb-6522-461e-994f-f9e9006c4a33"), "หมู่บ้านพาลาสเซตโต้");
+
+        dbPlaceRepository.delete(place);
+
+        List<Building> buildings = new DbBuildingRepository(context, dbPlaceRepository).findByPlaceUuid(place.getId());
+        assertNull(buildings);
     }
 }

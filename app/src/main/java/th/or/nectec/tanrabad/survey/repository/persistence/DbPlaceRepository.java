@@ -21,15 +21,14 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
-import java.util.List;
-import java.util.UUID;
-
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.repository.ChangedRepository;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorList;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
+
+import java.util.List;
+import java.util.UUID;
 
 public class DbPlaceRepository extends DbRepository implements PlaceRepository, ChangedRepository<Place> {
 
@@ -114,8 +113,13 @@ public class DbPlaceRepository extends DbRepository implements PlaceRepository, 
     }
 
     @Override
-    public boolean delete(Place data) {
-        return false;
+    public boolean delete(Place place) {
+        int deleted = writableDatabase().delete(TABLE_NAME,
+                PlaceColumn.ID + "=?",
+                new String[]{place.getId().toString()});
+        if (deleted > 1)
+            throw new IllegalStateException("Delete Place more than 1 record");
+        return deleted == 1;
     }
 
     @Override

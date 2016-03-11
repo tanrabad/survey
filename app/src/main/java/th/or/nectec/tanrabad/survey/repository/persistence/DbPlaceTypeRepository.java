@@ -81,6 +81,11 @@ public class DbPlaceTypeRepository extends DbRepository implements PlaceTypeRepo
     }
 
     @Override
+    public boolean delete(PlaceType data) {
+        return false;
+    }
+
+    @Override
     public void updateOrInsert(List<PlaceType> updateList) {
         SQLiteDatabase db = writableDatabase();
         db.beginTransaction();

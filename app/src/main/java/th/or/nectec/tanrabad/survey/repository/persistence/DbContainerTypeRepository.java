@@ -80,6 +80,11 @@ public class DbContainerTypeRepository extends DbRepository implements Container
     }
 
     @Override
+    public boolean delete(ContainerType data) {
+        return false;
+    }
+
+    @Override
     public void updateOrInsert(List<ContainerType> updateList) {
         SQLiteDatabase db = writableDatabase();
         db.beginTransaction();

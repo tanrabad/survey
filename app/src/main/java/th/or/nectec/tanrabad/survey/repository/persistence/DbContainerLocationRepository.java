@@ -81,6 +81,11 @@ public class DbContainerLocationRepository extends DbRepository implements Conta
     }
 
     @Override
+    public boolean delete(ContainerLocation data) {
+        return false;
+    }
+
+    @Override
     public void updateOrInsert(List<ContainerLocation> updateList) {
         SQLiteDatabase db = writableDatabase();
         db.beginTransaction();

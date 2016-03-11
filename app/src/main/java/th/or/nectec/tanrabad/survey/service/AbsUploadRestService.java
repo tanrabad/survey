@@ -28,7 +28,7 @@ import th.or.nectec.tanrabad.survey.service.http.Status;
 
 import static th.or.nectec.tanrabad.survey.service.http.Header.USER_AGENT;
 
-public abstract class AbsUploadRestService<T> extends AbsRestService implements UploadRestService<T> {
+public abstract class AbsUploadRestService<T> extends AbsRestService<T> implements UploadRestService<T> {
 
     private static final String TRB_USER_AGENT = "tanrabad-survey-app";
     private static final MediaType JSON_MEDIA_TYPE = MediaType.parse("application/json");

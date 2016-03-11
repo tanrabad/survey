@@ -47,6 +47,7 @@ public abstract class AbsRestService<T> implements RestService<T> {
     private ServiceLastUpdate serviceLastUpdate;
     private User user;
     private String nextUrl = null;
+    private List<T> deletedData;
 
     AbsRestService(String baseApi, ServiceLastUpdate serviceLastUpdate) {
         this(baseApi, serviceLastUpdate, AccountUtils.getUser());
@@ -61,6 +62,7 @@ public abstract class AbsRestService<T> implements RestService<T> {
                 .writeTimeout(READ_WRITE_TIMEOUT, SECONDS)
                 .connectTimeout(CONNECT_TIMEOUT, SECONDS)
                 .build();
+        deletedData = new ArrayList<>();
     }
 
     String getApiFilterParam() {
@@ -81,6 +83,11 @@ public abstract class AbsRestService<T> implements RestService<T> {
             serviceLastUpdate.save(response.header(LAST_MODIFIED));
 
         return jsonToEntityList(response.body().string());
+    }
+
+    @Override
+    public List<T> getDelete() {
+        return deletedData;
     }
 
     @Override
@@ -139,4 +146,8 @@ public abstract class AbsRestService<T> implements RestService<T> {
     }
 
     protected abstract List<T> jsonToEntityList(String responseBody) throws IOException;
+
+    public void addDeleteData(T data) {
+        deletedData.add(data);
+    }
 }

@@ -21,13 +21,14 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import java.util.List;
+
 import th.or.nectec.tanrabad.domain.address.SubdistrictRepository;
 import th.or.nectec.tanrabad.entity.lookup.Subdistrict;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorList;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
-
-import java.util.List;
 
 public class DbSubdistrictRepository extends DbRepository implements SubdistrictRepository {
 
@@ -75,6 +76,11 @@ public class DbSubdistrictRepository extends DbRepository implements Subdistrict
 
     @Override
     public boolean update(Subdistrict subdistrict) {
+        return false;
+    }
+
+    @Override
+    public boolean delete(Subdistrict data) {
         return false;
     }
 

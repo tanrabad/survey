@@ -113,21 +113,9 @@ public class DbPlaceRepository extends DbRepository implements PlaceRepository, 
         return updateByContentValues(writableDatabase(), values);
     }
 
-    private int getAddOrChangedStatus(Place place) {
-        Cursor placeCursor = readableDatabase().query(TABLE_NAME, new String[]{PlaceColumn.CHANGED_STATUS},
-                PlaceColumn.ID + "=?", new String[]{place.getId().toString()}, null, null, null);
-        if (placeCursor.moveToNext()) {
-            if (placeCursor.getInt(0) == ChangedStatus.ADD)
-                return ChangedStatus.ADD;
-            else
-                return ChangedStatus.CHANGED;
-        }
-        placeCursor.close();
-        return ChangedStatus.CHANGED;
-    }
-
-    private boolean updateByContentValues(SQLiteDatabase db, ContentValues place) {
-        return db.update(TABLE_NAME, place, PlaceColumn.ID + "=?", new String[]{place.getAsString(PlaceColumn.ID)}) > 0;
+    @Override
+    public boolean delete(Place data) {
+        return false;
     }
 
     @Override
@@ -144,6 +132,23 @@ public class DbPlaceRepository extends DbRepository implements PlaceRepository, 
         db.setTransactionSuccessful();
         db.endTransaction();
         db.close();
+    }
+
+    private int getAddOrChangedStatus(Place place) {
+        Cursor placeCursor = readableDatabase().query(TABLE_NAME, new String[]{PlaceColumn.CHANGED_STATUS},
+                PlaceColumn.ID + "=?", new String[]{place.getId().toString()}, null, null, null);
+        if (placeCursor.moveToNext()) {
+            if (placeCursor.getInt(0) == ChangedStatus.ADD)
+                return ChangedStatus.ADD;
+            else
+                return ChangedStatus.CHANGED;
+        }
+        placeCursor.close();
+        return ChangedStatus.CHANGED;
+    }
+
+    private boolean updateByContentValues(SQLiteDatabase db, ContentValues place) {
+        return db.update(TABLE_NAME, place, PlaceColumn.ID + "=?", new String[]{place.getAsString(PlaceColumn.ID)}) > 0;
     }
 
     private ContentValues placeContentValues(Place place) {

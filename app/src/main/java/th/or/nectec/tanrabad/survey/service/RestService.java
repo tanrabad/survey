@@ -23,5 +23,6 @@ import java.util.List;
 public interface RestService<T> {
     List<T> getUpdate() throws IOException;
 
+    List<T> getDelete() throws IOException;
     boolean hasNextRequest();
 }

@@ -21,12 +21,13 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import java.util.List;
+
 import th.or.nectec.tanrabad.domain.place.PlaceSubTypeRepository;
 import th.or.nectec.tanrabad.entity.lookup.PlaceSubType;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorList;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
-
-import java.util.List;
 
 public class DbPlaceSubTypeRepository extends DbRepository implements PlaceSubTypeRepository {
 
@@ -91,6 +92,11 @@ public class DbPlaceSubTypeRepository extends DbRepository implements PlaceSubTy
     public boolean update(PlaceSubType placeType) {
         return updateByContentValues(writableDatabase(),
                 placeTypeContentValues(placeType));
+    }
+
+    @Override
+    public boolean delete(PlaceSubType data) {
+        return false;
     }
 
     @Override

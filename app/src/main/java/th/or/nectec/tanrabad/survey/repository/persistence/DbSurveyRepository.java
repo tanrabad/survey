@@ -124,6 +124,11 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
     }
 
     @Override
+    public boolean delete(Survey data) {
+        return false;
+    }
+
+    @Override
     public void updateOrInsert(List<Survey> surveys) {
     }
 

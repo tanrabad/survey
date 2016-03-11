@@ -8,7 +8,7 @@ CREATE TABLE building (
   changed_status INTEGER(10) DEFAULT 0 NOT NULL,
   update_by   VARCHAR(128) NOT NULL,
   PRIMARY KEY (building_id),
-  FOREIGN KEY (place_id) REFERENCES place (place_id) ON UPDATE CASCADE
+  FOREIGN KEY (place_id) REFERENCES place (place_id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 CREATE TABLE container_location (
   container_location_id INTEGER     NOT NULL PRIMARY KEY,
@@ -83,7 +83,7 @@ CREATE TABLE survey (
   changed_status  INTEGER(10) DEFAULT 0 NOT NULL,
   remark       VARCHAR(254),
   PRIMARY KEY (survey_id),
-  FOREIGN KEY (building_id) REFERENCES building (building_id) ON UPDATE CASCADE,
+  FOREIGN KEY (building_id) REFERENCES building (building_id) ON UPDATE CASCADE ON DELETE CASCADE,
   FOREIGN KEY (surveyor) REFERENCES user_profile (username) ON UPDATE CASCADE
 );
 CREATE TABLE survey_detail (

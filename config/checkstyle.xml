@@ -91,6 +91,7 @@
         <module name="FallThrough"/>
         <module name="UpperEll"/>
         <module name="ModifierOrder"/>
+        <module name="SuperFinalize"/>
 
         <module name="SeparatorWrap">
             <property name="tokens" value="DOT"/>

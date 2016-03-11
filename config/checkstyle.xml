@@ -36,7 +36,10 @@
         <property name="lineSeparator" value="lf" />
     </module>
 
+    <module name="SuppressWarningsFilter"/>
+
     <module name="TreeWalker">
+        <module name="SuppressWarningsHolder"/>
         <module name="OuterTypeFilename"/>
         <module name="IllegalTokenText">
             <property name="tokens" value="STRING_LITERAL, CHAR_LITERAL"/>
@@ -51,13 +54,11 @@
             <property name="allowNonPrintableEscapes" value="true"/>
         </module>
         <!-- Imports -->
-
         <module name="RedundantImport">
             <property name="severity" value="error"/>
         </module>
 
         <!-- General Code Style -->
-
         <module name="LineLength">
             <property name="max" value="120"/>
             <property name="ignorePattern" value="^package.*|^import.*|a href|href|http://|https://|ftp://"/>

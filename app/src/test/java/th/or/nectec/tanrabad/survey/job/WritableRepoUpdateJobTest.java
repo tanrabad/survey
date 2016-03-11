@@ -5,13 +5,17 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import th.or.nectec.tanrabad.domain.WritableRepository;
-import th.or.nectec.tanrabad.survey.service.RestService;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Mockito.*;
+import th.or.nectec.tanrabad.domain.WritableRepository;
+import th.or.nectec.tanrabad.survey.service.RestService;
+
+import static org.mockito.Mockito.anyList;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class WritableRepoUpdateJobTest {
@@ -38,6 +42,15 @@ public class WritableRepoUpdateJobTest {
         verify(writableRepository).updateOrInsert(firstData());
     }
 
+    private List<String> firstData() {
+        List<String> data = new ArrayList<>();
+        data.add("Hello");
+        data.add("How");
+        data.add("R");
+        data.add("U");
+        return data;
+    }
+
     @Test
     public void testServiceHaveNextRequest() throws Exception {
         when(restService.getUpdate()).thenReturn(firstData(), secondData());
@@ -47,6 +60,14 @@ public class WritableRepoUpdateJobTest {
 
         verify(writableRepository).updateOrInsert(firstData());
         verify(writableRepository).updateOrInsert(secondData());
+    }
+
+    private List<String> secondData() {
+        List<String> data = new ArrayList<>();
+        data.add("How");
+        data.add("About");
+        data.add("U");
+        return data;
     }
 
     @Test
@@ -59,20 +80,22 @@ public class WritableRepoUpdateJobTest {
         verify(writableRepository, never()).updateOrInsert(anyList());
     }
 
-    private List<String> firstData() {
+    @Test
+    public void testServiceReturnAndDeleteSomeData() throws Exception {
+        when(restService.getUpdate()).thenReturn(firstData());
+        when(restService.getDelete()).thenReturn(deleteData());
+
+        job.execute();
+
+        verify(writableRepository).updateOrInsert(firstData());
+        verify(writableRepository).delete(deleteData().get(0));
+    }
+
+    private List<String> deleteData() {
         List<String> data = new ArrayList<>();
-        data.add("Hello");
-        data.add("How");
-        data.add("R");
         data.add("U");
+        data.add("V");
         return data;
     }
 
-    private List<String> secondData() {
-        List<String> data = new ArrayList<>();
-        data.add("How");
-        data.add("About");
-        data.add("U");
-        return data;
-    }
 }

@@ -68,8 +68,9 @@ public class BuildingRestService extends AbsUploadRestService<Building> {
         List<JsonBuilding> jsonBuildings = LoganSquare.parseList(responseBody, JsonBuilding.class);
         for (JsonBuilding eachJsonBuilding : jsonBuildings) {
             Building building = eachJsonBuilding.getEntity(placeRepository, userRepository);
-            buildings.add(building);
-            if (!eachJsonBuilding.active) {
+            if (eachJsonBuilding.active) {
+                buildings.add(building);
+            } else {
                 addDeleteData(building);
             }
         }

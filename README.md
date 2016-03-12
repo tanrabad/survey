@@ -1,30 +1,64 @@
 # Tanrabad Survey [![Build Status](https://travis-ci.org/nectec-wisru/android-TanrabadSurvey.svg?branch=master)](https://travis-ci.org/nectec-wisru/android-TanrabadSurvey)
 
-Survey application of Tanrabad System on android
+Survey application of Tanrabad System on android 
 
-Entity
--------
-* place
-* building
-* survey
-* containerType
-* user
-* organization
+## Code Architecture
 
-Use Cases
---------
-* view place list
-* create new place in allowing type
-* show building list in place
-* view new building in place
-* survey building or edit if on same day
-* view surveyed building in specify place in 7 day ago
-* view surveyed place in 7 day ago
-* view user's profile
-* login
+This project is follow [Clean Architecture](https://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html) Concept
 
-License
---------
+### Modules
+Project have 3 module for easy test and maintenance
+
+- **App** - Android application module contain UI, In-App Database and Api Connection. depend on Domain.
+- **Domain** - Java module contain Application's logic. depend on Entity.
+- **Entity** - Java module contain Data use Application.
+
+## Libraries
+The libraries use in this Project
+
+- Android Support library
+- [Android Maps Utils](http://googlemaps.github.io/android-maps-utils/)
+- [Google APIs for Android](https://developers.google.com/android/guides/overview)
+- [Fabric](https://fabric.io/)
+- [OkHttp](https://github.com/square/okhttp)
+- [Joda-Time](http://www.joda.org/joda-time/)
+- [LoganSquare](https://github.com/bluelinelabs/LoganSquare)
+- [Calligraphy](https://github.com/chrisjenx/Calligraphy)
+- [Android-Thai-Widget](https://github.com/nectec-wisru/android-ThaiWidget)
+- [JumpingBeans](https://github.com/frakbot/JumpingBeans)
+- [RecyclerViewHeader](https://github.com/blipinsk/RecyclerViewHeader)
+- [License Fragment](https://github.com/first087/Android-License-Fragment)
+
+
+## Code Quality Control
+This project use quality control by unit-test ui-test and code analysis tools.
+
+Test libraries
+
+- [JUnit](http://junit.org/)
+- [Espresso](https://google.github.io/android-testing-support-library/)
+- [Mockito](http://mockito.org/)
+- [WireMock](http://wiremock.org/)
+
+Static code analysis tools
+
+- [Checkstyle](http://checkstyle.sourceforge.net/) 
+- [PMD](https://pmd.github.io/)
+- [Findbugs](http://findbugs.sourceforge.net/)
+- [Android Check](https://github.com/noveogroup/android-check)
+
+Use [Travis CI](https://travis-ci.org/) as Continuous Integration system
+
+## Requirements
+
+- Java SDK 7 or Above
+- [Android SDK](http://developer.android.com/sdk/index.html)
+- Android [6.0 (API 23) ](http://developer.android.com/tools/revisions/platforms.html#6.0)
+- Android SDK Tools
+- Android SDK Build tools 23.0.2
+- Android Support Repository
+
+## License
 
     Copyright 2015 NECTEC
       National Electronics and Computer Technology Center, Thailand
@@ -44,3 +78,24 @@ License
 
 [![NECTEC](http://www.nectec.or.th/themes/nectec/img/logo.png)](https://www.nectec.or.th)
 
+## Contributor
+
+- [Blaze Piruin](https://github.com/Blazei) Agile coach, System Analysis, UI&UX Design,  Programming 
+- [N. Choatravee](https://github.com/chncs23) Programming
+- [Puy Porntipa](https://github.com/porntipa) Automate Test, Manual Test
+- [icesuxx](https://github.com/icesuxx) Research
+- [zevendz](https://www.facebook.com/zevendz) Graphics Design
+
+Make sure your code pass all test and code quality control before push with 
+
+```cli
+./gradlew testBeforePush
+```
+
+**Notice** `testBeforePush` task not Include Android-Test (ui-test and some unit-test) 
+
+To run all Unit-test, code quality control and Android-test (Android Emulator or Device Required)
+
+```cli
+./gradlew fullTest
+```

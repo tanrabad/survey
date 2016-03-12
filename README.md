@@ -58,6 +58,31 @@ Use [Travis CI](https://travis-ci.org/) as Continuous Integration system
 - Android SDK Build tools 23.0.2
 - Android Support Repository
 
+## Contributor
+
+- [Blaze Piruin](https://github.com/Blazei) Agile coach, System Analysis, UI&UX Design,  Programming 
+- [N. Choatravee](https://github.com/chncs23) Programming
+- [Puy Porntipa](https://github.com/porntipa) Automate Test, Manual Test
+- [icesuxx](https://github.com/icesuxx) Research
+- [zevendz](https://www.facebook.com/zevendz) Graphics Design
+
+**Before Push Code**
+
+Make sure code pass all test and code quality control before push with 
+
+```cli
+./gradlew testBeforePush
+```
+
+**Notice** `testBeforePush` task not Include Android-Test (ui-test and some unit-test) 
+
+To run all Unit-test, code quality control and Android-test (Android Emulator or Device Required)
+
+```cli
+./gradlew fullTest
+```
+
+
 ## License
 
     Copyright 2015 NECTEC
@@ -77,25 +102,3 @@ Use [Travis CI](https://travis-ci.org/) as Continuous Integration system
     
 
 [![NECTEC](http://www.nectec.or.th/themes/nectec/img/logo.png)](https://www.nectec.or.th)
-
-## Contributor
-
-- [Blaze Piruin](https://github.com/Blazei) Agile coach, System Analysis, UI&UX Design,  Programming 
-- [N. Choatravee](https://github.com/chncs23) Programming
-- [Puy Porntipa](https://github.com/porntipa) Automate Test, Manual Test
-- [icesuxx](https://github.com/icesuxx) Research
-- [zevendz](https://www.facebook.com/zevendz) Graphics Design
-
-Make sure your code pass all test and code quality control before push with 
-
-```cli
-./gradlew testBeforePush
-```
-
-**Notice** `testBeforePush` task not Include Android-Test (ui-test and some unit-test) 
-
-To run all Unit-test, code quality control and Android-test (Android Emulator or Device Required)
-
-```cli
-./gradlew fullTest
-```

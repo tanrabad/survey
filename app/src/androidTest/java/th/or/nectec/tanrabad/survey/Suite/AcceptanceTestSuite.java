@@ -40,6 +40,7 @@ import th.or.nectec.tanrabad.survey.presenter.view.TorchButtonTest;
         UpdateBuildingTest.class,
 
         SurveyActivityTest.class,
+        EditSurveyActivityTest.class,
 
         EditTextStepperTest.class,
         TorchButtonTest.class,

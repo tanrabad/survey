@@ -99,7 +99,7 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
 
             manifestPlaceholders = [google_map_key: System.getenv("TANRABAD_GOOGLE_RELEASE_KEY")]
-            buildConfigField "String", "API_URL", "\"http://api.tanrabad.org/v1\""
+            buildConfigField "String", "API_URL",  "\"http://trb-test.igridproject.org/v1\""
             buildConfigField "String", "TRIAL_USER", "\"trial-beta\""
             resValue "string", "app_version", "version $genVersionName-Beta"
         }

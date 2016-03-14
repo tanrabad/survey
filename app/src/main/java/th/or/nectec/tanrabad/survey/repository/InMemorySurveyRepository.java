@@ -108,7 +108,6 @@ public class InMemorySurveyRepository implements SurveyRepository {
         if (surveys.contains(survey)) {
             surveys.set(surveys.indexOf(survey), survey);
         }
-        surveys.set(surveys.indexOf(survey), survey);
         return true;
     }
 

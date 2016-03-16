@@ -59,13 +59,13 @@ public class BuildingListActivityDisplayedTextSurveyedTest extends TanrabadEspre
         onView(withId(R.id.survey_more_building_button))
                 .perform(click());
 
-        onView(allOf(withId(R.id.surveyed)
-                ,withEffectiveVisibility(Visibility.VISIBLE)
-                ,hasSibling(withText("เมรุ"))))
+        onView(allOf(withId(R.id.surveyed),
+                withEffectiveVisibility(Visibility.VISIBLE),
+                hasSibling(withText("เมรุ"))))
                 .check(matches(isDisplayed()));
-        onView(allOf(withId(R.id.surveyed)
-                ,withEffectiveVisibility(Visibility.VISIBLE)
-                ,hasSibling(withText("ลานหน้าศาลากลาง"))))
+        onView(allOf(withId(R.id.surveyed),
+                withEffectiveVisibility(Visibility.VISIBLE),
+                hasSibling(withText("ลานหน้าศาลากลาง"))))
                 .check(matches(isDisplayed()));
     }
 }

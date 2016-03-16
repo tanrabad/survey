@@ -59,7 +59,6 @@ public class SurveyBuildingExistTest extends TanrabadEspressoTestBase {
                 .perform(click());
         onView(withId(R.id.resident_count))
                 .perform(replaceText("4"));
-        waitingFor(4000);
         onView(withId(R.id.save))
                 .perform(click());
         onView(withId(R.id.survey_more_building_button))
@@ -68,7 +67,6 @@ public class SurveyBuildingExistTest extends TanrabadEspressoTestBase {
                 .perform(click());
         onView(withId(R.id.resident_count))
                 .perform(replaceText("3"));
-        waitingFor(4000);
         onView(withId(R.id.save))
                 .perform(click());
 

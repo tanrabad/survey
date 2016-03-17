@@ -25,8 +25,10 @@ import java.util.List;
 import java.util.UUID;
 
 import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.WireMockTestBase;
+import th.or.nectec.tanrabad.survey.presenter.AccountUtils;
 import th.or.nectec.tanrabad.survey.service.http.Header;
 import th.or.nectec.tanrabad.survey.service.json.JsonEntomology;
 import th.or.nectec.tanrabad.survey.utils.ResourceFile;
@@ -38,6 +40,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo;
 import static com.github.tomakehurst.wiremock.client.WireMock.verify;
+import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 
@@ -60,6 +63,15 @@ public class EntomologyRestServiceTest extends WireMockTestBase {
         Place place = new Place(UUID.fromString("6e79ca31-d0da-fc50-64d2-ac403dfff644"), "หมู่ 5 บ้านท่าน้ำ");
         place.setType(PlaceType.VILLAGE_COMMUNITY);
         return place;
+    }
+
+    @Test
+    public void testDefaultParam() throws Exception {
+        User user = User.fromUsername("asdf");
+        user.setOrganizationId(23);
+        AccountUtils.setUser(user);
+        assertTrue(restService.getDefaultParams().contains("org_id=23"));
+        assertTrue(restService.getDefaultParams().contains("place_id=6e79ca31-d0da-fc50-64d2-ac403dfff644"));
     }
 
     @Test

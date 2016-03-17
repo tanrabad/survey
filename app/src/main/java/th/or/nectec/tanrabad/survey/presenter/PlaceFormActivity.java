@@ -53,7 +53,9 @@ import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.presenter.maps.LocationUtils;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
+import th.or.nectec.tanrabad.survey.repository.adapter.ThaiWidgetDistrictRepository;
 import th.or.nectec.tanrabad.survey.repository.adapter.ThaiWidgetProvinceRepository;
+import th.or.nectec.tanrabad.survey.repository.adapter.ThaiWidgetSubdistrictRepository;
 import th.or.nectec.tanrabad.survey.utils.MapUtils;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.SoftKeyboard;
@@ -122,7 +124,9 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         placeNameView = (EditText) findViewById(R.id.place_name);
         addressSelectView = (AddressPicker) findViewById(R.id.address_select);
         AddressPickerDialog popup = new AddressPickerDialog(this)
-                .setProvinceRepository(new ThaiWidgetProvinceRepository());
+                .setProvinceRepository(new ThaiWidgetProvinceRepository())
+                .setDistrictRepository(new ThaiWidgetDistrictRepository())
+                .setSubDistrictRepository(new ThaiWidgetSubdistrictRepository());
         addressSelectView.setPopup(popup);
         placeTypeSelectorView = (AppCompatSpinner) findViewById(R.id.place_type_selector);
         placeSubtypeLayout = findViewById(R.id.place_subtype_layout);

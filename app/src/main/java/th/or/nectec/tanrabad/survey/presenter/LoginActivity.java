@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.widget.CheckBox;
+
 import th.or.nectec.tanrabad.survey.BuildConfig;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
@@ -51,16 +52,21 @@ public class LoginActivity extends TanrabadActivity {
 
         setupShowcaseOption();
 
+        if (BuildConfig.BUILD_TYPE.equals("release")) {
+            findViewById(R.id.trial).setVisibility(View.GONE);
+        } else {
+            findViewById(R.id.trial).setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    anonymousLogin();
+                }
+            });
+        }
+
         findViewById(R.id.authentication_button).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 openAuthenWeb();
-            }
-        });
-        findViewById(R.id.trial).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                anonymousLogin();
             }
         });
         findViewById(R.id.about).setOnClickListener(new OnClickListener() {
@@ -93,7 +99,7 @@ public class LoginActivity extends TanrabadActivity {
             Alert.highLevel().show(R.string.connect_internet_when_use_for_first_time);
             TanrabadApp.action().firstTimeWithoutInternet();
         } else {
-            AccountUtils.setUser(BrokerUserRepository.getInstance().findByUsername(BuildConfig.USER));
+            AccountUtils.setUser(BrokerUserRepository.getInstance().findByUsername(BuildConfig.TRIAL_USER));
             showcasePreference.save(needShowcase.isChecked());
             InitialActivity.open(LoginActivity.this);
             finish();

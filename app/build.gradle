@@ -88,7 +88,7 @@ android {
 
             manifestPlaceholders = [google_map_key: System.getenv("TANRABAD_GOOGLE_DEBUG_KEY")]
             buildConfigField "String", "API_URL", "\"http://trb-test.igridproject.info/v1\""
-            buildConfigField "String", "USER", "\"dpc-user\""
+            buildConfigField "String", "TRIAL_USER", "\"trial-debug\""
             resValue "string", "app_version", "version $genVersionName-Debug"
         }
         beta {
@@ -100,7 +100,7 @@ android {
 
             manifestPlaceholders = [google_map_key: System.getenv("TANRABAD_GOOGLE_RELEASE_KEY")]
             buildConfigField "String", "API_URL", "\"http://api.tanrabad.org/v1\""
-            buildConfigField "String", "USER", "\"dpc-13-beta\""
+            buildConfigField "String", "TRIAL_USER", "\"trial-beta\""
             resValue "string", "app_version", "version $genVersionName-Beta"
         }
         release {
@@ -111,7 +111,7 @@ android {
 
             manifestPlaceholders = [google_map_key: System.getenv("TANRABAD_GOOGLE_RELEASE_KEY")]
             buildConfigField "String", "API_URL", "\"http://api.tanrabad.org/v1\""
-            buildConfigField "String", "USER", "\"dpc-13\""
+            buildConfigField "String", "TRIAL_USER", "\"trial-release\""
             resValue "string", "app_version", "version $genVersionName"
         }
     }

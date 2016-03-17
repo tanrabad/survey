@@ -26,6 +26,9 @@ import th.or.nectec.tanrabad.entity.User;
 
 public class InMemoryUserRepository implements UserRepository {
 
+    public static final String TRIAL_DEBUG = "trial-debug";
+    public static final String TRIAL_BETA = "trial-beta";
+    public static final String TRIAL_RELEASE = "trial-release";
     private static final String DEV_USERNAME = "dpc-user";
     private static final String DEMO_USERNAME = "dpc-13-beta";
     private static final String RELEASE_USERNAME = "dpc-13";
@@ -36,6 +39,9 @@ public class InMemoryUserRepository implements UserRepository {
         userMapping.put(DEV_USERNAME, devUser());
         userMapping.put(DEMO_USERNAME, betaUser());
         userMapping.put(RELEASE_USERNAME, ReleaseUser());
+        userMapping.put(TRIAL_DEBUG, trialDebugUser());
+        userMapping.put(TRIAL_BETA, trialDebugUser());
+        userMapping.put(TRIAL_RELEASE, trialReleaseUser());
     }
 
     private User devUser() {
@@ -65,7 +71,29 @@ public class InMemoryUserRepository implements UserRepository {
         release.setFirstname("ทดสอบ");
         release.setLastname("ทดสอบ");
         release.setEmail("dpc13@gmail.com");
-        release.setOrganizationId(5);
+        release.setOrganizationId(13);
+        release.setHealthRegionCode("dpc-13");
+        release.setApiFilter("hr_code=dpc-13");
+        return release;
+    }
+
+    private User trialDebugUser() {
+        User release = new User(TRIAL_DEBUG);
+        release.setFirstname("ทดสอบ");
+        release.setLastname("ทดสอบ");
+        release.setEmail("dpc13@gmail.com");
+        release.setOrganizationId(13);
+        release.setHealthRegionCode("dpc-13");
+        release.setApiFilter("hr_code=dpc-13");
+        return release;
+    }
+
+    private User trialReleaseUser() {
+        User release = new User(TRIAL_RELEASE);
+        release.setFirstname("ทดสอบ");
+        release.setLastname("ทดสอบ");
+        release.setEmail("dpc13@gmail.com");
+        release.setOrganizationId(13);
         release.setHealthRegionCode("dpc-13");
         release.setApiFilter("hr_code=dpc-13");
         return release;
@@ -76,6 +104,17 @@ public class InMemoryUserRepository implements UserRepository {
             instance = new InMemoryUserRepository();
         }
         return instance;
+    }
+
+    private User trialBetaUser() {
+        User release = new User(TRIAL_BETA);
+        release.setFirstname("ทดสอบ");
+        release.setLastname("ทดสอบ");
+        release.setEmail("dpc13@gmail.com");
+        release.setOrganizationId(5);
+        release.setHealthRegionCode("dpc-13");
+        release.setApiFilter("hr_code=dpc-13");
+        return release;
     }
 
     @Override

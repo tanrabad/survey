@@ -33,6 +33,7 @@ import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.*;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.not;
 
 public class BuildingListActivityDisplayedTextSurveyedTest extends TanrabadEspressoTestBase {
 
@@ -67,5 +68,9 @@ public class BuildingListActivityDisplayedTextSurveyedTest extends TanrabadEspre
                 withEffectiveVisibility(Visibility.VISIBLE),
                 hasSibling(withText("ลานหน้าศาลากลาง"))))
                 .check(matches(isDisplayed()));
+
+        onView(allOf(withId(R.id.surveyed),
+                hasSibling(withText("ศาลาใหญ่"))))
+                .check(matches(not(isDisplayed())));
     }
 }

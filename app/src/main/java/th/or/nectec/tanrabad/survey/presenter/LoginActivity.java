@@ -18,6 +18,7 @@
 package th.or.nectec.tanrabad.survey.presenter;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -25,6 +26,10 @@ import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.widget.CheckBox;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
 import th.or.nectec.tanrabad.survey.BuildConfig;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
@@ -44,11 +49,15 @@ public class LoginActivity extends TanrabadActivity {
     private CheckBox needShowcase;
     private ShowcasePreference showcasePreference;
 
+    private GoogleApiClient appIndexClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().setFlags(FLAG_FULLSCREEN, FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        appIndexClient = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
         setupShowcaseOption();
 
@@ -78,20 +87,10 @@ public class LoginActivity extends TanrabadActivity {
         startAnimation();
     }
 
-    private void openAuthenWeb() {
-        Intent intent = new Intent(this, AuthenActivity.class);
-        startActivityForResult(intent, AUTHEN_REQUEST_CODE);
-    }
-
     private void setupShowcaseOption() {
         showcasePreference = new ShowcasePreference(this);
         needShowcase = (CheckBox) findViewById(R.id.need_showcase);
         needShowcase.setChecked(showcasePreference.get());
-    }
-
-    private void openAboutActivity() {
-        Intent intent = new Intent(this, AboutActivity.class);
-        startActivity(intent);
     }
 
     private void anonymousLogin() {
@@ -106,9 +105,14 @@ public class LoginActivity extends TanrabadActivity {
         }
     }
 
-    private boolean isFirstTime() {
-        String placeTimeStamp = new ServiceLastUpdatePreference(LoginActivity.this, PlaceRestService.PATH).get();
-        return TextUtils.isEmpty(placeTimeStamp);
+    private void openAuthenWeb() {
+        Intent intent = new Intent(this, AuthenActivity.class);
+        startActivityForResult(intent, AUTHEN_REQUEST_CODE);
+    }
+
+    private void openAboutActivity() {
+        Intent intent = new Intent(this, AboutActivity.class);
+        startActivity(intent);
     }
 
     private void startAnimation() {
@@ -116,6 +120,18 @@ public class LoginActivity extends TanrabadActivity {
         Animation dropIn = loadAnimation(this, R.anim.logo);
         dropIn.setStartOffset(1200);
         findViewById(R.id.logo_tabrabad).startAnimation(dropIn);
+    }
+
+    private boolean isFirstTime() {
+        String placeTimeStamp = new ServiceLastUpdatePreference(LoginActivity.this, PlaceRestService.PATH).get();
+        return TextUtils.isEmpty(placeTimeStamp);
+    }
+
+    @Override
+    protected void onStop() {
+        appIndexClient.disconnect();
+        AppIndex.AppIndexApi.end(appIndexClient, getAppIndexAction());
+        super.onStop();
     }
 
     @Override
@@ -126,5 +142,25 @@ public class LoginActivity extends TanrabadActivity {
             finish();
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        appIndexClient.connect();
+        AppIndex.AppIndexApi.start(appIndexClient, getAppIndexAction());
+    }
+
+    public Action getAppIndexAction() {
+        Thing thing = new Thing.Builder()
+                .setName("ทันระบาดสำรวจ")
+                .setDescription("ประสบการณ์ใหม่ สำหรับการสำรวจลูกน้ำยุง")
+                .setUrl(Uri.parse("http://www.tanrabad.org/survey"))
+                .build();
+
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(thing)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
     }
 }

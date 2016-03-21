@@ -41,8 +41,8 @@
                 tools:ignore="MissingPrefix"/>
 
         <ImageView
-            android:layout_width="125dp"
-            android:layout_height="39dp"
+            android:layout_width="150dp"
+            android:layout_height="48dp"
                 android:layout_marginBottom="@dimen/space_between_content"
             android:contentDescription="@string/nectec"
             android:src="@drawable/logo_nectec"/>
@@ -76,10 +76,11 @@
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minWidth="200dp"
             android:layout_below="@id/authentication_button"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/space_between_content"
+            android:padding="16dp"
             android:text="@string/trial"
             android:textColor="@color/black"/>
     <CheckBox

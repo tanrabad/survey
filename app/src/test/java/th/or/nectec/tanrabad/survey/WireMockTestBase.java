@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,27 +18,27 @@
 package th.or.nectec.tanrabad.survey;
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
-
 import org.junit.Before;
 import org.junit.ClassRule;
-
+import org.mockito.Mockito;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.presenter.AccountUtils;
 
 public class WireMockTestBase {
 
-    static final String IF_MODIFIED_SINCE = "if-Modified-Since";
-    static final String LAST_UPDATE = "Last-Update";
-    static final String CONTENT_LENGTH = "Content-Length";
+    protected static final String IF_MODIFIED_SINCE = "if-Modified-Since";
+    protected static final String LAST_UPDATE = "Last-Update";
+    protected static final String CONTENT_LENGTH = "Content-Length";
 
     private static final int HTTP_PORT = 8089;
-    static final String HTTP_LOCALHOST_8089 = "http://localhost:" + HTTP_PORT;
-
+    protected static final String HTTP_LOCALHOST_8089 = "http://localhost:" + HTTP_PORT;
     @ClassRule
     public static WireMockRule wireMockRule = new WireMockRule(HTTP_PORT);
+    private AccountUtils.LastLoginUserRepo lastLoginUserRepo = Mockito.mock(AccountUtils.LastLoginUserRepo.class);
 
     @Before
     public void setUp() throws Exception {
+        AccountUtils.setLastLoginUserRepo(lastLoginUserRepo);
         AccountUtils.setUser(stubUser());
     }
 

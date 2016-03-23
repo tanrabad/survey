@@ -106,7 +106,7 @@ public class LoginActivity extends TanrabadActivity {
     }
 
     private void openAuthenWeb() {
-        if (AccountUtils.getLastLoginUser() != null) {
+        if (AccountUtils.getLastLoginUserRepo() != null) {
             InitialActivity.open(this);
             finish();
         } else if (InternetConnection.isAvailable(this)) {
@@ -141,6 +141,19 @@ public class LoginActivity extends TanrabadActivity {
         super.onStop();
     }
 
+    public Action getAppIndexAction() {
+        Thing thing = new Thing.Builder()
+                .setName("ทันระบาดสำรวจ")
+                .setDescription("ประสบการณ์ใหม่ สำหรับการสำรวจลูกน้ำยุง")
+                .setUrl(Uri.parse("http://www.tanrabad.org/survey"))
+                .build();
+
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(thing)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == AUTHEN_REQUEST_CODE && resultCode == RESULT_OK) {
@@ -156,18 +169,5 @@ public class LoginActivity extends TanrabadActivity {
         super.onStart();
         appIndexClient.connect();
         AppIndex.AppIndexApi.start(appIndexClient, getAppIndexAction());
-    }
-
-    public Action getAppIndexAction() {
-        Thing thing = new Thing.Builder()
-                .setName("ทันระบาดสำรวจ")
-                .setDescription("ประสบการณ์ใหม่ สำหรับการสำรวจลูกน้ำยุง")
-                .setUrl(Uri.parse("http://www.tanrabad.org/survey"))
-                .build();
-
-        return new Action.Builder(Action.TYPE_VIEW)
-                .setObject(thing)
-                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
-                .build();
     }
 }

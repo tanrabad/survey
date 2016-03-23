@@ -32,12 +32,10 @@ public final class AccountUtils {
     protected static final long ONE_DAY_IN_MILLS = 86400000L;
     protected static final long REMEMBER_LIMIT = ONE_DAY_IN_MILLS;
 
-    private static final String PREF_NAME = "user";
-    private static final String KEY_USER = "lastLogin";
-    private static final String KEY_TIMESTAMP = "lastLoginTimeStamp";
-    
     protected static CurrentTimer currentTimer = new JodaCurrentTime();
     private static User user;
+
+    private static LastLoginUserRepo lastLoginUserRepo = new PreferenceLastLoginUserRepo();
 
     private AccountUtils() {
     }
@@ -58,30 +56,68 @@ public final class AccountUtils {
         if (TanrabadApp.action() != null)
             TanrabadApp.action().login(AccountUtils.user);
 
-        SharedPreferences.Editor editor = getUserPreference().edit();
-        editor.putString(KEY_USER, !isTrialUser(user) ? user.getUsername() : "");
-        editor.putLong(KEY_TIMESTAMP, currentTimer.getInMills());
-        editor.apply();
-    }
-
-    private static SharedPreferences getUserPreference() {
-        return TanrabadApp.getInstance().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        if (isTrialUser(user)) {
+            lastLoginUserRepo.userLogin(user);
+        } else {
+            lastLoginUserRepo.clear();
+        }
     }
 
     private static boolean isTrialUser(User user) {
         return user.getUsername().startsWith("trial-");
     }
 
-    public static User getLastLoginUser() {
-        SharedPreferences userPreference = getUserPreference();
-        String username = userPreference.getString(KEY_USER, null);
-        long timestampInMills = userPreference.getLong(KEY_TIMESTAMP, 0);
-        long currentInMills = currentTimer.getInMills();
+    public static User getLastLoginUserRepo() {
+        return lastLoginUserRepo.getLastLoginUser();
+    }
 
-        if (currentInMills - timestampInMills < REMEMBER_LIMIT) {
-            return BrokerUserRepository.getInstance().findByUsername(username);
-        } else {
-            return null;
+    public static void setLastLoginUserRepo(LastLoginUserRepo repository) {
+        lastLoginUserRepo = repository;
+    }
+
+    public interface LastLoginUserRepo {
+        void userLogin(User user);
+
+        User getLastLoginUser();
+
+        void clear();
+    }
+
+    private static class PreferenceLastLoginUserRepo implements LastLoginUserRepo {
+
+        private static final String PREF_NAME = "user";
+        private static final String KEY_USER = "lastLogin";
+        private static final String KEY_TIMESTAMP = "lastLoginTimeStamp";
+
+        @Override
+        public void userLogin(User user) {
+            SharedPreferences.Editor editor = getUserPreference().edit();
+            editor.putString(KEY_USER, user.getUsername());
+            editor.putLong(KEY_TIMESTAMP, currentTimer.getInMills());
+            editor.apply();
+        }
+
+        private static SharedPreferences getUserPreference() {
+            return TanrabadApp.getInstance().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        }
+
+        @Override
+        public User getLastLoginUser() {
+            SharedPreferences userPreference = getUserPreference();
+            String username = userPreference.getString(KEY_USER, null);
+            long timestampInMills = userPreference.getLong(KEY_TIMESTAMP, 0);
+            long currentInMills = currentTimer.getInMills();
+
+            if (currentInMills - timestampInMills < REMEMBER_LIMIT) {
+                return BrokerUserRepository.getInstance().findByUsername(username);
+            } else {
+                return null;
+            }
+        }
+
+        @Override
+        public void clear() {
+            getUserPreference().edit().clear().apply();
         }
     }
 }

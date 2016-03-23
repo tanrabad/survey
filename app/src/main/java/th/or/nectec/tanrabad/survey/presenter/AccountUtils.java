@@ -30,9 +30,12 @@ import th.or.nectec.tanrabad.survey.utils.time.JodaCurrentTime;
 public final class AccountUtils {
 
     protected static final long ONE_DAY_IN_MILLS = 86400000L;
+    protected static final long REMEMBER_LIMIT = ONE_DAY_IN_MILLS;
+
     private static final String PREF_NAME = "user";
     private static final String KEY_USER = "lastLogin";
     private static final String KEY_TIMESTAMP = "lastLoginTimeStamp";
+    
     protected static CurrentTimer currentTimer = new JodaCurrentTime();
     private static User user;
 
@@ -75,7 +78,7 @@ public final class AccountUtils {
         long timestampInMills = userPreference.getLong(KEY_TIMESTAMP, 0);
         long currentInMills = currentTimer.getInMills();
 
-        if (currentInMills - timestampInMills < ONE_DAY_IN_MILLS) {
+        if (currentInMills - timestampInMills < REMEMBER_LIMIT) {
             return BrokerUserRepository.getInstance().findByUsername(username);
         } else {
             return null;

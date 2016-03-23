@@ -100,14 +100,21 @@ public class LoginActivity extends TanrabadActivity {
         } else {
             AccountUtils.setUser(BrokerUserRepository.getInstance().findByUsername(BuildConfig.TRIAL_USER));
             showcasePreference.save(needShowcase.isChecked());
-            InitialActivity.open(LoginActivity.this);
+            InitialActivity.open(this);
             finish();
         }
     }
 
     private void openAuthenWeb() {
-        Intent intent = new Intent(this, AuthenActivity.class);
-        startActivityForResult(intent, AUTHEN_REQUEST_CODE);
+        if (AccountUtils.getLastLoginUser() != null) {
+            InitialActivity.open(this);
+            finish();
+        } else if (InternetConnection.isAvailable(this)) {
+            Intent intent = new Intent(this, AuthenActivity.class);
+            startActivityForResult(intent, AUTHEN_REQUEST_CODE);
+        } else {
+            Alert.highLevel().show("กรุณาเชื่อมต่ออินเตอร์เน็ตเพื่อทำการยืนยันตัวตน");
+        }
     }
 
     private void openAboutActivity() {

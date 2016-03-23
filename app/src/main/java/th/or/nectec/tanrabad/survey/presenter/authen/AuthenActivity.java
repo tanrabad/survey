@@ -89,6 +89,12 @@ public class AuthenActivity extends TanrabadActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+    @Override
+    protected void onStop() {
+        webView.clearCache(true);
+        super.onStop();
+    }
+
     private class AuthenWebViewClient extends WebViewClient {
 
         private static final String PARAM_CODE = "code";

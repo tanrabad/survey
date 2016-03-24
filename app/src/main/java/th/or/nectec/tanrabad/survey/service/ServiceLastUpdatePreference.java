@@ -20,6 +20,10 @@ package th.or.nectec.tanrabad.survey.service;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 public class ServiceLastUpdatePreference implements ServiceLastUpdate {
 
     private static final String PREF_NAME = "api-last-update";
@@ -35,6 +39,12 @@ public class ServiceLastUpdatePreference implements ServiceLastUpdate {
         context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE).edit().clear().apply();
     }
 
+    public void backLastUpdateTimeToYesterday() {
+        DateTimeFormatter rfc1123Formatter = DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss 'GMT'");
+        DateTime dateTime = rfc1123Formatter.parseDateTime(get());
+        save(dateTime.minusDays(1).toString());
+    }
+
     @Override
     public void save(String dateTime) {
         SharedPreferences.Editor spEditor = getSharedPreferences().edit();
@@ -42,14 +52,13 @@ public class ServiceLastUpdatePreference implements ServiceLastUpdate {
         spEditor.apply();
     }
 
-    private SharedPreferences getSharedPreferences() {
-        return context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
-    }
-
     @Override
     public String get() {
         return getSharedPreferences().getString(path, null);
+    }
 
+    private SharedPreferences getSharedPreferences() {
+        return context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
     }
 
 }

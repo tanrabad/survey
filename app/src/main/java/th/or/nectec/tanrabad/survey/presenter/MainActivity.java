@@ -46,11 +46,14 @@ import th.or.nectec.tanrabad.survey.job.SyncJobBuilder;
 import th.or.nectec.tanrabad.survey.job.SyncJobRunner;
 import th.or.nectec.tanrabad.survey.repository.BrokerSurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerUserRepository;
+import th.or.nectec.tanrabad.survey.service.BuildingRestService;
+import th.or.nectec.tanrabad.survey.service.PlaceRestService;
+import th.or.nectec.tanrabad.survey.service.ServiceLastUpdatePreference;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.NetworkChangeReceiver;
 import th.or.nectec.tanrabad.survey.utils.android.TwiceBackPressed;
 
-public class MainActivity extends TanrabadActivity implements View.OnClickListener,
+public class MainActivity extends TanrabadActivity implements View.OnClickListener, View.OnLongClickListener,
         PlaceWithSurveyHistoryListPresenter, AdapterView.OnItemClickListener {
 
     private PlaceSurveyAdapter recentSurveyPlaceAdapter;
@@ -87,6 +90,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
         findViewById(R.id.root).setOnClickListener(this);
         findViewById(R.id.magnifier).setOnClickListener(this);
         findViewById(R.id.sync_data).setOnClickListener(this);
+        findViewById(R.id.sync_data).setOnLongClickListener(this);
     }
 
     private void setupNetworkChangeReceiver() {
@@ -172,6 +176,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
         }
     }
 
+
     private void startOrResumeSyncAnimation() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
                 && syncProgressAnimator.isPaused()) {
@@ -223,6 +228,20 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
         } else {
             syncProgressAnimator.cancel();
         }
+    }
+
+    @Override
+    public boolean onLongClick(View view) {
+        switch (view.getId()) {
+            case R.id.sync_data:
+                startOrResumeSyncAnimation();
+                new ServiceLastUpdatePreference(this, PlaceRestService.PATH).backLastUpdateTimeToYesterday();
+                new ServiceLastUpdatePreference(this, BuildingRestService.PATH).backLastUpdateTimeToYesterday();
+                findViewById(R.id.sync_data).setEnabled(false);
+                new SyncJobBuilder().build(new MainSyncJobRunner()).start();
+                break;
+        }
+        return true;
     }
 
     public class MainSyncJobRunner extends SyncJobRunner {

@@ -48,6 +48,7 @@ import th.or.nectec.tanrabad.survey.repository.BrokerSurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerUserRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.NetworkChangeReceiver;
+import th.or.nectec.tanrabad.survey.utils.android.TwiceBackPressed;
 
 public class MainActivity extends TanrabadActivity implements View.OnClickListener,
         PlaceWithSurveyHistoryListPresenter, AdapterView.OnItemClickListener {
@@ -57,6 +58,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
     private NetworkChangeReceiver networkChangeReceiver;
     private ObjectAnimator syncProgressAnimator;
     private PlaceWithSurveyHistoryChooser recentSurveyPlaceChooser;
+    private TwiceBackPressed twiceBackPressed;
 
     public static void open(Activity activity) {
         Intent intent = new Intent(activity, MainActivity.class);
@@ -68,6 +70,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        twiceBackPressed = new TwiceBackPressed(this);
         setupViewOnClick();
         setupNetworkChangeReceiver();
         setupList();
@@ -146,12 +149,6 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
     }
 
     @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        doLoadingRecentSurveyData();
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(networkChangeReceiver);
@@ -182,6 +179,19 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
         } else {
             syncProgressAnimator.start();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (twiceBackPressed.onTwiceBackPressed()) {
+            finish();
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        doLoadingRecentSurveyData();
     }
 
     @Override

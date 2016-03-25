@@ -49,14 +49,14 @@ public class AccountUtilsTest {
     public void testGetLastUser() throws Exception {
         AccountUtils.setUser(user);
 
-        assertEquals(user, AccountUtils.getLastLoginUserRepo());
+        assertEquals(user, AccountUtils.getLastLoginUser());
     }
 
     @Test
     public void testTrialUserMustNotSave() throws Exception {
         AccountUtils.setUser(User.fromUsername("trial-debug"));
 
-        assertNull(AccountUtils.getLastLoginUserRepo());
+        assertNull(AccountUtils.getLastLoginUser());
     }
 
     @Test
@@ -69,7 +69,7 @@ public class AccountUtilsTest {
 
         AccountUtils.setUser(user);
 
-        assertNull(AccountUtils.getLastLoginUserRepo());
+        assertNull(AccountUtils.getLastLoginUser());
     }
 
     @Test
@@ -82,6 +82,6 @@ public class AccountUtilsTest {
 
         AccountUtils.setUser(user);
 
-        assertEquals(user, AccountUtils.getLastLoginUserRepo());
+        assertEquals(user, AccountUtils.getLastLoginUser());
     }
 }

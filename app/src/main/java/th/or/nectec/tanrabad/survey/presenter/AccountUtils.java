@@ -67,7 +67,7 @@ public final class AccountUtils {
         return user.getUsername().startsWith("trial-");
     }
 
-    public static User getLastLoginUserRepo() {
+    public static User getLastLoginUser() {
         return lastLoginUserRepo.getLastLoginUser();
     }
 

@@ -106,7 +106,7 @@ public class LoginActivity extends TanrabadActivity {
     }
 
     private void openAuthenWeb() {
-        if (AccountUtils.getLastLoginUserRepo() != null) {
+        if (AccountUtils.getLastLoginUser() != null) {
             InitialActivity.open(this);
             finish();
         } else if (InternetConnection.isAvailable(this)) {

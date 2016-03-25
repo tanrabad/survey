@@ -24,6 +24,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import org.joda.time.DateTime;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -34,20 +36,12 @@ import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.domain.survey.ContainerTypeRepository;
 import th.or.nectec.tanrabad.domain.survey.SurveyRepository;
 import th.or.nectec.tanrabad.domain.user.UserRepository;
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.Survey;
-import th.or.nectec.tanrabad.entity.SurveyDetail;
-import th.or.nectec.tanrabad.entity.User;
+import th.or.nectec.tanrabad.entity.*;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
-import th.or.nectec.tanrabad.survey.repository.BrokerBuildingRepository;
-import th.or.nectec.tanrabad.survey.repository.BrokerContainerTypeRepository;
-import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
-import th.or.nectec.tanrabad.survey.repository.BrokerUserRepository;
-import th.or.nectec.tanrabad.survey.repository.ChangedRepository;
-import th.or.nectec.tanrabad.survey.repository.SurveyRepositoryException;
+import th.or.nectec.tanrabad.survey.repository.*;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorList;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
+import th.or.nectec.tanrabad.survey.utils.time.ThaiDateTimeConverter;
 
 public class DbSurveyRepository extends DbRepository implements SurveyRepository, ChangedRepository<Survey> {
 
@@ -254,7 +248,9 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
     public Survey findByBuildingAndUserIn7Day(Building building, User user) {
         Cursor cursor = readableDatabase().query(TABLE_NAME,
                 SurveyColumn.wildcard(),
-                SurveyColumn.BUILDING_ID + "=? AND " + SurveyColumn.SURVEYOR + "=?",
+                SurveyColumn.BUILDING_ID + "=? "
+                        + "AND " + surveyWithInWeekQueryCondition()
+                        + "AND " + SurveyColumn.SURVEYOR + "=?",
                 new String[]{building.getId().toString(), user.getUsername()},
                 null, null, null);
         return getSurvey(cursor);
@@ -273,7 +269,9 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
                 TABLE_NAME + "." + SurveyColumn.CHANGED_STATUS};
         Cursor cursor = db.query(TABLE_NAME + " INNER JOIN building USING(building_id)",
                 columns,
-                BuildingColumn.PLACE_ID + "=? AND " + SurveyColumn.SURVEYOR + "=?",
+                BuildingColumn.PLACE_ID + "=? "
+                        + "AND " + surveyWithInWeekQueryCondition()
+                        + "AND " + SurveyColumn.SURVEYOR + "=?",
                 new String[]{place.getId().toString(), user.getUsername()},
                 null, null, SurveyColumn.CREATE_TIME + " DESC");
         return new CursorList<>(cursor, getSurveyMapper(cursor));
@@ -283,11 +281,12 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
     public List<BuildingWithSurveyStatus> findSurveyBuilding(Place place, User user) {
         String[] columns = buildingSurveyColumn();
         Cursor cursor = readableDatabase().query(DbBuildingRepository.TABLE_NAME
-                        + " LEFT JOIN " + TABLE_NAME + " USING(building_id)",
+                        + " LEFT JOIN " + "(SELECT survey_id, building_id FROM survey WHERE "
+                        + surveyWithInWeekQueryCondition() + "AND surveyor='" + user.getUsername() + "') AS survey "
+                        + "ON survey.building_id = building.building_id",
                 columns,
-                BuildingColumn.PLACE_ID + "=? "
-                        + "AND (" + SurveyColumn.SURVEYOR + "=? OR " + SurveyColumn.SURVEYOR + " IS NULL)",
-                new String[]{place.getId().toString(), user.getUsername()},
+                BuildingColumn.PLACE_ID + "=?",
+                new String[]{place.getId().toString()},
                 null, null, null);
         return mapSurveyBuildingStatus(cursor);
     }
@@ -297,11 +296,11 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
             Place place, User user, String buildingName) {
         String[] columns = buildingSurveyColumn();
         Cursor cursor = readableDatabase().query(
-                DbBuildingRepository.TABLE_NAME + " LEFT JOIN " + TABLE_NAME + " USING(building_id)",
+                DbBuildingRepository.TABLE_NAME + " LEFT JOIN " + "(SELECT survey_id, building_id FROM survey WHERE "
+                        + surveyWithInWeekQueryCondition() + "AND surveyor='" + user.getUsername() + "') AS survey "
+                        + "ON survey.building_id = building.building_id",
                 columns,
-                BuildingColumn.PLACE_ID + "=? "
-                        + "AND (" + SurveyColumn.SURVEYOR + "=? OR " + SurveyColumn.SURVEYOR + " IS NULL) "
-                        + "AND " + BuildingColumn.NAME + " LIKE ? ",
+                BuildingColumn.PLACE_ID + "=? ",
                 new String[]{place.getId().toString(), user.getUsername(), "%" + buildingName + "%"},
                 null, null, null);
         return mapSurveyBuildingStatus(cursor);
@@ -346,7 +345,7 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
         Cursor cursor = readableDatabase().query(
                 TABLE_NAME + " INNER JOIN building USING(building_id) INNER JOIN place USING(place_id)",
                 columns,
-                SurveyColumn.SURVEYOR + "=?",
+                SurveyColumn.SURVEYOR + "=?" + "AND " + surveyWithInWeekQueryCondition(),
                 new String[]{user.getUsername()},
                 DbPlaceRepository.TABLE_NAME + "." + PlaceColumn.ID,
                 null,
@@ -390,6 +389,12 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
 
     private CursorMapper<Building> getBuildingSurveyMapper(Cursor cursor) {
         return new BuildingCursorMapper(cursor, placeRepository);
+    }
+
+    private String surveyWithInWeekQueryCondition() {
+        DateTime dateTime = ThaiDateTimeConverter.convert(new DateTime().toString());
+        return "date(" + DbSurveyRepository.TABLE_NAME + "." + SurveyColumn.CREATE_TIME + ")"
+                + " BETWEEN date('" + dateTime.minusDays(7) + "') " + "AND date('" + dateTime + "') ";
     }
 
     private Survey getSurvey(Cursor cursor) {

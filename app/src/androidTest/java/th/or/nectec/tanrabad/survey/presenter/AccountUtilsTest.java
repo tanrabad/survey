@@ -20,6 +20,7 @@ package th.or.nectec.tanrabad.survey.presenter;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.repository.BrokerUserRepository;
 import th.or.nectec.tanrabad.survey.utils.time.CurrentTimer;
@@ -48,14 +49,14 @@ public class AccountUtilsTest {
     public void testGetLastUser() throws Exception {
         AccountUtils.setUser(user);
 
-        assertEquals(user, AccountUtils.getLastLoginUser());
+        assertEquals(user, AccountUtils.getLastLoginUserRepo());
     }
 
     @Test
     public void testTrialUserMustNotSave() throws Exception {
         AccountUtils.setUser(User.fromUsername("trial-debug"));
 
-        assertNull(AccountUtils.getLastLoginUser());
+        assertNull(AccountUtils.getLastLoginUserRepo());
     }
 
     @Test
@@ -68,7 +69,7 @@ public class AccountUtilsTest {
 
         AccountUtils.setUser(user);
 
-        assertNull(AccountUtils.getLastLoginUser());
+        assertNull(AccountUtils.getLastLoginUserRepo());
     }
 
     @Test
@@ -81,6 +82,6 @@ public class AccountUtilsTest {
 
         AccountUtils.setUser(user);
 
-        assertEquals(user, AccountUtils.getLastLoginUser());
+        assertEquals(user, AccountUtils.getLastLoginUserRepo());
     }
 }

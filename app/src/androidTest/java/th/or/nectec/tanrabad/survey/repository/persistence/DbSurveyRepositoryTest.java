@@ -21,12 +21,19 @@ import android.content.Context;
 import android.database.Cursor;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.domain.building.BuildingRepository;
+import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.domain.survey.ContainerTypeRepository;
 import th.or.nectec.tanrabad.domain.user.UserRepository;
@@ -35,11 +42,7 @@ import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 import th.or.nectec.tanrabad.survey.base.SurveyDbTestRule;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static th.or.nectec.tanrabad.survey.repository.persistence.SurveyColumn.*;
@@ -60,7 +63,7 @@ public class DbSurveyRepositoryTest {
                 .thenReturn(stubBuilding());
 
         PlaceRepository placeRepository = mock(PlaceRepository.class);
-        when(placeRepository.findByUuid(UUID.fromString("f5bfd399-8fb2-4a69-674a-b40495f7686f")))
+        when(placeRepository.findByUuid(UUID.fromString("9b27df17-4234-4b9b-b444-0dc3d637d1fe")))
                 .thenReturn(stubPlace());
 
         ContainerTypeRepository containerTypeRepository = mock(ContainerTypeRepository.class);
@@ -81,7 +84,7 @@ public class DbSurveyRepositoryTest {
     }
 
     private Place stubPlace() {
-        return new Place(UUID.fromString("f5bfd399-8fb2-4a69-674a-b40495f7686f"), "ABCD");
+        return new Place(UUID.fromString("9b27df17-4234-4b9b-b444-0dc3d637d1fe"), "ABCD");
     }
 
     private ContainerType getWater() {
@@ -109,8 +112,8 @@ public class DbSurveyRepositoryTest {
         assertEquals(12f, surveyQuery.getDouble(surveyQuery.getColumnIndex(LONGITUDE)), 0);
         assertEquals("dpc-user", surveyQuery.getString(surveyQuery.getColumnIndex(SURVEYOR)));
         assertEquals(15, surveyQuery.getInt(surveyQuery.getColumnIndex(PERSON_COUNT)));
-        assertEquals("2015-12-24T12:19:20.626+07:00", surveyQuery.getString(surveyQuery.getColumnIndex(CREATE_TIME)));
-        assertEquals("2015-12-24T13:20:21.626+07:00", surveyQuery.getString(surveyQuery.getColumnIndex(UPDATE_TIME)));
+        assertEquals("2016-03-24T12:19:20.626+07:00", surveyQuery.getString(surveyQuery.getColumnIndex(CREATE_TIME)));
+        assertEquals("2016-03-24T13:20:21.626+07:00", surveyQuery.getString(surveyQuery.getColumnIndex(UPDATE_TIME)));
         assertEquals(ChangedStatus.ADD, surveyQuery.getInt(surveyQuery.getColumnIndex(CHANGED_STATUS)));
         surveyQuery.close();
 
@@ -135,8 +138,8 @@ public class DbSurveyRepositoryTest {
         Survey survey = new Survey(surveyId(), stubUser(), stubBuilding());
         survey.setLocation(new Location(80, 12));
         survey.setResidentCount(15);
-        survey.setStartTimestamp(new DateTime("2015-12-24T12:19:20.626+07:00"));
-        survey.setFinishTimestamp(new DateTime("2015-12-24T13:20:21.626+07:00"));
+        survey.setStartTimestamp(new DateTime("2016-03-24T12:19:20.626+07:00"));
+        survey.setFinishTimestamp(new DateTime("2016-03-24T13:20:21.626+07:00"));
 
         List<SurveyDetail> indoorDetail = new ArrayList<>();
         indoorDetail.add(new SurveyDetail(UUID.randomUUID(), getWater(), 3, 2));
@@ -216,9 +219,7 @@ public class DbSurveyRepositoryTest {
     public void testLoadSavedSurvey() throws Exception {
         Survey survey = getSurvey();
         surveyRepository.save(survey);
-
-        Survey querySurvey = surveyRepository.findByBuildingAndUserIn7Day(survey.getSurveyBuilding(),
-                survey.getUser());
+        Survey querySurvey = surveyRepository.findByBuildingAndUserIn7Day(survey.getSurveyBuilding(), survey.getUser());
         assertEquals(survey.getId(), querySurvey.getId());
         assertEquals(survey.getIndoorDetail(), querySurvey.getIndoorDetail());
         assertEquals(survey.getOutdoorDetail(), querySurvey.getOutdoorDetail());
@@ -228,5 +229,16 @@ public class DbSurveyRepositoryTest {
         assertEquals(survey.getStartTimestamp(), querySurvey.getStartTimestamp());
         assertEquals(survey.getResidentCount(), querySurvey.getResidentCount());
         assertEquals(survey.getUpdateTimestamp(), querySurvey.getUpdateTimestamp());
+    }
+
+    @Test
+    public void testFindSurveyBuildingInThisWeek() throws Exception {
+        List<BuildingWithSurveyStatus> surveyBuildingInThisWeek =
+                surveyRepository.findSurveyBuilding(stubPlace(), stubUser());
+
+        assertEquals(3, surveyBuildingInThisWeek.size());
+        assertTrue(surveyBuildingInThisWeek.get(0).isSurvey);
+        assertFalse(surveyBuildingInThisWeek.get(1).isSurvey);
+        assertFalse(surveyBuildingInThisWeek.get(2).isSurvey);
     }
 }

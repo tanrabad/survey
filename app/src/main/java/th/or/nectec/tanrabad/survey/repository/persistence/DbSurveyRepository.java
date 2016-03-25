@@ -300,8 +300,8 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
                         + surveyWithInWeekQueryCondition() + "AND surveyor='" + user.getUsername() + "') AS survey "
                         + "ON survey.building_id = building.building_id",
                 columns,
-                BuildingColumn.PLACE_ID + "=? ",
-                new String[]{place.getId().toString(), user.getUsername(), "%" + buildingName + "%"},
+                BuildingColumn.PLACE_ID + "=? AND " + BuildingColumn.NAME + " LIKE ?",
+                new String[]{place.getId().toString(), "%" + buildingName + "%"},
                 null, null, null);
         return mapSurveyBuildingStatus(cursor);
     }

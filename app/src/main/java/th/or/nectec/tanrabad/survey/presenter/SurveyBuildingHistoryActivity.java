@@ -19,6 +19,7 @@ package th.or.nectec.tanrabad.survey.presenter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,10 +36,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
-
-import java.util.List;
-import java.util.UUID;
-
+import it.sephiroth.android.library.tooltip.Tooltip;
+import it.sephiroth.android.library.tooltip.Typefaces;
 import th.or.nectec.tanrabad.domain.entomology.HouseIndex;
 import th.or.nectec.tanrabad.domain.place.PlaceController;
 import th.or.nectec.tanrabad.domain.place.PlacePresenter;
@@ -60,6 +59,9 @@ import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
 import th.or.nectec.tanrabad.survey.utils.showcase.BaseShowcase;
 import th.or.nectec.tanrabad.survey.utils.showcase.ShowcaseFactory;
+
+import java.util.List;
+import java.util.UUID;
 
 public class SurveyBuildingHistoryActivity extends TanrabadActivity implements SurveyBuildingPresenter, PlacePresenter {
 
@@ -106,22 +108,6 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
         displaySurveyMoreBuildingShowcase();
     }
 
-    private String getPlaceUuidFromIntent() {
-        return getIntent().getStringExtra(PLACE_UUID_ARG);
-    }
-
-    private void startSurveyMoreBuildingButtonAnimation() {
-        Animation moreBuildingAnim = AnimationUtils.loadAnimation(this, R.anim.survey_more_building_button);
-        surveyMoreBuildingButton.startAnimation(moreBuildingAnim);
-    }
-
-    private void displaySurveyMoreBuildingShowcase() {
-        BaseShowcase showcase = ShowcaseFactory.viewShowcase(R.id.survey_more_building_button);
-        showcase.setTitle(getString(R.string.showcase_survey_more_building_title));
-        showcase.setMessage(getString(R.string.showcase_survey_more_building));
-        //showcase.display();
-    }
-
     private void showPlaceInfo() {
         PlaceController placeController = new PlaceController(BrokerPlaceRepository.getInstance(), this);
         placeController.showPlace(UUID.fromString(getPlaceUuidFromIntent()));
@@ -160,6 +146,55 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
                 this);
         surveyBuildingHistoryController.showSurveyBuildingOf(getPlaceUuidFromIntent(),
                 AccountUtils.getUser().getUsername());
+    }
+
+    private String getPlaceUuidFromIntent() {
+        return getIntent().getStringExtra(PLACE_UUID_ARG);
+    }
+
+    private void startSurveyMoreBuildingButtonAnimation() {
+        Animation moreBuildingAnim = AnimationUtils.loadAnimation(this, R.anim.survey_more_building_button);
+        moreBuildingAnim.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                Typeface typeface = Typefaces.get(SurveyBuildingHistoryActivity.this,
+                        "fonts/ThaiSansNeue-Regular.otf");
+
+                Tooltip.ClosePolicy policy = new Tooltip.ClosePolicy()
+                        .insidePolicy(true, false)
+                        .outsidePolicy(false, false);
+
+                Tooltip.make(SurveyBuildingHistoryActivity.this,
+                        new Tooltip.Builder(101)
+                                .typeface(typeface)
+                                .closePolicy(policy, 10000)
+                                .withArrow(true)
+                                .withOverlay(true)
+                                .text(getString(R.string.choose_building_to_survey))
+                                .withStyleId(R.style.ToolTipLayoutCustomStyle)
+                                .anchor(surveyMoreBuildingButton, Tooltip.Gravity.LEFT)
+                                .build()
+                ).show();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        surveyMoreBuildingButton.startAnimation(moreBuildingAnim);
+    }
+
+    private void displaySurveyMoreBuildingShowcase() {
+        BaseShowcase showcase = ShowcaseFactory.viewShowcase(R.id.survey_more_building_button);
+        showcase.setTitle(getString(R.string.showcase_survey_more_building_title));
+        showcase.setMessage(getString(R.string.showcase_survey_more_building));
+        //showcase.display();
     }
 
     @Override

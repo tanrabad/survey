@@ -187,5 +187,6 @@
     <string name="customactivityoncrash_error_activity_restart_app">เริ่มแอพใหม่</string>
     <string name="customactivityoncrash_error_activity_close_app">ปิด</string>
     <string name="customactivityoncrash_error_activity_error_details">รายละเอียด</string>
+    <string name="choose_building_to_survey">ระบุอาคารเพื่อสำรวจเพิ่มเติม</string>
 
 </resources>

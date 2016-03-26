@@ -19,6 +19,8 @@ package th.or.nectec.tanrabad.survey;
 
 import android.app.Application;
 import android.content.Context;
+
+import cat.ereza.customactivityoncrash.CustomActivityOnCrash;
 import org.trb.authen.client.TRBAuthenUtil;
 import th.or.nectec.tanrabad.survey.utils.tool.ActionLogger;
 import th.or.nectec.tanrabad.survey.utils.tool.ExceptionLogger;
@@ -52,6 +54,7 @@ public class TanrabadApp extends Application {
         super.onCreate();
         instance = this;
         setupAuthenUtils();
+        setupCrashActivity();
         setupAnalysisTools();
         setupDefaultFont();
     }
@@ -60,6 +63,15 @@ public class TanrabadApp extends Application {
         TRBAuthenUtil authenUtil = TRBAuthenUtil.getInstance();
         authenUtil.initTRBAuthenUtil(this, BuildConfig.TRB_AUTHEN_CLIENT_ID,
                 BuildConfig.TRB_AUTHEN_CLIENT_SECRET);
+    }
+
+    private void setupCrashActivity() {
+        //must call this before setup fabric tools
+        CustomActivityOnCrash.install(this);
+        CustomActivityOnCrash.setLaunchErrorActivityWhenInBackground(false);
+        CustomActivityOnCrash.setShowErrorDetails(BuildConfig.DEBUG);
+        CustomActivityOnCrash.setEnableAppRestart(true);
+        CustomActivityOnCrash.setDefaultErrorActivityDrawable(R.drawable.sad_cloud);
     }
 
     private void setupAnalysisTools() {

@@ -58,6 +58,7 @@ ext {
     crashlyticsVersion = "2.5.5"
     recyclerViewHeaderVersion = "1.2.1"
     licenseFragmentVersion = "1.2.0"
+    customActivityOnCrash = "1.5.0"
 
     junitVersion = "4.12"
     jMockVersion = "2.8.1"

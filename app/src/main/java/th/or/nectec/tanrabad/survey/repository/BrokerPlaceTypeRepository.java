@@ -17,14 +17,14 @@
 
 package th.or.nectec.tanrabad.survey.repository;
 
-import java.util.List;
-
 import th.or.nectec.tanrabad.domain.place.PlaceTypeRepository;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.repository.persistence.DbPlaceTypeRepository;
 
-public class BrokerPlaceTypeRepository implements PlaceTypeRepository {
+import java.util.List;
+
+public final class BrokerPlaceTypeRepository implements PlaceTypeRepository {
 
     private static BrokerPlaceTypeRepository instance;
     private PlaceTypeRepository persistence;

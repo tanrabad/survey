@@ -29,16 +29,16 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import th.or.nectec.tanrabad.domain.entomology.ContainerIndex;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.view.TimeAgoView;
 import th.or.nectec.tanrabad.survey.repository.persistence.SurveyWithChange;
 import th.or.nectec.tanrabad.survey.utils.time.DurationTimePrinter;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBuildingHistoryAdapter.ViewHolder>
         implements ListViewAdapter<Survey> {
@@ -106,13 +106,13 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
         setCiValue(holder, currentSurvey);
     }
 
+    private String getDuration(Survey currentSurvey) {
+        return DurationTimePrinter.print(currentSurvey.getStartTimestamp(), currentSurvey.getFinishTimestamp());
+    }
+
     private void setSyncStatus(ViewHolder holder, Survey currentSurvey) {
         SurveyWithChange swc = (SurveyWithChange) currentSurvey;
         holder.notSync.setVisibility(swc.isNotSynced() ? View.VISIBLE : View.GONE);
-    }
-
-    private String getDuration(Survey currentSurvey) {
-        return DurationTimePrinter.print(currentSurvey.getStartTimestamp(), currentSurvey.getFinishTimestamp());
     }
 
     private void setCiValue(ViewHolder holder, Survey currentSurvey) {
@@ -149,13 +149,13 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView duration;
-        TextView surveyBuildingTextView;
-        ImageView surveyBuildingIcon;
-        TimeAgoView timeAgoView;
-        TextView containerIndex;
-        TextView containerCount;
-        ImageView notSync;
-        private SurveyBuildingHistoryAdapter adapter;
+        private final TextView surveyBuildingTextView;
+        private final ImageView surveyBuildingIcon;
+        private final TimeAgoView timeAgoView;
+        private final TextView containerIndex;
+        private final TextView containerCount;
+        private final ImageView notSync;
+        private final SurveyBuildingHistoryAdapter adapter;
 
         public ViewHolder(View itemView, SurveyBuildingHistoryAdapter adapter) {
             super(itemView);

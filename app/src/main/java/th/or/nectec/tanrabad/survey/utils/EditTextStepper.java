@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,14 +25,6 @@ public class EditTextStepper {
     private EditText editText;
     private boolean unsignedValue = true;
 
-    public static void stepUp(EditText view) {
-        new EditTextStepper(view).step(1);
-    }
-
-    public static void stepDown(EditText view) {
-        new EditTextStepper(view).step(-1);
-    }
-
     public EditTextStepper(EditText editText) {
         validate(editText);
         this.editText = editText;
@@ -40,18 +32,26 @@ public class EditTextStepper {
 
     private void validate(EditText editText) {
         if (editText == null)
-            throw new NullPointerException("EditText must not be null");
+            throw new IllegalArgumentException("EditText must not be null");
         if (!isNumberType(editText))
             throw new NotSupportEditTextInputTypeException("EditText's inputType must be CLASS NUMBER ");
     }
 
-    public EditTextStepper setUnsignedValue(boolean unsignedValue) {
-        this.unsignedValue = unsignedValue;
-        return this;
-    }
-
     private boolean isNumberType(EditText view) {
         return view.getInputType() == InputType.TYPE_CLASS_NUMBER;
+    }
+
+    public static void stepUp(EditText view) {
+        new EditTextStepper(view).step(1);
+    }
+
+    public void step(int valueToStep) {
+        int value = currentValueOf(editText) + valueToStep;
+        if (unsignedValue && value < 0) {
+            value = 0;
+        }
+        editText.setText(String.valueOf(value));
+        editText.setSelection(editText.getText().length());
     }
 
     private int currentValueOf(EditText editText) {
@@ -63,13 +63,13 @@ public class EditTextStepper {
         }
     }
 
-    public void step(int valueToStep) {
-        int value = currentValueOf(editText) + valueToStep;
-        if (unsignedValue && value < 0) {
-            value = 0;
-        }
-        editText.setText(String.valueOf(value));
-        editText.setSelection(editText.getText().length());
+    public static void stepDown(EditText view) {
+        new EditTextStepper(view).step(-1);
+    }
+
+    public EditTextStepper setUnsignedValue(boolean unsignedValue) {
+        this.unsignedValue = unsignedValue;
+        return this;
     }
 
     public static class NotSupportEditTextInputTypeException extends RuntimeException {

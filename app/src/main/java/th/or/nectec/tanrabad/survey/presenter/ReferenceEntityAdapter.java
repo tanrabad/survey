@@ -24,14 +24,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import th.or.nectec.tanrabad.entity.ReferenceEntity;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceTypeRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ReferenceEntityAdapter extends BaseAdapter {
 
@@ -109,6 +109,6 @@ public class ReferenceEntityAdapter extends BaseAdapter {
     }
 
     public class ViewHolder {
-        TextView nameView;
+        protected TextView nameView;
     }
 }

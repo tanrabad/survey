@@ -17,14 +17,14 @@
 
 package th.or.nectec.tanrabad.survey.repository;
 
-import java.util.List;
-
 import th.or.nectec.tanrabad.domain.survey.ContainerTypeRepository;
 import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.repository.persistence.DbContainerTypeRepository;
 
-public class BrokerContainerTypeRepository implements ContainerTypeRepository {
+import java.util.List;
+
+public final class BrokerContainerTypeRepository implements ContainerTypeRepository {
 
     private static BrokerContainerTypeRepository instance;
     private ContainerTypeRepository cache;

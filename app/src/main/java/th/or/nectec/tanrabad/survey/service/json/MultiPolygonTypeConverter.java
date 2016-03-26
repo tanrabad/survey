@@ -1,15 +1,31 @@
+/*
+ * Copyright (c) 2016 NECTEC
+ *   National Electronics and Computer Technology Center, Thailand
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package th.or.nectec.tanrabad.survey.service.json;
 
 import com.bluelinelabs.logansquare.typeconverters.TypeConverter;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
+import th.or.nectec.tanrabad.entity.field.Location;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import th.or.nectec.tanrabad.entity.field.Location;
 
 
 public class MultiPolygonTypeConverter implements TypeConverter<List<JsonPolygon>> {
@@ -45,6 +61,22 @@ public class MultiPolygonTypeConverter implements TypeConverter<List<JsonPolygon
         return eachChildPolygon;
     }
 
+    private List<Location> getBoundary(List<List<Location>> polygon) {
+        return polygon.get(0);
+    }
+
+    private List<Location>[] getHoles(List<List<Location>> polygon) {
+        int holeSize = polygon.size() - 1;
+        if (holeSize == 0)
+            return null;
+
+        List<Location>[] holes = new ArrayList[holeSize];
+        for (int position = 0; position < holeSize; position++) {
+            holes[position] = polygon.get(position + 1);
+        }
+        return holes;
+    }
+
     private Location getLocation(JsonParser jsonParser) throws IOException {
         Location value3;
         if (jsonParser.getCurrentToken() == JsonToken.START_ARRAY) {
@@ -60,22 +92,6 @@ public class MultiPolygonTypeConverter implements TypeConverter<List<JsonPolygon
             value3 = null;
         }
         return value3;
-    }
-
-    private List<Location> getBoundary(ArrayList<List<Location>> polygon) {
-        return polygon.get(0);
-    }
-
-    private List<Location>[] getHoles(ArrayList<List<Location>> polygon) {
-        int holeSize = polygon.size() - 1;
-        if (holeSize == 0)
-            return null;
-
-        List<Location>[] holes = new ArrayList[holeSize];
-        for (int position = 0; position < holeSize; position++) {
-            holes[position] = polygon.get(position + 1);
-        }
-        return holes;
     }
 
     @Override

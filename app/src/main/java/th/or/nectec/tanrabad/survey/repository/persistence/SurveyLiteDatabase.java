@@ -21,10 +21,11 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
+
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.service.ServiceLastUpdatePreference;
 
-public class SurveyLiteDatabase extends SQLiteOpenHelper {
+public final class SurveyLiteDatabase extends SQLiteOpenHelper {
 
     public static final String DB_NAME = "trb_survey.db";
     public static final int DB_VERSION = 2;

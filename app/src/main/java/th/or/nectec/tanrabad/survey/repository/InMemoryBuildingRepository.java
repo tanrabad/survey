@@ -17,20 +17,20 @@
 
 package th.or.nectec.tanrabad.survey.repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
 import th.or.nectec.tanrabad.domain.building.BuildingRepository;
 import th.or.nectec.tanrabad.domain.building.BuildingRepositoryException;
 import th.or.nectec.tanrabad.entity.Building;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+
 public class InMemoryBuildingRepository implements BuildingRepository {
 
     private static InMemoryBuildingRepository instance;
-    private Map<UUID, Building> buildingMap = new HashMap<>();
+    private Map<UUID, Building> buildingMap = new ConcurrentHashMap<>();
 
     static InMemoryBuildingRepository getInstance() {
         if (instance == null)

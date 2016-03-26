@@ -42,7 +42,7 @@ public class SqlScript {
             is.close();
             isr.close();
         } catch (IOException exception) {
-            throw new RuntimeException("Unable to read SQL script", exception);
+            throw new IllegalArgumentException("Unable to read SQL script", exception);
         } finally {
             db.endTransaction();
         }
@@ -54,7 +54,7 @@ public class SqlScript {
         StringBuilder statement = new StringBuilder();
         while ((line = reader.readLine()) != null) {
             statement.append(line);
-            statement.append("\n");
+            statement.append('\n');
             if (line.endsWith(";")) {
                 db.execSQL(statement.toString());
                 statement = new StringBuilder();

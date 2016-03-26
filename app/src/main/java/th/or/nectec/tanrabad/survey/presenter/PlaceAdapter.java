@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,18 +26,18 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.repository.persistence.PlaceWithChange;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> implements ListViewAdapter<Place> {
 
     private Context context;
 
-    private ArrayList<Place> places = new ArrayList<>();
+    private List<Place> places = new ArrayList<>();
     private AdapterView.OnItemClickListener onItemClickListener;
     private AdapterView.OnItemLongClickListener onItemLongClickListener;
 
@@ -117,9 +117,9 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
-        TextView placeTextView;
-        ImageView placeIcon;
-        ImageView notSync;
+        private TextView placeTextView;
+        private ImageView placeIcon;
+        private ImageView notSync;
         private PlaceAdapter adapter;
 
         public ViewHolder(View itemView, PlaceAdapter adapter) {

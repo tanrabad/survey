@@ -17,17 +17,17 @@
 
 package th.or.nectec.tanrabad.survey.repository;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import th.or.nectec.tanrabad.domain.place.PlaceTypeRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceTypeRepositoryException;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 
-class InMemoryPlaceTypeRepository implements PlaceTypeRepository {
+import java.util.ArrayList;
+import java.util.List;
+
+final class InMemoryPlaceTypeRepository implements PlaceTypeRepository {
 
     private static InMemoryPlaceTypeRepository instance;
-    private ArrayList<PlaceType> placeTypes;
+    private List<PlaceType> placeTypes;
 
     private InMemoryPlaceTypeRepository() {
         placeTypes = new ArrayList<>();

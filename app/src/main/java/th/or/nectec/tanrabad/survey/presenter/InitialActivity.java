@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+
 import net.frakbot.jumpingbeans.JumpingBeans;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
@@ -29,7 +30,6 @@ import th.or.nectec.tanrabad.entity.lookup.*;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.job.AbsJobRunner;
-import th.or.nectec.tanrabad.survey.job.InMemoryInitializeJob;
 import th.or.nectec.tanrabad.survey.job.Job;
 import th.or.nectec.tanrabad.survey.job.WritableRepoUpdateJob;
 import th.or.nectec.tanrabad.survey.repository.*;
@@ -80,7 +80,6 @@ public class InitialActivity extends TanrabadActivity {
         if (InternetConnection.isAvailable(this)) {
             new InitialJobRunner()
                     .addJob(new CreateDatabaseJob(this))
-                    .addJob(new InMemoryInitializeJob())
                     .addJob(containerLocationUpdateJob)
                     .addJob(containerTypeUpdateJob)
                     .addJob(provinceUpdateJob)
@@ -107,9 +106,6 @@ public class InitialActivity extends TanrabadActivity {
     @SuppressLint("SetTextI18n")
     private void updateLoadingText(Job startingJob) {
         switch (startingJob.id()) {
-            case InMemoryInitializeJob.ID:
-                loadingText.setText("ทำสมาธิ");
-                break;
             case CreateDatabaseJob.ID:
                 loadingText.setText("เตรียมกระดาษสำหรับจดข้อมูล");
                 break;
@@ -146,8 +142,8 @@ public class InitialActivity extends TanrabadActivity {
 
     public class InitialJobRunner extends AbsJobRunner {
 
-        IOException ioException;
-        RestServiceException restServiceException;
+        private IOException ioException;
+        private RestServiceException restServiceException;
 
         @Override
         protected void onJobError(Job errorJob, Exception exception) {

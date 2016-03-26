@@ -50,14 +50,14 @@ public class TanrabadActivity extends AppCompatActivity {
         ShowcaseFactory.init(this);
     }
 
-    void setupHomeButton() {
+    protected void setupHomeButton() {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
         }
     }
 
-    boolean isUiTesting() {
+    protected boolean isUiTesting() {
         return getIntent().getBooleanExtra("isUiTesting", false);
     }
 
@@ -82,7 +82,7 @@ public class TanrabadActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    void setupToolbar() {
+    protected void setupToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }

@@ -19,7 +19,7 @@ package th.or.nectec.tanrabad.survey.utils.android;
 
 import android.content.Context;
 
-public class DpCalculator {
+public final class DpCalculator {
 
     private static DpCalculator instance;
     private Context context;

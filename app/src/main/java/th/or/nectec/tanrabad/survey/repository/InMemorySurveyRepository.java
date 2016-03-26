@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,23 +17,19 @@
 
 package th.or.nectec.tanrabad.survey.repository;
 
+import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
+import th.or.nectec.tanrabad.domain.place.PlaceRepositoryException;
+import th.or.nectec.tanrabad.domain.survey.SurveyRepository;
+import th.or.nectec.tanrabad.entity.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
-import th.or.nectec.tanrabad.domain.place.PlaceRepositoryException;
-import th.or.nectec.tanrabad.domain.survey.SurveyRepository;
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.Survey;
-import th.or.nectec.tanrabad.entity.SurveyDetail;
-import th.or.nectec.tanrabad.entity.User;
-
-public class InMemorySurveyRepository implements SurveyRepository {
+final class InMemorySurveyRepository implements SurveyRepository {
 
     private static InMemorySurveyRepository instance;
-    private ArrayList<Survey> surveys;
+    private List<Survey> surveys;
 
     private InMemorySurveyRepository() {
         this.surveys = new ArrayList<>();

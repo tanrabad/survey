@@ -19,12 +19,11 @@ package th.or.nectec.tanrabad.survey.service.json;
 
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
+import th.or.nectec.tanrabad.entity.SurveyDetail;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import th.or.nectec.tanrabad.entity.SurveyDetail;
 
 @JsonObject
 public class JsonSurveyDetail {
@@ -47,7 +46,7 @@ public class JsonSurveyDetail {
     @JsonField(name = "container_have_larva")
     int containerHaveLarva;
 
-    public static ArrayList<JsonSurveyDetail> parseList(
+    public static List<JsonSurveyDetail> parseList(
             List<SurveyDetail> indoorDetailList, List<SurveyDetail> outdoorDetailList) {
         ArrayList<JsonSurveyDetail> jsonSurveyDetailList = new ArrayList<>();
         for (SurveyDetail jsonSurveyDetail : indoorDetailList) {

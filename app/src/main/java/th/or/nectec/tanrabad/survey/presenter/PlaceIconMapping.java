@@ -17,15 +17,16 @@
 
 package th.or.nectec.tanrabad.survey.presenter;
 
-import java.util.HashMap;
-
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.lookup.PlaceSubType;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.R;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 class PlaceIconMapping {
-    private static final HashMap<Integer, Integer> PLACE_ICON_MAP = new HashMap<>();
+    private static final Map<Integer, Integer> PLACE_ICON_MAP = new ConcurrentHashMap<>();
 
     static {
         PLACE_ICON_MAP.put(PlaceType.VILLAGE_COMMUNITY, R.mipmap.ic_place_village);

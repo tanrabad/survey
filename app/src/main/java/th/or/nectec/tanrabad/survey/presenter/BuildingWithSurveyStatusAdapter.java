@@ -29,13 +29,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.repository.persistence.BuildingWithChange;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<BuildingWithSurveyStatusAdapter.ViewHolder>
         implements ListViewAdapter<BuildingWithSurveyStatus> {
@@ -43,7 +43,7 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
     private final Context context;
     private final int buildingIcon;
 
-    private ArrayList<BuildingWithSurveyStatus> buildingsWithSurveyStatusList = new ArrayList<>();
+    private List<BuildingWithSurveyStatus> buildingsWithSurveyStatusList = new ArrayList<>();
     private AdapterView.OnItemClickListener onItemClickListener;
     private AdapterView.OnItemLongClickListener onItemLongClickListener;
     private boolean isEditButtonVisible;
@@ -144,12 +144,12 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
-        TextView buildingTextView;
-        Button editBuilding;
-        ImageView buildingIcon;
-        ImageView notSync;
-        View surveyedStatus;
-        View rootView;
+        private TextView buildingTextView;
+        private Button editBuilding;
+        private ImageView buildingIcon;
+        private ImageView notSync;
+        private View surveyedStatus;
+        private View rootView;
 
         public ViewHolder(View itemView) {
             super(itemView);

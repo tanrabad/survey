@@ -23,7 +23,8 @@ import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.presenter.AccountUtils;
 
 public class SurveyAccountTestRule extends ExternalResource {
-    String username;
+
+    private String username;
 
     public SurveyAccountTestRule() {
         username = "dpc-user";

@@ -90,8 +90,9 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
         setupBuildingHistoryList();
         setupEmptyLayout();
         showSurveyBuildingHistoryList();
-        if (InternetConnection.isAvailable(this))
+        if (InternetConnection.isAvailable(this)) {
             new SyncJobBuilder().build(new SurveyUpdateJob()).start();
+        }
     }
 
     private void setupView() {
@@ -234,7 +235,7 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
     public void displaySurveyBuildingsNotFound() {
         setResult(RESULT_OK);
         finish();
-        BuildingListActivity.open(SurveyBuildingHistoryActivity.this, getPlaceUuidFromIntent());
+        BuildingListActivity.open(this, getPlaceUuidFromIntent());
     }
 
     @Override
@@ -257,8 +258,9 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != RESULT_OK)
+        if (resultCode != RESULT_OK) {
             return;
+        }
         showPlaceInfo();
         showSurveyBuildingHistoryList();
     }
@@ -273,19 +275,21 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         showSurveyBuildingHistoryList();
-        if (InternetConnection.isAvailable(this))
+        if (InternetConnection.isAvailable(this)) {
             new SyncJobBuilder().build(new SurveyUpdateJob()).start();
+        }
     }
 
     public class SurveyUpdateJob extends SyncJobRunner {
 
-        int successCount = 0;
+        private int successCount;
 
         @Override
         protected void onJobDone(Job job) {
             super.onJobDone(job);
-            if (job instanceof UploadJob)
+            if (job instanceof UploadJob) {
                 successCount += ((UploadJob) job).getSuccessCount();
+            }
         }
 
         @Override

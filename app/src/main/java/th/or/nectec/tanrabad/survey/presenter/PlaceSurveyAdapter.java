@@ -28,17 +28,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlaceSurveyAdapter extends RecyclerView.Adapter<PlaceSurveyAdapter.ViewHolder>
         implements ListViewAdapter<Place> {
 
     private Context context;
-    private ArrayList<Place> places = new ArrayList<>();
+    private List<Place> places = new ArrayList<>();
     private FragmentManager fragmentManager;
     private AdapterView.OnItemClickListener onItemClickListener;
     private AdapterView.OnItemLongClickListener onItemLongClickListener;
@@ -114,9 +114,9 @@ public class PlaceSurveyAdapter extends RecyclerView.Adapter<PlaceSurveyAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView placeTextView;
-        ImageView placeIcon;
-        Button viewSurveyResultButton;
+        private TextView placeTextView;
+        private ImageView placeIcon;
+        private Button viewSurveyResultButton;
         private PlaceSurveyAdapter adapter;
 
         public ViewHolder(View itemView, final PlaceSurveyAdapter adapter) {

@@ -48,7 +48,7 @@ class PageLinks {
                 continue;
 
             String linkPart = segments[0].trim();
-            if (!linkPart.startsWith("<") || !linkPart.endsWith(">")) //$NON-NLS-1$ //$NON-NLS-2$
+            if (linkPart.charAt(0) != '<' || !linkPart.endsWith(">")) //$NON-NLS-1$ //$NON-NLS-2$
                 continue;
             linkPart = linkPart.substring(1, linkPart.length() - 1);
 

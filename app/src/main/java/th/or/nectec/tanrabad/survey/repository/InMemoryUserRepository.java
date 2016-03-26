@@ -17,14 +17,15 @@
 
 package th.or.nectec.tanrabad.survey.repository;
 
-import java.util.HashMap;
-import java.util.List;
-
 import th.or.nectec.tanrabad.domain.user.UserRepository;
 import th.or.nectec.tanrabad.domain.user.UserRepositoryException;
 import th.or.nectec.tanrabad.entity.User;
 
-public class InMemoryUserRepository implements UserRepository {
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+final class InMemoryUserRepository implements UserRepository {
 
     public static final String TRIAL_DEBUG = "trial-debug";
     public static final String TRIAL_BETA = "trial-beta";
@@ -33,7 +34,7 @@ public class InMemoryUserRepository implements UserRepository {
     private static final String DEMO_USERNAME = "dpc-13-beta";
     private static final String RELEASE_USERNAME = "dpc-13";
     private static InMemoryUserRepository instance;
-    private HashMap<String, User> userMapping = new HashMap<>();
+    private Map<String, User> userMapping = new ConcurrentHashMap<>();
 
     private InMemoryUserRepository() {
         userMapping.put(DEV_USERNAME, devUser());

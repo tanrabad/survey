@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,17 +17,13 @@
 
 package th.or.nectec.tanrabad.survey.repository;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import th.or.nectec.tanrabad.domain.survey.ContainerTypeRepository;
 import th.or.nectec.tanrabad.domain.survey.ContainerTypeRepositoryException;
 import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 
-public class InMemoryContainerTypeRepository implements ContainerTypeRepository {
+import java.util.*;
+
+final class InMemoryContainerTypeRepository implements ContainerTypeRepository {
 
 
     private static InMemoryContainerTypeRepository instance;

@@ -19,12 +19,12 @@ package th.or.nectec.tanrabad.survey.utils.time;
 
 import org.joda.time.DateTime;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 class DateTimePrinter implements TimePrettyPrinter {
-    private static final Map<Integer, String> monthNameMap = new HashMap<>();
+    private static final Map<Integer, String> monthNameMap = new ConcurrentHashMap<>();
 
     static {
         monthNameMap.put(1, "ม.ค.");

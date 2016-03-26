@@ -19,6 +19,7 @@ package th.or.nectec.tanrabad.survey.utils.tool;
 
 import android.content.Context;
 import android.util.Log;
+
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders.EventBuilder;
 import com.google.android.gms.analytics.Tracker;
@@ -29,7 +30,7 @@ import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.BuildConfig;
 import th.or.nectec.tanrabad.survey.R;
 
-public class GoogleAnalyticsTool extends FabricTools {
+public final class GoogleAnalyticsTool extends FabricTools {
 
     public static final String CATEGORY_TOOLS = "Tools";
     public static final String CATEGORY_UX = "UX";

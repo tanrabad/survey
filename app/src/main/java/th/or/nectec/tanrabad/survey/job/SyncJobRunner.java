@@ -1,16 +1,34 @@
+/*
+ * Copyright (c) 2016 NECTEC
+ *   National Electronics and Computer Technology Center, Thailand
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package th.or.nectec.tanrabad.survey.job;
 
 import android.content.Context;
 import android.text.TextUtils;
-
-import java.io.IOException;
-import java.util.ArrayList;
 
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.service.RestServiceException;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SyncJobRunner extends AbsJobRunner {
 
@@ -24,7 +42,7 @@ public class SyncJobRunner extends AbsJobRunner {
     private int completelyFailCount = 0;
     private int dataUploadedCount = 0;
 
-    private ArrayList<UploadJob> uploadJobs = new ArrayList<>();
+    private List<UploadJob> uploadJobs = new ArrayList<>();
 
     private IOException ioException;
     private RestServiceException restServiceException;
@@ -85,17 +103,6 @@ public class SyncJobRunner extends AbsJobRunner {
         }
     }
 
-    private void showErrorMessage() {
-        if (!isManualSync)
-            return;
-
-        if (ioException != null)
-            Alert.mediumLevel().show(R.string.error_connection_problem);
-        else if (restServiceException != null) {
-            Alert.mediumLevel().show(R.string.error_rest_service);
-        }
-    }
-
     private void showUploadResultMsg() {
         String message = "";
         for (UploadJob uploadJob : uploadJobs) {
@@ -113,6 +120,17 @@ public class SyncJobRunner extends AbsJobRunner {
 
         if (!TextUtils.isEmpty(message))
             Alert.mediumLevel().show(message.trim());
+    }
+
+    private void showErrorMessage() {
+        if (!isManualSync)
+            return;
+
+        if (ioException != null)
+            Alert.mediumLevel().show(R.string.error_connection_problem);
+        else if (restServiceException != null) {
+            Alert.mediumLevel().show(R.string.error_rest_service);
+        }
     }
 
     private String getDataType(UploadJob uploadJob) {

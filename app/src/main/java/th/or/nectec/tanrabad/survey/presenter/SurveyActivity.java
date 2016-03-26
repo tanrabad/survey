@@ -32,23 +32,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import th.or.nectec.tanrabad.domain.survey.ContainerController;
-import th.or.nectec.tanrabad.domain.survey.ContainerPresenter;
-import th.or.nectec.tanrabad.domain.survey.SurveyController;
-import th.or.nectec.tanrabad.domain.survey.SurveyPresenter;
-import th.or.nectec.tanrabad.domain.survey.SurveyRepository;
-import th.or.nectec.tanrabad.domain.survey.SurveySavePresenter;
-import th.or.nectec.tanrabad.domain.survey.SurveySaver;
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.Survey;
-import th.or.nectec.tanrabad.entity.SurveyDetail;
-import th.or.nectec.tanrabad.entity.User;
+import th.or.nectec.tanrabad.domain.survey.*;
+import th.or.nectec.tanrabad.entity.*;
 import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
@@ -73,6 +58,11 @@ import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 import th.or.nectec.tanrabad.survey.validator.SaveSurveyValidator;
 import th.or.nectec.tanrabad.survey.validator.ValidatorException;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class SurveyActivity extends TanrabadActivity implements ContainerPresenter, SurveyPresenter,
         SurveySavePresenter {
 
@@ -81,8 +71,8 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     private static final int offsetStep = 80;
     private boolean firstLoad = true;
     private int containerViewAnimOffset = 240;
-    private HashMap<Integer, SurveyContainerView> indoorContainerViews;
-    private HashMap<Integer, SurveyContainerView> outdoorContainerViews;
+    private Map<Integer, SurveyContainerView> indoorContainerViews;
+    private Map<Integer, SurveyContainerView> outdoorContainerViews;
     private LinearLayout outdoorContainerLayout;
     private LinearLayout indoorContainerLayout;
     private EditText residentCountView;
@@ -157,12 +147,27 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         }
     }
 
+    private void showAbortSurveyPrompt() {
+        PromptMessage promptMessage = new AlertDialogPromptMessage(this);
+        promptMessage.setOnCancel(getString(R.string.no), null);
+        promptMessage.setOnConfirm(getString(R.string.yes), new PromptMessage.OnConfirmListener() {
+            @Override
+            public void onConfirm() {
+                TanrabadApp.action().finishSurvey(survey, false);
+                finish();
+                if (!isEditSurvey)
+                    BuildingListActivity.open(SurveyActivity.this, survey.getSurveyBuilding().getPlaceId().toString());
+            }
+        });
+        promptMessage.show(getString(R.string.abort_survey), getBuildingNameWithPrefix(survey.getSurveyBuilding()));
+    }
+
     private int getResidentCount() {
         String residentCountStr = residentCountView.getText().toString();
         return TextUtils.isEmpty(residentCountStr) ? 0 : Integer.valueOf(residentCountStr);
     }
 
-    private ArrayList<SurveyDetail> getSurveyDetail(HashMap<Integer, SurveyContainerView> containerViews) {
+    private List<SurveyDetail> getSurveyDetail(Map<Integer, SurveyContainerView> containerViews) {
         ArrayList<SurveyDetail> surveyDetails = new ArrayList<>();
         for (Map.Entry<Integer, SurveyContainerView> eachView : containerViews.entrySet()) {
             SurveyDetail surveyDetail = eachView.getValue().getSurveyDetail();
@@ -180,27 +185,12 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         return null;
     }
 
-    private boolean validateSurveyContainerViews(HashMap<Integer, SurveyContainerView> containerViews) {
+    private boolean validateSurveyContainerViews(Map<Integer, SurveyContainerView> containerViews) {
         boolean isValid = true;
         for (Map.Entry<Integer, SurveyContainerView> eachView : containerViews.entrySet()) {
             if (!eachView.getValue().isValid()) isValid = false;
         }
         return isValid;
-    }
-
-    private void showAbortSurveyPrompt() {
-        PromptMessage promptMessage = new AlertDialogPromptMessage(this);
-        promptMessage.setOnCancel(getString(R.string.no), null);
-        promptMessage.setOnConfirm(getString(R.string.yes), new PromptMessage.OnConfirmListener() {
-            @Override
-            public void onConfirm() {
-                TanrabadApp.action().finishSurvey(survey, false);
-                finish();
-                if (!isEditSurvey)
-                    BuildingListActivity.open(SurveyActivity.this, survey.getSurveyBuilding().getPlaceId().toString());
-            }
-        });
-        promptMessage.show(getString(R.string.abort_survey), getBuildingNameWithPrefix(survey.getSurveyBuilding()));
     }
 
     private String getBuildingNameWithPrefix(Building building) {
@@ -309,7 +299,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     }
 
     private void loadSurveyDetail(List<SurveyDetail> indoorDetails,
-                                  HashMap<Integer, SurveyContainerView> surveyContainerViews) {
+                                  Map<Integer, SurveyContainerView> surveyContainerViews) {
         for (SurveyDetail eachDetail : indoorDetails) {
             SurveyContainerView surveyContainerView = surveyContainerViews.get(eachDetail.getContainerType().getId());
             surveyContainerView.setSurveyDetail(eachDetail);
@@ -334,7 +324,7 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         Alert.highLevel().show(R.string.container_not_found);
     }
 
-    private void displayContainerView(ContainerType containerType, HashMap<Integer, SurveyContainerView> containerViews,
+    private void displayContainerView(ContainerType containerType, Map<Integer, SurveyContainerView> containerViews,
                                       LinearLayout layout) {
         SurveyContainerView view = new SurveyContainerView(this, containerType);
         layout.addView(view);

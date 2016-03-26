@@ -17,17 +17,18 @@
 
 package th.or.nectec.tanrabad.survey.repository;
 
-import java.util.HashMap;
-import java.util.List;
-
 import th.or.nectec.tanrabad.domain.organization.OrganizationRepository;
 import th.or.nectec.tanrabad.domain.organization.OrganizationRepositoryException;
 import th.or.nectec.tanrabad.entity.Organization;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class InMemoryOrganizationRepository implements OrganizationRepository {
     private static InMemoryOrganizationRepository instance;
 
-    private HashMap<Integer, Organization> organizationMapping = new HashMap<>();
+    private Map<Integer, Organization> organizationMapping = new HashMap<>();
 
     static InMemoryOrganizationRepository getInstance() {
         if (instance == null) {

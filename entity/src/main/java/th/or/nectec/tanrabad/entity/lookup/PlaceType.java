@@ -17,10 +17,9 @@
 
 package th.or.nectec.tanrabad.entity.lookup;
 
-import th.or.nectec.tanrabad.entity.Entity;
 import th.or.nectec.tanrabad.entity.ReferenceEntity;
 
-public class PlaceType extends Entity implements ReferenceEntity {
+public class PlaceType implements ReferenceEntity {
 
     public static final int VILLAGE_COMMUNITY = 1;
     public static final int WORSHIP = 2;
@@ -46,13 +45,21 @@ public class PlaceType extends Entity implements ReferenceEntity {
     }
 
     @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + name.hashCode();
+        return result;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         PlaceType placeType = (PlaceType) o;
 
-        if (id != placeType.id) return false;
-        return name != null ? name.equals(placeType.name) : placeType.name == null;
+        return id == placeType.id && (name != null
+                ? name.equals(placeType.name)
+                : placeType.name == null);
     }
 }

@@ -18,17 +18,18 @@
 package th.or.nectec.tanrabad.entity;
 
 import org.joda.time.DateTime;
+import th.or.nectec.tanrabad.entity.field.Location;
+import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import th.or.nectec.tanrabad.entity.field.Location;
-import th.or.nectec.tanrabad.entity.lookup.ContainerType;
-
 public class Survey extends Entity implements LocationEntity, Comparable<Survey> {
+
     private final User user;
     private final UUID surveyId;
+
     private Building surveyBuilding;
     private int residentCount;
     private List<SurveyDetail> indoorDetails;
@@ -38,6 +39,7 @@ public class Survey extends Entity implements LocationEntity, Comparable<Survey>
     private Location location;
 
     public Survey(UUID surveyId, User user, Building surveyBuilding) {
+        super();
         this.surveyId = surveyId;
         this.user = user;
         this.surveyBuilding = surveyBuilding;
@@ -118,6 +120,18 @@ public class Survey extends Entity implements LocationEntity, Comparable<Survey>
     }
 
     @Override
+    public int hashCode() {
+        int result = user.hashCode();
+        result = 31 * result + surveyId.hashCode();
+        result = 31 * result + surveyBuilding.hashCode();
+        result = 31 * result + residentCount;
+        result = 31 * result + (indoorDetails != null ? indoorDetails.hashCode() : 0);
+        result = 31 * result + (outdoorDetails != null ? outdoorDetails.hashCode() : 0);
+        result = 31 * result + (startTimestamp != null ? startTimestamp.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -172,7 +186,7 @@ public class Survey extends Entity implements LocationEntity, Comparable<Survey>
         private final List<SurveyDetail> indoor = new ArrayList<>();
         private final List<SurveyDetail> outdoor = new ArrayList<>();
         private final UUID surveyId;
-        private int resident = 0;
+        private int resident;
         private User surveyor = TESTER;
         private Building building = DEFAULT_BUILDING;
         private Location location;

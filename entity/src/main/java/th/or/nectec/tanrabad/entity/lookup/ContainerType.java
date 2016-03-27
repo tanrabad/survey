@@ -32,6 +32,13 @@ public class ContainerType implements Comparable<ContainerType> {
     }
 
     @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + name.hashCode();
+        return result;
+    }
+
+    @Override
     public boolean equals(Object other) {
         if (this == other) return true;
         if (!(other instanceof ContainerType)) return false;
@@ -49,9 +56,13 @@ public class ContainerType implements Comparable<ContainerType> {
 
     @Override
     public int compareTo(ContainerType o) {
-        if (id > o.getId()) return 1;
-        else if (id < o.getId()) return -1;
-        else return 0;
+        if (id > o.getId()) {
+            return 1;
+        } else if (id < o.getId()) {
+            return -1;
+        } else {
+            return 0;
+        }
     }
 
     public int getId() {

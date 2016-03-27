@@ -17,7 +17,6 @@
 
 package th.or.nectec.tanrabad.entity;
 
-
 public class User {
     private final String username;
     private String firstname;
@@ -120,7 +119,11 @@ public class User {
 
     @Override
     public int hashCode() {
-        return username.hashCode();
+        int result = username.hashCode();
+        result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
+        result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
+        result = 31 * result + organizationId;
+        return result;
     }
 
     @Override
@@ -129,7 +132,6 @@ public class User {
         if (o == null || getClass() != o.getClass()) return false;
 
         User user = (User) o;
-
         if (organizationId != user.organizationId) return false;
         if (!username.equals(user.username)) return false;
         if (firstname != null ? !firstname.equals(user.firstname) : user.firstname != null)

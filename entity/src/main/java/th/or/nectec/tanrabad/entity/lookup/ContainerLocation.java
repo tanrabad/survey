@@ -28,6 +28,13 @@ public class ContainerLocation {
     }
 
     @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + name.hashCode();
+        return result;
+    }
+
+    @Override
     public boolean equals(Object other) {
         if (this == other) return true;
         if (!(other instanceof ContainerLocation)) return false;

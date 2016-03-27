@@ -30,6 +30,7 @@ public class PlaceSubType extends Entity implements ReferenceEntity {
     private final int placeTypeId;
 
     public PlaceSubType(int id, String name, int placeTypeId) {
+        super();
         this.id = id;
         this.name = name;
         this.placeTypeId = placeTypeId;
@@ -50,14 +51,22 @@ public class PlaceSubType extends Entity implements ReferenceEntity {
     }
 
     @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + name.hashCode();
+        result = 31 * result + placeTypeId;
+        return result;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         PlaceSubType that = (PlaceSubType) o;
-        if (id != that.id) return false;
-        if (placeTypeId != that.placeTypeId) return false;
-        return name.equals(that.name);
+        return id == that.id
+                && placeTypeId == that.placeTypeId
+                && name.equals(that.name);
     }
 
     @Override

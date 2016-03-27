@@ -31,6 +31,4 @@ public class ContainerTypeStub {
     public static final ContainerType กากใบพืช = new ContainerType(8, "กากใบพืช");
     public static final ContainerType ภาชนะที่ไม่ใช้ = new ContainerType(9, "ภาชนะที่ไม่ใช้");
     public static final ContainerType อื่นๆ = new ContainerType(10, "อื่นๆ(ที่ไม่ใช้ประโยชน์)");
-
-
 }

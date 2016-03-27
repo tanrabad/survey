@@ -17,9 +17,9 @@
 
 package th.or.nectec.tanrabad.entity;
 
-import java.util.UUID;
-
 import th.or.nectec.tanrabad.entity.field.Location;
+
+import java.util.UUID;
 
 public class Place extends Entity implements LocationEntity, Comparable<Place> {
 
@@ -32,6 +32,7 @@ public class Place extends Entity implements LocationEntity, Comparable<Place> {
     private String updateBy;
 
     public Place(UUID id, String name) {
+        super();
         this.id = id;
         this.name = name;
     }
@@ -96,6 +97,16 @@ public class Place extends Entity implements LocationEntity, Comparable<Place> {
 
     public void setUpdateBy(String updateBy) {
         this.updateBy = updateBy;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + name.hashCode();
+        result = 31 * result + type;
+        result = 31 * result + subType;
+        result = 31 * result + (location != null ? location.hashCode() : 0);
+        return result;
     }
 
     @Override

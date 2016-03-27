@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,9 +17,9 @@
 
 package th.or.nectec.tanrabad.entity;
 
-import java.util.UUID;
-
 import th.or.nectec.tanrabad.entity.lookup.ContainerType;
+
+import java.util.UUID;
 
 public class SurveyDetail implements Comparable {
     private final UUID surveyDetailId;
@@ -61,6 +61,15 @@ public class SurveyDetail implements Comparable {
     }
 
     @Override
+    public int hashCode() {
+        int result = surveyDetailId.hashCode();
+        result = 31 * result + containerType.hashCode();
+        result = 31 * result + totalContainer;
+        result = 31 * result + foundLarvaContainer;
+        return result;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -71,8 +80,9 @@ public class SurveyDetail implements Comparable {
         if (foundLarvaContainer != that.foundLarvaContainer) return false;
         if (containerType != null ? !containerType.equals(that.containerType) : that.containerType != null)
             return false;
-        return surveyDetailId != null ? surveyDetailId.equals(that.surveyDetailId) : that.surveyDetailId == null;
-
+        return surveyDetailId != null
+                ? surveyDetailId.equals(that.surveyDetailId)
+                : that.surveyDetailId == null;
     }
 
     @Override
@@ -88,14 +98,15 @@ public class SurveyDetail implements Comparable {
     @Override
     public int compareTo(Object o) {
         SurveyDetail other = (SurveyDetail) o;
-        if (foundLarvaContainer > other.foundLarvaContainer)
+        if (foundLarvaContainer > other.foundLarvaContainer) {
             return 1;
-        else if (foundLarvaContainer < other.foundLarvaContainer)
+        } else if (foundLarvaContainer < other.foundLarvaContainer) {
             return -1;
-        else
+        } else {
             return 0;
+        }
     }
 
-    public class ContainerFoundLarvaOverTotalException extends RuntimeException {
+    public static class ContainerFoundLarvaOverTotalException extends RuntimeException {
     }
 }

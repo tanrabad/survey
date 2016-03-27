@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015  NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -114,7 +114,10 @@ public class UserTest {
     @Test
     public void testHashcode() throws Exception {
         assertEquals(AUSTIN_USERNAME.hashCode(), austin.hashCode());
+    }
 
+    @Test
+    public void testHashcodeOfDifferentDataObjectShouldNotEqual() throws Exception {
         User bob = User.fromUsername("bob");
         assertNotEquals(austin.hashCode(), bob.hashCode());
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,15 +17,14 @@
 
 package th.or.nectec.tanrabad.entity;
 
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
-
-import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 
 import static org.junit.Assert.assertEquals;
 
@@ -42,7 +41,7 @@ public class SurveyIndoorOutdoorDetailTest {
         assertEquals(surveyDetails1(), survey1.getIndoorDetail());
     }
 
-    private ArrayList<SurveyDetail> surveyDetails1() {
+    private List<SurveyDetail> surveyDetails1() {
         ContainerType containerType1 = new ContainerType(1, "น้ำใช้");
         ContainerType containerType2 = new ContainerType(8, "กากใบพืช");
         ContainerType containerType3 = new ContainerType(7, "ยางรถยนต์เก่า");

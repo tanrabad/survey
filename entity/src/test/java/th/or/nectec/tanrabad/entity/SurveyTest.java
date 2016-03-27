@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,15 +20,14 @@ package th.or.nectec.tanrabad.entity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import th.or.nectec.tanrabad.entity.field.Location;
+import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import th.or.nectec.tanrabad.entity.field.Location;
-import th.or.nectec.tanrabad.entity.lookup.ContainerType;
-
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 @RunWith(JUnit4.class)
 public class SurveyTest {
@@ -74,7 +73,7 @@ public class SurveyTest {
         survey1.setIndoorDetail(indoor2);
         survey1.setOutdoorDetail(outdoor2);
 
-        assertEquals(false, survey1.isFoundLarvae());
+        assertFalse(survey1.isFoundLarvae());
     }
 
     @Test
@@ -84,7 +83,7 @@ public class SurveyTest {
 
         survey1.setIndoorDetail(indoor2);
 
-        assertEquals(true, survey1.isFoundLarvae());
+        assertTrue(survey1.isFoundLarvae());
     }
 
     @Test
@@ -99,6 +98,6 @@ public class SurveyTest {
         survey1.setIndoorDetail(indoor2);
         survey1.setOutdoorDetail(outdoor2);
 
-        assertEquals(true, survey1.isFoundLarvae());
+        assertTrue(survey1.isFoundLarvae());
     }
 }

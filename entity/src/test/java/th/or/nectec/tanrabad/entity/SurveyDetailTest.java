@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,10 +21,9 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 
 import java.util.UUID;
-
-import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 
 @RunWith(JUnit4.class)
 public class SurveyDetailTest {
@@ -32,7 +31,7 @@ public class SurveyDetailTest {
     private final ContainerType water = new ContainerType(1, "water");
 
     @Test(expected = SurveyDetail.ContainerFoundLarvaOverTotalException.class)
-    public void ContainerFoundLarvaMoreThanTotalMustThrowException() {
+    public void containerFoundLarvaMoreThanTotalMustThrowException() {
         new SurveyDetail(UUID.randomUUID(), water, 2, 10);
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,6 +24,7 @@ import org.junit.runners.JUnit4;
 import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
@@ -32,9 +33,9 @@ import static org.junit.Assert.assertNotEquals;
 @RunWith(JUnit4.class)
 public class SurveyEqualOrNotEqualTest {
 
+    private static final int resident = 2250;
     private final User user1 = User.fromUsername("Tom50");
     private final Building building1 = Building.withName("โรงเรียนเซนต์เมรี่");
-    private final int resident = 2250;
     private final Survey survey1 = new Survey(UUID.randomUUID(), user1, building1);
 
     @Test
@@ -73,7 +74,7 @@ public class SurveyEqualOrNotEqualTest {
         assertNotEquals(survey1, survey2);
     }
 
-    private ArrayList<SurveyDetail> surveyDetails1() {
+    private List<SurveyDetail> surveyDetails1() {
         ContainerType containerType1 = new ContainerType(1, "น้ำใช้");
         ContainerType containerType2 = new ContainerType(8, "กากใบพืช");
         ContainerType containerType3 = new ContainerType(7, "ยางรถยนต์เก่า");
@@ -89,7 +90,7 @@ public class SurveyEqualOrNotEqualTest {
         return detailArrayList;
     }
 
-    private ArrayList<SurveyDetail> surveyDetails2() {
+    private List<SurveyDetail> surveyDetails2() {
         ContainerType containerType1 = new ContainerType(1, "น้ำใช้");
         ContainerType containerType2 = new ContainerType(8, "กากใบพืช");
         ContainerType containerType3 = new ContainerType(7, "ยางรถยนต์เก่า");

@@ -18,7 +18,6 @@
 package th.or.nectec.tanrabad.entity;
 
 import org.junit.Test;
-
 import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 import th.or.nectec.tanrabad.entity.stub.ContainerTypeStub;
 
@@ -66,9 +65,16 @@ public class ContainerTypeTest {
 
     @Test
     public void testCompare() throws Exception {
-        assertEquals(-1, ContainerTypeStub.น้ำใช้.compareTo(ContainerTypeStub.ยางรถยนต์เก่า));
         assertEquals(0, ContainerTypeStub.น้ำดื่ม.compareTo(ContainerTypeStub.น้ำดื่ม));
-        assertEquals(1, ContainerTypeStub.อื่นๆ.compareTo(ContainerTypeStub.น้ำดื่ม));
+    }
 
+    @Test
+    public void testCompareLessThen() throws Exception {
+        assertEquals(-1, ContainerTypeStub.น้ำใช้.compareTo(ContainerTypeStub.ยางรถยนต์เก่า));
+    }
+
+    @Test
+    public void testCompareGreaterThen() throws Exception {
+        assertEquals(1, ContainerTypeStub.อื่นๆ.compareTo(ContainerTypeStub.น้ำดื่ม));
     }
 }

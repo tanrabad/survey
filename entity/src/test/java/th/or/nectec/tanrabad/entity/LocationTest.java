@@ -20,12 +20,10 @@ package th.or.nectec.tanrabad.entity;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
 import th.or.nectec.tanrabad.entity.field.Location;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
-
 
 public class LocationTest {
     private static final double DELTA = 0.0001;
@@ -66,27 +64,15 @@ public class LocationTest {
         assertEquals(location, sameLocation);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testOutOfRangeLatitude() throws Exception {
-        new Location(89, 0);
-        new Location(90, 0);
-        new Location(-89, 0);
-        new Location(-90, 0);
-
         exception.expect(IllegalArgumentException.class);
         new Location(-90.1, 0);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testOutOfRangeLongitude() throws Exception {
-        new Location(0, 179);
-        new Location(0, 180);
-        new Location(0, -179);
-        new Location(0, -180);
-
         exception.expect(IllegalArgumentException.class);
         new Location(0, 180.1f);
-
-
     }
 }

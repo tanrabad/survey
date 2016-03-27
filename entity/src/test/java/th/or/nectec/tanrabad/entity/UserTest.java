@@ -112,13 +112,9 @@ public class UserTest {
     }
 
     @Test
-    public void testHashcode() throws Exception {
-        assertEquals(AUSTIN_USERNAME.hashCode(), austin.hashCode());
-    }
-
-    @Test
     public void testHashcodeOfDifferentDataObjectShouldNotEqual() throws Exception {
         User bob = User.fromUsername("bob");
+
         assertNotEquals(austin.hashCode(), bob.hashCode());
     }
 }

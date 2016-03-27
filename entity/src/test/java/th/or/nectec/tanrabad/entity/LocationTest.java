@@ -66,13 +66,11 @@ public class LocationTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testOutOfRangeLatitude() throws Exception {
-        exception.expect(IllegalArgumentException.class);
         new Location(-90.1, 0);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testOutOfRangeLongitude() throws Exception {
-        exception.expect(IllegalArgumentException.class);
         new Location(0, 180.1f);
     }
 }

@@ -173,12 +173,14 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
                 Tooltip.make(SurveyBuildingHistoryActivity.this,
                         new Tooltip.Builder(101)
                                 .typeface(typeface)
-                                .closePolicy(policy, 10000)
+                                .showDelay(5000)
+                                .closePolicy(policy, 20000)
                                 .withArrow(true)
                                 .withOverlay(true)
                                 .text(getString(R.string.choose_building_to_survey))
                                 .withStyleId(R.style.ToolTipLayoutCustomStyle)
                                 .anchor(surveyMoreBuildingButton, Tooltip.Gravity.LEFT)
+                                .floatingAnimation(Tooltip.AnimationBuilder.SLOW)
                                 .build()
                 ).show();
             }

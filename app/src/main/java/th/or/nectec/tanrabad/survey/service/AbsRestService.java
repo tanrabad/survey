@@ -17,6 +17,9 @@
 
 package th.or.nectec.tanrabad.survey.service;
 
+import android.text.TextUtils;
+import android.util.Patterns;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,20 +33,15 @@ import th.or.nectec.tanrabad.survey.presenter.AccountUtils;
 import th.or.nectec.tanrabad.survey.service.http.Status;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
-import static th.or.nectec.tanrabad.survey.service.http.Header.ACCEPT;
-import static th.or.nectec.tanrabad.survey.service.http.Header.ACCEPT_CHARSET;
-import static th.or.nectec.tanrabad.survey.service.http.Header.IF_MODIFIED_SINCE;
-import static th.or.nectec.tanrabad.survey.service.http.Header.LAST_MODIFIED;
-import static th.or.nectec.tanrabad.survey.service.http.Header.LINK;
+import static th.or.nectec.tanrabad.survey.service.http.Header.*;
 
 public abstract class AbsRestService<T> implements RestService<T> {
 
-    static final String BASE_API = BuildConfig.API_URL;
     private static final int READ_WRITE_TIMEOUT = 10; //second
     private static final int CONNECT_TIMEOUT = 5; //second
-
-    final OkHttpClient client;
-    String baseApi;
+    protected static String BASE_API = BuildConfig.API_URL;
+    protected final OkHttpClient client;
+    protected String baseApi;
     private ServiceLastUpdate serviceLastUpdate;
     private User user;
     private String nextUrl = null;
@@ -54,15 +52,30 @@ public abstract class AbsRestService<T> implements RestService<T> {
     }
 
     private AbsRestService(String baseApi, ServiceLastUpdate serviceLastUpdate, User user) {
-        this.baseApi = baseApi;
         this.serviceLastUpdate = serviceLastUpdate;
         this.user = user;
+        this.baseApi = baseApi;
+
         client = new OkHttpClient.Builder()
                 .readTimeout(READ_WRITE_TIMEOUT, SECONDS)
                 .writeTimeout(READ_WRITE_TIMEOUT, SECONDS)
                 .connectTimeout(CONNECT_TIMEOUT, SECONDS)
                 .build();
         deletedData = new ArrayList<>();
+    }
+
+    public static void setBaseApi(String baseApi) {
+        if (TextUtils.isEmpty(baseApi))
+            return;
+
+        if (!Patterns.WEB_URL.matcher(baseApi).matches())
+            return;
+
+        BASE_API = baseApi;
+    }
+
+    public static String getBaseApi() {
+        return BASE_API;
     }
 
     String getApiFilterParam() {

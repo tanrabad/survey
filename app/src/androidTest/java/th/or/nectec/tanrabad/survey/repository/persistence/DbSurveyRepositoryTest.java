@@ -236,7 +236,7 @@ public class DbSurveyRepositoryTest {
         List<BuildingWithSurveyStatus> surveyBuildingInThisWeek =
                 surveyRepository.findSurveyBuilding(stubPlace(), stubUser());
 
-        assertEquals(3, surveyBuildingInThisWeek.size());
+        assertEquals(4, surveyBuildingInThisWeek.size());
         assertTrue(surveyBuildingInThisWeek.get(0).isSurvey);
         assertFalse(surveyBuildingInThisWeek.get(1).isSurvey);
         assertFalse(surveyBuildingInThisWeek.get(2).isSurvey);

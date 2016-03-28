@@ -116,7 +116,7 @@
                                 android:ems="2"
                                 android:gravity="center"
                                 android:inputType="number"
-                                android:maxLength="3"
+                                android:maxLength="4"
                                 android:padding="10dp"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/text_body"

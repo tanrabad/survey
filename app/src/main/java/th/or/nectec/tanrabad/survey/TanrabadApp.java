@@ -22,6 +22,7 @@ import android.content.Context;
 
 import cat.ereza.customactivityoncrash.CustomActivityOnCrash;
 import org.trb.authen.client.TRBAuthenUtil;
+import th.or.nectec.tanrabad.survey.presenter.LoginActivity;
 import th.or.nectec.tanrabad.survey.utils.tool.ActionLogger;
 import th.or.nectec.tanrabad.survey.utils.tool.ExceptionLogger;
 import th.or.nectec.tanrabad.survey.utils.tool.GoogleAnalyticsTool;
@@ -68,6 +69,7 @@ public class TanrabadApp extends Application {
     private void setupCrashActivity() {
         //must call this before setup fabric tools
         CustomActivityOnCrash.install(this);
+        CustomActivityOnCrash.setRestartActivityClass(LoginActivity.class);
         CustomActivityOnCrash.setLaunchErrorActivityWhenInBackground(false);
         CustomActivityOnCrash.setShowErrorDetails(BuildConfig.DEBUG);
         CustomActivityOnCrash.setEnableAppRestart(true);

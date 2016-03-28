@@ -22,7 +22,7 @@ import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 import th.or.nectec.tanrabad.entity.stub.ContainerTypeStub;
-import th.or.nectec.tanrabad.survey.utils.SurveyBuilder;
+import th.or.nectec.tanrabad.entity.utils.SurveyBuilder;
 
 import java.util.UUID;
 

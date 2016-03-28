@@ -1,18 +1,34 @@
+/*
+ * Copyright (c) 2016 NECTEC
+ *   National Electronics and Computer Technology Center, Thailand
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package th.or.nectec.tanrabad.survey.service.json;
 
 import com.bluelinelabs.logansquare.LoganSquare;
-
 import org.joda.time.DateTime;
 import org.junit.Test;
-
-import java.util.UUID;
-
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.entity.lookup.ContainerType;
+import th.or.nectec.tanrabad.entity.utils.SurveyBuilder;
 import th.or.nectec.tanrabad.survey.utils.ResourceFile;
+
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 
@@ -37,7 +53,7 @@ public class JsonSurveyTest {
 
     @Test
     public void testParseSurveyDataToJsonString() throws Exception {
-        Survey survey = new Survey.Builder(UUID.fromString("1619f46f-6a70-4049-82ec-69dad861a5c6"), stubUser())
+        Survey survey = new SurveyBuilder(UUID.fromString("1619f46f-6a70-4049-82ec-69dad861a5c6"), stubUser())
                 .addIndoorDetail(UUID.fromString("772c4938-b910-11e5-a0c5-aabbccddeeff"),
                         new ContainerType(1, "น้ำใช้"), 10, 5)
                 .addOutdoorDetail(UUID.fromString("772c4938-b917-11e5-a0c5-aabbccddeeff"),
@@ -64,6 +80,10 @@ public class JsonSurveyTest {
                 + "\"surveyor\":\"dcp-user\"}", LoganSquare.serialize(jsonSurvey));
     }
 
+    private User stubUser() {
+        return new User("dcp-user");
+    }
+
     private Building stubBuilding() {
         return new Building(UUID.fromString("5cf5665b-5642-10fb-a3a0-5e612a842583"), "abc");
     }
@@ -72,13 +92,9 @@ public class JsonSurveyTest {
         return new Location(39.745675, -73.150055);
     }
 
-    private User stubUser() {
-        return new User("dcp-user");
-    }
-
     @Test
     public void testParseSurveyDataWithNullLocationToJsonString() throws Exception {
-        Survey survey = new Survey.Builder(UUID.fromString("1619f46f-6a70-4049-82ec-69dad861a5c6"), stubUser())
+        Survey survey = new SurveyBuilder(UUID.fromString("1619f46f-6a70-4049-82ec-69dad861a5c6"), stubUser())
                 .addIndoorDetail(UUID.fromString("772c4938-b910-11e5-a0c5-aabbccddeeff"),
                         new ContainerType(1, "น้ำใช้"), 10, 5)
                 .addOutdoorDetail(UUID.fromString("772c4938-b917-11e5-a0c5-aabbccddeeff"),

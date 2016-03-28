@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey.utils;
+package th.or.nectec.tanrabad.entity.utils;
 
 import org.joda.time.DateTime;
 import th.or.nectec.tanrabad.entity.Building;

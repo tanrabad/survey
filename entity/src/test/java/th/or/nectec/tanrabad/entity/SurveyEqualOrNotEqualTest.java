@@ -33,7 +33,7 @@ import static org.junit.Assert.assertNotEquals;
 @RunWith(JUnit4.class)
 public class SurveyEqualOrNotEqualTest {
 
-    private static final int resident = 2250;
+    private static final int RESIDENT = 2250;
     private final User user1 = User.fromUsername("Tom50");
     private final Building building1 = Building.withName("โรงเรียนเซนต์เมรี่");
     private final Survey survey1 = new Survey(UUID.randomUUID(), user1, building1);
@@ -60,7 +60,7 @@ public class SurveyEqualOrNotEqualTest {
 
     @Test
     public void surveyWithDifferentResidentMustNotEquals() {
-        survey1.setResidentCount(resident);
+        survey1.setResidentCount(RESIDENT);
         Survey survey2 = new Survey(UUID.randomUUID(), user1, building1);
         survey2.setResidentCount(3000);
         assertNotEquals(survey1, survey2);
@@ -117,7 +117,7 @@ public class SurveyEqualOrNotEqualTest {
     @Test
     public void surveyWithTheSameAllFieldMustEquals() {
         survey1.setStartTimestamp(DateTime.now());
-        survey1.setResidentCount(resident);
+        survey1.setResidentCount(RESIDENT);
         survey1.setIndoorDetail(surveyDetails1());
         survey1.setOutdoorDetail(surveyDetails2());
         Survey survey2 = new Survey(UUID.randomUUID(), user1, building1);

@@ -21,7 +21,7 @@ import org.junit.Test;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.stub.ContainerTypeStub;
-import th.or.nectec.tanrabad.survey.utils.SurveyBuilder;
+import th.or.nectec.tanrabad.entity.utils.SurveyBuilder;
 
 import java.util.ArrayList;
 import java.util.UUID;

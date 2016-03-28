@@ -33,8 +33,8 @@ import static org.junit.Assert.*;
 public class SurveyTest {
 
     private final User user1 = User.fromUsername("Tom50");
-    private final Building building1 = Building.withName("โรงเรียนเซนต์เมรี่");
-    private final Survey survey1 = new Survey(UUID.randomUUID(), user1, building1);
+    private final Building building = Building.withName("โรงเรียนเซนต์เมรี่");
+    private final Survey survey1 = new Survey(UUID.randomUUID(), user1, building);
     private final ContainerType drinkWater = new ContainerType(1, "drinkWater");
     private final ContainerType water = new ContainerType(2, "water");
     private final Location location = new Location(14.078606, 100.603120);
@@ -52,9 +52,7 @@ public class SurveyTest {
 
     @Test
     public void testSetThenGetSurveyBuilding() {
-        Building building2 = Building.withName("โรงเรียนดอนบอสโก");
-        survey1.setSurveyBuilding(building2);
-        assertEquals(building2, survey1.getSurveyBuilding());
+        assertEquals(building, survey1.getSurveyBuilding());
     }
 
     @Test

@@ -33,7 +33,9 @@ public class SplashScreenActivity extends TanrabadActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        openLoginActivityAfterDelayed();
+        if ("android.intent.action.MAIN".equals(getIntent().getAction())) {
+            openLoginActivityAfterDelayed();
+        }
     }
 
     private void openLoginActivityAfterDelayed() {

@@ -127,7 +127,16 @@ public class LoginActivity extends TanrabadActivity {
         findViewById(R.id.bg_blue).startAnimation(loadAnimation(this, R.anim.login_bg_blue));
         Animation dropIn = loadAnimation(this, R.anim.logo);
         dropIn.setStartOffset(1200);
-        findViewById(R.id.logo_tabrabad).startAnimation(dropIn);
+        View logoTrb = findViewById(R.id.logo_tabrabad);
+        logoTrb.startAnimation(dropIn);
+        logoTrb.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, SplashScreenActivity.class);
+                startActivity(intent);
+                return true;
+            }
+        });
     }
 
     private boolean isFirstTime() {

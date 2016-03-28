@@ -187,5 +187,9 @@
     <string name="customactivityoncrash_error_activity_close_app">ปิด</string>
     <string name="customactivityoncrash_error_activity_error_details">รายละเอียด</string>
     <string name="choose_building_to_survey">ระบุอาคารเพื่อสำรวจเพิ่มเติม</string>
+    <string name="tanrabad_survey">TanRaBad SURVEY</string>
+    <string name="support_by">สนับสนุนโดย</string>
+    <string name="ministry_of_science_and_technology">กระทรวงวิทยาศาสตร์และเทคโนโลยี</string>
+    <string name="ministry_of_public_health">กระทรวงสาธารณสุข</string>
 
 </resources>

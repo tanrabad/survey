@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2016 NECTEC
+  ~   National Electronics and Computer Technology Center, Thailand
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:gravity="center"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <TextView
+                style="@style/TanrabadTextAppearance.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="80sp"
+                android:text="@string/app_name"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:textColor="@color/white"
+                android:textSize="78sp"
+                android:text="@string/survey"/>
+    </LinearLayout>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black_transparent_50"
+            android:layout_marginTop="-16dp"
+            android:textSize="46sp"
+            android:text="@string/tanrabad_survey"/>
+
+
+    <View android:layout_width="390dp"
+          android:layout_height="1dp"
+          android:background="@color/white_transparent_50"
+          android:layout_marginTop="@dimen/space_between_content"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TanrabadTextAppearance.Caption"
+            android:textColor="@color/white"
+            android:layout_marginTop="16dp"
+            android:text="@string/support_by"
+            android:id="@+id/support_by"/>
+
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:layout_marginTop="12dp"
+                  android:orientation="horizontal">
+        <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                   android:contentDescription="@string/ministry_of_public_health"
+                   android:layout_marginRight="4dp"
+                   android:src="@mipmap/ic_logo_moph"/>
+        <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                   android:contentDescription="@string/ministry_of_science_and_technology"
+                   android:layout_marginLeft="4dp"
+                   android:src="@mipmap/ic_logo_most"/>
+    </LinearLayout>
+
+
+</LinearLayout>

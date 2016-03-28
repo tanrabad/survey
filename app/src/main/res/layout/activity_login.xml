@@ -41,11 +41,11 @@
                 tools:ignore="MissingPrefix"/>
 
         <ImageView
-            android:layout_width="150dp"
-            android:layout_height="48dp"
+                android:layout_width="150dp"
+                android:layout_height="48dp"
                 android:layout_marginBottom="@dimen/space_between_content"
-            android:contentDescription="@string/nectec"
-            android:src="@drawable/logo_nectec"/>
+                android:contentDescription="@string/nectec"
+                android:src="@drawable/logo_nectec"/>
 
         <TextView
                 fontPath="fonts/RobotoCondensed-Regular.ttf"
@@ -84,20 +84,20 @@
             android:text="@string/trial"
             android:textColor="@color/black"/>
     <CheckBox
-        android:id="@+id/need_showcase"
+            android:id="@+id/need_showcase"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/authentication_button"
             android:layout_centerHorizontal="true"
-        android:text="@string/show_tutorial"
-        android:visibility="invisible"/>
+            android:text="@string/show_tutorial"
+            android:visibility="invisible"/>
     <ImageView
-        android:id="@+id/bg_blue"
+            android:id="@+id/bg_blue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-        android:contentDescription="@null"
+            android:contentDescription="@null"
             android:scaleType="fitXY"
-        android:src="@drawable/bg_blue_login_page"/>
+            android:src="@drawable/bg_blue_login_page"/>
 
     <TextView
             android:layout_width="wrap_content"
@@ -107,7 +107,7 @@
             android:textColor="@color/light_gray"
             android:text="@string/about"
             android:id="@+id/about"
-            />
+    />
 
     <TextView
             android:layout_width="wrap_content"
@@ -133,12 +133,12 @@
             android:textSize="@dimen/text_caption"/>
 
     <ImageView
-        android:id="@+id/logo_tabrabad"
+            android:id="@+id/logo_tabrabad"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:contentDescription="@null"
+            android:layout_marginTop="30dp"
+            android:contentDescription="@null"
             android:src="@drawable/logo_tanrabad"/>
 
     <LinearLayout
@@ -154,6 +154,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/app_name"
+                android:textStyle="bold"
                 android:textColor="#ffffff"
                 android:textSize="@dimen/text_headline"/>
 
@@ -162,7 +163,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/survey"
                 android:textColor="#ffffff"
-                android:textSize="@dimen/text_title"/>
+                android:textSize="38sp"/>
     </LinearLayout>
 
 

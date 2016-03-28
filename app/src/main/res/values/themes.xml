@@ -59,17 +59,17 @@
     </style>
 
     <style name="AppTheme.Blue">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
         <item name="colorPrimary">@color/water_blue</item>
         <item name="colorPrimaryDark">@color/dark_blue</item>
     </style>
 
     <style name="AppTheme.Purple">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
         <item name="colorPrimary">@color/purple</item>
         <item name="colorPrimaryDark">@color/purple_dark</item>
+    </style>
+
+    <style name="AppTheme.SplashScreen">
+        <item name="android:windowBackground">@color/razzmatazz</item>
     </style>
 
     <style name="AppTheme.Blue.Water">

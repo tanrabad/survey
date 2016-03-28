@@ -61,14 +61,17 @@
                 android:authorities="th.or.nectec.tanrabad.survey.PlaceSuggestionProvider"
                 android:exported="false"/>
 
-        <activity
-                android:name=".presenter.LoginActivity"
-                android:theme="@style/AppTheme.Blue">
+        <activity android:name=".presenter.SplashScreenActivity" android:theme="@style/AppTheme.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+
+        <activity
+                android:name=".presenter.LoginActivity"
+                android:theme="@style/AppTheme.Blue">
 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>

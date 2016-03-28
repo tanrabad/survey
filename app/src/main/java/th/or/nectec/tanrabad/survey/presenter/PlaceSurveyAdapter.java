@@ -32,15 +32,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.lookup.District;
-import th.or.nectec.tanrabad.entity.lookup.Province;
-import th.or.nectec.tanrabad.entity.lookup.Subdistrict;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
-import th.or.nectec.tanrabad.survey.repository.persistence.DbDistrictRepository;
-import th.or.nectec.tanrabad.survey.repository.persistence.DbProvinceRepository;
-import th.or.nectec.tanrabad.survey.repository.persistence.DbSubdistrictRepository;
-import th.or.nectec.thai.address.AddressPrinter;
+import th.or.nectec.thai.widget.address.AddressPicker;
 
 public class PlaceSurveyAdapter extends RecyclerView.Adapter<PlaceSurveyAdapter.ViewHolder>
         implements ListViewAdapter<Place> {
@@ -94,14 +88,10 @@ public class PlaceSurveyAdapter extends RecyclerView.Adapter<PlaceSurveyAdapter.
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Place place = places.get(position);
         holder.placeTextView.setText(place.getName());
-        holder.placeIcon.setImageResource(PlaceIconMapping.getPlaceIcon(place));
         holder.placeSubtypeTextView.setText(
                 BrokerPlaceSubTypeRepository.getInstance().findById(place.getSubType()).getName());
-        Subdistrict subdistrict = DbSubdistrictRepository.getInstance().findByCode(place.getSubdistrictCode());
-        District district = DbDistrictRepository.getInstance().findByCode(subdistrict.getDistrictCode());
-        Province province = DbProvinceRepository.getInstance().findByCode(district.getProvinceCode());
-        holder.placeAddressTextView.setText(
-                AddressPrinter.print(subdistrict.getName(), district.getName(), province.getName()));
+        holder.placeAddressTextView.setAddressCode(place.getSubdistrictCode());
+        holder.placeIcon.setImageResource(PlaceIconMapping.getPlaceIcon(place));
         holder.placeIcon.setImageResource(PlaceIconMapping.getPlaceIcon(place));
         holder.viewSurveyResultButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,7 +122,7 @@ public class PlaceSurveyAdapter extends RecyclerView.Adapter<PlaceSurveyAdapter.
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView placeTextView;
         private TextView placeSubtypeTextView;
-        private TextView placeAddressTextView;
+        private AddressPicker placeAddressTextView;
         private ImageView placeIcon;
         private Button viewSurveyResultButton;
         private ImageView notSync;
@@ -144,11 +134,10 @@ public class PlaceSurveyAdapter extends RecyclerView.Adapter<PlaceSurveyAdapter.
             itemView.setOnClickListener(this);
             placeTextView = (TextView) itemView.findViewById(R.id.place_name);
             placeSubtypeTextView = (TextView) itemView.findViewById(R.id.place_subtype);
-            placeAddressTextView = (TextView) itemView.findViewById(R.id.place_address);
-            placeIcon = (ImageView) itemView.findViewById(R.id.place_icon);
+            placeAddressTextView = (AddressPicker) itemView.findViewById(R.id.place_address);
             notSync = (ImageView) itemView.findViewById(R.id.not_sync);
+            placeIcon = (ImageView) itemView.findViewById(R.id.place_icon);
             viewSurveyResultButton = (Button) itemView.findViewById(R.id.view_survey_result_button);
-
             notSync.setVisibility(View.GONE);
         }
 

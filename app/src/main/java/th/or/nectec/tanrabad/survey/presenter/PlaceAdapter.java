@@ -30,16 +30,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.lookup.District;
-import th.or.nectec.tanrabad.entity.lookup.Province;
-import th.or.nectec.tanrabad.entity.lookup.Subdistrict;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
-import th.or.nectec.tanrabad.survey.repository.persistence.DbDistrictRepository;
-import th.or.nectec.tanrabad.survey.repository.persistence.DbProvinceRepository;
-import th.or.nectec.tanrabad.survey.repository.persistence.DbSubdistrictRepository;
 import th.or.nectec.tanrabad.survey.repository.persistence.PlaceWithChange;
-import th.or.nectec.thai.address.AddressPrinter;
+import th.or.nectec.thai.widget.address.AddressPicker;
 
 public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> implements ListViewAdapter<Place> {
 
@@ -93,11 +87,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> 
         holder.placeTextView.setText(place.getName());
         holder.placeSubtypeTextView.setText(
                 BrokerPlaceSubTypeRepository.getInstance().findById(place.getSubType()).getName());
-        Subdistrict subdistrict = DbSubdistrictRepository.getInstance().findByCode(place.getSubdistrictCode());
-        District district = DbDistrictRepository.getInstance().findByCode(subdistrict.getDistrictCode());
-        Province province = DbProvinceRepository.getInstance().findByCode(district.getProvinceCode());
-        holder.placeAddressTextView.setText(
-                AddressPrinter.print(subdistrict.getName(), district.getName(), province.getName()));
+        holder.placeAddressTextView.setAddressCode(place.getSubdistrictCode());
         holder.placeIcon.setImageResource(PlaceIconMapping.getPlaceIcon(place));
         setSyncStatus(holder, place);
     }
@@ -134,7 +124,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         private TextView placeTextView;
         private TextView placeSubtypeTextView;
-        private TextView placeAddressTextView;
+        private AddressPicker placeAddressTextView;
         private ImageView placeIcon;
         private ImageView notSync;
         private PlaceAdapter adapter;
@@ -146,7 +136,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> 
             itemView.setOnLongClickListener(this);
             placeTextView = (TextView) itemView.findViewById(R.id.place_name);
             placeSubtypeTextView = (TextView) itemView.findViewById(R.id.place_subtype);
-            placeAddressTextView = (TextView) itemView.findViewById(R.id.place_address);
+            placeAddressTextView = (AddressPicker) itemView.findViewById(R.id.place_address);
             placeIcon = (ImageView) itemView.findViewById(R.id.place_icon);
             notSync = (ImageView) itemView.findViewById(R.id.not_sync);
         }

@@ -57,11 +57,13 @@
             android:textIsSelectable="false"
             tools:text="โรงพยาบาลชุมชน"/>
 
-        <TextView
+        <th.or.nectec.thai.widget.address.AddressPicker
             android:id="@+id/place_address"
             style="@style/TanrabadTextAppearance.Caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@null"
+            android:clickable="false"
             android:textIsSelectable="false"
             android:textSize="@dimen/text_small_caption"
             tools:text="แขวงหลักสี่ เขตหลักสี่ กรุงเทพมหานคร"/>

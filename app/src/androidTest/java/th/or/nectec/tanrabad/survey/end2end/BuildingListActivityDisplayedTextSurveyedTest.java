@@ -78,4 +78,11 @@ public class BuildingListActivityDisplayedTextSurveyedTest extends TanrabadEspre
                 hasSibling(withText("ลานหน้าศาลากลาง"))))
                 .check(matches(not(isDisplayed())));
     }
+
+    @Test
+    public void surveyByOtherUserShouldNotShowTextSurveyedAtThisBuilding() {
+        onView(allOf(withId(R.id.surveyed),
+                hasSibling(withText("เมรุ"))))
+                .check(matches(not(isDisplayed())));
+    }
 }

@@ -51,7 +51,7 @@ public class BuildingListActivityDisplayedTextSurveyedTest extends TanrabadEspre
 
     @Test
     public void surveyBuildingThenOpenBuildingListPageShouldFoundTextSurveyedAtThisBuilding() {
-        onView(withText("เมรุ"))
+        onView(withText("โบสถ์ริมรั้ว"))
                 .perform(click());
         onView(withId(R.id.resident_count))
                 .perform(replaceText("4"));
@@ -61,16 +61,7 @@ public class BuildingListActivityDisplayedTextSurveyedTest extends TanrabadEspre
                 .perform(click());
 
         onView(allOf(withId(R.id.surveyed),
-                withEffectiveVisibility(Visibility.VISIBLE),
-                hasSibling(withText("เมรุ"))))
+                hasSibling(withText("โบสถ์ริมรั้ว"))))
                 .check(matches(isDisplayed()));
-        onView(allOf(withId(R.id.surveyed),
-                withEffectiveVisibility(Visibility.VISIBLE),
-                hasSibling(withText("ลานหน้าศาลากลาง"))))
-                .check(matches(isDisplayed()));
-
-        onView(allOf(withId(R.id.surveyed),
-                hasSibling(withText("ศาลาใหญ่"))))
-                .check(matches(not(isDisplayed())));
     }
 }

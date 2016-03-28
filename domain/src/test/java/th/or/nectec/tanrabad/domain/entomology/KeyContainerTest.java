@@ -21,6 +21,7 @@ import org.junit.Test;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.stub.ContainerTypeStub;
+import th.or.nectec.tanrabad.survey.utils.SurveyBuilder;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -32,7 +33,7 @@ public class KeyContainerTest {
 
     @Test
     public void testFindOfOneSurvey() throws Exception {
-        Survey survey = new Survey.Builder().setBuilding(Building.withName("1"))
+        Survey survey = new SurveyBuilder().setBuilding(Building.withName("1"))
                 .setResident(4)
                 .addIndoorDetail(UUID.randomUUID(), ContainerTypeStub.น้ำดื่ม, 4, 2)
                 .addIndoorDetail(UUID.randomUUID(), ContainerTypeStub.ที่รองกันมด, 4, 4)
@@ -53,7 +54,7 @@ public class KeyContainerTest {
 
     @Test
     public void testFindOfThreeSurvey() throws Exception {
-        Survey survey = new Survey.Builder().setBuilding(Building.withName("1"))
+        Survey survey = new SurveyBuilder().setBuilding(Building.withName("1"))
                 .setResident(4)
                 .addIndoorDetail(UUID.randomUUID(), ContainerTypeStub.น้ำดื่ม, 4, 4)
                 .addIndoorDetail(UUID.randomUUID(), ContainerTypeStub.ที่รองกันมด, 4, 4)
@@ -61,7 +62,7 @@ public class KeyContainerTest {
                 .addOutdoorDetail(UUID.randomUUID(), ContainerTypeStub.อ่างบัว_ไม้น้ำ, 6, 6)
                 .addOutdoorDetail(UUID.randomUUID(), ContainerTypeStub.น้ำใช้, 3, 3)
                 .build();
-        Survey survey2 = new Survey.Builder().setBuilding(Building.withName("1"))
+        Survey survey2 = new SurveyBuilder().setBuilding(Building.withName("1"))
                 .setResident(1)
                 .addIndoorDetail(UUID.randomUUID(), ContainerTypeStub.น้ำดื่ม, 10, 10)
                 .addIndoorDetail(UUID.randomUUID(), ContainerTypeStub.ที่รองกันมด, 4, 4)
@@ -69,7 +70,7 @@ public class KeyContainerTest {
                 .addOutdoorDetail(UUID.randomUUID(), ContainerTypeStub.ยางรถยนต์เก่า, 8, 8)
                 .addOutdoorDetail(UUID.randomUUID(), ContainerTypeStub.ภาชนะที่ไม่ใช้, 3, 3)
                 .build();
-        Survey survey3 = new Survey.Builder().setBuilding(Building.withName("1"))
+        Survey survey3 = new SurveyBuilder().setBuilding(Building.withName("1"))
                 .setResident(5)
                 .addIndoorDetail(UUID.randomUUID(), ContainerTypeStub.น้ำดื่ม, 2, 2)
                 .addIndoorDetail(UUID.randomUUID(), ContainerTypeStub.น้ำใช้, 13, 13)

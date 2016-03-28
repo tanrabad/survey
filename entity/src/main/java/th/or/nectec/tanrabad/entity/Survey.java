@@ -19,9 +19,7 @@ package th.or.nectec.tanrabad.entity;
 
 import org.joda.time.DateTime;
 import th.or.nectec.tanrabad.entity.field.Location;
-import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,8 +27,8 @@ public class Survey extends Entity implements LocationEntity, Comparable<Survey>
 
     private final User user;
     private final UUID surveyId;
+    private final Building surveyBuilding;
 
-    private Building surveyBuilding;
     private int residentCount;
     private List<SurveyDetail> indoorDetails;
     private List<SurveyDetail> outdoorDetails;
@@ -71,10 +69,6 @@ public class Survey extends Entity implements LocationEntity, Comparable<Survey>
 
     public Building getSurveyBuilding() {
         return surveyBuilding;
-    }
-
-    public void setSurveyBuilding(Building surveyBuilding) {
-        this.surveyBuilding = surveyBuilding;
     }
 
     public User getUser() {
@@ -179,74 +173,4 @@ public class Survey extends Entity implements LocationEntity, Comparable<Survey>
         return surveyId;
     }
 
-    public static class Builder {
-
-        public static final Building DEFAULT_BUILDING = Building.withName("default");
-        public static final User TESTER = User.fromUsername("tester");
-        private final List<SurveyDetail> indoor = new ArrayList<>();
-        private final List<SurveyDetail> outdoor = new ArrayList<>();
-        private final UUID surveyId;
-        private int resident;
-        private User surveyor = TESTER;
-        private Building building = DEFAULT_BUILDING;
-        private Location location;
-        private DateTime startTimeStamp;
-        private DateTime finishTimeStamp;
-
-        public Builder() {
-            this(UUID.randomUUID(), TESTER);
-        }
-
-        public Builder(UUID surveyId, User surveyor) {
-            this.surveyId = surveyId;
-            this.surveyor = surveyor;
-        }
-
-        public Survey build() {
-            Survey survey = new Survey(surveyId, surveyor, building);
-            survey.setResidentCount(resident);
-            survey.setIndoorDetail(indoor);
-            survey.setOutdoorDetail(outdoor);
-            survey.setLocation(location);
-            survey.setStartTimestamp(startTimeStamp);
-            survey.setFinishTimestamp(finishTimeStamp);
-            return survey;
-        }
-
-        public Builder setBuilding(Building building) {
-            this.building = building;
-            return this;
-        }
-
-        public Builder setResident(int residentCount) {
-            resident = residentCount;
-            return this;
-        }
-
-        public Builder addIndoorDetail(UUID surveydetailid, ContainerType containerType, int total, int foundLarvae) {
-            indoor.add(new SurveyDetail(surveydetailid, containerType, total, foundLarvae));
-            return this;
-        }
-
-        public Builder addOutdoorDetail(UUID surveyDetailId, ContainerType containerType, int total, int foundLarvae) {
-            outdoor.add(new SurveyDetail(surveyDetailId, containerType, total, foundLarvae));
-            return this;
-        }
-
-        public Builder setLocation(Location location) {
-            this.location = location;
-            return this;
-        }
-
-        public Builder setStartTimeStamp(DateTime startTimeStamp) {
-            this.startTimeStamp = startTimeStamp;
-            return this;
-        }
-
-        public Builder setFinishTimeStamp(DateTime finishTimeStamp) {
-            this.finishTimeStamp = finishTimeStamp;
-            return this;
-        }
-
-    }
 }

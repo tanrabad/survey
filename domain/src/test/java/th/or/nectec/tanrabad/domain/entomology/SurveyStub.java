@@ -17,25 +17,26 @@
 
 package th.or.nectec.tanrabad.domain.entomology;
 
-import java.util.UUID;
-
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 import th.or.nectec.tanrabad.entity.stub.ContainerTypeStub;
+import th.or.nectec.tanrabad.survey.utils.SurveyBuilder;
+
+import java.util.UUID;
 
 class SurveyStub {
 
     private static final User SURVEYOR = User.fromUsername("surveyor");
 
     public static Survey withoutLarvae(Building building) {
-        return new Survey.Builder(UUID.randomUUID(), SURVEYOR).setBuilding(building)
+        return new SurveyBuilder(UUID.randomUUID(), SURVEYOR).setBuilding(building)
                 .addIndoorDetail(UUID.randomUUID(), ContainerTypeStub.น้ำใช้, 20, 0).build();
     }
 
     public static Survey withLarvae(Building building) {
-        return new Survey.Builder(UUID.randomUUID(), SURVEYOR)
+        return new SurveyBuilder(UUID.randomUUID(), SURVEYOR)
                 .setBuilding(building)
                 .addIndoorDetail(UUID.randomUUID(), ContainerTypeStub.แจกัน, 5, 2)
                 .addOutdoorDetail(UUID.randomUUID(), ContainerTypeStub.กากใบพืช, 10, 2)
@@ -47,14 +48,14 @@ class SurveyStub {
     }
 
     public static Survey withResult(ContainerType containerType, int total, int foundLarvae) {
-        return new Survey.Builder(UUID.randomUUID(), SURVEYOR)
+        return new SurveyBuilder(UUID.randomUUID(), SURVEYOR)
                 .setBuilding(Building.withName("1"))
                 .addIndoorDetail(UUID.randomUUID(), containerType, total, foundLarvae)
                 .build();
     }
 
     public static Survey withIndoorOutdoorResult(int indoorTotal, int indoorFound, int outdoorTotal, int outdoorFound) {
-        return new Survey.Builder(UUID.randomUUID(), SURVEYOR)
+        return new SurveyBuilder(UUID.randomUUID(), SURVEYOR)
                 .setBuilding(Building.withName("1"))
                 .addIndoorDetail(UUID.randomUUID(), ContainerTypeStub.น้ำใช้, indoorTotal, indoorFound)
                 .addOutdoorDetail(UUID.randomUUID(), ContainerTypeStub.อ่างบัว_ไม้น้ำ, outdoorTotal, outdoorFound)

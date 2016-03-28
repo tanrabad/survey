@@ -121,16 +121,14 @@
         </com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader>
     </android.support.v7.widget.CardView>
 
-    <Button
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/sync_data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right|top"
-        android:layout_marginRight="@dimen/space_between_content"
-        android:background="@color/transparent"
-        android:drawableLeft="@mipmap/ic_sync"
-        android:drawablePadding="6dp"
-        android:text="@string/sync_data"
-        android:textColor="@color/text_sync_state"/>
+        android:layout_margin="@dimen/wide_space_between_content"
+        android:src="@mipmap/ic_sync"
+        app:backgroundTint="@color/color_primary"
+        app:elevation="8dp"/>
 
 </android.support.design.widget.CoordinatorLayout>

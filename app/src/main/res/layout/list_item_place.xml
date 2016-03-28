@@ -26,19 +26,47 @@
     <ImageView
         android:id="@+id/place_icon"
         style="@style/ListIcon"
+        android:layout_centerVertical="true"
         android:contentDescription="@string/place_icon"
         tools:src="@mipmap/ic_place_hospital"/>
 
-    <TextView
-        android:id="@+id/place_name"
-        style="@style/ListTitle"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/space_between_content"
+        android:layout_toEndOf="@+id/place_icon"
         android:layout_toLeftOf="@id/not_sync"
-        android:textIsSelectable="false"
-        tools:text="หมู่ที่ 1"/>
+        android:layout_toRightOf="@+id/place_icon"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/place_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:textIsSelectable="false"
+            android:textSize="@dimen/text_title"
+            tools:text="ทดสอบ"/>
+
+        <TextView
+            android:id="@+id/place_subtype"
+            style="@style/TanrabadTextAppearance.Caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textIsSelectable="false"
+            tools:text="โรงพยาบาลชุมชน"/>
+
+        <TextView
+            android:id="@+id/place_address"
+            style="@style/TanrabadTextAppearance.Caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textIsSelectable="false"
+            android:textSize="@dimen/text_small_caption"
+            tools:text="แขวงหลักสี่ เขตหลักสี่ กรุงเทพมหานคร"/>
+    </LinearLayout>
+
 
     <ImageView
         android:id="@+id/not_sync"

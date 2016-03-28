@@ -16,19 +16,29 @@
   ~ limitations under the License.
   -->
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    <include layout="@layout/list_item_place"/>
+    <include
+        layout="@layout/list_item_place"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/view_survey_result_button"
+        android:layout_toStartOf="@+id/view_survey_result_button"/>
 
     <Button
+        android:id="@+id/view_survey_result_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/view_survey_result"
-        android:id="@+id/view_survey_result_button"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical|right"
+        android:layout_marginLeft="@dimen/wide_space_between_content"
+        android:layout_marginRight="@dimen/wide_space_between_content"
         android:drawableLeft="@mipmap/ic_report"
         android:drawablePadding="@dimen/space_between_content"
-        android:layout_marginRight="@dimen/list_padding_right"
-        android:layout_gravity="center_vertical|right"/>
-</FrameLayout>
+        android:text="@string/view_survey_result"/>
+
+</RelativeLayout>

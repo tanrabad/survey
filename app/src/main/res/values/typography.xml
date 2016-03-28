@@ -23,6 +23,7 @@
     <dimen name="text_subhead">26sp</dimen>
     <dimen name="text_body">24sp</dimen>
     <dimen name="text_caption">20sp</dimen>
+    <dimen name="text_small_caption">16sp</dimen>
     <dimen name="text_micro">10sp</dimen>
 
     <style name="TanrabadTextAppearance" parent="@android:style/TextAppearance">

@@ -17,6 +17,7 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical"
               android:gravity="center"
               android:layout_width="match_parent"
@@ -27,10 +28,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
         <TextView
+                tools:ignore="MissingPrefix"
+                fontPath="fonts/ThaiSansNeue-Bold.otf"
                 style="@style/TanrabadTextAppearance.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
+
                 android:textSize="80sp"
                 android:text="@string/app_name"/>
         <TextView
@@ -43,6 +47,7 @@
     </LinearLayout>
 
     <TextView
+            tools:ignore="NegativeMargin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black_transparent_50"
@@ -62,21 +67,24 @@
             android:textAppearance="@style/TanrabadTextAppearance.Caption"
             android:textColor="@color/white"
             android:layout_marginTop="16dp"
-            android:text="@string/support_by"
-            android:id="@+id/support_by"/>
+            android:text="@string/support_by"/>
 
-    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+    <LinearLayout android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
                   android:layout_marginTop="12dp"
                   android:orientation="horizontal">
-        <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                   android:contentDescription="@string/ministry_of_public_health"
-                   android:layout_marginRight="4dp"
-                   android:src="@mipmap/ic_logo_moph"/>
-        <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                   android:contentDescription="@string/ministry_of_science_and_technology"
-                   android:layout_marginLeft="4dp"
-                   android:src="@mipmap/ic_logo_most"/>
-    </LinearLayout>
 
+        <ImageView android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:contentDescription="@string/ministry_of_public_health"
+                   android:scaleType="fitStart"
+                   android:src="@drawable/logo_moph"/>
+
+        <ImageView android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:contentDescription="@string/ministry_of_science_and_technology"
+                   android:scaleType="fitStart"
+                   android:src="@drawable/logo_most"/>
+    </LinearLayout>
 
 </LinearLayout>

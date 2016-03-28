@@ -81,7 +81,7 @@ public class EditTextStepperTest {
         new EditTextStepper(new EditText(InstrumentationRegistry.getContext()));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testNullPointerExceptionIfEditTextIsNull() throws Exception {
         new EditTextStepper(null);
     }

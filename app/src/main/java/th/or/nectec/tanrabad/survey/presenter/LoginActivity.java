@@ -30,13 +30,20 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
+
 import th.or.nectec.tanrabad.survey.BuildConfig;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
+import th.or.nectec.tanrabad.survey.job.AbsJobRunner;
+import th.or.nectec.tanrabad.survey.job.Job;
+import th.or.nectec.tanrabad.survey.job.SyncJobRunner;
 import th.or.nectec.tanrabad.survey.presenter.authen.AuthenActivity;
 import th.or.nectec.tanrabad.survey.repository.BrokerUserRepository;
+import th.or.nectec.tanrabad.survey.service.AbsRestService;
 import th.or.nectec.tanrabad.survey.service.PlaceRestService;
 import th.or.nectec.tanrabad.survey.service.ServiceLastUpdatePreference;
+import th.or.nectec.tanrabad.survey.service.TrialModePreference;
+import th.or.nectec.tanrabad.survey.utils.ClearDataManager;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
 import th.or.nectec.tanrabad.survey.utils.showcase.ShowcasePreference;
@@ -45,9 +52,11 @@ import static android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN;
 import static android.view.animation.AnimationUtils.loadAnimation;
 
 public class LoginActivity extends TanrabadActivity {
+    public static final String TEST_URL = "http://trb-test.igridproject.info/v1";
     private static final int AUTHEN_REQUEST_CODE = 1232;
     private CheckBox needShowcase;
     private ShowcasePreference showcasePreference;
+    private TrialModePreference trialModePreference;
 
     private GoogleApiClient appIndexClient;
 
@@ -58,20 +67,15 @@ public class LoginActivity extends TanrabadActivity {
         setContentView(R.layout.activity_login);
 
         appIndexClient = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-
+        setupPreferences();
         setupShowcaseOption();
 
-        if (BuildConfig.BUILD_TYPE.equals("release")) {
-            findViewById(R.id.trial).setVisibility(View.GONE);
-        } else {
-            findViewById(R.id.trial).setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    anonymousLogin();
-                }
-            });
-        }
-
+        findViewById(R.id.trial).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                trialLogin();
+            }
+        });
         findViewById(R.id.authentication_button).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,34 +91,61 @@ public class LoginActivity extends TanrabadActivity {
         startAnimation();
     }
 
-    private void setupShowcaseOption() {
+    private void setupPreferences() {
+        trialModePreference = new TrialModePreference(this);
         showcasePreference = new ShowcasePreference(this);
+    }
+
+    private void setupShowcaseOption() {
         needShowcase = (CheckBox) findViewById(R.id.need_showcase);
         needShowcase.setChecked(showcasePreference.get());
     }
 
-    private void anonymousLogin() {
-        if (isFirstTime() && !InternetConnection.isAvailable(LoginActivity.this)) {
+    private void trialLogin() {
+        if (isFirstTime() && !InternetConnection.isAvailable(this)) {
             Alert.highLevel().show(R.string.connect_internet_when_use_for_first_time);
             TanrabadApp.action().firstTimeWithoutInternet();
+            return;
+        }
+
+        if (!trialModePreference.isUsingTrialMode()) {
+            if (!InternetConnection.isAvailable(this)) {
+                Alert.highLevel().show(R.string.connect_internet_before_using_trial_mode);
+                return;
+            }
+            AccountUtils.setUser(BrokerUserRepository.getInstance().findByUsername(BuildConfig.TRIAL_USER));
+            AbsJobRunner jobRunner = new SyncJobRunner();
+            jobRunner.addJob(new DeleteJob());
+            jobRunner.addJob(new SetTrialModeAndSelectApiServerJob(true));
+            jobRunner.addJob(new StartInitialActivityJob());
+            jobRunner.start();
         } else {
             AccountUtils.setUser(BrokerUserRepository.getInstance().findByUsername(BuildConfig.TRIAL_USER));
-            showcasePreference.save(needShowcase.isChecked());
-            InitialActivity.open(this);
-            finish();
+            startInitialActivity();
         }
+        showcasePreference.save(needShowcase.isChecked());
+    }
+
+    private boolean isFirstTime() {
+        String placeTimeStamp = new ServiceLastUpdatePreference(this, PlaceRestService.PATH).get();
+        return TextUtils.isEmpty(placeTimeStamp);
+    }
+
+    private void startInitialActivity() {
+        InitialActivity.open(LoginActivity.this);
+        finish();
     }
 
     private void openAuthenWeb() {
-        if (AccountUtils.getLastLoginUser() != null) {
-            AccountUtils.setUser(AccountUtils.getLastLoginUser());
+        if (AccountUtils.getLastLoginUser() != null
+                && !AccountUtils.isTrialUser(AccountUtils.getLastLoginUser())) {
             InitialActivity.open(this);
             finish();
         } else if (InternetConnection.isAvailable(this)) {
             Intent intent = new Intent(this, AuthenActivity.class);
             startActivityForResult(intent, AUTHEN_REQUEST_CODE);
         } else {
-            Alert.highLevel().show("กรุณาเชื่อมต่ออินเตอร์เน็ตเพื่อทำการยืนยันตัวตน");
+            Alert.highLevel().show(R.string.connect_internet_before_authen);
         }
     }
 
@@ -127,21 +158,7 @@ public class LoginActivity extends TanrabadActivity {
         findViewById(R.id.bg_blue).startAnimation(loadAnimation(this, R.anim.login_bg_blue));
         Animation dropIn = loadAnimation(this, R.anim.logo);
         dropIn.setStartOffset(1200);
-        View logoTrb = findViewById(R.id.logo_tabrabad);
-        logoTrb.startAnimation(dropIn);
-        logoTrb.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, SplashScreenActivity.class);
-                startActivity(intent);
-                return true;
-            }
-        });
-    }
-
-    private boolean isFirstTime() {
-        String placeTimeStamp = new ServiceLastUpdatePreference(LoginActivity.this, PlaceRestService.PATH).get();
-        return TextUtils.isEmpty(placeTimeStamp);
+        findViewById(R.id.logo_tabrabad).startAnimation(dropIn);
     }
 
     @Override
@@ -167,9 +184,16 @@ public class LoginActivity extends TanrabadActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == AUTHEN_REQUEST_CODE && resultCode == RESULT_OK) {
+            if (trialModePreference.isUsingTrialMode()) {
+                AbsJobRunner jobRunner = new SyncJobRunner();
+                jobRunner.addJob(new DeleteJob());
+                jobRunner.addJob(new SetTrialModeAndSelectApiServerJob(false));
+                jobRunner.addJob(new StartInitialActivityJob());
+                jobRunner.start();
+            } else {
+                startInitialActivity();
+            }
             showcasePreference.save(needShowcase.isChecked());
-            InitialActivity.open(LoginActivity.this);
-            finish();
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -179,5 +203,55 @@ public class LoginActivity extends TanrabadActivity {
         super.onStart();
         appIndexClient.connect();
         AppIndex.AppIndexApi.start(appIndexClient, getAppIndexAction());
+    }
+
+    class DeleteJob implements Job {
+
+        @Override
+        public int id() {
+            return 77777;
+        }
+
+        @Override
+        public void execute() throws Exception {
+            ClearDataManager.clearAll(LoginActivity.this);
+        }
+    }
+
+    class SetTrialModeAndSelectApiServerJob implements Job {
+
+        private boolean isTrialMode;
+
+        public SetTrialModeAndSelectApiServerJob(boolean isTrialMode) {
+            this.isTrialMode = isTrialMode;
+        }
+
+        @Override
+        public int id() {
+            return 88888;
+        }
+
+        @Override
+        public void execute() throws Exception {
+            trialModePreference.setUsingTrialMode(isTrialMode);
+            if (isTrialMode) {
+                AbsRestService.setBaseApi(TEST_URL);
+            } else {
+                AbsRestService.setBaseApi(BuildConfig.API_URL);
+            }
+        }
+    }
+
+    class StartInitialActivityJob implements Job {
+
+        @Override
+        public int id() {
+            return 99999;
+        }
+
+        @Override
+        public void execute() throws Exception {
+            startInitialActivity();
+        }
     }
 }

@@ -63,7 +63,7 @@ public final class AccountUtils {
         }
     }
 
-    private static boolean isTrialUser(User user) {
+    public static boolean isTrialUser(User user) {
         return user.getUsername().startsWith("trial-");
     }
 

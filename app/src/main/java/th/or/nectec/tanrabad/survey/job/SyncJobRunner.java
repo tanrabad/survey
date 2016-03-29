@@ -20,15 +20,15 @@ package th.or.nectec.tanrabad.survey.job;
 import android.content.Context;
 import android.text.TextUtils;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.service.RestServiceException;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class SyncJobRunner extends AbsJobRunner {
 
@@ -122,17 +122,6 @@ public class SyncJobRunner extends AbsJobRunner {
             Alert.mediumLevel().show(message.trim());
     }
 
-    private void showErrorMessage() {
-        if (!isManualSync)
-            return;
-
-        if (ioException != null)
-            Alert.mediumLevel().show(R.string.error_connection_problem);
-        else if (restServiceException != null) {
-            Alert.mediumLevel().show(R.string.error_rest_service);
-        }
-    }
-
     private String getDataType(UploadJob uploadJob) {
         String dataType = null;
         if (uploadJob.equals(syncJobBuilder.placePostDataJob)
@@ -160,5 +149,16 @@ public class SyncJobRunner extends AbsJobRunner {
                 ? String.format(context.getString(R.string.upload_data_fail), uploadJob.getFailCount()) + "\n"
                 : "\n";
         return space + message;
+    }
+
+    private void showErrorMessage() {
+        if (!isManualSync)
+            return;
+
+        if (ioException != null)
+            Alert.mediumLevel().show(R.string.error_connection_problem);
+        else if (restServiceException != null) {
+            Alert.mediumLevel().show(R.string.error_rest_service);
+        }
     }
 }

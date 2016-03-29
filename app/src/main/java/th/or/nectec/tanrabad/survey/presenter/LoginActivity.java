@@ -35,15 +35,14 @@ import th.or.nectec.tanrabad.survey.BuildConfig;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.job.AbsJobRunner;
-import th.or.nectec.tanrabad.survey.job.Job;
+import th.or.nectec.tanrabad.survey.job.DeleteUserDataJob;
+import th.or.nectec.tanrabad.survey.job.SetTrialModeAndSelectApiServerJob;
 import th.or.nectec.tanrabad.survey.job.SyncJobRunner;
 import th.or.nectec.tanrabad.survey.presenter.authen.AuthenActivity;
 import th.or.nectec.tanrabad.survey.repository.BrokerUserRepository;
-import th.or.nectec.tanrabad.survey.service.AbsRestService;
 import th.or.nectec.tanrabad.survey.service.PlaceRestService;
 import th.or.nectec.tanrabad.survey.service.ServiceLastUpdatePreference;
 import th.or.nectec.tanrabad.survey.service.TrialModePreference;
-import th.or.nectec.tanrabad.survey.utils.ClearDataManager;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
 import th.or.nectec.tanrabad.survey.utils.showcase.ShowcasePreference;
@@ -115,9 +114,9 @@ public class LoginActivity extends TanrabadActivity {
             }
             AccountUtils.setUser(BrokerUserRepository.getInstance().findByUsername(BuildConfig.TRIAL_USER));
             AbsJobRunner jobRunner = new SyncJobRunner();
-            jobRunner.addJob(new DeleteJob());
-            jobRunner.addJob(new SetTrialModeAndSelectApiServerJob(true));
-            jobRunner.addJob(new StartInitialActivityJob());
+            jobRunner.addJob(new DeleteUserDataJob(this));
+            jobRunner.addJob(new SetTrialModeAndSelectApiServerJob(this, true));
+            jobRunner.addJob(new StartInitialActivityJob(this));
             jobRunner.start();
         } else {
             AccountUtils.setUser(BrokerUserRepository.getInstance().findByUsername(BuildConfig.TRIAL_USER));
@@ -186,9 +185,9 @@ public class LoginActivity extends TanrabadActivity {
         if (requestCode == AUTHEN_REQUEST_CODE && resultCode == RESULT_OK) {
             if (trialModePreference.isUsingTrialMode()) {
                 AbsJobRunner jobRunner = new SyncJobRunner();
-                jobRunner.addJob(new DeleteJob());
-                jobRunner.addJob(new SetTrialModeAndSelectApiServerJob(false));
-                jobRunner.addJob(new StartInitialActivityJob());
+                jobRunner.addJob(new DeleteUserDataJob(this));
+                jobRunner.addJob(new SetTrialModeAndSelectApiServerJob(this, false));
+                jobRunner.addJob(new StartInitialActivityJob(this));
                 jobRunner.start();
             } else {
                 startInitialActivity();
@@ -205,53 +204,4 @@ public class LoginActivity extends TanrabadActivity {
         AppIndex.AppIndexApi.start(appIndexClient, getAppIndexAction());
     }
 
-    class DeleteJob implements Job {
-
-        @Override
-        public int id() {
-            return 77777;
-        }
-
-        @Override
-        public void execute() throws Exception {
-            ClearDataManager.clearAll(LoginActivity.this);
-        }
-    }
-
-    class SetTrialModeAndSelectApiServerJob implements Job {
-
-        private boolean isTrialMode;
-
-        public SetTrialModeAndSelectApiServerJob(boolean isTrialMode) {
-            this.isTrialMode = isTrialMode;
-        }
-
-        @Override
-        public int id() {
-            return 88888;
-        }
-
-        @Override
-        public void execute() throws Exception {
-            trialModePreference.setUsingTrialMode(isTrialMode);
-            if (isTrialMode) {
-                AbsRestService.setBaseApi(TEST_URL);
-            } else {
-                AbsRestService.setBaseApi(BuildConfig.API_URL);
-            }
-        }
-    }
-
-    class StartInitialActivityJob implements Job {
-
-        @Override
-        public int id() {
-            return 99999;
-        }
-
-        @Override
-        public void execute() throws Exception {
-            startInitialActivity();
-        }
-    }
 }

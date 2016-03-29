@@ -7,7 +7,7 @@ import th.or.nectec.tanrabad.survey.repository.persistence.SqlScript;
 import th.or.nectec.tanrabad.survey.repository.persistence.SurveyLiteDatabase;
 import th.or.nectec.tanrabad.survey.service.ServiceLastUpdatePreference;
 
-public class ClearDataManager {
+public class UserDataManager {
     public static void clearAll(Context context) {
         clearPreferences(context);
         clearDatabase(context);

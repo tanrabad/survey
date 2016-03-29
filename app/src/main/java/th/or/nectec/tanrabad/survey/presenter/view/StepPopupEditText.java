@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,6 +19,7 @@ package th.or.nectec.tanrabad.survey.presenter.view;
 
 import android.content.Context;
 import android.graphics.Rect;
+import android.os.Parcelable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
 import android.text.InputType;
@@ -37,8 +38,8 @@ import th.or.nectec.tanrabad.survey.utils.android.DpCalculator;
 import th.or.nectec.tanrabad.survey.utils.android.ResourceUtils;
 
 public class StepPopupEditText extends EditText {
+    protected EditTextStepper editTextStepper;
     private StepperPopup popUp;
-    private EditTextStepper editTextStepper;
 
     public StepPopupEditText(Context context) {
         this(context, null);
@@ -52,7 +53,8 @@ public class StepPopupEditText extends EditText {
         super(context, attrs, defStyleAttr);
         setupEditText();
         editTextStepper = new EditTextStepper(this);
-        popUp = new EditTextPopup(context);
+        popUp = new EditTextPopup(this);
+
     }
 
     private void setupEditText() {
@@ -66,8 +68,16 @@ public class StepPopupEditText extends EditText {
     }
 
     @Override
+    public Parcelable onSaveInstanceState() {
+        popUp.hide();
+        return super.onSaveInstanceState();
+    }
+
+    @Override
     protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
         super.onFocusChanged(focused, direction, previouslyFocusedRect);
+        if (!isShown()) return; //to prevent force close on orientation change
+
         if (focused) {
             popUp.display();
         } else {
@@ -79,19 +89,22 @@ public class StepPopupEditText extends EditText {
         void display();
 
         void hide();
+
     }
 
-    private class EditTextPopup extends PopupWindow implements StepperPopup, View.OnClickListener {
+    private static class EditTextPopup extends PopupWindow implements StepperPopup, View.OnClickListener {
 
         private static final int BUTTON_HEIGHT = 64;
         private static final int BUTTON_WIDTH = 80;
         private static final int BUTTON_PADDING = 4;
         private static final int POPUP_PADDING = 2;
         private final Context context;
+        private final StepPopupEditText editText;
 
-        public EditTextPopup(Context context) {
-            super(context);
-            this.context = context;
+        public EditTextPopup(StepPopupEditText editText) {
+            super(editText.getContext());
+            this.context = editText.getContext();
+            this.editText = editText;
             init();
         }
 
@@ -116,10 +129,6 @@ public class StepPopupEditText extends EditText {
             return button;
         }
 
-        private int getButtonPadding() {
-            return DpCalculator.from(context).toPx(BUTTON_PADDING);
-        }
-
         private LinearLayout getLayout(ImageButton... imageButtons) {
             ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(getButtonWidth(), getButtonHeight());
             LinearLayout layout = new LinearLayout(context);
@@ -129,6 +138,10 @@ public class StepPopupEditText extends EditText {
                 layout.addView(imageButton, params);
             }
             return layout;
+        }
+
+        private int getButtonPadding() {
+            return DpCalculator.from(context).toPx(BUTTON_PADDING);
         }
 
         private int getButtonWidth() {
@@ -145,8 +158,10 @@ public class StepPopupEditText extends EditText {
 
         @Override
         public void display() {
-            showAsDropDown(StepPopupEditText.this, getXoffset(), getYoffset());
-            update(getPopupWidth(), getPopupHeight());
+            if (!isShowing()) {
+                showAsDropDown(editText, getXoffset(), getYoffset());
+                update(getPopupWidth(), getPopupHeight());
+            }
         }
 
         @Override
@@ -156,7 +171,7 @@ public class StepPopupEditText extends EditText {
         }
 
         private int getXoffset() {
-            return 0 - getPopupWidth() / 2 + StepPopupEditText.this.getWidth() / 2;
+            return 0 - getPopupWidth() / 2 + editText.getWidth() / 2;
         }
 
         private int getYoffset() {
@@ -175,16 +190,14 @@ public class StepPopupEditText extends EditText {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.plus:
-                    editTextStepper.step(1);
+                    editText.editTextStepper.step(1);
                     break;
                 case R.id.minus:
-                    editTextStepper.step(-1);
+                    editText.editTextStepper.step(-1);
                     break;
             }
         }
 
-
     }
-
 
 }

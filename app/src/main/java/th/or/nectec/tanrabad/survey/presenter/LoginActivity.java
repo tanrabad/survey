@@ -30,7 +30,7 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
-
+import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.BuildConfig;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
@@ -125,19 +125,11 @@ public class LoginActivity extends TanrabadActivity {
         showcasePreference.save(needShowcase.isChecked());
     }
 
-    private boolean isFirstTime() {
-        String placeTimeStamp = new ServiceLastUpdatePreference(this, PlaceRestService.PATH).get();
-        return TextUtils.isEmpty(placeTimeStamp);
-    }
-
-    private void startInitialActivity() {
-        InitialActivity.open(LoginActivity.this);
-        finish();
-    }
-
     private void openAuthenWeb() {
-        if (AccountUtils.getLastLoginUser() != null
-                && !AccountUtils.isTrialUser(AccountUtils.getLastLoginUser())) {
+        User lastLoginUser = AccountUtils.getLastLoginUser();
+        if (lastLoginUser != null
+                && !AccountUtils.isTrialUser(lastLoginUser)) {
+            AccountUtils.setUser(lastLoginUser);
             InitialActivity.open(this);
             finish();
         } else if (InternetConnection.isAvailable(this)) {
@@ -158,6 +150,16 @@ public class LoginActivity extends TanrabadActivity {
         Animation dropIn = loadAnimation(this, R.anim.logo);
         dropIn.setStartOffset(1200);
         findViewById(R.id.logo_tabrabad).startAnimation(dropIn);
+    }
+
+    private boolean isFirstTime() {
+        String placeTimeStamp = new ServiceLastUpdatePreference(this, PlaceRestService.PATH).get();
+        return TextUtils.isEmpty(placeTimeStamp);
+    }
+
+    private void startInitialActivity() {
+        InitialActivity.open(LoginActivity.this);
+        finish();
     }
 
     @Override

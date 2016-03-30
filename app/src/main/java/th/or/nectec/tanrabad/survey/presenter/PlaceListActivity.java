@@ -32,7 +32,9 @@ import android.widget.TextView;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 
 import th.or.nectec.tanrabad.survey.R;
-import th.or.nectec.tanrabad.survey.job.SyncJobRunner;
+import th.or.nectec.tanrabad.survey.job.AbsJobRunner;
+import th.or.nectec.tanrabad.survey.job.DownloadJobBuilder;
+import th.or.nectec.tanrabad.survey.job.UploadJobRunner;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
 import th.or.nectec.tanrabad.survey.utils.showcase.BaseShowcase;
 import th.or.nectec.tanrabad.survey.utils.showcase.Showcase;
@@ -141,9 +143,15 @@ public class PlaceListActivity extends TanrabadActivity {
         switch (requestCode) {
             case PlaceFormActivity.ADD_PLACE_REQ_CODE:
                 if (InternetConnection.isAvailable(this))
-                    new PlaceUpdateJob().start();
+                    startSyncJobs();
                 break;
         }
+    }
+
+    private void startSyncJobs() {
+        AbsJobRunner jobRunner = new PlaceSyncJobRunner();
+        jobRunner.addJobs(new DownloadJobBuilder().getJobs());
+        jobRunner.start();
     }
 
     @Override
@@ -158,7 +166,7 @@ public class PlaceListActivity extends TanrabadActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    protected class PlaceUpdateJob extends SyncJobRunner {
+    class PlaceSyncJobRunner extends UploadJobRunner {
         @Override
         protected void onRunFinish() {
             super.onRunFinish();

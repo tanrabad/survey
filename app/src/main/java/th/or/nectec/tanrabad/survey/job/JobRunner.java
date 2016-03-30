@@ -17,8 +17,12 @@
 
 package th.or.nectec.tanrabad.survey.job;
 
+import java.util.List;
+
 public interface JobRunner {
     JobRunner addJob(Job job);
+
+    JobRunner addJobs(List<Job> jobs);
 
     void start();
 

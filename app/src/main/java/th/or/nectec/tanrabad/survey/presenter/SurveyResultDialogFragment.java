@@ -24,12 +24,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.*;
 
 import java.text.DecimalFormat;
 import java.util.UUID;
@@ -44,7 +39,7 @@ import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.job.AbsJobRunner;
 import th.or.nectec.tanrabad.survey.job.EntomologyJob;
 import th.or.nectec.tanrabad.survey.job.Job;
-import th.or.nectec.tanrabad.survey.job.SyncJobBuilder;
+import th.or.nectec.tanrabad.survey.job.UploadJobBuilder;
 import th.or.nectec.tanrabad.survey.presenter.view.KeyContainerView;
 import th.or.nectec.tanrabad.survey.presenter.view.RelativeTimeAgoTextView;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
@@ -155,7 +150,8 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
 
     private void startJob(Place place) {
         if (InternetConnection.isAvailable(getContext())) {
-            AbsJobRunner jobRunner = new SyncJobBuilder().build(new SurveyResultJobRunner());
+            AbsJobRunner jobRunner = new SurveyResultJobRunner();
+            jobRunner.addJobs(new UploadJobBuilder().getJobs());
             jsonEntomologyGetDataJob = new EntomologyJob(place);
             jobRunner.addJob(jsonEntomologyGetDataJob);
             jobRunner.start();

@@ -37,7 +37,7 @@ import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.job.AbsJobRunner;
 import th.or.nectec.tanrabad.survey.job.DeleteUserDataJob;
 import th.or.nectec.tanrabad.survey.job.SetTrialModeAndSelectApiServerJob;
-import th.or.nectec.tanrabad.survey.job.SyncJobRunner;
+import th.or.nectec.tanrabad.survey.job.UploadJobRunner;
 import th.or.nectec.tanrabad.survey.presenter.authen.AuthenActivity;
 import th.or.nectec.tanrabad.survey.repository.BrokerUserRepository;
 import th.or.nectec.tanrabad.survey.service.PlaceRestService;
@@ -113,7 +113,7 @@ public class LoginActivity extends TanrabadActivity {
                 return;
             }
             AccountUtils.setUser(BrokerUserRepository.getInstance().findByUsername(BuildConfig.TRIAL_USER));
-            AbsJobRunner jobRunner = new SyncJobRunner();
+            AbsJobRunner jobRunner = new UploadJobRunner();
             jobRunner.addJob(new DeleteUserDataJob(this));
             jobRunner.addJob(new SetTrialModeAndSelectApiServerJob(this, true));
             jobRunner.addJob(new StartInitialActivityJob(this));
@@ -184,7 +184,7 @@ public class LoginActivity extends TanrabadActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == AUTHEN_REQUEST_CODE && resultCode == RESULT_OK) {
             if (trialModePreference.isUsingTrialMode()) {
-                AbsJobRunner jobRunner = new SyncJobRunner();
+                AbsJobRunner jobRunner = new UploadJobRunner();
                 jobRunner.addJob(new DeleteUserDataJob(this));
                 jobRunner.addJob(new SetTrialModeAndSelectApiServerJob(this, false));
                 jobRunner.addJob(new StartInitialActivityJob(this));

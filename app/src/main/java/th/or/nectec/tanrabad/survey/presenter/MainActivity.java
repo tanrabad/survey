@@ -42,8 +42,10 @@ import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyHistoryListPresenter;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.R;
-import th.or.nectec.tanrabad.survey.job.SyncJobBuilder;
-import th.or.nectec.tanrabad.survey.job.SyncJobRunner;
+import th.or.nectec.tanrabad.survey.job.AbsJobRunner;
+import th.or.nectec.tanrabad.survey.job.DownloadJobBuilder;
+import th.or.nectec.tanrabad.survey.job.Job;
+import th.or.nectec.tanrabad.survey.job.UploadJobRunner;
 import th.or.nectec.tanrabad.survey.repository.BrokerSurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerUserRepository;
 import th.or.nectec.tanrabad.survey.service.BuildingRestService;
@@ -171,7 +173,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
             case R.id.sync_data:
                 startOrResumeSyncAnimation();
                 findViewById(R.id.sync_data).setEnabled(false);
-                new SyncJobBuilder().build(new MainSyncJobRunner()).start();
+                startSyncJobs();
                 break;
         }
     }
@@ -184,6 +186,13 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
         } else {
             syncProgressAnimator.start();
         }
+    }
+
+    private void startSyncJobs() {
+        AbsJobRunner jobRunner = new UploadJobRunner();
+        jobRunner.addJobs(new DownloadJobBuilder().getJobs());
+        jobRunner.addJob(new SyncFinishJob());
+        jobRunner.start();
     }
 
     @Override
@@ -238,20 +247,21 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
                 new ServiceLastUpdatePreference(this, PlaceRestService.PATH).backLastUpdateTimeToYesterday();
                 new ServiceLastUpdatePreference(this, BuildingRestService.PATH).backLastUpdateTimeToYesterday();
                 findViewById(R.id.sync_data).setEnabled(false);
-                new SyncJobBuilder().build(new MainSyncJobRunner()).start();
+
+                startSyncJobs();
                 break;
         }
         return true;
     }
 
-    public class MainSyncJobRunner extends SyncJobRunner {
-        public MainSyncJobRunner() {
-            super(true);
+    protected class SyncFinishJob implements Job {
+        @Override
+        public int id() {
+            return 100;
         }
 
         @Override
-        protected void onRunFinish() {
-            super.onRunFinish();
+        public void execute() throws Exception {
             findViewById(R.id.sync_data).setEnabled(true);
             stopSyncAnimation();
         }

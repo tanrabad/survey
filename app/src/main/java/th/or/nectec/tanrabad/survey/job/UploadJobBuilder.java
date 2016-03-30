@@ -1,10 +1,9 @@
 package th.or.nectec.tanrabad.survey.job;
 
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.Place;
+import java.util.ArrayList;
+import java.util.List;
+
 import th.or.nectec.tanrabad.survey.TanrabadApp;
-import th.or.nectec.tanrabad.survey.repository.BrokerBuildingRepository;
-import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.persistence.DbBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.persistence.DbPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.persistence.DbSurveyRepository;
@@ -12,7 +11,7 @@ import th.or.nectec.tanrabad.survey.service.BuildingRestService;
 import th.or.nectec.tanrabad.survey.service.PlaceRestService;
 import th.or.nectec.tanrabad.survey.service.SurveyRestService;
 
-public class SyncJobBuilder {
+public class UploadJobBuilder {
     public PostDataJob placePostDataJob = new PostDataJob<>(
             new DbPlaceRepository(TanrabadApp.getInstance()), new PlaceRestService());
     public PostDataJob buildingPostDataJob = new PostDataJob<>(
@@ -25,20 +24,15 @@ public class SyncJobBuilder {
             new DbBuildingRepository(TanrabadApp.getInstance()), new BuildingRestService());
     public PutDataJob surveyPutDataJob = new PutDataJob<>(
             new DbSurveyRepository(TanrabadApp.getInstance()), new SurveyRestService());
-    private WritableRepoUpdateJob<Place> placeUpdateJob = new WritableRepoUpdateJob<>(
-            new PlaceRestService(), BrokerPlaceRepository.getInstance());
-    private WritableRepoUpdateJob<Building> buildingUpdateJob = new WritableRepoUpdateJob<>(
-            new BuildingRestService(), BrokerBuildingRepository.getInstance());
 
-    public AbsJobRunner build(AbsJobRunner runner) {
-        runner.addJob(placePostDataJob);
-        runner.addJob(buildingPostDataJob);
-        runner.addJob(surveyPostDataJob);
-        runner.addJob(placePutDataJob);
-        runner.addJob(buildingPutDataJob);
-        runner.addJob(surveyPutDataJob);
-        runner.addJob(placeUpdateJob);
-        runner.addJob(buildingUpdateJob);
-        return runner;
+    public List<Job> getJobs() {
+        List<Job> jobs = new ArrayList<>();
+        jobs.add(placePostDataJob);
+        jobs.add(buildingPostDataJob);
+        jobs.add(surveyPostDataJob);
+        jobs.add(placePutDataJob);
+        jobs.add(buildingPutDataJob);
+        jobs.add(surveyPutDataJob);
+        return jobs;
     }
 }

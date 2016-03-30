@@ -49,7 +49,9 @@ import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
-import th.or.nectec.tanrabad.survey.job.SyncJobRunner;
+import th.or.nectec.tanrabad.survey.job.AbsJobRunner;
+import th.or.nectec.tanrabad.survey.job.DownloadJobBuilder;
+import th.or.nectec.tanrabad.survey.job.UploadJobRunner;
 import th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerSurveyRepository;
@@ -254,10 +256,10 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
             return;
 
         setResult(RESULT_OK);
+        if (InternetConnection.isAvailable(this))
+            startSyncJobs();
         switch (requestCode) {
             case BuildingFormActivity.ADD_BUILDING_REQ_CODE:
-                if (InternetConnection.isAvailable(this))
-                    new BuildingUpdateJob().start();
                 loadSurveyBuildingList();
                 stopActionMode();
                 break;
@@ -265,6 +267,12 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
                 showPlaceName();
                 break;
         }
+    }
+
+    private void startSyncJobs() {
+        AbsJobRunner jobRunner = new BuildingSyncJobRunner();
+        jobRunner.addJobs(new DownloadJobBuilder().getJobs());
+        jobRunner.start();
     }
 
     private void stopActionMode() {
@@ -293,7 +301,8 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         buildingAdapter.setEditButtonVisibility(false);
     }
 
-    protected class BuildingUpdateJob extends SyncJobRunner {
+
+    class BuildingSyncJobRunner extends UploadJobRunner {
         @Override
         protected void onRunFinish() {
             super.onRunFinish();

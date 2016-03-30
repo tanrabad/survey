@@ -36,6 +36,12 @@ public abstract class AbsJobRunner implements JobRunner {
     }
 
     @Override
+    public JobRunner addJobs(List<Job> jobs) {
+        jobList.addAll(jobs);
+        return this;
+    }
+
+    @Override
     public void start() {
         running = true;
         jobErrorCount = 0;

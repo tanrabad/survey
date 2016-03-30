@@ -30,12 +30,12 @@ import th.or.nectec.tanrabad.survey.service.RestServiceException;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
 
-public class SyncJobRunner extends AbsJobRunner {
+public class UploadJobRunner extends AbsJobRunner {
 
     private static final String PLACE = "สถานที่";
     private static final String SURVEY = "การสำรวจ";
     private static final String BUILDING = "อาคาร";
-    private final SyncJobBuilder syncJobBuilder;
+    private final UploadJobBuilder uploadJobBuilder;
     private final Context context;
 
     private int completelySuccessCount = 0;
@@ -48,14 +48,14 @@ public class SyncJobRunner extends AbsJobRunner {
     private RestServiceException restServiceException;
     private boolean isManualSync;
 
-    public SyncJobRunner() {
+    public UploadJobRunner() {
         this(false);
     }
 
-    public SyncJobRunner(boolean isManualSync) {
+    public UploadJobRunner(boolean isManualSync) {
         this.isManualSync = isManualSync;
-        syncJobBuilder = new SyncJobBuilder();
-        syncJobBuilder.build(this);
+        uploadJobBuilder = new UploadJobBuilder();
+        addJobs(uploadJobBuilder.getJobs());
         context = TanrabadApp.getInstance();
     }
 
@@ -124,14 +124,14 @@ public class SyncJobRunner extends AbsJobRunner {
 
     private String getDataType(UploadJob uploadJob) {
         String dataType = null;
-        if (uploadJob.equals(syncJobBuilder.placePostDataJob)
-                || uploadJob.equals(syncJobBuilder.placePutDataJob)) {
+        if (uploadJob.equals(uploadJobBuilder.placePostDataJob)
+                || uploadJob.equals(uploadJobBuilder.placePutDataJob)) {
             dataType = PLACE;
-        } else if (uploadJob.equals(syncJobBuilder.buildingPostDataJob)
-                || uploadJob.equals(syncJobBuilder.buildingPutDataJob)) {
+        } else if (uploadJob.equals(uploadJobBuilder.buildingPostDataJob)
+                || uploadJob.equals(uploadJobBuilder.buildingPutDataJob)) {
             dataType = BUILDING;
-        } else if (uploadJob.equals(syncJobBuilder.surveyPostDataJob)
-                || uploadJob.equals(syncJobBuilder.surveyPutDataJob)) {
+        } else if (uploadJob.equals(uploadJobBuilder.surveyPostDataJob)
+                || uploadJob.equals(uploadJobBuilder.surveyPutDataJob)) {
             dataType = SURVEY;
         }
         return dataType;

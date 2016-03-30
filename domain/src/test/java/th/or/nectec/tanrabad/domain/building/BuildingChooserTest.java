@@ -17,18 +17,16 @@
 
 package th.or.nectec.tanrabad.domain.building;
 
-
 import org.jmock.Expectations;
 import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import th.or.nectec.tanrabad.entity.Building;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import th.or.nectec.tanrabad.entity.Building;
 
 public class BuildingChooserTest {
     private final UUID placeUuid = UUID.randomUUID();
@@ -38,7 +36,7 @@ public class BuildingChooserTest {
     private BuildingListPresenter presenter;
 
     @Before
-    public void setup() {
+    public void setUp() {
         buildingRepository = context.mock(BuildingRepository.class);
         presenter = context.mock(BuildingListPresenter.class);
     }

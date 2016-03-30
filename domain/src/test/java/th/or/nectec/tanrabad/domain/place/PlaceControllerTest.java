@@ -22,14 +22,13 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import th.or.nectec.tanrabad.entity.Place;
 
 import java.util.UUID;
 
-import th.or.nectec.tanrabad.entity.Place;
-
 public class PlaceControllerTest {
-    private final String placeName = "New York";
-    private final Place place = Place.withName(placeName);
+    private static final String PLACE_NAME = "New York";
+    private final Place place = Place.withName(PLACE_NAME);
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
     private PlaceRepository placeRepository;

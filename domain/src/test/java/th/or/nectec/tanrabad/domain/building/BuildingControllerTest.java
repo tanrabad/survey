@@ -22,15 +22,14 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import th.or.nectec.tanrabad.entity.Building;
 
 import java.util.UUID;
 
-import th.or.nectec.tanrabad.entity.Building;
-
 public class BuildingControllerTest {
 
-    private final String buildingName = "123";
-    private final Building building = Building.withName(buildingName);
+    private static final String BUILDING_NAME = "123";
+    private final Building building = Building.withName(BUILDING_NAME);
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
     private BuildingRepository buildingRepository;

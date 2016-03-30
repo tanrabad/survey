@@ -43,7 +43,6 @@ public class KeyContainerTest {
         KeyContainer keyContainer = new KeyContainer(survey);
         keyContainer.calculate();
 
-        assertEquals(1, keyContainer.outdoorKey.size());
         assertEquals(ContainerTypeStub.จานรองกระถาง, keyContainer.indoorNumberOne());
         assertEquals(ContainerTypeStub.ที่รองกันมด, keyContainer.indoorNumberTwo());
         assertEquals(ContainerTypeStub.น้ำดื่ม, keyContainer.indoorNumberThree());

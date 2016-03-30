@@ -22,13 +22,12 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
-import java.util.ArrayList;
-
 import th.or.nectec.tanrabad.domain.survey.SurveyRepository;
 import th.or.nectec.tanrabad.domain.user.UserRepository;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
+
+import java.util.ArrayList;
 
 public class PlaceWithSurveyHistoryChooserTest {
 
@@ -41,7 +40,7 @@ public class PlaceWithSurveyHistoryChooserTest {
     private User user;
 
     @Before
-    public void setup() {
+    public void setUp() {
         surveyRepository = context.mock(SurveyRepository.class);
         userRepository = context.mock(UserRepository.class);
         placeWithSurveyHistoryListPresenter = context.mock(PlaceWithSurveyHistoryListPresenter.class);

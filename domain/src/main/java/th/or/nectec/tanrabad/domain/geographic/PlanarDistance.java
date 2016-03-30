@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -36,10 +36,9 @@ public class PlanarDistance implements DistanceCalculator {
         double y;
         double d;
 
-
         x = dLon * Math.cos(Math.toRadians(lat1));
         y = dLat;
-        d = RADIUS * Math.sqrt(((x * x) + (y * y)));
+        d = RADIUS * Math.sqrt(x * x + y * y);
 
         return d;
     }

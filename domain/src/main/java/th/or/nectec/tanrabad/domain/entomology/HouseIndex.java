@@ -17,10 +17,10 @@
 
 package th.or.nectec.tanrabad.domain.entomology;
 
+import th.or.nectec.tanrabad.entity.Survey;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import th.or.nectec.tanrabad.entity.Survey;
 
 public class HouseIndex {
 
@@ -40,7 +40,7 @@ public class HouseIndex {
     }
 
     public float calculate() {
-        if (surveys.size() == 0)
+        if (surveys.isEmpty())
             throw new IllegalStateException("must have some survey before calculate");
 
         foundLarvaeCount = 0;

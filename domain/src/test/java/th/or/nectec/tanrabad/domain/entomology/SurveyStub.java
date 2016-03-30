@@ -26,9 +26,12 @@ import th.or.nectec.tanrabad.entity.utils.SurveyBuilder;
 
 import java.util.UUID;
 
-class SurveyStub {
+final class SurveyStub {
 
     private static final User SURVEYOR = User.fromUsername("surveyor");
+
+    private SurveyStub() {
+    }
 
     public static Survey withoutLarvae(Building building) {
         return new SurveyBuilder(UUID.randomUUID(), SURVEYOR).setBuilding(building)

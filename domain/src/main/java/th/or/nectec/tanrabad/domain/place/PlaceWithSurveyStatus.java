@@ -30,6 +30,13 @@ public class PlaceWithSurveyStatus {
     }
 
     @Override
+    public int hashCode() {
+        int result = place.hashCode();
+        result = 31 * result + (isSurvey ? 1 : 0);
+        return result;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -37,6 +44,5 @@ public class PlaceWithSurveyStatus {
         PlaceWithSurveyStatus that = (PlaceWithSurveyStatus) o;
 
         return isSurvey == that.isSurvey && place.equals(that.place);
-
     }
 }

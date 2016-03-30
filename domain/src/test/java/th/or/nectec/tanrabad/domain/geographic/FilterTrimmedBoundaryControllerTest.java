@@ -22,21 +22,19 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
-import java.util.ArrayList;
-
 import th.or.nectec.tanrabad.entity.LocationEntity;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.field.Location;
 
+import java.util.ArrayList;
+
 public class FilterTrimmedBoundaryControllerTest {
 
-    private final double currentLatitude = 40.6892;
-    private final double currentLongitude = -74.0444;
-    private final Location currentLocation = new Location(currentLatitude, currentLongitude);
-    private final double distanceInKm = 100;
+    private static final Location CURRENT_LOCATION = new Location(40.6892, -74.0444);
+    private static final double DISTANCE_IN_KM = 100;
+
     @Rule
-    public JUnitRuleMockery context = new JUnitRuleMockery();
+    public final JUnitRuleMockery context = new JUnitRuleMockery();
     private LocationRepository locationRepository;
     private NearbyPlacePresenter nearbyPlacePresenter;
     private FilterBoundaryCalculator filterBoundaryCalculate;
@@ -132,13 +130,13 @@ public class FilterTrimmedBoundaryControllerTest {
 
         context.checking(new Expectations() {
             {
-                oneOf(filterBoundaryCalculate).getMinLocation(with(currentLocation), with(distanceInKm));
+                oneOf(filterBoundaryCalculate).getMinLocation(with(CURRENT_LOCATION), with(DISTANCE_IN_KM));
                 will(returnValue(outsideMinimumLocation));
-                oneOf(coordinateLocationCalculate).getNewMinLocation(with(currentLocation), with(distanceInKm));
+                oneOf(coordinateLocationCalculate).getNewMinLocation(with(CURRENT_LOCATION), with(DISTANCE_IN_KM));
                 will(returnValue(insideMinimumLocation));
-                oneOf(filterBoundaryCalculate).getMaxLocation(with(currentLocation), with(distanceInKm));
+                oneOf(filterBoundaryCalculate).getMaxLocation(with(CURRENT_LOCATION), with(DISTANCE_IN_KM));
                 will(returnValue(outsideMaximumLocation));
-                oneOf(coordinateLocationCalculate).getNewMaxLocation(with(currentLocation), with(distanceInKm));
+                oneOf(coordinateLocationCalculate).getNewMaxLocation(with(CURRENT_LOCATION), with(DISTANCE_IN_KM));
                 will(returnValue(insideMaximumLocation));
                 oneOf(locationRepository).findTrimmedInBoundaryLocation(
                         insideMinimumLocation, outsideMinimumLocation, insideMaximumLocation, outsideMaximumLocation);
@@ -149,7 +147,7 @@ public class FilterTrimmedBoundaryControllerTest {
         FilterTrimmedBoundaryController filterTrimmedBoundaryController = new FilterTrimmedBoundaryController(
                 filterBoundaryCalculate, coordinateLocationCalculate,
                 locationRepository, nearbyPlacePresenter);
-        filterTrimmedBoundaryController.findNearByFilterTrimmedBoundary(currentLocation, distanceInKm);
+        filterTrimmedBoundaryController.findNearByFilterTrimmedBoundary(CURRENT_LOCATION, DISTANCE_IN_KM);
     }
 
     @Test
@@ -173,13 +171,13 @@ public class FilterTrimmedBoundaryControllerTest {
 
         context.checking(new Expectations() {
             {
-                oneOf(filterBoundaryCalculate).getMinLocation(with(currentLocation), with(distanceInKm));
+                oneOf(filterBoundaryCalculate).getMinLocation(with(CURRENT_LOCATION), with(DISTANCE_IN_KM));
                 will(returnValue(outsideMinimumLocation));
-                oneOf(coordinateLocationCalculate).getNewMinLocation(with(currentLocation), with(distanceInKm));
+                oneOf(coordinateLocationCalculate).getNewMinLocation(with(CURRENT_LOCATION), with(DISTANCE_IN_KM));
                 will(returnValue(insideMinimumLocation));
-                oneOf(filterBoundaryCalculate).getMaxLocation(with(currentLocation), with(distanceInKm));
+                oneOf(filterBoundaryCalculate).getMaxLocation(with(CURRENT_LOCATION), with(DISTANCE_IN_KM));
                 will(returnValue(outsideMaximumLocation));
-                oneOf(coordinateLocationCalculate).getNewMaxLocation(with(currentLocation), with(distanceInKm));
+                oneOf(coordinateLocationCalculate).getNewMaxLocation(with(CURRENT_LOCATION), with(DISTANCE_IN_KM));
                 will(returnValue(insideMaximumLocation));
                 oneOf(locationRepository).findTrimmedInBoundaryLocation(
                         insideMinimumLocation, outsideMinimumLocation, insideMaximumLocation, outsideMaximumLocation);
@@ -191,6 +189,6 @@ public class FilterTrimmedBoundaryControllerTest {
                 new FilterTrimmedBoundaryController(
                         filterBoundaryCalculate, coordinateLocationCalculate,
                         locationRepository, nearbyPlacePresenter);
-        filterTrimmedBoundaryController.findNearByFilterTrimmedBoundary(currentLocation, distanceInKm);
+        filterTrimmedBoundaryController.findNearByFilterTrimmedBoundary(CURRENT_LOCATION, DISTANCE_IN_KM);
     }
 }

@@ -18,7 +18,6 @@
 package th.or.nectec.tanrabad.domain.entomology;
 
 import org.junit.Test;
-
 import th.or.nectec.tanrabad.entity.stub.ContainerTypeStub;
 
 import static org.junit.Assert.assertEquals;
@@ -29,13 +28,9 @@ public class ContainerIndexTest {
 
     @Test
     public void testCalculateWithOneSurvey() throws Exception {
-        ContainerIndex ci = new ContainerIndex(SurveyStub.withResult(10, 1));
         ContainerIndex ci2 = new ContainerIndex(SurveyStub.withResult(ContainerTypeStub.จานรองกระถาง, 20, 2));
-        ContainerIndex ci3 = new ContainerIndex(SurveyStub.withIndoorOutdoorResult(5, 0, 5, 1));
 
-        assertEquals(10.0f, ci.calculate(), DELTA);
         assertEquals(10.0f, ci2.calculate(), DELTA);
-        assertEquals(10.0f, ci3.calculate(), DELTA);
     }
 
     @Test

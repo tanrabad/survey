@@ -17,17 +17,17 @@
 
 package th.or.nectec.tanrabad.domain.entomology;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.SurveyDetail;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContainerIndex {
 
     private final List<Survey> surveys;
-    private float totalContainer = 0;
-    private float foundLarvaeContainer = 0;
+    private float totalContainer;
+    private float foundLarvaeContainer;
 
     public ContainerIndex() {
         surveys = new ArrayList<>();

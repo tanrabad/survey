@@ -17,25 +17,23 @@
 
 package th.or.nectec.tanrabad.domain;
 
-
 import org.jmock.Expectations;
 import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
 import th.or.nectec.tanrabad.domain.user.UserController;
 import th.or.nectec.tanrabad.domain.user.UserPresenter;
 import th.or.nectec.tanrabad.domain.user.UserRepository;
 import th.or.nectec.tanrabad.entity.User;
 
 public class UserControllerTest {
-    private final String userName = "ice";
-    private final User user = User.fromUsername(userName);
+    private static final String USERNAME = "ice";
+    private final User user = User.fromUsername(USERNAME);
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
-    private th.or.nectec.tanrabad.domain.user.UserRepository userRepository;
-    private th.or.nectec.tanrabad.domain.user.UserPresenter userPresenter;
+    private UserRepository userRepository;
+    private UserPresenter userPresenter;
 
     @Before
     public void setUp() {
@@ -48,13 +46,13 @@ public class UserControllerTest {
 
         context.checking(new Expectations() {
             {
-                allowing(userRepository).findByUsername(userName);
+                allowing(userRepository).findByUsername(USERNAME);
                 will(returnValue(user));
                 oneOf(userPresenter).displayUserName(user);
             }
         });
         UserController userController = new UserController(userRepository, userPresenter);
-        userController.showUserOf(userName);
+        userController.showUserOf(USERNAME);
     }
 
     @Test
@@ -62,13 +60,13 @@ public class UserControllerTest {
 
         context.checking(new Expectations() {
             {
-                allowing(userRepository).findByUsername(userName);
+                allowing(userRepository).findByUsername(USERNAME);
                 will(returnValue(null));
                 oneOf(userPresenter).displayNotFoundUser();
             }
         });
         UserController userController = new UserController(userRepository, userPresenter);
-        userController.showUserOf(userName);
+        userController.showUserOf(USERNAME);
     }
 }
 

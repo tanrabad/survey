@@ -28,6 +28,8 @@ The libraries use in this Project
 - [JumpingBeans](https://github.com/frakbot/JumpingBeans)
 - [RecyclerViewHeader](https://github.com/blipinsk/RecyclerViewHeader)
 - [License Fragment](https://github.com/first087/Android-License-Fragment)
+- [Custom Activity On Crash](https://github.com/Ereza/CustomActivityOnCrash)
+- [Android Tooltip](https://github.com/sephiroth74/android-target-tooltip)
 
 
 ## Code Quality Control

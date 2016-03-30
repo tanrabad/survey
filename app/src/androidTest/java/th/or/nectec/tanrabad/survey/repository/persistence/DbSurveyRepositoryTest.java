@@ -21,6 +21,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
 
 import org.joda.time.DateTime;
 import org.junit.Before;
@@ -240,5 +241,10 @@ public class DbSurveyRepositoryTest {
         assertTrue(surveyBuildingInThisWeek.get(0).isSurvey);
         assertFalse(surveyBuildingInThisWeek.get(1).isSurvey);
         assertFalse(surveyBuildingInThisWeek.get(2).isSurvey);
+        assertFalse(surveyBuildingInThisWeek.get(3).isSurvey);
+        for (BuildingWithSurveyStatus building : surveyBuildingInThisWeek) {
+            Log.e("survey status", String.valueOf(building.isSurvey));
+            Log.e("building data", String.valueOf(building.building.getName()));
+        }
     }
 }

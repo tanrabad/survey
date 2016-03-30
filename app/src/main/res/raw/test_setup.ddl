@@ -207,13 +207,13 @@ INSERT INTO
   survey (survey_id, building_id, person_count, surveyor, create_time, update_time)
 VALUES
   ('0fedd057-a5cf-43c9-81d3-9b2d2c4c3cb8', '5a57720e-11b3-4d4f-9f80-a3ca80dc8563', '5', 'dpc-user',
-   '2016-03-23T12:19:20.626+07:00', '2016-03-25T12:19:20.626+07:00'),
+   strftime("%Y-%m-%dT%H:%M:%f+07:00"), strftime("%Y-%m-%dT%H:%M:%f+07:00", 'now', '+1 minutes')),
   ('0fedd057-a5cf-43c9-81d3-9b2d2c4c3c11', '5174ed8d-9d51-4994-86fe-ea1e8636998b', '5', 'dpc1-user',
-   '2016-03-23T12:19:20.626+07:00', '2016-03-25T12:19:20.626+07:00'),
+   strftime("%Y-%m-%dT%H:%M:%f+07:00"), strftime("%Y-%m-%dT%H:%M:%f+07:00", 'now', '+1 minutes')),
   ('0fedd057-a5cf-43c9-81d3-9b2d2c4c3cb9', '6a2fc9f1-3489-4a73-a425-b3d4e5b0e34b', '5', 'dpc-user',
-   '2016-03-12T12:19:20.626+07:00', '2016-03-17T12:19:20.626+07:00'),
-  ('0fedd057-a5cf-43c9-81d3-9b2d2c4c3c10', '6a2fc9f1-3489-4a73-a425-b3d4e5b0e34b', '5', 'dpc-user',
-   '2016-03-10T12:19:20.626+07:00', '2016-03-17T12:19:20.626+07:00');
+   strftime("%Y-%m-%dT%H:%M:%f+07:00", 'now', '-8 days'), strftime("%Y-%m-%dT%H:%M:%f+07:00", 'now', '+1 minutes')),
+  ('0fedd057-a5cf-43c9-81d3-9b2d2c4c3c10', 'd1bfeca3-f701-4881-8026-c919079a3a4c', '5', 'dpc-user',
+   strftime("%Y-%m-%dT%H:%M:%f+07:00", 'now', '-9 days'), strftime("%Y-%m-%dT%H:%M:%f+07:00", 'now', '+1 minutes'));
 
 INSERT INTO
   survey_detail (detail_id, survey_id, container_location_id, container_type_id, container_count, container_have_larva)

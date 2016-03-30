@@ -56,7 +56,7 @@ public final class AccountUtils {
         if (TanrabadApp.action() != null)
             TanrabadApp.action().login(AccountUtils.user);
 
-        if (isTrialUser(user)) {
+        if (!isTrialUser(user)) {
             lastLoginUserRepo.userLogin(user);
         } else {
             lastLoginUserRepo.clear();

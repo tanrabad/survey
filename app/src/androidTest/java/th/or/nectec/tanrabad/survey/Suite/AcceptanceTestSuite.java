@@ -44,6 +44,7 @@ import th.or.nectec.tanrabad.survey.presenter.view.TorchButtonTest;
 
         EditTextStepperTest.class,
         TorchButtonTest.class,
+        AccountUtilsTest.class
         })
 public class AcceptanceTestSuite {
 }

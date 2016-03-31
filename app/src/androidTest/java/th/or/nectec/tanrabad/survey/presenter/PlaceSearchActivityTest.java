@@ -63,5 +63,7 @@ public class PlaceSearchActivityTest extends TanrabadEspressoTestBase {
                 .perform(ViewActions.pressImeActionButton());
 
         textDisplayed("หมู่บ้านพาลาซเซตโต้");
+        textDisplayed("ชุมชนพักอาศัย");
+        textDisplayed("ต.บางกรวย อ.บางกรวย จ.นนทบุรี");
     }
 }

@@ -5,12 +5,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import th.or.nectec.tanrabad.domain.WritableRepository;
+import th.or.nectec.tanrabad.survey.service.RestService;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import th.or.nectec.tanrabad.domain.WritableRepository;
-import th.or.nectec.tanrabad.survey.service.RestService;
 
 import static org.mockito.Mockito.anyList;
 import static org.mockito.Mockito.never;
@@ -96,6 +95,16 @@ public class WritableRepoUpdateJobTest {
         data.add("U");
         data.add("V");
         return data;
+    }
+
+    @Test
+    public void testServiceReturnOnlyDeleteData() throws Exception {
+        when(restService.getUpdate()).thenReturn(new ArrayList<String>());
+        when(restService.getDelete()).thenReturn(deleteData());
+
+        job.execute();
+
+        verify(writableRepository).delete(deleteData().get(0));
     }
 
 }

@@ -51,6 +51,7 @@ import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.job.AbsJobRunner;
 import th.or.nectec.tanrabad.survey.job.DownloadJobBuilder;
+import th.or.nectec.tanrabad.survey.job.UploadJobBuilder;
 import th.or.nectec.tanrabad.survey.job.UploadJobRunner;
 import th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
@@ -271,6 +272,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
 
     private void startSyncJobs() {
         AbsJobRunner jobRunner = new BuildingSyncJobRunner();
+        jobRunner.addJobs(new UploadJobBuilder().getJobs());
         jobRunner.addJobs(new DownloadJobBuilder().getJobs());
         jobRunner.start();
     }

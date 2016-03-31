@@ -18,10 +18,29 @@
 package th.or.nectec.tanrabad.survey.job;
 
 
-public abstract class UploadJob implements Job {
+import java.io.IOException;
+import java.util.List;
+
+import th.or.nectec.tanrabad.survey.repository.ChangedRepository;
+import th.or.nectec.tanrabad.survey.service.RestServiceException;
+import th.or.nectec.tanrabad.survey.service.UploadRestService;
+import th.or.nectec.tanrabad.survey.utils.collection.CursorList;
+
+public abstract class UploadJob<T> implements Job {
+    private final int jobId;
     protected int successCount = 0;
     protected int ioExceptionCount = 0;
     protected int restServiceExceptionCount = 0;
+    private UploadRestService<T> uploadRestService;
+    private ChangedRepository<T> changedRepository;
+    private IOException ioException;
+    private RestServiceException restServiceException;
+
+    public UploadJob(int jobId, ChangedRepository<T> changedRepository, UploadRestService<T> uploadRestService) {
+        this.jobId = jobId;
+        this.changedRepository = changedRepository;
+        this.uploadRestService = uploadRestService;
+    }
 
     public boolean isUploadData() {
         return getSuccessCount() > 0 || getFailCount() > 0;
@@ -31,10 +50,6 @@ public abstract class UploadJob implements Job {
         return getIoExceptionCount() + getRestServiceExceptionCount();
     }
 
-    public int getSuccessCount() {
-        return successCount;
-    }
-
     public int getIoExceptionCount() {
         return ioExceptionCount;
     }
@@ -42,6 +57,50 @@ public abstract class UploadJob implements Job {
     public int getRestServiceExceptionCount() {
         return restServiceExceptionCount;
     }
+
+    public int getSuccessCount() {
+        return successCount;
+    }
+
+    @Override
+    public int id() {
+        return jobId;
+    }
+
+    @Override
+    public void execute() throws Exception {
+        List<T> changedList = getUpdatedData(changedRepository);
+        if (changedList == null)
+            return;
+        for (T t : changedList) {
+            try {
+                if (uploadData(uploadRestService, t)) {
+                    changedRepository.markUnchanged(t);
+                    successCount++;
+                }
+            } catch (IOException exception) {
+                ioException = exception;
+                ioExceptionCount++;
+            } catch (RestServiceException exception) {
+                restServiceException = exception;
+                restServiceExceptionCount++;
+            }
+        }
+        CursorList.close(changedList);
+        throwBufferException();
+    }
+
+    private void throwBufferException() throws IOException {
+        if (ioException != null) {
+            throw ioException;
+        } else if (restServiceException != null) {
+            throw restServiceException;
+        }
+    }
+
+    public abstract boolean uploadData(UploadRestService<T> uploadRestService, T data) throws IOException;
+
+    public abstract List<T> getUpdatedData(ChangedRepository changedRepository);
 
     public boolean isUploadCompletelySuccess() {
         return getFailCount() == 0 && getSuccessCount() > 0;

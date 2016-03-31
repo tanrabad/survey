@@ -46,7 +46,7 @@ import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.job.AbsJobRunner;
 import th.or.nectec.tanrabad.survey.job.DownloadJobBuilder;
-import th.or.nectec.tanrabad.survey.job.Job;
+import th.or.nectec.tanrabad.survey.job.UploadJobBuilder;
 import th.or.nectec.tanrabad.survey.job.UploadJobRunner;
 import th.or.nectec.tanrabad.survey.presenter.view.MainActivityNavigation;
 import th.or.nectec.tanrabad.survey.repository.BrokerOrganizationRepository;
@@ -205,9 +205,9 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
     }
 
     private void startSyncJobs() {
-        AbsJobRunner jobRunner = new UploadJobRunner();
+        AbsJobRunner jobRunner = new ManualSyncJobRunner();
+        jobRunner.addJobs(new UploadJobBuilder().getJobs());
         jobRunner.addJobs(new DownloadJobBuilder().getJobs());
-        jobRunner.addJob(new SyncFinishJob());
         jobRunner.start();
     }
 
@@ -270,14 +270,10 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
         return true;
     }
 
-    protected class SyncFinishJob implements Job {
+    protected class ManualSyncJobRunner extends UploadJobRunner {
         @Override
-        public int id() {
-            return 100;
-        }
-
-        @Override
-        public void execute() throws Exception {
+        protected void onRunFinish() {
+            super.onRunFinish();
             findViewById(R.id.sync_data).setEnabled(true);
             stopSyncAnimation();
         }

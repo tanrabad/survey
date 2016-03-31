@@ -35,7 +35,6 @@ public class UploadJobRunner extends AbsJobRunner {
     private static final String PLACE = "สถานที่";
     private static final String SURVEY = "การสำรวจ";
     private static final String BUILDING = "อาคาร";
-    private final UploadJobBuilder uploadJobBuilder;
     private final Context context;
 
     private int completelySuccessCount = 0;
@@ -54,8 +53,6 @@ public class UploadJobRunner extends AbsJobRunner {
 
     public UploadJobRunner(boolean isManualSync) {
         this.isManualSync = isManualSync;
-        uploadJobBuilder = new UploadJobBuilder();
-        addJobs(uploadJobBuilder.getJobs());
         context = TanrabadApp.getInstance();
     }
 
@@ -124,14 +121,14 @@ public class UploadJobRunner extends AbsJobRunner {
 
     private String getDataType(UploadJob uploadJob) {
         String dataType = null;
-        if (uploadJob.equals(uploadJobBuilder.placePostDataJob)
-                || uploadJob.equals(uploadJobBuilder.placePutDataJob)) {
+        if (uploadJob.id() == UploadJobBuilder.PLACE_POST_ID
+                || uploadJob.id() == UploadJobBuilder.PLACE_PUT_ID) {
             dataType = PLACE;
-        } else if (uploadJob.equals(uploadJobBuilder.buildingPostDataJob)
-                || uploadJob.equals(uploadJobBuilder.buildingPutDataJob)) {
+        } else if (uploadJob.id() == UploadJobBuilder.BUILDING_POST_ID
+                || uploadJob.id() == UploadJobBuilder.BUILDING_PUT_ID) {
             dataType = BUILDING;
-        } else if (uploadJob.equals(uploadJobBuilder.surveyPostDataJob)
-                || uploadJob.equals(uploadJobBuilder.surveyPutDataJob)) {
+        } else if (uploadJob.id() == UploadJobBuilder.SURVEY_POST_ID
+                || uploadJob.id() == UploadJobBuilder.SURVEY_PUT_ID) {
             dataType = SURVEY;
         }
         return dataType;

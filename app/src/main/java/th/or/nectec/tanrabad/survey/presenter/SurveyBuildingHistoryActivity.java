@@ -215,6 +215,7 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
 
     private void startSyncJob() {
         AbsJobRunner jobRunner = new SurveySyncJobRunner();
+        jobRunner.addJobs(new UploadJobBuilder().getJobs());
         jobRunner.addJobs(new DownloadJobBuilder().getJobs());
         jobRunner.start();
     }

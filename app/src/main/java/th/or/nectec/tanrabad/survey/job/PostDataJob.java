@@ -21,56 +21,21 @@ import java.io.IOException;
 import java.util.List;
 
 import th.or.nectec.tanrabad.survey.repository.ChangedRepository;
-import th.or.nectec.tanrabad.survey.service.RestServiceException;
 import th.or.nectec.tanrabad.survey.service.UploadRestService;
-import th.or.nectec.tanrabad.survey.utils.collection.CursorList;
 
-public class PostDataJob<T> extends UploadJob {
+public class PostDataJob<T> extends UploadJob<T> {
 
-    private static final int ID = 90000;
-    private IOException ioException;
-    private RestServiceException restServiceException;
-    private ChangedRepository<T> changedRepository;
-    private UploadRestService<T> uploadRestService;
-
-    public PostDataJob(ChangedRepository<T> changedRepository, UploadRestService<T> uploadRestService) {
-        this.changedRepository = changedRepository;
-        this.uploadRestService = uploadRestService;
+    public PostDataJob(int jobId, ChangedRepository<T> changedRepository, UploadRestService<T> uploadRestService) {
+        super(jobId, changedRepository, uploadRestService);
     }
 
     @Override
-    public int id() {
-        return ID;
+    public boolean uploadData(UploadRestService<T> uploadRestService, T data) throws IOException {
+        return uploadRestService.post(data);
     }
 
     @Override
-    public void execute() throws Exception {
-        List<T> addList = changedRepository.getAdd();
-        if (addList == null)
-            return;
-        for (T eachData : addList) {
-            try {
-                if (uploadRestService.post(eachData)) {
-                    changedRepository.markUnchanged(eachData);
-                    successCount++;
-                }
-            } catch (IOException exception) {
-                ioException = exception;
-                ioExceptionCount++;
-            } catch (RestServiceException exception) {
-                restServiceException = exception;
-                restServiceExceptionCount++;
-            }
-        }
-        CursorList.close(addList);
-        throwBufferException();
-    }
-
-    private void throwBufferException() throws IOException {
-        if (ioException != null) {
-            throw ioException;
-        } else if (restServiceException != null) {
-            throw restServiceException;
-        }
+    public List<T> getUpdatedData(ChangedRepository changedRepository) {
+        return changedRepository.getAdd();
     }
 }

@@ -34,6 +34,7 @@ import com.github.amlcurran.showcaseview.ShowcaseView;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.job.AbsJobRunner;
 import th.or.nectec.tanrabad.survey.job.DownloadJobBuilder;
+import th.or.nectec.tanrabad.survey.job.UploadJobBuilder;
 import th.or.nectec.tanrabad.survey.job.UploadJobRunner;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
 import th.or.nectec.tanrabad.survey.utils.showcase.BaseShowcase;
@@ -150,6 +151,7 @@ public class PlaceListActivity extends TanrabadActivity {
 
     private void startSyncJobs() {
         AbsJobRunner jobRunner = new PlaceSyncJobRunner();
+        jobRunner.addJobs(new UploadJobBuilder().getJobs());
         jobRunner.addJobs(new DownloadJobBuilder().getJobs());
         jobRunner.start();
     }

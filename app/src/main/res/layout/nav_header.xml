@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="192dp"
-                android:padding="16dp"
-                app:theme="@style/AppTheme.Pink">
+    >
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/papercolormaterialdesign_texture_pink"
+        android:contentDescription="@null"
+        android:scaleType="center"/>
 
     <ImageView
         android:id="@+id/avatar_icon"
@@ -14,6 +19,7 @@
         android:layout_above="@+id/user_fullname"
         android:layout_gravity="bottom"
         android:layout_marginBottom="24dp"
+        android:layout_marginLeft="@dimen/wide_space_between_content"
         android:background="@color/white"
         android:contentDescription="@null"
         android:src="@drawable/person_default_background"/>
@@ -24,6 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/organization"
         android:layout_gravity="bottom"
+        android:layout_marginLeft="@dimen/wide_space_between_content"
         android:background="@color/transparent"
         android:textColor="@color/white"
         android:textIsSelectable="false"
@@ -35,6 +42,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/wide_space_between_content"
+        android:layout_marginLeft="@dimen/wide_space_between_content"
         android:background="@color/transparent"
         android:textColor="@color/white"
         android:textIsSelectable="false"

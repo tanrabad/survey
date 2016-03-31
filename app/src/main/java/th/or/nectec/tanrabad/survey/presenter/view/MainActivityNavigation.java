@@ -23,6 +23,7 @@ public class MainActivityNavigation {
 
     public static void setup(final Activity activity) {
         NavigationView navigationView = (NavigationView) activity.findViewById(R.id.navigation);
+        navigationView.setItemIconTintList(null);
         setupHeaderView(navigationView);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override

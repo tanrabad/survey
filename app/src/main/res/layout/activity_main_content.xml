@@ -148,7 +148,8 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/space_between_content"
             android:background="@color/white"
-            android:contentDescription="@null"/>
+            android:contentDescription="@null"
+            android:src="@drawable/person_default_background"/>
 
         <TextView
             android:id="@+id/user_fullname"

@@ -30,6 +30,7 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
+
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.BuildConfig;
 import th.or.nectec.tanrabad.survey.R;
@@ -51,7 +52,6 @@ import static android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN;
 import static android.view.animation.AnimationUtils.loadAnimation;
 
 public class LoginActivity extends TanrabadActivity {
-    public static final String TEST_URL = "http://trb-test.igridproject.info/v1";
     private static final int AUTHEN_REQUEST_CODE = 1232;
     private CheckBox needShowcase;
     private ShowcasePreference showcasePreference;
@@ -125,6 +125,16 @@ public class LoginActivity extends TanrabadActivity {
         showcasePreference.save(needShowcase.isChecked());
     }
 
+    private boolean isFirstTime() {
+        String placeTimeStamp = new ServiceLastUpdatePreference(this, PlaceRestService.PATH).get();
+        return TextUtils.isEmpty(placeTimeStamp);
+    }
+
+    private void startInitialActivity() {
+        InitialActivity.open(LoginActivity.this);
+        finish();
+    }
+
     private void openAuthenWeb() {
         User lastLoginUser = AccountUtils.getLastLoginUser();
         if (lastLoginUser != null
@@ -150,16 +160,6 @@ public class LoginActivity extends TanrabadActivity {
         Animation dropIn = loadAnimation(this, R.anim.logo);
         dropIn.setStartOffset(1200);
         findViewById(R.id.logo_tabrabad).startAnimation(dropIn);
-    }
-
-    private boolean isFirstTime() {
-        String placeTimeStamp = new ServiceLastUpdatePreference(this, PlaceRestService.PATH).get();
-        return TextUtils.isEmpty(placeTimeStamp);
-    }
-
-    private void startInitialActivity() {
-        InitialActivity.open(LoginActivity.this);
-        finish();
     }
 
     @Override

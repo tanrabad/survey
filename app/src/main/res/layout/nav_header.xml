@@ -16,7 +16,7 @@
         android:layout_marginBottom="24dp"
         android:background="@color/white"
         android:contentDescription="@null"
-        android:src="@null"/>
+        android:src="@drawable/person_default_background"/>
 
     <TextView
         android:id="@+id/user_fullname"

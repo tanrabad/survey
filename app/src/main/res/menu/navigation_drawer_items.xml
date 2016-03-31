@@ -37,4 +37,14 @@
 
     </group>
 
+    <group
+        android:id="@+id/other"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/logout"
+            android:icon="@mipmap/ic_logout"
+            android:title="@string/logout"/>
+
+    </group>
+
 </menu>

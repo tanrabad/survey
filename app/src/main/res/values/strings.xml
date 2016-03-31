@@ -197,5 +197,6 @@
     <string name="trb_bi">TanRabad BI</string>
     <string name="trb_report">TanRabad Report</string>
     <string name="trb_watch">TanRabad Watch</string>
+    <string name="logout">ออกจากระบบ</string>
 
 </resources>

@@ -16,6 +16,7 @@ import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.AboutActivity;
 import th.or.nectec.tanrabad.survey.presenter.AccountUtils;
+import th.or.nectec.tanrabad.survey.presenter.LoginActivity;
 import th.or.nectec.tanrabad.survey.repository.BrokerOrganizationRepository;
 
 public class MainActivityNavigation {
@@ -44,6 +45,12 @@ public class MainActivityNavigation {
                         AboutActivity.open(activity);
                         break;
                     case R.id.preferences:
+                        break;
+                    case R.id.logout:
+                        AccountUtils.clear();
+                        Intent backToLogin = new Intent(activity, LoginActivity.class);
+                        activity.startActivity(backToLogin);
+                        activity.finish();
                         break;
                 }
                 return false;

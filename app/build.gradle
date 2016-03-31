@@ -54,6 +54,9 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
+        manifestPlaceholders = [manifestApplicationId: "${applicationId}",
+                                onesignal_app_id: "b92149c9-8d41-4bf7-aedb-3c6c3cb65c4c",
+                                onesignal_google_project_number: "139178348155"]
         resValue "string", "app_build_time", "build $buildTime"
         buildConfigField "String", "TRB_AUTHEN_CLIENT_ID", "\"$clientId\""
         buildConfigField "String", "TRB_AUTHEN_CLIENT_SECRET", "\"$clientSecret\""
@@ -148,10 +151,12 @@ dependencies {
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile project(":domain")
     compile project(":entity")
+    compile 'com.onesignal:OneSignal:2.+@aar'
     compile "com.android.support:cardview-v7:$supportLibVersion"
     compile "com.android.support:preference-v14:$supportLibVersion"
     compile "com.android.support:design:$supportLibVersion"
     compile "com.android.support:percent:$supportLibVersion"
+    compile "com.google.android.gms:play-services-gcm:$playServicesVersion"
     compile "com.google.android.gms:play-services-appindexing:$playServicesVersion"
     compile "com.google.android.gms:play-services-location:$playServicesVersion"
     compile "com.google.android.gms:play-services-maps:$playServicesVersion"

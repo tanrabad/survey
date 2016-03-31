@@ -19,11 +19,15 @@ package org.tanrabad.survey;
 
 import android.app.Application;
 import android.content.Context;
-import cat.ereza.customactivityoncrash.CustomActivityOnCrash;
 import org.tanrabad.survey.presenter.LoginActivity;
 import org.tanrabad.survey.utils.tool.ActionLogger;
 import org.tanrabad.survey.utils.tool.ExceptionLogger;
 import org.tanrabad.survey.utils.tool.GoogleAnalyticsTool;
+
+import android.util.Log;
+import cat.ereza.customactivityoncrash.CustomActivityOnCrash;
+import com.onesignal.OneSignal;
+import org.json.JSONObject;
 import org.trb.authen.client.TRBAuthenUtil;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
@@ -58,6 +62,24 @@ public class TanrabadApp extends Application {
         setupCrashActivity();
         setupAnalysisTools();
         setupDefaultFont();
+        OneSignal.startInit(this).setNotificationOpenedHandler(new ExampleNotificationOpenedHandler()).init();
+    }
+
+    private class ExampleNotificationOpenedHandler implements OneSignal.NotificationOpenedHandler {
+        @Override
+        public void notificationOpened(String message, JSONObject additionalData, boolean isActive) {
+            try {
+                if (additionalData != null) {
+                    if (additionalData.has("actionSelected"))
+                        Log.d("OneSignalExample", "OneSignal notification button with id "
+                                + additionalData.getString("actionSelected") + " pressed");
+
+                    Log.d("OneSignalExample", "Full additionalData:\n" + additionalData.toString());
+                }
+            } catch (Throwable t) {
+                t.printStackTrace();
+            }
+        }
     }
 
     private void setupAuthenUtils() {

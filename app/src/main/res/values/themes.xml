@@ -72,6 +72,10 @@
         <item name="android:windowBackground">@color/razzmatazz</item>
     </style>
 
+    <style name="AppTheme.Pink">
+        <item name="android:background">@color/pink</item>
+    </style>
+
     <style name="AppTheme.Blue.Water">
         <item name="android:windowBackground">@drawable/bg_water</item>
     </style>

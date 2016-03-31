@@ -17,13 +17,13 @@
 
 package th.or.nectec.tanrabad.survey.repository;
 
-import th.or.nectec.tanrabad.domain.user.UserRepository;
-import th.or.nectec.tanrabad.domain.user.UserRepositoryException;
-import th.or.nectec.tanrabad.entity.User;
-
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import th.or.nectec.tanrabad.domain.user.UserRepository;
+import th.or.nectec.tanrabad.domain.user.UserRepositoryException;
+import th.or.nectec.tanrabad.entity.User;
 
 final class InMemoryUserRepository implements UserRepository {
 
@@ -72,7 +72,7 @@ final class InMemoryUserRepository implements UserRepository {
         release.setFirstname("ทดสอบ");
         release.setLastname("ทดสอบ");
         release.setEmail("dpc13@gmail.com");
-        release.setOrganizationId(13);
+        release.setOrganizationId(100);
         release.setHealthRegionCode("dpc-13");
         release.setApiFilter("hr_code=dpc-13");
         return release;
@@ -83,7 +83,7 @@ final class InMemoryUserRepository implements UserRepository {
         release.setFirstname("ทดสอบ");
         release.setLastname("ทดสอบ");
         release.setEmail("dpc13@gmail.com");
-        release.setOrganizationId(13);
+        release.setOrganizationId(100);
         release.setHealthRegionCode("dpc-13");
         release.setApiFilter("hr_code=dpc-13");
         return release;
@@ -94,7 +94,7 @@ final class InMemoryUserRepository implements UserRepository {
         release.setFirstname("ทดสอบ");
         release.setLastname("ทดสอบ");
         release.setEmail("dpc13@gmail.com");
-        release.setOrganizationId(13);
+        release.setOrganizationId(100);
         release.setHealthRegionCode("dpc-13");
         release.setApiFilter("hr_code=dpc-13");
         return release;

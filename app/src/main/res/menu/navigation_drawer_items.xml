@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="UnusedIds">
+
+    <group
+        android:id="@+id/trb_group"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/trb_watch"
+            android:icon="@mipmap/ic_trb_watch"
+            android:title="@string/trb_watch"/>
+        <item
+            android:id="@+id/trb_report"
+            android:icon="@mipmap/ic_trb_report"
+            android:title="@string/trb_report"/>
+
+        <item
+            android:id="@+id/trb_bi"
+            android:icon="@mipmap/ic_trb_bi"
+            android:title="@string/trb_bi"/>
+
+    </group>
+
+    <group
+        android:id="@+id/app_group"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/about"
+            android:icon="@mipmap/ic_info"
+            android:title="@string/about_th"/>
+        <item
+            android:id="@+id/preferences"
+            android:icon="@mipmap/ic_settings"
+            android:title="@string/preference"/>
+
+    </group>
+
+</menu>

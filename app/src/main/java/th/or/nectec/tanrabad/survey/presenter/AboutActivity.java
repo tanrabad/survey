@@ -1,5 +1,7 @@
 package th.or.nectec.tanrabad.survey.presenter;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
@@ -24,6 +26,11 @@ public class AboutActivity extends TanrabadActivity {
             }
         }
     };
+
+    public static void open(Activity activity) {
+        Intent intent = new Intent(activity, AboutActivity.class);
+        activity.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

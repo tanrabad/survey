@@ -130,4 +130,9 @@
         <item name="android:textColor">@color/color_accent</item>
     </style>
 
+    <style name="NavigationViewStyle">
+        <item name="android:textSize">@dimen/text_body</item>
+        <item name="android:background">@color/white</item>
+    </style>
+
 </resources>

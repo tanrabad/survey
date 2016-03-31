@@ -32,6 +32,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.TextView;
 
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
 
@@ -39,6 +40,7 @@ import java.util.List;
 
 import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyHistoryChooser;
 import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyHistoryListPresenter;
+import th.or.nectec.tanrabad.entity.Organization;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.R;
@@ -46,6 +48,8 @@ import th.or.nectec.tanrabad.survey.job.AbsJobRunner;
 import th.or.nectec.tanrabad.survey.job.DownloadJobBuilder;
 import th.or.nectec.tanrabad.survey.job.Job;
 import th.or.nectec.tanrabad.survey.job.UploadJobRunner;
+import th.or.nectec.tanrabad.survey.presenter.view.MainActivityNavigation;
+import th.or.nectec.tanrabad.survey.repository.BrokerOrganizationRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerSurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerUserRepository;
 import th.or.nectec.tanrabad.survey.service.BuildingRestService;
@@ -76,6 +80,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         twiceBackPressed = new TwiceBackPressed(this);
+        setupDrawerLayout();
         setupViewOnClick();
         setupNetworkChangeReceiver();
         setupList();
@@ -87,12 +92,23 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
         }
     }
 
+    private void setupDrawerLayout() {
+        MainActivityNavigation.setup(this);
+
+        User user = AccountUtils.getUser();
+        TextView userFullNameTextView = (TextView) findViewById(R.id.user_fullname);
+        userFullNameTextView.setText(String.format("%s %s", user.getFirstname(), user.getLastname()));
+
+        Organization organization = BrokerOrganizationRepository.getInstance().findById(user.getOrganizationId());
+        TextView organizationTextView = (TextView) findViewById(R.id.organization);
+        organizationTextView.setText(organization.getName());
+    }
+
     private void setupViewOnClick() {
         findViewById(R.id.start_survey).setOnClickListener(this);
         findViewById(R.id.root).setOnClickListener(this);
         findViewById(R.id.magnifier).setOnClickListener(this);
         findViewById(R.id.sync_data).setOnClickListener(this);
-        findViewById(R.id.sync_data).setOnLongClickListener(this);
     }
 
     private void setupNetworkChangeReceiver() {

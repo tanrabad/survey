@@ -113,8 +113,10 @@ public class DbSurveyRepositoryTest {
         assertEquals(12f, surveyQuery.getDouble(surveyQuery.getColumnIndex(LONGITUDE)), 0);
         assertEquals("dpc-user", surveyQuery.getString(surveyQuery.getColumnIndex(SURVEYOR)));
         assertEquals(15, surveyQuery.getInt(surveyQuery.getColumnIndex(PERSON_COUNT)));
-        assertEquals("2016-03-24T12:19:20.626+07:00", surveyQuery.getString(surveyQuery.getColumnIndex(CREATE_TIME)));
-        assertEquals("2016-03-24T13:20:21.626+07:00", surveyQuery.getString(surveyQuery.getColumnIndex(UPDATE_TIME)));
+        assertEquals(survey.getStartTimestamp().toString(),
+                surveyQuery.getString(surveyQuery.getColumnIndex(CREATE_TIME)));
+        assertEquals(survey.getFinishTimestamp().toString(),
+                surveyQuery.getString(surveyQuery.getColumnIndex(UPDATE_TIME)));
         assertEquals(ChangedStatus.ADD, surveyQuery.getInt(surveyQuery.getColumnIndex(CHANGED_STATUS)));
         surveyQuery.close();
 
@@ -139,8 +141,9 @@ public class DbSurveyRepositoryTest {
         Survey survey = new Survey(surveyId(), stubUser(), stubBuilding());
         survey.setLocation(new Location(80, 12));
         survey.setResidentCount(15);
-        survey.setStartTimestamp(new DateTime("2016-03-24T12:19:20.626+07:00"));
-        survey.setFinishTimestamp(new DateTime("2016-03-24T13:20:21.626+07:00"));
+        DateTime timeStamp = new DateTime();
+        survey.setStartTimestamp(timeStamp);
+        survey.setFinishTimestamp(timeStamp);
 
         List<SurveyDetail> indoorDetail = new ArrayList<>();
         indoorDetail.add(new SurveyDetail(UUID.randomUUID(), getWater(), 3, 2));

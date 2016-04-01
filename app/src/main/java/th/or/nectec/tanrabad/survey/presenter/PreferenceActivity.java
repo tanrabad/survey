@@ -19,6 +19,16 @@ public class PreferenceActivity extends TanrabadActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preference);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-        getFragmentManager().beginTransaction().replace(R.id.container, new PreferenceFragment()).commit();
+
+        PreferenceFragment preferenceFragment = (PreferenceFragment) getSupportFragmentManager()
+                .findFragmentByTag(PreferenceFragment.FRAGMENT_TAG);
+        if (preferenceFragment == null) {
+            preferenceFragment = new PreferenceFragment();
+        }
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container, preferenceFragment, PreferenceFragment.FRAGMENT_TAG)
+                .commit();
     }
 }

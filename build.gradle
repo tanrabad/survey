@@ -59,6 +59,7 @@ ext {
     recyclerViewHeaderVersion = "1.2.1"
     licenseFragmentVersion = "1.2.0"
     customActivityOnCrash = "1.5.0"
+    circleImageViewVersion = "2.0.0"
     tooltipVersion = "1.3.14"
 
     junitVersion = "4.12"

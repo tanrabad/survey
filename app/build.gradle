@@ -175,6 +175,7 @@ dependencies {
     compile "uk.co.chrisjenx:calligraphy:$calligraphyVersion"
     compile "com.artit-k:license-fragment:$licenseFragmentVersion"
     compile "cat.ereza:customactivityoncrash:$customActivityOnCrash"
+    compile "de.hdodenhof:circleimageview:$circleImageViewVersion"
     compile "it.sephiroth.android.library.targettooltip:target-tooltip-library:$tooltipVersion"
 
     testCompile "junit:junit:$junitVersion"

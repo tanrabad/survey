@@ -141,15 +141,16 @@
         android:background="@drawable/bg_drawer_button"
         android:padding="@dimen/image_button_padding">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/avatar_icon"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/space_between_content"
-            android:background="@color/white"
             android:contentDescription="@null"
-            android:src="@drawable/person_default_background"/>
+            android:src="@drawable/person_default_background"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="2dp"/>
 
         <TextView
             android:id="@+id/user_fullname"

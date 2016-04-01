@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import th.or.nectec.tanrabad.entity.Organization;
@@ -18,6 +19,7 @@ import th.or.nectec.tanrabad.survey.presenter.AboutActivity;
 import th.or.nectec.tanrabad.survey.presenter.AccountUtils;
 import th.or.nectec.tanrabad.survey.presenter.LoginActivity;
 import th.or.nectec.tanrabad.survey.repository.BrokerOrganizationRepository;
+import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 
 public class MainActivityNavigation {
 
@@ -72,7 +74,19 @@ public class MainActivityNavigation {
     private static void setupHeaderView(NavigationView navigationView) {
         View header = navigationView.getHeaderView(0);
 
-        User user = AccountUtils.getUser();
+        final User user = AccountUtils.getUser();
+        ImageView avatarImageView = (ImageView) header.findViewById(R.id.avatar_icon);
+        avatarImageView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Alert.lowLevel().show(user.getApiFilter());
+                return true;
+            }
+        });
+
+        TextView userNameTextView = (TextView) header.findViewById(R.id.username);
+        userNameTextView.setText(user.getUsername());
+
         TextView userFullNameTextView = (TextView) header.findViewById(R.id.user_fullname);
         userFullNameTextView.setText(String.format("%s %s", user.getFirstname(), user.getLastname()));
 

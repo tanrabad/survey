@@ -173,7 +173,7 @@
             android:background="@color/transparent"
             android:textColor="@color/white"
             android:textIsSelectable="false"
-            android:textSize="@dimen/text_caption"
+            android:textSize="@dimen/text_small_caption"
             tools:text="หน่วยงาน"/>
     </RelativeLayout>
 

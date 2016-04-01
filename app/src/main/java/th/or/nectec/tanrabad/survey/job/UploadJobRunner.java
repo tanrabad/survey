@@ -20,15 +20,15 @@ package th.or.nectec.tanrabad.survey.job;
 import android.content.Context;
 import android.text.TextUtils;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.service.RestServiceException;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UploadJobRunner extends AbsJobRunner {
 
@@ -41,7 +41,7 @@ public class UploadJobRunner extends AbsJobRunner {
     private int completelyFailCount = 0;
     private int dataUploadedCount = 0;
 
-    private List<UploadJob> uploadJobs = new ArrayList<>();
+    private List<AbsUploadJob> uploadJobs = new ArrayList<>();
 
     private IOException ioException;
     private RestServiceException restServiceException;
@@ -70,8 +70,8 @@ public class UploadJobRunner extends AbsJobRunner {
     @Override
     protected void onJobDone(Job job) {
         super.onJobDone(job);
-        if (job instanceof UploadJob) {
-            UploadJob uploadJob = (UploadJob) job;
+        if (job instanceof AbsUploadJob) {
+            AbsUploadJob uploadJob = (AbsUploadJob) job;
             uploadJobs.add(uploadJob);
             if (uploadJob.isUploadCompletelySuccess())
                 completelySuccessCount++;
@@ -102,7 +102,7 @@ public class UploadJobRunner extends AbsJobRunner {
 
     private void showUploadResultMsg() {
         String message = "";
-        for (UploadJob uploadJob : uploadJobs) {
+        for (AbsUploadJob uploadJob : uploadJobs) {
             if (!uploadJob.isUploadData())
                 continue;
 
@@ -119,7 +119,18 @@ public class UploadJobRunner extends AbsJobRunner {
             Alert.mediumLevel().show(message.trim());
     }
 
-    private String getDataType(UploadJob uploadJob) {
+    private void showErrorMessage() {
+        if (!isManualSync)
+            return;
+
+        if (ioException != null)
+            Alert.mediumLevel().show(R.string.error_connection_problem);
+        else if (restServiceException != null) {
+            Alert.mediumLevel().show(R.string.error_rest_service);
+        }
+    }
+
+    private String getDataType(AbsUploadJob uploadJob) {
         String dataType = null;
         if (uploadJob.id() == UploadJobBuilder.PLACE_POST_ID
                 || uploadJob.id() == UploadJobBuilder.PLACE_PUT_ID) {
@@ -134,28 +145,17 @@ public class UploadJobRunner extends AbsJobRunner {
         return dataType;
     }
 
-    private String appendUploadSuccessMessage(UploadJob uploadJob) {
+    private String appendUploadSuccessMessage(AbsUploadJob uploadJob) {
         return uploadJob.getSuccessCount() > 0
                 ? String.format(context.getString(R.string.upload_data_success), uploadJob.getSuccessCount())
                 : "";
     }
 
-    private String appendUploadFailedMessage(UploadJob uploadJob) {
+    private String appendUploadFailedMessage(AbsUploadJob uploadJob) {
         String space = (uploadJob.getSuccessCount() > 0) ? " " : "";
         String message = (uploadJob.getFailCount() > 0)
                 ? String.format(context.getString(R.string.upload_data_fail), uploadJob.getFailCount()) + "\n"
                 : "\n";
         return space + message;
-    }
-
-    private void showErrorMessage() {
-        if (!isManualSync)
-            return;
-
-        if (ioException != null)
-            Alert.mediumLevel().show(R.string.error_connection_problem);
-        else if (restServiceException != null) {
-            Alert.mediumLevel().show(R.string.error_rest_service);
-        }
     }
 }

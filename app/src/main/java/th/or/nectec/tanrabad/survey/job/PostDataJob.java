@@ -17,25 +17,25 @@
 
 package th.or.nectec.tanrabad.survey.job;
 
-import java.io.IOException;
-import java.util.List;
-
 import th.or.nectec.tanrabad.survey.repository.ChangedRepository;
 import th.or.nectec.tanrabad.survey.service.UploadRestService;
 
-public class PostDataJob<T> extends UploadJob<T> {
+import java.io.IOException;
+import java.util.List;
+
+public class PostDataJob<T> extends AbsUploadJob<T> {
 
     public PostDataJob(int jobId, ChangedRepository<T> changedRepository, UploadRestService<T> uploadRestService) {
         super(jobId, changedRepository, uploadRestService);
     }
 
     @Override
-    public boolean uploadData(UploadRestService<T> uploadRestService, T data) throws IOException {
-        return uploadRestService.post(data);
+    public List<T> getUpdatedData(ChangedRepository<T> changedRepository) {
+        return changedRepository.getAdd();
     }
 
     @Override
-    public List<T> getUpdatedData(ChangedRepository changedRepository) {
-        return changedRepository.getAdd();
+    public boolean uploadData(UploadRestService<T> uploadRestService, T data) throws IOException {
+        return uploadRestService.post(data);
     }
 }

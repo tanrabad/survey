@@ -36,10 +36,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
-
-import java.util.List;
-import java.util.UUID;
-
 import it.sephiroth.android.library.tooltip.Tooltip;
 import it.sephiroth.android.library.tooltip.Typefaces;
 import th.or.nectec.tanrabad.domain.entomology.HouseIndex;
@@ -60,6 +56,9 @@ import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
 import th.or.nectec.tanrabad.survey.utils.showcase.BaseShowcase;
 import th.or.nectec.tanrabad.survey.utils.showcase.ShowcaseFactory;
+
+import java.util.List;
+import java.util.UUID;
 
 public class SurveyBuildingHistoryActivity extends TanrabadActivity implements SurveyBuildingPresenter, PlacePresenter {
 
@@ -105,6 +104,53 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
         });
         startSurveyMoreBuildingButtonAnimation();
         displaySurveyMoreBuildingShowcase();
+    }
+
+    private void showPlaceInfo() {
+        PlaceController placeController = new PlaceController(BrokerPlaceRepository.getInstance(), this);
+        placeController.showPlace(UUID.fromString(getPlaceUuidFromIntent()));
+    }
+
+    private void setupBuildingHistoryList() {
+        surveyBuildingHistoryAdapter = new SurveyBuildingHistoryAdapter(this,
+                BuildingIcon.getWhite(place));
+        RecyclerView surveyBuildingHistoryList = (RecyclerView) findViewById(R.id.survey_building_history_list);
+        surveyBuildingHistoryList.setAdapter(surveyBuildingHistoryAdapter);
+        surveyBuildingHistoryList.setLayoutManager(new LinearLayoutManager(this));
+        surveyBuildingHistoryList.addItemDecoration(new SimpleDividerItemDecoration(this));
+        surveyBuildingHistoryAdapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Survey survey = surveyBuildingHistoryAdapter.getItem(position);
+                SurveyActivity.open(SurveyBuildingHistoryActivity.this, survey.getSurveyBuilding());
+            }
+        });
+        RecyclerViewHeader recyclerViewHeader = (RecyclerViewHeader) findViewById(R.id.card_header);
+
+        recyclerViewHeader.attachTo(surveyBuildingHistoryList, true);
+    }
+
+    private void setupEmptyLayout() {
+        emptyLayoutView = (EmptyLayoutView) findViewById(R.id.empty_layout);
+        emptyLayoutView.setEmptyButtonVisibility(false);
+        emptyLayoutView.setEmptyText(R.string.survey_building_history_not_found);
+    }
+
+    private void showSurveyBuildingHistoryList() {
+        SurveyBuildingHistoryController surveyBuildingHistoryController = new SurveyBuildingHistoryController(
+                BrokerUserRepository.getInstance(),
+                BrokerPlaceRepository.getInstance(),
+                BrokerSurveyRepository.getInstance(),
+                this);
+        surveyBuildingHistoryController.showSurveyBuildingOf(getPlaceUuidFromIntent(),
+                AccountUtils.getUser().getUsername());
+    }
+
+    private void startSyncJob() {
+        AbsJobRunner jobRunner = new SurveySyncJobRunner();
+        jobRunner.addJobs(new UploadJobBuilder().getJobs());
+        jobRunner.addJobs(new DownloadJobBuilder().getJobs());
+        jobRunner.start();
     }
 
     private String getPlaceUuidFromIntent() {
@@ -158,46 +204,6 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
         //showcase.display();
     }
 
-    private void showPlaceInfo() {
-        PlaceController placeController = new PlaceController(BrokerPlaceRepository.getInstance(), this);
-        placeController.showPlace(UUID.fromString(getPlaceUuidFromIntent()));
-    }
-
-    private void setupBuildingHistoryList() {
-        surveyBuildingHistoryAdapter = new SurveyBuildingHistoryAdapter(this,
-                BuildingIcon.getWhite(place));
-        RecyclerView surveyBuildingHistoryList = (RecyclerView) findViewById(R.id.survey_building_history_list);
-        surveyBuildingHistoryList.setAdapter(surveyBuildingHistoryAdapter);
-        surveyBuildingHistoryList.setLayoutManager(new LinearLayoutManager(this));
-        surveyBuildingHistoryList.addItemDecoration(new SimpleDividerItemDecoration(this));
-        surveyBuildingHistoryAdapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Survey survey = surveyBuildingHistoryAdapter.getItem(position);
-                SurveyActivity.open(SurveyBuildingHistoryActivity.this, survey.getSurveyBuilding());
-            }
-        });
-        RecyclerViewHeader recyclerViewHeader = (RecyclerViewHeader) findViewById(R.id.card_header);
-
-        recyclerViewHeader.attachTo(surveyBuildingHistoryList, true);
-    }
-
-    private void setupEmptyLayout() {
-        emptyLayoutView = (EmptyLayoutView) findViewById(R.id.empty_layout);
-        emptyLayoutView.setEmptyButtonVisibility(false);
-        emptyLayoutView.setEmptyText(R.string.survey_building_history_not_found);
-    }
-
-    private void showSurveyBuildingHistoryList() {
-        SurveyBuildingHistoryController surveyBuildingHistoryController = new SurveyBuildingHistoryController(
-                BrokerUserRepository.getInstance(),
-                BrokerPlaceRepository.getInstance(),
-                BrokerSurveyRepository.getInstance(),
-                this);
-        surveyBuildingHistoryController.showSurveyBuildingOf(getPlaceUuidFromIntent(),
-                AccountUtils.getUser().getUsername());
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -211,13 +217,6 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
                 break;
         }
         return true;
-    }
-
-    private void startSyncJob() {
-        AbsJobRunner jobRunner = new SurveySyncJobRunner();
-        jobRunner.addJobs(new UploadJobBuilder().getJobs());
-        jobRunner.addJobs(new DownloadJobBuilder().getJobs());
-        jobRunner.start();
     }
 
     @Override
@@ -294,8 +293,8 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
         @Override
         protected void onJobDone(Job job) {
             super.onJobDone(job);
-            if (job instanceof UploadJob) {
-                successCount += ((UploadJob) job).getSuccessCount();
+            if (job instanceof AbsUploadJob) {
+                successCount += ((AbsUploadJob) job).getSuccessCount();
             }
         }
 

@@ -17,16 +17,15 @@
 
 package th.or.nectec.tanrabad.survey.job;
 
-
-import java.io.IOException;
-import java.util.List;
-
 import th.or.nectec.tanrabad.survey.repository.ChangedRepository;
 import th.or.nectec.tanrabad.survey.service.RestServiceException;
 import th.or.nectec.tanrabad.survey.service.UploadRestService;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorList;
 
-public abstract class UploadJob<T> implements Job {
+import java.io.IOException;
+import java.util.List;
+
+public abstract class AbsUploadJob<T> implements Job {
     private final int jobId;
     protected int successCount = 0;
     protected int ioExceptionCount = 0;
@@ -36,7 +35,7 @@ public abstract class UploadJob<T> implements Job {
     private IOException ioException;
     private RestServiceException restServiceException;
 
-    public UploadJob(int jobId, ChangedRepository<T> changedRepository, UploadRestService<T> uploadRestService) {
+    public AbsUploadJob(int jobId, ChangedRepository<T> changedRepository, UploadRestService<T> uploadRestService) {
         this.jobId = jobId;
         this.changedRepository = changedRepository;
         this.uploadRestService = uploadRestService;
@@ -50,16 +49,16 @@ public abstract class UploadJob<T> implements Job {
         return getIoExceptionCount() + getRestServiceExceptionCount();
     }
 
+    public int getSuccessCount() {
+        return successCount;
+    }
+
     public int getIoExceptionCount() {
         return ioExceptionCount;
     }
 
     public int getRestServiceExceptionCount() {
         return restServiceExceptionCount;
-    }
-
-    public int getSuccessCount() {
-        return successCount;
     }
 
     @Override
@@ -90,6 +89,10 @@ public abstract class UploadJob<T> implements Job {
         throwBufferException();
     }
 
+    public abstract List<T> getUpdatedData(ChangedRepository<T> changedRepository);
+
+    public abstract boolean uploadData(UploadRestService<T> uploadRestService, T data) throws IOException;
+
     private void throwBufferException() throws IOException {
         if (ioException != null) {
             throw ioException;
@@ -97,10 +100,6 @@ public abstract class UploadJob<T> implements Job {
             throw restServiceException;
         }
     }
-
-    public abstract boolean uploadData(UploadRestService<T> uploadRestService, T data) throws IOException;
-
-    public abstract List<T> getUpdatedData(ChangedRepository changedRepository);
 
     public boolean isUploadCompletelySuccess() {
         return getFailCount() == 0 && getSuccessCount() > 0;

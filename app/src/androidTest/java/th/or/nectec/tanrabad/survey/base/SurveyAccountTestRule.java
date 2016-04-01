@@ -19,6 +19,7 @@ package th.or.nectec.tanrabad.survey.base;
 
 
 import org.junit.rules.ExternalResource;
+
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.presenter.AccountUtils;
 
@@ -38,6 +39,7 @@ public class SurveyAccountTestRule extends ExternalResource {
     protected void before() throws Throwable {
         User user = User.fromUsername(username);
         user.setHealthRegionCode("dpc-04");
+        user.setOrganizationId(100);
         AccountUtils.setUser(user);
     }
 

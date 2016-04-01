@@ -1,16 +1,26 @@
+/*
+ * Copyright (c) 2016 NECTEC
+ *   National Electronics and Computer Technology Center, Thailand
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package th.or.nectec.tanrabad.survey.service;
 
-
 import com.bluelinelabs.logansquare.LoganSquare;
-
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.mockito.Mockito;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.SurveyDetail;
@@ -20,22 +30,24 @@ import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 import th.or.nectec.tanrabad.survey.WireMockTestBase;
 import th.or.nectec.tanrabad.survey.service.json.JsonSurvey;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
-import static com.github.tomakehurst.wiremock.client.WireMock.equalToJson;
-import static com.github.tomakehurst.wiremock.client.WireMock.post;
-import static com.github.tomakehurst.wiremock.client.WireMock.postRequestedFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
-import static com.github.tomakehurst.wiremock.client.WireMock.verify;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 
 public class SurveyRestServiceTest extends WireMockTestBase {
+
+    private final ServiceLastUpdate lastUpdate = Mockito.mock(ServiceLastUpdate.class);
+
     @Test
     public void testPost() throws Exception {
         stubFor(post(urlEqualTo(SurveyRestService.PATH))
                 .willReturn(aResponse()
                         .withStatus(201)));
-        SurveyRestService surveyRestService = new SurveyRestService(localHost(), Mockito.mock(ServiceLastUpdate.class));
+        SurveyRestService surveyRestService = new SurveyRestService(localHost(), lastUpdate);
         Survey survey = getSurvey();
 
         boolean postDataResult = surveyRestService.post(survey);
@@ -71,5 +83,33 @@ public class SurveyRestServiceTest extends WireMockTestBase {
 
     private ContainerType getDrinkingWater() {
         return new ContainerType(2, "น้ำดื่ม");
+    }
+
+    @Test
+    public void testDelete() throws Exception {
+        Survey survey = getSurvey();
+        String deleteUrl = SurveyRestService.PATH.concat("/").concat(survey.getId().toString());
+        stubFor(delete(urlPathEqualTo(deleteUrl))
+                .willReturn(aResponse()
+                        .withStatus(200)));
+
+        SurveyRestService surveyRestService = new SurveyRestService(localHost(), lastUpdate);
+        boolean result = surveyRestService.delete(survey);
+
+        assertTrue(result);
+        verify(deleteRequestedFor(urlEqualTo(deleteUrl)));
+    }
+
+    @Test(expected = RestServiceException.class)
+    public void testDeleteNotSuccess() throws Exception {
+        Survey survey = getSurvey();
+        String deleteUrl = SurveyRestService.PATH.concat("/").concat(survey.getId().toString());
+        stubFor(delete(urlPathEqualTo(deleteUrl))
+                .willReturn(aResponse()
+                        .withStatus(409)));
+
+        SurveyRestService surveyRestService = new SurveyRestService(localHost(), lastUpdate);
+        surveyRestService.delete(survey);
+
     }
 }

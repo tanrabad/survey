@@ -18,12 +18,8 @@
 package th.or.nectec.tanrabad.survey.service;
 
 import java.io.IOException;
-import java.util.List;
 
-public interface RestService<T> {
-    List<T> getUpdate() throws IOException;
+public interface DeleteRestService<T> {
 
-    List<T> getDelete() throws IOException;
-
-    boolean hasNextRequest();
+    boolean delete(T data) throws IOException;
 }

@@ -20,10 +20,6 @@ package th.or.nectec.tanrabad.survey.service;
 import android.text.TextUtils;
 import android.util.Patterns;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -32,10 +28,16 @@ import th.or.nectec.tanrabad.survey.BuildConfig;
 import th.or.nectec.tanrabad.survey.presenter.AccountUtils;
 import th.or.nectec.tanrabad.survey.service.http.Status;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static th.or.nectec.tanrabad.survey.service.http.Header.*;
 
 public abstract class AbsRestService<T> implements RestService<T> {
+
+    protected static final String TRB_USER_AGENT = "tanrabad-survey-app";
 
     private static final int READ_WRITE_TIMEOUT = 10; //second
     private static final int CONNECT_TIMEOUT = 5; //second
@@ -64,6 +66,10 @@ public abstract class AbsRestService<T> implements RestService<T> {
         deletedData = new ArrayList<>();
     }
 
+    public static String getBaseApi() {
+        return BASE_API;
+    }
+
     public static void setBaseApi(String baseApi) {
         if (TextUtils.isEmpty(baseApi))
             return;
@@ -72,10 +78,6 @@ public abstract class AbsRestService<T> implements RestService<T> {
             return;
 
         BASE_API = baseApi;
-    }
-
-    public static String getBaseApi() {
-        return BASE_API;
     }
 
     String getApiFilterParam() {
@@ -108,6 +110,17 @@ public abstract class AbsRestService<T> implements RestService<T> {
         return nextUrl != null;
     }
 
+    protected final Request makeRequest() {
+        Request.Builder requestBuilder = new Request.Builder()
+                .get()
+                .url(getUrl())
+                .addHeader(USER_AGENT, TRB_USER_AGENT)
+                .addHeader(ACCEPT, "application/json")
+                .addHeader(ACCEPT_CHARSET, "utf-8");
+        headerIfModifiedSince(requestBuilder);
+        return requestBuilder.build();
+    }
+
     private void getNextRequest(Response response) {
         String linkHeader = response.header(LINK);
         if (linkHeader != null && !linkHeader.isEmpty()) {
@@ -118,23 +131,15 @@ public abstract class AbsRestService<T> implements RestService<T> {
         }
     }
 
-    boolean isNotSuccess(Response response) {
-        return !response.isSuccessful();
-    }
-
     private boolean isNotModified(Response response) {
         return response.code() == Status.NOT_MODIFIED;
     }
 
-    protected final Request makeRequest() {
-        Request.Builder requestBuilder = new Request.Builder()
-                .get()
-                .url(getUrl())
-                .addHeader(ACCEPT, "application/json")
-                .addHeader(ACCEPT_CHARSET, "utf-8");
-        headerIfModifiedSince(requestBuilder);
-        return requestBuilder.build();
+    boolean isNotSuccess(Response response) {
+        return !response.isSuccessful();
     }
+
+    protected abstract List<T> jsonToEntityList(String responseBody) throws IOException;
 
     public String getUrl() {
         if (nextUrl != null && !nextUrl.isEmpty()) {
@@ -146,19 +151,17 @@ public abstract class AbsRestService<T> implements RestService<T> {
         return url;
     }
 
-    String getDefaultParams() {
-        return null;
-    }
-
-    protected abstract String getPath();
-
     private void headerIfModifiedSince(Request.Builder requestBuilder) {
         String lastUpdate = this.serviceLastUpdate.get();
         if (lastUpdate != null)
             requestBuilder.addHeader(IF_MODIFIED_SINCE, lastUpdate);
     }
 
-    protected abstract List<T> jsonToEntityList(String responseBody) throws IOException;
+    protected abstract String getPath();
+
+    String getDefaultParams() {
+        return null;
+    }
 
     public void addDeleteData(T data) {
         deletedData.add(data);

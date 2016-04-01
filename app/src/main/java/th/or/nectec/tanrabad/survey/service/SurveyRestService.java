@@ -18,6 +18,8 @@
 package th.or.nectec.tanrabad.survey.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
+import okhttp3.Request;
+import okhttp3.Response;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.service.json.JsonSurvey;
@@ -25,7 +27,9 @@ import th.or.nectec.tanrabad.survey.service.json.JsonSurvey;
 import java.io.IOException;
 import java.util.List;
 
-public class SurveyRestService extends AbsUploadRestService<Survey> {
+import static th.or.nectec.tanrabad.survey.service.http.Header.*;
+
+public class SurveyRestService extends AbsUploadRestService<Survey> implements DeleteRestService<Survey> {
 
     public static final String PATH = "/survey";
 
@@ -55,5 +59,26 @@ public class SurveyRestService extends AbsUploadRestService<Survey> {
     @Override
     protected List<Survey> jsonToEntityList(String responseBody) {
         throw new IllegalArgumentException("Survey rest service not support convert to entity.");
+    }
+
+    @Override
+    public boolean delete(Survey data) throws IOException {
+        Request request = deleteRequest(data);
+        Response response = client.newCall(request).execute();
+        if (!response.isSuccessful()) {
+            TanrabadApp.log(response.body().string());
+            throw new RestServiceException(response);
+        }
+        return true;
+    }
+
+    protected final Request deleteRequest(Survey data) {
+        Request.Builder requestBuilder = new Request.Builder()
+                .delete()
+                .url(getUrl().concat("/").concat(data.getId().toString()))
+                .addHeader(USER_AGENT, TRB_USER_AGENT)
+                .addHeader(ACCEPT, "application/json")
+                .addHeader(ACCEPT_CHARSET, "utf-8");
+        return requestBuilder.build();
     }
 }

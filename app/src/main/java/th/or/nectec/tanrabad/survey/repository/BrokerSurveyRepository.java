@@ -28,6 +28,7 @@ import java.util.UUID;
 
 public final class BrokerSurveyRepository implements SurveyRepository {
 
+    private static final String TAG = "BrokerSurveyRepository";
     private static BrokerSurveyRepository instance;
     private final SurveyRepository cache;
     private final SurveyRepository persistent;

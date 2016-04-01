@@ -47,10 +47,12 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
     private ArrayList<Survey> surveyBuildings = new ArrayList<>();
     private int buildingIcon;
     private AdapterView.OnItemClickListener onItemClickListener;
+    private AdapterView.OnItemLongClickListener onItemLongClickListener;
 
     public SurveyBuildingHistoryAdapter(Context context, @DrawableRes int buildingIcon) {
         this.context = context;
         this.buildingIcon = buildingIcon;
+
     }
 
     @Override
@@ -67,8 +69,8 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
         notifyDataSetChanged();
     }
 
-    public Survey getItem(int i) {
-        return surveyBuildings.get(i);
+    public Survey getItem(int position) {
+        return surveyBuildings.get(position);
     }
 
     @Override
@@ -78,13 +80,26 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
 
     @Override
     public void setOnItemLongClickListener(AdapterView.OnItemLongClickListener onItemLongClickListener) {
+        this.onItemLongClickListener = onItemLongClickListener;
     }
 
     private void onItemHolderClick(ViewHolder itemHolder) {
         if (onItemClickListener != null) {
-            onItemClickListener.onItemClick(null, itemHolder.itemView,
-                    itemHolder.getAdapterPosition(), itemHolder.getItemId());
+            onItemClickListener.onItemClick(null,
+                    itemHolder.itemView,
+                    itemHolder.getAdapterPosition(),
+                    itemHolder.getItemId());
         }
+    }
+
+    private boolean onItemHolderLongClick(ViewHolder viewHolder) {
+        if (onItemLongClickListener != null) {
+            return onItemLongClickListener.onItemLongClick(null,
+                    viewHolder.itemView,
+                    viewHolder.getAdapterPosition(),
+                    viewHolder.getItemId());
+        }
+        return false;
     }
 
     @Override
@@ -147,7 +162,7 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
         return surveyBuildings.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         private final TextView duration;
         private final TextView surveyBuildingTextView;
         private final ImageView surveyBuildingIcon;
@@ -161,6 +176,7 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
             super(itemView);
             this.adapter = adapter;
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
             surveyBuildingTextView = (TextView) itemView.findViewById(R.id.survey_building_name);
             surveyBuildingIcon = (ImageView) itemView.findViewById(R.id.survey_building_icon);
             timeAgoView = (TimeAgoView) itemView.findViewById(R.id.time_ago);
@@ -174,5 +190,11 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
         public void onClick(View view) {
             adapter.onItemHolderClick(this);
         }
+
+        @Override
+        public boolean onLongClick(View view) {
+            return adapter.onItemHolderLongClick(this);
+        }
     }
+
 }

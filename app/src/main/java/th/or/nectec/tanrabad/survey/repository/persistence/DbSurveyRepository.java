@@ -25,11 +25,6 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import org.joda.time.DateTime;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
 import th.or.nectec.tanrabad.domain.building.BuildingRepository;
 import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
@@ -42,6 +37,10 @@ import th.or.nectec.tanrabad.survey.repository.*;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorList;
 import th.or.nectec.tanrabad.survey.utils.collection.CursorMapper;
 import th.or.nectec.tanrabad.survey.utils.time.ThaiDateTimeConverter;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class DbSurveyRepository extends DbRepository implements SurveyRepository, ChangedRepository<Survey> {
 
@@ -119,7 +118,8 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
 
     @Override
     public boolean delete(Survey data) {
-        return false;
+        int delete = writableDatabase().delete(TABLE_NAME, "survey_id=?", new String[]{data.getId().toString()});
+        return delete == 1;
     }
 
     @Override
@@ -192,7 +192,6 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
         values.put(SurveyColumn.UPDATE_TIME, survey.getFinishTimestamp().toString());
         return values;
     }
-
 
     private boolean saveByContentValues(SQLiteDatabase db, ContentValues survey) {
         if (db.insert(TABLE_NAME, null, survey) == ERROR_INSERT_ID)

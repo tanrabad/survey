@@ -52,6 +52,7 @@ import th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerSurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerUserRepository;
+import th.or.nectec.tanrabad.survey.service.SurveyRestService;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
 import th.or.nectec.tanrabad.survey.utils.showcase.BaseShowcase;
@@ -123,6 +124,16 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Survey survey = surveyBuildingHistoryAdapter.getItem(position);
                 SurveyActivity.open(SurveyBuildingHistoryActivity.this, survey.getSurveyBuilding());
+            }
+        });
+        surveyBuildingHistoryAdapter.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+                if (InternetConnection.isAvailable(SurveyBuildingHistoryActivity.this)) {
+                    deleteSurvey(position);
+                    return true;
+                }
+                return false;
             }
         });
         RecyclerViewHeader recyclerViewHeader = (RecyclerViewHeader) findViewById(R.id.card_header);
@@ -202,6 +213,15 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
         showcase.setTitle(getString(R.string.showcase_survey_more_building_title));
         showcase.setMessage(getString(R.string.showcase_survey_more_building));
         //showcase.display();
+    }
+
+    private void deleteSurvey(int position) {
+        Survey survey = surveyBuildingHistoryAdapter.getItem(position);
+        DeleteDataJob<Survey> dataJob = new DeleteDataJob<>(BrokerSurveyRepository.getInstance(),
+                new SurveyRestService(), survey);
+        SurveySyncJobRunner runner = new SurveySyncJobRunner();
+        runner.addJob(dataJob);
+        runner.start();
     }
 
     @Override
@@ -295,6 +315,8 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
             super.onJobDone(job);
             if (job instanceof AbsUploadJob) {
                 successCount += ((AbsUploadJob) job).getSuccessCount();
+            } else if (job instanceof DeleteDataJob) {
+                successCount += ((DeleteDataJob) job).getSuccessCount();
             }
         }
 

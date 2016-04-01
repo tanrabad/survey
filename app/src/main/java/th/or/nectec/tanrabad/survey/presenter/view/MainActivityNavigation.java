@@ -18,6 +18,7 @@ import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.presenter.AboutActivity;
 import th.or.nectec.tanrabad.survey.presenter.AccountUtils;
 import th.or.nectec.tanrabad.survey.presenter.LoginActivity;
+import th.or.nectec.tanrabad.survey.presenter.PreferenceActivity;
 import th.or.nectec.tanrabad.survey.repository.BrokerOrganizationRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 
@@ -48,6 +49,7 @@ public class MainActivityNavigation {
                         AboutActivity.open(activity);
                         break;
                     case R.id.preferences:
+                        PreferenceActivity.open(activity);
                         break;
                     case R.id.logout:
                         AccountUtils.clear();

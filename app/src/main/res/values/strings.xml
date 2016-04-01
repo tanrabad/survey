@@ -198,5 +198,7 @@
     <string name="trb_report">TanRabad Report</string>
     <string name="trb_watch">TanRabad Watch</string>
     <string name="logout">ออกจากระบบ</string>
+    <string name="google_analytic_pref_title">การใช้งานและรายงานข้อบกพร่อง</string>
+    <string name="setting">การตั้งค่า</string>
 
 </resources>

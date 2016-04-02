@@ -34,7 +34,6 @@ apply plugin: "com.android.application"
 apply plugin: "io.fabric"
 apply plugin: "com.neenbedankt.android-apt"
 apply plugin: "com.noveogroup.android.check"
-apply from: "../gradle/versionGenerator.gradle"
 
 repositories {
     maven { url "https://maven.fabric.io/public" }
@@ -49,8 +48,8 @@ android {
         applicationId "th.or.nectec.tanrabad.survey"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode rootProject.genVersionCode
-        versionName rootProject.genVersionName
+        versionCode rootProject.versionCode
+        versionName rootProject.versionName
         testApplicationId "th.or.nectec.tanrabad.survey.test"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -90,7 +89,7 @@ android {
             manifestPlaceholders = [google_map_key: System.getenv("TANRABAD_GOOGLE_DEBUG_KEY")]
             buildConfigField "String", "API_URL", "\"http://trb-test.igridproject.info/v1\""
             buildConfigField "String", "TRIAL_USER", "\"trial-debug\""
-            resValue "string", "app_version", "version $genVersionName-Debug"
+            resValue "string", "app_version", "version $versionName-Debug"
         }
         beta {
             debuggable false
@@ -102,7 +101,7 @@ android {
             manifestPlaceholders = [google_map_key: System.getenv("TANRABAD_GOOGLE_RELEASE_KEY")]
             buildConfigField "String", "API_URL", "\"http://trb-test.igridproject.info/v1\""
             buildConfigField "String", "TRIAL_USER", "\"trial-beta\""
-            resValue "string", "app_version", "version $genVersionName-Beta"
+            resValue "string", "app_version", "version $versionName-Beta"
         }
         release {
             signingConfig signingConfigs.release
@@ -113,7 +112,7 @@ android {
             manifestPlaceholders = [google_map_key: System.getenv("TANRABAD_GOOGLE_RELEASE_KEY")]
             buildConfigField "String", "API_URL", "\"http://api.tanrabad.org/v1\""
             buildConfigField "String", "TRIAL_USER", "\"trial-release\""
-            resValue "string", "app_version", "version $genVersionName"
+            resValue "string", "app_version", "version $versionName"
         }
     }
 

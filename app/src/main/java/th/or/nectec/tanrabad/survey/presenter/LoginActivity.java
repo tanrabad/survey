@@ -81,12 +81,6 @@ public class LoginActivity extends TanrabadActivity {
                 openAuthenWeb();
             }
         });
-        findViewById(R.id.about).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openAboutActivity();
-            }
-        });
         startAnimation();
     }
 

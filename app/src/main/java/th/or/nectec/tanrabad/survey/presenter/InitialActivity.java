@@ -67,7 +67,6 @@ public class InitialActivity extends TanrabadActivity {
     public static void open(Activity activity) {
         Intent intent = new Intent(activity, InitialActivity.class);
         activity.startActivity(intent);
-        activity.overridePendingTransition(R.anim.drop_in, R.anim.drop_out);
     }
 
     @Override
@@ -164,6 +163,7 @@ public class InitialActivity extends TanrabadActivity {
         protected void onRunFinish() {
             pleaseWaitBeans.stopJumping();
             MainActivity.open(InitialActivity.this);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             finish();
             showErrorMessage();
         }

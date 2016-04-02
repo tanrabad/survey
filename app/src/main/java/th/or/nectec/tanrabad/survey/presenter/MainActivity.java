@@ -71,7 +71,6 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
 
     public static void open(Activity activity) {
         Intent intent = new Intent(activity, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         activity.startActivity(intent);
     }
 

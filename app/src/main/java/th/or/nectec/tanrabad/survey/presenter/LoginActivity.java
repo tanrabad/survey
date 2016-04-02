@@ -132,6 +132,7 @@ public class LoginActivity extends TanrabadActivity {
 
     private void startInitialActivity() {
         InitialActivity.open(LoginActivity.this);
+        overridePendingTransition(R.anim.drop_in, R.anim.drop_out);
         finish();
     }
 

@@ -26,7 +26,7 @@ import th.or.nectec.tanrabad.survey.R;
 
 public class SplashScreenActivity extends TanrabadActivity {
 
-    private static final int DELAY_MILLS = 4000;
+    private static final int DELAY_MILLS = 3000;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

@@ -27,34 +27,34 @@ import th.or.nectec.tanrabad.survey.R;
 public class SplashScreenActivity extends TanrabadActivity {
 
     private static final int DELAY_MILLS = 3000;
+    private Handler handler = new Handler();
+    private Runnable openLoginActivity = new Runnable() {
+        @Override
+        public void run() {
+            Intent intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        }
+    };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
-        if ("android.intent.action.MAIN".equals(getIntent().getAction())) {
-            openLoginActivityAfterDelayed();
-        }
-    }
-
-    private void openLoginActivityAfterDelayed() {
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-            }
-        }, DELAY_MILLS);
     }
 
     @Override
-    public void onBackPressed() {
-        if (!"android.intent.action.MAIN".equals(getIntent().getAction())) {
-            super.onBackPressed();
+    protected void onResume() {
+        super.onResume();
+        if ("android.intent.action.MAIN".equals(getIntent().getAction())) {
+            handler.postDelayed(openLoginActivity, DELAY_MILLS);
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        handler.removeCallbacks(openLoginActivity);
     }
 }

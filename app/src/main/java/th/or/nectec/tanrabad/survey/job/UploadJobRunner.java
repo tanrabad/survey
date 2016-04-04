@@ -20,15 +20,15 @@ package th.or.nectec.tanrabad.survey.job;
 import android.content.Context;
 import android.text.TextUtils;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.service.RestServiceException;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class UploadJobRunner extends AbsJobRunner {
 
@@ -91,13 +91,7 @@ public class UploadJobRunner extends AbsJobRunner {
         if (uploadJobs.size() == 0)
             return;
 
-        if (completelySuccessCount == dataUploadedCount) {
-            showUploadResultMsg();
-        } else if (completelyFailCount == dataUploadedCount) {
-            showErrorMessage();
-        } else {
-            showUploadResultMsg();
-        }
+        showUploadResultMsg();
     }
 
     private void showUploadResultMsg() {
@@ -119,16 +113,6 @@ public class UploadJobRunner extends AbsJobRunner {
             Alert.mediumLevel().show(message.trim());
     }
 
-    private void showErrorMessage() {
-        if (!isManualSync)
-            return;
-
-        if (ioException != null)
-            Alert.mediumLevel().show(R.string.error_connection_problem);
-        else if (restServiceException != null) {
-            Alert.mediumLevel().show(R.string.error_rest_service);
-        }
-    }
 
     private String getDataType(AbsUploadJob uploadJob) {
         String dataType = null;

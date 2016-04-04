@@ -127,7 +127,6 @@
     <string name="press_back_again_to_exit">กรุณากดอีกครั้งเพื่อออก</string>
     <string name="location">พิกัด</string>
     <string name="distance_between_place_and_building">เนื่องจากพิกัดอาคารห่างจากพิกัดสถานที่ %1$s กม.</string>
-    <string name="cant_edit_community_village">ไม่สามารถแก้ไขข้อมูลสถานที่ที่เป็นชุมชน/หมู่บ้าน</string>
     <string name="edit_place">แก้ไขสถานที่</string>
     <string name="search_building_by_name_hint">พิมพ์ชื่ออาคารเพื่อค้นหา</string>
     <string name="search_place_by_name_hint">พิมพ์ชื่อสถานที่เพื่อค้นหา</string>

@@ -275,6 +275,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
             super.onRunFinish();
             findViewById(R.id.sync_data).setEnabled(true);
             stopSyncAnimation();
+            doLoadingRecentSurveyData();
         }
     }
 }

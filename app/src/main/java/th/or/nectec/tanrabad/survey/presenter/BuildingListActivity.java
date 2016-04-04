@@ -45,18 +45,18 @@ import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatusListPresent
 import th.or.nectec.tanrabad.domain.place.PlaceController;
 import th.or.nectec.tanrabad.domain.place.PlacePresenter;
 import th.or.nectec.tanrabad.domain.survey.SurveyBuildingChooser;
+import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
-import th.or.nectec.tanrabad.survey.job.AbsJobRunner;
-import th.or.nectec.tanrabad.survey.job.DownloadJobBuilder;
-import th.or.nectec.tanrabad.survey.job.UploadJobBuilder;
-import th.or.nectec.tanrabad.survey.job.UploadJobRunner;
+import th.or.nectec.tanrabad.survey.job.*;
 import th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView;
+import th.or.nectec.tanrabad.survey.repository.BrokerBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerSurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerUserRepository;
+import th.or.nectec.tanrabad.survey.service.BuildingRestService;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
 
@@ -139,15 +139,24 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         buildingAdapter.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-                BuildingWithSurveyStatus building = buildingAdapter.getItem(position);
-                BuildingFormActivity.startEdit(BuildingListActivity.this,
-                        getPlaceUuidFromIntent().toString(),
-                        building.building.getId().toString());
-                return true;
+                if (InternetConnection.isAvailable(BuildingListActivity.this)) {
+                    deleteBuilding(buildingAdapter.getItem(position).building);
+                    return true;
+                }
+
+                return false;
             }
         });
         RecyclerViewHeader recyclerViewHeader = (RecyclerViewHeader) findViewById(R.id.card_header);
         recyclerViewHeader.attachTo(buildingList, true);
+    }
+
+    private void deleteBuilding(Building building) {
+        DeleteDataJob<Building> dataJob = new DeleteDataJob<>(BrokerBuildingRepository.getInstance(),
+                new BuildingRestService(), building);
+        BuildingSyncJobRunner runner = new BuildingSyncJobRunner();
+        runner.addJob(dataJob);
+        runner.start();
     }
 
     private void setupSearchView() {

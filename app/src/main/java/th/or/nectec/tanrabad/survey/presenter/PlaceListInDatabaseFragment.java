@@ -34,12 +34,11 @@ import java.util.List;
 import th.or.nectec.tanrabad.domain.place.PlaceChooser;
 import th.or.nectec.tanrabad.domain.place.PlaceListPresenter;
 import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
-import th.or.nectec.tanrabad.survey.utils.alert.Alert;
+import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 
@@ -47,6 +46,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements
         AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener,
         AdapterView.OnItemSelectedListener, PlaceListPresenter {
 
+    OnPlaceDeleteListener onPlaceDeleteListener;
     private PlaceAdapter placeAdapter;
     private ReferenceEntityAdapter placeTypeAdapter;
     private PlaceChooser placeChooser = new PlaceChooser(BrokerPlaceRepository.getInstance(), this);
@@ -55,7 +55,6 @@ public class PlaceListInDatabaseFragment extends Fragment implements
     private AppCompatSpinner placeTypeFilterView;
     private RecyclerViewHeader placeListHeader;
     private EmptyLayoutView emptyPlacesView;
-
     private int placeTypeId = -1;
 
     public static PlaceListInDatabaseFragment newInstance() {
@@ -185,14 +184,21 @@ public class PlaceListInDatabaseFragment extends Fragment implements
 
     @Override
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
-        final Place placeData = placeAdapter.getItem(position);
-
-        if (!AccountUtils.canAddOrEditVillage() && placeData.getType() == PlaceType.VILLAGE_COMMUNITY) {
-            Alert.lowLevel().show(R.string.cant_edit_community_village);
+        if (!InternetConnection.isAvailable(getActivity()))
             return false;
-        } else {
-            PlaceFormActivity.startEdit(getActivity(), placeData);
-            return true;
-        }
+
+        if (onPlaceDeleteListener == null)
+            return false;
+
+        onPlaceDeleteListener.doDeletedPlace(placeAdapter.getItem(position));
+        return false;
+    }
+
+    public void setOnPlaceDeleteListener(OnPlaceDeleteListener onPlaceDeleteListener) {
+        this.onPlaceDeleteListener = onPlaceDeleteListener;
+    }
+
+    public interface OnPlaceDeleteListener {
+        void doDeletedPlace(Place place);
     }
 }

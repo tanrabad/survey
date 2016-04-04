@@ -38,20 +38,8 @@ import th.or.nectec.tanrabad.survey.service.http.Header;
 import th.or.nectec.tanrabad.survey.service.json.JsonPlace;
 import th.or.nectec.tanrabad.survey.utils.ResourceFile;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
-import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
-import static com.github.tomakehurst.wiremock.client.WireMock.equalToJson;
-import static com.github.tomakehurst.wiremock.client.WireMock.get;
-import static com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.post;
-import static com.github.tomakehurst.wiremock.client.WireMock.postRequestedFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.put;
-import static com.github.tomakehurst.wiremock.client.WireMock.putRequestedFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
-import static com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo;
-import static com.github.tomakehurst.wiremock.client.WireMock.urlPathMatching;
-import static com.github.tomakehurst.wiremock.client.WireMock.verify;
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static th.or.nectec.tanrabad.survey.service.PlaceRestService.PATH;
 import static th.or.nectec.tanrabad.survey.service.http.Header.CONTENT_TYPE;
@@ -267,5 +255,33 @@ public class PlaceRestServiceTest extends WireMockTestBase {
                         .withStatus(409)));
 
         restService.put(place);
+    }
+
+    @Test
+    public void testDelete() throws Exception {
+        Place place = stubPlace();
+        String deleteUrl = PATH.concat("/").concat(place.getId().toString());
+        stubFor(delete(urlPathEqualTo(deleteUrl))
+                .willReturn(aResponse()
+                        .withStatus(200)));
+
+        PlaceRestService placeRestService = new PlaceRestService(localHost(), lastUpdate, placeSubTypeRepository);
+        boolean result = placeRestService.delete(place);
+
+        assertTrue(result);
+        verify(deleteRequestedFor(urlEqualTo(deleteUrl)));
+    }
+
+    @Test(expected = RestServiceException.class)
+    public void testDeleteNotSuccess() throws Exception {
+        Place place = stubPlace();
+        String deleteUrl = PATH.concat("/").concat(place.getId().toString());
+        stubFor(delete(urlPathEqualTo(deleteUrl))
+                .willReturn(aResponse()
+                        .withStatus(404)));
+
+        PlaceRestService placeRestService = new PlaceRestService(localHost(), lastUpdate, placeSubTypeRepository);
+        placeRestService.delete(place);
+
     }
 }

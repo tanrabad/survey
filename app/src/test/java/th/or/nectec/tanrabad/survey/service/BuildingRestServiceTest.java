@@ -35,14 +35,10 @@ import th.or.nectec.tanrabad.survey.WireMockTestBase;
 import th.or.nectec.tanrabad.survey.service.http.Header;
 import th.or.nectec.tanrabad.survey.utils.ResourceFile;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
-import static com.github.tomakehurst.wiremock.client.WireMock.get;
-import static com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
-import static com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo;
-import static com.github.tomakehurst.wiremock.client.WireMock.verify;
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static th.or.nectec.tanrabad.survey.service.BuildingRestService.PATH;
 
 public class BuildingRestServiceTest extends WireMockTestBase {
 
@@ -78,7 +74,7 @@ public class BuildingRestServiceTest extends WireMockTestBase {
 
     @Test(expected = RestServiceException.class)
     public void test404Response() throws Exception {
-        stubFor(get(urlEqualTo(BuildingRestService.PATH))
+        stubFor(get(urlEqualTo(PATH))
                 .willReturn(aResponse()
                         .withStatus(404)
                         .withBody("")));
@@ -88,7 +84,7 @@ public class BuildingRestServiceTest extends WireMockTestBase {
 
     @Test
     public void testNotModifiedResponse() throws Exception {
-        stubFor(get(urlPathEqualTo(BuildingRestService.PATH))
+        stubFor(get(urlPathEqualTo(PATH))
                 .willReturn(aResponse()
                         .withStatus(304)
                         .withBody("[]")));
@@ -100,7 +96,7 @@ public class BuildingRestServiceTest extends WireMockTestBase {
 
     @Test
     public void testSuccessResponse() throws Exception {
-        stubFor(get(urlPathEqualTo(BuildingRestService.PATH))
+        stubFor(get(urlPathEqualTo(PATH))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader(Header.LAST_MODIFIED, MON_30_NOV_2015_17_00_00_GMT)
@@ -118,7 +114,7 @@ public class BuildingRestServiceTest extends WireMockTestBase {
 
     @Test
     public void testSuccessResponseMultipleItem() throws Exception {
-        stubFor(get(urlPathEqualTo(BuildingRestService.PATH))
+        stubFor(get(urlPathEqualTo(PATH))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader(Header.LAST_MODIFIED, MON_30_NOV_2015_17_00_00_GMT)
@@ -145,7 +141,7 @@ public class BuildingRestServiceTest extends WireMockTestBase {
     @Test
     public void testWithoutIfModifiedSinceHeader() throws Exception {
         Mockito.when(lastUpdate.get()).thenReturn(null);
-        stubFor(get(urlPathEqualTo(BuildingRestService.PATH))
+        stubFor(get(urlPathEqualTo(PATH))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader(Header.LAST_MODIFIED, MON_30_NOV_2015_17_00_00_GMT)
@@ -153,13 +149,13 @@ public class BuildingRestServiceTest extends WireMockTestBase {
 
         restService.getUpdate();
 
-        verify(getRequestedFor(urlPathEqualTo(BuildingRestService.PATH))
+        verify(getRequestedFor(urlPathEqualTo(PATH))
                 .withoutHeader(Header.IF_MODIFIED_SINCE));
     }
 
     @Test
     public void testSuccessResponseMultipleAndDeleteItem() throws Exception {
-        stubFor(get(urlPathEqualTo(BuildingRestService.PATH))
+        stubFor(get(urlPathEqualTo(PATH))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader(Header.LAST_MODIFIED, MON_30_NOV_2015_17_00_00_GMT)
@@ -185,5 +181,39 @@ public class BuildingRestServiceTest extends WireMockTestBase {
         Building building4 = deleteList.get(0);
         assertEquals(uuid("b7a9d934-04fc-a22e-0539-6c17504f7312"), building4.getId());
         Mockito.verify(lastUpdate).save(MON_30_NOV_2015_17_00_00_GMT);
+    }
+
+    @Test
+    public void testDelete() throws Exception {
+        Building building = stubBuilding();
+        String deleteUrl = PATH.concat("/").concat(building.getId().toString());
+        stubFor(delete(urlPathEqualTo(deleteUrl))
+                .willReturn(aResponse()
+                        .withStatus(200)));
+
+        BuildingRestService placeRestService = new BuildingRestService(
+                localHost(), lastUpdate, placeRepository, userRepository);
+        boolean result = placeRestService.delete(building);
+
+        assertTrue(result);
+        verify(deleteRequestedFor(urlEqualTo(deleteUrl)));
+    }
+
+    private Building stubBuilding() {
+        return new Building(UUID.nameUUIDFromBytes("abc".getBytes()), "ทดสอบ");
+    }
+
+    @Test(expected = RestServiceException.class)
+    public void testDeleteNotSuccess() throws Exception {
+        Building building = stubBuilding();
+        String deleteUrl = PATH.concat("/").concat(building.getId().toString());
+        stubFor(delete(urlPathEqualTo(deleteUrl))
+                .willReturn(aResponse()
+                        .withStatus(404)));
+
+        BuildingRestService placeRestService = new BuildingRestService(
+                localHost(), lastUpdate, placeRepository, userRepository);
+        placeRestService.delete(building);
+
     }
 }

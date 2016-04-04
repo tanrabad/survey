@@ -23,6 +23,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.Request;
+import okhttp3.Response;
 import th.or.nectec.tanrabad.domain.place.PlaceRepository;
 import th.or.nectec.tanrabad.domain.user.UserRepository;
 import th.or.nectec.tanrabad.entity.Building;
@@ -31,7 +33,9 @@ import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerUserRepository;
 import th.or.nectec.tanrabad.survey.service.json.JsonBuilding;
 
-public class BuildingRestService extends AbsUploadRestService<Building> {
+import static th.or.nectec.tanrabad.survey.service.http.Header.*;
+
+public class BuildingRestService extends AbsUploadRestService<Building> implements DeleteRestService<Building> {
 
     public static final String PATH = "/building";
     private PlaceRepository placeRepository;
@@ -53,16 +57,6 @@ public class BuildingRestService extends AbsUploadRestService<Building> {
     }
 
     @Override
-    public String getDefaultParams() {
-        return new QueryStringBuilder("geostd=4326", getApiFilterParam()).build();
-    }
-
-    @Override
-    protected String getPath() {
-        return PATH;
-    }
-
-    @Override
     protected List<Building> jsonToEntityList(String responseBody) throws IOException {
         ArrayList<Building> buildings = new ArrayList<>();
         List<JsonBuilding> jsonBuildings = LoganSquare.parseList(responseBody, JsonBuilding.class);
@@ -78,6 +72,16 @@ public class BuildingRestService extends AbsUploadRestService<Building> {
     }
 
     @Override
+    protected String getPath() {
+        return PATH;
+    }
+
+    @Override
+    public String getDefaultParams() {
+        return new QueryStringBuilder("geostd=4326", getApiFilterParam()).build();
+    }
+
+    @Override
     protected String entityToJsonString(Building data) {
         try {
             return LoganSquare.serialize(JsonBuilding.parse(data));
@@ -89,5 +93,26 @@ public class BuildingRestService extends AbsUploadRestService<Building> {
     @Override
     protected String getId(Building data) {
         return data.getId().toString();
+    }
+
+    @Override
+    public boolean delete(Building data) throws IOException {
+        Request request = deleteRequest(data);
+        Response response = client.newCall(request).execute();
+        if (!response.isSuccessful()) {
+            TanrabadApp.log(response.body().string());
+            throw new RestServiceException(response);
+        }
+        return true;
+    }
+
+    protected final Request deleteRequest(Building data) {
+        Request.Builder requestBuilder = new Request.Builder()
+                .delete()
+                .url(getUrl().replace(getDefaultParams(), "").concat("/").concat(data.getId().toString()))
+                .addHeader(USER_AGENT, TRB_USER_AGENT)
+                .addHeader(ACCEPT, "application/json")
+                .addHeader(ACCEPT_CHARSET, "utf-8");
+        return requestBuilder.build();
     }
 }

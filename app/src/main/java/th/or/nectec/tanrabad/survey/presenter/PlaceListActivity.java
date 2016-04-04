@@ -31,11 +31,11 @@ import android.widget.TextView;
 
 import com.github.amlcurran.showcaseview.ShowcaseView;
 
+import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.survey.R;
-import th.or.nectec.tanrabad.survey.job.AbsJobRunner;
-import th.or.nectec.tanrabad.survey.job.DownloadJobBuilder;
-import th.or.nectec.tanrabad.survey.job.UploadJobBuilder;
-import th.or.nectec.tanrabad.survey.job.UploadJobRunner;
+import th.or.nectec.tanrabad.survey.job.*;
+import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
+import th.or.nectec.tanrabad.survey.service.PlaceRestService;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
 import th.or.nectec.tanrabad.survey.utils.showcase.BaseShowcase;
 import th.or.nectec.tanrabad.survey.utils.showcase.Showcase;
@@ -82,6 +82,22 @@ public class PlaceListActivity extends TanrabadActivity {
                 AccountUtils.getUser().getUsername());
         placePager.setAdapter(placePagerAdapter);
         placeListTabLayout.setupWithViewPager(placePager);
+
+        PlaceListInDatabaseFragment placeListInDbFragment = (PlaceListInDatabaseFragment) placePagerAdapter.getItem(0);
+        placeListInDbFragment.setOnPlaceDeleteListener(new PlaceListInDatabaseFragment.OnPlaceDeleteListener() {
+            @Override
+            public void doDeletedPlace(Place place) {
+                deletePlace(place);
+            }
+        });
+    }
+
+    private void deletePlace(Place place) {
+        DeleteDataJob<Place> dataJob = new DeleteDataJob<>(BrokerPlaceRepository.getInstance(),
+                new PlaceRestService(), place);
+        PlaceListActivity.PlaceSyncJobRunner runner = new PlaceListActivity.PlaceSyncJobRunner();
+        runner.addJob(dataJob);
+        runner.start();
     }
 
     private void changeTabsFont() {

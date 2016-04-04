@@ -156,6 +156,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
             @Override
             public boolean onQueryTextSubmit(String searchString) {
                 TanrabadApp.action().filterBuilding(searchString);
+                emptyBuildingsView.showProgressBar();
                 surveyBuildingChooser.searchSurveyBuildingOfPlaceByName(searchString,
                         getPlaceUuidFromIntent().toString(),
                         AccountUtils.getUser());
@@ -164,6 +165,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
 
             @Override
             public boolean onQueryTextChange(String searchString) {
+                emptyBuildingsView.showProgressBar();
                 surveyBuildingChooser.searchSurveyBuildingOfPlaceByName(searchString,
                         getPlaceUuidFromIntent().toString(),
                         AccountUtils.getUser());
@@ -186,6 +188,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     }
 
     private void loadSurveyBuildingList() {
+        emptyBuildingsView.showProgressBar();
         surveyBuildingChooser.displaySurveyBuildingOf(getPlaceUuidFromIntent().toString(), AccountUtils.getUser());
     }
 
@@ -214,6 +217,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
 
     @Override
     public void alertBuildingsNotFound() {
+        emptyBuildingsView.showEmptyLayout();
         emptyBuildingsView.setVisibility(View.VISIBLE);
         TextView buildingCountView = (TextView) findViewById(R.id.building_count);
         buildingCountView.setVisibility(View.GONE);
@@ -224,7 +228,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     @Override
     public void displayAllSurveyBuildingList(List<BuildingWithSurveyStatus> buildingsWithSurveyStatuses) {
         Collections.sort(buildingsWithSurveyStatuses);
-        emptyBuildingsView.setVisibility(View.GONE);
+        emptyBuildingsView.hide();
         editBuildingButton.setVisibility(View.VISIBLE);
         buildingSearchView.setVisibility(View.VISIBLE);
         buildingAdapter.updateData(buildingsWithSurveyStatuses);

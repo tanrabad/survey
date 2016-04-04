@@ -77,7 +77,7 @@ public class PlaceSurveyListFragment extends Fragment implements PlaceWithSurvey
         View view = inflater.inflate(R.layout.fragment_place_survey_list, container, false);
         setupViews(view);
         setupPlaceList();
-        setupEmptyLayout();
+        emptySurveyPlaceListView.showProgressBar();
         placeChooser.showSurveyPlaceList(username);
         return view;
     }
@@ -85,9 +85,11 @@ public class PlaceSurveyListFragment extends Fragment implements PlaceWithSurvey
     private void setupViews(View view) {
         placeListView = (RecyclerView) view.findViewById(R.id.place_list);
         placeCountView = (TextView) view.findViewById(R.id.place_count);
+        surveyPlaceListHeader = (RecyclerViewHeader) view.findViewById(R.id.card_header);
         emptySurveyPlaceListView = (EmptyLayoutView) view.findViewById(R.id.empty_layout);
         emptySurveyPlaceListView.setEmptyIcon(R.mipmap.ic_place);
-        surveyPlaceListHeader = (RecyclerViewHeader) view.findViewById(R.id.card_header);
+        emptySurveyPlaceListView.setEmptyButtonVisibility(false);
+        emptySurveyPlaceListView.setEmptyText(R.string.survey_place_not_found);
     }
 
     private void setupPlaceList() {
@@ -101,14 +103,9 @@ public class PlaceSurveyListFragment extends Fragment implements PlaceWithSurvey
         surveyPlaceListHeader.attachTo(placeListView, true);
     }
 
-    private void setupEmptyLayout() {
-        emptySurveyPlaceListView.setEmptyButtonVisibility(false);
-        emptySurveyPlaceListView.setEmptyText(R.string.survey_place_not_found);
-    }
-
     @Override
     public void displaySurveyPlaceList(List<Place> surveyPlace) {
-        emptySurveyPlaceListView.setVisibility(View.GONE);
+        emptySurveyPlaceListView.hide();
         placeAdapter.updateData(surveyPlace);
         placeCountView.setText(getString(R.string.format_place_count, surveyPlace.size()));
         placeCountView.setVisibility(View.VISIBLE);
@@ -121,7 +118,7 @@ public class PlaceSurveyListFragment extends Fragment implements PlaceWithSurvey
 
     @Override
     public void displaySurveyPlacesNotFound() {
-        emptySurveyPlaceListView.setVisibility(View.VISIBLE);
+        emptySurveyPlaceListView.showEmptyLayout();
         placeAdapter.clearData();
         placeCountView.setVisibility(View.GONE);
     }

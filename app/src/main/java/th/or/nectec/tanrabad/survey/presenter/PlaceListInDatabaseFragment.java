@@ -27,6 +27,10 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
+
+import java.util.Collections;
+import java.util.List;
+
 import th.or.nectec.tanrabad.domain.place.PlaceChooser;
 import th.or.nectec.tanrabad.domain.place.PlaceListPresenter;
 import th.or.nectec.tanrabad.entity.Place;
@@ -38,9 +42,6 @@ import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
-
-import java.util.Collections;
-import java.util.List;
 
 public class PlaceListInDatabaseFragment extends Fragment implements
         AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener,
@@ -70,14 +71,14 @@ public class PlaceListInDatabaseFragment extends Fragment implements
         placeAdapter.updateData(places);
         placeCountView.setText(getString(R.string.format_place_count, places.size()));
         placeCountView.setVisibility(View.VISIBLE);
-        emptyPlacesView.setVisibility(View.GONE);
+        emptyPlacesView.hide();
     }
 
     @Override
     public void displayPlaceNotFound() {
         placeAdapter.clearData();
         placeCountView.setVisibility(View.GONE);
-        emptyPlacesView.setVisibility(View.VISIBLE);
+        emptyPlacesView.showEmptyLayout();
     }
 
     @Override
@@ -87,6 +88,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements
     }
 
     protected void loadPlaceList() {
+        emptyPlacesView.showProgressBar();
         if (placeTypeId > 0) {
             placeChooser.getPlaceListWithPlaceTypeFilter(this.placeTypeId);
         } else {
@@ -118,10 +120,11 @@ public class PlaceListInDatabaseFragment extends Fragment implements
         this.placeTypeFilterView = (AppCompatSpinner) view.findViewById(R.id.place_filter);
         placeListHeader = (RecyclerViewHeader) view.findViewById(R.id.card_header);
         emptyPlacesView = (EmptyLayoutView) view.findViewById(R.id.empty_layout);
-        emptyPlacesView.setEmptyIcon(R.mipmap.ic_place);
+
     }
 
     private void setupEmptyList() {
+        emptyPlacesView.setEmptyIcon(R.mipmap.ic_place);
         emptyPlacesView.setEmptyButtonText(R.string.add_place, new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -145,11 +145,6 @@ public class LoginActivity extends TanrabadActivity {
         }
     }
 
-    private void openAboutActivity() {
-        Intent intent = new Intent(this, AboutActivity.class);
-        startActivity(intent);
-    }
-
     private void startAnimation() {
         findViewById(R.id.bg_blue).startAnimation(loadAnimation(this, R.anim.login_bg_blue));
         Animation dropIn = loadAnimation(this, R.anim.logo);

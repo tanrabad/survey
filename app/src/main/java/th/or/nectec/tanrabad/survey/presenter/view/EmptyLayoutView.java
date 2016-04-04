@@ -23,16 +23,9 @@ public class EmptyLayoutView extends LinearLayout {
 
     public EmptyLayoutView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initInflate();
-        initInstances();
-    }
 
-    private void initInflate() {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.empty_layout, this);
-    }
-
-    private void initInstances() {
         emptyTextView = (TextView) findViewById(R.id.empty_text);
         emptyButtonView = (Button) findViewById(R.id.empty_button);
         emptyIconView = (ImageView) findViewById(R.id.empty_icon);
@@ -50,8 +43,8 @@ public class EmptyLayoutView extends LinearLayout {
         emptyIconView.setImageResource(drawableId);
     }
 
-    public void setEmptyButtonText(String emptyButtonText) {
-        emptyButtonView.setText(emptyButtonText);
+    public void setEmptyButtonText(@StringRes int emptyButtonTextId, OnClickListener onClickListener) {
+        setEmptyButtonText(getContext().getString(emptyButtonTextId), onClickListener);
     }
 
     public void setEmptyButtonText(String emptyButtonText, OnClickListener onClickListener) {
@@ -59,28 +52,26 @@ public class EmptyLayoutView extends LinearLayout {
         emptyButtonView.setOnClickListener(onClickListener);
     }
 
-    public void setEmptyButtonText(@StringRes int emptyButtonTextId) {
-        emptyButtonView.setText(emptyButtonTextId);
-    }
-
-    public void setEmptyButtonText(@StringRes int emptyButtonTextId, OnClickListener onClickListener) {
-        emptyButtonView.setText(emptyButtonTextId);
-        emptyButtonView.setOnClickListener(onClickListener);
-    }
-
     public void setEmptyIconVisibility(boolean isVisible) {
-        if (isVisible) {
-            emptyIconView.setVisibility(VISIBLE);
-        } else {
-            emptyIconView.setVisibility(GONE);
-        }
+        emptyIconView.setVisibility(isVisible ? VISIBLE : GONE);
     }
 
     public void setEmptyButtonVisibility(boolean isVisible) {
-        if (isVisible) {
-            emptyButtonView.setVisibility(VISIBLE);
-        } else {
-            emptyButtonView.setVisibility(GONE);
-        }
+        emptyButtonView.setVisibility(isVisible ? VISIBLE : GONE);
+    }
+
+    public void showProgressBar() {
+        findViewById(R.id.loading_view).setVisibility(VISIBLE);
+        findViewById(R.id.empty_layout_view).setVisibility(GONE);
+    }
+
+    public void showEmptyLayout() {
+        findViewById(R.id.loading_view).setVisibility(GONE);
+        findViewById(R.id.empty_layout_view).setVisibility(VISIBLE);
+    }
+
+    public void hide() {
+        findViewById(R.id.loading_view).setVisibility(GONE);
+        findViewById(R.id.empty_layout_view).setVisibility(GONE);
     }
 }

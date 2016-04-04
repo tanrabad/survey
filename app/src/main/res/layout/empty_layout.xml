@@ -16,32 +16,61 @@
   ~ limitations under the License.
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="140dp"
-              android:gravity="center"
-              android:orientation="vertical">
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="140dp">
 
-    <ImageView
-        android:id="@+id/empty_icon"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
-        android:contentDescription="@null"
-        tools:src="@mipmap/ic_place"/>
+    <LinearLayout
+        android:id="@+id/empty_layout_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="invisible">
 
-    <TextView
+        <ImageView
+            android:id="@+id/empty_icon"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:contentDescription="@null"
+            tools:src="@mipmap/ic_place"/>
+
+        <TextView
             android:id="@+id/empty_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textIsSelectable="false"
-            tools:text="ไม่พบข้อมูลในรายการ" />
+            tools:text="ไม่พบข้อมูลในรายการ"/>
 
-    <Button
+        <Button
             android:id="@+id/empty_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            tools:text="เพิ่มอะไรบางอย่าง" />
-</LinearLayout>
+            tools:text="เพิ่มอะไรบางอย่าง"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/loading_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <ProgressBar
+            style="@style/Base.Widget.AppCompat.ProgressBar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:indeterminate="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/please_wait"/>
+    </LinearLayout>
+
+</FrameLayout>

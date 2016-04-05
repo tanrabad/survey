@@ -47,6 +47,7 @@ import th.or.nectec.tanrabad.domain.place.PlacePresenter;
 import th.or.nectec.tanrabad.domain.survey.SurveyBuildingChooser;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
@@ -57,6 +58,7 @@ import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerSurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerUserRepository;
 import th.or.nectec.tanrabad.survey.service.BuildingRestService;
+import th.or.nectec.tanrabad.survey.service.SurveyRestService;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
@@ -162,9 +164,14 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     }
 
     private void deleteBuilding(Building building) {
+        BuildingSyncJobRunner runner = new BuildingSyncJobRunner();
+        Survey survey = BrokerSurveyRepository.getInstance().findByBuildingAndUserIn7Day(
+                building, AccountUtils.getUser());
+        runner.addJob(new DeleteDataJob<>(BrokerSurveyRepository.getInstance(),
+                new SurveyRestService(), survey));
+
         DeleteDataJob<Building> dataJob = new DeleteDataJob<>(BrokerBuildingRepository.getInstance(),
                 new BuildingRestService(), building);
-        BuildingSyncJobRunner runner = new BuildingSyncJobRunner();
         runner.addJob(dataJob);
         runner.start();
     }

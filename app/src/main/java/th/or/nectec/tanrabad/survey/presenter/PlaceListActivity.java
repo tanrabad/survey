@@ -31,11 +31,19 @@ import android.widget.TextView;
 
 import com.github.amlcurran.showcaseview.ShowcaseView;
 
+import java.util.List;
+
+import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.job.*;
+import th.or.nectec.tanrabad.survey.repository.BrokerBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
+import th.or.nectec.tanrabad.survey.repository.BrokerSurveyRepository;
+import th.or.nectec.tanrabad.survey.service.BuildingRestService;
 import th.or.nectec.tanrabad.survey.service.PlaceRestService;
+import th.or.nectec.tanrabad.survey.service.SurveyRestService;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
@@ -104,10 +112,19 @@ public class PlaceListActivity extends TanrabadActivity {
     }
 
     private void deletePlace(Place place) {
-        DeleteDataJob<Place> dataJob = new DeleteDataJob<>(BrokerPlaceRepository.getInstance(),
-                new PlaceRestService(), place);
         PlaceListActivity.PlaceSyncJobRunner runner = new PlaceListActivity.PlaceSyncJobRunner();
-        runner.addJob(dataJob);
+        List<Survey> surveys = BrokerSurveyRepository.getInstance().findByPlaceAndUserIn7Days(
+                place, AccountUtils.getUser());
+        runner.addJob(new DeleteDataJob<>(BrokerSurveyRepository.getInstance(),
+                new SurveyRestService(), surveys.toArray(new Survey[surveys.size()])));
+
+        List<Building> buildings = BrokerBuildingRepository.getInstance().findByPlaceUuid(place.getId());
+        runner.addJob(new DeleteDataJob<>(BrokerBuildingRepository.getInstance(),
+                new BuildingRestService(), buildings.toArray(new Building[buildings.size()])));
+
+        DeleteDataJob<Place> deletePlaceJob = new DeleteDataJob<>(BrokerPlaceRepository.getInstance(),
+                new PlaceRestService(), place);
+        runner.addJob(deletePlaceJob);
         runner.start();
     }
 

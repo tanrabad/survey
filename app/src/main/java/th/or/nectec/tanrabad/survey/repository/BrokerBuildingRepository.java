@@ -17,13 +17,13 @@
 
 package th.or.nectec.tanrabad.survey.repository;
 
+import java.util.List;
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.domain.building.BuildingRepository;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.repository.persistence.DbBuildingRepository;
-
-import java.util.List;
-import java.util.UUID;
 
 public final class BrokerBuildingRepository implements BuildingRepository {
     private static BrokerBuildingRepository instance;
@@ -91,5 +91,6 @@ public final class BrokerBuildingRepository implements BuildingRepository {
     @Override
     public void updateOrInsert(List<Building> buildings) {
         database.updateOrInsert(buildings);
+        cache.updateOrInsert(buildings);
     }
 }

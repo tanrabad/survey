@@ -59,6 +59,8 @@ import th.or.nectec.tanrabad.survey.repository.BrokerUserRepository;
 import th.or.nectec.tanrabad.survey.service.BuildingRestService;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
+import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
+import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 
 public class BuildingListActivity extends TanrabadActivity implements BuildingWithSurveyStatusListPresenter,
         PlacePresenter, ActionMode.Callback, View.OnClickListener {
@@ -138,12 +140,20 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         });
         buildingAdapter.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int position, long id) {
                 if (InternetConnection.isAvailable(BuildingListActivity.this)) {
-                    deleteBuilding(buildingAdapter.getItem(position).building);
+                    PromptMessage promptMessage = new AlertDialogPromptMessage(
+                            BuildingListActivity.this, R.mipmap.ic_delete);
+                    promptMessage.setOnConfirm(getString(R.string.delete), new PromptMessage.OnConfirmListener() {
+                        @Override
+                        public void onConfirm() {
+                            deleteBuilding(buildingAdapter.getItem(position).building);
+                        }
+                    });
+                    promptMessage.setOnCancel(getString(R.string.cancel), null);
+                    promptMessage.show(getString(R.string.delete_building), getString(R.string.delete_building_msg));
                     return true;
                 }
-
                 return false;
             }
         });

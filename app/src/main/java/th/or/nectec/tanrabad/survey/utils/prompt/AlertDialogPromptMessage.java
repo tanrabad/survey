@@ -19,6 +19,7 @@ package th.or.nectec.tanrabad.survey.utils.prompt;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.annotation.DrawableRes;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.widget.TextView;
@@ -31,6 +32,11 @@ public class AlertDialogPromptMessage implements PromptMessage {
 
     public AlertDialogPromptMessage(Context context) {
         alertDialog = new AlertDialog.Builder(context);
+    }
+
+    public AlertDialogPromptMessage(Context context, @DrawableRes int iconRes) {
+        alertDialog = new AlertDialog.Builder(context);
+        alertDialog.setIcon(iconRes);
     }
 
     @Override

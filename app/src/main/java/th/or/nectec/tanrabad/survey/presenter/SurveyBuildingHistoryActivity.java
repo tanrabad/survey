@@ -59,6 +59,8 @@ import th.or.nectec.tanrabad.survey.repository.BrokerUserRepository;
 import th.or.nectec.tanrabad.survey.service.SurveyRestService;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
+import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
+import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 import th.or.nectec.tanrabad.survey.utils.showcase.BaseShowcase;
 import th.or.nectec.tanrabad.survey.utils.showcase.ShowcaseFactory;
 
@@ -180,9 +182,18 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
         });
         surveyBuildingHistoryAdapter.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int position, long id) {
                 if (InternetConnection.isAvailable(SurveyBuildingHistoryActivity.this)) {
-                    deleteSurvey(position);
+                    PromptMessage promptMessage = new AlertDialogPromptMessage(
+                            SurveyBuildingHistoryActivity.this, R.mipmap.ic_delete);
+                    promptMessage.setOnConfirm(getString(R.string.delete), new PromptMessage.OnConfirmListener() {
+                        @Override
+                        public void onConfirm() {
+                            deleteSurvey(position);
+                        }
+                    });
+                    promptMessage.setOnCancel(getString(R.string.cancel), null);
+                    promptMessage.show(getString(R.string.delete_survey), getString(R.string.delete_survey_msg));
                     return true;
                 }
                 return false;

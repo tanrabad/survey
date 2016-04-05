@@ -37,6 +37,8 @@ import th.or.nectec.tanrabad.survey.job.*;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.service.PlaceRestService;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
+import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
+import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 import th.or.nectec.tanrabad.survey.utils.showcase.BaseShowcase;
 import th.or.nectec.tanrabad.survey.utils.showcase.Showcase;
 import th.or.nectec.tanrabad.survey.utils.showcase.ShowcaseFactory;
@@ -86,8 +88,17 @@ public class PlaceListActivity extends TanrabadActivity {
         PlaceListInDatabaseFragment placeListInDbFragment = (PlaceListInDatabaseFragment) placePagerAdapter.getItem(0);
         placeListInDbFragment.setOnPlaceDeleteListener(new PlaceListInDatabaseFragment.OnPlaceDeleteListener() {
             @Override
-            public void doDeletedPlace(Place place) {
-                deletePlace(place);
+            public void doDeletedPlace(final Place place) {
+                PromptMessage promptMessage = new AlertDialogPromptMessage(
+                        PlaceListActivity.this, R.mipmap.ic_delete);
+                promptMessage.setOnConfirm(getString(R.string.delete), new PromptMessage.OnConfirmListener() {
+                    @Override
+                    public void onConfirm() {
+                        deletePlace(place);
+                    }
+                });
+                promptMessage.setOnCancel(getString(R.string.cancel), null);
+                promptMessage.show(getString(R.string.delete_place), getString(R.string.delete_place_msg));
             }
         });
     }

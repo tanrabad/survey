@@ -206,5 +206,6 @@
     <string name="delete_place">ลบสถานที่</string>
     <string name="delete_survey_msg">ข้อมูลการสำรวจของท่านจะถูกลบ</string>
     <string name="delete_survey">ลบการสำรวจ</string>
+    <string name="authen_error_response">เกืดข้อผิดผลาด หรือคุณไม่ได้ให้สิทธิทันระบาด-สำรวจในการเข้าถึงข้อมูล</string>
 
 </resources>

@@ -30,7 +30,6 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
-
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.BuildConfig;
 import th.or.nectec.tanrabad.survey.R;
@@ -119,17 +118,6 @@ public class LoginActivity extends TanrabadActivity {
         showcasePreference.save(needShowcase.isChecked());
     }
 
-    private boolean isFirstTime() {
-        String placeTimeStamp = new ServiceLastUpdatePreference(this, PlaceRestService.PATH).get();
-        return TextUtils.isEmpty(placeTimeStamp);
-    }
-
-    private void startInitialActivity() {
-        InitialActivity.open(LoginActivity.this);
-        overridePendingTransition(R.anim.drop_in, R.anim.drop_out);
-        finish();
-    }
-
     private void openAuthenWeb() {
         User lastLoginUser = AccountUtils.getLastLoginUser();
         if (lastLoginUser != null
@@ -161,6 +149,17 @@ public class LoginActivity extends TanrabadActivity {
         });
     }
 
+    private boolean isFirstTime() {
+        String placeTimeStamp = new ServiceLastUpdatePreference(this, PlaceRestService.PATH).get();
+        return TextUtils.isEmpty(placeTimeStamp);
+    }
+
+    private void startInitialActivity() {
+        InitialActivity.open(LoginActivity.this);
+        overridePendingTransition(R.anim.drop_in, R.anim.drop_out);
+        finish();
+    }
+
     @Override
     protected void onStop() {
         appIndexClient.disconnect();
@@ -183,17 +182,21 @@ public class LoginActivity extends TanrabadActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == AUTHEN_REQUEST_CODE && resultCode == RESULT_OK) {
-            if (trialModePreference.isUsingTrialMode()) {
-                AbsJobRunner jobRunner = new UploadJobRunner();
-                jobRunner.addJob(new DeleteUserDataJob(this));
-                jobRunner.addJob(new SetTrialModeAndSelectApiServerJob(this, false));
-                jobRunner.addJob(new StartInitialActivityJob(this));
-                jobRunner.start();
-            } else {
-                startInitialActivity();
+        if (requestCode == AUTHEN_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                if (trialModePreference.isUsingTrialMode()) {
+                    AbsJobRunner jobRunner = new UploadJobRunner();
+                    jobRunner.addJob(new DeleteUserDataJob(this));
+                    jobRunner.addJob(new SetTrialModeAndSelectApiServerJob(this, false));
+                    jobRunner.addJob(new StartInitialActivityJob(this));
+                    jobRunner.start();
+                } else {
+                    startInitialActivity();
+                }
+                showcasePreference.save(needShowcase.isChecked());
+            } else if (resultCode == AuthenActivity.RESULT_ERROR) {
+                Alert.highLevel().show(R.string.authen_error_response);
             }
-            showcasePreference.save(needShowcase.isChecked());
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

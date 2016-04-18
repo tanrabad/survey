@@ -43,11 +43,12 @@ import th.or.nectec.tanrabad.survey.presenter.AccountUtils;
 import th.or.nectec.tanrabad.survey.presenter.TanrabadActivity;
 import th.or.nectec.tanrabad.survey.repository.BrokerOrganizationRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerUserRepository;
-import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.CookieUtils;
 
 @SuppressLint("SetJavaScriptEnabled")
 public class AuthenActivity extends TanrabadActivity {
+
+    public static final int RESULT_ERROR = 1923;
 
     private WebView webView;
     private WebChromeClient webChromeClient = new WebChromeClient() {
@@ -161,8 +162,11 @@ public class AuthenActivity extends TanrabadActivity {
 
         @Override
         public void onError(Exception e) {
-            Alert.highLevel().show("คุณจำเป็นต้องให้สิทธิในการเข้าถึงข้อมูลเพื่อเข้าใช้งาน ทันระบาด-สำรวจ");
             TanrabadApp.log(e);
+
+            setResult(RESULT_ERROR);
+            finish();
         }
+
     }
 }

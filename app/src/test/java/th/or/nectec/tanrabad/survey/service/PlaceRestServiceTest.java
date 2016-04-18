@@ -66,7 +66,7 @@ public class PlaceRestServiceTest extends WireMockTestBase {
 
     @Test
     public void testGetUrl() throws Exception {
-        assertEquals(localHost() + PATH + restService.getDefaultParams(), restService.getUrl());
+        assertEquals(localHost() + PATH + restService.getQueryString(), restService.getUrl());
     }
 
     @Test(expected = RestServiceException.class)
@@ -260,7 +260,8 @@ public class PlaceRestServiceTest extends WireMockTestBase {
     @Test
     public void testDelete() throws Exception {
         Place place = stubPlace();
-        String deleteUrl = PATH.concat("/").concat(place.getId().toString());
+        String deleteUrl = PATH.concat("/").concat(place.getId().toString())
+                .concat(restService.getDeleteQueryString());
         stubFor(delete(urlPathEqualTo(deleteUrl))
                 .willReturn(aResponse()
                         .withStatus(200)));
@@ -275,7 +276,8 @@ public class PlaceRestServiceTest extends WireMockTestBase {
     @Test(expected = RestServiceException.class)
     public void testDeleteNotSuccess() throws Exception {
         Place place = stubPlace();
-        String deleteUrl = PATH.concat("/").concat(place.getId().toString());
+        String deleteUrl = PATH.concat("/").concat(place.getId().toString())
+                .concat(restService.getDeleteQueryString());
         stubFor(delete(urlPathEqualTo(deleteUrl))
                 .willReturn(aResponse()
                         .withStatus(404)));

@@ -39,13 +39,13 @@ public class TambonRestService extends AbsRestService<Subdistrict> {
         super(apiBaseUrl, serviceLastUpdate);
     }
 
-    @Override
-    public String getDefaultParams() {
-        return new QueryStringBuilder("geostd=4326", getApiFilterParam()).build();
-    }
-
     protected String getPath() {
         return PATH;
+    }
+
+    @Override
+    public String getQueryString() {
+        return new QueryStringBuilder("geostd=4326", getApiFilterParam()).build();
     }
 
     protected List<Subdistrict> jsonToEntityList(String responseBody) throws IOException {

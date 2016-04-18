@@ -18,9 +18,16 @@
 package th.or.nectec.tanrabad.survey.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
+
 import org.joda.time.DateTime;
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.SurveyDetail;
@@ -30,10 +37,6 @@ import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 import th.or.nectec.tanrabad.survey.WireMockTestBase;
 import th.or.nectec.tanrabad.survey.service.json.JsonSurvey;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
@@ -41,13 +44,19 @@ import static junit.framework.Assert.assertTrue;
 public class SurveyRestServiceTest extends WireMockTestBase {
 
     private final ServiceLastUpdate lastUpdate = Mockito.mock(ServiceLastUpdate.class);
+    private SurveyRestService surveyRestService;
+
+    @Before
+    public void setUp() throws Exception {
+        super.setUp();
+        surveyRestService = new SurveyRestService(localHost(), lastUpdate);
+    }
 
     @Test
     public void testPost() throws Exception {
         stubFor(post(urlEqualTo(SurveyRestService.PATH))
                 .willReturn(aResponse()
                         .withStatus(201)));
-        SurveyRestService surveyRestService = new SurveyRestService(localHost(), lastUpdate);
         Survey survey = getSurvey();
 
         boolean postDataResult = surveyRestService.post(survey);
@@ -88,7 +97,10 @@ public class SurveyRestServiceTest extends WireMockTestBase {
     @Test
     public void testDelete() throws Exception {
         Survey survey = getSurvey();
-        String deleteUrl = SurveyRestService.PATH.concat("/").concat(survey.getId().toString());
+
+        String deleteUrl = SurveyRestService.PATH.concat("/")
+                .concat(survey.getId().toString())
+                .concat(surveyRestService.getDeleteQueryString());
         stubFor(delete(urlPathEqualTo(deleteUrl))
                 .willReturn(aResponse()
                         .withStatus(200)));
@@ -103,7 +115,9 @@ public class SurveyRestServiceTest extends WireMockTestBase {
     @Test(expected = RestServiceException.class)
     public void testDeleteNotSuccess() throws Exception {
         Survey survey = getSurvey();
-        String deleteUrl = SurveyRestService.PATH.concat("/").concat(survey.getId().toString());
+        String deleteUrl = SurveyRestService.PATH.concat("/")
+                .concat(survey.getId().toString())
+                .concat(surveyRestService.getDeleteQueryString());
         stubFor(delete(urlPathEqualTo(deleteUrl))
                 .willReturn(aResponse()
                         .withStatus(409)));

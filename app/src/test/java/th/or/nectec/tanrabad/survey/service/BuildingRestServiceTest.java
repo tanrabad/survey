@@ -186,7 +186,8 @@ public class BuildingRestServiceTest extends WireMockTestBase {
     @Test
     public void testDelete() throws Exception {
         Building building = stubBuilding();
-        String deleteUrl = PATH.concat("/").concat(building.getId().toString());
+        String deleteUrl = PATH.concat("/").concat(building.getId().toString())
+                .concat(restService.getDeleteQueryString());
         stubFor(delete(urlPathEqualTo(deleteUrl))
                 .willReturn(aResponse()
                         .withStatus(200)));
@@ -206,7 +207,8 @@ public class BuildingRestServiceTest extends WireMockTestBase {
     @Test(expected = RestServiceException.class)
     public void testDeleteNotSuccess() throws Exception {
         Building building = stubBuilding();
-        String deleteUrl = PATH.concat("/").concat(building.getId().toString());
+        String deleteUrl = PATH.concat("/").concat(building.getId().toString())
+                .concat(restService.getDeleteQueryString());
         stubFor(delete(urlPathEqualTo(deleteUrl))
                 .willReturn(aResponse()
                         .withStatus(404)));

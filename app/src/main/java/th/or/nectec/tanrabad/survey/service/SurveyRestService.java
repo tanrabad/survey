@@ -18,14 +18,15 @@
 package th.or.nectec.tanrabad.survey.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
+
+import java.io.IOException;
+import java.util.List;
+
 import okhttp3.Request;
 import okhttp3.Response;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
 import th.or.nectec.tanrabad.survey.service.json.JsonSurvey;
-
-import java.io.IOException;
-import java.util.List;
 
 import static th.or.nectec.tanrabad.survey.service.http.Header.*;
 
@@ -72,10 +73,15 @@ public class SurveyRestService extends AbsUploadRestService<Survey> implements D
         return true;
     }
 
+    @Override
+    public String getDeleteQueryString() {
+        return "?userid=".concat(getUser().getUsername());
+    }
+
     protected final Request deleteRequest(Survey data) {
         Request.Builder requestBuilder = new Request.Builder()
                 .delete()
-                .url(getUrl().concat("/").concat(data.getId().toString()))
+                .url(getUrl().concat("/").concat(data.getId().toString()).concat(getDeleteQueryString()))
                 .addHeader(USER_AGENT, TRB_USER_AGENT)
                 .addHeader(ACCEPT, "application/json")
                 .addHeader(ACCEPT_CHARSET, "utf-8");

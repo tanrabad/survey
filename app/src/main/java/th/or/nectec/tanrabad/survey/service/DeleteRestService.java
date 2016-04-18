@@ -22,4 +22,6 @@ import java.io.IOException;
 public interface DeleteRestService<T> {
 
     boolean delete(T data) throws IOException;
+
+    String getDeleteQueryString();
 }

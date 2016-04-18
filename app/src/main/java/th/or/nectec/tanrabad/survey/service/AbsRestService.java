@@ -20,6 +20,10 @@ package th.or.nectec.tanrabad.survey.service;
 import android.text.TextUtils;
 import android.util.Patterns;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -27,10 +31,6 @@ import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.BuildConfig;
 import th.or.nectec.tanrabad.survey.presenter.AccountUtils;
 import th.or.nectec.tanrabad.survey.service.http.Status;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static th.or.nectec.tanrabad.survey.service.http.Header.*;
@@ -121,6 +121,28 @@ public abstract class AbsRestService<T> implements RestService<T> {
         return requestBuilder.build();
     }
 
+    public String getUrl() {
+        if (nextUrl != null && !nextUrl.isEmpty()) {
+            return nextUrl;
+        }
+        String url = baseApi + getPath();
+        if (getQueryString() != null)
+            url += getQueryString();
+        return url;
+    }
+
+    protected abstract String getPath();
+
+    String getQueryString() {
+        return null;
+    }
+
+    private void headerIfModifiedSince(Request.Builder requestBuilder) {
+        String lastUpdate = this.serviceLastUpdate.get();
+        if (lastUpdate != null)
+            requestBuilder.addHeader(IF_MODIFIED_SINCE, lastUpdate);
+    }
+
     private void getNextRequest(Response response) {
         String linkHeader = response.header(LINK);
         if (linkHeader != null && !linkHeader.isEmpty()) {
@@ -141,26 +163,8 @@ public abstract class AbsRestService<T> implements RestService<T> {
 
     protected abstract List<T> jsonToEntityList(String responseBody) throws IOException;
 
-    public String getUrl() {
-        if (nextUrl != null && !nextUrl.isEmpty()) {
-            return nextUrl;
-        }
-        String url = baseApi + getPath();
-        if (getDefaultParams() != null)
-            url += getDefaultParams();
-        return url;
-    }
-
-    private void headerIfModifiedSince(Request.Builder requestBuilder) {
-        String lastUpdate = this.serviceLastUpdate.get();
-        if (lastUpdate != null)
-            requestBuilder.addHeader(IF_MODIFIED_SINCE, lastUpdate);
-    }
-
-    protected abstract String getPath();
-
-    String getDefaultParams() {
-        return null;
+    public User getUser() {
+        return user;
     }
 
     public void addDeleteData(T data) {

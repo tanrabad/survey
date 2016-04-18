@@ -51,6 +51,16 @@ public class PlaceRestService extends AbsUploadRestService<Place> implements Del
     }
 
     @Override
+    protected String getPath() {
+        return PATH;
+    }
+
+    @Override
+    public String getQueryString() {
+        return new QueryStringBuilder("geostd=4326", getApiFilterParam()).build();
+    }
+
+    @Override
     protected List<Place> jsonToEntityList(String responseBody) throws IOException {
         ArrayList<Place> places = new ArrayList<>();
         List<JsonPlace> jsonPlaces = LoganSquare.parseList(responseBody, JsonPlace.class);
@@ -63,16 +73,6 @@ public class PlaceRestService extends AbsUploadRestService<Place> implements Del
             }
         }
         return places;
-    }
-
-    @Override
-    protected String getPath() {
-        return PATH;
-    }
-
-    @Override
-    public String getDefaultParams() {
-        return new QueryStringBuilder("geostd=4326", getApiFilterParam()).build();
     }
 
     @Override
@@ -100,10 +100,18 @@ public class PlaceRestService extends AbsUploadRestService<Place> implements Del
         return true;
     }
 
+    @Override
+    public String getDeleteQueryString() {
+        return "?userid=".concat(getUser().getUsername());
+    }
+
     protected final Request deleteRequest(Place data) {
         Request.Builder requestBuilder = new Request.Builder()
                 .delete()
-                .url(getUrl().replace(getDefaultParams(), "").concat("/").concat(data.getId().toString()))
+                .url(getUrl().replace(getQueryString(), "")
+                        .concat("/").concat(data.getId().toString())
+                        .concat(getDeleteQueryString()))
+
                 .addHeader(USER_AGENT, TRB_USER_AGENT)
                 .addHeader(ACCEPT, "application/json")
                 .addHeader(ACCEPT_CHARSET, "utf-8");

@@ -40,13 +40,13 @@ public class AmphurRestService extends AbsRestService<District> {
     }
 
     @Override
-    public String getDefaultParams() {
-        return new QueryStringBuilder("geostd=4326", getApiFilterParam()).build();
+    protected String getPath() {
+        return PATH;
     }
 
     @Override
-    protected String getPath() {
-        return PATH;
+    public String getQueryString() {
+        return new QueryStringBuilder("geostd=4326", getApiFilterParam()).build();
     }
 
     @Override

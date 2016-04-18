@@ -33,13 +33,7 @@ import th.or.nectec.tanrabad.survey.service.http.Header;
 import th.or.nectec.tanrabad.survey.service.json.JsonEntomology;
 import th.or.nectec.tanrabad.survey.utils.ResourceFile;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
-import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
-import static com.github.tomakehurst.wiremock.client.WireMock.get;
-import static com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo;
-import static com.github.tomakehurst.wiremock.client.WireMock.verify;
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 
@@ -70,13 +64,13 @@ public class EntomologyRestServiceTest extends WireMockTestBase {
         User user = User.fromUsername("asdf");
         user.setOrganizationId(23);
         AccountUtils.setUser(user);
-        assertTrue(restService.getDefaultParams().contains("org_id=23"));
-        assertTrue(restService.getDefaultParams().contains("place_id=6e79ca31-d0da-fc50-64d2-ac403dfff644"));
+        assertTrue(restService.getQueryString().contains("org_id=23"));
+        assertTrue(restService.getQueryString().contains("place_id=6e79ca31-d0da-fc50-64d2-ac403dfff644"));
     }
 
     @Test
     public void testGetUrl() throws Exception {
-        assertEquals(localHost() + EntomologyRestService.PATH + restService.getDefaultParams(),
+        assertEquals(localHost() + EntomologyRestService.PATH + restService.getQueryString(),
                 restService.getUrl());
     }
 

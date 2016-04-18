@@ -82,7 +82,7 @@ public class FabricTools implements ExceptionLogger, ActionLogger {
         Crashlytics.setUserName(user.getUsername());
         answers.logLogin(new LoginEvent()
                 .putCustomAttribute("Health-Region Code", user.getHealthRegionCode())
-                .putCustomAttribute("Organization ID", user.getOrganizationId())
+                .putCustomAttribute("Organization ID", String.valueOf(user.getOrganizationId()))
                 .putCustomAttribute("User Type", user.getUserType().toString())
                 .putSuccess(true));
     }

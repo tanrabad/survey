@@ -58,7 +58,7 @@ ext {
     clientSecret = System.getenv("TANRABAD_AUTHEN_CLIENT_SECRET")
 
     //App Dependency
-    supportLibVersion = "23.2.1"
+    supportLibVersion = "23.3.0"
     playServicesVersion = "8.4.0"
     androidMapUtilsVersion = "0.4.3"
     okHttpVersion = "3.1.2"

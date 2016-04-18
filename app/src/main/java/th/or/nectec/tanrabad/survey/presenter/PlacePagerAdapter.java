@@ -67,8 +67,4 @@ class PlacePagerAdapter extends FragmentPagerAdapter {
                 return null;
         }
     }
-
-    public void refreshPlaceListData() {
-        placeListInDatabaseFragment.loadPlaceList();
-    }
 }

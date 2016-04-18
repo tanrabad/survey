@@ -19,15 +19,15 @@ package th.or.nectec.tanrabad.survey.repository;
 
 import org.junit.Before;
 import org.junit.Test;
-import th.or.nectec.tanrabad.domain.building.BuildingRepositoryException;
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.Place;
 
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import th.or.nectec.tanrabad.domain.building.BuildingRepositoryException;
+import th.or.nectec.tanrabad.entity.Building;
+import th.or.nectec.tanrabad.entity.Place;
+
+import static org.junit.Assert.*;
 
 
 public class InMemoryBuildingRepositoryTest {
@@ -70,6 +70,16 @@ public class InMemoryBuildingRepositoryTest {
         buildingRepo.update(towerANewName);
 
         assertEquals(towerANewName, buildingRepo.findByUuid(towerA.getId()));
+    }
+
+    @Test
+    public void testDeleteNotExistBuilding() throws Exception {
+        assertFalse(buildingRepo.delete(new Building(UUID.randomUUID(), "Tower X")));
+    }
+
+    @Test
+    public void testDelete() throws Exception {
+        assertTrue(buildingRepo.delete(towerA));
     }
 
     @Test(expected = BuildingRepositoryException.class)

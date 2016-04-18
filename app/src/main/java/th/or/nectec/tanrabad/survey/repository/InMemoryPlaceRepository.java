@@ -19,15 +19,15 @@ package th.or.nectec.tanrabad.survey.repository;
 
 import android.text.TextUtils;
 
-import th.or.nectec.tanrabad.domain.place.PlaceRepository;
-import th.or.nectec.tanrabad.domain.place.PlaceRepositoryException;
-import th.or.nectec.tanrabad.entity.Place;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+
+import th.or.nectec.tanrabad.domain.place.PlaceRepository;
+import th.or.nectec.tanrabad.domain.place.PlaceRepositoryException;
+import th.or.nectec.tanrabad.entity.Place;
 
 public class InMemoryPlaceRepository implements PlaceRepository {
 
@@ -100,11 +100,7 @@ public class InMemoryPlaceRepository implements PlaceRepository {
 
     @Override
     public boolean delete(Place place) {
-        if (!placesMap.containsKey(place.getId())) {
-            throw new PlaceRepositoryException();
-        }
-        placesMap.remove(place.getId());
-        return true;
+        return placesMap.remove(place.getId()) != null;
     }
 
     @Override

@@ -31,22 +31,7 @@ import android.widget.TextView;
 
 import com.github.amlcurran.showcaseview.ShowcaseView;
 
-import java.util.List;
-
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.survey.R;
-import th.or.nectec.tanrabad.survey.job.*;
-import th.or.nectec.tanrabad.survey.repository.BrokerBuildingRepository;
-import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
-import th.or.nectec.tanrabad.survey.repository.BrokerSurveyRepository;
-import th.or.nectec.tanrabad.survey.service.BuildingRestService;
-import th.or.nectec.tanrabad.survey.service.PlaceRestService;
-import th.or.nectec.tanrabad.survey.service.SurveyRestService;
-import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
-import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
-import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 import th.or.nectec.tanrabad.survey.utils.showcase.BaseShowcase;
 import th.or.nectec.tanrabad.survey.utils.showcase.Showcase;
 import th.or.nectec.tanrabad.survey.utils.showcase.ShowcaseFactory;
@@ -92,40 +77,6 @@ public class PlaceListActivity extends TanrabadActivity {
                 AccountUtils.getUser().getUsername());
         placePager.setAdapter(placePagerAdapter);
         placeListTabLayout.setupWithViewPager(placePager);
-
-        PlaceListInDatabaseFragment placeListInDbFragment = (PlaceListInDatabaseFragment) placePagerAdapter.getItem(0);
-        placeListInDbFragment.setOnPlaceDeleteListener(new PlaceListInDatabaseFragment.OnPlaceDeleteListener() {
-            @Override
-            public void doDeletedPlace(final Place place) {
-                PromptMessage promptMessage = new AlertDialogPromptMessage(
-                        PlaceListActivity.this, R.mipmap.ic_delete);
-                promptMessage.setOnConfirm(getString(R.string.delete), new PromptMessage.OnConfirmListener() {
-                    @Override
-                    public void onConfirm() {
-                        deletePlace(place);
-                    }
-                });
-                promptMessage.setOnCancel(getString(R.string.cancel), null);
-                promptMessage.show(getString(R.string.delete_place), getString(R.string.delete_place_msg));
-            }
-        });
-    }
-
-    private void deletePlace(Place place) {
-        PlaceListActivity.PlaceSyncJobRunner runner = new PlaceListActivity.PlaceSyncJobRunner();
-        List<Survey> surveys = BrokerSurveyRepository.getInstance().findByPlaceAndUserIn7Days(
-                place, AccountUtils.getUser());
-        runner.addJob(new DeleteDataJob<>(BrokerSurveyRepository.getInstance(),
-                new SurveyRestService(), surveys.toArray(new Survey[surveys.size()])));
-
-        List<Building> buildings = BrokerBuildingRepository.getInstance().findByPlaceUuid(place.getId());
-        runner.addJob(new DeleteDataJob<>(BrokerBuildingRepository.getInstance(),
-                new BuildingRestService(), buildings.toArray(new Building[buildings.size()])));
-
-        DeleteDataJob<Place> deletePlaceJob = new DeleteDataJob<>(BrokerPlaceRepository.getInstance(),
-                new PlaceRestService(), place);
-        runner.addJob(deletePlaceJob);
-        runner.start();
     }
 
     private void changeTabsFont() {
@@ -180,24 +131,7 @@ public class PlaceListActivity extends TanrabadActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode != RESULT_OK)
-            return;
-
-        placePagerAdapter.refreshPlaceListData();
-        switch (requestCode) {
-            case PlaceFormActivity.ADD_PLACE_REQ_CODE:
-                if (InternetConnection.isAvailable(this))
-                    startSyncJobs();
-                break;
-        }
-    }
-
-    private void startSyncJobs() {
-        AbsJobRunner jobRunner = new PlaceSyncJobRunner();
-        jobRunner.addJobs(new UploadJobBuilder().getJobs());
-        jobRunner.addJobs(new DownloadJobBuilder().getJobs());
-        jobRunner.start();
+        placePagerAdapter.getItem(0).onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -210,13 +144,5 @@ public class PlaceListActivity extends TanrabadActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.action_activity_place_search, menu);
         return super.onCreateOptionsMenu(menu);
-    }
-
-    class PlaceSyncJobRunner extends UploadJobRunner {
-        @Override
-        protected void onRunFinish() {
-            super.onRunFinish();
-            placePagerAdapter.refreshPlaceListData();
-        }
     }
 }

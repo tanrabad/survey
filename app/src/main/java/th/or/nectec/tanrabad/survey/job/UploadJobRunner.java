@@ -37,15 +37,12 @@ public class UploadJobRunner extends AbsJobRunner {
     private static final String BUILDING = "อาคาร";
     private final Context context;
 
-    private int completelySuccessCount = 0;
-    private int completelyFailCount = 0;
-    private int dataUploadedCount = 0;
-
     private List<AbsUploadJob> uploadJobs = new ArrayList<>();
 
     private IOException ioException;
     private RestServiceException restServiceException;
     private boolean isManualSync;
+    private OnSyncFinishListener onSyncFinishListener;
 
     public UploadJobRunner() {
         this(false);
@@ -73,12 +70,7 @@ public class UploadJobRunner extends AbsJobRunner {
         if (job instanceof AbsUploadJob) {
             AbsUploadJob uploadJob = (AbsUploadJob) job;
             uploadJobs.add(uploadJob);
-            if (uploadJob.isUploadCompletelySuccess())
-                completelySuccessCount++;
-            if (uploadJob.isUploadCompletelyFail())
-                completelyFailCount++;
-            if (uploadJob.isUploadData())
-                dataUploadedCount++;
+
         }
     }
 
@@ -88,8 +80,12 @@ public class UploadJobRunner extends AbsJobRunner {
 
     @Override
     protected void onRunFinish() {
-        if (uploadJobs.size() == 0)
+        if (onSyncFinishListener != null)
+            onSyncFinishListener.onSyncFinish();
+
+        if (uploadJobs.size() == 0) {
             return;
+        }
 
         showUploadResultMsg();
     }
@@ -141,5 +137,14 @@ public class UploadJobRunner extends AbsJobRunner {
                 ? String.format(context.getString(R.string.upload_data_fail), uploadJob.getFailCount()) + "\n"
                 : "\n";
         return space + message;
+    }
+
+    public UploadJobRunner setOnSyncFinishListener(OnSyncFinishListener onSyncFinishListener) {
+        this.onSyncFinishListener = onSyncFinishListener;
+        return this;
+    }
+
+    public interface OnSyncFinishListener {
+        void onSyncFinish();
     }
 }

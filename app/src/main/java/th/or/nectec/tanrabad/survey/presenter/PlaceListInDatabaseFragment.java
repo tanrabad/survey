@@ -17,6 +17,8 @@
 
 package th.or.nectec.tanrabad.survey.presenter;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatSpinner;
@@ -33,11 +35,22 @@ import java.util.List;
 
 import th.or.nectec.tanrabad.domain.place.PlaceChooser;
 import th.or.nectec.tanrabad.domain.place.PlaceListPresenter;
+import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
+import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
+import th.or.nectec.tanrabad.survey.job.DeleteDataJob;
+import th.or.nectec.tanrabad.survey.job.DownloadJobBuilder;
+import th.or.nectec.tanrabad.survey.job.UploadJobBuilder;
+import th.or.nectec.tanrabad.survey.job.UploadJobRunner;
 import th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView;
+import th.or.nectec.tanrabad.survey.repository.BrokerBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
+import th.or.nectec.tanrabad.survey.repository.BrokerSurveyRepository;
+import th.or.nectec.tanrabad.survey.service.BuildingRestService;
+import th.or.nectec.tanrabad.survey.service.PlaceRestService;
+import th.or.nectec.tanrabad.survey.service.SurveyRestService;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
@@ -46,7 +59,6 @@ public class PlaceListInDatabaseFragment extends Fragment implements
         AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener,
         AdapterView.OnItemSelectedListener, PlaceListPresenter {
 
-    OnPlaceDeleteListener onPlaceDeleteListener;
     private PlaceAdapter placeAdapter;
     private ReferenceEntityAdapter placeTypeAdapter;
     private PlaceChooser placeChooser = new PlaceChooser(BrokerPlaceRepository.getInstance(), this);
@@ -97,7 +109,80 @@ public class PlaceListInDatabaseFragment extends Fragment implements
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
+    }
 
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, final int position, long l) {
+        final Place placeData = placeAdapter.getItem(position);
+        PromptMessage promptMessage = new AlertDialogPromptMessage(getActivity());
+        promptMessage.setOnConfirm(getString(R.string.survey), new PromptMessage.OnConfirmListener() {
+            @Override
+            public void onConfirm() {
+                TanrabadApp.action().startSurvey(placeData);
+                SurveyBuildingHistoryActivity.open(getActivity(), placeData);
+            }
+        });
+        promptMessage.setOnCancel(getString(R.string.cancel), null);
+        promptMessage.show(getString(R.string.start_survey), placeAdapter.getItem(position).getName());
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int position, long l) {
+        if (!InternetConnection.isAvailable(getActivity()))
+            return false;
+
+        PromptMessage promptMessage = new AlertDialogPromptMessage(getActivity(), R.mipmap.ic_delete);
+
+        promptMessage.setOnConfirm(getString(R.string.delete), new PromptMessage.OnConfirmListener() {
+            @Override
+            public void onConfirm() {
+                deletePlace(placeAdapter.getItem(position));
+            }
+        });
+        promptMessage.setOnCancel(getString(R.string.cancel), null);
+        promptMessage.show(getString(R.string.delete_place), getString(R.string.delete_place_msg));
+        return true;
+    }
+
+    private void deletePlace(Place place) {
+        UploadJobRunner jobRunner = new UploadJobRunner();
+        jobRunner.setOnSyncFinishListener(new UploadJobRunner.OnSyncFinishListener() {
+            @Override
+            public void onSyncFinish() {
+                loadPlaceList();
+            }
+        });
+        List<Survey> surveys = BrokerSurveyRepository.getInstance().findByPlaceAndUserIn7Days(
+                place, AccountUtils.getUser());
+        if (surveys != null)
+            jobRunner.addJob(new DeleteDataJob<>(BrokerSurveyRepository.getInstance(),
+                    new SurveyRestService(), surveys.toArray(new Survey[surveys.size()])));
+
+        List<Building> buildings = BrokerBuildingRepository.getInstance().findByPlaceUuid(place.getId());
+        if (buildings != null)
+            jobRunner.addJob(new DeleteDataJob<>(BrokerBuildingRepository.getInstance(),
+                    new BuildingRestService(), buildings.toArray(new Building[buildings.size()])));
+
+        DeleteDataJob<Place> deletePlaceJob = new DeleteDataJob<>(BrokerPlaceRepository.getInstance(),
+                new PlaceRestService(), place);
+        jobRunner.addJob(deletePlaceJob);
+        jobRunner.start();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode != Activity.RESULT_OK)
+            return;
+
+        loadPlaceList();
+        switch (requestCode) {
+            case PlaceFormActivity.ADD_PLACE_REQ_CODE:
+                if (InternetConnection.isAvailable(getActivity()))
+                    startSyncJobs();
+                break;
+        }
     }
 
     @Override
@@ -167,38 +252,16 @@ public class PlaceListInDatabaseFragment extends Fragment implements
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, final int position, long l) {
-        final Place placeData = placeAdapter.getItem(position);
-        PromptMessage promptMessage = new AlertDialogPromptMessage(getActivity());
-        promptMessage.setOnConfirm(getString(R.string.survey), new PromptMessage.OnConfirmListener() {
+    private void startSyncJobs() {
+        UploadJobRunner jobRunner = new UploadJobRunner();
+        jobRunner.setOnSyncFinishListener(new UploadJobRunner.OnSyncFinishListener() {
             @Override
-            public void onConfirm() {
-                TanrabadApp.action().startSurvey(placeData);
-                SurveyBuildingHistoryActivity.open(getActivity(), placeData);
+            public void onSyncFinish() {
+                loadPlaceList();
             }
         });
-        promptMessage.setOnCancel(getString(R.string.cancel), null);
-        promptMessage.show(getString(R.string.start_survey), placeAdapter.getItem(position).getName());
-    }
-
-    @Override
-    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
-        if (!InternetConnection.isAvailable(getActivity()))
-            return false;
-
-        if (onPlaceDeleteListener == null)
-            return false;
-
-        onPlaceDeleteListener.doDeletedPlace(placeAdapter.getItem(position));
-        return false;
-    }
-
-    public void setOnPlaceDeleteListener(OnPlaceDeleteListener onPlaceDeleteListener) {
-        this.onPlaceDeleteListener = onPlaceDeleteListener;
-    }
-
-    public interface OnPlaceDeleteListener {
-        void doDeletedPlace(Place place);
+        jobRunner.addJobs(new UploadJobBuilder().getJobs());
+        jobRunner.addJobs(new DownloadJobBuilder().getJobs());
+        jobRunner.start();
     }
 }

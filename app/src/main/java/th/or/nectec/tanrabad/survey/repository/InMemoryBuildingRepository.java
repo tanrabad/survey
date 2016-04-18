@@ -17,15 +17,15 @@
 
 package th.or.nectec.tanrabad.survey.repository;
 
-import th.or.nectec.tanrabad.domain.building.BuildingRepository;
-import th.or.nectec.tanrabad.domain.building.BuildingRepositoryException;
-import th.or.nectec.tanrabad.entity.Building;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+
+import th.or.nectec.tanrabad.domain.building.BuildingRepository;
+import th.or.nectec.tanrabad.domain.building.BuildingRepositoryException;
+import th.or.nectec.tanrabad.entity.Building;
 
 public class InMemoryBuildingRepository implements BuildingRepository {
 
@@ -91,11 +91,7 @@ public class InMemoryBuildingRepository implements BuildingRepository {
 
     @Override
     public boolean delete(Building building) {
-        if (!buildingMap.containsKey(building.getId())) {
-            throw new BuildingRepositoryException();
-        }
-        buildingMap.remove(building.getId());
-        return true;
+        return buildingMap.remove(building.getId()) != null;
     }
 
     @Override

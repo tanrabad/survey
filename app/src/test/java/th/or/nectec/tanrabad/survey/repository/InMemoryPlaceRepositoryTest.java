@@ -17,28 +17,34 @@
 
 package th.or.nectec.tanrabad.survey.repository;
 
-import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
-import th.or.nectec.tanrabad.domain.place.PlaceRepositoryException;
-import th.or.nectec.tanrabad.entity.Place;
 
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import th.or.nectec.tanrabad.domain.place.PlaceRepositoryException;
+import th.or.nectec.tanrabad.entity.Place;
 
+import static org.junit.Assert.*;
 
 public class InMemoryPlaceRepositoryTest {
 
-    private static InMemoryPlaceRepository placeRepository = InMemoryPlaceRepository.getInstance();
-    private static Place hospital = Place.withName("โรงพยาบาลธรรมศาสตร์เฉลิมพระเกียรติ");
-    private static Place school = Place.withName("โรงเรียนบางปะอิน \"ราชานุเคราะห์ ๑\"");
+    private InMemoryPlaceRepository placeRepository = InMemoryPlaceRepository.getInstance();
+    private Place hospital = Place.withName("โรงพยาบาลธรรมศาสตร์เฉลิมพระเกียรติ");
+    private Place school = Place.withName("โรงเรียนบางปะอิน \"ราชานุเคราะห์ ๑\"");
 
-    @BeforeClass
-    public static void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         placeRepository.save(hospital);
         placeRepository.save(school);
+    }
+
+    @After
+    public void tearDown() {
+        placeRepository.delete(hospital);
+        placeRepository.delete(school);
     }
 
     @Test(expected = PlaceRepositoryException.class)
@@ -65,6 +71,16 @@ public class InMemoryPlaceRepositoryTest {
         assertEquals(racha1NewName, placeRepository.findByUuid(school.getId()));
     }
 
+    @Test
+    public void testDelete() throws Exception {
+        assertTrue(placeRepository.delete(school));
+    }
+
+    @Test
+    public void testDeleteNotExistPlace() throws Exception {
+        assertFalse(placeRepository.delete(new Place(UUID.randomUUID(), "New Place")));
+    }
+
     @Test(expected = PlaceRepositoryException.class)
     public void testUpdateNotExistPlaceMustThrowException() throws Exception {
         placeRepository.update(new Place(UUID.randomUUID(), "New Place"));
@@ -73,7 +89,7 @@ public class InMemoryPlaceRepositoryTest {
     @Test
     public void testFindPlaceByName() throws Exception {
         List<Place> searchPlace = placeRepository.findByName("๑");
-        assertTrue(searchPlace.size() == 1);
+        assertEquals(1, searchPlace.size());
         assertTrue(searchPlace.contains(school));
 
         List<Place> emptyPlaceList = placeRepository.findByName("C");

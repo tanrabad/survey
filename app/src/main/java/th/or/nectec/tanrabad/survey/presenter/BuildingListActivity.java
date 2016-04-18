@@ -51,7 +51,10 @@ import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.TanrabadApp;
-import th.or.nectec.tanrabad.survey.job.*;
+import th.or.nectec.tanrabad.survey.job.DeleteDataJob;
+import th.or.nectec.tanrabad.survey.job.DownloadJobBuilder;
+import th.or.nectec.tanrabad.survey.job.UploadJobBuilder;
+import th.or.nectec.tanrabad.survey.job.UploadJobRunner;
 import th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView;
 import th.or.nectec.tanrabad.survey.repository.BrokerBuildingRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
@@ -104,6 +107,22 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         loadSurveyBuildingList();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.add_building_menu:
+                BuildingFormActivity.startAdd(BuildingListActivity.this, getPlaceUuidFromIntent().toString());
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private UUID getPlaceUuidFromIntent() {
+        String uuid = getIntent().getStringExtra(PLACE_UUID_ARG);
+        return UUID.fromString(uuid);
+    }
+
     private void setupEditPlaceButton() {
         editPlaceButton = (Button) findViewById(R.id.edit_place);
         editPlaceButton.setOnClickListener(this);
@@ -117,11 +136,6 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     private void showPlaceName() {
         PlaceController placeController = new PlaceController(BrokerPlaceRepository.getInstance(), this);
         placeController.showPlace(getPlaceUuidFromIntent());
-    }
-
-    private UUID getPlaceUuidFromIntent() {
-        String uuid = getIntent().getStringExtra(PLACE_UUID_ARG);
-        return UUID.fromString(uuid);
     }
 
     private void setupBuildingList() {
@@ -164,7 +178,14 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     }
 
     private void deleteBuilding(Building building) {
-        BuildingSyncJobRunner runner = new BuildingSyncJobRunner();
+        UploadJobRunner runner = new UploadJobRunner();
+        runner.setOnSyncFinishListener(new UploadJobRunner.OnSyncFinishListener() {
+            @Override
+            public void onSyncFinish() {
+                loadSurveyBuildingList();
+            }
+        });
+
         Survey survey = BrokerSurveyRepository.getInstance().findByBuildingAndUserIn7Day(
                 building, AccountUtils.getUser());
         runner.addJob(new DeleteDataJob<>(BrokerSurveyRepository.getInstance(),
@@ -216,17 +237,6 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     private void loadSurveyBuildingList() {
         emptyBuildingsView.showProgressBar();
         surveyBuildingChooser.displaySurveyBuildingOf(getPlaceUuidFromIntent().toString(), AccountUtils.getUser());
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.add_building_menu:
-                BuildingFormActivity.startAdd(BuildingListActivity.this, getPlaceUuidFromIntent().toString());
-                finish();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -301,7 +311,13 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     }
 
     private void startSyncJobs() {
-        AbsJobRunner jobRunner = new BuildingSyncJobRunner();
+        UploadJobRunner jobRunner = new UploadJobRunner();
+        jobRunner.setOnSyncFinishListener(new UploadJobRunner.OnSyncFinishListener() {
+            @Override
+            public void onSyncFinish() {
+                loadSurveyBuildingList();
+            }
+        });
         jobRunner.addJobs(new UploadJobBuilder().getJobs());
         jobRunner.addJobs(new DownloadJobBuilder().getJobs());
         jobRunner.start();
@@ -333,14 +349,6 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         buildingAdapter.setEditButtonVisibility(false);
     }
 
-
-    class BuildingSyncJobRunner extends UploadJobRunner {
-        @Override
-        protected void onRunFinish() {
-            super.onRunFinish();
-            loadSurveyBuildingList();
-        }
-    }
 
     @Override
     public void onClick(View view) {

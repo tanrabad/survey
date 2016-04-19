@@ -61,9 +61,11 @@ import th.or.nectec.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerSurveyRepository;
 import th.or.nectec.tanrabad.survey.repository.BrokerUserRepository;
 import th.or.nectec.tanrabad.survey.service.BuildingRestService;
+import th.or.nectec.tanrabad.survey.service.PlaceRestService;
 import th.or.nectec.tanrabad.survey.service.SurveyRestService;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
+import th.or.nectec.tanrabad.survey.utils.android.NetworkChangeReceiver;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 
@@ -85,6 +87,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
             this);
     private SearchView buildingSearchView;
     private ActionMode actionMode;
+    private NetworkChangeReceiver networkChangeReceiver;
 
     public static void open(Activity activity, String placeUuid) {
         Intent intent = new Intent(activity, BuildingListActivity.class);
@@ -96,6 +99,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_building_list);
+        setupNetworkChangeReceiver();
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         setupHomeButton();
         setupEditPlaceButton();
@@ -114,13 +118,70 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
                 BuildingFormActivity.startAdd(BuildingListActivity.this, getPlaceUuidFromIntent().toString());
                 finish();
                 break;
+            case R.id.delete_place_menu:
+                if (!InternetConnection.isAvailable(this))
+                    return false;
+
+                PromptMessage promptMessage = new AlertDialogPromptMessage(this, R.mipmap.ic_delete);
+
+                promptMessage.setOnConfirm(getString(R.string.delete), new PromptMessage.OnConfirmListener() {
+                    @Override
+                    public void onConfirm() {
+                        deletePlace(place);
+                    }
+                });
+                promptMessage.setOnCancel(getString(R.string.cancel), null);
+                promptMessage.show(getString(R.string.delete_place), getString(R.string.delete_place_msg));
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void deletePlace(Place place) {
+        UploadJobRunner jobRunner = new UploadJobRunner();
+        jobRunner.setOnSyncFinishListener(new UploadJobRunner.OnSyncFinishListener() {
+            @Override
+            public void onSyncFinish() {
+                setResult(RESULT_OK);
+                finish();
+            }
+        });
+        List<Survey> surveys = BrokerSurveyRepository.getInstance().findByPlaceAndUserIn7Days(
+                place, AccountUtils.getUser());
+        if (surveys != null)
+            jobRunner.addJob(new DeleteDataJob<>(BrokerSurveyRepository.getInstance(),
+                    new SurveyRestService(), surveys.toArray(new Survey[surveys.size()])));
+
+        List<Building> buildings = BrokerBuildingRepository.getInstance().findByPlaceUuid(place.getId());
+        if (buildings != null)
+            jobRunner.addJob(new DeleteDataJob<>(BrokerBuildingRepository.getInstance(),
+                    new BuildingRestService(), buildings.toArray(new Building[buildings.size()])));
+
+        DeleteDataJob<Place> deletePlaceJob = new DeleteDataJob<>(BrokerPlaceRepository.getInstance(),
+                new PlaceRestService(), place);
+        jobRunner.addJob(deletePlaceJob);
+        jobRunner.start();
     }
 
     private UUID getPlaceUuidFromIntent() {
         String uuid = getIntent().getStringExtra(PLACE_UUID_ARG);
         return UUID.fromString(uuid);
+    }
+
+    private void setupNetworkChangeReceiver() {
+        networkChangeReceiver = new NetworkChangeReceiver(new NetworkChangeReceiver.OnNetworkChangedListener() {
+            @Override
+            public void onNetworkChanged(boolean isConnected) {
+                invalidateOptionsMenu();
+            }
+        });
+        registerReceiver(networkChangeReceiver, NetworkChangeReceiver.getIntentFilter());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(networkChangeReceiver);
     }
 
     private void setupEditPlaceButton() {
@@ -287,8 +348,17 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.action_activity_building_list, menu);
+        menu.findItem(R.id.delete_place_menu).setVisible(InternetConnection.isAvailable(this));
         return super.onCreateOptionsMenu(menu);
     }
+/*
+    @Override
+    public boolean onMenuOpened(int featureId, Menu menu) {
+        CalligraphyUtils.applyFontToTextView(
+                (TextView) menu.findItem(R.id.delete_place_menu).getActionView(),
+                TypefaceUtils.load(this.getAssets(), "fonts/ThaiSansNeue-Regular.otf"));
+        return super.onMenuOpened(featureId, menu);
+    }*/
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

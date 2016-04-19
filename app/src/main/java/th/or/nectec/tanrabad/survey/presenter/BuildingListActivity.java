@@ -63,6 +63,7 @@ import th.or.nectec.tanrabad.survey.repository.BrokerUserRepository;
 import th.or.nectec.tanrabad.survey.service.BuildingRestService;
 import th.or.nectec.tanrabad.survey.service.PlaceRestService;
 import th.or.nectec.tanrabad.survey.service.SurveyRestService;
+import th.or.nectec.tanrabad.survey.utils.PopupMenuUtil;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
 import th.or.nectec.tanrabad.survey.utils.android.NetworkChangeReceiver;
@@ -347,14 +348,6 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         menu.findItem(R.id.delete_place_menu).setVisible(InternetConnection.isAvailable(this));
         return super.onCreateOptionsMenu(menu);
     }
-/*
-    @Override
-    public boolean onMenuOpened(int featureId, Menu menu) {
-        CalligraphyUtils.applyFontToTextView(
-                (TextView) menu.findItem(R.id.delete_place_menu).getActionView(),
-                TypefaceUtils.load(this.getAssets(), "fonts/ThaiSansNeue-Regular.otf"));
-        return super.onMenuOpened(featureId, menu);
-    }*/
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -374,6 +367,20 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
                 showPlaceName();
                 break;
         }
+    }
+/*
+    @Override
+    public boolean onMenuOpened(int featureId, Menu menu) {
+        CalligraphyUtils.applyFontToTextView(
+                (TextView) menu.findItem(R.id.delete_place_menu).getActionView(),
+                TypefaceUtils.load(this.getAssets(), "fonts/ThaiSansNeue-Regular.otf"));
+        return super.onMenuOpened(featureId, menu);
+    }*/
+
+    @Override
+    protected boolean onPrepareOptionsPanel(View view, Menu menu) {
+        PopupMenuUtil.showPopupMenuIcon(menu);
+        return super.onPrepareOptionsPanel(view, menu);
     }
 
     private void startSyncJobs() {

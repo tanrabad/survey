@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey.onlineRunTest;
+package th.or.nectec.tanrabad.survey.online;
 
 import android.content.Intent;
 import android.support.test.espresso.intent.rule.IntentsTestRule;

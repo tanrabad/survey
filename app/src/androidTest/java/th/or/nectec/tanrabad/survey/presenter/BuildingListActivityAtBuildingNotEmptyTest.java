@@ -33,7 +33,9 @@ import th.or.nectec.tanrabad.survey.base.TanrabadEspressoTestBase;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.longClick;
 import static android.support.test.espresso.action.ViewActions.replaceText;
+import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtra;
@@ -105,5 +107,14 @@ public class BuildingListActivityAtBuildingNotEmptyTest extends TanrabadEspresso
                 .perform(replaceText("กากา"));
 
         textDisplayed(R.string.building_list_not_found);
+    }
+
+    @Test
+    public void offlineShouldNotFoundPromptDeleteBuilding() {
+        onView(withText("ตึก1"))
+                .perform(longClick());
+
+        onView(withText(R.string.delete_building))
+                .check(doesNotExist());
     }
 }

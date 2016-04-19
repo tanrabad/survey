@@ -24,6 +24,12 @@
         app:showAsAction="ifRoom|withText"/>
 
     <item
+        android:id="@+id/edit_place_menu"
+        android:icon="@mipmap/ic_edit_black"
+        android:title="@string/edit_place"
+        app:showAsAction="collapseActionView"/>
+
+    <item
         android:id="@+id/delete_place_menu"
         android:icon="@mipmap/ic_delete"
         android:title="@string/delete_place"

@@ -140,6 +140,10 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
                 promptMessage.setOnCancel(getString(R.string.cancel), null);
                 promptMessage.show(getString(R.string.delete_place), getString(R.string.delete_place_msg));
                 break;
+
+            case R.id.edit_place_menu:
+                PlaceFormActivity.startEdit(BuildingListActivity.this, place);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -368,14 +372,6 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
                 break;
         }
     }
-/*
-    @Override
-    public boolean onMenuOpened(int featureId, Menu menu) {
-        CalligraphyUtils.applyFontToTextView(
-                (TextView) menu.findItem(R.id.delete_place_menu).getActionView(),
-                TypefaceUtils.load(this.getAssets(), "fonts/ThaiSansNeue-Regular.otf"));
-        return super.onMenuOpened(featureId, menu);
-    }*/
 
     @Override
     protected boolean onPrepareOptionsPanel(View view, Menu menu) {

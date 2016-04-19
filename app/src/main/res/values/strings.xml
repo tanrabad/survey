@@ -207,5 +207,6 @@
     <string name="delete_survey_msg">แน่ใจหรือไม่ว่าคุณต้องการลบการสำรวจ</string>
     <string name="delete_survey">ลบการสำรวจ</string>
     <string name="authen_error_response">เกืดข้อผิดผลาด หรือคุณไม่ได้ให้สิทธิทันระบาด-สำรวจในการเข้าถึงข้อมูล</string>
+    <string name="please_delete_building_in_place">กรุณาลบอาคารทั้งหมดที่อยู่ภายในสถานที่ ก่อนที่จะลบสถานที่</string>
 
 </resources>

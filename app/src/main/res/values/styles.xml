@@ -24,6 +24,10 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <style name="TextViewTanrabad.Popup">
+        <item name="fontPath">fonts/ThaiSansNeue-Regular.otf</item>
+    </style>
+
     <style name="TextViewTanrabad.Label">
         <item name="android:textColor">@color/color_primary_dark</item>
         <item name="android:layout_marginTop">@dimen/space_between_content</item>

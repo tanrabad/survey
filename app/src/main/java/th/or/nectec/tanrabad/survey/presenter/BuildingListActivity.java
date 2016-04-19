@@ -120,7 +120,13 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
                 break;
             case R.id.delete_place_menu:
                 if (!InternetConnection.isAvailable(this))
-                    return false;
+                    return true;
+
+                List<Building> buildings = BrokerBuildingRepository.getInstance().findByPlaceUuid(place.getId());
+                if (buildings != null) {
+                    Alert.highLevel().show(R.string.please_delete_building_in_place);
+                    return true;
+                }
 
                 PromptMessage promptMessage = new AlertDialogPromptMessage(this, R.mipmap.ic_delete);
 
@@ -146,16 +152,6 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
                 finish();
             }
         });
-        List<Survey> surveys = BrokerSurveyRepository.getInstance().findByPlaceAndUserIn7Days(
-                place, AccountUtils.getUser());
-        if (surveys != null)
-            jobRunner.addJob(new DeleteDataJob<>(BrokerSurveyRepository.getInstance(),
-                    new SurveyRestService(), surveys.toArray(new Survey[surveys.size()])));
-
-        List<Building> buildings = BrokerBuildingRepository.getInstance().findByPlaceUuid(place.getId());
-        if (buildings != null)
-            jobRunner.addJob(new DeleteDataJob<>(BrokerBuildingRepository.getInstance(),
-                    new BuildingRestService(), buildings.toArray(new Building[buildings.size()])));
 
         DeleteDataJob<Place> deletePlaceJob = new DeleteDataJob<>(BrokerPlaceRepository.getInstance(),
                 new PlaceRestService(), place);

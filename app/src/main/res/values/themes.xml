@@ -49,7 +49,7 @@
         <item name="android:textAppearanceLargeInverse">@style/TanrabadTextAppearance.Title</item>
         <item name="android:textAppearanceListItem">@style/TanrabadTextAppearance.Body</item>
         <item name="android:textAppearanceListItemSmall">@style/TanrabadTextAppearance.Caption</item>
-        <item name="android:itemTextAppearance">@style/TanrabadTextAppearance.Body</item>
+        <item name="itemTextAppearance">@style/TanrabadTextAppearance.Body</item>
 
         <!-- Define Color Theme-->
         <item name="colorPrimary">@color/color_primary</item>
@@ -89,10 +89,6 @@
         <item name="colorPrimary">@color/darker_gray</item>
         <item name="colorPrimaryDark">@color/black</item>
     </style>
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="CustomActivityOnCrashTheme" parent="AppTheme"/>
 

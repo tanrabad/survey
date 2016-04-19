@@ -25,8 +25,7 @@
 
     <item
         android:id="@+id/delete_place_menu"
-        android:icon="@mipmap/ic_action_delete"
+        android:icon="@mipmap/ic_delete"
         android:title="@string/delete_place"
-        app:fontPath="fonts/ThaiSansNeue-Regular.otf"
         app:showAsAction="collapseActionView"/>
 </menu>

@@ -25,14 +25,13 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.base.TanrabadEspressoTestBase;
 import th.or.nectec.tanrabad.survey.presenter.PlaceListActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.longClick;
-import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
-
+import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
@@ -48,14 +47,21 @@ public class PlaceListActivityDeletePlaceTest extends TanrabadEspressoTestBase {
         Intent intent = new Intent();
         mActivity = mActivityTestRule.launchActivity(intent);
     }
+
     @Test
-    public void longTouchPlaceThenChooseDeleteShouldNotFoundThisPlaceAtPlaceList() {
+    public void touchPlaceThenChooseSurveyThenTouchMoreOptionsThenChooseDeletePlaceMenuThenChooseDeleteShouldGoPlaceListPage() {
         onView(withText("ชุมชนกอล์ฟวิว"))
-                .perform(longClick());
+                .perform(click());
+        onView(withText("สำรวจ"))
+                .perform(click());
+
+        onView(withContentDescription("More options"))
+                .perform(click());
+        onView(withText(R.string.delete_place))
+                .perform(click());
         onView(withText("ลบ"))
                 .perform(click());
 
-        onView(withText("ชุมชนกอล์ฟวิว"))
-                .check(doesNotExist());
+        textDisplayed(R.string.define_place_survey);
     }
 }

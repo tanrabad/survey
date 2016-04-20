@@ -49,7 +49,7 @@ public class PlaceListActivityDeletePlaceTest extends TanrabadEspressoTestBase {
     }
 
     @Test
-    public void touchPlaceThenChooseSurveyThenTouchMoreOptionsThenChooseDeletePlaceMenuThenChooseDeleteShouldGoPlaceListPage() {
+    public void chooseDeletePlaceMenuThenChooseDeleteShouldGoPlaceListPage() {
         onView(withText("ชุมชนกอล์ฟวิว"))
                 .perform(click());
         onView(withText("สำรวจ"))

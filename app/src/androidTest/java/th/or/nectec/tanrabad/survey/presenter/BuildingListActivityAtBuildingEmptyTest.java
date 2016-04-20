@@ -97,4 +97,15 @@ public class BuildingListActivityAtBuildingEmptyTest extends TanrabadEspressoTes
         onView(withText(R.string.edit_place))
                 .check(matches(isDisplayed()));
     }
+
+    @Test
+    public void ifOfflineTouchMoreOptionsThenChooseEditPlaceMenuShouldFoundBuildingFormPage() {
+        onView(withContentDescription("More options"))
+                .perform(click());
+        onView(withText(R.string.edit_place))
+                .perform(click());
+
+        onView(withText(R.string.edit_place))
+                .check(matches(isDisplayed()));
+    }
 }

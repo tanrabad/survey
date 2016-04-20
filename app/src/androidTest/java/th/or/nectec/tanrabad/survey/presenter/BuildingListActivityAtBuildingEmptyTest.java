@@ -81,11 +81,11 @@ public class BuildingListActivityAtBuildingEmptyTest extends TanrabadEspressoTes
     }
 
     @Test
-    public void offlineShouldNotFoundDeletePlaceMenu() {
+    public void ifOfflineShouldNotFoundDeletePlaceMenu() {
         onView(withContentDescription("More options"))
                 .perform(click());
 
-        onView(withId(R.id.delete_place_menu))
+        onView(withText(R.string.delete_place))
                 .check(doesNotExist());
     }
 

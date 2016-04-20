@@ -34,11 +34,11 @@ import th.or.nectec.tanrabad.survey.base.TanrabadEspressoTestBase;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtra;
-import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.*;
 
 @RunWith(AndroidJUnit4.class)
 public class BuildingListActivityAtBuildingEmptyTest extends TanrabadEspressoTestBase {
@@ -78,5 +78,14 @@ public class BuildingListActivityAtBuildingEmptyTest extends TanrabadEspressoTes
     public void openPlaceAtEmptyBuildingShouldNotFoundButtonEditBuilding() {
         onView(withId(R.id.edit_building))
                 .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+    }
+
+    @Test
+    public void offlineShouldNotFoundDeletePlaceMenu() {
+        onView(withContentDescription("More options"))
+                .perform(click());
+
+        onView(withId(R.id.delete_place_menu))
+                .check(doesNotExist());
     }
 }

@@ -36,8 +36,6 @@ import th.or.nectec.tanrabad.survey.base.TanrabadEspressoTestBase;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.longClick;
-import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtra;
@@ -152,15 +150,5 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
         Intents.intended(
                 hasComponent(new ComponentName(mActivity, PlaceSearchActivity.class)
                 ));
-    }
-
-    @Test
-    public void offlineShouldNotFoundPromptDeletePlace() {
-        changePlaceTypeFilterTo(R.string.village_community);
-        onView(withText("ชุมชนกอล์ฟวิว"))
-                .perform(longClick());
-
-        onView(withText(R.string.delete_place))
-                .check(doesNotExist());
     }
 }

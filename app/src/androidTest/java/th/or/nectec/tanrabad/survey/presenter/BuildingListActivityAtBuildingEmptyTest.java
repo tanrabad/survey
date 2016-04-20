@@ -88,4 +88,13 @@ public class BuildingListActivityAtBuildingEmptyTest extends TanrabadEspressoTes
         onView(withId(R.id.delete_place_menu))
                 .check(doesNotExist());
     }
+
+    @Test
+    public void ifOfflineTouchMoreOptionsShouldFoundEditPlaceMenu() {
+        onView(withContentDescription("More options"))
+                .perform(click());
+
+        onView(withText(R.string.edit_place))
+                .check(matches(isDisplayed()));
+    }
 }

@@ -29,16 +29,30 @@
         android:contentDescription="@string/building_icon"
         tools:src="@mipmap/ic_building_home_black"/>
 
-
-
-    <Button
-        android:id="@+id/edit_building"
+    <ImageButton
+        android:id="@+id/delete_building"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:text="@string/edit"
+        android:background="@drawable/bg_button"
+        android:contentDescription="@null"
+        android:padding="@dimen/space_between_content"
+        android:src="@mipmap/ic_delete_white"
+        tools:ignore="RelativeOverlap"/>
+
+    <ImageButton
+        android:id="@+id/edit_building"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/space_between_content"
+        android:layout_toLeftOf="@id/delete_building"
+        android:background="@drawable/bg_button"
+        android:contentDescription="@null"
+        android:padding="@dimen/space_between_content"
+        android:src="@mipmap/ic_edit_white"
         tools:ignore="RelativeOverlap"/>
 
     <ImageView

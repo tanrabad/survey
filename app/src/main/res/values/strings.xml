@@ -134,7 +134,6 @@
     <string name="search">ค้นหา</string>
     <string name="place_name_not_found">
         <![CDATA[คำค้นหา <font color=#E91E63>%1$s</font> ไม่ตรงกับชื่อสถานที่ใด ๆ]]></string>
-    <string name="edit">แก้ไข</string>
     <string name="please_wait">กรุณารอสักครู่&#8230;</string>
     <string name="clear_search_history">ล้างประวัติการค้นหา</string>
     <string name="trial">ทดลองใช้งาน</string>

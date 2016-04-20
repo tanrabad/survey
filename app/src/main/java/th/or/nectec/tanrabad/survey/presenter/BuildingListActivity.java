@@ -216,23 +216,21 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
                     TanrabadApp.action().filterBuilding(buildingSearchView.getQuery().toString());
             }
         });
-        buildingAdapter.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        buildingAdapter.setOnDeleteBuildingListener(new BuildingWithSurveyStatusAdapter.OnDeleteBuildingListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int position, long id) {
+            public void onDeleteBuilding(final Building building) {
                 if (InternetConnection.isAvailable(BuildingListActivity.this)) {
                     PromptMessage promptMessage = new AlertDialogPromptMessage(
                             BuildingListActivity.this, R.mipmap.ic_delete);
                     promptMessage.setOnConfirm(getString(R.string.delete), new PromptMessage.OnConfirmListener() {
                         @Override
                         public void onConfirm() {
-                            deleteBuilding(buildingAdapter.getItem(position).building);
+                            deleteBuilding(building);
                         }
                     });
                     promptMessage.setOnCancel(getString(R.string.cancel), null);
                     promptMessage.show(getString(R.string.delete_building), getString(R.string.delete_building_msg));
-                    return true;
                 }
-                return false;
             }
         });
         RecyclerViewHeader recyclerViewHeader = (RecyclerViewHeader) findViewById(R.id.card_header);

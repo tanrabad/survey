@@ -41,7 +41,7 @@
             map:cameraTargetLat="13.764922"
             map:cameraTargetLng="100.538268"
             map:cameraZoom="7"
-            map:liteMode="true"
+            map:liteMode="false"
             map:mapType="satellite"
             tools:ignore="MissingPrefix"/>
 

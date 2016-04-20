@@ -25,17 +25,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.repository.persistence.BuildingWithChange;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<BuildingWithSurveyStatusAdapter.ViewHolder>
         implements ListViewAdapter<BuildingWithSurveyStatus> {
@@ -47,6 +47,7 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
     private AdapterView.OnItemClickListener onItemClickListener;
     private AdapterView.OnItemLongClickListener onItemLongClickListener;
     private boolean isEditButtonVisible;
+    private OnDeleteBuildingListener onDeleteBuildingListener;
 
     public BuildingWithSurveyStatusAdapter(Context context, @DrawableRes int buildingIcon) {
         this.context = context;
@@ -107,9 +108,11 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
 
         if (isEditButtonVisible) {
             holder.editBuilding.setVisibility(View.VISIBLE);
+            holder.deleteBuilding.setVisibility(View.VISIBLE);
             holder.notSync.setVisibility(View.GONE);
         } else {
             holder.editBuilding.setVisibility(View.GONE);
+            holder.deleteBuilding.setVisibility(View.GONE);
             setSyncStatus(holder, buildingWithSurveyStatus.building);
         }
     }
@@ -143,9 +146,18 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
         }
     }
 
+    public void setOnDeleteBuildingListener(OnDeleteBuildingListener onDeleteBuildingListener) {
+        this.onDeleteBuildingListener = onDeleteBuildingListener;
+    }
+
+    interface OnDeleteBuildingListener {
+        void onDeleteBuilding(Building building);
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         private TextView buildingTextView;
-        private Button editBuilding;
+        private ImageButton editBuilding;
+        private ImageButton deleteBuilding;
         private ImageView buildingIcon;
         private ImageView notSync;
         private View surveyedStatus;
@@ -156,10 +168,12 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
             rootView = itemView;
             buildingTextView = (TextView) itemView.findViewById(R.id.building_name);
             buildingIcon = (ImageView) itemView.findViewById(R.id.building_icon);
-            editBuilding = (Button) itemView.findViewById(R.id.edit_building);
+            editBuilding = (ImageButton) itemView.findViewById(R.id.edit_building);
+            deleteBuilding = (ImageButton) itemView.findViewById(R.id.delete_building);
             surveyedStatus = itemView.findViewById(R.id.surveyed);
             notSync = (ImageView) itemView.findViewById(R.id.not_sync);
             editBuilding.setOnClickListener(this);
+            deleteBuilding.setOnClickListener(this);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
         }
@@ -171,6 +185,11 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
                 BuildingFormActivity.startEdit((Activity) context,
                         building.getPlace().getId().toString(),
                         building.getId().toString());
+            } else if (view.getId() == R.id.delete_building) {
+                if (onDeleteBuildingListener == null)
+                    return;
+                Building building = buildingsWithSurveyStatusList.get(getAdapterPosition()).building;
+                onDeleteBuildingListener.onDeleteBuilding(building);
             } else {
                 onItemHolderClick(this);
             }

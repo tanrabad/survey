@@ -49,7 +49,7 @@ public class PlaceListActivityDeletePlaceTest extends TanrabadEspressoTestBase {
     }
 
     @Test
-    public void chooseDeletePlaceMenuThenChooseDeleteShouldGoPlaceListPage() {
+    public void deletePlaceHaveNotBuildingsShouldDeleteSuccessThenGoPlaceListPage() {
         onView(withText("ชุมชนกอล์ฟวิว"))
                 .perform(click());
         onView(withText("สำรวจ"))
@@ -66,7 +66,7 @@ public class PlaceListActivityDeletePlaceTest extends TanrabadEspressoTestBase {
     }
 
     @Test
-    public void chooseDeletePlaceMenuThenChooseCancelShouldStayAtBuilingListPage() {
+    public void cancelDeletePlaceHaveNotBuildingsShouldDeleteFailAndStayAtBuilingListPage() {
         onView(withText("ชุมชนกอล์ฟวิว"))
                 .perform(click());
         onView(withText("สำรวจ"))
@@ -83,7 +83,7 @@ public class PlaceListActivityDeletePlaceTest extends TanrabadEspressoTestBase {
     }
 
     @Test
-    public void chooseDeletePlaceHaveBuildingsShouldFoundPromptPleaseDeleteBuildingInPlace() {
+    public void deletePlaceHaveBuildingsShouldFoundPromptPleaseDeleteBuildingInPlace() {
         onView(withText("หมู่บ้านทดสอบ"))
                 .perform(click());
         onView(withText("สำรวจ"))

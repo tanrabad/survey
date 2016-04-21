@@ -59,9 +59,26 @@ public class PlaceListActivityDeletePlaceTest extends TanrabadEspressoTestBase {
                 .perform(click());
         onView(withText(R.string.delete_place))
                 .perform(click());
-        onView(withText("ลบ"))
+        onView(withText(R.string.delete))
                 .perform(click());
 
         textDisplayed(R.string.define_place_survey);
+    }
+
+    @Test
+    public void chooseDeletePlaceMenuThenChooseCancelShouldStayAtBuilingListPage() {
+        onView(withText("ชุมชนกอล์ฟวิว"))
+                .perform(click());
+        onView(withText("สำรวจ"))
+                .perform(click());
+
+        onView(withContentDescription("More options"))
+                .perform(click());
+        onView(withText(R.string.delete_place))
+                .perform(click());
+        onView(withText(R.string.cancel))
+                .perform(click());
+
+        textDisplayed(R.string.define_building_survey);
     }
 }

@@ -54,7 +54,8 @@ public final class BrokerPlaceRepository implements PlaceRepository {
         Place place = cache.findByUuid(placeUuid);
         if (place == null) {
             place = persistence.findByUuid(placeUuid);
-            cache.save(place);
+            if (place != null)
+                cache.save(place);
         }
         return place;
     }

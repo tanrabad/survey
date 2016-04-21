@@ -153,6 +153,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
             @Override
             public void onSyncFinish() {
                 setResult(RESULT_OK);
+                PlaceListActivity.open(BuildingListActivity.this);
                 finish();
             }
         });

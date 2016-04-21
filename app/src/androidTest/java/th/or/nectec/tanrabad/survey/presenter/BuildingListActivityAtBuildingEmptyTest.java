@@ -34,7 +34,6 @@ import th.or.nectec.tanrabad.survey.base.TanrabadEspressoTestBase;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtra;
@@ -81,12 +80,15 @@ public class BuildingListActivityAtBuildingEmptyTest extends TanrabadEspressoTes
     }
 
     @Test
-    public void ifOfflineShouldNotFoundDeletePlaceMenu() {
+    public void ifOfflineThenTapDeletePlaceShouldFoundPromptConnectInternet() {
         onView(withContentDescription("More options"))
                 .perform(click());
-
         onView(withText(R.string.delete_place))
-                .check(doesNotExist());
+                .perform(click());
+
+        onView(withText(R.string.please_enable_internet_before_delete_place))
+                .check(matches(isDisplayed()));
+
     }
 
     @Test

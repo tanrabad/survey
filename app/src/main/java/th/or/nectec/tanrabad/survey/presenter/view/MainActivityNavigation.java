@@ -34,15 +34,15 @@ public class MainActivityNavigation {
                 int id = menuItem.getItemId();
                 switch (id) {
                     case R.id.trb_watch:
-                        Intent trbWatch = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
+                        Intent trbWatch = new Intent(Intent.ACTION_VIEW, Uri.parse("https://watch.tanrabad.org"));
                         activity.startActivity(trbWatch);
                         break;
                     case R.id.trb_report:
-                        Intent trbReport = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
+                        Intent trbReport = new Intent(Intent.ACTION_VIEW, Uri.parse("https://report.tanrabad.org"));
                         activity.startActivity(trbReport);
                         break;
                     case R.id.trb_bi:
-                        Intent trbBi = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
+                        Intent trbBi = new Intent(Intent.ACTION_VIEW, Uri.parse("https://bi.tanrabad.org"));
                         activity.startActivity(trbBi);
                         break;
                     case R.id.about:

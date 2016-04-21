@@ -45,6 +45,11 @@ public class MainActivityNavigation {
                         Intent trbBi = new Intent(Intent.ACTION_VIEW, Uri.parse("https://bi.tanrabad.org"));
                         activity.startActivity(trbBi);
                         break;
+                    case R.id.manual:
+                        Intent manual = new Intent(Intent.ACTION_VIEW,
+                                Uri.parse("https://tanrabad.gitbooks.io/survey-manual/content/"));
+                        activity.startActivity(manual);
+                        break;
                     case R.id.about:
                         AboutActivity.open(activity);
                         break;
@@ -70,7 +75,6 @@ public class MainActivityNavigation {
                 drawerLayout.openDrawer(Gravity.LEFT);
             }
         });
-
     }
 
     private static void setupHeaderView(NavigationView navigationView) {

@@ -210,5 +210,6 @@
     <string name="please_enable_internet_before_delete_place">กรุณาเชื่อมต่ออินเทอร์เน็ตก่อนที่จะทำการลบสถานที่</string>
     <string name="please_enable_internet_before_delete_building">กรุณาเชื่อมต่ออินเทอร์เน็ตก่อนที่จะทำการลบอาคาร</string>
     <string name="please_enable_internet_before_delete_survey">กรุณาเชื่อมต่ออินเทอร์เน็ตก่อนที่จะทำการลบการสำรวจ</string>
+    <string name="manual">คู่มือ</string>
 
 </resources>

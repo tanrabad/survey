@@ -174,6 +174,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
             @Override
             public void onNetworkChanged(boolean isConnected) {
                 invalidateOptionsMenu();
+                buildingAdapter.setDeleteButtonEnabled(isConnected);
             }
         });
         registerReceiver(networkChangeReceiver, NetworkChangeReceiver.getIntentFilter());

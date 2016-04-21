@@ -48,6 +48,7 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
     private AdapterView.OnItemLongClickListener onItemLongClickListener;
     private boolean isEditButtonVisible;
     private OnDeleteBuildingListener onDeleteBuildingListener;
+    private boolean isDeleteButtonEnabled;
 
     public BuildingWithSurveyStatusAdapter(Context context, @DrawableRes int buildingIcon) {
         this.context = context;
@@ -109,7 +110,7 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
         if (isEditButtonVisible) {
             holder.editBuilding.setVisibility(View.VISIBLE);
             holder.deleteBuilding.setVisibility(View.VISIBLE);
-            holder.notSync.setVisibility(View.GONE);
+            holder.deleteBuilding.setEnabled(isDeleteButtonEnabled);
         } else {
             holder.editBuilding.setVisibility(View.GONE);
             holder.deleteBuilding.setVisibility(View.GONE);
@@ -148,6 +149,11 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
 
     public void setOnDeleteBuildingListener(OnDeleteBuildingListener onDeleteBuildingListener) {
         this.onDeleteBuildingListener = onDeleteBuildingListener;
+    }
+
+    public void setDeleteButtonEnabled(boolean isEnabled) {
+        isDeleteButtonEnabled = isEnabled;
+        notifyDataSetChanged();
     }
 
     interface OnDeleteBuildingListener {

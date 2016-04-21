@@ -47,7 +47,7 @@ public class MainActivityNavigation {
                         break;
                     case R.id.manual:
                         Intent manual = new Intent(Intent.ACTION_VIEW,
-                                Uri.parse("https://tanrabad.gitbooks.io/survey-manual/content/"));
+                                Uri.parse("https://tanrabad.gitbooks.io/tanrabad-survey/content/index.html"));
                         activity.startActivity(manual);
                         break;
                     case R.id.about:

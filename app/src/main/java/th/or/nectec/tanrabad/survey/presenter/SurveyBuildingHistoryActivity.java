@@ -195,8 +195,10 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
                     promptMessage.setOnCancel(getString(R.string.cancel), null);
                     promptMessage.show(getString(R.string.delete_survey), getString(R.string.delete_survey_msg));
                     return true;
+                } else {
+                    Alert.highLevel().show(R.string.please_enable_internet_before_delete_survey);
+                    return false;
                 }
-                return false;
             }
         });
         RecyclerViewHeader recyclerViewHeader = (RecyclerViewHeader) findViewById(R.id.card_header);

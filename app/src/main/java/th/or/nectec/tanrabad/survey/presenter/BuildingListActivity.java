@@ -66,7 +66,6 @@ import th.or.nectec.tanrabad.survey.service.SurveyRestService;
 import th.or.nectec.tanrabad.survey.utils.PopupMenuUtil;
 import th.or.nectec.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
-import th.or.nectec.tanrabad.survey.utils.android.NetworkChangeReceiver;
 import th.or.nectec.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import th.or.nectec.tanrabad.survey.utils.prompt.PromptMessage;
 
@@ -88,7 +87,6 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
             this);
     private SearchView buildingSearchView;
     private ActionMode actionMode;
-    private NetworkChangeReceiver networkChangeReceiver;
 
     public static void open(Activity activity, String placeUuid) {
         Intent intent = new Intent(activity, BuildingListActivity.class);
@@ -100,7 +98,6 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_building_list);
-        setupNetworkChangeReceiver();
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         setupHomeButton();
         setupEditPlaceButton();
@@ -120,8 +117,10 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
                 finish();
                 break;
             case R.id.delete_place_menu:
-                if (!InternetConnection.isAvailable(this))
+                if (!InternetConnection.isAvailable(this)) {
+                    Alert.highLevel().show(R.string.please_enable_internet_before_delete_place);
                     return true;
+                }
 
                 List<Building> buildings = BrokerBuildingRepository.getInstance().findByPlaceUuid(place.getId());
                 if (buildings != null) {
@@ -167,23 +166,6 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     private UUID getPlaceUuidFromIntent() {
         String uuid = getIntent().getStringExtra(PLACE_UUID_ARG);
         return UUID.fromString(uuid);
-    }
-
-    private void setupNetworkChangeReceiver() {
-        networkChangeReceiver = new NetworkChangeReceiver(new NetworkChangeReceiver.OnNetworkChangedListener() {
-            @Override
-            public void onNetworkChanged(boolean isConnected) {
-                invalidateOptionsMenu();
-                buildingAdapter.setDeleteButtonEnabled(isConnected);
-            }
-        });
-        registerReceiver(networkChangeReceiver, NetworkChangeReceiver.getIntentFilter());
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unregisterReceiver(networkChangeReceiver);
     }
 
     private void setupEditPlaceButton() {
@@ -348,7 +330,6 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.action_activity_building_list, menu);
-        menu.findItem(R.id.delete_place_menu).setVisible(InternetConnection.isAvailable(this));
         return super.onCreateOptionsMenu(menu);
     }
 

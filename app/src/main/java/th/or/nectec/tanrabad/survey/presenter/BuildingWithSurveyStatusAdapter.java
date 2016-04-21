@@ -36,6 +36,8 @@ import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.survey.R;
 import th.or.nectec.tanrabad.survey.repository.persistence.BuildingWithChange;
+import th.or.nectec.tanrabad.survey.utils.alert.Alert;
+import th.or.nectec.tanrabad.survey.utils.android.InternetConnection;
 
 public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<BuildingWithSurveyStatusAdapter.ViewHolder>
         implements ListViewAdapter<BuildingWithSurveyStatus> {
@@ -48,7 +50,6 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
     private AdapterView.OnItemLongClickListener onItemLongClickListener;
     private boolean isEditButtonVisible;
     private OnDeleteBuildingListener onDeleteBuildingListener;
-    private boolean isDeleteButtonEnabled;
 
     public BuildingWithSurveyStatusAdapter(Context context, @DrawableRes int buildingIcon) {
         this.context = context;
@@ -110,7 +111,6 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
         if (isEditButtonVisible) {
             holder.editBuilding.setVisibility(View.VISIBLE);
             holder.deleteBuilding.setVisibility(View.VISIBLE);
-            holder.deleteBuilding.setEnabled(isDeleteButtonEnabled);
         } else {
             holder.editBuilding.setVisibility(View.GONE);
             holder.deleteBuilding.setVisibility(View.GONE);
@@ -151,11 +151,6 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
         this.onDeleteBuildingListener = onDeleteBuildingListener;
     }
 
-    public void setDeleteButtonEnabled(boolean isEnabled) {
-        isDeleteButtonEnabled = isEnabled;
-        notifyDataSetChanged();
-    }
-
     interface OnDeleteBuildingListener {
         void onDeleteBuilding(Building building);
     }
@@ -192,8 +187,14 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
                         building.getPlace().getId().toString(),
                         building.getId().toString());
             } else if (view.getId() == R.id.delete_building) {
+                if (!InternetConnection.isAvailable(context)) {
+                    Alert.highLevel().show(R.string.please_enable_internet_before_delete_building);
+                    return;
+                }
+
                 if (onDeleteBuildingListener == null)
                     return;
+
                 Building building = buildingsWithSurveyStatusList.get(getAdapterPosition()).building;
                 onDeleteBuildingListener.onDeleteBuilding(building);
             } else {

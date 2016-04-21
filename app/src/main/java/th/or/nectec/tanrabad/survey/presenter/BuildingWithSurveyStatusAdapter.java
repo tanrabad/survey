@@ -188,7 +188,7 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
                         building.getId().toString());
             } else if (view.getId() == R.id.delete_building) {
                 if (!InternetConnection.isAvailable(context)) {
-                    Alert.highLevel().show(R.string.please_enable_internet_before_delete_building);
+                    Alert.highLevel().show(R.string.please_enable_internet_before_delete);
                     return;
                 }
 

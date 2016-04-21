@@ -86,7 +86,7 @@ public class BuildingListActivityAtBuildingEmptyTest extends TanrabadEspressoTes
         onView(withText(R.string.delete_place))
                 .perform(click());
 
-        onView(withText(R.string.please_enable_internet_before_delete_place))
+        onView(withText(R.string.please_enable_internet_before_delete))
                 .check(matches(isDisplayed()));
 
     }

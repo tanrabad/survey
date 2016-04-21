@@ -118,7 +118,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
                 break;
             case R.id.delete_place_menu:
                 if (!InternetConnection.isAvailable(this)) {
-                    Alert.highLevel().show(R.string.please_enable_internet_before_delete_place);
+                    Alert.highLevel().show(R.string.please_enable_internet_before_delete);
                     return true;
                 }
 

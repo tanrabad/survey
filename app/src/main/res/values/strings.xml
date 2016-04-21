@@ -206,10 +206,8 @@
     <string name="delete_survey_msg">แน่ใจหรือไม่ว่าคุณต้องการลบการสำรวจ</string>
     <string name="delete_survey">ลบการสำรวจ</string>
     <string name="authen_error_response">เกืดข้อผิดผลาด หรือคุณไม่ได้ให้สิทธิทันระบาด-สำรวจในการเข้าถึงข้อมูล</string>
-    <string name="please_delete_building_in_place">กรุณาลบอาคารทั้งหมดก่อนที่จะลบสถานที่</string>
-    <string name="please_enable_internet_before_delete_place">กรุณาเชื่อมต่ออินเทอร์เน็ตก่อนที่จะทำการลบสถานที่</string>
-    <string name="please_enable_internet_before_delete_building">กรุณาเชื่อมต่ออินเทอร์เน็ตก่อนที่จะทำการลบอาคาร</string>
-    <string name="please_enable_internet_before_delete_survey">กรุณาเชื่อมต่ออินเทอร์เน็ตก่อนที่จะทำการลบการสำรวจ</string>
+    <string name="please_delete_building_in_place">กรุณาลบอาคารทั้งหมด ก่อนลบสถานที่</string>
+    <string name="please_enable_internet_before_delete">กรุณาเชื่อมต่ออินเทอร์เน็ตเพื่อลบ</string>
     <string name="manual">คู่มือ</string>
 
 </resources>

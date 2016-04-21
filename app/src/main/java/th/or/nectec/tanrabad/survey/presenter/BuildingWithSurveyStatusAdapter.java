@@ -114,8 +114,9 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
         } else {
             holder.editBuilding.setVisibility(View.GONE);
             holder.deleteBuilding.setVisibility(View.GONE);
-            setSyncStatus(holder, buildingWithSurveyStatus.building);
         }
+
+        setSyncStatus(holder, buildingWithSurveyStatus.building);
     }
 
     private void setSyncStatus(ViewHolder holder, Building currentBuilding) {

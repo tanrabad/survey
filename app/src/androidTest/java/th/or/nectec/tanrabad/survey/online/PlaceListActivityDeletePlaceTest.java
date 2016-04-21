@@ -54,11 +54,11 @@ public class PlaceListActivityDeletePlaceTest extends TanrabadEspressoTestBase {
                 .perform(click());
         onView(withText("สำรวจ"))
                 .perform(click());
-
         onView(withContentDescription("More options"))
                 .perform(click());
         onView(withText(R.string.delete_place))
                 .perform(click());
+
         onView(withText(R.string.delete))
                 .perform(click());
 
@@ -71,14 +71,29 @@ public class PlaceListActivityDeletePlaceTest extends TanrabadEspressoTestBase {
                 .perform(click());
         onView(withText("สำรวจ"))
                 .perform(click());
-
         onView(withContentDescription("More options"))
                 .perform(click());
         onView(withText(R.string.delete_place))
                 .perform(click());
+
         onView(withText(R.string.cancel))
                 .perform(click());
 
         textDisplayed(R.string.define_building_survey);
     }
+
+    @Test
+    public void chooseDeletePlaceHaveBuildingsShouldFoundPromptPleaseDeleteBuildingInPlace() {
+        onView(withText("หมู่บ้านทดสอบ"))
+                .perform(click());
+        onView(withText("สำรวจ"))
+                .perform(click());
+        onView(withContentDescription("More options"))
+                .perform(click());
+        onView(withText(R.string.delete_place))
+                .perform(click());
+
+        textDisplayed(R.string.please_delete_building_in_place);
+    }
+
 }

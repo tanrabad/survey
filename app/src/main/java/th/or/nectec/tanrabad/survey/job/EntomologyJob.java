@@ -1,6 +1,7 @@
 package th.or.nectec.tanrabad.survey.job;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import th.or.nectec.tanrabad.entity.Place;
@@ -26,7 +27,10 @@ public class EntomologyJob implements Job {
 
     @Override
     public void execute() throws IOException {
-        List<JsonEntomology> entomologyList = restService.getUpdate();
+        List<JsonEntomology> entomologyList = new ArrayList<>();
+        do {
+            entomologyList.addAll(restService.getUpdate());
+        } while (restService.hasNextRequest());
         data = entomologyList.isEmpty() ? null : entomologyList.get(entomologyList.size() - 1);
     }
 

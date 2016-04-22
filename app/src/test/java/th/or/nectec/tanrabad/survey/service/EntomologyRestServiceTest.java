@@ -21,6 +21,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -118,5 +119,41 @@ public class EntomologyRestServiceTest extends WireMockTestBase {
         assertEquals(125.00, jsonEntomology1.biValue, 0);
         assertEquals("แจกัน", jsonEntomology1.keyContainerIn.get(0).containerName);
         assertEquals("ภาชนะที่ไม่ใช้", jsonEntomology1.keyContainerOut.get(0).containerName);
+    }
+
+    @Test
+    public void testSuccessResponseWithNextPage() throws Exception {
+        stubFor(get(urlPathEqualTo(EntomologyRestService.PATH))
+                .willReturn(aResponse()
+                        .withStatus(200)
+                        .withHeader(Header.LAST_MODIFIED, MON_30_NOV_2015_17_00_00_GMT)
+                        .withHeader(Header.LINK,
+                                "<" + localHost() + EntomologyRestService.PATH + "?page=2&per_page=10>; rel=\"next\","
+                                        + "<" + localHost() + EntomologyRestService.PATH + "?page=2&per_page=10>; rel=\"last\"")
+                        .withBody(ResourceFile.read("entomologyList1Item.json"))));
+        stubFor(get(urlEqualTo(EntomologyRestService.PATH + "?page=2&per_page=10"))
+                .willReturn(aResponse()
+                        .withStatus(200)
+                        .withHeader(Header.LAST_MODIFIED, MON_30_NOV_2015_17_00_00_GMT)
+                        .withBody(ResourceFile.read("entomologyNextList1Item.json"))));
+
+        ArrayList<JsonEntomology> jsonEntomologyList = new ArrayList<>();
+        do {
+            jsonEntomologyList.addAll(restService.getUpdate());
+        } while (restService.hasNextRequest());
+
+        assertEquals(2, jsonEntomologyList.size());
+        JsonEntomology jsonEntomology1 = jsonEntomologyList.get(0);
+        assertEquals("6e79ca31-d0da-fc50-64d2-ac403dfff644", jsonEntomology1.placeId.toString());
+        assertEquals("หมู่ 5 บ้านท่าน้ำ", jsonEntomology1.placeName);
+        assertEquals(54.00, jsonEntomology1.hiValue, 0);
+        assertEquals(25.00, jsonEntomology1.ciValue, 0);
+        assertEquals(125.00, jsonEntomology1.biValue, 0);
+        JsonEntomology jsonEntomology2 = jsonEntomologyList.get(1);
+        assertEquals("6e79ca31-d0da-fc50-64d2-ac403dfff644", jsonEntomology1.placeId.toString());
+        assertEquals("หมู่ 5 บ้านท่าน้ำ", jsonEntomology1.placeName);
+        assertEquals(10.0, jsonEntomology2.hiValue, 0);
+        assertEquals(15.00, jsonEntomology2.ciValue, 0);
+        assertEquals(300.00, jsonEntomology2.biValue, 0);
     }
 }

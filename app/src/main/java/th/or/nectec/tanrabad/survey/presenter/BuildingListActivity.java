@@ -313,7 +313,8 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         buildingCountView.setVisibility(View.GONE);
         editBuildingButton.setVisibility(View.GONE);
         buildingAdapter.clearData();
-        actionMode.finish();
+        if (actionMode != null)
+            actionMode.finish();
     }
 
     @Override
@@ -411,6 +412,11 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     }
 
     @Override
+    public void onDestroyActionMode(ActionMode mode) {
+        buildingAdapter.setEditButtonVisibility(false);
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.edit_place:
@@ -421,11 +427,6 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
                 buildingAdapter.setEditButtonVisibility(true);
                 break;
         }
-    }
-
-    @Override
-    public void onDestroyActionMode(ActionMode mode) {
-        buildingAdapter.setEditButtonVisibility(false);
     }
 
 

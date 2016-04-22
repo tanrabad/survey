@@ -199,11 +199,11 @@
     <string name="google_analytic_pref_title">การใช้งานและรายงานข้อบกพร่อง</string>
     <string name="setting">การตั้งค่า</string>
     <string name="delete">ลบ</string>
-    <string name="delete_building_msg">แน่ใจหรือไม่ว่าคุณต้องการลบอาคาร</string>
+    <string name="delete_building_msg">เมื่อลบแล้วจะไม่สามารถกู้ข้อมูลอาคารได้</string>
     <string name="delete_building">ลบอาคาร</string>
-    <string name="delete_place_msg">แน่ใจหรือไม่ว่าคุณต้องการลบสถานที่</string>
+    <string name="delete_place_msg">เมื่อลบแล้วจะไม่สามารถกู้ข้อมูลสถานที่ได้</string>
     <string name="delete_place">ลบสถานที่</string>
-    <string name="delete_survey_msg">แน่ใจหรือไม่ว่าคุณต้องการลบการสำรวจ</string>
+    <string name="delete_survey_msg">เมื่อลบแล้วจะไม่สามารถกู้ข้อมูลการสำรวจได้</string>
     <string name="delete_survey">ลบการสำรวจ</string>
     <string name="authen_error_response">เกืดข้อผิดผลาด หรือคุณไม่ได้ให้สิทธิทันระบาด-สำรวจในการเข้าถึงข้อมูล</string>
     <string name="please_delete_building_in_place">กรุณาลบอาคารทั้งหมด ก่อนลบสถานที่</string>

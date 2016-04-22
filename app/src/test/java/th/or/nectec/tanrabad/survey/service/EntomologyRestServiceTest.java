@@ -129,7 +129,8 @@ public class EntomologyRestServiceTest extends WireMockTestBase {
                         .withHeader(Header.LAST_MODIFIED, MON_30_NOV_2015_17_00_00_GMT)
                         .withHeader(Header.LINK,
                                 "<" + localHost() + EntomologyRestService.PATH + "?page=2&per_page=10>; rel=\"next\","
-                                        + "<" + localHost() + EntomologyRestService.PATH + "?page=2&per_page=10>; rel=\"last\"")
+                                        + "<" + localHost()
+                                        + EntomologyRestService.PATH + "?page=2&per_page=10>; rel=\"last\"")
                         .withBody(ResourceFile.read("entomologyList1Item.json"))));
         stubFor(get(urlEqualTo(EntomologyRestService.PATH + "?page=2&per_page=10"))
                 .willReturn(aResponse()

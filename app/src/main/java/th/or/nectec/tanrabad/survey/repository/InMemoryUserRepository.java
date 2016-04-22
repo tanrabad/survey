@@ -41,7 +41,7 @@ final class InMemoryUserRepository implements UserRepository {
         userMapping.put(DEMO_USERNAME, betaUser());
         userMapping.put(RELEASE_USERNAME, ReleaseUser());
         userMapping.put(TRIAL_DEBUG, trialDebugUser());
-        userMapping.put(TRIAL_BETA, trialDebugUser());
+        userMapping.put(TRIAL_BETA, trialBetaUser());
         userMapping.put(TRIAL_RELEASE, trialReleaseUser());
     }
 
@@ -50,7 +50,7 @@ final class InMemoryUserRepository implements UserRepository {
         dev.setFirstname("ซาร่า");
         dev.setLastname("คิดส์");
         dev.setEmail("dev@tanrabad.org");
-        dev.setOrganizationId(1);
+        dev.setOrganizationId(13);
         dev.setHealthRegionCode("dpc-13");
         dev.setApiFilter("hr_code=dpc-13");
         return dev;
@@ -61,7 +61,7 @@ final class InMemoryUserRepository implements UserRepository {
         beta.setFirstname("ทดสอบ");
         beta.setLastname("ทดสอบ");
         beta.setEmail("dpc13@gmail.com");
-        beta.setOrganizationId(5);
+        beta.setOrganizationId(13);
         beta.setHealthRegionCode("dpc-13");
         beta.setApiFilter("hr_code=dpc-13");
         return beta;
@@ -72,7 +72,7 @@ final class InMemoryUserRepository implements UserRepository {
         release.setFirstname("ทดสอบ");
         release.setLastname("ทดสอบ");
         release.setEmail("dpc13@gmail.com");
-        release.setOrganizationId(100);
+        release.setOrganizationId(13);
         release.setHealthRegionCode("dpc-13");
         release.setApiFilter("hr_code=dpc-13");
         return release;
@@ -83,7 +83,7 @@ final class InMemoryUserRepository implements UserRepository {
         release.setFirstname("ทดสอบ");
         release.setLastname("ทดสอบ");
         release.setEmail("dpc13@gmail.com");
-        release.setOrganizationId(100);
+        release.setOrganizationId(13);
         release.setHealthRegionCode("dpc-13");
         release.setApiFilter("hr_code=dpc-13");
         return release;
@@ -94,7 +94,18 @@ final class InMemoryUserRepository implements UserRepository {
         release.setFirstname("ทดสอบ");
         release.setLastname("ทดสอบ");
         release.setEmail("dpc13@gmail.com");
-        release.setOrganizationId(100);
+        release.setOrganizationId(13);
+        release.setHealthRegionCode("dpc-13");
+        release.setApiFilter("hr_code=dpc-13");
+        return release;
+    }
+
+    private User trialBetaUser() {
+        User release = new User(TRIAL_BETA);
+        release.setFirstname("ทดสอบ");
+        release.setLastname("ทดสอบ");
+        release.setEmail("dpc13@gmail.com");
+        release.setOrganizationId(13);
         release.setHealthRegionCode("dpc-13");
         release.setApiFilter("hr_code=dpc-13");
         return release;
@@ -105,17 +116,6 @@ final class InMemoryUserRepository implements UserRepository {
             instance = new InMemoryUserRepository();
         }
         return instance;
-    }
-
-    private User trialBetaUser() {
-        User release = new User(TRIAL_BETA);
-        release.setFirstname("ทดสอบ");
-        release.setLastname("ทดสอบ");
-        release.setEmail("dpc13@gmail.com");
-        release.setOrganizationId(5);
-        release.setHealthRegionCode("dpc-13");
-        release.setApiFilter("hr_code=dpc-13");
-        return release;
     }
 
     @Override

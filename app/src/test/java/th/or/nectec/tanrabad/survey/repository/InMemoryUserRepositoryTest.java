@@ -40,7 +40,7 @@ public class InMemoryUserRepositoryTest {
         dpcUser.setFirstname("ซาร่า");
         dpcUser.setLastname("คิดส์");
         dpcUser.setEmail("sara.k@gmail.com");
-        dpcUser.setOrganizationId(1);
+        dpcUser.setOrganizationId(13);
         dpcUser.setHealthRegionCode("dpc-13");
         return dpcUser;
     }

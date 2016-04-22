@@ -128,6 +128,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
                     return true;
                 }
 
+                startSyncJobs();
                 PromptMessage promptMessage = new AlertDialogPromptMessage(this, R.mipmap.ic_delete);
 
                 promptMessage.setOnConfirm(getString(R.string.delete), new PromptMessage.OnConfirmListener() {
@@ -179,6 +180,24 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         finish();
     }
 
+    private void startSyncJobs() {
+        UploadJobRunner jobRunner = new UploadJobRunner();
+        jobRunner.setOnSyncFinishListener(new UploadJobRunner.OnSyncFinishListener() {
+            @Override
+            public void onSyncFinish() {
+                loadSurveyBuildingList();
+            }
+        });
+        jobRunner.addJobs(new UploadJobBuilder().getJobs());
+        jobRunner.addJobs(new DownloadJobBuilder().getJobs());
+        jobRunner.start();
+    }
+
+    private void loadSurveyBuildingList() {
+        emptyBuildingsView.showProgressBar();
+        surveyBuildingChooser.displaySurveyBuildingOf(getPlaceUuidFromIntent().toString(), AccountUtils.getUser());
+    }
+
     private void setupEditPlaceButton() {
         editPlaceButton = (Button) findViewById(R.id.edit_place);
         editPlaceButton.setOnClickListener(this);
@@ -214,6 +233,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
             @Override
             public void onDeleteBuilding(final Building building) {
                 if (InternetConnection.isAvailable(BuildingListActivity.this)) {
+                    startSyncJobs();
                     PromptMessage promptMessage = new AlertDialogPromptMessage(
                             BuildingListActivity.this, R.mipmap.ic_delete);
                     promptMessage.setOnConfirm(getString(R.string.delete), new PromptMessage.OnConfirmListener() {
@@ -286,11 +306,6 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
                 BuildingFormActivity.startAdd(BuildingListActivity.this, getPlaceUuidFromIntent().toString());
             }
         });
-    }
-
-    private void loadSurveyBuildingList() {
-        emptyBuildingsView.showProgressBar();
-        surveyBuildingChooser.displaySurveyBuildingOf(getPlaceUuidFromIntent().toString(), AccountUtils.getUser());
     }
 
     @Override
@@ -375,19 +390,6 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     protected boolean onPrepareOptionsPanel(View view, Menu menu) {
         PopupMenuUtil.showPopupMenuIcon(menu);
         return super.onPrepareOptionsPanel(view, menu);
-    }
-
-    private void startSyncJobs() {
-        UploadJobRunner jobRunner = new UploadJobRunner();
-        jobRunner.setOnSyncFinishListener(new UploadJobRunner.OnSyncFinishListener() {
-            @Override
-            public void onSyncFinish() {
-                loadSurveyBuildingList();
-            }
-        });
-        jobRunner.addJobs(new UploadJobBuilder().getJobs());
-        jobRunner.addJobs(new DownloadJobBuilder().getJobs());
-        jobRunner.start();
     }
 
     private void stopActionMode() {

@@ -184,6 +184,7 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int position, long id) {
                 if (InternetConnection.isAvailable(SurveyBuildingHistoryActivity.this)) {
+                    startSyncJob();
                     PromptMessage promptMessage = new AlertDialogPromptMessage(
                             SurveyBuildingHistoryActivity.this, R.mipmap.ic_delete);
                     promptMessage.setOnConfirm(getString(R.string.delete), new PromptMessage.OnConfirmListener() {
@@ -215,6 +216,13 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
         runner.start();
     }
 
+    private void startSyncJob() {
+        AbsJobRunner jobRunner = new SurveySyncJobRunner();
+        jobRunner.addJobs(new UploadJobBuilder().getJobs());
+        jobRunner.addJobs(new DownloadJobBuilder().getJobs());
+        jobRunner.start();
+    }
+
     private void setupEmptyLayout() {
         emptyLayoutView = (EmptyLayoutView) findViewById(R.id.empty_layout);
         emptyLayoutView.setEmptyButtonVisibility(false);
@@ -230,13 +238,6 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
         emptyLayoutView.showProgressBar();
         surveyBuildingHistoryController.showSurveyBuildingOf(getPlaceUuidFromIntent(),
                 AccountUtils.getUser().getUsername());
-    }
-
-    private void startSyncJob() {
-        AbsJobRunner jobRunner = new SurveySyncJobRunner();
-        jobRunner.addJobs(new UploadJobBuilder().getJobs());
-        jobRunner.addJobs(new DownloadJobBuilder().getJobs());
-        jobRunner.start();
     }
 
     @Override

@@ -143,6 +143,10 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
             case R.id.edit_place_menu:
                 PlaceFormActivity.startEdit(BuildingListActivity.this, place);
                 break;
+
+            case android.R.id.home:
+                finishActivity();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -167,6 +171,12 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     private UUID getPlaceUuidFromIntent() {
         String uuid = getIntent().getStringExtra(PLACE_UUID_ARG);
         return UUID.fromString(uuid);
+    }
+
+    public void finishActivity() {
+        if (buildingAdapter.getItemCount() == 0)
+            PlaceListActivity.open(BuildingListActivity.this);
+        finish();
     }
 
     private void setupEditPlaceButton() {
@@ -303,6 +313,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         buildingCountView.setVisibility(View.GONE);
         editBuildingButton.setVisibility(View.GONE);
         buildingAdapter.clearData();
+        actionMode.finish();
     }
 
     @Override
@@ -355,6 +366,11 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     }
 
     @Override
+    public void onBackPressed() {
+        finishActivity();
+    }
+
+    @Override
     protected boolean onPrepareOptionsPanel(View view, Menu menu) {
         PopupMenuUtil.showPopupMenuIcon(menu);
         return super.onPrepareOptionsPanel(view, menu);
@@ -395,12 +411,6 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     }
 
     @Override
-    public void onDestroyActionMode(ActionMode mode) {
-        buildingAdapter.setEditButtonVisibility(false);
-    }
-
-
-    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.edit_place:
@@ -412,4 +422,11 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
                 break;
         }
     }
+
+    @Override
+    public void onDestroyActionMode(ActionMode mode) {
+        buildingAdapter.setEditButtonVisibility(false);
+    }
+
+
 }

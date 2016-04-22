@@ -177,6 +177,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     public void finishActivity() {
         if (buildingAdapter.getItemCount() == 0)
             PlaceListActivity.open(BuildingListActivity.this);
+        setResult(RESULT_OK);
         finish();
     }
 

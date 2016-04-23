@@ -36,7 +36,7 @@ import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
-import th.or.nectec.tanrabad.survey.R;
+import org.tanrabad.survey.R;
 
 import java.util.List;
 import java.util.UUID;

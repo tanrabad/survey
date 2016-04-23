@@ -7,7 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import org.tanrabad.survey.utils.android.ResourceUtils;
-import th.or.nectec.tanrabad.survey.R;
+import org.tanrabad.survey.R;
 
 import static android.support.v7.widget.RecyclerView.ItemDecoration;
 import static android.support.v7.widget.RecyclerView.State;

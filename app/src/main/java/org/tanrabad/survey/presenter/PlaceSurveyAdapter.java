@@ -29,7 +29,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import org.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
 import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.survey.R;
+import org.tanrabad.survey.R;
 import th.or.nectec.thai.widget.address.AddressPicker;
 
 import java.util.ArrayList;

@@ -44,7 +44,7 @@ import org.tanrabad.survey.utils.android.InternetConnection;
 import org.tanrabad.survey.utils.showcase.ShowcasePreference;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.survey.BuildConfig;
-import th.or.nectec.tanrabad.survey.R;
+import org.tanrabad.survey.R;
 
 import static android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN;
 import static android.view.animation.AnimationUtils.loadAnimation;

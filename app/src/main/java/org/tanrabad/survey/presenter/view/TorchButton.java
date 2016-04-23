@@ -27,7 +27,7 @@ import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.utils.CameraFlashLight;
 import org.tanrabad.survey.utils.Torch;
 import org.tanrabad.survey.utils.time.JodaCurrentTime;
-import th.or.nectec.tanrabad.survey.R;
+import org.tanrabad.survey.R;
 
 public class TorchButton extends ImageButton {
 

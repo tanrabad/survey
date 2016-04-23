@@ -48,7 +48,7 @@ import th.or.nectec.tanrabad.entity.lookup.District;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.entity.lookup.Province;
 import th.or.nectec.tanrabad.entity.lookup.Subdistrict;
-import th.or.nectec.tanrabad.survey.R;
+import org.tanrabad.survey.R;
 import th.or.nectec.thai.address.AddressPrinter;
 
 import java.text.DecimalFormat;

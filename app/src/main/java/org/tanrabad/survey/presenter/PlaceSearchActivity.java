@@ -39,7 +39,7 @@ import org.tanrabad.survey.repository.BrokerPlaceRepository;
 import th.or.nectec.tanrabad.domain.place.PlaceChooser;
 import th.or.nectec.tanrabad.domain.place.PlaceListPresenter;
 import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.survey.R;
+import org.tanrabad.survey.R;
 
 import java.util.List;
 

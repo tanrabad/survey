@@ -34,7 +34,7 @@ import org.tanrabad.survey.utils.EditTextStepper;
 import org.tanrabad.survey.utils.android.BackgroundSetter;
 import org.tanrabad.survey.utils.android.DpCalculator;
 import org.tanrabad.survey.utils.android.ResourceUtils;
-import th.or.nectec.tanrabad.survey.R;
+import org.tanrabad.survey.R;
 
 public class StepPopupEditText extends EditText {
     protected EditTextStepper editTextStepper;

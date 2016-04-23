@@ -27,7 +27,7 @@ import org.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
 import org.tanrabad.survey.repository.BrokerPlaceTypeRepository;
 import th.or.nectec.tanrabad.entity.ReferenceEntity;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
-import th.or.nectec.tanrabad.survey.R;
+import org.tanrabad.survey.R;
 
 import java.util.ArrayList;
 import java.util.List;

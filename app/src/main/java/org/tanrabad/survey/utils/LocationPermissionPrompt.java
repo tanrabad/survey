@@ -5,7 +5,7 @@ import android.app.Activity;
 import android.support.v4.app.ActivityCompat;
 import org.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import org.tanrabad.survey.utils.prompt.PromptMessage;
-import th.or.nectec.tanrabad.survey.R;
+import org.tanrabad.survey.R;
 
 public class LocationPermissionPrompt {
 

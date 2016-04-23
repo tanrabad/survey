@@ -26,7 +26,7 @@ import android.support.v7.widget.Toolbar;
 import com.artitk.licensefragment.RecyclerViewLicenseFragment;
 import com.artitk.licensefragment.model.License;
 import com.artitk.licensefragment.model.LicenseID;
-import th.or.nectec.tanrabad.survey.R;
+import org.tanrabad.survey.R;
 
 import java.util.ArrayList;
 

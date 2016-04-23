@@ -32,7 +32,7 @@ import com.github.amlcurran.showcaseview.ShowcaseView;
 import org.tanrabad.survey.utils.showcase.BaseShowcase;
 import org.tanrabad.survey.utils.showcase.Showcase;
 import org.tanrabad.survey.utils.showcase.ShowcaseFactory;
-import th.or.nectec.tanrabad.survey.R;
+import org.tanrabad.survey.R;
 import uk.co.chrisjenx.calligraphy.CalligraphyUtils;
 import uk.co.chrisjenx.calligraphy.TypefaceUtils;
 

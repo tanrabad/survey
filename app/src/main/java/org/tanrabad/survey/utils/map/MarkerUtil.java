@@ -7,7 +7,7 @@ import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.presenter.maps.LocationUtils;
 import org.tanrabad.survey.utils.MapUtils;
 import th.or.nectec.tanrabad.entity.field.Location;
-import th.or.nectec.tanrabad.survey.R;
+import org.tanrabad.survey.R;
 
 public class MarkerUtil {
     public static MarkerOptions buildMarkerOption(Location location) {

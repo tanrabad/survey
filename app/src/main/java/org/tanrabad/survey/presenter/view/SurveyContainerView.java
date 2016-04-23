@@ -34,7 +34,7 @@ import org.tanrabad.survey.utils.android.ResourceUtils;
 import th.or.nectec.tanrabad.entity.SurveyDetail;
 import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 import th.or.nectec.tanrabad.entity.utils.UuidUtils;
-import th.or.nectec.tanrabad.survey.R;
+import org.tanrabad.survey.R;
 
 import java.util.HashMap;
 

@@ -21,7 +21,7 @@ import android.content.Context;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AlertDialog;
 import android.widget.TextView;
-import th.or.nectec.tanrabad.survey.R;
+import org.tanrabad.survey.R;
 
 class DialogAlertMessage implements AlertMessage {
     private Context context;

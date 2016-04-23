@@ -19,7 +19,7 @@ package org.tanrabad.survey.validator;
 
 import th.or.nectec.tanrabad.domain.survey.SurveyValidator;
 import th.or.nectec.tanrabad.entity.Survey;
-import th.or.nectec.tanrabad.survey.R;
+import org.tanrabad.survey.R;
 
 public class SaveSurveyValidator implements SurveyValidator {
 

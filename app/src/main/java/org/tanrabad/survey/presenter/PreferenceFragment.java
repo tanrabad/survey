@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import com.google.android.gms.analytics.GoogleAnalytics;
-import th.or.nectec.tanrabad.survey.R;
+import org.tanrabad.survey.R;
 
 public class PreferenceFragment extends PreferenceFragmentCompat {
 

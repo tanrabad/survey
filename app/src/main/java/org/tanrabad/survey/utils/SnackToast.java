@@ -6,7 +6,7 @@ import android.content.Context;
 import android.view.Gravity;
 import android.widget.TextView;
 import android.widget.Toast;
-import th.or.nectec.tanrabad.survey.R;
+import org.tanrabad.survey.R;
 
 public class SnackToast {
     @SuppressLint("InflateParams")

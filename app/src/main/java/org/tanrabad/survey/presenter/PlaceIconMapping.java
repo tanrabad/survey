@@ -20,7 +20,7 @@ package org.tanrabad.survey.presenter;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.lookup.PlaceSubType;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
-import th.or.nectec.tanrabad.survey.R;
+import org.tanrabad.survey.R;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

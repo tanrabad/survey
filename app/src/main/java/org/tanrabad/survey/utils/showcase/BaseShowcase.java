@@ -20,7 +20,7 @@ package org.tanrabad.survey.utils.showcase;
 import android.app.Activity;
 import android.widget.RelativeLayout;
 import com.github.amlcurran.showcaseview.ShowcaseView;
-import th.or.nectec.tanrabad.survey.R;
+import org.tanrabad.survey.R;
 
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 

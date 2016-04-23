@@ -57,7 +57,7 @@ import th.or.nectec.tanrabad.domain.survey.SurveyBuildingHistoryController;
 import th.or.nectec.tanrabad.domain.survey.SurveyBuildingPresenter;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.Survey;
-import th.or.nectec.tanrabad.survey.R;
+import org.tanrabad.survey.R;
 
 import java.util.List;
 import java.util.UUID;

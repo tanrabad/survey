@@ -2,7 +2,7 @@ package org.tanrabad.survey.utils.android;
 
 import android.content.Context;
 import android.widget.Toast;
-import th.or.nectec.tanrabad.survey.R;
+import org.tanrabad.survey.R;
 
 public class TwiceBackPressed {
 

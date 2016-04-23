@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import th.or.nectec.tanrabad.entity.stub.ContainerTypeStub;
-import th.or.nectec.tanrabad.survey.R;
+import org.tanrabad.survey.R;
 
 public class KeyContainerView extends RelativeLayout {
     private ImageView containerIcon;

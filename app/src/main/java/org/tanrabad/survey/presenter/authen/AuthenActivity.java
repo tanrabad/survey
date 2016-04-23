@@ -42,7 +42,7 @@ import th.or.nectec.tanrabad.domain.organization.OrganizationRepository;
 import th.or.nectec.tanrabad.domain.user.UserRepository;
 import th.or.nectec.tanrabad.entity.Organization;
 import th.or.nectec.tanrabad.entity.User;
-import th.or.nectec.tanrabad.survey.R;
+import org.tanrabad.survey.R;
 
 @SuppressLint("SetJavaScriptEnabled")
 public class AuthenActivity extends TanrabadActivity {

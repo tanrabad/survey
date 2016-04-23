@@ -28,7 +28,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import org.tanrabad.survey.utils.alert.Alert;
 import org.tanrabad.survey.utils.showcase.ShowcaseFactory;
-import th.or.nectec.tanrabad.survey.R;
+import org.tanrabad.survey.R;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 @SuppressLint("Registered")

@@ -4,7 +4,7 @@ import android.content.Context;
 import org.tanrabad.survey.repository.persistence.SqlScript;
 import org.tanrabad.survey.repository.persistence.SurveyLiteDatabase;
 import org.tanrabad.survey.service.ServiceLastUpdatePreference;
-import th.or.nectec.tanrabad.survey.R;
+import org.tanrabad.survey.R;
 
 public class UserDataManager {
     public static void clearAll(Context context) {

@@ -19,7 +19,7 @@ import org.tanrabad.survey.repository.BrokerOrganizationRepository;
 import org.tanrabad.survey.utils.alert.Alert;
 import th.or.nectec.tanrabad.entity.Organization;
 import th.or.nectec.tanrabad.entity.User;
-import th.or.nectec.tanrabad.survey.R;
+import org.tanrabad.survey.R;
 
 public class MainActivityNavigation {
 

@@ -50,7 +50,7 @@ import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.entity.lookup.PlaceSubType;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
-import th.or.nectec.tanrabad.survey.R;
+import org.tanrabad.survey.R;
 import th.or.nectec.thai.widget.address.AddressPicker;
 import th.or.nectec.thai.widget.address.AddressPickerDialog;
 

@@ -22,7 +22,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 import org.tanrabad.survey.service.ServiceLastUpdatePreference;
-import th.or.nectec.tanrabad.survey.R;
+import org.tanrabad.survey.R;
 
 public final class SurveyLiteDatabase extends SQLiteOpenHelper {
 

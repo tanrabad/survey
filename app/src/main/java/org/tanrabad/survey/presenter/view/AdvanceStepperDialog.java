@@ -23,7 +23,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
-import th.or.nectec.tanrabad.survey.R;
+import org.tanrabad.survey.R;
 
 public class AdvanceStepperDialog extends Dialog implements View.OnClickListener {
 

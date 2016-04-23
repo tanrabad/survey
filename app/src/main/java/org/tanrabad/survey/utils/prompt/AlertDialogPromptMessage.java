@@ -23,7 +23,7 @@ import android.support.annotation.DrawableRes;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.widget.TextView;
-import th.or.nectec.tanrabad.survey.R;
+import org.tanrabad.survey.R;
 
 public class AlertDialogPromptMessage implements PromptMessage {
 

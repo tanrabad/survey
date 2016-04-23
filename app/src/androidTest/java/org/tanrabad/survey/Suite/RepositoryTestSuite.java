@@ -33,6 +33,6 @@ import org.tanrabad.survey.repository.persistence.*;
         DbSurveyRepositoryTest.class,
         SurveyDbTestRule.class,
         SurveyLiteDatabaseTest.class
-})
+        })
 public class RepositoryTestSuite {
 }

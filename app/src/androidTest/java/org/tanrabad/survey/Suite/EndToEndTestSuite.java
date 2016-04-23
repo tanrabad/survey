@@ -29,6 +29,6 @@ import org.tanrabad.survey.end2end.*;
         SurveyBuildingExistTest.class,
         SurveyByAddNewPlaceAddNewBuildingTest.class,
         BuildingListActivityDisplayedTextSurveyedTest.class
-})
+        })
 public class EndToEndTestSuite {
 }

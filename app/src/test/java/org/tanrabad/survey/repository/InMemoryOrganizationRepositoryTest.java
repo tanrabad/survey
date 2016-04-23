@@ -20,7 +20,7 @@ package org.tanrabad.survey.repository;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import th.or.nectec.tanrabad.domain.organization.OrganizationRepositoryException;
+import org.tanrabad.survey.domain.organization.OrganizationRepositoryException;
 import th.or.nectec.tanrabad.entity.Organization;
 
 import static org.junit.Assert.assertEquals;

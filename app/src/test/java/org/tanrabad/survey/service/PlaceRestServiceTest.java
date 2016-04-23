@@ -28,8 +28,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import th.or.nectec.tanrabad.domain.place.PlaceSubTypeRepository;
-import th.or.nectec.tanrabad.domain.user.UserRepository;
+import org.tanrabad.survey.domain.place.PlaceSubTypeRepository;
+import org.tanrabad.survey.domain.user.UserRepository;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;

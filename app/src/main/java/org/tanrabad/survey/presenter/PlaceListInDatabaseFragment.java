@@ -37,8 +37,8 @@ import org.tanrabad.survey.repository.BrokerPlaceRepository;
 import org.tanrabad.survey.utils.android.InternetConnection;
 import org.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import org.tanrabad.survey.utils.prompt.PromptMessage;
-import th.or.nectec.tanrabad.domain.place.PlaceChooser;
-import th.or.nectec.tanrabad.domain.place.PlaceListPresenter;
+import org.tanrabad.survey.domain.place.PlaceChooser;
+import org.tanrabad.survey.domain.place.PlaceListPresenter;
 import th.or.nectec.tanrabad.entity.Place;
 import org.tanrabad.survey.R;
 

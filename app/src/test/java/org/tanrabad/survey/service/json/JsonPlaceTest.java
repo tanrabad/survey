@@ -23,7 +23,7 @@ import org.joda.time.DateTimeZone;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import th.or.nectec.tanrabad.domain.place.PlaceSubTypeRepository;
+import org.tanrabad.survey.domain.place.PlaceSubTypeRepository;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.entity.field.Location;

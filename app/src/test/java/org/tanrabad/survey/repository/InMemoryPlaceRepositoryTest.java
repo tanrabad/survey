@@ -24,7 +24,7 @@ import org.junit.Test;
 import java.util.List;
 import java.util.UUID;
 
-import th.or.nectec.tanrabad.domain.place.PlaceRepositoryException;
+import org.tanrabad.survey.domain.place.PlaceRepositoryException;
 import th.or.nectec.tanrabad.entity.Place;
 
 import static org.junit.Assert.*;

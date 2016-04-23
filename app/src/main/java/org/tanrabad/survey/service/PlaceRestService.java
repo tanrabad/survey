@@ -23,7 +23,7 @@ import okhttp3.Response;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
 import org.tanrabad.survey.service.json.JsonPlace;
-import th.or.nectec.tanrabad.domain.place.PlaceSubTypeRepository;
+import org.tanrabad.survey.domain.place.PlaceSubTypeRepository;
 import th.or.nectec.tanrabad.entity.Place;
 
 import java.io.IOException;

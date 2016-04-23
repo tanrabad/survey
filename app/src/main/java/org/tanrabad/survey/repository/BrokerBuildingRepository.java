@@ -19,7 +19,7 @@ package org.tanrabad.survey.repository;
 
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.repository.persistence.DbBuildingRepository;
-import th.or.nectec.tanrabad.domain.building.BuildingRepository;
+import org.tanrabad.survey.domain.building.BuildingRepository;
 import th.or.nectec.tanrabad.entity.Building;
 
 import java.util.List;

@@ -24,7 +24,7 @@ import android.database.sqlite.SQLiteDatabase;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.utils.collection.CursorList;
 import org.tanrabad.survey.utils.collection.CursorMapper;
-import th.or.nectec.tanrabad.domain.address.SubdistrictRepository;
+import org.tanrabad.survey.domain.address.SubdistrictRepository;
 import th.or.nectec.tanrabad.entity.lookup.Subdistrict;
 
 import java.util.List;

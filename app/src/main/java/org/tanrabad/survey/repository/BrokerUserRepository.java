@@ -19,7 +19,7 @@ package org.tanrabad.survey.repository;
 
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.repository.persistence.DbUserRepository;
-import th.or.nectec.tanrabad.domain.user.UserRepository;
+import org.tanrabad.survey.domain.user.UserRepository;
 import th.or.nectec.tanrabad.entity.User;
 
 import java.util.List;

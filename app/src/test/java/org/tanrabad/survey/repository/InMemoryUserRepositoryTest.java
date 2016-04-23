@@ -19,7 +19,7 @@ package org.tanrabad.survey.repository;
 
 import org.junit.Test;
 
-import th.or.nectec.tanrabad.domain.user.UserRepositoryException;
+import org.tanrabad.survey.domain.user.UserRepositoryException;
 import th.or.nectec.tanrabad.entity.User;
 
 import static org.junit.Assert.assertEquals;

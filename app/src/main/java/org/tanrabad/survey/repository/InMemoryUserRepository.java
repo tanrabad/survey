@@ -17,8 +17,8 @@
 
 package org.tanrabad.survey.repository;
 
-import th.or.nectec.tanrabad.domain.user.UserRepository;
-import th.or.nectec.tanrabad.domain.user.UserRepositoryException;
+import org.tanrabad.survey.domain.user.UserRepository;
+import org.tanrabad.survey.domain.user.UserRepositoryException;
 import th.or.nectec.tanrabad.entity.User;
 
 import java.util.List;

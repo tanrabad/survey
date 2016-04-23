@@ -19,8 +19,8 @@ package org.tanrabad.survey.repository;
 
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.repository.persistence.DbSurveyRepository;
-import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
-import th.or.nectec.tanrabad.domain.survey.SurveyRepository;
+import org.tanrabad.survey.domain.building.BuildingWithSurveyStatus;
+import org.tanrabad.survey.domain.survey.SurveyRepository;
 import th.or.nectec.tanrabad.entity.*;
 
 import java.util.List;

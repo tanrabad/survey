@@ -31,8 +31,8 @@ import org.tanrabad.survey.presenter.view.EmptyLayoutView;
 import org.tanrabad.survey.repository.BrokerSurveyRepository;
 import org.tanrabad.survey.repository.BrokerUserRepository;
 import org.tanrabad.survey.utils.alert.Alert;
-import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyHistoryChooser;
-import th.or.nectec.tanrabad.domain.place.PlaceWithSurveyHistoryListPresenter;
+import org.tanrabad.survey.domain.place.PlaceWithSurveyHistoryChooser;
+import org.tanrabad.survey.domain.place.PlaceWithSurveyHistoryListPresenter;
 import th.or.nectec.tanrabad.entity.Place;
 import org.tanrabad.survey.R;
 

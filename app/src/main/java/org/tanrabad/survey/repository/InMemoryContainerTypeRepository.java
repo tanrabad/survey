@@ -17,8 +17,8 @@
 
 package org.tanrabad.survey.repository;
 
-import th.or.nectec.tanrabad.domain.survey.ContainerTypeRepository;
-import th.or.nectec.tanrabad.domain.survey.ContainerTypeRepositoryException;
+import org.tanrabad.survey.domain.survey.ContainerTypeRepository;
+import org.tanrabad.survey.domain.survey.ContainerTypeRepositoryException;
 import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 
 import java.util.*;

@@ -18,8 +18,8 @@
 package org.tanrabad.survey.repository;
 
 import android.text.TextUtils;
-import th.or.nectec.tanrabad.domain.place.PlaceRepository;
-import th.or.nectec.tanrabad.domain.place.PlaceRepositoryException;
+import org.tanrabad.survey.domain.place.PlaceRepository;
+import org.tanrabad.survey.domain.place.PlaceRepositoryException;
 import th.or.nectec.tanrabad.entity.Place;
 
 import java.util.ArrayList;

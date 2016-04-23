@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import th.or.nectec.tanrabad.domain.WritableRepository;
+import org.tanrabad.survey.domain.WritableRepository;
 import org.tanrabad.survey.service.RestService;
 
 import java.util.ArrayList;

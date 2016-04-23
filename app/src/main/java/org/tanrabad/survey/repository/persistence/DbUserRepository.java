@@ -23,8 +23,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import org.tanrabad.survey.repository.BrokerOrganizationRepository;
 import org.tanrabad.survey.utils.collection.CursorMapper;
-import th.or.nectec.tanrabad.domain.organization.OrganizationRepository;
-import th.or.nectec.tanrabad.domain.user.UserRepository;
+import org.tanrabad.survey.domain.organization.OrganizationRepository;
+import org.tanrabad.survey.domain.user.UserRepository;
 import th.or.nectec.tanrabad.entity.User;
 
 import java.util.List;

@@ -49,7 +49,7 @@ import org.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import org.tanrabad.survey.utils.prompt.PromptMessage;
 import org.tanrabad.survey.validator.SaveSurveyValidator;
 import org.tanrabad.survey.validator.ValidatorException;
-import th.or.nectec.tanrabad.domain.survey.*;
+import org.tanrabad.survey.domain.survey.*;
 import th.or.nectec.tanrabad.entity.*;
 import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.entity.lookup.ContainerType;

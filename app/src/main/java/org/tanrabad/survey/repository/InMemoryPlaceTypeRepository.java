@@ -17,8 +17,8 @@
 
 package org.tanrabad.survey.repository;
 
-import th.or.nectec.tanrabad.domain.place.PlaceTypeRepository;
-import th.or.nectec.tanrabad.domain.place.PlaceTypeRepositoryException;
+import org.tanrabad.survey.domain.place.PlaceTypeRepository;
+import org.tanrabad.survey.domain.place.PlaceTypeRepositoryException;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 
 import java.util.ArrayList;

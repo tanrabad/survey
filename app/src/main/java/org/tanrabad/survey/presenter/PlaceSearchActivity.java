@@ -36,8 +36,8 @@ import android.view.View;
 import android.widget.*;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.repository.BrokerPlaceRepository;
-import th.or.nectec.tanrabad.domain.place.PlaceChooser;
-import th.or.nectec.tanrabad.domain.place.PlaceListPresenter;
+import org.tanrabad.survey.domain.place.PlaceChooser;
+import org.tanrabad.survey.domain.place.PlaceListPresenter;
 import th.or.nectec.tanrabad.entity.Place;
 import org.tanrabad.survey.R;
 

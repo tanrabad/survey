@@ -17,8 +17,8 @@
 
 package org.tanrabad.survey.validator;
 
-import th.or.nectec.tanrabad.domain.place.PlaceRepository;
-import th.or.nectec.tanrabad.domain.place.PlaceValidator;
+import org.tanrabad.survey.domain.place.PlaceRepository;
+import org.tanrabad.survey.domain.place.PlaceValidator;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import org.tanrabad.survey.R;

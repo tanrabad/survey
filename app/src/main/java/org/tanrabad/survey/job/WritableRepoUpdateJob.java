@@ -18,7 +18,7 @@
 package org.tanrabad.survey.job;
 
 import org.tanrabad.survey.service.RestService;
-import th.or.nectec.tanrabad.domain.WritableRepository;
+import org.tanrabad.survey.domain.WritableRepository;
 
 import java.io.IOException;
 import java.util.List;

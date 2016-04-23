@@ -29,7 +29,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.tanrabad.survey.base.SurveyDbTestRule;
-import th.or.nectec.tanrabad.domain.organization.OrganizationRepository;
+import org.tanrabad.survey.domain.organization.OrganizationRepository;
 import th.or.nectec.tanrabad.entity.Organization;
 import th.or.nectec.tanrabad.entity.User;
 

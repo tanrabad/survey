@@ -24,8 +24,8 @@ import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.repository.BrokerPlaceRepository;
 import org.tanrabad.survey.repository.BrokerUserRepository;
 import org.tanrabad.survey.service.json.JsonBuilding;
-import th.or.nectec.tanrabad.domain.place.PlaceRepository;
-import th.or.nectec.tanrabad.domain.user.UserRepository;
+import org.tanrabad.survey.domain.place.PlaceRepository;
+import org.tanrabad.survey.domain.user.UserRepository;
 import th.or.nectec.tanrabad.entity.Building;
 
 import java.io.IOException;

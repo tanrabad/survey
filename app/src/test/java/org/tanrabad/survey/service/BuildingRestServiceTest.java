@@ -26,8 +26,8 @@ import org.mockito.Mockito;
 import java.util.List;
 import java.util.UUID;
 
-import th.or.nectec.tanrabad.domain.place.PlaceRepository;
-import th.or.nectec.tanrabad.domain.user.UserRepository;
+import org.tanrabad.survey.domain.place.PlaceRepository;
+import org.tanrabad.survey.domain.user.UserRepository;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;

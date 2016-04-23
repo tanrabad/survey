@@ -45,7 +45,7 @@ import org.tanrabad.survey.utils.map.MarkerUtil;
 import org.tanrabad.survey.validator.SavePlaceValidator;
 import org.tanrabad.survey.validator.UpdatePlaceValidator;
 import org.tanrabad.survey.validator.ValidatorException;
-import th.or.nectec.tanrabad.domain.place.*;
+import org.tanrabad.survey.domain.place.*;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.entity.lookup.PlaceSubType;

@@ -32,7 +32,7 @@ import org.mockito.Mockito;
 import org.tanrabad.survey.base.SurveyDbTestRule;
 import org.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
 import org.tanrabad.survey.utils.time.ThaiDateTimeConverter;
-import th.or.nectec.tanrabad.domain.user.UserRepository;
+import org.tanrabad.survey.domain.user.UserRepository;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;

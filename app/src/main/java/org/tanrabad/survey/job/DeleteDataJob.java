@@ -19,7 +19,7 @@ package org.tanrabad.survey.job;
 
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.service.DeleteRestService;
-import th.or.nectec.tanrabad.domain.WritableRepository;
+import org.tanrabad.survey.domain.WritableRepository;
 
 import java.io.IOException;
 

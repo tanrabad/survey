@@ -31,7 +31,7 @@ import android.widget.TextView;
 import org.tanrabad.survey.repository.persistence.BuildingWithChange;
 import org.tanrabad.survey.utils.alert.Alert;
 import org.tanrabad.survey.utils.android.InternetConnection;
-import th.or.nectec.tanrabad.domain.building.BuildingWithSurveyStatus;
+import org.tanrabad.survey.domain.building.BuildingWithSurveyStatus;
 import th.or.nectec.tanrabad.entity.Building;
 import org.tanrabad.survey.R;
 

@@ -21,8 +21,8 @@ import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
 import org.joda.time.DateTimeZone;
 import org.tanrabad.survey.utils.time.ThaiDateTimeConverter;
-import th.or.nectec.tanrabad.domain.place.PlaceRepository;
-import th.or.nectec.tanrabad.domain.user.UserRepository;
+import org.tanrabad.survey.domain.place.PlaceRepository;
+import org.tanrabad.survey.domain.user.UserRepository;
 import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.field.Location;
 

@@ -3,7 +3,7 @@ package org.tanrabad.survey.job;
 import android.content.Context;
 import org.tanrabad.survey.service.AbsRestService;
 import org.tanrabad.survey.service.TrialModePreference;
-import th.or.nectec.tanrabad.survey.BuildConfig;
+import org.tanrabad.survey.BuildConfig;
 
 public class SetTrialModeAndSelectApiServerJob implements Job {
 

@@ -26,7 +26,7 @@ import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.Survey;
 import th.or.nectec.tanrabad.entity.User;
-import th.or.nectec.tanrabad.survey.BuildConfig;
+import org.tanrabad.survey.BuildConfig;
 import org.tanrabad.survey.R;
 
 public final class GoogleAnalyticsTool extends FabricTools {

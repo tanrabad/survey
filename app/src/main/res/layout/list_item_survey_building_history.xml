@@ -41,7 +41,7 @@
             android:textColor="@color/black"
             tools:text="CI 50.5%" />
 
-    <th.or.nectec.tanrabad.survey.presenter.view.RelativeTimeAgoTextView
+    <org.tanrabad.survey.presenter.view.RelativeTimeAgoTextView
             android:id="@+id/time_ago"
             style="@style/TanrabadTextAppearance.Caption"
             android:layout_width="wrap_content"

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey.validator;
+package org.tanrabad.survey.validator;
 
 import org.junit.Test;
 import org.mockito.Mockito;

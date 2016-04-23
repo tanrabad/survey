@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey.service;
+package org.tanrabad.survey.service;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,10 +29,10 @@ import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.WireMockTestBase;
-import th.or.nectec.tanrabad.survey.presenter.AccountUtils;
-import th.or.nectec.tanrabad.survey.service.http.Header;
-import th.or.nectec.tanrabad.survey.service.json.JsonEntomology;
-import th.or.nectec.tanrabad.survey.utils.ResourceFile;
+import org.tanrabad.survey.presenter.AccountUtils;
+import org.tanrabad.survey.service.http.Header;
+import org.tanrabad.survey.service.json.JsonEntomology;
+import org.tanrabad.survey.utils.ResourceFile;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static junit.framework.Assert.assertTrue;

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey.utils.collection;
+package org.tanrabad.survey.utils.collection;
 
 import android.database.Cursor;
 import org.junit.Test;

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey.presenter;
+package org.tanrabad.survey.presenter;
 
 import org.junit.Before;
 import org.junit.Test;

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey.service;
+package org.tanrabad.survey.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
 
@@ -35,7 +35,7 @@ import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.entity.lookup.ContainerType;
 import th.or.nectec.tanrabad.survey.WireMockTestBase;
-import th.or.nectec.tanrabad.survey.service.json.JsonSurvey;
+import org.tanrabad.survey.service.json.JsonSurvey;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static junit.framework.Assert.assertEquals;

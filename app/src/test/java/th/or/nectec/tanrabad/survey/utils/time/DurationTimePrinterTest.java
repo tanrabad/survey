@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey.utils.time;
+package org.tanrabad.survey.utils.time;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -23,7 +23,7 @@ import org.joda.time.format.DateTimeFormatter;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static th.or.nectec.tanrabad.survey.utils.time.DurationTimePrinter.print;
+import static org.tanrabad.survey.utils.time.DurationTimePrinter.print;
 
 public class DurationTimePrinterTest {
 

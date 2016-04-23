@@ -8,10 +8,10 @@
     {
       "client_info": {
         "mobilesdk_app_id": "1:139178348155:android:0261a25cc14cb27b",
-        "client_id": "android:th.or.nectec.tanrabad.survey",
+        "client_id": "android:org.tanrabad.survey",
         "client_type": 1,
         "android_client_info": {
-          "package_name": "th.or.nectec.tanrabad.survey"
+          "package_name": "org.tanrabad.survey"
         }
       },
       "oauth_client": [],

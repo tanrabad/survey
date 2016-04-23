@@ -63,7 +63,7 @@
 
             <include layout="@layout/card_header_survey_building_list"/>
 
-            <th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView
+            <org.tanrabad.survey.presenter.view.EmptyLayoutView
                 android:id="@+id/empty_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>

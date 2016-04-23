@@ -30,7 +30,8 @@
             android:id="@+id/report_update_title"
             android:paddingRight="@dimen/space_between_content"
             android:text="@string/process_time"/>
-        <th.or.nectec.tanrabad.survey.presenter.view.RelativeTimeAgoTextView
+
+        <org.tanrabad.survey.presenter.view.RelativeTimeAgoTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/report_update"

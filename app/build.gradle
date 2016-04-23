@@ -45,12 +45,12 @@ android {
     buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
-        applicationId "th.or.nectec.tanrabad.survey"
+        applicationId "org.tanrabad.survey"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
         versionCode rootProject.versionCode
         versionName rootProject.versionName
-        testApplicationId "th.or.nectec.tanrabad.survey.test"
+        testApplicationId "org.tanrabad.survey.test"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         resValue "string", "app_build_time", "build $buildTime"

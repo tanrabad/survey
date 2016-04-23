@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey.service.json;
+package org.tanrabad.survey.service.json;
 
 import org.joda.time.DateTime;
 import org.junit.Test;

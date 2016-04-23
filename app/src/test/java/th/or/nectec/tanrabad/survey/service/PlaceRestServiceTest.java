@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey.service;
+package org.tanrabad.survey.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
 
@@ -34,16 +34,16 @@ import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.WireMockTestBase;
-import th.or.nectec.tanrabad.survey.service.http.Header;
-import th.or.nectec.tanrabad.survey.service.json.JsonPlace;
-import th.or.nectec.tanrabad.survey.utils.ResourceFile;
+import org.tanrabad.survey.service.http.Header;
+import org.tanrabad.survey.service.json.JsonPlace;
+import org.tanrabad.survey.utils.ResourceFile;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
-import static th.or.nectec.tanrabad.survey.service.PlaceRestService.PATH;
-import static th.or.nectec.tanrabad.survey.service.http.Header.CONTENT_TYPE;
-import static th.or.nectec.tanrabad.survey.service.http.Header.USER_AGENT;
+import static org.tanrabad.survey.service.PlaceRestService.PATH;
+import static org.tanrabad.survey.service.http.Header.CONTENT_TYPE;
+import static org.tanrabad.survey.service.http.Header.USER_AGENT;
 
 public class PlaceRestServiceTest extends WireMockTestBase {
 

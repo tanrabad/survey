@@ -1,4 +1,4 @@
-package th.or.nectec.tanrabad.survey.service.json;
+package org.tanrabad.survey.service.json;
 
 import com.bluelinelabs.logansquare.LoganSquare;
 
@@ -9,7 +9,7 @@ import java.util.List;
 
 import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.entity.field.Polygon;
-import th.or.nectec.tanrabad.survey.utils.ResourceFile;
+import org.tanrabad.survey.utils.ResourceFile;
 
 import static junit.framework.Assert.assertEquals;
 

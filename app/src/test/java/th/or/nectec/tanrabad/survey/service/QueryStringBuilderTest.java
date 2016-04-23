@@ -1,4 +1,4 @@
-package th.or.nectec.tanrabad.survey.service;
+package org.tanrabad.survey.service;
 
 import org.junit.Test;
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey.service;
+package org.tanrabad.survey.service;
 
 import android.support.annotation.NonNull;
 
@@ -32,13 +32,13 @@ import th.or.nectec.tanrabad.entity.Building;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
 import th.or.nectec.tanrabad.survey.WireMockTestBase;
-import th.or.nectec.tanrabad.survey.service.http.Header;
-import th.or.nectec.tanrabad.survey.utils.ResourceFile;
+import org.tanrabad.survey.service.http.Header;
+import org.tanrabad.survey.utils.ResourceFile;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
-import static th.or.nectec.tanrabad.survey.service.BuildingRestService.PATH;
+import static org.tanrabad.survey.service.BuildingRestService.PATH;
 
 public class BuildingRestServiceTest extends WireMockTestBase {
 

@@ -16,9 +16,9 @@
   ~ limitations under the License.
 -->
 <manifest
-    package="th.or.nectec.tanrabad.survey"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+        package="org.tanrabad.survey"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -34,16 +34,16 @@
         android:required="false"/>
 
     <application
-        android:name=".TanrabadApp"
-        android:allowBackup="false"
-        android:fullBackupContent="false"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:largeHeap="true"
-        android:supportsRtl="false"
-        android:theme="@style/AppTheme"
-        tools:ignore="UnusedAttribute"
-        tools:replace="android:allowBackup">
+            android:name="org.tanrabad.survey.TanrabadApp"
+            android:allowBackup="false"
+            android:fullBackupContent="false"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:largeHeap="true"
+            android:supportsRtl="false"
+            android:theme="@style/AppTheme"
+            tools:ignore="UnusedAttribute"
+            tools:replace="android:allowBackup">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${google_map_key}"/>
@@ -55,13 +55,13 @@
             android:value="985b93fe45ed65dc37e25e81a8c5ce5ba9c217fa"/>
 
         <provider
-            android:name=".presenter.PlaceSuggestionProvider"
-            android:authorities="th.or.nectec.tanrabad.survey.PlaceSuggestionProvider"
-            android:exported="false"/>
+                android:name="org.tanrabad.survey.presenter.PlaceSuggestionProvider"
+                android:authorities="th.or.nectec.tanrabad.survey.PlaceSuggestionProvider"
+                android:exported="false"/>
 
         <activity
-            android:name=".presenter.SplashScreenActivity"
-            android:theme="@style/AppTheme.SplashScreen">
+                android:name="org.tanrabad.survey.presenter.SplashScreenActivity"
+                android:theme="@style/AppTheme.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -69,8 +69,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presenter.LoginActivity"
-            android:theme="@style/AppTheme.Blue">
+                android:name="org.tanrabad.survey.presenter.LoginActivity"
+                android:theme="@style/AppTheme.Blue">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
 
@@ -84,26 +84,26 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presenter.authen.AuthenActivity"
-            android:theme="@style/AppTheme.Purple"/>
+                android:name="org.tanrabad.survey.presenter.authen.AuthenActivity"
+                android:theme="@style/AppTheme.Purple"/>
         <activity
-            android:name=".presenter.InitialActivity"
-            android:theme="@style/AppTheme.Blue.Water"/>
+                android:name="org.tanrabad.survey.presenter.InitialActivity"
+                android:theme="@style/AppTheme.Blue.Water"/>
         <activity
-            android:name=".presenter.MainActivity"
-            android:label="@string/app_name"
-            android:launchMode="singleTask"
-            android:theme="@style/AppTheme.Blue.Water"/>
+                android:name="org.tanrabad.survey.presenter.MainActivity"
+                android:label="@string/app_name"
+                android:launchMode="singleTask"
+                android:theme="@style/AppTheme.Blue.Water"/>
         <activity
-            android:name=".presenter.PlaceListActivity"
-            android:label="@string/define_place_survey"/>
+                android:name="org.tanrabad.survey.presenter.PlaceListActivity"
+                android:label="@string/define_place_survey"/>
         <activity
-            android:name=".presenter.BuildingListActivity"
-            android:label="@string/define_building_survey"
-            android:launchMode="singleTop"/>
+                android:name="org.tanrabad.survey.presenter.BuildingListActivity"
+                android:label="@string/define_building_survey"
+                android:launchMode="singleTop"/>
         <activity
-            android:name=".presenter.SurveyActivity"
-            android:label="@string/title_activity_survey">
+                android:name="org.tanrabad.survey.presenter.SurveyActivity"
+                android:label="@string/title_activity_survey">
             <intent-filter>
                 <action android:name="android.intent.action.EDIT"/>
 
@@ -111,28 +111,28 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presenter.SurveyBuildingHistoryActivity"
-            android:label="@string/survey_building_history"
-            android:launchMode="singleTask"/>
+                android:name="org.tanrabad.survey.presenter.SurveyBuildingHistoryActivity"
+                android:label="@string/survey_building_history"
+                android:launchMode="singleTask"/>
         <activity
-            android:name=".presenter.BuildingFormActivity"
-            android:label="@string/add_building"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+                android:name="org.tanrabad.survey.presenter.BuildingFormActivity"
+                android:label="@string/add_building"
+                android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity
-            android:name=".presenter.MapMarkerActivity"
-            android:label="@string/add_location"/>
+                android:name="org.tanrabad.survey.presenter.MapMarkerActivity"
+                android:label="@string/add_location"/>
         <activity
-            android:name=".presenter.BuildingMapMarkerActivity"
-            android:label="@string/add_location"/>
+                android:name="org.tanrabad.survey.presenter.BuildingMapMarkerActivity"
+                android:label="@string/add_location"/>
         <activity
-            android:name=".presenter.PlaceFormActivity"
-            android:label="@string/add_place"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+                android:name="org.tanrabad.survey.presenter.PlaceFormActivity"
+                android:label="@string/add_place"
+                android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity
-            android:name=".presenter.PlaceSearchActivity"
-            android:icon="@mipmap/ic_launcher_inverse"
-            android:label="@string/search_place"
-            android:theme="@style/AppTheme.Alternate">
+                android:name="org.tanrabad.survey.presenter.PlaceSearchActivity"
+                android:icon="@mipmap/ic_launcher_inverse"
+                android:label="@string/search_place"
+                android:theme="@style/AppTheme.Alternate">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>
@@ -142,15 +142,15 @@
                 android:resource="@xml/places_searchable"/>
         </activity>
         <activity
-            android:name=".presenter.AboutActivity"
-            android:label="@string/about"/>
+                android:name="org.tanrabad.survey.presenter.AboutActivity"
+                android:label="@string/about"/>
         <activity
-            android:name=".presenter.LicenseActivity"
-            android:label="@string/about_license"/>
+                android:name="org.tanrabad.survey.presenter.LicenseActivity"
+                android:label="@string/about_license"/>
 
         <activity
-            android:name=".presenter.PreferenceActivity"
-            android:label="@string/setting">
+                android:name="org.tanrabad.survey.presenter.PreferenceActivity"
+                android:label="@string/setting">
         </activity>
     </application>
 

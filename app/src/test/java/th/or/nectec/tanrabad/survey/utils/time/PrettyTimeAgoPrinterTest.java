@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey.utils.time;
+package org.tanrabad.survey.utils.time;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;

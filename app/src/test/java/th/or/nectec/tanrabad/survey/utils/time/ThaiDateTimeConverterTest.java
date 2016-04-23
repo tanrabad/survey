@@ -1,4 +1,4 @@
-package th.or.nectec.tanrabad.survey.utils.time;
+package org.tanrabad.survey.utils.time;
 
 import org.junit.Test;
 

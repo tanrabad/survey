@@ -1,4 +1,4 @@
-package th.or.nectec.tanrabad.survey.job;
+package org.tanrabad.survey.job;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import th.or.nectec.tanrabad.domain.WritableRepository;
-import th.or.nectec.tanrabad.survey.service.RestService;
+import org.tanrabad.survey.service.RestService;
 
 import java.util.ArrayList;
 import java.util.List;

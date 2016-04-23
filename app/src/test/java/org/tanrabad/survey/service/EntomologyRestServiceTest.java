@@ -28,7 +28,7 @@ import java.util.UUID;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
-import th.or.nectec.tanrabad.survey.WireMockTestBase;
+import org.tanrabad.survey.WireMockTestBase;
 import org.tanrabad.survey.presenter.AccountUtils;
 import org.tanrabad.survey.service.http.Header;
 import org.tanrabad.survey.service.json.JsonEntomology;

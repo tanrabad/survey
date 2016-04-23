@@ -33,7 +33,7 @@ import th.or.nectec.tanrabad.domain.user.UserRepository;
 import th.or.nectec.tanrabad.entity.Place;
 import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
-import th.or.nectec.tanrabad.survey.WireMockTestBase;
+import org.tanrabad.survey.WireMockTestBase;
 import org.tanrabad.survey.service.http.Header;
 import org.tanrabad.survey.service.json.JsonPlace;
 import org.tanrabad.survey.utils.ResourceFile;

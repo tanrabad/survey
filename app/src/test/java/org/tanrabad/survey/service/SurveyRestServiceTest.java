@@ -34,7 +34,7 @@ import th.or.nectec.tanrabad.entity.SurveyDetail;
 import th.or.nectec.tanrabad.entity.User;
 import th.or.nectec.tanrabad.entity.field.Location;
 import th.or.nectec.tanrabad.entity.lookup.ContainerType;
-import th.or.nectec.tanrabad.survey.WireMockTestBase;
+import org.tanrabad.survey.WireMockTestBase;
 import org.tanrabad.survey.service.json.JsonSurvey;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;

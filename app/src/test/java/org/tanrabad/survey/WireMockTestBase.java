@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey;
+package org.tanrabad.survey;
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import org.junit.Before;

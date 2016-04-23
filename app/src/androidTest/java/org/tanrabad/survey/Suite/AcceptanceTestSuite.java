@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package th.or.nectec.tanrabad.survey.suite;
+package org.tanrabad.survey.suite;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;

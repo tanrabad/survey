@@ -39,6 +39,8 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtra;
+import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 
@@ -58,7 +60,7 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
 
     @Test
     public void openDefineSurveyPlaceShouldFoundListPlace8List() {
-        onView(allOf(ViewMatchers.withId(R.id.place_count),
+        onView(allOf(withId(R.id.place_count),
                 withContentDescription(R.string.number_place_list_in_database)))
                 .check(matches(containText("10")));
     }

@@ -22,11 +22,11 @@ import java.util.UUID;
 
 import org.tanrabad.survey.domain.WritableRepository;
 import org.tanrabad.survey.domain.building.BuildingWithSurveyStatus;
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.Survey;
-import th.or.nectec.tanrabad.entity.SurveyDetail;
-import th.or.nectec.tanrabad.entity.User;
+import org.tanrabad.survey.entity.Building;
+import org.tanrabad.survey.entity.Place;
+import org.tanrabad.survey.entity.Survey;
+import org.tanrabad.survey.entity.SurveyDetail;
+import org.tanrabad.survey.entity.User;
 
 public interface SurveyRepository extends WritableRepository<Survey> {
 

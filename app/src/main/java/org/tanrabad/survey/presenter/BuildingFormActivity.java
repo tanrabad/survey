@@ -51,10 +51,10 @@ import org.tanrabad.survey.domain.building.BuildingSavePresenter;
 import org.tanrabad.survey.domain.building.BuildingSaver;
 import org.tanrabad.survey.domain.place.PlaceController;
 import org.tanrabad.survey.domain.place.PlacePresenter;
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.field.Location;
-import th.or.nectec.tanrabad.entity.lookup.PlaceType;
+import org.tanrabad.survey.entity.Building;
+import org.tanrabad.survey.entity.Place;
+import org.tanrabad.survey.entity.field.Location;
+import org.tanrabad.survey.entity.lookup.PlaceType;
 import org.tanrabad.survey.R;
 
 import java.util.UUID;

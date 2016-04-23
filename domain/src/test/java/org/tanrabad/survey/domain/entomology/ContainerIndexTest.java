@@ -18,7 +18,7 @@
 package org.tanrabad.survey.domain.entomology;
 
 import org.junit.Test;
-import th.or.nectec.tanrabad.entity.stub.ContainerTypeStub;
+import org.tanrabad.survey.entity.stub.ContainerTypeStub;
 
 import static org.junit.Assert.assertEquals;
 

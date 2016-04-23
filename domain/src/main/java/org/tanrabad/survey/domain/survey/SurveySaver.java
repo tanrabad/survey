@@ -17,7 +17,7 @@
 
 package org.tanrabad.survey.domain.survey;
 
-import th.or.nectec.tanrabad.entity.Survey;
+import org.tanrabad.survey.entity.Survey;
 
 public class SurveySaver {
     private final SurveyValidator saveValidator;

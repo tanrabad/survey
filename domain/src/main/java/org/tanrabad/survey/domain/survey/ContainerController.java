@@ -19,7 +19,7 @@ package org.tanrabad.survey.domain.survey;
 
 import java.util.List;
 
-import th.or.nectec.tanrabad.entity.lookup.ContainerType;
+import org.tanrabad.survey.entity.lookup.ContainerType;
 
 public class ContainerController {
     private final ContainerTypeRepository containerTypeRepository;

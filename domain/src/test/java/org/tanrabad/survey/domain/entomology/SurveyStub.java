@@ -17,12 +17,12 @@
 
 package org.tanrabad.survey.domain.entomology;
 
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.Survey;
-import th.or.nectec.tanrabad.entity.User;
-import th.or.nectec.tanrabad.entity.lookup.ContainerType;
-import th.or.nectec.tanrabad.entity.stub.ContainerTypeStub;
-import th.or.nectec.tanrabad.entity.utils.SurveyBuilder;
+import org.tanrabad.survey.entity.Building;
+import org.tanrabad.survey.entity.Survey;
+import org.tanrabad.survey.entity.User;
+import org.tanrabad.survey.entity.lookup.ContainerType;
+import org.tanrabad.survey.entity.stub.ContainerTypeStub;
+import org.tanrabad.survey.entity.utils.SurveyBuilder;
 
 import java.util.UUID;
 

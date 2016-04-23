@@ -25,7 +25,7 @@ import org.junit.Test;
 import org.tanrabad.survey.domain.user.UserController;
 import org.tanrabad.survey.domain.user.UserPresenter;
 import org.tanrabad.survey.domain.user.UserRepository;
-import th.or.nectec.tanrabad.entity.User;
+import org.tanrabad.survey.entity.User;
 
 public class UserControllerTest {
     private static final String USERNAME = "ice";

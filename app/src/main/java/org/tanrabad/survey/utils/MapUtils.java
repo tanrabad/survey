@@ -27,7 +27,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import org.tanrabad.survey.presenter.maps.LocationUtils;
 import org.tanrabad.survey.utils.android.ResourceUtils;
-import th.or.nectec.tanrabad.entity.field.Location;
+import org.tanrabad.survey.entity.field.Location;
 
 public class MapUtils {
     public static BitmapDescriptor getIconBitmapDescriptor(Context context, @ColorRes int colorRes) {

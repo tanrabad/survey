@@ -17,9 +17,9 @@
 
 package org.tanrabad.survey.presenter;
 
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.lookup.PlaceSubType;
-import th.or.nectec.tanrabad.entity.lookup.PlaceType;
+import org.tanrabad.survey.entity.Place;
+import org.tanrabad.survey.entity.lookup.PlaceSubType;
+import org.tanrabad.survey.entity.lookup.PlaceType;
 import org.tanrabad.survey.R;
 
 import java.util.Map;

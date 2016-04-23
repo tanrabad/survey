@@ -2,7 +2,7 @@ package org.tanrabad.survey.service.json;
 
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
-import th.or.nectec.tanrabad.entity.lookup.PlaceSubType;
+import org.tanrabad.survey.entity.lookup.PlaceSubType;
 
 @JsonObject
 public class JsonPlaceSubType {

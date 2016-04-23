@@ -31,9 +31,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import org.tanrabad.survey.utils.MacAddressUtils;
 import org.tanrabad.survey.utils.android.ResourceUtils;
-import th.or.nectec.tanrabad.entity.SurveyDetail;
-import th.or.nectec.tanrabad.entity.lookup.ContainerType;
-import th.or.nectec.tanrabad.entity.utils.UuidUtils;
+import org.tanrabad.survey.entity.SurveyDetail;
+import org.tanrabad.survey.entity.lookup.ContainerType;
+import org.tanrabad.survey.entity.utils.UuidUtils;
 import org.tanrabad.survey.R;
 
 import java.util.HashMap;

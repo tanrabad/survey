@@ -27,9 +27,9 @@ import java.util.UUID;
 
 import org.tanrabad.survey.domain.building.BuildingRepository;
 import org.tanrabad.survey.domain.user.UserRepository;
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.Survey;
-import th.or.nectec.tanrabad.entity.User;
+import org.tanrabad.survey.entity.Building;
+import org.tanrabad.survey.entity.Survey;
+import org.tanrabad.survey.entity.User;
 
 public class SurveyControllerTest {
     @Rule

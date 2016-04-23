@@ -26,7 +26,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.tanrabad.survey.base.SurveyDbTestRule;
-import th.or.nectec.tanrabad.entity.lookup.ContainerType;
+import org.tanrabad.survey.entity.lookup.ContainerType;
 
 import java.util.List;
 

@@ -17,7 +17,7 @@
 
 package org.tanrabad.survey.domain.survey;
 
-import th.or.nectec.tanrabad.entity.lookup.ContainerType;
+import org.tanrabad.survey.entity.lookup.ContainerType;
 
 import java.util.List;
 

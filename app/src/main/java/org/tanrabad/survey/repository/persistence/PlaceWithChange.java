@@ -17,7 +17,7 @@
 
 package org.tanrabad.survey.repository.persistence;
 
-import th.or.nectec.tanrabad.entity.Place;
+import org.tanrabad.survey.entity.Place;
 
 import java.util.UUID;
 

@@ -4,8 +4,8 @@ import org.tanrabad.survey.repository.BrokerBuildingRepository;
 import org.tanrabad.survey.repository.BrokerPlaceRepository;
 import org.tanrabad.survey.service.BuildingRestService;
 import org.tanrabad.survey.service.PlaceRestService;
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.Place;
+import org.tanrabad.survey.entity.Building;
+import org.tanrabad.survey.entity.Place;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -23,10 +23,10 @@ import org.tanrabad.survey.utils.collection.CursorMapper;
 import org.tanrabad.survey.domain.building.BuildingRepository;
 import org.tanrabad.survey.domain.survey.SurveyRepository;
 import org.tanrabad.survey.domain.user.UserRepository;
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.Survey;
-import th.or.nectec.tanrabad.entity.User;
-import th.or.nectec.tanrabad.entity.field.Location;
+import org.tanrabad.survey.entity.Building;
+import org.tanrabad.survey.entity.Survey;
+import org.tanrabad.survey.entity.User;
+import org.tanrabad.survey.entity.field.Location;
 
 import java.util.UUID;
 

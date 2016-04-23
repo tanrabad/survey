@@ -18,7 +18,7 @@
 package org.tanrabad.survey.domain.address;
 
 import org.tanrabad.survey.domain.WritableRepository;
-import th.or.nectec.tanrabad.entity.lookup.District;
+import org.tanrabad.survey.entity.lookup.District;
 
 import java.util.List;
 

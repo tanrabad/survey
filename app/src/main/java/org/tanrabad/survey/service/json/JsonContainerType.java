@@ -2,7 +2,7 @@ package org.tanrabad.survey.service.json;
 
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
-import th.or.nectec.tanrabad.entity.lookup.ContainerType;
+import org.tanrabad.survey.entity.lookup.ContainerType;
 
 @JsonObject
 public class JsonContainerType {

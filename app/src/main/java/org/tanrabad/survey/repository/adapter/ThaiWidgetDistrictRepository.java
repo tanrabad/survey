@@ -34,10 +34,10 @@ public class ThaiWidgetDistrictRepository implements AddressRepository<District>
 
     @Override
     public List<District> findByParentCode(String s) {
-        List<th.or.nectec.tanrabad.entity.lookup.District> districts = DbDistrictRepository
+        List<org.tanrabad.survey.entity.lookup.District> districts = DbDistrictRepository
                 .getInstance().findByProvinceCode(s);
         List<District> thaiWidgetDistrict = new ArrayList<>();
-        for (th.or.nectec.tanrabad.entity.lookup.District district : districts) {
+        for (org.tanrabad.survey.entity.lookup.District district : districts) {
             District widgetDistrict = new District(district.getCode(), district.getName());
             thaiWidgetDistrict.add(widgetDistrict);
         }

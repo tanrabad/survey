@@ -25,6 +25,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import org.joda.time.DateTime;
 import org.tanrabad.survey.TanrabadApp;
+import org.tanrabad.survey.entity.*;
 import org.tanrabad.survey.repository.*;
 import org.tanrabad.survey.utils.collection.CursorList;
 import org.tanrabad.survey.utils.collection.CursorMapper;
@@ -35,7 +36,6 @@ import org.tanrabad.survey.domain.place.PlaceRepository;
 import org.tanrabad.survey.domain.survey.ContainerTypeRepository;
 import org.tanrabad.survey.domain.survey.SurveyRepository;
 import org.tanrabad.survey.domain.user.UserRepository;
-import th.or.nectec.tanrabad.entity.*;
 
 import java.util.ArrayList;
 import java.util.List;

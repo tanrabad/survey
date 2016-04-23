@@ -35,7 +35,7 @@ public class MapMarkerFragment extends BaseMapFragment implements MapMarkerInter
     public static final String FRAGMENT_TAG = "map_marker_fragment";
 
     Marker marker;
-    private th.or.nectec.tanrabad.entity.field.Location markedLocation;
+    private org.tanrabad.survey.entity.field.Location markedLocation;
     private GoogleApiClient.ConnectionCallbacks locationServiceCallback = new GoogleApiClient.ConnectionCallbacks() {
         @Override
         public void onConnected(@Nullable Bundle bundle) {
@@ -64,7 +64,7 @@ public class MapMarkerFragment extends BaseMapFragment implements MapMarkerInter
         return mapMarkerFragment;
     }
 
-    public static MapMarkerFragment newInstanceWithLocation(th.or.nectec.tanrabad.entity.field.Location location) {
+    public static MapMarkerFragment newInstanceWithLocation(org.tanrabad.survey.entity.field.Location location) {
         MapMarkerFragment mapMarkerFragment = new MapMarkerFragment();
         mapMarkerFragment.setMoveToMyLocation(false);
         mapMarkerFragment.setMarkedLocation(location);
@@ -113,13 +113,13 @@ public class MapMarkerFragment extends BaseMapFragment implements MapMarkerInter
         googleMap.getUiSettings().setScrollGesturesEnabled(true);
     }
 
-    public th.or.nectec.tanrabad.entity.field.Location getMarkedLocation() {
-        return marker == null ? null : new th.or.nectec.tanrabad.entity.field.Location(marker.getPosition().latitude,
+    public org.tanrabad.survey.entity.field.Location getMarkedLocation() {
+        return marker == null ? null : new org.tanrabad.survey.entity.field.Location(marker.getPosition().latitude,
                 marker.getPosition().longitude);
     }
 
     @Override
-    public void setMarkedLocation(th.or.nectec.tanrabad.entity.field.Location location) {
+    public void setMarkedLocation(org.tanrabad.survey.entity.field.Location location) {
         markedLocation = location;
     }
 }

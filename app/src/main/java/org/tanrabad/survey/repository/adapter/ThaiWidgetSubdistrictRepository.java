@@ -35,10 +35,10 @@ public class ThaiWidgetSubdistrictRepository implements AddressRepository<SubDis
 
     @Override
     public List<SubDistrict> findByParentCode(String s) {
-        List<th.or.nectec.tanrabad.entity.lookup.Subdistrict> subdistricts = DbSubdistrictRepository
+        List<org.tanrabad.survey.entity.lookup.Subdistrict> subdistricts = DbSubdistrictRepository
                 .getInstance().findByDistrictCode(s);
         List<SubDistrict> thaiWidgetSubdistrict = new ArrayList<>();
-        for (th.or.nectec.tanrabad.entity.lookup.Subdistrict subdistrict : subdistricts) {
+        for (org.tanrabad.survey.entity.lookup.Subdistrict subdistrict : subdistricts) {
             SubDistrict widgetSubdistrict = new SubDistrict(subdistrict.getCode(), subdistrict.getName(), "00000");
             thaiWidgetSubdistrict.add(widgetSubdistrict);
         }

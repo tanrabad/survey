@@ -25,7 +25,7 @@ import org.tanrabad.survey.repository.ChangedRepository;
 import org.tanrabad.survey.utils.collection.CursorList;
 import org.tanrabad.survey.utils.collection.CursorMapper;
 import org.tanrabad.survey.domain.place.PlaceRepository;
-import th.or.nectec.tanrabad.entity.Place;
+import org.tanrabad.survey.entity.Place;
 
 import java.util.List;
 import java.util.UUID;

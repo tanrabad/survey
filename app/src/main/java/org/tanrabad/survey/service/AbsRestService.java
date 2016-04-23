@@ -24,7 +24,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import org.tanrabad.survey.presenter.AccountUtils;
 import org.tanrabad.survey.service.http.Status;
-import th.or.nectec.tanrabad.entity.User;
+import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.BuildConfig;
 
 import java.io.IOException;

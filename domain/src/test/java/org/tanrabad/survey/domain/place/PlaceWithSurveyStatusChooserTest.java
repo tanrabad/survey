@@ -29,8 +29,8 @@ import java.util.List;
 import org.tanrabad.survey.domain.survey.SurveyPlaceChooser;
 import org.tanrabad.survey.domain.survey.SurveyRepository;
 import org.tanrabad.survey.domain.user.UserRepository;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.User;
+import org.tanrabad.survey.entity.Place;
+import org.tanrabad.survey.entity.User;
 
 public class PlaceWithSurveyStatusChooserTest {
 

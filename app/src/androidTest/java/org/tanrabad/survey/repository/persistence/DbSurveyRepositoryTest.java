@@ -34,8 +34,8 @@ import org.tanrabad.survey.domain.place.PlaceRepository;
 import org.tanrabad.survey.domain.survey.ContainerTypeRepository;
 import org.tanrabad.survey.domain.user.UserRepository;
 import th.or.nectec.tanrabad.entity.*;
-import th.or.nectec.tanrabad.entity.field.Location;
-import th.or.nectec.tanrabad.entity.lookup.ContainerType;
+import org.tanrabad.survey.entity.field.Location;
+import org.tanrabad.survey.entity.lookup.ContainerType;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -43,11 +43,11 @@ import org.tanrabad.survey.utils.android.InternetConnection;
 import org.tanrabad.survey.utils.android.ResourceUtils;
 import org.tanrabad.survey.utils.time.ThaiDatePrinter;
 import org.tanrabad.survey.utils.time.ThaiDateTimeConverter;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.lookup.District;
-import th.or.nectec.tanrabad.entity.lookup.PlaceType;
-import th.or.nectec.tanrabad.entity.lookup.Province;
-import th.or.nectec.tanrabad.entity.lookup.Subdistrict;
+import org.tanrabad.survey.entity.Place;
+import org.tanrabad.survey.entity.lookup.District;
+import org.tanrabad.survey.entity.lookup.PlaceType;
+import org.tanrabad.survey.entity.lookup.Province;
+import org.tanrabad.survey.entity.lookup.Subdistrict;
 import org.tanrabad.survey.R;
 import th.or.nectec.thai.address.AddressPrinter;
 

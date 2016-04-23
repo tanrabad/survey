@@ -19,7 +19,7 @@ package org.tanrabad.survey.repository.persistence;
 
 import android.database.Cursor;
 import org.tanrabad.survey.utils.collection.CursorMapper;
-import th.or.nectec.tanrabad.entity.Organization;
+import org.tanrabad.survey.entity.Organization;
 
 class OrganizationCursorMapper implements CursorMapper<Organization> {
 

@@ -17,7 +17,7 @@
 
 package org.tanrabad.survey.service.json;
 
-import th.or.nectec.tanrabad.entity.field.Location;
+import org.tanrabad.survey.entity.field.Location;
 
 import java.util.List;
 

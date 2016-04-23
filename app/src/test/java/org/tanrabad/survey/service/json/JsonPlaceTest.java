@@ -24,11 +24,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.tanrabad.survey.domain.place.PlaceSubTypeRepository;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.User;
-import th.or.nectec.tanrabad.entity.field.Location;
-import th.or.nectec.tanrabad.entity.lookup.PlaceSubType;
-import th.or.nectec.tanrabad.entity.lookup.PlaceType;
+import org.tanrabad.survey.entity.Place;
+import org.tanrabad.survey.entity.User;
+import org.tanrabad.survey.entity.field.Location;
+import org.tanrabad.survey.entity.lookup.PlaceSubType;
+import org.tanrabad.survey.entity.lookup.PlaceType;
 import org.tanrabad.survey.utils.ResourceFile;
 
 import java.util.UUID;

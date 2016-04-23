@@ -17,7 +17,7 @@
 
 package org.tanrabad.survey.domain.geographic;
 
-import th.or.nectec.tanrabad.entity.field.Location;
+import org.tanrabad.survey.entity.field.Location;
 
 interface DistanceCalculator {
     double calculate(Location currentLocation, Location targetLocation);

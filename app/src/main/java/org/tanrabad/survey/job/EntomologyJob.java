@@ -3,7 +3,7 @@ package org.tanrabad.survey.job;
 import org.tanrabad.survey.service.EntomologyRestService;
 import org.tanrabad.survey.service.RestService;
 import org.tanrabad.survey.service.json.JsonEntomology;
-import th.or.nectec.tanrabad.entity.Place;
+import org.tanrabad.survey.entity.Place;
 
 import java.io.IOException;
 import java.util.ArrayList;

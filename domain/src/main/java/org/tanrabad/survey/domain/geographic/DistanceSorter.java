@@ -19,7 +19,7 @@ package org.tanrabad.survey.domain.geographic;
 
 import java.util.List;
 
-import th.or.nectec.tanrabad.entity.LocationEntity;
+import org.tanrabad.survey.entity.LocationEntity;
 
 interface DistanceSorter {
 

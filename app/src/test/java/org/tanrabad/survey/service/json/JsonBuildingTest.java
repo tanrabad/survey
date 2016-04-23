@@ -28,11 +28,11 @@ import java.util.UUID;
 
 import org.tanrabad.survey.domain.place.PlaceRepository;
 import org.tanrabad.survey.domain.user.UserRepository;
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.User;
-import th.or.nectec.tanrabad.entity.field.Location;
-import th.or.nectec.tanrabad.entity.lookup.PlaceType;
+import org.tanrabad.survey.entity.Building;
+import org.tanrabad.survey.entity.Place;
+import org.tanrabad.survey.entity.User;
+import org.tanrabad.survey.entity.field.Location;
+import org.tanrabad.survey.entity.lookup.PlaceType;
 
 import static org.junit.Assert.assertEquals;
 

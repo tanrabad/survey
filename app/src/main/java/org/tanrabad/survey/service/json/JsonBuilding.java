@@ -23,8 +23,8 @@ import org.joda.time.DateTimeZone;
 import org.tanrabad.survey.utils.time.ThaiDateTimeConverter;
 import org.tanrabad.survey.domain.place.PlaceRepository;
 import org.tanrabad.survey.domain.user.UserRepository;
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.field.Location;
+import org.tanrabad.survey.entity.Building;
+import org.tanrabad.survey.entity.field.Location;
 
 import java.util.UUID;
 

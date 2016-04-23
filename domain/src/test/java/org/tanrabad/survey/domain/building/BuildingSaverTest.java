@@ -25,7 +25,7 @@ import org.junit.Test;
 
 import java.util.UUID;
 
-import th.or.nectec.tanrabad.entity.Building;
+import org.tanrabad.survey.entity.Building;
 
 
 public class BuildingSaverTest {

@@ -6,7 +6,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.presenter.maps.LocationUtils;
 import org.tanrabad.survey.utils.MapUtils;
-import th.or.nectec.tanrabad.entity.field.Location;
+import org.tanrabad.survey.entity.field.Location;
 import org.tanrabad.survey.R;
 
 public class MarkerUtil {

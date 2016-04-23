@@ -18,7 +18,7 @@
 package org.tanrabad.survey.domain.survey;
 
 
-import th.or.nectec.tanrabad.entity.Survey;
+import org.tanrabad.survey.entity.Survey;
 
 public interface SurveyValidator {
     boolean validate(Survey with);

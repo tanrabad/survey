@@ -26,8 +26,8 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.lookup.PlaceType;
+import org.tanrabad.survey.entity.Place;
+import org.tanrabad.survey.entity.lookup.PlaceType;
 
 public class PlaceChooseTest {
 

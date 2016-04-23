@@ -2,7 +2,7 @@ package org.tanrabad.survey.service.json;
 
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
-import th.or.nectec.tanrabad.entity.lookup.District;
+import org.tanrabad.survey.entity.lookup.District;
 
 @JsonObject
 public class JsonAmphur {

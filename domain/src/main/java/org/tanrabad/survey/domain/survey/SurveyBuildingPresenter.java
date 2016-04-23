@@ -19,7 +19,7 @@ package org.tanrabad.survey.domain.survey;
 
 import java.util.List;
 
-import th.or.nectec.tanrabad.entity.Survey;
+import org.tanrabad.survey.entity.Survey;
 
 public interface SurveyBuildingPresenter {
     void alertUserNotFound();

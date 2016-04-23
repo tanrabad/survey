@@ -31,9 +31,9 @@ import org.tanrabad.survey.domain.place.PlaceRepository;
 import org.tanrabad.survey.domain.survey.SurveyBuildingChooser;
 import org.tanrabad.survey.domain.survey.SurveyRepository;
 import org.tanrabad.survey.domain.user.UserRepository;
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.User;
+import org.tanrabad.survey.entity.Building;
+import org.tanrabad.survey.entity.Place;
+import org.tanrabad.survey.entity.User;
 
 public class BuildingWithSurveyStatusChooserTest {
 

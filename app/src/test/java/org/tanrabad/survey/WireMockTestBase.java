@@ -21,7 +21,7 @@ import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.mockito.Mockito;
-import th.or.nectec.tanrabad.entity.User;
+import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.presenter.AccountUtils;
 
 public class WireMockTestBase {

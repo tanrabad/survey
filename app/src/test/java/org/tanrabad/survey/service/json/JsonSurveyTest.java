@@ -20,12 +20,12 @@ package org.tanrabad.survey.service.json;
 import com.bluelinelabs.logansquare.LoganSquare;
 import org.joda.time.DateTime;
 import org.junit.Test;
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.Survey;
-import th.or.nectec.tanrabad.entity.User;
-import th.or.nectec.tanrabad.entity.field.Location;
-import th.or.nectec.tanrabad.entity.lookup.ContainerType;
-import th.or.nectec.tanrabad.entity.utils.SurveyBuilder;
+import org.tanrabad.survey.entity.Building;
+import org.tanrabad.survey.entity.Survey;
+import org.tanrabad.survey.entity.User;
+import org.tanrabad.survey.entity.field.Location;
+import org.tanrabad.survey.entity.lookup.ContainerType;
+import org.tanrabad.survey.entity.utils.SurveyBuilder;
 import org.tanrabad.survey.utils.ResourceFile;
 
 import java.util.UUID;

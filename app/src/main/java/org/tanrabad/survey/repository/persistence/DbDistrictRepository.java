@@ -25,7 +25,7 @@ import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.utils.collection.CursorList;
 import org.tanrabad.survey.utils.collection.CursorMapper;
 import org.tanrabad.survey.domain.address.DistrictRepository;
-import th.or.nectec.tanrabad.entity.lookup.District;
+import org.tanrabad.survey.entity.lookup.District;
 
 import java.util.List;
 

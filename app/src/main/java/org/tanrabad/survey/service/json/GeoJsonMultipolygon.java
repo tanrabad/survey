@@ -2,7 +2,7 @@ package org.tanrabad.survey.service.json;
 
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
-import th.or.nectec.tanrabad.entity.field.Polygon;
+import org.tanrabad.survey.entity.field.Polygon;
 
 import java.util.ArrayList;
 import java.util.List;

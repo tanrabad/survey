@@ -20,7 +20,7 @@ package org.tanrabad.survey.service.json;
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
 import org.joda.time.DateTimeZone;
-import th.or.nectec.tanrabad.entity.Survey;
+import org.tanrabad.survey.entity.Survey;
 
 import java.util.List;
 import java.util.UUID;

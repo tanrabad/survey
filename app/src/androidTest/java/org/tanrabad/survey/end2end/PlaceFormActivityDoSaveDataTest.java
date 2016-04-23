@@ -30,7 +30,7 @@ import org.junit.runner.RunWith;
 import org.tanrabad.survey.base.TanrabadEspressoTestBase;
 import org.tanrabad.survey.presenter.PlaceFormActivity;
 import org.tanrabad.survey.presenter.SurveyBuildingHistoryActivity;
-import th.or.nectec.tanrabad.entity.lookup.PlaceType;
+import org.tanrabad.survey.entity.lookup.PlaceType;
 import org.tanrabad.survey.R;
 
 import static android.support.test.espresso.Espresso.onView;

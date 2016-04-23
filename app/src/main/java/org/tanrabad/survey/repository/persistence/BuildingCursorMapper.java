@@ -20,8 +20,8 @@ package org.tanrabad.survey.repository.persistence;
 import android.database.Cursor;
 import org.tanrabad.survey.utils.collection.CursorMapper;
 import org.tanrabad.survey.domain.place.PlaceRepository;
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.field.Location;
+import org.tanrabad.survey.entity.Building;
+import org.tanrabad.survey.entity.field.Location;
 
 import java.util.UUID;
 

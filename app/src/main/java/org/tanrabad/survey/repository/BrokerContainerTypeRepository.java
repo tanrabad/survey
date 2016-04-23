@@ -20,7 +20,7 @@ package org.tanrabad.survey.repository;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.repository.persistence.DbContainerTypeRepository;
 import org.tanrabad.survey.domain.survey.ContainerTypeRepository;
-import th.or.nectec.tanrabad.entity.lookup.ContainerType;
+import org.tanrabad.survey.entity.lookup.ContainerType;
 
 import java.util.List;
 

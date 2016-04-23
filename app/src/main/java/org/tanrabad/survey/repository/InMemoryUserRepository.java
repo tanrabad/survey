@@ -19,7 +19,7 @@ package org.tanrabad.survey.repository;
 
 import org.tanrabad.survey.domain.user.UserRepository;
 import org.tanrabad.survey.domain.user.UserRepositoryException;
-import th.or.nectec.tanrabad.entity.User;
+import org.tanrabad.survey.entity.User;
 
 import java.util.List;
 import java.util.Map;

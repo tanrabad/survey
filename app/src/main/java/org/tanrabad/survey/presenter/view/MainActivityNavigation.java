@@ -17,8 +17,8 @@ import org.tanrabad.survey.presenter.LoginActivity;
 import org.tanrabad.survey.presenter.PreferenceActivity;
 import org.tanrabad.survey.repository.BrokerOrganizationRepository;
 import org.tanrabad.survey.utils.alert.Alert;
-import th.or.nectec.tanrabad.entity.Organization;
-import th.or.nectec.tanrabad.entity.User;
+import org.tanrabad.survey.entity.Organization;
+import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.R;
 
 public class MainActivityNavigation {

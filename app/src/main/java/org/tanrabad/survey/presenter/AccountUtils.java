@@ -23,7 +23,7 @@ import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.repository.BrokerUserRepository;
 import org.tanrabad.survey.utils.time.CurrentTimer;
 import org.tanrabad.survey.utils.time.JodaCurrentTime;
-import th.or.nectec.tanrabad.entity.User;
+import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.BuildConfig;
 
 public final class AccountUtils {

@@ -20,7 +20,7 @@ package org.tanrabad.survey.service;
 import com.bluelinelabs.logansquare.LoganSquare;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.service.json.JsonPlaceType;
-import th.or.nectec.tanrabad.entity.lookup.PlaceType;
+import org.tanrabad.survey.entity.lookup.PlaceType;
 
 import java.io.IOException;
 import java.util.ArrayList;

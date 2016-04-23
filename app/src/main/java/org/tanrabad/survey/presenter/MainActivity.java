@@ -50,9 +50,9 @@ import org.tanrabad.survey.utils.android.NetworkChangeReceiver;
 import org.tanrabad.survey.utils.android.TwiceBackPressed;
 import org.tanrabad.survey.domain.place.PlaceWithSurveyHistoryChooser;
 import org.tanrabad.survey.domain.place.PlaceWithSurveyHistoryListPresenter;
-import th.or.nectec.tanrabad.entity.Organization;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.User;
+import org.tanrabad.survey.entity.Organization;
+import org.tanrabad.survey.entity.Place;
+import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.R;
 
 import java.util.List;

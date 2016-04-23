@@ -28,7 +28,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import org.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
-import th.or.nectec.tanrabad.entity.Place;
+import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.R;
 import th.or.nectec.thai.widget.address.AddressPicker;
 

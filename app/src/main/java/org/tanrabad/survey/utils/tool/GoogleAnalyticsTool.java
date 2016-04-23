@@ -22,10 +22,10 @@ import android.util.Log;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders.EventBuilder;
 import com.google.android.gms.analytics.Tracker;
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.Survey;
-import th.or.nectec.tanrabad.entity.User;
+import org.tanrabad.survey.entity.Building;
+import org.tanrabad.survey.entity.Place;
+import org.tanrabad.survey.entity.Survey;
+import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.BuildConfig;
 import org.tanrabad.survey.R;
 

@@ -21,7 +21,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import org.tanrabad.survey.domain.organization.OrganizationRepositoryException;
-import th.or.nectec.tanrabad.entity.Organization;
+import org.tanrabad.survey.entity.Organization;
 
 import static org.junit.Assert.assertEquals;
 

@@ -6,9 +6,9 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-import th.or.nectec.tanrabad.entity.field.Location;
-import th.or.nectec.tanrabad.entity.field.Polygon;
-import th.or.nectec.tanrabad.entity.lookup.Subdistrict;
+import org.tanrabad.survey.entity.field.Location;
+import org.tanrabad.survey.entity.field.Polygon;
+import org.tanrabad.survey.entity.lookup.Subdistrict;
 import org.tanrabad.survey.utils.ResourceFile;
 
 import static org.junit.Assert.assertEquals;

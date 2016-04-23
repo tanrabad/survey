@@ -18,8 +18,8 @@
 package org.tanrabad.survey.presenter;
 
 import android.support.annotation.DrawableRes;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.lookup.PlaceType;
+import org.tanrabad.survey.entity.Place;
+import org.tanrabad.survey.entity.lookup.PlaceType;
 import org.tanrabad.survey.R;
 
 class BuildingIcon {

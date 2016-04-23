@@ -25,7 +25,7 @@ import org.junit.Test;
 
 import java.util.UUID;
 
-import th.or.nectec.tanrabad.entity.Place;
+import org.tanrabad.survey.entity.Place;
 
 public class PlaceSaverTest {
     private final Place place = new Place(UUID.randomUUID(), "test Place");

@@ -25,7 +25,7 @@ import org.tanrabad.survey.repository.BrokerOrganizationRepository;
 import org.tanrabad.survey.utils.collection.CursorMapper;
 import org.tanrabad.survey.domain.organization.OrganizationRepository;
 import org.tanrabad.survey.domain.user.UserRepository;
-import th.or.nectec.tanrabad.entity.User;
+import org.tanrabad.survey.entity.User;
 
 import java.util.List;
 

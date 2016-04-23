@@ -33,7 +33,7 @@ import org.tanrabad.survey.repository.BrokerUserRepository;
 import org.tanrabad.survey.utils.alert.Alert;
 import org.tanrabad.survey.domain.place.PlaceWithSurveyHistoryChooser;
 import org.tanrabad.survey.domain.place.PlaceWithSurveyHistoryListPresenter;
-import th.or.nectec.tanrabad.entity.Place;
+import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.R;
 
 import java.util.List;

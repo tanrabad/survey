@@ -32,9 +32,9 @@ import org.tanrabad.survey.repository.persistence.*;
 import org.tanrabad.survey.service.*;
 import org.tanrabad.survey.utils.alert.Alert;
 import org.tanrabad.survey.utils.android.InternetConnection;
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.lookup.*;
+import org.tanrabad.survey.entity.Building;
+import org.tanrabad.survey.entity.Place;
+import org.tanrabad.survey.entity.lookup.*;
 import org.tanrabad.survey.R;
 
 import java.io.IOException;

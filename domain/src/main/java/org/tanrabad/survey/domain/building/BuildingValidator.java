@@ -17,7 +17,7 @@
 
 package org.tanrabad.survey.domain.building;
 
-import th.or.nectec.tanrabad.entity.Building;
+import org.tanrabad.survey.entity.Building;
 
 public interface BuildingValidator {
     boolean validate(Building building);

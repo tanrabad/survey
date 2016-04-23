@@ -24,8 +24,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.tanrabad.survey.domain.survey.SurveyRepository;
 import org.tanrabad.survey.domain.user.UserRepository;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.User;
+import org.tanrabad.survey.entity.Place;
+import org.tanrabad.survey.entity.User;
 
 import java.util.ArrayList;
 

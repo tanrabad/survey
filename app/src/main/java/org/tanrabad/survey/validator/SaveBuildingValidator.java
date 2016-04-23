@@ -20,8 +20,8 @@ package org.tanrabad.survey.validator;
 import android.text.TextUtils;
 import org.tanrabad.survey.domain.building.BuildingRepository;
 import org.tanrabad.survey.domain.building.BuildingValidator;
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.lookup.PlaceType;
+import org.tanrabad.survey.entity.Building;
+import org.tanrabad.survey.entity.lookup.PlaceType;
 import org.tanrabad.survey.R;
 
 import java.util.List;

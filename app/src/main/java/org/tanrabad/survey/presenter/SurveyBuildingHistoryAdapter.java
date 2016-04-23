@@ -32,7 +32,7 @@ import org.tanrabad.survey.presenter.view.TimeAgoView;
 import org.tanrabad.survey.repository.persistence.SurveyWithChange;
 import org.tanrabad.survey.utils.time.DurationTimePrinter;
 import org.tanrabad.survey.domain.entomology.ContainerIndex;
-import th.or.nectec.tanrabad.entity.Survey;
+import org.tanrabad.survey.entity.Survey;
 import org.tanrabad.survey.R;
 
 import java.util.ArrayList;

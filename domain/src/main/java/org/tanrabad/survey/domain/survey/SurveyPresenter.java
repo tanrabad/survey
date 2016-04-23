@@ -17,9 +17,9 @@
 
 package org.tanrabad.survey.domain.survey;
 
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.Survey;
-import th.or.nectec.tanrabad.entity.User;
+import org.tanrabad.survey.entity.Building;
+import org.tanrabad.survey.entity.Survey;
+import org.tanrabad.survey.entity.User;
 
 public interface SurveyPresenter {
     void onEditSurvey(Survey survey);

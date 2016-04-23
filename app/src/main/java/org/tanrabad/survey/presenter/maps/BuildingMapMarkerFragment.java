@@ -32,10 +32,10 @@ import org.tanrabad.survey.repository.BrokerBuildingRepository;
 import org.tanrabad.survey.repository.BrokerPlaceRepository;
 import org.tanrabad.survey.utils.android.ResourceUtils;
 import org.tanrabad.survey.utils.map.MarkerUtil;
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.field.Location;
-import th.or.nectec.tanrabad.entity.lookup.PlaceType;
+import org.tanrabad.survey.entity.Building;
+import org.tanrabad.survey.entity.Place;
+import org.tanrabad.survey.entity.field.Location;
+import org.tanrabad.survey.entity.lookup.PlaceType;
 import org.tanrabad.survey.R;
 
 import java.util.List;

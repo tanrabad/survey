@@ -31,7 +31,7 @@ import org.tanrabad.survey.utils.alert.Alert;
 import org.tanrabad.survey.utils.android.TwiceBackPressed;
 import org.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import org.tanrabad.survey.utils.prompt.PromptMessage;
-import th.or.nectec.tanrabad.entity.field.Location;
+import org.tanrabad.survey.entity.field.Location;
 import org.tanrabad.survey.R;
 
 import java.text.DecimalFormat;

@@ -24,7 +24,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-import th.or.nectec.tanrabad.entity.lookup.ContainerType;
+import org.tanrabad.survey.entity.lookup.ContainerType;
 
 public class ContainerTypeControllerTest {
     @Rule

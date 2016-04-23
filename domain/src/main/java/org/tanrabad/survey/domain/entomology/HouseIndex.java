@@ -17,7 +17,7 @@
 
 package org.tanrabad.survey.domain.entomology;
 
-import th.or.nectec.tanrabad.entity.Survey;
+import org.tanrabad.survey.entity.Survey;
 
 import java.util.ArrayList;
 import java.util.List;

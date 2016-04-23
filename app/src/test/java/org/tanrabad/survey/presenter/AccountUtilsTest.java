@@ -20,7 +20,7 @@ package org.tanrabad.survey.presenter;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import th.or.nectec.tanrabad.entity.User;
+import org.tanrabad.survey.entity.User;
 
 import static org.junit.Assert.*;
 

@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.tanrabad.survey.domain.WritableRepository;
-import th.or.nectec.tanrabad.entity.Place;
+import org.tanrabad.survey.entity.Place;
 
 public interface PlaceRepository extends WritableRepository<Place> {
 

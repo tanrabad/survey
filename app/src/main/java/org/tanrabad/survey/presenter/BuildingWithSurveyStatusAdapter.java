@@ -32,7 +32,7 @@ import org.tanrabad.survey.repository.persistence.BuildingWithChange;
 import org.tanrabad.survey.utils.alert.Alert;
 import org.tanrabad.survey.utils.android.InternetConnection;
 import org.tanrabad.survey.domain.building.BuildingWithSurveyStatus;
-import th.or.nectec.tanrabad.entity.Building;
+import org.tanrabad.survey.entity.Building;
 import org.tanrabad.survey.R;
 
 import java.util.ArrayList;

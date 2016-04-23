@@ -20,7 +20,7 @@ package org.tanrabad.survey.domain.survey;
 import java.util.List;
 
 import org.tanrabad.survey.domain.WritableRepository;
-import th.or.nectec.tanrabad.entity.lookup.ContainerLocation;
+import org.tanrabad.survey.entity.lookup.ContainerLocation;
 
 public interface ContainerLocationRepository extends WritableRepository<ContainerLocation> {
 

@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.tanrabad.survey.domain.WritableRepository;
-import th.or.nectec.tanrabad.entity.Building;
+import org.tanrabad.survey.entity.Building;
 
 public interface BuildingRepository extends WritableRepository<Building> {
     List<Building> findByPlaceUuid(UUID placeUuid);

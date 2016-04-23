@@ -40,8 +40,8 @@ import org.trb.authen.client.TRBCallback;
 import org.trb.authen.model.UserProfile;
 import org.tanrabad.survey.domain.organization.OrganizationRepository;
 import org.tanrabad.survey.domain.user.UserRepository;
-import th.or.nectec.tanrabad.entity.Organization;
-import th.or.nectec.tanrabad.entity.User;
+import org.tanrabad.survey.entity.Organization;
+import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.R;
 
 @SuppressLint("SetJavaScriptEnabled")

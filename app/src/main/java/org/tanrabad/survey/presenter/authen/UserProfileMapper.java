@@ -19,8 +19,8 @@ package org.tanrabad.survey.presenter.authen;
 
 import org.trb.authen.model.Address;
 import org.trb.authen.model.UserProfile;
-import th.or.nectec.tanrabad.entity.Organization;
-import th.or.nectec.tanrabad.entity.User;
+import org.tanrabad.survey.entity.Organization;
+import org.tanrabad.survey.entity.User;
 
 class UserProfileMapper {
 

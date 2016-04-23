@@ -17,7 +17,7 @@
 
 package org.tanrabad.survey.domain.place;
 
-import th.or.nectec.tanrabad.entity.Place;
+import org.tanrabad.survey.entity.Place;
 
 import java.util.List;
 

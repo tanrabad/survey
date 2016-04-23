@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-import th.or.nectec.tanrabad.entity.lookup.PlaceSubType;
+import org.tanrabad.survey.entity.lookup.PlaceSubType;
 import org.tanrabad.survey.utils.ResourceFile;
 
 import static org.junit.Assert.assertEquals;

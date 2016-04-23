@@ -4,7 +4,7 @@ import com.bluelinelabs.logansquare.LoganSquare;
 
 import org.junit.Test;
 
-import th.or.nectec.tanrabad.entity.lookup.ContainerType;
+import org.tanrabad.survey.entity.lookup.ContainerType;
 
 import static org.junit.Assert.assertEquals;
 

@@ -26,10 +26,10 @@ import io.fabric.sdk.android.Fabric;
 import org.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
 import org.tanrabad.survey.repository.BrokerPlaceTypeRepository;
 import org.tanrabad.survey.domain.entomology.ContainerIndex;
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.Survey;
-import th.or.nectec.tanrabad.entity.User;
+import org.tanrabad.survey.entity.Building;
+import org.tanrabad.survey.entity.Place;
+import org.tanrabad.survey.entity.Survey;
+import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.BuildConfig;
 
 public class FabricTools implements ExceptionLogger, ActionLogger {

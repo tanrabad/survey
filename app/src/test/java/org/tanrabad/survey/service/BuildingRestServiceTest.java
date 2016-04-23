@@ -28,9 +28,9 @@ import java.util.UUID;
 
 import org.tanrabad.survey.domain.place.PlaceRepository;
 import org.tanrabad.survey.domain.user.UserRepository;
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.lookup.PlaceType;
+import org.tanrabad.survey.entity.Building;
+import org.tanrabad.survey.entity.Place;
+import org.tanrabad.survey.entity.lookup.PlaceType;
 import org.tanrabad.survey.WireMockTestBase;
 import org.tanrabad.survey.service.http.Header;
 import org.tanrabad.survey.utils.ResourceFile;

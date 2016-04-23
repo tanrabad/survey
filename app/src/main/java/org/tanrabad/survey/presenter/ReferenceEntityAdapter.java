@@ -25,8 +25,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import org.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
 import org.tanrabad.survey.repository.BrokerPlaceTypeRepository;
-import th.or.nectec.tanrabad.entity.ReferenceEntity;
-import th.or.nectec.tanrabad.entity.lookup.PlaceType;
+import org.tanrabad.survey.entity.ReferenceEntity;
+import org.tanrabad.survey.entity.lookup.PlaceType;
 import org.tanrabad.survey.R;
 
 import java.util.ArrayList;

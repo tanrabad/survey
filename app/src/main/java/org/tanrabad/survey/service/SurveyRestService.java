@@ -22,7 +22,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.service.json.JsonSurvey;
-import th.or.nectec.tanrabad.entity.Survey;
+import org.tanrabad.survey.entity.Survey;
 
 import java.io.IOException;
 import java.util.List;

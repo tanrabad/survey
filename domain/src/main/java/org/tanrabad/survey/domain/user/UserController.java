@@ -17,7 +17,7 @@
 
 package org.tanrabad.survey.domain.user;
 
-import th.or.nectec.tanrabad.entity.User;
+import org.tanrabad.survey.entity.User;
 
 public class UserController {
     private final UserRepository userRepository;

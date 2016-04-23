@@ -18,7 +18,7 @@
 package org.tanrabad.survey.domain.user;
 
 import org.tanrabad.survey.domain.WritableRepository;
-import th.or.nectec.tanrabad.entity.User;
+import org.tanrabad.survey.entity.User;
 
 public interface UserRepository extends WritableRepository<User> {
     User findByUsername(String userName);

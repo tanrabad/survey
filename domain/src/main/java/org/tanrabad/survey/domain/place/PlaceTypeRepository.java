@@ -20,7 +20,7 @@ package org.tanrabad.survey.domain.place;
 import java.util.List;
 
 import org.tanrabad.survey.domain.WritableRepository;
-import th.or.nectec.tanrabad.entity.lookup.PlaceType;
+import org.tanrabad.survey.entity.lookup.PlaceType;
 
 public interface PlaceTypeRepository extends WritableRepository<PlaceType> {
 

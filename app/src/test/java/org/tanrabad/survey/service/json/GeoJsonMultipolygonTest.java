@@ -7,8 +7,8 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import th.or.nectec.tanrabad.entity.field.Location;
-import th.or.nectec.tanrabad.entity.field.Polygon;
+import org.tanrabad.survey.entity.field.Location;
+import org.tanrabad.survey.entity.field.Polygon;
 import org.tanrabad.survey.utils.ResourceFile;
 
 import static junit.framework.Assert.assertEquals;

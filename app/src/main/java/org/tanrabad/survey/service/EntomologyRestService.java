@@ -22,7 +22,7 @@ import org.joda.time.DateTime;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.presenter.AccountUtils;
 import org.tanrabad.survey.service.json.JsonEntomology;
-import th.or.nectec.tanrabad.entity.Place;
+import org.tanrabad.survey.entity.Place;
 
 import java.io.IOException;
 import java.util.List;

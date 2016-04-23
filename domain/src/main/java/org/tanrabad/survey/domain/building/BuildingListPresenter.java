@@ -19,7 +19,7 @@ package org.tanrabad.survey.domain.building;
 
 import java.util.List;
 
-import th.or.nectec.tanrabad.entity.Building;
+import org.tanrabad.survey.entity.Building;
 
 interface BuildingListPresenter {
     void alertBuildingsNotFound();

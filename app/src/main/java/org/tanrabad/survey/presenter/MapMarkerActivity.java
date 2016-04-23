@@ -29,7 +29,7 @@ import org.tanrabad.survey.presenter.maps.LocationUtils;
 import org.tanrabad.survey.presenter.maps.MapMarkerFragment;
 import org.tanrabad.survey.utils.alert.Alert;
 import org.tanrabad.survey.utils.android.TwiceBackPressed;
-import th.or.nectec.tanrabad.entity.field.Location;
+import org.tanrabad.survey.entity.field.Location;
 import org.tanrabad.survey.R;
 
 public class MapMarkerActivity extends TanrabadActivity implements View.OnClickListener {

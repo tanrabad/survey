@@ -19,7 +19,7 @@ package org.tanrabad.survey.domain.place;
 
 import java.util.List;
 
-import th.or.nectec.tanrabad.entity.Place;
+import org.tanrabad.survey.entity.Place;
 
 public class PlaceChooser {
 

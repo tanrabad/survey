@@ -20,7 +20,7 @@ package org.tanrabad.survey.repository;
 import org.tanrabad.survey.domain.building.BuildingWithSurveyStatus;
 import org.tanrabad.survey.domain.place.PlaceRepositoryException;
 import org.tanrabad.survey.domain.survey.SurveyRepository;
-import th.or.nectec.tanrabad.entity.*;
+import org.tanrabad.survey.entity.*;
 
 import java.util.ArrayList;
 import java.util.List;

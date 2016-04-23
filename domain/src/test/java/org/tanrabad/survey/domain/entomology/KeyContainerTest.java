@@ -18,10 +18,10 @@
 package org.tanrabad.survey.domain.entomology;
 
 import org.junit.Test;
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.Survey;
-import th.or.nectec.tanrabad.entity.stub.ContainerTypeStub;
-import th.or.nectec.tanrabad.entity.utils.SurveyBuilder;
+import org.tanrabad.survey.entity.Building;
+import org.tanrabad.survey.entity.Survey;
+import org.tanrabad.survey.entity.stub.ContainerTypeStub;
+import org.tanrabad.survey.entity.utils.SurveyBuilder;
 
 import java.util.ArrayList;
 import java.util.UUID;

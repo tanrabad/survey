@@ -55,8 +55,8 @@ import org.tanrabad.survey.domain.place.PlaceController;
 import org.tanrabad.survey.domain.place.PlacePresenter;
 import org.tanrabad.survey.domain.survey.SurveyBuildingHistoryController;
 import org.tanrabad.survey.domain.survey.SurveyBuildingPresenter;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.Survey;
+import org.tanrabad.survey.entity.Place;
+import org.tanrabad.survey.entity.Survey;
 import org.tanrabad.survey.R;
 
 import java.util.List;

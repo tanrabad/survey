@@ -21,7 +21,7 @@ import android.support.test.espresso.matcher.ViewMatchers;
 import android.view.View;
 import org.hamcrest.Matcher;
 import org.junit.Rule;
-import th.or.nectec.tanrabad.survey.R;
+import org.tanrabad.survey.R;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;

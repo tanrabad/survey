@@ -27,7 +27,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.tanrabad.survey.base.TanrabadEspressoTestBase;
 import org.tanrabad.survey.presenter.PlaceListActivity;
-import th.or.nectec.tanrabad.survey.R;
+import org.tanrabad.survey.R;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;

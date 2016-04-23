@@ -24,7 +24,7 @@ import android.support.test.InstrumentationRegistry;
 import org.junit.rules.ExternalResource;
 import org.tanrabad.survey.repository.persistence.SqlScript;
 import org.tanrabad.survey.repository.persistence.SurveyLiteDatabase;
-import th.or.nectec.tanrabad.survey.R;
+import org.tanrabad.survey.R;
 
 public class SurveyDbTestRule extends ExternalResource {
 

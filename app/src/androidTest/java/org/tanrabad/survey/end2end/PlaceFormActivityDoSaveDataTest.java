@@ -31,12 +31,13 @@ import org.tanrabad.survey.base.TanrabadEspressoTestBase;
 import org.tanrabad.survey.presenter.PlaceFormActivity;
 import org.tanrabad.survey.presenter.SurveyBuildingHistoryActivity;
 import th.or.nectec.tanrabad.entity.lookup.PlaceType;
-import th.or.nectec.tanrabad.survey.R;
+import org.tanrabad.survey.R;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)

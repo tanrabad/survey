@@ -51,7 +51,7 @@
                         android:contentDescription="@string/survey_container_bg_description"
                         android:src="@drawable/header_larvae_survey"/>
 
-                <th.or.nectec.tanrabad.survey.presenter.view.TorchButton
+                <org.tanrabad.survey.presenter.view.TorchButton
                         android:id="@+id/torch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -107,7 +107,7 @@
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/text_subhead"/>
 
-                        <th.or.nectec.tanrabad.survey.presenter.view.StepPopupEditText
+                        <org.tanrabad.survey.presenter.view.StepPopupEditText
                                 android:id="@+id/resident_count"
                                 android:layout_width="@dimen/number_input_size"
                                 android:layout_height="wrap_content"

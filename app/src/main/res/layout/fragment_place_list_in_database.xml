@@ -53,7 +53,7 @@
                     android:layout_height="match_parent"/>
             <include layout="@layout/card_header_place_list_in_database"/>
 
-            <th.or.nectec.tanrabad.survey.presenter.view.EmptyLayoutView
+            <org.tanrabad.survey.presenter.view.EmptyLayoutView
                 android:id="@+id/empty_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

@@ -48,8 +48,8 @@ ext {
     buildToolsVersion = "23.0.2"
 
     versionMajor = 1
-    versionMinor = 2
-    versionPatch = 2
+    versionMinor = 3
+    versionPatch = 0
     versionName = "$versionMajor.$versionMinor.$versionPatch";
     versionCode = versionMajor * 10000 + versionMinor * 1000 + versionPatch
     buildTime = new SimpleDateFormat("yyMMddHHmm").format(new Date())

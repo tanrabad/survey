@@ -1,0 +1,72 @@
+/*
+ * Copyright (c) 2016 NECTEC
+ *   National Electronics and Computer Technology Center, Thailand
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package org.tanrabad.survey.utils.collection;
+
+import android.database.Cursor;
+
+import java.util.AbstractList;
+import java.util.List;
+
+public class CursorList<T> extends AbstractList<T> {
+
+    private Cursor cursor;
+    private CursorMapper<T> mapper;
+
+    public CursorList(Cursor cursor, CursorMapper<T> mapper) {
+        this.cursor = cursor;
+        this.mapper = mapper;
+    }
+
+    public static void close(List list) {
+        if (list instanceof CursorList) {
+            Cursor cursor = ((CursorList) list).cursor;
+            if (cursor != null && !cursor.isClosed())
+                cursor.close();
+        }
+    }
+
+    public Cursor getCursor() {
+        return cursor;
+    }
+
+    @Override
+    public T get(int i) {
+        cursor.moveToPosition(i);
+        return mapper.map(cursor);
+    }
+
+    @Override
+    public T set(int location, T object) {
+        return null;
+    }
+
+    @Override
+    public int size() {
+        return cursor.getCount();
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        try {
+            cursor.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        super.finalize();
+    }
+}

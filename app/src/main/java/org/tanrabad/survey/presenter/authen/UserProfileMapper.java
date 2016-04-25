@@ -30,9 +30,9 @@ class UserProfileMapper {
     }
 
     public User getUser() {
-        User user = new User(profile.getDisplayName());
-        user.setFirstname(profile.getGivenName());
-        user.setLastname(profile.getSn());
+        User user = new User(profile.getUserName());
+        user.setFirstname(profile.getFirstName());
+        user.setLastname(profile.getLastName());
 
         Organization organization = getOrganization();
         user.setOrganizationId(organization.getOrganizationId());

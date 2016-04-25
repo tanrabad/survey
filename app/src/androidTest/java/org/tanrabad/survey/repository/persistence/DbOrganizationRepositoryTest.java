@@ -22,11 +22,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.tanrabad.survey.base.SurveyDbTestRule;
-import th.or.nectec.tanrabad.entity.Organization;
+import org.tanrabad.survey.entity.Organization;
 
 import static org.junit.Assert.assertEquals;
 

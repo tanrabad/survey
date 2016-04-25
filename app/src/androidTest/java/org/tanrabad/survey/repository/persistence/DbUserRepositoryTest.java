@@ -23,6 +23,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -30,8 +31,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.tanrabad.survey.base.SurveyDbTestRule;
 import org.tanrabad.survey.domain.organization.OrganizationRepository;
-import th.or.nectec.tanrabad.entity.Organization;
-import th.or.nectec.tanrabad.entity.User;
+import org.tanrabad.survey.entity.Organization;
+import org.tanrabad.survey.entity.User;
 
 import static org.junit.Assert.assertEquals;
 

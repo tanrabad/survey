@@ -23,6 +23,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Rule;
@@ -30,15 +31,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.tanrabad.survey.base.SurveyDbTestRule;
-import org.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
-import org.tanrabad.survey.utils.time.ThaiDateTimeConverter;
 import org.tanrabad.survey.domain.user.UserRepository;
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.User;
+import org.tanrabad.survey.entity.Building;
+import org.tanrabad.survey.entity.Place;
+import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.entity.field.Location;
 import org.tanrabad.survey.entity.lookup.PlaceSubType;
 import org.tanrabad.survey.entity.lookup.PlaceType;
+import org.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
+import org.tanrabad.survey.utils.time.ThaiDateTimeConverter;
 
 import java.util.ArrayList;
 import java.util.List;

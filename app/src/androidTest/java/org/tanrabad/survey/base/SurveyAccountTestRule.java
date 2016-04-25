@@ -19,8 +19,9 @@ package org.tanrabad.survey.base;
 
 
 import org.junit.rules.ExternalResource;
+import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.presenter.AccountUtils;
-import th.or.nectec.tanrabad.entity.User;
+
 
 public class SurveyAccountTestRule extends ExternalResource {
 

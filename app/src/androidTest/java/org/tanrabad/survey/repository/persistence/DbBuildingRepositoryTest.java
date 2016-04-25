@@ -22,6 +22,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Rule;
@@ -29,13 +30,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.tanrabad.survey.base.SurveyDbTestRule;
-import org.tanrabad.survey.utils.time.ThaiDateTimeConverter;
 import org.tanrabad.survey.domain.place.PlaceRepository;
 import org.tanrabad.survey.domain.user.UserRepository;
-import th.or.nectec.tanrabad.entity.Building;
-import th.or.nectec.tanrabad.entity.Place;
-import th.or.nectec.tanrabad.entity.User;
+import org.tanrabad.survey.entity.Building;
+import org.tanrabad.survey.entity.Place;
+import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.entity.field.Location;
+import org.tanrabad.survey.utils.time.ThaiDateTimeConverter;
 
 import java.util.List;
 import java.util.UUID;

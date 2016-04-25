@@ -22,6 +22,7 @@ import android.database.Cursor;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
+
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Rule;
@@ -33,7 +34,7 @@ import org.tanrabad.survey.domain.building.BuildingWithSurveyStatus;
 import org.tanrabad.survey.domain.place.PlaceRepository;
 import org.tanrabad.survey.domain.survey.ContainerTypeRepository;
 import org.tanrabad.survey.domain.user.UserRepository;
-import th.or.nectec.tanrabad.entity.*;
+import org.tanrabad.survey.entity.*;
 import org.tanrabad.survey.entity.field.Location;
 import org.tanrabad.survey.entity.lookup.ContainerType;
 
@@ -41,20 +42,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.tanrabad.survey.repository.persistence.SurveyColumn.CHANGED_STATUS;
-import static org.tanrabad.survey.repository.persistence.SurveyColumn.CREATE_TIME;
-import static org.tanrabad.survey.repository.persistence.SurveyColumn.ID;
-import static org.tanrabad.survey.repository.persistence.SurveyColumn.LATITUDE;
-import static org.tanrabad.survey.repository.persistence.SurveyColumn.LONGITUDE;
-import static org.tanrabad.survey.repository.persistence.SurveyColumn.PERSON_COUNT;
-import static org.tanrabad.survey.repository.persistence.SurveyColumn.SURVEYOR;
-import static org.tanrabad.survey.repository.persistence.SurveyColumn.UPDATE_TIME;
-import static org.tanrabad.survey.repository.persistence.SurveyColumn.wildcard;
+import static org.tanrabad.survey.repository.persistence.SurveyColumn.*;
 
 @RunWith(AndroidJUnit4.class)
 public class DbSurveyRepositoryTest {

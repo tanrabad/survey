@@ -20,9 +20,9 @@ package org.tanrabad.survey.presenter;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.repository.BrokerUserRepository;
 import org.tanrabad.survey.utils.time.CurrentTimer;
-import th.or.nectec.tanrabad.entity.User;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;

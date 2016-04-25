@@ -59,9 +59,10 @@ public final class AccountUtils {
             TanrabadApp.action().login(AccountUtils.user);
 
         if (!isTrialUser(user)) {
-            AbsRestService.setBaseApi(SetTrialModeAndSelectApiServerJob.TEST_URL);
+            AbsRestService.setBaseApi(BuildConfig.API_URL);
             lastLoginUserRepo.userLogin(user);
         } else {
+            AbsRestService.setBaseApi(SetTrialModeAndSelectApiServerJob.TEST_URL);
             lastLoginUserRepo.clear();
         }
     }

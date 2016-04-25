@@ -31,7 +31,6 @@ import org.tanrabad.survey.repository.persistence.*;
         DbPlaceSubTypeRepositoryTest.class,
         DbPlaceTypeRepositoryTest.class,
         DbSurveyRepositoryTest.class,
-        SurveyDbTestRule.class,
         SurveyLiteDatabaseTest.class
         })
 public class RepositoryTestSuite {

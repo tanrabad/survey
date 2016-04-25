@@ -29,6 +29,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class TanrabadApp extends Application {
 
+    public static final String TRB_AUTHEN_ENDPOINT = "https://authen.tanrabad.org/";
     private static ExceptionLogger exceptionLogger;
     private static ActionLogger actionLogger;
     private static TanrabadApp instance;
@@ -61,7 +62,7 @@ public class TanrabadApp extends Application {
 
     private void setupAuthenUtils() {
         TRBAuthenUtil authenUtil = TRBAuthenUtil.getInstance();
-        authenUtil.initTRBAuthenUtil(this, BuildConfig.TRB_AUTHEN_CLIENT_ID,
+        authenUtil.initTRBAuthenUtil(this, TRB_AUTHEN_ENDPOINT, BuildConfig.TRB_AUTHEN_CLIENT_ID,
                 BuildConfig.TRB_AUTHEN_CLIENT_SECRET);
     }
 

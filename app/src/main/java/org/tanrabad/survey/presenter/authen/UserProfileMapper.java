@@ -17,10 +17,9 @@
 
 package org.tanrabad.survey.presenter.authen;
 
-import org.trb.authen.model.Address;
-import org.trb.authen.model.UserProfile;
 import org.tanrabad.survey.entity.Organization;
 import org.tanrabad.survey.entity.User;
+import org.trb.authen.model.UserProfile;
 
 class UserProfileMapper {
 
@@ -31,28 +30,28 @@ class UserProfileMapper {
     }
 
     public User getUser() {
-        User user = new User(profile.getUserName());
+        User user = new User(profile.getDisplayName());
         user.setFirstname(profile.getGivenName());
         user.setLastname(profile.getSn());
 
         Organization organization = getOrganization();
         user.setOrganizationId(organization.getOrganizationId());
         user.setHealthRegionCode(organization.getHealthRegionCode());
-        user.setApiFilter(profile.getAddress().getOrgQueryString());
+        user.setApiFilter(profile.getOrgQueryString());
         return user;
     }
 
     public Organization getOrganization() {
-        Address profileAddress = profile.getAddress();
+
         Organization org = new Organization(getOrganizationId(),
-                profileAddress.getOrgName());
-        org.setSubdistrictCode(profileAddress.getOrgTambonCode());
-        org.setHealthRegionCode(profileAddress.getOrgHealthRegionCode());
-        org.setAddress(profileAddress.getOrgAddress());
+                profile.getOrgName());
+        org.setSubdistrictCode(profile.getOrgTambonCode());
+        org.setHealthRegionCode(profile.getOrgHealthRegionCode());
+        org.setAddress(profile.getOrgAddress());
         return org;
     }
 
     private int getOrganizationId() {
-        return Integer.parseInt(profile.getAddress().getOrgId());
+        return Integer.parseInt(profile.getOrgId());
     }
 }

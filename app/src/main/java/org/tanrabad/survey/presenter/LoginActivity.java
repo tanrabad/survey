@@ -25,11 +25,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.widget.CheckBox;
+
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
+import org.tanrabad.survey.BuildConfig;
+import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
+import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.job.AbsJobRunner;
 import org.tanrabad.survey.job.DeleteUserDataJob;
 import org.tanrabad.survey.job.SetTrialModeAndSelectApiServerJob;
@@ -42,9 +46,6 @@ import org.tanrabad.survey.service.TrialModePreference;
 import org.tanrabad.survey.utils.alert.Alert;
 import org.tanrabad.survey.utils.android.InternetConnection;
 import org.tanrabad.survey.utils.showcase.ShowcasePreference;
-import org.tanrabad.survey.entity.User;
-import org.tanrabad.survey.BuildConfig;
-import org.tanrabad.survey.R;
 
 import static android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN;
 import static android.view.animation.AnimationUtils.loadAnimation;
@@ -107,7 +108,6 @@ public class LoginActivity extends TanrabadActivity {
             AccountUtils.setUser(BrokerUserRepository.getInstance().findByUsername(BuildConfig.TRIAL_USER));
             AbsJobRunner jobRunner = new UploadJobRunner();
             jobRunner.addJob(new DeleteUserDataJob(this));
-            jobRunner.addJob(new SetTrialModeAndSelectApiServerJob(this, true));
             jobRunner.addJob(new StartInitialActivityJob(this));
             jobRunner.start();
         } else {

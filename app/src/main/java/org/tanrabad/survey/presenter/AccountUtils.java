@@ -19,12 +19,15 @@ package org.tanrabad.survey.presenter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import org.tanrabad.survey.BuildConfig;
 import org.tanrabad.survey.TanrabadApp;
+import org.tanrabad.survey.entity.User;
+import org.tanrabad.survey.job.SetTrialModeAndSelectApiServerJob;
 import org.tanrabad.survey.repository.BrokerUserRepository;
+import org.tanrabad.survey.service.AbsRestService;
 import org.tanrabad.survey.utils.time.CurrentTimer;
 import org.tanrabad.survey.utils.time.JodaCurrentTime;
-import org.tanrabad.survey.entity.User;
-import org.tanrabad.survey.BuildConfig;
 
 public final class AccountUtils {
 
@@ -56,6 +59,7 @@ public final class AccountUtils {
             TanrabadApp.action().login(AccountUtils.user);
 
         if (!isTrialUser(user)) {
+            AbsRestService.setBaseApi(SetTrialModeAndSelectApiServerJob.TEST_URL);
             lastLoginUserRepo.userLogin(user);
         } else {
             lastLoginUserRepo.clear();

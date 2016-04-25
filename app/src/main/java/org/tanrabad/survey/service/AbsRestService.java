@@ -17,15 +17,13 @@
 
 package org.tanrabad.survey.service;
 
-import android.text.TextUtils;
-import android.util.Patterns;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.tanrabad.survey.BuildConfig;
+import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.presenter.AccountUtils;
 import org.tanrabad.survey.service.http.Status;
-import org.tanrabad.survey.entity.User;
-import org.tanrabad.survey.BuildConfig;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -75,12 +73,8 @@ public abstract class AbsRestService<T> implements RestService<T> {
     }
 
     public static void setBaseApi(String baseApi) {
-        if (TextUtils.isEmpty(baseApi))
-            return;
-
-        if (!Patterns.WEB_URL.matcher(baseApi).matches())
-            return;
-
+        if (baseApi == null || "".equals(baseApi))
+            throw new IllegalArgumentException("base api must not be empty");
         BASE_API = baseApi;
     }
 
@@ -125,28 +119,6 @@ public abstract class AbsRestService<T> implements RestService<T> {
         return requestBuilder.build();
     }
 
-    public String getUrl() {
-        if (nextUrl != null && !nextUrl.isEmpty()) {
-            return nextUrl;
-        }
-        String url = baseApi + getPath();
-        if (getQueryString() != null)
-            url += getQueryString();
-        return url;
-    }
-
-    protected abstract String getPath();
-
-    String getQueryString() {
-        return null;
-    }
-
-    private void headerIfModifiedSince(Request.Builder requestBuilder) {
-        String lastUpdate = this.serviceLastUpdate.get();
-        if (lastUpdate != null)
-            requestBuilder.addHeader(IF_MODIFIED_SINCE, lastUpdate);
-    }
-
     private void getNextRequest(Response response) {
         String linkHeader = response.header(LINK);
         if (linkHeader != null && !linkHeader.isEmpty()) {
@@ -166,6 +138,28 @@ public abstract class AbsRestService<T> implements RestService<T> {
     }
 
     protected abstract List<T> jsonToEntityList(String responseBody) throws IOException;
+
+    public String getUrl() {
+        if (nextUrl != null && !nextUrl.isEmpty()) {
+            return nextUrl;
+        }
+        String url = baseApi + getPath();
+        if (getQueryString() != null)
+            url += getQueryString();
+        return url;
+    }
+
+    private void headerIfModifiedSince(Request.Builder requestBuilder) {
+        String lastUpdate = this.serviceLastUpdate.get();
+        if (lastUpdate != null)
+            requestBuilder.addHeader(IF_MODIFIED_SINCE, lastUpdate);
+    }
+
+    protected abstract String getPath();
+
+    String getQueryString() {
+        return null;
+    }
 
     public User getUser() {
         return user;

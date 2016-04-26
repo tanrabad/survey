@@ -108,6 +108,7 @@ public class LoginActivity extends TanrabadActivity {
             AccountUtils.setUser(BrokerUserRepository.getInstance().findByUsername(BuildConfig.TRIAL_USER));
             AbsJobRunner jobRunner = new UploadJobRunner();
             jobRunner.addJob(new DeleteUserDataJob(this));
+            jobRunner.addJob(new SetTrialModeAndSelectApiServerJob(this, true));
             jobRunner.addJob(new StartInitialActivityJob(this));
             jobRunner.start();
         } else {

@@ -49,7 +49,7 @@ ext {
 
     versionMajor = 1
     versionMinor = 3
-    versionPatch = 4
+    versionPatch = 5
     versionName = "$versionMajor.$versionMinor.$versionPatch";
     versionCode = versionMajor * 10000 + versionMinor * 1000 + versionPatch
     buildTime = new SimpleDateFormat("yyMMddHHmm").format(new Date())

@@ -70,6 +70,17 @@
         android:textSize="@dimen/text_headline"/>
 
     <TextView
+        android:id="@+id/notice_trial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_marginTop="420dp"
+        android:text="@string/trial"
+        android:textSize="@dimen/text_big_headline"
+        android:textColor="@color/white_transparent_50"/>
+
+    <TextView
         android:id="@+id/start_survey_hint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

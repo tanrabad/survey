@@ -33,7 +33,14 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.TextView;
+
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
+import org.tanrabad.survey.R;
+import org.tanrabad.survey.domain.place.PlaceWithSurveyHistoryChooser;
+import org.tanrabad.survey.domain.place.PlaceWithSurveyHistoryListPresenter;
+import org.tanrabad.survey.entity.Organization;
+import org.tanrabad.survey.entity.Place;
+import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.job.AbsJobRunner;
 import org.tanrabad.survey.job.DownloadJobBuilder;
 import org.tanrabad.survey.job.UploadJobBuilder;
@@ -48,12 +55,6 @@ import org.tanrabad.survey.service.ServiceLastUpdatePreference;
 import org.tanrabad.survey.utils.alert.Alert;
 import org.tanrabad.survey.utils.android.NetworkChangeReceiver;
 import org.tanrabad.survey.utils.android.TwiceBackPressed;
-import org.tanrabad.survey.domain.place.PlaceWithSurveyHistoryChooser;
-import org.tanrabad.survey.domain.place.PlaceWithSurveyHistoryListPresenter;
-import org.tanrabad.survey.entity.Organization;
-import org.tanrabad.survey.entity.Place;
-import org.tanrabad.survey.entity.User;
-import org.tanrabad.survey.R;
 
 import java.util.List;
 
@@ -77,6 +78,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         twiceBackPressed = new TwiceBackPressed(this);
+        setupTrialNotice();
         setupDrawerLayout();
         setupViewOnClick();
         setupNetworkChangeReceiver();
@@ -87,6 +89,11 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
         if (!isUiTesting()) {
             startAnimation();
         }
+    }
+
+    private void setupTrialNotice() {
+        boolean trialUser = AccountUtils.isTrialUser(AccountUtils.getUser());
+        findViewById(R.id.notice_trial).setVisibility(trialUser ? View.VISIBLE : View.GONE);
     }
 
     private void setupDrawerLayout() {
@@ -190,7 +197,6 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
                 break;
         }
     }
-
 
     private void startOrResumeSyncAnimation() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT

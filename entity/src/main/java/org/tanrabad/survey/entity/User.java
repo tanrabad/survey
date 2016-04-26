@@ -139,6 +139,22 @@ public class User {
         return !(lastname != null ? !lastname.equals(user.lastname) : user.lastname != null);
     }
 
+    @Override
+    public String toString() {
+        return "User{"
+                + "username='" + username + '\''
+                + ", firstname='" + firstname + '\''
+                + ", lastname='" + lastname + '\''
+                + ", password='" + password + '\''
+                + ", phoneNumber='" + phoneNumber + '\''
+                + ", email='" + email + '\''
+                + ", avatarFileName='" + avatarFileName + '\''
+                + ", healthRegionCode='" + healthRegionCode + '\''
+                + ", organizationId=" + organizationId
+                + ", apiFilter='" + apiFilter + '\''
+                + '}';
+    }
+
     public enum UserType {
         OPERATION("_operation"),
         RESEARCH("_research");

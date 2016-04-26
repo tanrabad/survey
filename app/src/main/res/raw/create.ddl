@@ -123,6 +123,7 @@ CREATE TABLE user_profile (
   avatar_filename VARCHAR(128),
   email           VARCHAR(64),
   phone_number    VARCHAR(64),
+  api_filter      VARCHAR(128),
   PRIMARY KEY (username),
   FOREIGN KEY (org_id) REFERENCES organization (org_id) ON UPDATE CASCADE
 );

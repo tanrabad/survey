@@ -27,9 +27,11 @@ public class UserColumn {
     public static final String AVATAR_FILENAME = "avatar_filename";
     public static final String EMAIL = "email";
     public static final String PHONE_NUMBER = "phone_number";
+    public static final String API_FILTER = "api_filter";
 
 
     public static String[] wildcard() {
-        return new String[]{USERNAME, ORG_ID, PASSWORD, FIRSTNAME, LASTNAME, AVATAR_FILENAME, EMAIL, PHONE_NUMBER};
+        return new String[]{USERNAME, ORG_ID, PASSWORD, FIRSTNAME, LASTNAME,
+                AVATAR_FILENAME, EMAIL, PHONE_NUMBER, API_FILTER};
     }
 }

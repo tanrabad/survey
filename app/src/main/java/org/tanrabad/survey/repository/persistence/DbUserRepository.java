@@ -21,11 +21,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import org.tanrabad.survey.repository.BrokerOrganizationRepository;
-import org.tanrabad.survey.utils.collection.CursorMapper;
+
 import org.tanrabad.survey.domain.organization.OrganizationRepository;
 import org.tanrabad.survey.domain.user.UserRepository;
 import org.tanrabad.survey.entity.User;
+import org.tanrabad.survey.repository.BrokerOrganizationRepository;
+import org.tanrabad.survey.utils.collection.CursorMapper;
 
 import java.util.List;
 
@@ -82,6 +83,7 @@ public class DbUserRepository extends DbRepository implements UserRepository {
         values.put(UserColumn.AVATAR_FILENAME, user.getAvatarFileName());
         values.put(UserColumn.PHONE_NUMBER, user.getPhoneNumber());
         values.put(UserColumn.EMAIL, user.getEmail());
+        values.put(UserColumn.API_FILTER, user.getApiFilter());
         return values;
     }
 

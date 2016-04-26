@@ -17,8 +17,9 @@
 
 package org.tanrabad.survey.repository;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
-
 import org.tanrabad.survey.domain.user.UserRepositoryException;
 import org.tanrabad.survey.entity.User;
 
@@ -30,8 +31,9 @@ public class InMemoryUserRepositoryTest {
     private static final String DPC_USER = "dpc-user";
     private static InMemoryUserRepository userRepository = InMemoryUserRepository.getInstance();
 
-    @Test(expected = UserRepositoryException.class)
-    public void testSaveExistPlaceMustThrowException() throws Exception {
+
+    @Before
+    public void setUp() {
         userRepository.save(getDpcUser());
     }
 
@@ -43,6 +45,16 @@ public class InMemoryUserRepositoryTest {
         dpcUser.setOrganizationId(13);
         dpcUser.setHealthRegionCode("dpc-13");
         return dpcUser;
+    }
+
+    @After
+    public void tearDown() {
+        userRepository.delete(getDpcUser());
+    }
+
+    @Test(expected = UserRepositoryException.class)
+    public void testSaveExistPlaceMustThrowException() throws Exception {
+        userRepository.save(getDpcUser());
     }
 
     @Test

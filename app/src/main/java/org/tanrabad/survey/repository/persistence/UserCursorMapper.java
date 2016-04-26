@@ -18,9 +18,10 @@
 package org.tanrabad.survey.repository.persistence;
 
 import android.database.Cursor;
-import org.tanrabad.survey.utils.collection.CursorMapper;
+
 import org.tanrabad.survey.domain.organization.OrganizationRepository;
 import org.tanrabad.survey.entity.User;
+import org.tanrabad.survey.utils.collection.CursorMapper;
 
 class UserCursorMapper implements CursorMapper<User> {
 
@@ -32,6 +33,7 @@ class UserCursorMapper implements CursorMapper<User> {
     private int emailIndex;
     private int avatarIndex;
     private int phoneNumberIndex;
+    private int apiFilterIndex;
     private OrganizationRepository organizationRepository;
 
     public UserCursorMapper(Cursor cursor, OrganizationRepository organizationRepository) {
@@ -48,6 +50,7 @@ class UserCursorMapper implements CursorMapper<User> {
         emailIndex = cursor.getColumnIndex(UserColumn.EMAIL);
         avatarIndex = cursor.getColumnIndex(UserColumn.AVATAR_FILENAME);
         phoneNumberIndex = cursor.getColumnIndex(UserColumn.PHONE_NUMBER);
+        apiFilterIndex = cursor.getColumnIndex(UserColumn.API_FILTER);
     }
 
     @Override
@@ -62,6 +65,7 @@ class UserCursorMapper implements CursorMapper<User> {
         int orgId = cursor.getInt(orgIdIndex);
         user.setOrganizationId(orgId);
         user.setHealthRegionCode(organizationRepository.findById(orgId).getHealthRegionCode());
+        user.setApiFilter(cursor.getString(apiFilterIndex));
         return user;
     }
 }

@@ -57,7 +57,6 @@ public class LicenseActivity extends TanrabadActivity {
         ArrayList<License> licenses = new ArrayList<>();
         licenses.add(new License(this, "Joda-time", APACHE_LICENSE_20, "2002-2016", "joda.org"));
         licenses.add(new License(this, "LoganSquare", APACHE_LICENSE_20, "2015", "BlueLine Labs, Inc."));
-        licenses.add(new License(this, "ShowcaseView", APACHE_LICENSE_20, "2012-2014", "Alex Curran (@amlcurran)"));
         licenses.add(new License(this, "JumpingBeans", APACHE_LICENSE_20, "2012-2014",
                 "Frakbot (Sebastiano Poggi and Francesco Pontillo)"));
         licenses.add(new License(this, "RecyclerViewHeader", APACHE_LICENSE_20, "2015", "Bartosz Lipiński"));

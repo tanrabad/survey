@@ -28,10 +28,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import com.github.amlcurran.showcaseview.ShowcaseView;
-import org.tanrabad.survey.utils.showcase.BaseShowcase;
-import org.tanrabad.survey.utils.showcase.Showcase;
-import org.tanrabad.survey.utils.showcase.ShowcaseFactory;
 import org.tanrabad.survey.R;
 import uk.co.chrisjenx.calligraphy.CalligraphyUtils;
 import uk.co.chrisjenx.calligraphy.TypefaceUtils;
@@ -105,25 +101,6 @@ public class PlaceListActivity extends TanrabadActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void displayShowcase() {
-        BaseShowcase toolbarBasedShowcase = ShowcaseFactory.toolbarShowCase(toolbar, R.id.action_search);
-        toolbarBasedShowcase.setTitle("ค้นหาสถานที่");
-        toolbarBasedShowcase.setMessage("กดที่แว่นขยายเพื่อค้นหาสถานที่นะจ๊ะ");
-        toolbarBasedShowcase.setOnShowCaseDismissListener(new Showcase.OnShowcaseDismissListener() {
-            @Override
-            public void onDismissListener(ShowcaseView showcaseView) {
-                displayNextShowcase();
-            }
-        });
-        toolbarBasedShowcase.display();
-    }
-
-    private void displayNextShowcase() {
-        BaseShowcase toolbarBasedShowcase = ShowcaseFactory.viewShowcase(R.id.place_filter);
-        toolbarBasedShowcase.setMessage("กดที่นี่เพื่อเปลี่ยนประเภทสถานที่");
-        toolbarBasedShowcase.display();
     }
 
     @Override

@@ -25,7 +25,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.widget.CheckBox;
-
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
@@ -45,7 +44,6 @@ import org.tanrabad.survey.service.ServiceLastUpdatePreference;
 import org.tanrabad.survey.service.TrialModePreference;
 import org.tanrabad.survey.utils.alert.Alert;
 import org.tanrabad.survey.utils.android.InternetConnection;
-import org.tanrabad.survey.utils.showcase.ShowcasePreference;
 
 import static android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN;
 import static android.view.animation.AnimationUtils.loadAnimation;
@@ -53,7 +51,6 @@ import static android.view.animation.AnimationUtils.loadAnimation;
 public class LoginActivity extends TanrabadActivity {
     private static final int AUTHEN_REQUEST_CODE = 1232;
     private CheckBox needShowcase;
-    private ShowcasePreference showcasePreference;
     private TrialModePreference trialModePreference;
 
     private GoogleApiClient appIndexClient;
@@ -66,7 +63,6 @@ public class LoginActivity extends TanrabadActivity {
 
         appIndexClient = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
         setupPreferences();
-        setupShowcaseOption();
 
         findViewById(R.id.trial).setOnClickListener(new OnClickListener() {
             @Override
@@ -85,13 +81,8 @@ public class LoginActivity extends TanrabadActivity {
 
     private void setupPreferences() {
         trialModePreference = new TrialModePreference(this);
-        showcasePreference = new ShowcasePreference(this);
     }
 
-    private void setupShowcaseOption() {
-        needShowcase = (CheckBox) findViewById(R.id.need_showcase);
-        needShowcase.setChecked(showcasePreference.get());
-    }
 
     private void trialLogin() {
         if (isFirstTime() && !InternetConnection.isAvailable(this)) {
@@ -115,7 +106,6 @@ public class LoginActivity extends TanrabadActivity {
             AccountUtils.setUser(BrokerUserRepository.getInstance().findByUsername(BuildConfig.TRIAL_USER));
             startInitialActivity();
         }
-        showcasePreference.save(needShowcase.isChecked());
     }
 
     private void openAuthenWeb() {
@@ -193,7 +183,6 @@ public class LoginActivity extends TanrabadActivity {
                 } else {
                     startInitialActivity();
                 }
-                showcasePreference.save(needShowcase.isChecked());
             } else if (resultCode == AuthenActivity.RESULT_ERROR) {
                 Alert.highLevel().show(R.string.authen_error_response);
             }

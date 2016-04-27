@@ -83,14 +83,7 @@
             android:padding="16dp"
             android:text="@string/trial"
             android:textColor="@color/black"/>
-    <CheckBox
-            android:id="@+id/need_showcase"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/authentication_button"
-            android:layout_centerHorizontal="true"
-            android:text="@string/show_tutorial"
-            android:visibility="invisible"/>
+
     <ImageView
             android:id="@+id/bg_blue"
             android:layout_width="match_parent"

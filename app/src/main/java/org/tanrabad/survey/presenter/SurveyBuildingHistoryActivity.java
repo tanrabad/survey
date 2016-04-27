@@ -37,7 +37,15 @@ import android.widget.TextView;
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
 import it.sephiroth.android.library.tooltip.Tooltip;
 import it.sephiroth.android.library.tooltip.Typefaces;
+import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
+import org.tanrabad.survey.domain.entomology.HouseIndex;
+import org.tanrabad.survey.domain.place.PlaceController;
+import org.tanrabad.survey.domain.place.PlacePresenter;
+import org.tanrabad.survey.domain.survey.SurveyBuildingHistoryController;
+import org.tanrabad.survey.domain.survey.SurveyBuildingPresenter;
+import org.tanrabad.survey.entity.Place;
+import org.tanrabad.survey.entity.Survey;
 import org.tanrabad.survey.job.*;
 import org.tanrabad.survey.presenter.view.EmptyLayoutView;
 import org.tanrabad.survey.repository.BrokerPlaceRepository;
@@ -48,16 +56,6 @@ import org.tanrabad.survey.utils.alert.Alert;
 import org.tanrabad.survey.utils.android.InternetConnection;
 import org.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import org.tanrabad.survey.utils.prompt.PromptMessage;
-import org.tanrabad.survey.utils.showcase.BaseShowcase;
-import org.tanrabad.survey.utils.showcase.ShowcaseFactory;
-import org.tanrabad.survey.domain.entomology.HouseIndex;
-import org.tanrabad.survey.domain.place.PlaceController;
-import org.tanrabad.survey.domain.place.PlacePresenter;
-import org.tanrabad.survey.domain.survey.SurveyBuildingHistoryController;
-import org.tanrabad.survey.domain.survey.SurveyBuildingPresenter;
-import org.tanrabad.survey.entity.Place;
-import org.tanrabad.survey.entity.Survey;
-import org.tanrabad.survey.R;
 
 import java.util.List;
 import java.util.UUID;
@@ -105,7 +103,6 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
             }
         });
         startSurveyMoreBuildingButtonAnimation();
-        displaySurveyMoreBuildingShowcase();
     }
 
     private String getPlaceUuidFromIntent() {
@@ -150,13 +147,6 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
             }
         });
         surveyMoreBuildingButton.startAnimation(moreBuildingAnim);
-    }
-
-    private void displaySurveyMoreBuildingShowcase() {
-        BaseShowcase showcase = ShowcaseFactory.viewShowcase(R.id.survey_more_building_button);
-        showcase.setTitle(getString(R.string.showcase_survey_more_building_title));
-        showcase.setMessage(getString(R.string.showcase_survey_more_building));
-        //showcase.display();
     }
 
     private void showPlaceInfo() {

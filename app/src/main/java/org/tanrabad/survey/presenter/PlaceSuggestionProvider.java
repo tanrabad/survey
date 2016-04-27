@@ -24,7 +24,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.text.TextUtils;
 
-public class PlaceSuggestionProvider extends SearchRecentSuggestionsProvider {
+public final class PlaceSuggestionProvider extends SearchRecentSuggestionsProvider {
     public static final String AUTHORITY = "th.or.nectec.tanrabad.survey.PlaceSuggestionProvider";
     public static final int MODE = DATABASE_MODE_QUERIES;
 

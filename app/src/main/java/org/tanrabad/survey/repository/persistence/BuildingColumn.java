@@ -17,7 +17,7 @@
 
 package org.tanrabad.survey.repository.persistence;
 
-public class BuildingColumn {
+public final class BuildingColumn {
 
     public static final String ID = "building_id";
     public static final String NAME = "name";
@@ -28,6 +28,8 @@ public class BuildingColumn {
     public static final String UPDATE_TIME = "update_time";
     public static final String CHANGED_STATUS = "changed_status";
 
+    private BuildingColumn() {
+    }
 
     public static String[] wildcard() {
         return new String[]{ID, NAME, PLACE_ID, LATITUDE, LONGITUDE, UPDATE_BY, UPDATE_TIME, CHANGED_STATUS};

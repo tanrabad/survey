@@ -167,7 +167,6 @@ dependencies {
     compile "com.bluelinelabs:logansquare:$loganSquareVersion"
     compile("com.crashlytics.sdk.android:answers:$answersVersion@aar") { transitive = true; }
     compile("com.crashlytics.sdk.android:crashlytics:$crashlyticsVersion@aar") { transitive = true; }
-    compile "com.github.amlcurran.showcaseview:library:$showcaseViewVersion"
     compile "com.squareup.okhttp3:okhttp:$okHttpVersion"
     compile "joda-time:joda-time:$jodaTimeVersion"
     compile "net.frakbot:jumpingbeans:$jumpingbeansVersion"

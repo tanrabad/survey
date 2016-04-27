@@ -26,9 +26,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import org.tanrabad.survey.utils.alert.Alert;
-import org.tanrabad.survey.utils.showcase.ShowcaseFactory;
 import org.tanrabad.survey.R;
+import org.tanrabad.survey.utils.alert.Alert;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 @SuppressLint("Registered")
@@ -42,11 +41,6 @@ public class TanrabadActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
-        setupShowcaseFactory();
-    }
-
-    private void setupShowcaseFactory() {
-        ShowcaseFactory.init(this);
     }
 
     protected void setupHomeButton() {
@@ -64,7 +58,6 @@ public class TanrabadActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         setupAlertFactory();
-        setupShowcaseFactory();
     }
 
     private void setupAlertFactory() {

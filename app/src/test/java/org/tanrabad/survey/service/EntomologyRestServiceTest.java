@@ -20,21 +20,27 @@ package org.tanrabad.survey.service;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.tanrabad.survey.WireMockTestBase;
+import org.tanrabad.survey.entity.Place;
+import org.tanrabad.survey.entity.User;
+import org.tanrabad.survey.entity.lookup.PlaceType;
+import org.tanrabad.survey.presenter.AccountUtils;
+import org.tanrabad.survey.service.json.JsonEntomology;
+import org.tanrabad.survey.utils.ResourceFile;
+import org.tanrabad.survey.utils.http.Header;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import org.tanrabad.survey.entity.Place;
-import org.tanrabad.survey.entity.User;
-import org.tanrabad.survey.entity.lookup.PlaceType;
-import org.tanrabad.survey.WireMockTestBase;
-import org.tanrabad.survey.presenter.AccountUtils;
-import org.tanrabad.survey.service.http.Header;
-import org.tanrabad.survey.service.json.JsonEntomology;
-import org.tanrabad.survey.utils.ResourceFile;
-
-import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
+import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
+import static com.github.tomakehurst.wiremock.client.WireMock.get;
+import static com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor;
+import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
+import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
+import static com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo;
+import static com.github.tomakehurst.wiremock.client.WireMock.verify;
 import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 

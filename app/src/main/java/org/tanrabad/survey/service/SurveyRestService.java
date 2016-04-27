@@ -21,15 +21,15 @@ import com.bluelinelabs.logansquare.LoganSquare;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.tanrabad.survey.TanrabadApp;
-import org.tanrabad.survey.service.json.JsonSurvey;
 import org.tanrabad.survey.entity.Survey;
+import org.tanrabad.survey.service.json.JsonSurvey;
 
 import java.io.IOException;
 import java.util.List;
 
-import static org.tanrabad.survey.service.http.Header.ACCEPT;
-import static org.tanrabad.survey.service.http.Header.ACCEPT_CHARSET;
-import static org.tanrabad.survey.service.http.Header.USER_AGENT;
+import static org.tanrabad.survey.utils.http.Header.ACCEPT;
+import static org.tanrabad.survey.utils.http.Header.ACCEPT_CHARSET;
+import static org.tanrabad.survey.utils.http.Header.USER_AGENT;
 
 public class SurveyRestService extends AbsUploadRestService<Survey> implements DeleteRestService<Survey> {
 

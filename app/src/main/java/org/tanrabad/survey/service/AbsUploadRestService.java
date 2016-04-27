@@ -22,11 +22,11 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import org.tanrabad.survey.TanrabadApp;
-import org.tanrabad.survey.service.http.Status;
+import org.tanrabad.survey.utils.http.Status;
 
 import java.io.IOException;
 
-import static org.tanrabad.survey.service.http.Header.USER_AGENT;
+import static org.tanrabad.survey.utils.http.Header.USER_AGENT;
 
 public abstract class AbsUploadRestService<T> extends AbsRestService<T> implements UploadRestService<T> {
 

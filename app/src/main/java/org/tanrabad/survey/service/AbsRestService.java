@@ -23,19 +23,20 @@ import okhttp3.Response;
 import org.tanrabad.survey.BuildConfig;
 import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.presenter.AccountUtils;
-import org.tanrabad.survey.service.http.Status;
+import org.tanrabad.survey.utils.http.PageLinks;
+import org.tanrabad.survey.utils.http.Status;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.tanrabad.survey.service.http.Header.ACCEPT;
-import static org.tanrabad.survey.service.http.Header.ACCEPT_CHARSET;
-import static org.tanrabad.survey.service.http.Header.IF_MODIFIED_SINCE;
-import static org.tanrabad.survey.service.http.Header.LAST_MODIFIED;
-import static org.tanrabad.survey.service.http.Header.LINK;
-import static org.tanrabad.survey.service.http.Header.USER_AGENT;
+import static org.tanrabad.survey.utils.http.Header.ACCEPT;
+import static org.tanrabad.survey.utils.http.Header.ACCEPT_CHARSET;
+import static org.tanrabad.survey.utils.http.Header.IF_MODIFIED_SINCE;
+import static org.tanrabad.survey.utils.http.Header.LAST_MODIFIED;
+import static org.tanrabad.survey.utils.http.Header.LINK;
+import static org.tanrabad.survey.utils.http.Header.USER_AGENT;
 
 public abstract class AbsRestService<T> implements RestService<T> {
 

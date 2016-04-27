@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-package org.tanrabad.survey.service;
+package org.tanrabad.survey.utils.http;
 
 /**
  * Page link class to be used to determine the links to other pages of request
  * responses encoded in the current response. These will be present if the
  * result set size exceeds the per page limit.
  */
-class PageLinks {
+public class PageLinks {
 
     private static final String DELIM_LINKS = ","; //$NON-NLS-1$
 

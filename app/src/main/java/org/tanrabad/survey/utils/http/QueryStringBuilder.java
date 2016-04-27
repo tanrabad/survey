@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.tanrabad.survey.service;
+package org.tanrabad.survey.utils.http;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,7 +24,7 @@ import java.util.List;
 public class QueryStringBuilder {
     List<String> queryParams;
 
-    QueryStringBuilder(String... params) {
+    public QueryStringBuilder(String... params) {
         queryParams = Arrays.asList(params);
     }
 

@@ -28,9 +28,9 @@ import org.tanrabad.survey.domain.user.UserRepository;
 import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.entity.field.Location;
 import org.tanrabad.survey.entity.lookup.PlaceType;
-import org.tanrabad.survey.service.http.Header;
 import org.tanrabad.survey.service.json.JsonPlace;
 import org.tanrabad.survey.utils.ResourceFile;
+import org.tanrabad.survey.utils.http.Header;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,8 +57,8 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.never;
 import static org.tanrabad.survey.service.PlaceRestService.PATH;
-import static org.tanrabad.survey.service.http.Header.CONTENT_TYPE;
-import static org.tanrabad.survey.service.http.Header.USER_AGENT;
+import static org.tanrabad.survey.utils.http.Header.CONTENT_TYPE;
+import static org.tanrabad.survey.utils.http.Header.USER_AGENT;
 
 public class PlaceRestServiceTest extends WireMockTestBase {
 

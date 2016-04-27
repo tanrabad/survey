@@ -15,12 +15,14 @@
  * limitations under the License.
  */
 
-package org.tanrabad.survey.service.http;
+package org.tanrabad.survey.utils.http;
 
-public class Status {
-    public static final int SUCCESS = 200;
-    public static final int NOT_MODIFIED = 304;
-    public static final int NOT_FOUND = 404;
-    public static final int BAD_REQUEST = 400;
-    public static final int CREATED = 201;
+public class Header {
+    public static final String IF_MODIFIED_SINCE = "If-Modified-Since";
+    public static final String LAST_MODIFIED = "Last-Modified";
+    public static final String LINK = "Link";
+    public static final String USER_AGENT = "User-Agent";
+    public static final String CONTENT_TYPE = "Content-Type";
+    public static final String ACCEPT = "Accept";
+    public static final String ACCEPT_CHARSET = "Accept-Charset";
 }

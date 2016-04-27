@@ -18,29 +18,44 @@
 package org.tanrabad.survey.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
-
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
+import org.tanrabad.survey.WireMockTestBase;
 import org.tanrabad.survey.domain.place.PlaceSubTypeRepository;
 import org.tanrabad.survey.domain.user.UserRepository;
 import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.entity.field.Location;
 import org.tanrabad.survey.entity.lookup.PlaceType;
-import org.tanrabad.survey.WireMockTestBase;
 import org.tanrabad.survey.service.http.Header;
 import org.tanrabad.survey.service.json.JsonPlace;
 import org.tanrabad.survey.utils.ResourceFile;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
+import static com.github.tomakehurst.wiremock.client.WireMock.delete;
+import static com.github.tomakehurst.wiremock.client.WireMock.deleteRequestedFor;
+import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
+import static com.github.tomakehurst.wiremock.client.WireMock.equalToJson;
+import static com.github.tomakehurst.wiremock.client.WireMock.get;
+import static com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor;
+import static com.github.tomakehurst.wiremock.client.WireMock.post;
+import static com.github.tomakehurst.wiremock.client.WireMock.postRequestedFor;
+import static com.github.tomakehurst.wiremock.client.WireMock.put;
+import static com.github.tomakehurst.wiremock.client.WireMock.putRequestedFor;
+import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
+import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
+import static com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo;
+import static com.github.tomakehurst.wiremock.client.WireMock.urlPathMatching;
+import static com.github.tomakehurst.wiremock.client.WireMock.verify;
 import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.never;
 import static org.tanrabad.survey.service.PlaceRestService.PATH;
 import static org.tanrabad.survey.service.http.Header.CONTENT_TYPE;
 import static org.tanrabad.survey.service.http.Header.USER_AGENT;
@@ -77,7 +92,7 @@ public class PlaceRestServiceTest extends WireMockTestBase {
                         .withBody("")));
 
         restService.getUpdate();
-        Mockito.verify(lastUpdate, Mockito.never()).save(Mockito.anyString());
+        Mockito.verify(lastUpdate, never()).save(anyString());
     }
 
     @Test
@@ -93,7 +108,7 @@ public class PlaceRestServiceTest extends WireMockTestBase {
         assertEquals(0, places.size());
         verify(getRequestedFor(urlPathEqualTo(PATH))
                 .withHeader(Header.IF_MODIFIED_SINCE, equalTo(MON_30_NOV_2015_17_00_00_GMT)));
-        Mockito.verify(lastUpdate, Mockito.never()).save(Mockito.anyString());
+        Mockito.verify(lastUpdate, never()).save(anyString());
     }
 
     @Test
@@ -115,6 +130,7 @@ public class PlaceRestServiceTest extends WireMockTestBase {
         verify(getRequestedFor(urlPathEqualTo(PATH))
                 .withHeader(Header.ACCEPT, equalTo("application/json"))
                 .withHeader(Header.ACCEPT_CHARSET, equalTo("utf-8"))
+                .withHeader(Header.USER_AGENT, equalTo(AbsRestService.TRB_USER_AGENT))
                 .withoutHeader(Header.IF_MODIFIED_SINCE));
     }
 
@@ -197,7 +213,7 @@ public class PlaceRestServiceTest extends WireMockTestBase {
         verify(postRequestedFor(urlPathMatching(PATH))
                 .withRequestBody(equalToJson(toJson(testPlace)))
                 .withHeader(CONTENT_TYPE, equalTo("application/json; charset=utf-8"))
-                .withHeader(USER_AGENT, equalTo("tanrabad-survey-app")));
+                .withHeader(USER_AGENT, equalTo(AbsRestService.TRB_USER_AGENT)));
     }
 
     private Place stubPlace() {
@@ -243,7 +259,7 @@ public class PlaceRestServiceTest extends WireMockTestBase {
         assertEquals(true, success);
         verify(putRequestedFor(urlEqualTo(PATH + "/" + place.getId().toString()))
                 .withHeader(CONTENT_TYPE, equalTo("application/json; charset=utf-8"))
-                .withHeader(USER_AGENT, equalTo("tanrabad-survey-app"))
+                .withHeader(USER_AGENT, equalTo(AbsRestService.TRB_USER_AGENT))
                 .withRequestBody(equalToJson(toJson(place))));
     }
 

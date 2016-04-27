@@ -17,6 +17,9 @@
 
 package org.tanrabad.survey.service;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import org.tanrabad.survey.BuildConfig;
 import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.presenter.AccountUtils;
@@ -26,16 +29,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-
 import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.tanrabad.survey.service.http.Header.*;
+import static org.tanrabad.survey.service.http.Header.ACCEPT;
+import static org.tanrabad.survey.service.http.Header.ACCEPT_CHARSET;
+import static org.tanrabad.survey.service.http.Header.IF_MODIFIED_SINCE;
+import static org.tanrabad.survey.service.http.Header.LAST_MODIFIED;
+import static org.tanrabad.survey.service.http.Header.LINK;
+import static org.tanrabad.survey.service.http.Header.USER_AGENT;
 
 public abstract class AbsRestService<T> implements RestService<T> {
 
-    protected static final String TRB_USER_AGENT = "tanrabad-survey-app";
+    protected static final String TRB_USER_AGENT = "TanRabad-SURVEY/" + BuildConfig.VERSION_NAME + " (Android)";
 
     private static final int READ_WRITE_TIMEOUT = 10; //second
     private static final int CONNECT_TIMEOUT = 5; //second

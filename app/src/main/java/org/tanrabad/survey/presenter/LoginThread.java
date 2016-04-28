@@ -6,13 +6,13 @@ import android.os.Message;
 import org.tanrabad.survey.BuildConfig;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.entity.User;
-import org.tanrabad.survey.job.SetTrialModeAndSelectApiServerJob;
 import org.tanrabad.survey.job.UploadJobBuilder;
 import org.tanrabad.survey.service.AbsRestService;
 import org.tanrabad.survey.utils.UserDataManager;
 import org.tanrabad.survey.utils.android.InternetConnection;
 
 class LoginThread implements Runnable {
+    public static final String TEST_URL = "http://trb-test.igridproject.info/v1";
     private static final int SUCCESS = 1;
     private static final int FAIL = 0;
     private final User user;
@@ -67,7 +67,7 @@ class LoginThread implements Runnable {
         if (!AccountUtils.isTrialUser(user)) {
             AbsRestService.setBaseApi(BuildConfig.API_URL);
         } else {
-            AbsRestService.setBaseApi(SetTrialModeAndSelectApiServerJob.TEST_URL);
+            AbsRestService.setBaseApi(TEST_URL);
         }
     }
 

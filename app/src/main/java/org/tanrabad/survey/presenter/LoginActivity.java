@@ -102,11 +102,8 @@ public class LoginActivity extends TanrabadActivity {
     private void openAuthenWeb() {
         authenButton.setEnabled(false);
         User lastLoginUser = AccountUtils.getLastLoginUser();
-        if (lastLoginUser != null
-                && !AccountUtils.isTrialUser(lastLoginUser)) {
-            AccountUtils.setUser(lastLoginUser);
-            InitialActivity.open(this);
-            finish();
+        if (lastLoginUser != null) {
+            doLogin(lastLoginUser);
         } else if (InternetConnection.isAvailable(this)) {
             Intent intent = new Intent(this, AuthenActivity.class);
             startActivityForResult(intent, AUTHEN_REQUEST_CODE);
@@ -119,7 +116,7 @@ public class LoginActivity extends TanrabadActivity {
         findViewById(R.id.bg_blue).startAnimation(loadAnimation(this, R.anim.login_bg_blue));
         Animation dropIn = loadAnimation(this, R.anim.logo);
         dropIn.setStartOffset(1200);
-        View logoTrb = findViewById(R.id.logo_tabrabad);
+        View logoTrb = findViewById(R.id.logo_tanrabad);
         logoTrb.startAnimation(dropIn);
         logoTrb.setOnLongClickListener(new View.OnLongClickListener() {
             @Override

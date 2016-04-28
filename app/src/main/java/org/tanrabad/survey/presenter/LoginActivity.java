@@ -82,10 +82,12 @@ public class LoginActivity extends TanrabadActivity {
     }
 
     private void doLogin(User user) {
-        AccountUtils.login(user, new AccountUtils.LoginListener() {
+        AccountUtils.login(user, new LoginThread.LoginListener() {
             @Override
-            public void loginFinish(User user) {
-                startInitialActivity();
+            public void loginFinish() {
+                InitialActivity.open(LoginActivity.this);
+                overridePendingTransition(R.anim.drop_in, R.anim.drop_out);
+                finish();
             }
 
             @Override
@@ -95,12 +97,6 @@ public class LoginActivity extends TanrabadActivity {
                 Alert.highLevel().show(R.string.connect_internet_before_login);
             }
         });
-    }
-
-    private void startInitialActivity() {
-        InitialActivity.open(LoginActivity.this);
-        overridePendingTransition(R.anim.drop_in, R.anim.drop_out);
-        finish();
     }
 
     private void openAuthenWeb() {

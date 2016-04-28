@@ -21,7 +21,6 @@ import android.content.Context;
 
 import org.tanrabad.survey.BuildConfig;
 import org.tanrabad.survey.service.AbsRestService;
-import org.tanrabad.survey.service.TrialModePreference;
 
 public class SetTrialModeAndSelectApiServerJob implements Job {
 

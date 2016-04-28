@@ -89,4 +89,17 @@ public class MainStartSurveyTest extends TanrabadEspressoTestBase {
         textDisplayed(R.string.setting);
         textDisplayed(R.string.logout);
     }
+
+    @Test
+    public void tapLogoutShouldFoundLoginPage() {
+        onView(allOf(withId(R.id.avatar_icon)
+                ,withContentDescription("แสดงข้อมูลผู้ใช้")))
+                .perform(click());
+        onView(withText(R.string.logout))
+                .perform(click());
+
+        Intents.intended(allOf(
+                hasComponent(new ComponentName(mActivity, LoginActivity.class))
+        ));
+    }
 }

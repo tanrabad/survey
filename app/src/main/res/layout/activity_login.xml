@@ -116,7 +116,7 @@
             android:textSize="@dimen/text_caption"/>
 
     <ImageView
-            android:id="@+id/logo_tabrabad"
+            android:id="@+id/logo_tanrabad"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -127,7 +127,7 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/logo_tabrabad"
+            android:layout_below="@+id/logo_tanrabad"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
             android:gravity="center"

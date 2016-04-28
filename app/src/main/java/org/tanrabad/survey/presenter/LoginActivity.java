@@ -127,7 +127,7 @@ public class LoginActivity extends TanrabadActivity {
         findViewById(R.id.bg_blue).startAnimation(loadAnimation(this, R.anim.login_bg_blue));
         Animation dropIn = loadAnimation(this, R.anim.logo);
         dropIn.setStartOffset(1200);
-        View logoTrb = findViewById(R.id.logo_tabrabad);
+        View logoTrb = findViewById(R.id.logo_tanrabad);
         logoTrb.startAnimation(dropIn);
         logoTrb.setOnLongClickListener(new View.OnLongClickListener() {
             @Override

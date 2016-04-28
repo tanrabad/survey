@@ -51,12 +51,6 @@ public class AccountUtilsTest {
         assertFalse(AccountUtils.isTrialUser(User.fromUsername("dpc-user")));
     }
 
-    @Test
-    public void testMustClearLastUserRepoIfTrialUser() throws Exception {
-        AccountUtils.setUser(User.fromUsername("trial-release"));
-
-        Mockito.verify(repository).clear();
-    }
 
     @Test
     public void mustSaveUserToLastLoginRepoIfRealUser() throws Exception {

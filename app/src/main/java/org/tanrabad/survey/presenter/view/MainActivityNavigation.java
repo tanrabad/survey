@@ -11,15 +11,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import org.tanrabad.survey.R;
+import org.tanrabad.survey.entity.Organization;
+import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.presenter.AboutActivity;
 import org.tanrabad.survey.presenter.AccountUtils;
 import org.tanrabad.survey.presenter.LoginActivity;
 import org.tanrabad.survey.presenter.PreferenceActivity;
 import org.tanrabad.survey.repository.BrokerOrganizationRepository;
 import org.tanrabad.survey.utils.alert.Alert;
-import org.tanrabad.survey.entity.Organization;
-import org.tanrabad.survey.entity.User;
-import org.tanrabad.survey.R;
 
 public class MainActivityNavigation {
 
@@ -56,7 +57,6 @@ public class MainActivityNavigation {
                         PreferenceActivity.open(activity);
                         break;
                     case R.id.logout:
-                        AccountUtils.clear();
                         Intent backToLogin = new Intent(activity, LoginActivity.class);
                         activity.startActivity(backToLogin);
                         activity.finish();

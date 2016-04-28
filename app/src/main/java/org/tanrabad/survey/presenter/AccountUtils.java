@@ -19,13 +19,18 @@ package org.tanrabad.survey.presenter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Handler;
+import android.os.Message;
 
 import org.tanrabad.survey.BuildConfig;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.job.SetTrialModeAndSelectApiServerJob;
+import org.tanrabad.survey.job.UploadJobBuilder;
 import org.tanrabad.survey.repository.BrokerUserRepository;
 import org.tanrabad.survey.service.AbsRestService;
+import org.tanrabad.survey.utils.UserDataManager;
+import org.tanrabad.survey.utils.android.InternetConnection;
 import org.tanrabad.survey.utils.time.CurrentTimer;
 import org.tanrabad.survey.utils.time.JodaCurrentTime;
 
@@ -33,6 +38,7 @@ public final class AccountUtils {
 
     protected static final long ONE_DAY_IN_MILLS = 86400000L;
     protected static final long REMEMBER_LIMIT = ONE_DAY_IN_MILLS;
+
 
     protected static CurrentTimer currentTimer = new JodaCurrentTime();
     private static User user;
@@ -54,16 +60,36 @@ public final class AccountUtils {
     }
 
     public static void setUser(User user) {
+        if (TanrabadApp.action() != null) {
+            TanrabadApp.action().login(user);
+        }
         AccountUtils.user = user;
-        if (TanrabadApp.action() != null)
-            TanrabadApp.action().login(AccountUtils.user);
+        lastLoginUserRepo.userLogin(user);
+    }
 
+    public static void login(final User user, final LoginListener loginListener) {
+        Thread background = new Thread(new LoginThread(user, loginListener));
+
+        background.start();
+    }
+
+
+    private static boolean shouldUploadOldUserData(User user) {
+        if (getLastLoginUser() == null)
+            return false;
+
+        return user.getOrganizationId() != getLastLoginUser().getOrganizationId();
+    }
+
+    public static User getLastLoginUser() {
+        return lastLoginUserRepo.getLastLoginUser();
+    }
+
+    private static void setApiEndPointByUser(User user) {
         if (!isTrialUser(user)) {
             AbsRestService.setBaseApi(BuildConfig.API_URL);
-            lastLoginUserRepo.userLogin(user);
         } else {
             AbsRestService.setBaseApi(SetTrialModeAndSelectApiServerJob.TEST_URL);
-            lastLoginUserRepo.clear();
         }
     }
 
@@ -76,12 +102,14 @@ public final class AccountUtils {
         lastLoginUserRepo.clear();
     }
 
-    public static User getLastLoginUser() {
-        return lastLoginUserRepo.getLastLoginUser();
-    }
-
     public static void setLastLoginUserRepo(LastLoginUserRepo repository) {
         lastLoginUserRepo = repository;
+    }
+
+    public interface LoginListener {
+        void loginFinish(User user);
+
+        void loginFail();
     }
 
     public interface LastLoginUserRepo {
@@ -127,6 +155,71 @@ public final class AccountUtils {
         @Override
         public void clear() {
             getUserPreference().edit().clear().apply();
+        }
+    }
+
+    private static class LoginThread implements Runnable {
+        private static final int SUCCESS = 1;
+        private static final int FAIL = 0;
+        private final User user;
+        private final Handler handler;
+
+
+        public LoginThread(final User user, LoginListener loginListener) {
+            this.user = user;
+            handler = new LoginHandler(loginListener);
+        }
+
+        public void run() {
+            if (InternetConnection.isAvailable(TanrabadApp.getInstance())) {
+                if (shouldUploadOldUserData(user)) {
+                    setApiEndPointByUser(getLastLoginUser());
+                    syncAndClearData();
+                }
+            } else if (!user.equals(getLastLoginUser())) {
+                handler.sendEmptyMessage(FAIL);
+                return;
+            }
+
+            setUser(user);
+            setApiEndPointByUser(user);
+            handler.sendEmptyMessage(SUCCESS);
+        }
+
+        private void syncAndClearData() {
+            try {
+                UploadJobBuilder uploadJobBuilder = new UploadJobBuilder();
+                uploadJobBuilder.placePostDataJob.execute();
+                uploadJobBuilder.buildingPostDataJob.execute();
+                uploadJobBuilder.surveyPostDataJob.execute();
+                uploadJobBuilder.placePutDataJob.execute();
+                uploadJobBuilder.buildingPutDataJob.execute();
+                uploadJobBuilder.surveyPutDataJob.execute();
+                UserDataManager.clearAll(TanrabadApp.getInstance());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    static class LoginHandler extends Handler {
+        private static final int SUCCESS = 1;
+        private static final int FAIL = 0;
+        private final LoginListener loginListener;
+
+        public LoginHandler(LoginListener loginListener) {
+            this.loginListener = loginListener;
+        }
+
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case SUCCESS:
+                    loginListener.loginFinish(user);
+                    break;
+                case FAIL:
+                    loginListener.loginFail();
+                    break;
+            }
         }
     }
 }

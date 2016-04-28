@@ -146,8 +146,6 @@
     <string name="update_data_type">แก้ไข%1$s</string>
     <string name="upload_data_success">สำเร็จ %1$d</string>
     <string name="upload_data_fail">ไม่สำเร็จ %1$d</string>
-    <string name="connect_internet_when_use_for_first_time">กรุณาเชื่อมต่ออินเทอร์เน็ต เนื่องจากท่านใช้งานเป็นครั้งแรก</string>
-    <string name="connect_internet_before_using_trial_mode">กรุณาเชื่อมต่ออินเทอร์เน็ต ก่อนที่จะทดลองใช้งาน</string>
     <string name="ok">ตกลง</string>
     <string name="not_available">N/A</string>
     <string name="view_survey_result">ดูผลการสำรวจ</string>
@@ -187,6 +185,7 @@
     <string name="ministry_of_science_and_technology">กระทรวงวิทยาศาสตร์และเทคโนโลยี</string>
     <string name="ministry_of_public_health">กระทรวงสาธารณสุข</string>
     <string name="connect_internet_before_authen">กรุณาเชื่อมต่ออินเตอร์เน็ตเพื่อทำการยืนยันตัวตน</string>
+    <string name="connect_internet_before_login">กรุณาเชื่อมต่ออินเตอร์เน็ตก่อนทำการเข้าสู่ระบบ</string>
     <string name="about_th">เกี่ยวกับ</string>
     <string name="preference">การตั้งค่า</string>
     <string name="trb_bi">TanRabad BI</string>

@@ -20,28 +20,21 @@ package org.tanrabad.survey.presenter;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.widget.CheckBox;
+
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
+
 import org.tanrabad.survey.BuildConfig;
 import org.tanrabad.survey.R;
-import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.entity.User;
-import org.tanrabad.survey.job.AbsJobRunner;
-import org.tanrabad.survey.job.DeleteUserDataJob;
-import org.tanrabad.survey.job.SetTrialModeAndSelectApiServerJob;
-import org.tanrabad.survey.job.UploadJobRunner;
 import org.tanrabad.survey.presenter.authen.AuthenActivity;
 import org.tanrabad.survey.repository.BrokerUserRepository;
-import org.tanrabad.survey.service.PlaceRestService;
-import org.tanrabad.survey.service.ServiceLastUpdatePreference;
-import org.tanrabad.survey.service.TrialModePreference;
 import org.tanrabad.survey.utils.alert.Alert;
 import org.tanrabad.survey.utils.android.InternetConnection;
 
@@ -51,9 +44,10 @@ import static android.view.animation.AnimationUtils.loadAnimation;
 public class LoginActivity extends TanrabadActivity {
     private static final int AUTHEN_REQUEST_CODE = 1232;
     private CheckBox needShowcase;
-    private TrialModePreference trialModePreference;
 
     private GoogleApiClient appIndexClient;
+    private View trialButton;
+    private View authenButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,15 +56,16 @@ public class LoginActivity extends TanrabadActivity {
         setContentView(R.layout.activity_login);
 
         appIndexClient = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-        setupPreferences();
+        trialButton = findViewById(R.id.trial);
+        authenButton = findViewById(R.id.authentication_button);
 
-        findViewById(R.id.trial).setOnClickListener(new OnClickListener() {
+        trialButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 trialLogin();
             }
         });
-        findViewById(R.id.authentication_button).setOnClickListener(new OnClickListener() {
+        authenButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 openAuthenWeb();
@@ -79,36 +74,37 @@ public class LoginActivity extends TanrabadActivity {
         startAnimation();
     }
 
-    private void setupPreferences() {
-        trialModePreference = new TrialModePreference(this);
-    }
-
 
     private void trialLogin() {
-        if (isFirstTime() && !InternetConnection.isAvailable(this)) {
-            Alert.highLevel().show(R.string.connect_internet_when_use_for_first_time);
-            TanrabadApp.action().firstTimeWithoutInternet();
-            return;
-        }
+        trialButton.setEnabled(false);
+        User user = BrokerUserRepository.getInstance().findByUsername(BuildConfig.TRIAL_USER);
+        doLogin(user);
+    }
 
-        if (!trialModePreference.isUsingTrialMode()) {
-            if (!InternetConnection.isAvailable(this)) {
-                Alert.highLevel().show(R.string.connect_internet_before_using_trial_mode);
-                return;
+    private void doLogin(User user) {
+        AccountUtils.login(user, new AccountUtils.LoginListener() {
+            @Override
+            public void loginFinish(User user) {
+                startInitialActivity();
             }
-            AccountUtils.setUser(BrokerUserRepository.getInstance().findByUsername(BuildConfig.TRIAL_USER));
-            AbsJobRunner jobRunner = new UploadJobRunner();
-            jobRunner.addJob(new DeleteUserDataJob(this));
-            jobRunner.addJob(new SetTrialModeAndSelectApiServerJob(this, true));
-            jobRunner.addJob(new StartInitialActivityJob(this));
-            jobRunner.start();
-        } else {
-            AccountUtils.setUser(BrokerUserRepository.getInstance().findByUsername(BuildConfig.TRIAL_USER));
-            startInitialActivity();
-        }
+
+            @Override
+            public void loginFail() {
+                trialButton.setEnabled(true);
+                authenButton.setEnabled(true);
+                Alert.highLevel().show(R.string.connect_internet_before_login);
+            }
+        });
+    }
+
+    private void startInitialActivity() {
+        InitialActivity.open(LoginActivity.this);
+        overridePendingTransition(R.anim.drop_in, R.anim.drop_out);
+        finish();
     }
 
     private void openAuthenWeb() {
+        authenButton.setEnabled(false);
         User lastLoginUser = AccountUtils.getLastLoginUser();
         if (lastLoginUser != null
                 && !AccountUtils.isTrialUser(lastLoginUser)) {
@@ -127,7 +123,7 @@ public class LoginActivity extends TanrabadActivity {
         findViewById(R.id.bg_blue).startAnimation(loadAnimation(this, R.anim.login_bg_blue));
         Animation dropIn = loadAnimation(this, R.anim.logo);
         dropIn.setStartOffset(1200);
-        View logoTrb = findViewById(R.id.logo_tanrabad);
+        View logoTrb = findViewById(R.id.logo_tabrabad);
         logoTrb.startAnimation(dropIn);
         logoTrb.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -137,17 +133,6 @@ public class LoginActivity extends TanrabadActivity {
                 return true;
             }
         });
-    }
-
-    private boolean isFirstTime() {
-        String placeTimeStamp = new ServiceLastUpdatePreference(this, PlaceRestService.PATH).get();
-        return TextUtils.isEmpty(placeTimeStamp);
-    }
-
-    private void startInitialActivity() {
-        InitialActivity.open(LoginActivity.this);
-        overridePendingTransition(R.anim.drop_in, R.anim.drop_out);
-        finish();
     }
 
     @Override
@@ -174,15 +159,9 @@ public class LoginActivity extends TanrabadActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == AUTHEN_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                if (trialModePreference.isUsingTrialMode()) {
-                    AbsJobRunner jobRunner = new UploadJobRunner();
-                    jobRunner.addJob(new DeleteUserDataJob(this));
-                    jobRunner.addJob(new SetTrialModeAndSelectApiServerJob(this, false));
-                    jobRunner.addJob(new StartInitialActivityJob(this));
-                    jobRunner.start();
-                } else {
-                    startInitialActivity();
-                }
+                User user = BrokerUserRepository.getInstance().findByUsername(
+                        data.getStringExtra(AuthenActivity.USERNAME));
+                doLogin(user);
             } else if (resultCode == AuthenActivity.RESULT_ERROR) {
                 Alert.highLevel().show(R.string.authen_error_response);
             }

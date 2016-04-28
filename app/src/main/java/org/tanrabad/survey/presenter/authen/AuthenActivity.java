@@ -18,6 +18,7 @@
 package org.tanrabad.survey.presenter.authen;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Bundle;
@@ -29,8 +30,13 @@ import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
-import org.tanrabad.survey.presenter.AccountUtils;
+import org.tanrabad.survey.domain.organization.OrganizationRepository;
+import org.tanrabad.survey.domain.user.UserRepository;
+import org.tanrabad.survey.entity.Organization;
+import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.presenter.TanrabadActivity;
 import org.tanrabad.survey.repository.BrokerOrganizationRepository;
 import org.tanrabad.survey.repository.BrokerUserRepository;
@@ -38,16 +44,12 @@ import org.tanrabad.survey.utils.android.CookieUtils;
 import org.trb.authen.client.TRBAuthenUtil;
 import org.trb.authen.client.TRBCallback;
 import org.trb.authen.model.UserProfile;
-import org.tanrabad.survey.domain.organization.OrganizationRepository;
-import org.tanrabad.survey.domain.user.UserRepository;
-import org.tanrabad.survey.entity.Organization;
-import org.tanrabad.survey.entity.User;
-import org.tanrabad.survey.R;
 
 @SuppressLint("SetJavaScriptEnabled")
 public class AuthenActivity extends TanrabadActivity {
 
     public static final int RESULT_ERROR = 1923;
+    public static final String USERNAME = "username";
 
     private WebView webView;
     private WebChromeClient webChromeClient = new WebChromeClient() {
@@ -134,8 +136,9 @@ public class AuthenActivity extends TanrabadActivity {
             User user = userProfileMapper.getUser();
             saveOrUpdate(user);
 
-            AccountUtils.setUser(user);
-            setResult(RESULT_OK);
+            Intent intent = new Intent();
+            intent.putExtra(USERNAME, user.getUsername());
+            setResult(RESULT_OK, intent);
             finish();
         }
 

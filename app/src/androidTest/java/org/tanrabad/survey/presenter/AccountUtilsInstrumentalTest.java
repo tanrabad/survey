@@ -17,9 +17,14 @@
 
 package org.tanrabad.survey.presenter;
 
+import android.support.test.runner.AndroidJUnit4;
+
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.tanrabad.survey.base.SurveyDbTestRule;
 import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.repository.BrokerUserRepository;
 import org.tanrabad.survey.utils.time.CurrentTimer;
@@ -28,8 +33,11 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
 import static org.mockito.Mockito.when;
 
-public class AccountUtilsTest {
+@RunWith(AndroidJUnit4.class)
+public class AccountUtilsInstrumentalTest {
 
+    @Rule
+    public SurveyDbTestRule dbTestRule = new SurveyDbTestRule();
     private User user;
 
     @Before

@@ -19,6 +19,7 @@ package org.tanrabad.survey.service;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -35,7 +36,7 @@ public class ServiceLastUpdatePreference implements ServiceLastUpdate {
     }
 
     public static void clear(Context context) {
-        context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE).edit().clear().apply();
+        context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE).edit().clear().commit();
     }
 
     public void backLastUpdateTimeToYesterday() {

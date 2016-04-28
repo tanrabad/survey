@@ -47,7 +47,7 @@ import org.tanrabad.survey.presenter.view.TorchButtonTest;
 
         EditTextStepperTest.class,
         TorchButtonTest.class,
-        AccountUtilsTest.class
+        AccountUtilsInstrumentalTest.class
         })
 public class AcceptanceTestSuite {
 }

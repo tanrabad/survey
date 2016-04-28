@@ -35,9 +35,7 @@ import uk.co.chrisjenx.calligraphy.TypefaceUtils;
 public class PlaceListActivity extends TanrabadActivity {
 
     private TabLayout placeListTabLayout;
-    private ViewPager placePager;
     private PlacePagerAdapter placePagerAdapter;
-    private Toolbar toolbar;
 
     public static void open(Activity activity) {
         Intent intent = new Intent(activity, PlaceListActivity.class);
@@ -49,22 +47,25 @@ public class PlaceListActivity extends TanrabadActivity {
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_list);
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         setupViews();
         setupHomeButton();
         setupTabPager();
         changeTabsFont();
-
-        //displayShowcase();
     }
 
     private void setupViews() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        placeListTabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        placePager = (ViewPager) findViewById(R.id.place_pager);
-        setSupportActionBar(toolbar);
+        findViewById(R.id.fab_search).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PlaceSearchActivity.open(PlaceListActivity.this);
+            }
+        });
     }
 
     private void setupTabPager() {
+        placeListTabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        ViewPager placePager = (ViewPager) findViewById(R.id.place_pager);
         placePagerAdapter = new PlacePagerAdapter(
                 getSupportFragmentManager(),
                 PlaceListActivity.this,

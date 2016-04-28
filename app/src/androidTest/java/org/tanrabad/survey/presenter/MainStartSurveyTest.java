@@ -77,8 +77,7 @@ public class MainStartSurveyTest extends TanrabadEspressoTestBase {
 
     @Test
     public void tapAvatarShouldDisplayNavigation() {
-        onView(allOf(withId(R.id.avatar_icon)
-                ,withContentDescription("แสดงข้อมูลผู้ใช้")))
+        onView(allOf(withId(R.id.avatar_icon), withContentDescription("แสดงข้อมูลผู้ใช้")))
                 .perform(click());
 
         textDisplayed(R.string.trb_watch);
@@ -92,8 +91,7 @@ public class MainStartSurveyTest extends TanrabadEspressoTestBase {
 
     @Test
     public void tapLogoutShouldFoundLoginPage() {
-        onView(allOf(withId(R.id.avatar_icon)
-                ,withContentDescription("แสดงข้อมูลผู้ใช้")))
+        onView(allOf(withId(R.id.avatar_icon), withContentDescription("แสดงข้อมูลผู้ใช้")))
                 .perform(click());
         onView(withText(R.string.logout))
                 .perform(click());

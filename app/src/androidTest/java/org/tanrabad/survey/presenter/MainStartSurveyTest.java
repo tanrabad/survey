@@ -77,7 +77,7 @@ public class MainStartSurveyTest extends TanrabadEspressoTestBase {
 
     @Test
     public void tapAvatarShouldDisplayNavigation() {
-        onView(allOf(withId(R.id.avatar_icon), withContentDescription("แสดงข้อมูลผู้ใช้")))
+        onView(allOf(withId(R.id.avatar_icon), withContentDescription(R.string.displayProfile)))
                 .perform(click());
 
         textDisplayed(R.string.trb_watch);

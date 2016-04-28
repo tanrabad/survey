@@ -19,12 +19,10 @@ package org.tanrabad.survey.presenter;
 
 import android.content.ComponentName;
 import android.content.Intent;
-import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.runner.AndroidJUnit4;
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -33,11 +31,11 @@ import org.tanrabad.survey.base.TanrabadEspressoTestBase;
 import org.tanrabad.survey.R;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.*;
+import static org.hamcrest.Matchers.allOf;
 
 @RunWith(AndroidJUnit4.class)
 public class MainStartSurveyTest extends TanrabadEspressoTestBase {
@@ -64,9 +62,9 @@ public class MainStartSurveyTest extends TanrabadEspressoTestBase {
     @Test
     public void tapStartSurveyShouldOpenPlaceListPage() {
         onView(withId(R.id.start_survey))
-                .perform(ViewActions.click());
+                .perform(click());
 
-        Intents.intended(Matchers.allOf(
+        Intents.intended(allOf(
                 hasComponent(new ComponentName(mActivity, PlaceListActivity.class))
         ));
     }
@@ -75,5 +73,20 @@ public class MainStartSurveyTest extends TanrabadEspressoTestBase {
     public void ifOfflineShouldNotFoundSyncButton() {
         onView(withId(R.id.sync_data))
                 .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+    }
+
+    @Test
+    public void tapAvatarShouldDisplayNavigation() {
+        onView(allOf(withId(R.id.avatar_icon)
+                ,withContentDescription("แสดงข้อมูลผู้ใช้")))
+                .perform(click());
+
+        textDisplayed(R.string.trb_watch);
+        textDisplayed(R.string.trb_report);
+        textDisplayed(R.string.trb_bi);
+        textDisplayed(R.string.manual);
+        textDisplayed(R.string.about_th);
+        textDisplayed(R.string.setting);
+        textDisplayed(R.string.logout);
     }
 }

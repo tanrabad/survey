@@ -25,6 +25,7 @@ import org.tanrabad.survey.presenter.view.TorchButtonTest;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+        LoginActivityTest.class,
         MainStartSurveyTest.class,
 
         PlaceListInDatabaseTest.class,

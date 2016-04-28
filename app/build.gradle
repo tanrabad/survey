@@ -52,15 +52,11 @@ android {
         versionName rootProject.versionName
         testApplicationId "org.tanrabad.survey.test"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
 
         resValue "string", "app_build_time", "build $buildTime"
         buildConfigField "String", "TRB_AUTHEN_CLIENT_ID", "\"$clientId\""
         buildConfigField "String", "TRB_AUTHEN_CLIENT_SECRET", "\"$clientSecret\""
-        generatedDensities = []
-    }
-
-    aaptOptions {
-        additionalParameters "--no-version-vectors"
     }
 
     compileOptions {

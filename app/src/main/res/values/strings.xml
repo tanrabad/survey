@@ -206,6 +206,6 @@
     <string name="please_enable_internet_before_delete">กรุณาเชื่อมต่ออินเทอร์เน็ตเพื่อลบ</string>
     <string name="manual">คู่มือ</string>
     <string name="displayProfile">แสดงข้อมูลผู้ใช้</string>
-    <string name="login_loading">กำลังเข้าสู่ระบบ กรุณารอ...</string>
+    <string name="login_loading">กำลังเข้าสู่ระบบ กรุณารอ</string>
 
 </resources>

@@ -22,9 +22,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
-
 import net.frakbot.jumpingbeans.JumpingBeans;
-
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.entity.Building;
@@ -137,7 +135,7 @@ public class InitialActivity extends TanrabadActivity {
 
     @SuppressLint("SetTextI18n")
     private void updateLoadingText(Job startingJob) {
-        switch (startingJob.id()) {
+        switch (startingJob.getId()) {
             case CreateDatabaseJob.ID:
                 loadingText.setText("เตรียมกระดาษสำหรับจดข้อมูล");
                 break;

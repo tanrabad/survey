@@ -17,8 +17,8 @@
 
 package org.tanrabad.survey.job;
 
-import org.tanrabad.survey.service.RestService;
 import org.tanrabad.survey.domain.WritableRepository;
+import org.tanrabad.survey.service.RestService;
 
 import java.io.IOException;
 import java.util.List;
@@ -35,7 +35,7 @@ public class WritableRepoUpdateJob<T> implements Job {
     }
 
     @Override
-    public int id() {
+    public int getId() {
         return ID;
     }
 

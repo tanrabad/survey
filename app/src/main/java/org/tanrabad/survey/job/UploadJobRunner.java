@@ -19,11 +19,11 @@ package org.tanrabad.survey.job;
 
 import android.content.Context;
 import android.text.TextUtils;
+import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.service.RestServiceException;
 import org.tanrabad.survey.utils.alert.Alert;
 import org.tanrabad.survey.utils.android.InternetConnection;
-import org.tanrabad.survey.R;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -111,14 +111,14 @@ public class UploadJobRunner extends AbsJobRunner {
 
     private String getDataType(AbsUploadJob uploadJob) {
         String dataType = null;
-        if (uploadJob.id() == UploadJobBuilder.PLACE_POST_ID
-                || uploadJob.id() == UploadJobBuilder.PLACE_PUT_ID) {
+        if (uploadJob.getId() == UploadJobBuilder.PLACE_POST_ID
+                || uploadJob.getId() == UploadJobBuilder.PLACE_PUT_ID) {
             dataType = PLACE;
-        } else if (uploadJob.id() == UploadJobBuilder.BUILDING_POST_ID
-                || uploadJob.id() == UploadJobBuilder.BUILDING_PUT_ID) {
+        } else if (uploadJob.getId() == UploadJobBuilder.BUILDING_POST_ID
+                || uploadJob.getId() == UploadJobBuilder.BUILDING_PUT_ID) {
             dataType = BUILDING;
-        } else if (uploadJob.id() == UploadJobBuilder.SURVEY_POST_ID
-                || uploadJob.id() == UploadJobBuilder.SURVEY_PUT_ID) {
+        } else if (uploadJob.getId() == UploadJobBuilder.SURVEY_POST_ID
+                || uploadJob.getId() == UploadJobBuilder.SURVEY_PUT_ID) {
             dataType = SURVEY;
         }
         return dataType;

@@ -17,8 +17,10 @@
 
 package org.tanrabad.survey.job;
 
-public interface Job {
-    int id();
+import java.io.IOException;
 
-    void execute() throws Exception;
+public interface Job {
+    int getId();
+
+    void execute() throws IOException;
 }

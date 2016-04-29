@@ -18,8 +18,8 @@
 package org.tanrabad.survey.job;
 
 import org.tanrabad.survey.TanrabadApp;
-import org.tanrabad.survey.service.DeleteRestService;
 import org.tanrabad.survey.domain.WritableRepository;
+import org.tanrabad.survey.service.DeleteRestService;
 
 import java.io.IOException;
 
@@ -37,12 +37,12 @@ public class DeleteDataJob<T> implements Job {
     }
 
     @Override
-    public int id() {
+    public int getId() {
         return 104924;
     }
 
     @Override
-    public void execute() throws Exception {
+    public void execute() {
         for (T eachData : data) {
             try {
                 boolean deletedOnServer = service.delete(eachData);

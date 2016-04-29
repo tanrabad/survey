@@ -62,12 +62,12 @@ public abstract class AbsUploadJob<T> implements Job {
     }
 
     @Override
-    public int id() {
+    public int getId() {
         return jobId;
     }
 
     @Override
-    public void execute() throws Exception {
+    public void execute() throws IOException {
         List<T> changedList = getUpdatedData(changedRepository);
         if (changedList == null)
             return;

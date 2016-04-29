@@ -31,7 +31,7 @@ public class CreateDatabaseJob implements Job {
     }
 
     @Override
-    public int id() {
+    public int getId() {
         return ID;
     }
 

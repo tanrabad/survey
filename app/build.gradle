@@ -135,7 +135,7 @@ android {
             incremental false
             preDexLibraries false
         } else {
-            javaMaxHeapSize "2g"
+            javaMaxHeapSize "3g"
         }
     }
 

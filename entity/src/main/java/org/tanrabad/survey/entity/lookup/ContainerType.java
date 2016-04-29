@@ -21,10 +21,21 @@ public class ContainerType implements Comparable<ContainerType> {
 
     private final int id;
     private final String name;
+    private int order;
 
     public ContainerType(int id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public ContainerType(int id, String name, int order) {
+        this.id = id;
+        this.name = name;
+        this.order = order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
     }
 
     public String getName() {
@@ -51,14 +62,15 @@ public class ContainerType implements Comparable<ContainerType> {
         return "ContainerType{"
                 + "id=" + id
                 + ", name='" + name + '\''
+                + ", order=" + order
                 + '}';
     }
 
     @Override
     public int compareTo(ContainerType o) {
-        if (id > o.getId()) {
+        if (order > o.getId()) {
             return 1;
-        } else if (id < o.getId()) {
+        } else if (order < o.getId()) {
             return -1;
         } else {
             return 0;

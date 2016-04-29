@@ -30,7 +30,7 @@ public class ContainerTypeTest {
     private static final String น้ำใข้ = "น้ำใช้";
     private static final int ID_น้ำใช้ = 1;
 
-    private final ContainerType containerType = new ContainerType(ID_น้ำใช้, น้ำใข้);
+    private final ContainerType containerType = new ContainerType(ID_น้ำใช้, น้ำใข้, 1);
 
     @Test
     public void testGetName() {
@@ -76,5 +76,11 @@ public class ContainerTypeTest {
     @Test
     public void testCompareGreaterThen() throws Exception {
         assertEquals(1, ContainerTypeStub.อื่นๆ.compareTo(ContainerTypeStub.น้ำดื่ม));
+    }
+
+    @Test
+    public void testCompareMustUserOrderValue() throws Exception {
+        assertEquals(1, ContainerTypeStub.อื่นๆ.compareTo(ContainerTypeStub.ตู้เย็น));
+
     }
 }

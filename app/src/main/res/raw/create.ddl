@@ -30,7 +30,8 @@ CREATE TABLE container_location (
 );
 CREATE TABLE container_type (
   container_type_id INTEGER     NOT NULL PRIMARY KEY,
-  name              VARCHAR(80) NOT NULL
+  name              VARCHAR(80) NOT NULL,
+  order_number      INTEGER     DEFAULT 255
 );
 CREATE TABLE district (
   district_code VARCHAR(4)  NOT NULL,

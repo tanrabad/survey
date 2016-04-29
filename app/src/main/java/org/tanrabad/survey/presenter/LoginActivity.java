@@ -17,6 +17,7 @@
 
 package org.tanrabad.survey.presenter;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -43,8 +44,8 @@ import static android.view.animation.AnimationUtils.loadAnimation;
 
 public class LoginActivity extends TanrabadActivity {
     private static final int AUTHEN_REQUEST_CODE = 1232;
+    ProgressDialog progressDialog;
     private CheckBox needShowcase;
-
     private GoogleApiClient appIndexClient;
     private View trialButton;
     private View authenButton;
@@ -74,17 +75,22 @@ public class LoginActivity extends TanrabadActivity {
         startAnimation();
     }
 
-
     private void trialLogin() {
-        trialButton.setEnabled(false);
         User user = BrokerUserRepository.getInstance().findByUsername(BuildConfig.TRIAL_USER);
         doLogin(user);
     }
 
     private void doLogin(User user) {
+        trialButton.setEnabled(false);
+        authenButton.setEnabled(false);
+        progressDialog = new ProgressDialog(this, R.style.Dialog);
+        progressDialog.setMessage(getString(R.string.login_loading));
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         AccountUtils.login(user, new LoginThread.LoginListener() {
             @Override
             public void loginFinish() {
+                progressDialog.dismiss();
                 InitialActivity.open(LoginActivity.this);
                 overridePendingTransition(R.anim.drop_in, R.anim.drop_out);
                 finish();
@@ -92,6 +98,7 @@ public class LoginActivity extends TanrabadActivity {
 
             @Override
             public void loginFail() {
+                progressDialog.dismiss();
                 trialButton.setEnabled(true);
                 authenButton.setEnabled(true);
                 Alert.highLevel().show(R.string.connect_internet_before_login);
@@ -100,9 +107,8 @@ public class LoginActivity extends TanrabadActivity {
     }
 
     private void openAuthenWeb() {
-        authenButton.setEnabled(false);
         User lastLoginUser = AccountUtils.getLastLoginUser();
-        if (lastLoginUser != null) {
+        if (lastLoginUser != null && !AccountUtils.isTrialUser(lastLoginUser)) {
             doLogin(lastLoginUser);
         } else if (InternetConnection.isAvailable(this)) {
             Intent intent = new Intent(this, AuthenActivity.class);

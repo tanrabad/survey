@@ -15,12 +15,16 @@ import android.widget.TextView;
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.entity.Organization;
 import org.tanrabad.survey.entity.User;
+import org.tanrabad.survey.job.UploadJobBuilder;
+import org.tanrabad.survey.job.UploadJobRunner;
 import org.tanrabad.survey.presenter.AboutActivity;
 import org.tanrabad.survey.presenter.AccountUtils;
 import org.tanrabad.survey.presenter.LoginActivity;
 import org.tanrabad.survey.presenter.PreferenceActivity;
 import org.tanrabad.survey.repository.BrokerOrganizationRepository;
+import org.tanrabad.survey.utils.UserDataManager;
 import org.tanrabad.survey.utils.alert.Alert;
+import org.tanrabad.survey.utils.android.InternetConnection;
 
 public class MainActivityNavigation {
 
@@ -57,9 +61,25 @@ public class MainActivityNavigation {
                         PreferenceActivity.open(activity);
                         break;
                     case R.id.logout:
-                        Intent backToLogin = new Intent(activity, LoginActivity.class);
-                        activity.startActivity(backToLogin);
-                        activity.finish();
+                        if (!InternetConnection.isAvailable(activity)) {
+                            Alert.highLevel().show(R.string.please_connect_internet_before_logout);
+                            return false;
+                        }
+
+                        UploadJobRunner uploadJob = new UploadJobRunner();
+                        uploadJob.addJobs(new UploadJobBuilder().getJobs());
+                        uploadJob.setOnSyncFinishListener(new UploadJobRunner.OnSyncFinishListener() {
+                            @Override
+                            public void onSyncFinish() {
+                                AccountUtils.clear();
+                                UserDataManager.clearAll(activity);
+                                Intent backToLogin = new Intent(activity, LoginActivity.class);
+                                activity.startActivity(backToLogin);
+                                activity.finish();
+                            }
+                        });
+                        uploadJob.start();
+
                         break;
                 }
                 return false;

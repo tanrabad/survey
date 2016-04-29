@@ -18,17 +18,18 @@
 package org.tanrabad.survey.service;
 
 import android.support.test.InstrumentationRegistry;
+
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
 
-public class ServiceLastUpdatePreferenceTest {
+public class ApiSyncInfoPreferenceTest {
 
 
     @Test
     public void testSaveThenGet() throws Exception {
-        ServiceLastUpdatePreference lastUpdatePreference = new ServiceLastUpdatePreference(
+        ApiSyncInfoPreference lastUpdatePreference = new ApiSyncInfoPreference(
                 InstrumentationRegistry.getTargetContext(), "test");
         lastUpdatePreference.save("Mon, 30 Nov 2015 17:00:00 GMT");
 

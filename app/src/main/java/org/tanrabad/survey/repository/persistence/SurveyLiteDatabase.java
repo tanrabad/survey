@@ -23,7 +23,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 
 import org.tanrabad.survey.R;
-import org.tanrabad.survey.service.ServiceLastUpdatePreference;
+import org.tanrabad.survey.service.ApiSyncInfoPreference;
 
 public final class SurveyLiteDatabase extends SQLiteOpenHelper {
 
@@ -62,7 +62,7 @@ public final class SurveyLiteDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int fromVersion, int newVersion) {
-        ServiceLastUpdatePreference.clear(context);
+        ApiSyncInfoPreference.clear(context);
         switch (fromVersion) {
             case 1:
                 onCreate(db);

@@ -35,6 +35,7 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
+
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.domain.place.PlaceWithSurveyHistoryChooser;
 import org.tanrabad.survey.domain.place.PlaceWithSurveyHistoryListPresenter;
@@ -49,9 +50,9 @@ import org.tanrabad.survey.presenter.view.MainActivityNavigation;
 import org.tanrabad.survey.repository.BrokerOrganizationRepository;
 import org.tanrabad.survey.repository.BrokerSurveyRepository;
 import org.tanrabad.survey.repository.BrokerUserRepository;
+import org.tanrabad.survey.service.ApiSyncInfoPreference;
 import org.tanrabad.survey.service.BuildingRestService;
 import org.tanrabad.survey.service.PlaceRestService;
-import org.tanrabad.survey.service.ServiceLastUpdatePreference;
 import org.tanrabad.survey.utils.alert.Alert;
 import org.tanrabad.survey.utils.android.NetworkChangeReceiver;
 import org.tanrabad.survey.utils.android.TwiceBackPressed;
@@ -263,8 +264,8 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
         switch (view.getId()) {
             case R.id.sync_data:
                 startOrResumeSyncAnimation();
-                new ServiceLastUpdatePreference(this, PlaceRestService.PATH).backLastUpdateTimeToYesterday();
-                new ServiceLastUpdatePreference(this, BuildingRestService.PATH).backLastUpdateTimeToYesterday();
+                new ApiSyncInfoPreference(this, PlaceRestService.PATH).backLastUpdateTimeToYesterday();
+                new ApiSyncInfoPreference(this, BuildingRestService.PATH).backLastUpdateTimeToYesterday();
                 findViewById(R.id.sync_data).setEnabled(false);
 
                 startSyncJobs();

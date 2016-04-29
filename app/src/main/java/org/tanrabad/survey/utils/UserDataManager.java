@@ -1,10 +1,11 @@
 package org.tanrabad.survey.utils;
 
 import android.content.Context;
+
+import org.tanrabad.survey.R;
 import org.tanrabad.survey.repository.persistence.SqlScript;
 import org.tanrabad.survey.repository.persistence.SurveyLiteDatabase;
-import org.tanrabad.survey.service.ServiceLastUpdatePreference;
-import org.tanrabad.survey.R;
+import org.tanrabad.survey.service.ApiSyncInfoPreference;
 
 public class UserDataManager {
     public static void clearAll(Context context) {
@@ -20,7 +21,7 @@ public class UserDataManager {
     }
 
     public static void clearPreferences(Context context) {
-        ServiceLastUpdatePreference.clear(context);
+        ApiSyncInfoPreference.clear(context);
     }
 }
 

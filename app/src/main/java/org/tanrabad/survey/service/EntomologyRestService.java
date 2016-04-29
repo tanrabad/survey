@@ -18,6 +18,7 @@
 package org.tanrabad.survey.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
+
 import org.joda.time.DateTime;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.entity.Place;
@@ -34,7 +35,7 @@ public class EntomologyRestService extends AbsRestService<JsonEntomology> {
     private final Place place;
 
     public EntomologyRestService(Place place) {
-        this(BASE_API, new ServiceLastUpdatePreference(TanrabadApp.getInstance(), PATH), place);
+        this(BASE_API, new ApiSyncInfoPreference(TanrabadApp.getInstance(), PATH), place);
     }
 
     public EntomologyRestService(String apiBaseUrl, ServiceLastUpdate serviceLastUpdate, Place place) {

@@ -18,9 +18,10 @@
 package org.tanrabad.survey.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
+
 import org.tanrabad.survey.TanrabadApp;
-import org.tanrabad.survey.service.json.JsonPlaceType;
 import org.tanrabad.survey.entity.lookup.PlaceType;
+import org.tanrabad.survey.service.json.JsonPlaceType;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class PlaceTypeRestService extends AbsRestService<PlaceType> {
     private static final String PATH = "/placetype";
 
     public PlaceTypeRestService() {
-        this(BASE_API, new ServiceLastUpdatePreference(TanrabadApp.getInstance(), PATH));
+        this(BASE_API, new ApiSyncInfoPreference(TanrabadApp.getInstance(), PATH));
     }
 
     private PlaceTypeRestService(String apiBaseUrl, ServiceLastUpdate serviceLastUpdate) {

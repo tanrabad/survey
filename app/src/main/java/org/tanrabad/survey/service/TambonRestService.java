@@ -18,6 +18,7 @@
 package org.tanrabad.survey.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
+
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.entity.lookup.Subdistrict;
 import org.tanrabad.survey.service.json.JsonTambon;
@@ -32,7 +33,7 @@ public class TambonRestService extends AbsRestService<Subdistrict> {
     private static final String PATH = "/tambon";
 
     public TambonRestService() {
-        this(BASE_API, new ServiceLastUpdatePreference(TanrabadApp.getInstance(), PATH));
+        this(BASE_API, new ApiSyncInfoPreference(TanrabadApp.getInstance(), PATH));
     }
 
     public TambonRestService(String apiBaseUrl, ServiceLastUpdate serviceLastUpdate) {

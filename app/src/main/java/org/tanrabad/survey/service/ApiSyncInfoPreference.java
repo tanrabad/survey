@@ -19,18 +19,24 @@ package org.tanrabad.survey.service;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-public class ServiceLastUpdatePreference implements ServiceLastUpdate {
+public class ApiSyncInfoPreference implements ServiceLastUpdate {
 
-    private static final String PREF_NAME = "api-last-update";
+    public static final String SYNC_SUCCESS_KEY = "sync_success";
+    private static final String PREF_NAME = "api-sync-info";
     private final Context context;
     private final String path;
 
-    public ServiceLastUpdatePreference(Context context, String path) {
+    public ApiSyncInfoPreference(Context context) {
+        this(context, null);
+    }
+
+    public ApiSyncInfoPreference(Context context, String path) {
         this.context = context;
         this.path = path;
     }
@@ -47,6 +53,9 @@ public class ServiceLastUpdatePreference implements ServiceLastUpdate {
 
     @Override
     public void save(String dateTime) {
+        if (TextUtils.isEmpty(path))
+            throw new RuntimeException("Please define path before save timestamp");
+
         SharedPreferences.Editor spEditor = getSharedPreferences().edit();
         spEditor.putString(path, dateTime);
         spEditor.apply();
@@ -59,6 +68,16 @@ public class ServiceLastUpdatePreference implements ServiceLastUpdate {
 
     private SharedPreferences getSharedPreferences() {
         return context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+    }
+
+    public void saveSyncStatus(boolean isSuccess) {
+        SharedPreferences.Editor spEditor = getSharedPreferences().edit();
+        spEditor.putBoolean(SYNC_SUCCESS_KEY, isSuccess);
+        spEditor.apply();
+    }
+
+    public boolean isPreviousSyncStatusSuccess() {
+        return getSharedPreferences().getBoolean(SYNC_SUCCESS_KEY, false);
     }
 
 }

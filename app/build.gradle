@@ -134,8 +134,6 @@ android {
         if (isCi) {
             incremental false
             preDexLibraries false
-        } else {
-            javaMaxHeapSize "3g"
         }
     }
 

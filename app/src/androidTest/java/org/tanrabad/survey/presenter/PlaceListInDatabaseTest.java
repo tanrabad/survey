@@ -153,4 +153,14 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
                 hasComponent(new ComponentName(mActivity, PlaceSearchActivity.class)
                 ));
     }
+
+    @Test
+    public void tapFabSearhShouldOpenPlaceSearchPage() {
+        onView(withId(R.id.fab_search))
+                .perform(click());
+
+        Intents.intended(
+                hasComponent(new ComponentName(mActivity, PlaceSearchActivity.class)
+                ));
+    }
 }

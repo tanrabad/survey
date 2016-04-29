@@ -21,8 +21,8 @@ import org.tanrabad.survey.entity.lookup.ContainerType;
 
 public class ContainerTypeStub {
 
-    public static final ContainerType น้ำใช้ = new ContainerType(1, "น้ำใช้", 1);
-    public static final ContainerType น้ำดื่ม = new ContainerType(2, "น้ำดื่ม", 2);
+    public static final ContainerType น้ำใช้ = new ContainerType(1, "น้ำใช้");
+    public static final ContainerType น้ำดื่ม = new ContainerType(2, "น้ำดื่ม");
     public static final ContainerType แจกัน = new ContainerType(3, "แจกัน", 3);
     public static final ContainerType ที่รองกันมด = new ContainerType(4, "ที่รองกันมด", 4);
     public static final ContainerType จานรองกระถาง = new ContainerType(5, "จานรองกระถาง", 5);

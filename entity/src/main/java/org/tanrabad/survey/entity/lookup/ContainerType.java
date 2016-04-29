@@ -66,18 +66,23 @@ public class ContainerType implements Comparable<ContainerType> {
                 + '}';
     }
 
-    @Override
-    public int compareTo(ContainerType o) {
-        if (order > o.getId()) {
-            return 1;
-        } else if (order < o.getId()) {
-            return -1;
-        } else {
-            return 0;
-        }
-    }
-
     public int getId() {
         return id;
+    }
+
+    @Override
+    public int compareTo(ContainerType that) {
+        if (this.order < that.order) {
+            return -1;
+        } else if (this.order > that.order) {
+            return 1;
+        }
+
+        if (this.id < that.id) {
+            return -1;
+        } else if (this.id > that.id) {
+            return 1;
+        }
+        return 0;
     }
 }

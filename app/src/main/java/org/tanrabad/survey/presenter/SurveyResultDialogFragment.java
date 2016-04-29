@@ -24,12 +24,23 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
+import org.tanrabad.survey.entity.Place;
+import org.tanrabad.survey.entity.lookup.District;
+import org.tanrabad.survey.entity.lookup.PlaceType;
+import org.tanrabad.survey.entity.lookup.Province;
+import org.tanrabad.survey.entity.lookup.Subdistrict;
 import org.tanrabad.survey.job.AbsJobRunner;
 import org.tanrabad.survey.job.EntomologyJob;
 import org.tanrabad.survey.job.Job;
-import org.tanrabad.survey.job.UploadJobBuilder;
+import org.tanrabad.survey.job.UploadJobRunner;
 import org.tanrabad.survey.presenter.view.KeyContainerView;
 import org.tanrabad.survey.presenter.view.RelativeTimeAgoTextView;
 import org.tanrabad.survey.repository.BrokerPlaceRepository;
@@ -43,12 +54,6 @@ import org.tanrabad.survey.utils.android.InternetConnection;
 import org.tanrabad.survey.utils.android.ResourceUtils;
 import org.tanrabad.survey.utils.time.ThaiDatePrinter;
 import org.tanrabad.survey.utils.time.ThaiDateTimeConverter;
-import org.tanrabad.survey.entity.Place;
-import org.tanrabad.survey.entity.lookup.District;
-import org.tanrabad.survey.entity.lookup.PlaceType;
-import org.tanrabad.survey.entity.lookup.Province;
-import org.tanrabad.survey.entity.lookup.Subdistrict;
-import org.tanrabad.survey.R;
 import th.or.nectec.thai.address.AddressPrinter;
 
 import java.text.DecimalFormat;
@@ -150,7 +155,7 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
     private void startJob(Place place) {
         if (InternetConnection.isAvailable(getContext())) {
             AbsJobRunner jobRunner = new SurveyResultJobRunner();
-            jobRunner.addJobs(new UploadJobBuilder().getJobs());
+            jobRunner.addJobs(new UploadJobRunner.Builder().getJobs());
             jsonEntomologyGetDataJob = new EntomologyJob(place);
             jobRunner.addJob(jsonEntomologyGetDataJob);
             jobRunner.start();

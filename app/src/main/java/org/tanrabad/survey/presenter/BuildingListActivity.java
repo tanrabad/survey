@@ -49,7 +49,6 @@ import org.tanrabad.survey.entity.Survey;
 import org.tanrabad.survey.entity.lookup.PlaceType;
 import org.tanrabad.survey.job.DeleteDataJob;
 import org.tanrabad.survey.job.DownloadJobBuilder;
-import org.tanrabad.survey.job.UploadJobBuilder;
 import org.tanrabad.survey.job.UploadJobRunner;
 import org.tanrabad.survey.presenter.view.EmptyLayoutView;
 import org.tanrabad.survey.repository.BrokerBuildingRepository;
@@ -189,7 +188,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
                 loadSurveyBuildingList();
             }
         });
-        jobRunner.addJobs(new UploadJobBuilder().getJobs());
+        jobRunner.addJobs(new UploadJobRunner.Builder().getJobs());
         jobRunner.addJobs(new DownloadJobBuilder().getJobs());
         jobRunner.start();
     }

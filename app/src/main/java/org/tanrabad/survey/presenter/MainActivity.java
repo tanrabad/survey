@@ -33,9 +33,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.TextView;
-
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
-
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.domain.place.PlaceWithSurveyHistoryChooser;
 import org.tanrabad.survey.domain.place.PlaceWithSurveyHistoryListPresenter;
@@ -44,7 +42,6 @@ import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.job.AbsJobRunner;
 import org.tanrabad.survey.job.DownloadJobBuilder;
-import org.tanrabad.survey.job.UploadJobBuilder;
 import org.tanrabad.survey.job.UploadJobRunner;
 import org.tanrabad.survey.presenter.view.MainActivityNavigation;
 import org.tanrabad.survey.repository.BrokerOrganizationRepository;
@@ -210,7 +207,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
 
     private void startSyncJobs() {
         AbsJobRunner jobRunner = new ManualSyncJobRunner();
-        jobRunner.addJobs(new UploadJobBuilder().getJobs());
+        jobRunner.addJobs(new UploadJobRunner.Builder().getJobs());
         jobRunner.addJobs(new DownloadJobBuilder().getJobs());
         jobRunner.start();
     }

@@ -46,7 +46,12 @@ import org.tanrabad.survey.domain.survey.SurveyBuildingHistoryController;
 import org.tanrabad.survey.domain.survey.SurveyBuildingPresenter;
 import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.entity.Survey;
-import org.tanrabad.survey.job.*;
+import org.tanrabad.survey.job.AbsJobRunner;
+import org.tanrabad.survey.job.AbsUploadJob;
+import org.tanrabad.survey.job.DeleteDataJob;
+import org.tanrabad.survey.job.DownloadJobBuilder;
+import org.tanrabad.survey.job.Job;
+import org.tanrabad.survey.job.UploadJobRunner;
 import org.tanrabad.survey.presenter.view.EmptyLayoutView;
 import org.tanrabad.survey.repository.BrokerPlaceRepository;
 import org.tanrabad.survey.repository.BrokerSurveyRepository;
@@ -206,7 +211,7 @@ public class SurveyBuildingHistoryActivity extends TanrabadActivity implements S
 
     private void startSyncJob() {
         AbsJobRunner jobRunner = new SurveySyncJobRunner();
-        jobRunner.addJobs(new UploadJobBuilder().getJobs());
+        jobRunner.addJobs(new UploadJobRunner.Builder().getJobs());
         jobRunner.addJobs(new DownloadJobBuilder().getJobs());
         jobRunner.start();
     }

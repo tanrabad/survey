@@ -21,7 +21,13 @@ import android.content.Context;
 import android.text.TextUtils;
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
+import org.tanrabad.survey.repository.persistence.DbBuildingRepository;
+import org.tanrabad.survey.repository.persistence.DbPlaceRepository;
+import org.tanrabad.survey.repository.persistence.DbSurveyRepository;
+import org.tanrabad.survey.service.BuildingRestService;
+import org.tanrabad.survey.service.PlaceRestService;
 import org.tanrabad.survey.service.RestServiceException;
+import org.tanrabad.survey.service.SurveyRestService;
 import org.tanrabad.survey.utils.alert.Alert;
 import org.tanrabad.survey.utils.android.InternetConnection;
 
@@ -111,14 +117,14 @@ public class UploadJobRunner extends AbsJobRunner {
 
     private String getDataType(AbsUploadJob uploadJob) {
         String dataType = null;
-        if (uploadJob.getId() == UploadJobBuilder.PLACE_POST_ID
-                || uploadJob.getId() == UploadJobBuilder.PLACE_PUT_ID) {
+        if (uploadJob.getId() == Builder.PLACE_POST_ID
+                || uploadJob.getId() == Builder.PLACE_PUT_ID) {
             dataType = PLACE;
-        } else if (uploadJob.getId() == UploadJobBuilder.BUILDING_POST_ID
-                || uploadJob.getId() == UploadJobBuilder.BUILDING_PUT_ID) {
+        } else if (uploadJob.getId() == Builder.BUILDING_POST_ID
+                || uploadJob.getId() == Builder.BUILDING_PUT_ID) {
             dataType = BUILDING;
-        } else if (uploadJob.getId() == UploadJobBuilder.SURVEY_POST_ID
-                || uploadJob.getId() == UploadJobBuilder.SURVEY_PUT_ID) {
+        } else if (uploadJob.getId() == Builder.SURVEY_POST_ID
+                || uploadJob.getId() == Builder.SURVEY_PUT_ID) {
             dataType = SURVEY;
         }
         return dataType;
@@ -145,5 +151,38 @@ public class UploadJobRunner extends AbsJobRunner {
 
     public interface OnSyncFinishListener {
         void onSyncFinish();
+    }
+
+    public static class Builder {
+        public static final int PLACE_POST_ID = 101;
+        public static final int BUILDING_POST_ID = 102;
+        public static final int SURVEY_POST_ID = 103;
+        public static final int PLACE_PUT_ID = 201;
+        public static final int BUILDING_PUT_ID = 202;
+        public static final int SURVEY_PUT_ID = 203;
+
+        public PostDataJob placePostDataJob = new PostDataJob<>(
+                PLACE_POST_ID, new DbPlaceRepository(TanrabadApp.getInstance()), new PlaceRestService());
+        public PostDataJob buildingPostDataJob = new PostDataJob<>(
+                BUILDING_POST_ID, new DbBuildingRepository(TanrabadApp.getInstance()), new BuildingRestService());
+        public PostDataJob surveyPostDataJob = new PostDataJob<>(
+                SURVEY_POST_ID, new DbSurveyRepository(TanrabadApp.getInstance()), new SurveyRestService());
+        public PutDataJob placePutDataJob = new PutDataJob<>(
+                PLACE_PUT_ID, new DbPlaceRepository(TanrabadApp.getInstance()), new PlaceRestService());
+        public PutDataJob buildingPutDataJob = new PutDataJob<>(
+                BUILDING_PUT_ID, new DbBuildingRepository(TanrabadApp.getInstance()), new BuildingRestService());
+        public PutDataJob surveyPutDataJob = new PutDataJob<>(
+                SURVEY_PUT_ID, new DbSurveyRepository(TanrabadApp.getInstance()), new SurveyRestService());
+
+        public List<Job> getJobs() {
+            List<Job> jobs = new ArrayList<>();
+            jobs.add(placePostDataJob);
+            jobs.add(buildingPostDataJob);
+            jobs.add(surveyPostDataJob);
+            jobs.add(placePutDataJob);
+            jobs.add(buildingPutDataJob);
+            jobs.add(surveyPutDataJob);
+            return jobs;
+        }
     }
 }

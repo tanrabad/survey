@@ -24,23 +24,27 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
+import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
+import org.tanrabad.survey.domain.place.PlaceChooser;
+import org.tanrabad.survey.domain.place.PlaceListPresenter;
+import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.job.DownloadJobBuilder;
-import org.tanrabad.survey.job.UploadJobBuilder;
 import org.tanrabad.survey.job.UploadJobRunner;
 import org.tanrabad.survey.presenter.view.EmptyLayoutView;
 import org.tanrabad.survey.repository.BrokerPlaceRepository;
 import org.tanrabad.survey.utils.android.InternetConnection;
 import org.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import org.tanrabad.survey.utils.prompt.PromptMessage;
-import org.tanrabad.survey.domain.place.PlaceChooser;
-import org.tanrabad.survey.domain.place.PlaceListPresenter;
-import org.tanrabad.survey.entity.Place;
-import org.tanrabad.survey.R;
 
 import java.util.Collections;
 import java.util.List;
@@ -213,7 +217,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements
                 loadPlaceList();
             }
         });
-        jobRunner.addJobs(new UploadJobBuilder().getJobs());
+        jobRunner.addJobs(new UploadJobRunner.Builder().getJobs());
         jobRunner.addJobs(new DownloadJobBuilder().getJobs());
         jobRunner.start();
     }

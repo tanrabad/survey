@@ -18,7 +18,11 @@
 package org.tanrabad.survey.utils;
 
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class ResourceFile {
 
@@ -40,7 +44,7 @@ public class ResourceFile {
         } catch (FileNotFoundException exception) {
             System.out.print("Not found file " + filename);
             return null;
-        } catch (IOException io){
+        } catch (IOException io) {
             io.printStackTrace();
             return null;
         }

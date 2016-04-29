@@ -22,11 +22,9 @@ import org.junit.Test;
 import org.tanrabad.survey.domain.place.PlaceTypeRepositoryException;
 import org.tanrabad.survey.entity.lookup.PlaceType;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class InMemoryPlaceTypeRepositoryTest {
 
@@ -61,13 +59,9 @@ public class InMemoryPlaceTypeRepositoryTest {
 
     @Test
     public void testFindAllPlaceType() throws Exception {
-        List<PlaceType> placeInRepo = new ArrayList<>();
-        placeInRepo.add(village);
-        placeInRepo.add(worship);
-
         List<PlaceType> placeTypes = placeTypeRepository.find();
 
-        assertTrue(placeTypes.containsAll(placeInRepo));
+        assertEquals(2, placeTypes.size());
     }
 
     @Test

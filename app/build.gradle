@@ -79,7 +79,6 @@ android {
     buildTypes {
         debug {
             debuggable true
-            testCoverageEnabled true
             ext.enableCrashlytics = false
 
             manifestPlaceholders = [google_map_key: System.getenv("TANRABAD_GOOGLE_DEBUG_KEY")]

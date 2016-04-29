@@ -45,10 +45,10 @@ public class ContainerTypeRestService extends AbsRestService<ContainerType> {
 
     @Override
     protected List<ContainerType> jsonToEntityList(String responseBody) throws IOException {
-        ArrayList<ContainerType> provinceList = new ArrayList<>();
+        ArrayList<ContainerType> containerTypes = new ArrayList<>();
         List<JsonContainerType> jsonContainerTypeList = LoganSquare.parseList(responseBody, JsonContainerType.class);
         for (JsonContainerType eachJsonContainerType : jsonContainerTypeList)
-            provinceList.add(eachJsonContainerType.getEntity());
-        return provinceList;
+            containerTypes.add(eachJsonContainerType.getEntity());
+        return containerTypes;
     }
 }

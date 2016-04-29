@@ -111,6 +111,7 @@ public class DbContainerTypeRepository extends DbRepository implements Container
         ContentValues values = new ContentValues();
         values.put(ContainerTypeColumn.ID, containerType.getId());
         values.put(ContainerTypeColumn.NAME, containerType.getName());
+        values.put(ContainerTypeColumn.ORDER, containerType.getOrder());
         return values;
     }
 }

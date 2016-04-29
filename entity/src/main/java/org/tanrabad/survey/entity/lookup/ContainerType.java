@@ -38,6 +38,10 @@ public class ContainerType implements Comparable<ContainerType> {
         this.order = order;
     }
 
+    public int getOrder() {
+        return order;
+    }
+
     public String getName() {
         return name;
     }

@@ -21,6 +21,7 @@ public class ContainerTypeColumn {
 
     public static final String ID = "container_type_id";
     public static final String NAME = "name";
+    public static final String ORDER = "order_number";
 
     public static String[] wildcard() {
         return new String[]{ID, NAME};

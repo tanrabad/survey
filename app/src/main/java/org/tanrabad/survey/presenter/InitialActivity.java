@@ -22,8 +22,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+
 import net.frakbot.jumpingbeans.JumpingBeans;
+
+import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
+import org.tanrabad.survey.entity.Building;
+import org.tanrabad.survey.entity.Place;
+import org.tanrabad.survey.entity.lookup.*;
 import org.tanrabad.survey.job.AbsJobRunner;
 import org.tanrabad.survey.job.Job;
 import org.tanrabad.survey.job.WritableRepoUpdateJob;
@@ -32,10 +38,8 @@ import org.tanrabad.survey.repository.persistence.*;
 import org.tanrabad.survey.service.*;
 import org.tanrabad.survey.utils.alert.Alert;
 import org.tanrabad.survey.utils.android.InternetConnection;
-import org.tanrabad.survey.entity.Building;
-import org.tanrabad.survey.entity.Place;
-import org.tanrabad.survey.entity.lookup.*;
-import org.tanrabad.survey.R;
+import org.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
+import org.tanrabad.survey.utils.prompt.PromptMessage;
 
 import java.io.IOException;
 
@@ -62,6 +66,7 @@ public class InitialActivity extends TanrabadActivity {
 
     private TextView loadingText;
     private JumpingBeans pleaseWaitBeans;
+    private ApiSyncInfoPreference syncInfoPreference;
 
     public static void open(Activity activity) {
         Intent intent = new Intent(activity, InitialActivity.class);
@@ -74,7 +79,12 @@ public class InitialActivity extends TanrabadActivity {
         setContentView(R.layout.activity_initial);
         loadingText = (TextView) findViewById(R.id.loading);
         startPleaseWaitBeansJump();
+        syncInfoPreference = new ApiSyncInfoPreference(InitialActivity.this);
 
+        doDownloadData();
+    }
+
+    private void doDownloadData() {
         if (InternetConnection.isAvailable(this)) {
             new InitialJobRunner()
                     .addJob(new CreateDatabaseJob(this))
@@ -89,11 +99,28 @@ public class InitialActivity extends TanrabadActivity {
                     .addJob(buildingUpdateJob)
                     .start();
         } else {
-            MainActivity.open(InitialActivity.this);
-            finish();
+            if (!syncInfoPreference.isPreviousSyncStatusSuccess()) {
+                showDownloadFirstTimeFailDialog();
+            } else {
+                MainActivity.open(InitialActivity.this);
+                finish();
+            }
         }
     }
 
+    private void showDownloadFirstTimeFailDialog() {
+        PromptMessage promptMessage = new AlertDialogPromptMessage(InitialActivity.this);
+        promptMessage.setOnConfirm(getString(R.string.back_to_login), new PromptMessage.OnConfirmListener() {
+            @Override
+            public void onConfirm() {
+                Intent intent = new Intent(InitialActivity.this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+            }
+        });
+        promptMessage.show(null, getString(R.string.download_first_time_fail));
+    }
 
     private void startPleaseWaitBeansJump() {
         pleaseWaitBeans = JumpingBeans.with((TextView) findViewById(R.id.please_wait))
@@ -161,10 +188,22 @@ public class InitialActivity extends TanrabadActivity {
         @Override
         protected void onRunFinish() {
             pleaseWaitBeans.stopJumping();
+
+            if (isSyncSuccess()) {
+                syncInfoPreference.saveSyncStatus(true);
+            } else if (!syncInfoPreference.isPreviousSyncStatusSuccess()) {
+                showDownloadFirstTimeFailDialog();
+                return;
+            }
+
             MainActivity.open(InitialActivity.this);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             finish();
             showErrorMessage();
+        }
+
+        private boolean isSyncSuccess() {
+            return ioException == null && restServiceException == null;
         }
 
         private void showErrorMessage() {

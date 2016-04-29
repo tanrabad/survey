@@ -207,5 +207,7 @@
     <string name="manual">คู่มือ</string>
     <string name="displayProfile">แสดงข้อมูลผู้ใช้</string>
     <string name="login_loading">กำลังเข้าสู่ระบบ กรุณารอ</string>
+    <string name="back_to_login">กลับไปหน้า login</string>
+    <string name="download_first_time_fail">ไม่สามารถใช้งานแอปได้ เนื่องจากการดาวน์โหลดข้อมูลครั้งแรกล้มเหลว</string>
 
 </resources>

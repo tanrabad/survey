@@ -33,7 +33,7 @@ public final class AccountUtils {
     protected static final long REMEMBER_LIMIT = ONE_DAY_IN_MILLS;
 
 
-    protected static final CurrentTimer currentTimer = new JodaCurrentTime();
+    protected static CurrentTimer currentTimer = new JodaCurrentTime();
     private static User user;
 
     private static LastLoginUserRepo lastLoginUserRepo = new PreferenceLastLoginUserRepo();

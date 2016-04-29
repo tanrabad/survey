@@ -22,10 +22,11 @@ import org.junit.Test;
 import org.tanrabad.survey.domain.place.PlaceTypeRepositoryException;
 import org.tanrabad.survey.entity.lookup.PlaceType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-
+import static org.junit.Assert.assertTrue;
 
 public class InMemoryPlaceTypeRepositoryTest {
 
@@ -44,6 +45,15 @@ public class InMemoryPlaceTypeRepositoryTest {
         placeTypeRepository.save(village);
     }
 
+    @Test
+    public void testUpdate() throws Exception {
+        PlaceType house = new PlaceType(1, "ที่พักอาศัย");
+
+        placeTypeRepository.update(house);
+
+        assertEquals(house, placeTypeRepository.findById(house.getId()));
+    }
+
     @Test(expected = PlaceTypeRepositoryException.class)
     public void testUpdateNotExistPlaceMustThrowException() throws Exception {
         placeTypeRepository.update(new PlaceType(3, "โรงเรียน"));
@@ -51,10 +61,13 @@ public class InMemoryPlaceTypeRepositoryTest {
 
     @Test
     public void testFindAllPlaceType() throws Exception {
+        List<PlaceType> placeInRepo = new ArrayList<>();
+        placeInRepo.add(village);
+        placeInRepo.add(worship);
+
         List<PlaceType> placeTypes = placeTypeRepository.find();
-        assertEquals(2, placeTypes.size());
-        assertEquals("หมู่บ้าน/ชุมชน", placeTypes.get(0).getName());
-        assertEquals("ศาสนสถาน", placeTypes.get(1).getName());
+
+        assertTrue(placeTypes.containsAll(placeInRepo));
     }
 
     @Test

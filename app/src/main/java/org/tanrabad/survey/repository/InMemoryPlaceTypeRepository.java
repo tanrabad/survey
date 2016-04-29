@@ -23,14 +23,16 @@ import org.tanrabad.survey.entity.lookup.PlaceType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 final class InMemoryPlaceTypeRepository implements PlaceTypeRepository {
 
     private static InMemoryPlaceTypeRepository instance;
-    private List<PlaceType> placeTypes;
+    private Map<Integer, PlaceType> placeTypes;
 
     private InMemoryPlaceTypeRepository() {
-        placeTypes = new ArrayList<>();
+        placeTypes = new ConcurrentHashMap<>();
     }
 
     public static InMemoryPlaceTypeRepository getInstance() {
@@ -41,16 +43,12 @@ final class InMemoryPlaceTypeRepository implements PlaceTypeRepository {
 
     @Override
     public List<PlaceType> find() {
-        return placeTypes;
+        return new ArrayList<>(placeTypes.values());
     }
 
     @Override
     public PlaceType findById(int placeTypeId) {
-        for (PlaceType placeType : placeTypes) {
-            if (placeType.getId() == placeTypeId)
-                return placeType;
-        }
-        return null;
+        return placeTypes.get(placeTypeId);
     }
 
     @Override
@@ -65,26 +63,26 @@ final class InMemoryPlaceTypeRepository implements PlaceTypeRepository {
     }
 
     public boolean save(PlaceType placeType) {
-        if (placeTypes.contains(placeType)) {
+        if (placeTypes.containsKey(placeType.getId())) {
             throw new PlaceTypeRepositoryException();
         } else {
-            placeTypes.add(placeType);
+            placeTypes.put(placeType.getId(), placeType);
         }
         return true;
     }
 
     public boolean update(PlaceType placeType) {
-        if (!placeTypes.contains(placeType)) {
+        if (!placeTypes.containsKey(placeType.getId())) {
             throw new PlaceTypeRepositoryException();
         } else {
-            placeTypes.set(placeTypes.indexOf(placeType), placeType);
+            placeTypes.put(placeType.getId(), placeType);
         }
         return true;
     }
 
     @Override
     public boolean delete(PlaceType placeType) {
-        if (!placeTypes.contains(placeType)) {
+        if (!placeTypes.containsKey(placeType.getId())) {
             throw new PlaceTypeRepositoryException();
         }
         placeTypes.remove(placeType.getId());

@@ -28,7 +28,7 @@ import org.tanrabad.survey.service.ServiceLastUpdatePreference;
 public final class SurveyLiteDatabase extends SQLiteOpenHelper {
 
     public static final String DB_NAME = "trb_survey.db";
-    public static final int DB_VERSION = 3;
+    public static final int DB_VERSION = 4;
     private static SurveyLiteDatabase instance;
     private Context context;
 
@@ -69,6 +69,10 @@ public final class SurveyLiteDatabase extends SQLiteOpenHelper {
                 break;
             case 2:
                 SqlScript.readAndExecute(context, db, R.raw.alter2to3);
+                // fall through
+            case 3:
+                SqlScript.readAndExecute(context, db, R.raw.alter3to4);
+                break;
         }
 
     }

@@ -18,9 +18,7 @@
 package org.tanrabad.survey.utils;
 
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
 
 public class ResourceFile {
 
@@ -39,8 +37,11 @@ public class ResourceFile {
                 line = br.readLine();
             }
             return sb.toString();
-        } catch (Exception exception) {
-            exception.printStackTrace();
+        } catch (FileNotFoundException exception) {
+            System.out.print("Not found file " + filename);
+            return null;
+        } catch (IOException io){
+            io.printStackTrace();
             return null;
         }
     }

@@ -25,7 +25,9 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-public class ApiSyncInfoPreference implements ServiceLastUpdate {
+import static org.tanrabad.survey.presenter.InitialActivityController.SyncStatus;
+
+public class ApiSyncInfoPreference implements ServiceLastUpdate, SyncStatus {
 
     public static final String SYNC_SUCCESS_KEY = "sync_success";
     private static final String PREF_NAME = "api-sync-info";
@@ -70,7 +72,8 @@ public class ApiSyncInfoPreference implements ServiceLastUpdate {
         return context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
     }
 
-    public void saveSyncStatus(boolean isSuccess) {
+    @Override
+    public void setSyncStatus(boolean isSuccess) {
         SharedPreferences.Editor spEditor = getSharedPreferences().edit();
         spEditor.putBoolean(SYNC_SUCCESS_KEY, isSuccess);
         spEditor.apply();

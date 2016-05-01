@@ -3,16 +3,12 @@ package org.tanrabad.survey.presenter;
 import android.os.Handler;
 import android.os.Message;
 
-import org.tanrabad.survey.BuildConfig;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.job.UploadJobBuilder;
-import org.tanrabad.survey.service.AbsRestService;
 import org.tanrabad.survey.utils.UserDataManager;
-import org.tanrabad.survey.utils.android.InternetConnection;
 
-class LoginThread implements Runnable {
-    public static final String TEST_URL = "http://trb-test.igridproject.info/v1";
+class LoginThread extends LoginController implements Runnable {
     private static final int SUCCESS = 1;
     private static final int FAIL = 0;
     private final User user;
@@ -24,23 +20,22 @@ class LoginThread implements Runnable {
         handler = new LoginHandler(loginListener);
     }
 
+    @Override
     public void run() {
-        if (InternetConnection.isAvailable(TanrabadApp.getInstance())) {
-            if (shouldUploadOldUserData(user)) {
-                setApiEndPointByUser(AccountUtils.getLastLoginUser());
-                syncAndClearData();
-            }
-        } else if (!user.equals(AccountUtils.getLastLoginUser())) {
+        if (isCanLogin(user)) {
+            handler.sendEmptyMessage(SUCCESS);
+        } else {
             handler.sendEmptyMessage(FAIL);
-            return;
         }
-
-        AccountUtils.setUser(user);
-        setApiEndPointByUser(user);
-        handler.sendEmptyMessage(SUCCESS);
     }
 
-    private void syncAndClearData() {
+    @Override
+    protected void setUser(User user) {
+        AccountUtils.setUser(user);
+    }
+
+    @Override
+    protected void syncAndClearData() {
         try {
             UploadJobBuilder uploadJobBuilder = new UploadJobBuilder();
             uploadJobBuilder.placePostDataJob.execute();
@@ -52,22 +47,6 @@ class LoginThread implements Runnable {
             UserDataManager.clearAll(TanrabadApp.getInstance());
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-
-    private static boolean shouldUploadOldUserData(User user) {
-        if (AccountUtils.getLastLoginUser() == null)
-            return false;
-
-        return user.getOrganizationId() != AccountUtils.getLastLoginUser().getOrganizationId();
-    }
-
-    private static void setApiEndPointByUser(User user) {
-        if (!AccountUtils.isTrialUser(user)) {
-            AbsRestService.setBaseApi(BuildConfig.API_URL);
-        } else {
-            AbsRestService.setBaseApi(TEST_URL);
         }
     }
 

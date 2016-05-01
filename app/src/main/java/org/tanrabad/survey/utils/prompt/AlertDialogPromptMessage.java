@@ -23,6 +23,7 @@ import android.support.annotation.DrawableRes;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.widget.TextView;
+
 import org.tanrabad.survey.R;
 
 public class AlertDialogPromptMessage implements PromptMessage {
@@ -41,6 +42,7 @@ public class AlertDialogPromptMessage implements PromptMessage {
     @Override
     public void show(String title, String message) {
         alertDialog.setTitle(title);
+        alertDialog.setCancelable(false);
         if (TextUtils.isEmpty(message)) {
             alertDialog.show();
         } else {

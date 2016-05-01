@@ -36,6 +36,7 @@ import org.tanrabad.survey.job.WritableRepoUpdateJob;
 import org.tanrabad.survey.repository.*;
 import org.tanrabad.survey.repository.persistence.*;
 import org.tanrabad.survey.service.*;
+import org.tanrabad.survey.utils.UserDataManager;
 import org.tanrabad.survey.utils.alert.Alert;
 import org.tanrabad.survey.utils.android.InternetConnection;
 import org.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
@@ -67,6 +68,7 @@ public class InitialActivity extends TanrabadActivity {
     private TextView loadingText;
     private JumpingBeans pleaseWaitBeans;
     private ApiSyncInfoPreference syncInfoPreference;
+    private InitialActivityController initialActivityController;
 
     public static void open(Activity activity) {
         Intent intent = new Intent(activity, InitialActivity.class);
@@ -80,46 +82,51 @@ public class InitialActivity extends TanrabadActivity {
         loadingText = (TextView) findViewById(R.id.loading);
         startPleaseWaitBeansJump();
         syncInfoPreference = new ApiSyncInfoPreference(InitialActivity.this);
+        InternetConnection internetConnection = new InternetConnection(this);
 
-        doDownloadData();
-    }
-
-    private void doDownloadData() {
-        if (InternetConnection.isAvailable(this)) {
-            new InitialJobRunner()
-                    .addJob(new CreateDatabaseJob(this))
-                    .addJob(containerLocationUpdateJob)
-                    .addJob(containerTypeUpdateJob)
-                    .addJob(provinceUpdateJob)
-                    .addJob(districtUpdateJob)
-                    .addJob(subDistrictUpdateJob)
-                    .addJob(placeTypeUpdateJob)
-                    .addJob(placeSubTypeUpdateJob)
-                    .addJob(placeUpdateJob)
-                    .addJob(buildingUpdateJob)
-                    .start();
-        } else {
-            if (!syncInfoPreference.isPreviousSyncStatusSuccess()) {
-                showDownloadFirstTimeFailDialog();
-            } else {
-                MainActivity.open(InitialActivity.this);
-                finish();
-            }
-        }
-    }
-
-    private void showDownloadFirstTimeFailDialog() {
-        PromptMessage promptMessage = new AlertDialogPromptMessage(InitialActivity.this);
-        promptMessage.setOnConfirm(getString(R.string.back_to_login), new PromptMessage.OnConfirmListener() {
+        initialActivityController = new InitialActivityController(
+                internetConnection, syncInfoPreference) {
             @Override
-            public void onConfirm() {
-                Intent intent = new Intent(InitialActivity.this, LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+            public void onFail() {
+                UserDataManager.clearAll(InitialActivity.this);
+                PromptMessage promptMessage = new AlertDialogPromptMessage(InitialActivity.this);
+                promptMessage.setOnConfirm(getString(R.string.back_to_login), new PromptMessage.OnConfirmListener() {
+                    @Override
+                    public void onConfirm() {
+                        Intent intent = new Intent(InitialActivity.this, LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+                promptMessage.show(null, getString(R.string.download_first_time_fail));
+            }
+
+            @Override
+            public void onSuccess() {
+                MainActivity.open(InitialActivity.this);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
             }
-        });
-        promptMessage.show(null, getString(R.string.download_first_time_fail));
+
+            @Override
+            protected void downloadData() {
+                new InitialJobRunner()
+                        .addJob(new CreateDatabaseJob(InitialActivity.this))
+                        .addJob(containerLocationUpdateJob)
+                        .addJob(containerTypeUpdateJob)
+                        .addJob(provinceUpdateJob)
+                        .addJob(districtUpdateJob)
+                        .addJob(subDistrictUpdateJob)
+                        .addJob(placeTypeUpdateJob)
+                        .addJob(placeSubTypeUpdateJob)
+                        .addJob(placeUpdateJob)
+                        .addJob(buildingUpdateJob)
+                        .start();
+            }
+        };
+
+        initialActivityController.startInitialData();
     }
 
     private void startPleaseWaitBeansJump() {
@@ -189,16 +196,7 @@ public class InitialActivity extends TanrabadActivity {
         protected void onRunFinish() {
             pleaseWaitBeans.stopJumping();
 
-            if (isSyncSuccess()) {
-                syncInfoPreference.saveSyncStatus(true);
-            } else if (!syncInfoPreference.isPreviousSyncStatusSuccess()) {
-                showDownloadFirstTimeFailDialog();
-                return;
-            }
-
-            MainActivity.open(InitialActivity.this);
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            finish();
+            initialActivityController.downloadComplete(isSyncSuccess());
             showErrorMessage();
         }
 

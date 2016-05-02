@@ -209,6 +209,6 @@
     <string name="login_loading">กำลังเข้าสู่ระบบ กรุณารอ</string>
     <string name="back_to_login">กลับไปหน้า login</string>
     <string name="download_first_time_fail">ไม่สามารถใช้งานแอปได้ เนื่องจากการดาวน์โหลดข้อมูลครั้งแรกล้มเหลว</string>
-    <string name="please_connect_internet_before_logout">กรุณาเชื่อมต่ออินเทอร์เน็ตก่อนที่จะทำการออกจากระบบ</string>
+    <string name="please_connect_internet_before_logout">กรุณาเชื่อมต่ออินเทอร์เน็ตก่อนออกจากระบบ</string>
 
 </resources>

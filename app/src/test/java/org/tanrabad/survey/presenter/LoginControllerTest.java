@@ -116,7 +116,7 @@ public class LoginControllerTest {
     public void testLoginNewUserWithoutInternetMustFail() throws Exception {
         User stubUser = stubUser();
         when(connection.isAvailable()).thenReturn(false);
-        when(repository.getLastLoginUser()).thenReturn(stubLastLoginSameOrgId());
+        when(repository.getLastLoginUser()).thenReturn(null);
 
         assertFalse(loginController.isCanLogin(stubUser));
         verify(connection).isAvailable();

@@ -38,7 +38,7 @@ public abstract class LoginController {
     }
 
     protected boolean isNewUser(User user) {
-        return !repository.getLastLoginUser().equals(user);
+        return !user.equals(repository.getLastLoginUser());
     }
 
     protected abstract void setUser(User user);

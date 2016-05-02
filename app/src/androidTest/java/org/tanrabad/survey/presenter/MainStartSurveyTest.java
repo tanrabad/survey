@@ -23,12 +23,13 @@ import android.support.test.espresso.intent.Intents;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.runner.AndroidJUnit4;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.tanrabad.survey.base.TanrabadEspressoTestBase;
 import org.tanrabad.survey.R;
+import org.tanrabad.survey.base.TanrabadEspressoTestBase;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -90,14 +91,13 @@ public class MainStartSurveyTest extends TanrabadEspressoTestBase {
     }
 
     @Test
-    public void tapLogoutShouldFoundLoginPage() {
+    public void tapLogoutWithoutInternetConnectionMustAlert() {
         onView(allOf(withId(R.id.avatar_icon), withContentDescription("แสดงข้อมูลผู้ใช้")))
                 .perform(click());
         onView(withText(R.string.logout))
                 .perform(click());
 
-        Intents.intended(allOf(
-                hasComponent(new ComponentName(mActivity, LoginActivity.class))
-        ));
+        onView(withText(R.string.please_connect_internet_before_logout))
+                .check(matches(isDisplayed()));
     }
 }

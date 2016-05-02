@@ -30,10 +30,10 @@ public class JsonContainerType {
     @JsonField(name = "container_type_name")
     public String containerTypeName;
 
-    @JsonField(name = "container_type_number_order")
-    public int containerTypeOrderNumber;
+    @JsonField(name = "order_number")
+    public int orderNumber;
 
     public ContainerType getEntity() {
-        return new ContainerType(containerTypeId, containerTypeName, containerTypeOrderNumber);
+        return new ContainerType(containerTypeId, containerTypeName, orderNumber);
     }
 }

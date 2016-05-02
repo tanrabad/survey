@@ -20,17 +20,16 @@ package org.tanrabad.survey.end2end;
 import android.content.Intent;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.tanrabad.survey.R;
 import org.tanrabad.survey.base.TanrabadEspressoTestBase;
 import org.tanrabad.survey.presenter.MainActivity;
-import org.tanrabad.survey.R;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.longClick;
-import static android.support.test.espresso.action.ViewActions.replaceText;
+import static android.support.test.espresso.action.ViewActions.*;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
@@ -56,7 +55,7 @@ public class SurveyByAddNewPlaceAddNewBuildingTest extends TanrabadEspressoTestB
                 .perform(click());
         onView(withId(R.id.place_name))
                 .perform(replaceText("โรงงานพรทิพา"));
-        onView(withText("ศาสนสถาน"))
+        onView(withText("หมู่บ้าน/ชุมชน"))
                 .perform(click());
         onView(withText("โรงงาน"))
                 .perform(click());

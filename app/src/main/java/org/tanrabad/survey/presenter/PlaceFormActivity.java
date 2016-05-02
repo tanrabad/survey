@@ -27,11 +27,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
+
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+
 import org.joda.time.DateTime;
+import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
+import org.tanrabad.survey.domain.place.*;
+import org.tanrabad.survey.entity.Place;
+import org.tanrabad.survey.entity.field.Location;
+import org.tanrabad.survey.entity.lookup.PlaceSubType;
+import org.tanrabad.survey.entity.lookup.PlaceType;
 import org.tanrabad.survey.presenter.maps.LocationUtils;
 import org.tanrabad.survey.repository.BrokerPlaceRepository;
 import org.tanrabad.survey.repository.adapter.ThaiWidgetDistrictRepository;
@@ -45,16 +53,11 @@ import org.tanrabad.survey.utils.map.MarkerUtil;
 import org.tanrabad.survey.validator.SavePlaceValidator;
 import org.tanrabad.survey.validator.UpdatePlaceValidator;
 import org.tanrabad.survey.validator.ValidatorException;
-import org.tanrabad.survey.domain.place.*;
-import org.tanrabad.survey.entity.Place;
-import org.tanrabad.survey.entity.field.Location;
-import org.tanrabad.survey.entity.lookup.PlaceSubType;
-import org.tanrabad.survey.entity.lookup.PlaceType;
-import org.tanrabad.survey.R;
-import th.or.nectec.thai.widget.address.AddressPicker;
-import th.or.nectec.thai.widget.address.AddressPickerDialog;
 
 import java.util.UUID;
+
+import th.or.nectec.thai.widget.address.AddressPicker;
+import th.or.nectec.thai.widget.address.AddressPickerDialog;
 
 public class PlaceFormActivity extends TanrabadActivity implements View.OnClickListener,
         PlaceSavePresenter, PlacePresenter {
@@ -144,7 +147,7 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
 
     private void setupPlaceTypeSelector() {
         final ReferenceEntityAdapter placeAdapter =
-                ReferenceEntityAdapter.buildPlaceTypeForAdd(this, AccountUtils.canAddOrEditVillage());
+                ReferenceEntityAdapter.buildPlaceTypeForAdd(this);
         placeTypeSelectorView.setAdapter(placeAdapter);
         placeTypeSelectorView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

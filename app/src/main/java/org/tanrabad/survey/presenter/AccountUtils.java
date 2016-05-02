@@ -34,13 +34,6 @@ public final class AccountUtils {
 
     private static LastLoginUserRepo lastLoginUserRepo = new PreferenceLastLoginUserRepo();
 
-    private AccountUtils() {
-    }
-
-    public static boolean canAddOrEditVillage() {
-        return getUser().getHealthRegionCode().equals("dpc-13");
-    }
-
     public static User getUser() {
         if (AccountUtils.user == null && BuildConfig.DEBUG) {
             throw new IllegalStateException("user is null, please make sure to set user before call this");

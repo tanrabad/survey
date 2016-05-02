@@ -60,14 +60,4 @@ public class AccountUtilsTest {
 
         Mockito.verify(repository).userLogin(user);
     }
-
-    @Test
-    public void testCanAddVillage() throws Exception {
-        User user = User.fromUsername("bangkok");
-        user.setHealthRegionCode("dpc-13");
-
-        AccountUtils.setUser(user);
-
-        assertTrue(AccountUtils.canAddOrEditVillage());
-    }
 }

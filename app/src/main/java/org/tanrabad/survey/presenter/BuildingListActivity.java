@@ -33,8 +33,20 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
+
+import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
+import org.tanrabad.survey.domain.building.BuildingWithSurveyStatus;
+import org.tanrabad.survey.domain.building.BuildingWithSurveyStatusListPresenter;
+import org.tanrabad.survey.domain.place.PlaceController;
+import org.tanrabad.survey.domain.place.PlacePresenter;
+import org.tanrabad.survey.domain.survey.SurveyBuildingChooser;
+import org.tanrabad.survey.entity.Building;
+import org.tanrabad.survey.entity.Place;
+import org.tanrabad.survey.entity.Survey;
+import org.tanrabad.survey.entity.lookup.PlaceType;
 import org.tanrabad.survey.job.DeleteDataJob;
 import org.tanrabad.survey.job.DownloadJobBuilder;
 import org.tanrabad.survey.job.UploadJobBuilder;
@@ -52,16 +64,6 @@ import org.tanrabad.survey.utils.alert.Alert;
 import org.tanrabad.survey.utils.android.InternetConnection;
 import org.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import org.tanrabad.survey.utils.prompt.PromptMessage;
-import org.tanrabad.survey.domain.building.BuildingWithSurveyStatus;
-import org.tanrabad.survey.domain.building.BuildingWithSurveyStatusListPresenter;
-import org.tanrabad.survey.domain.place.PlaceController;
-import org.tanrabad.survey.domain.place.PlacePresenter;
-import org.tanrabad.survey.domain.survey.SurveyBuildingChooser;
-import org.tanrabad.survey.entity.Building;
-import org.tanrabad.survey.entity.Place;
-import org.tanrabad.survey.entity.Survey;
-import org.tanrabad.survey.entity.lookup.PlaceType;
-import org.tanrabad.survey.R;
 
 import java.util.Collections;
 import java.util.List;
@@ -312,11 +314,6 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         this.place = place;
         TextView placeName = (TextView) findViewById(R.id.place_name);
         placeName.setText(place.getName());
-        if (place.getType() == PlaceType.VILLAGE_COMMUNITY && !AccountUtils.canAddOrEditVillage()) {
-            editPlaceButton.setVisibility(View.GONE);
-        } else {
-            editPlaceButton.setVisibility(View.VISIBLE);
-        }
     }
 
     @Override

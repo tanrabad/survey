@@ -23,11 +23,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import org.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
-import org.tanrabad.survey.repository.BrokerPlaceTypeRepository;
+
+import org.tanrabad.survey.R;
 import org.tanrabad.survey.entity.ReferenceEntity;
 import org.tanrabad.survey.entity.lookup.PlaceType;
-import org.tanrabad.survey.R;
+import org.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
+import org.tanrabad.survey.repository.BrokerPlaceTypeRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,11 +51,9 @@ public class ReferenceEntityAdapter extends BaseAdapter {
         return new ReferenceEntityAdapter(context, placeTypes);
     }
 
-    public static ReferenceEntityAdapter buildPlaceTypeForAdd(Context context, boolean canAddVillage) {
+    public static ReferenceEntityAdapter buildPlaceTypeForAdd(Context context) {
         List<ReferenceEntity> placeTypes = new ArrayList<>();
         placeTypes.addAll(BrokerPlaceTypeRepository.getInstance().find());
-        if (!canAddVillage)
-            placeTypes.remove(new PlaceType(1, "หมู่บ้าน/ชุมชน"));
         return new ReferenceEntityAdapter(context, placeTypes);
     }
 

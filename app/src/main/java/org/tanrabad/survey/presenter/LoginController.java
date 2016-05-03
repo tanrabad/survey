@@ -23,7 +23,7 @@ public abstract class LoginController {
         this.repository = repository;
     }
 
-    public boolean isCanLogin(User user) {
+    public boolean login(User user) {
         if (!connection.isAvailable() && isNewUser(user))
             return false;
 

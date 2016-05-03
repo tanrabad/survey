@@ -32,106 +32,98 @@ public class LoginControllerTest {
     @Test
     public void testLoginSameOrgIdAndConnectedInternetMustSuccess() throws Exception {
         when(connection.isAvailable()).thenReturn(true);
-        when(repository.getLastLoginUser()).thenReturn(stubLastLoginSameOrgId());
+        when(repository.getLastLoginUser()).thenReturn(odpc13User2());
 
-        User user = stubUser();
-        assertTrue(loginController.isCanLogin(user));
-        verify(connection).isAvailable();
-        assertFalse(loginController.shouldUploadOldUserData(user));
+        User user = odpc13User1();
+        assertTrue(loginController.login(user));
         verify(loginController).setUser(user);
         verify(loginController, never()).syncAndClearData();
         verify(loginController).setApiEndPointByUser(user);
     }
 
-    private User stubUser() {
-        User user = User.fromUsername("oh-my-god");
-        user.setOrganizationId(10);
+    private User odpc13User1() {
+        User user = User.fromUsername("user1");
+        user.setOrganizationId(13);
         return user;
     }
 
-    private User stubLastLoginSameOrgId() {
-        User user = User.fromUsername("hahaha");
-        user.setOrganizationId(10);
+    private User odpc13User2() {
+        User user = User.fromUsername("user2");
+        user.setOrganizationId(13);
         return user;
     }
 
     @Test
     public void testLoginDifferentOrgIdAndConnectedInternetMustSuccess() throws Exception {
-        User stubLastLoginUserDifferentOrgId = stubLastLoginUserDifferentOrgId();
+        User odpc11Hello = odpc11Hello();
         when(connection.isAvailable()).thenReturn(true);
-        when(repository.getLastLoginUser()).thenReturn(stubLastLoginUserDifferentOrgId);
+        when(repository.getLastLoginUser()).thenReturn(odpc11Hello);
 
-        User stubUser = stubUser();
-        assertTrue(loginController.isCanLogin(stubUser));
-        verify(connection).isAvailable();
-        assertTrue(loginController.shouldUploadOldUserData(stubUser));
-        verify(loginController).setApiEndPointByUser(stubLastLoginUserDifferentOrgId);
+        User odpc13User1 = odpc13User1();
+        assertTrue(loginController.login(odpc13User1));
+        verify(loginController).setApiEndPointByUser(odpc11Hello);
         verify(loginController).syncAndClearData();
-        verify(loginController).setUser(stubUser);
-        verify(loginController).setApiEndPointByUser(stubUser);
+        verify(loginController).setUser(odpc13User1);
+        verify(loginController).setApiEndPointByUser(odpc13User1);
     }
 
-    private User stubLastLoginUserDifferentOrgId() {
+    private User odpc11Hello() {
         User user = User.fromUsername("hello");
         user.setOrganizationId(11);
         return user;
     }
 
     @Test
-    public void testLoginTrialInsteadAuthenAndConnectedInternetMustSuccess() throws Exception {
-        User stubLastLoginUserDifferentOrgId = stubLastLoginUserDifferentOrgId();
-        when(connection.isAvailable()).thenReturn(true);
-        when(repository.getLastLoginUser()).thenReturn(stubLastLoginUserDifferentOrgId);
+    public void testIsNewUser() throws Exception {
+        when(repository.getLastLoginUser()).thenReturn(odpc13User2());
 
-        User trialUser = stubTrialUser();
-        assertTrue(loginController.isCanLogin(trialUser));
-        verify(connection).isAvailable();
-        assertTrue(loginController.shouldUploadOldUserData(trialUser));
-        verify(loginController).setApiEndPointByUser(stubLastLoginUserDifferentOrgId);
-        verify(loginController).syncAndClearData();
-        verify(loginController).setUser(trialUser);
-        verify(loginController).setApiEndPointByUser(trialUser);
+        assertTrue(loginController.isNewUser(odpc13User1()));
+        assertFalse(loginController.isNewUser(odpc13User2()));
     }
 
-    private User stubTrialUser() {
+    @Test
+    public void testShouldUploadNewData() throws Exception {
+        when(repository.getLastLoginUser()).thenReturn(odpc13User2());
+
+        assertTrue(loginController.shouldUploadOldUserData(odpc11Hello()));
+        assertFalse(loginController.shouldUploadOldUserData(odpc13User1()));
+    }
+
+    @Test
+    public void testLoginSameUserWithoutInternetMustSuccess() throws Exception {
+        User stubUser = odpc13User1();
+        when(connection.isAvailable()).thenReturn(false);
+        when(repository.getLastLoginUser()).thenReturn(stubUser);
+
+        assertTrue(loginController.login(stubUser));
+        verify(loginController).setApiEndPointByUser(stubUser);
+    }
+
+    @Test
+    public void testLoginNewUserWithoutInternetMustFail() throws Exception {
+        when(connection.isAvailable()).thenReturn(false);
+        when(repository.getLastLoginUser()).thenReturn(null);
+
+        assertFalse(loginController.login(odpc13User1()));
+    }
+
+    @Test
+    public void testTrialUserMustSetTestApiEndpoint() throws Exception {
+        loginController.setApiEndPointByUser(trialUser());
+
+        assertEquals(LoginController.TEST_URL, AbsRestService.getBaseApi());
+    }
+
+    private User trialUser() {
         User user = User.fromUsername("trial-debug");
         user.setOrganizationId(999);
         return user;
     }
 
     @Test
-    public void testLoginSameUserWithoutInternetMustSuccess() throws Exception {
-        User stubUser = stubUser();
-        when(connection.isAvailable()).thenReturn(false);
-        when(repository.getLastLoginUser()).thenReturn(stubUser);
-
-        assertTrue(loginController.isCanLogin(stubUser));
-        verify(connection).isAvailable();
-        assertFalse(loginController.isNewUser(stubUser));
-        verify(loginController).setApiEndPointByUser(stubUser);
-        assertEquals(BuildConfig.API_URL, AbsRestService.getBaseApi());
-    }
-
-    @Test
-    public void testLoginNewUserWithoutInternetMustFail() throws Exception {
-        User stubUser = stubUser();
-        when(connection.isAvailable()).thenReturn(false);
-        when(repository.getLastLoginUser()).thenReturn(null);
-
-        assertFalse(loginController.isCanLogin(stubUser));
-        verify(connection).isAvailable();
-        assertTrue(loginController.isNewUser(stubUser));
-    }
-
-    @Test
-    public void testTrialUserMustSetTestApiEndpoint() throws Exception {
-        loginController.setApiEndPointByUser(stubTrialUser());
-        assertEquals(LoginController.TEST_URL, AbsRestService.getBaseApi());
-    }
-
-    @Test
     public void testAuthenUserMustSetApiEndpointByBuildConfig() throws Exception {
-        loginController.setApiEndPointByUser(stubUser());
+        loginController.setApiEndPointByUser(odpc13User1());
+
         assertEquals(BuildConfig.API_URL, AbsRestService.getBaseApi());
     }
 }

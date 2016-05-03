@@ -39,7 +39,7 @@ class LoginThread extends LoginController implements Runnable {
 
     @Override
     public void run() {
-        if (isCanLogin(user)) {
+        if (login(user)) {
             handler.sendEmptyMessage(SUCCESS);
         } else {
             handler.sendEmptyMessage(FAIL);

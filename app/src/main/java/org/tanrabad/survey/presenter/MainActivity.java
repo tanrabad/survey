@@ -33,7 +33,9 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.TextView;
+
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
+
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.domain.place.PlaceWithSurveyHistoryChooser;
 import org.tanrabad.survey.domain.place.PlaceWithSurveyHistoryListPresenter;
@@ -53,6 +55,8 @@ import org.tanrabad.survey.service.PlaceRestService;
 import org.tanrabad.survey.utils.alert.Alert;
 import org.tanrabad.survey.utils.android.NetworkChangeReceiver;
 import org.tanrabad.survey.utils.android.TwiceBackPressed;
+import org.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
+import org.tanrabad.survey.utils.prompt.PromptMessage;
 
 import java.util.List;
 
@@ -182,7 +186,19 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.start_survey:
-                PlaceListActivity.open(this);
+                if (AccountUtils.isTrialUser(AccountUtils.getUser())) {
+                    PromptMessage promptMessage = new AlertDialogPromptMessage(this);
+                    promptMessage.setOnConfirm(getString(R.string.got_it), new PromptMessage.OnConfirmListener() {
+                        @Override
+                        public void onConfirm() {
+                            PlaceListActivity.open(MainActivity.this);
+                        }
+                    });
+                    promptMessage.show(getString(R.string.trial_warning_title), getString(R.string.trial_warning_msg));
+                } else {
+                    PlaceListActivity.open(this);
+                }
+
                 break;
             case R.id.magnifier:
             case R.id.root:

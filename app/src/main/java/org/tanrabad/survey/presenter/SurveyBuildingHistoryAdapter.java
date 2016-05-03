@@ -28,12 +28,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import org.tanrabad.survey.R;
+import org.tanrabad.survey.domain.entomology.ContainerIndex;
+import org.tanrabad.survey.entity.Survey;
 import org.tanrabad.survey.presenter.view.TimeAgoView;
 import org.tanrabad.survey.repository.persistence.SurveyWithChange;
 import org.tanrabad.survey.utils.time.DurationTimePrinter;
-import org.tanrabad.survey.domain.entomology.ContainerIndex;
-import org.tanrabad.survey.entity.Survey;
-import org.tanrabad.survey.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,7 +44,7 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
         implements ListViewAdapter<Survey> {
 
     private Context context;
-    private ArrayList<Survey> surveyBuildings = new ArrayList<>();
+    private List<Survey> surveyBuildings = new ArrayList<>();
     private int buildingIcon;
     private AdapterView.OnItemClickListener onItemClickListener;
     private AdapterView.OnItemLongClickListener onItemLongClickListener;
@@ -57,14 +58,13 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
     @Override
     public void updateData(List<Survey> dataList) {
         Collections.sort(dataList, Collections.<Survey>reverseOrder());
-        this.surveyBuildings.clear();
-        this.surveyBuildings.addAll(dataList);
+        this.surveyBuildings = dataList;
         notifyDataSetChanged();
     }
 
     @Override
     public void clearData() {
-        this.surveyBuildings.clear();
+        this.surveyBuildings = new ArrayList<>();
         notifyDataSetChanged();
     }
 

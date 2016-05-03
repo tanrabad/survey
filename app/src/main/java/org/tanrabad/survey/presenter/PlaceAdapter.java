@@ -25,14 +25,16 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import org.tanrabad.survey.R;
+import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
 import org.tanrabad.survey.repository.persistence.PlaceWithChange;
-import org.tanrabad.survey.entity.Place;
-import org.tanrabad.survey.R;
-import th.or.nectec.thai.widget.address.AddressPicker;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import th.or.nectec.thai.widget.address.AddressPicker;
 
 public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> implements ListViewAdapter<Place> {
 
@@ -48,14 +50,13 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> 
 
     @Override
     public void updateData(List<Place> places) {
-        this.places.clear();
-        this.places.addAll(places);
+        this.places = places;
         notifyDataSetChanged();
     }
 
     @Override
     public void clearData() {
-        this.places.clear();
+        this.places = new ArrayList<>();
         notifyDataSetChanged();
     }
 

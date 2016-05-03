@@ -28,12 +28,13 @@ import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import org.tanrabad.survey.R;
+import org.tanrabad.survey.domain.building.BuildingWithSurveyStatus;
+import org.tanrabad.survey.entity.Building;
 import org.tanrabad.survey.repository.persistence.BuildingWithChange;
 import org.tanrabad.survey.utils.alert.Alert;
 import org.tanrabad.survey.utils.android.InternetConnection;
-import org.tanrabad.survey.domain.building.BuildingWithSurveyStatus;
-import org.tanrabad.survey.entity.Building;
-import org.tanrabad.survey.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,14 +58,13 @@ public class BuildingWithSurveyStatusAdapter extends RecyclerView.Adapter<Buildi
 
     @Override
     public void updateData(List<BuildingWithSurveyStatus> buildings) {
-        this.buildingsWithSurveyStatusList.clear();
-        this.buildingsWithSurveyStatusList.addAll(buildings);
+        this.buildingsWithSurveyStatusList = buildings;
         notifyDataSetChanged();
     }
 
     @Override
     public void clearData() {
-        this.buildingsWithSurveyStatusList.clear();
+        this.buildingsWithSurveyStatusList = new ArrayList<>();
         notifyDataSetChanged();
     }
 

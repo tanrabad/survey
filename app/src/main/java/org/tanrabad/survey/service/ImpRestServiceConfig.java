@@ -38,7 +38,7 @@ public final class ImpRestServiceConfig implements RestServiceConfig {
         if (AccountUtils.isTrialUser(user)) {
             apiBaseUrl = BuildConfig.API_BASE_URL_TEST;
         } else {
-            apiBaseUrl = BuildConfig.API_URL;
+            apiBaseUrl = BuildConfig.API_BASE_URL;
         }
     }
 

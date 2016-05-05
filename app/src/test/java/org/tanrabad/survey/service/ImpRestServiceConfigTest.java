@@ -46,7 +46,7 @@ public class ImpRestServiceConfigTest {
     public void testAuthenUserMustSetApiEndpointByBuildConfig() throws Exception {
         restServiceConfigImp.setApiBaseUrlByUser(odpc13User1());
 
-        assertEquals(BuildConfig.API_URL, restServiceConfigImp.getApiBaseUrl());
+        assertEquals(BuildConfig.API_BASE_URL, restServiceConfigImp.getApiBaseUrl());
     }
 
     private User odpc13User1() {

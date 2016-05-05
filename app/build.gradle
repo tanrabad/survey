@@ -57,6 +57,7 @@ android {
         resValue "string", "app_build_time", "build $buildTime"
         buildConfigField "String", "TRB_AUTHEN_CLIENT_ID", "\"$clientId\""
         buildConfigField "String", "TRB_AUTHEN_CLIENT_SECRET", "\"$clientSecret\""
+        buildConfigField "String", "API_BASE_URL_TEST", "\"$apiBaseUrlTest\""
     }
 
     compileOptions {
@@ -82,7 +83,7 @@ android {
             ext.enableCrashlytics = false
 
             manifestPlaceholders = [google_map_key: System.getenv("TANRABAD_GOOGLE_DEBUG_KEY")]
-            buildConfigField "String", "API_URL", "\"http://trb-test.igridproject.info/v1\""
+            buildConfigField "String", "API_URL", "\"$apiBaseUrlTest\""
             buildConfigField "String", "TRIAL_USER", "\"trial-debug\""
             resValue "string", "app_version", "version $versionName-Debug"
         }
@@ -94,7 +95,7 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
 
             manifestPlaceholders = [google_map_key: System.getenv("TANRABAD_GOOGLE_RELEASE_KEY")]
-            buildConfigField "String", "API_URL", "\"http://trb-test.igridproject.info/v1\""
+            buildConfigField "String", "API_URL", "\"$apiBaseUrlTest\""
             buildConfigField "String", "TRIAL_USER", "\"trial-beta\""
             resValue "string", "app_version", "version $versionName-Beta"
         }
@@ -105,7 +106,7 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
 
             manifestPlaceholders = [google_map_key: System.getenv("TANRABAD_GOOGLE_RELEASE_KEY")]
-            buildConfigField "String", "API_URL", "\"https://api.tanrabad.org/v1\""
+            buildConfigField "String", "API_URL", "\"$apiBaseUrlProduction\""
             buildConfigField "String", "TRIAL_USER", "\"trial-release\""
             resValue "string", "app_version", "version $versionName"
         }

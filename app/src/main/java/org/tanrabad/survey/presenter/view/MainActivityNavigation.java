@@ -41,7 +41,10 @@ import org.tanrabad.survey.utils.UserDataManager;
 import org.tanrabad.survey.utils.alert.Alert;
 import org.tanrabad.survey.utils.android.InternetConnection;
 
-public class MainActivityNavigation {
+public final class MainActivityNavigation {
+
+    private MainActivityNavigation() {
+    }
 
     public static void setup(final Activity activity) {
         NavigationView navigationView = (NavigationView) activity.findViewById(R.id.navigation);
@@ -102,6 +105,10 @@ public class MainActivityNavigation {
         });
 
 
+        setupDrawerButton(activity);
+    }
+
+    private static void setupDrawerButton(final Activity activity) {
         activity.findViewById(R.id.drawer_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,6 +116,14 @@ public class MainActivityNavigation {
                 drawerLayout.openDrawer(Gravity.LEFT);
             }
         });
+
+        User user = AccountUtils.getUser();
+        TextView userFullNameTextView = (TextView) activity.findViewById(R.id.user_fullname);
+        userFullNameTextView.setText(String.format("%s %s", user.getFirstname(), user.getLastname()));
+
+        Organization organization = BrokerOrganizationRepository.getInstance().findById(user.getOrganizationId());
+        TextView organizationTextView = (TextView) activity.findViewById(R.id.organization);
+        organizationTextView.setText(organization.getName());
     }
 
     private static void setupHeaderView(NavigationView navigationView) {

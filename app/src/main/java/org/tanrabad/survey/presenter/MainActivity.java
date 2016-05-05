@@ -32,21 +32,16 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
-import android.widget.TextView;
-
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
-
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.domain.place.PlaceWithSurveyHistoryChooser;
 import org.tanrabad.survey.domain.place.PlaceWithSurveyHistoryListPresenter;
-import org.tanrabad.survey.entity.Organization;
 import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.job.AbsJobRunner;
 import org.tanrabad.survey.job.DownloadJobBuilder;
 import org.tanrabad.survey.job.UploadJobRunner;
 import org.tanrabad.survey.presenter.view.MainActivityNavigation;
-import org.tanrabad.survey.repository.BrokerOrganizationRepository;
 import org.tanrabad.survey.repository.BrokerSurveyRepository;
 import org.tanrabad.survey.repository.BrokerUserRepository;
 import org.tanrabad.survey.service.ApiSyncInfoPreference;
@@ -78,14 +73,16 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         twiceBackPressed = new TwiceBackPressed(this);
+
+        setContentView(R.layout.activity_main);
+        MainActivityNavigation.setup(this);
         setupTrialNotice();
-        setupDrawerLayout();
         setupViewOnClick();
         setupNetworkChangeReceiver();
         setupList();
         setupSyncAnimator();
+
         showRecentSurveyCard();
         doLoadingRecentSurveyData();
         if (!isUiTesting()) {
@@ -96,18 +93,6 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
     private void setupTrialNotice() {
         boolean trialUser = AccountUtils.isTrialUser(AccountUtils.getUser());
         findViewById(R.id.notice_trial).setVisibility(trialUser ? View.VISIBLE : View.GONE);
-    }
-
-    private void setupDrawerLayout() {
-        MainActivityNavigation.setup(this);
-
-        User user = AccountUtils.getUser();
-        TextView userFullNameTextView = (TextView) findViewById(R.id.user_fullname);
-        userFullNameTextView.setText(String.format("%s %s", user.getFirstname(), user.getLastname()));
-
-        Organization organization = BrokerOrganizationRepository.getInstance().findById(user.getOrganizationId());
-        TextView organizationTextView = (TextView) findViewById(R.id.organization);
-        organizationTextView.setText(organization.getName());
     }
 
     private void setupViewOnClick() {

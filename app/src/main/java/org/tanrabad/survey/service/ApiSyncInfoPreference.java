@@ -20,12 +20,11 @@ package org.tanrabad.survey.service;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
-
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import static org.tanrabad.survey.presenter.InitialActivityController.SyncStatus;
+import static org.tanrabad.survey.presenter.AbsInitialActivityController.SyncStatus;
 
 public class ApiSyncInfoPreference implements ServiceLastUpdate, SyncStatus {
 

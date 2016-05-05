@@ -31,12 +31,12 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class LoginControllerTest {
+public class AbsLoginControllerTest {
 
     private final Connection connection = mock(Connection.class);
     private final RestServiceConfig restServiceConfig = mock(RestServiceConfig.class);
     private final AccountUtils.LastLoginUserRepo repository = mock(AccountUtils.LastLoginUserRepo.class);
-    LoginController loginController = spy(new LoginController(connection, repository, restServiceConfig) {
+    AbsLoginController loginController = spy(new AbsLoginController(connection, repository, restServiceConfig) {
         @Override
         protected void setUser(User user) {
         }

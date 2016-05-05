@@ -19,13 +19,12 @@ package org.tanrabad.survey.presenter;
 
 import android.os.Handler;
 import android.os.Message;
-
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.job.UploadJobRunner;
 import org.tanrabad.survey.utils.UserDataManager;
 
-class LoginThread extends LoginController implements Runnable {
+class LoginThread extends AbsLoginController implements Runnable {
     private static final int SUCCESS = 1;
     private static final int FAIL = 0;
     private final User user;

@@ -24,21 +24,21 @@ import org.tanrabad.survey.service.RestServiceConfig;
 import org.tanrabad.survey.utils.android.Connection;
 import org.tanrabad.survey.utils.android.InternetConnection;
 
-public abstract class LoginController {
+public abstract class AbsLoginController {
 
     private final RestServiceConfig restServiceConfig;
     private final Connection connection;
     private final AccountUtils.LastLoginUserRepo repository;
 
-    public LoginController() {
+    public AbsLoginController() {
         this(new InternetConnection(TanrabadApp.getInstance()),
                 new PreferenceLastLoginUserRepo(),
                 ImpRestServiceConfig.getInstance());
     }
 
-    public LoginController(Connection connection,
-                           AccountUtils.LastLoginUserRepo repository,
-                           RestServiceConfig restServiceConfig) {
+    public AbsLoginController(Connection connection,
+                              AccountUtils.LastLoginUserRepo repository,
+                              RestServiceConfig restServiceConfig) {
         this.connection = connection;
         this.repository = repository;
         this.restServiceConfig = restServiceConfig;

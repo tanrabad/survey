@@ -27,13 +27,37 @@ import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.entity.Building;
 import org.tanrabad.survey.entity.Place;
-import org.tanrabad.survey.entity.lookup.*;
+import org.tanrabad.survey.entity.lookup.ContainerLocation;
+import org.tanrabad.survey.entity.lookup.ContainerType;
+import org.tanrabad.survey.entity.lookup.District;
+import org.tanrabad.survey.entity.lookup.PlaceSubType;
+import org.tanrabad.survey.entity.lookup.PlaceType;
+import org.tanrabad.survey.entity.lookup.Province;
+import org.tanrabad.survey.entity.lookup.Subdistrict;
 import org.tanrabad.survey.job.AbsJobRunner;
 import org.tanrabad.survey.job.Job;
 import org.tanrabad.survey.job.WritableRepoUpdateJob;
-import org.tanrabad.survey.repository.*;
-import org.tanrabad.survey.repository.persistence.*;
-import org.tanrabad.survey.service.*;
+import org.tanrabad.survey.repository.BrokerBuildingRepository;
+import org.tanrabad.survey.repository.BrokerContainerTypeRepository;
+import org.tanrabad.survey.repository.BrokerPlaceRepository;
+import org.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
+import org.tanrabad.survey.repository.BrokerPlaceTypeRepository;
+import org.tanrabad.survey.repository.persistence.CreateDatabaseJob;
+import org.tanrabad.survey.repository.persistence.DbContainerLocationRepository;
+import org.tanrabad.survey.repository.persistence.DbDistrictRepository;
+import org.tanrabad.survey.repository.persistence.DbProvinceRepository;
+import org.tanrabad.survey.repository.persistence.DbSubdistrictRepository;
+import org.tanrabad.survey.service.AmphurRestService;
+import org.tanrabad.survey.service.ApiSyncInfoPreference;
+import org.tanrabad.survey.service.BuildingRestService;
+import org.tanrabad.survey.service.ContainerLocationRestService;
+import org.tanrabad.survey.service.ContainerTypeRestService;
+import org.tanrabad.survey.service.PlaceRestService;
+import org.tanrabad.survey.service.PlaceSubTypeRestService;
+import org.tanrabad.survey.service.PlaceTypeRestService;
+import org.tanrabad.survey.service.ProvinceRestService;
+import org.tanrabad.survey.service.RestServiceException;
+import org.tanrabad.survey.service.TambonRestService;
 import org.tanrabad.survey.utils.UserDataManager;
 import org.tanrabad.survey.utils.alert.Alert;
 import org.tanrabad.survey.utils.android.InternetConnection;
@@ -66,7 +90,7 @@ public class InitialActivity extends TanrabadActivity {
     private TextView loadingText;
     private JumpingBeans pleaseWaitBeans;
     private ApiSyncInfoPreference syncInfoPreference;
-    private InitialActivityController initialActivityController;
+    private AbsInitialActivityController initialActivityController;
 
     public static void open(Activity activity) {
         Intent intent = new Intent(activity, InitialActivity.class);
@@ -82,7 +106,7 @@ public class InitialActivity extends TanrabadActivity {
         syncInfoPreference = new ApiSyncInfoPreference(InitialActivity.this);
         InternetConnection internetConnection = new InternetConnection(this);
 
-        initialActivityController = new InitialActivityController(
+        initialActivityController = new AbsInitialActivityController(
                 internetConnection, syncInfoPreference) {
             @Override
             public void onFail() {

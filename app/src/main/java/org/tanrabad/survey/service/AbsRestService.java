@@ -44,7 +44,6 @@ public abstract class AbsRestService<T> implements RestService<T> {
 
     private static final int READ_WRITE_TIMEOUT = 10; //second
     private static final int CONNECT_TIMEOUT = 5; //second
-    protected static String BASE_API = BuildConfig.API_URL;
     protected final OkHttpClient client;
     protected String baseApi;
     private ServiceLastUpdate serviceLastUpdate;
@@ -67,16 +66,6 @@ public abstract class AbsRestService<T> implements RestService<T> {
                 .connectTimeout(CONNECT_TIMEOUT, SECONDS)
                 .build();
         deletedData = new ArrayList<>();
-    }
-
-    protected static void setBaseApi(String baseApi) {
-        if (baseApi == null || "".equals(baseApi))
-            throw new IllegalArgumentException("base api must not be empty");
-        BASE_API = baseApi;
-    }
-
-    public static String getBaseApi() {
-        return BASE_API;
     }
 
     String getApiFilterParam() {

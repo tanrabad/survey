@@ -18,7 +18,8 @@
 package org.tanrabad.survey.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
-
+import okhttp3.Request;
+import okhttp3.Response;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.domain.place.PlaceRepository;
 import org.tanrabad.survey.domain.user.UserRepository;
@@ -32,10 +33,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.Request;
-import okhttp3.Response;
-
-import static org.tanrabad.survey.utils.http.Header.*;
+import static org.tanrabad.survey.utils.http.Header.ACCEPT;
+import static org.tanrabad.survey.utils.http.Header.ACCEPT_CHARSET;
+import static org.tanrabad.survey.utils.http.Header.USER_AGENT;
 
 public class BuildingRestService extends AbsUploadRestService<Building> implements DeleteRestService<Building> {
 
@@ -44,7 +44,8 @@ public class BuildingRestService extends AbsUploadRestService<Building> implemen
     private UserRepository userRepository;
 
     public BuildingRestService() {
-        this(BASE_API, new ApiSyncInfoPreference(TanrabadApp.getInstance(), PATH),
+        this(ImpRestServiceConfig.getInstance().getApiBaseUrl(),
+                new ApiSyncInfoPreference(TanrabadApp.getInstance(), PATH),
                 BrokerPlaceRepository.getInstance(),
                 BrokerUserRepository.getInstance());
     }

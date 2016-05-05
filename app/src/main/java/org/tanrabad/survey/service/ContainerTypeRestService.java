@@ -18,7 +18,6 @@
 package org.tanrabad.survey.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
-
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.entity.lookup.ContainerType;
 import org.tanrabad.survey.service.json.JsonContainerType;
@@ -32,7 +31,8 @@ public class ContainerTypeRestService extends AbsRestService<ContainerType> {
     private static final String PATH = "/containertype";
 
     public ContainerTypeRestService() {
-        this(BASE_API, new ApiSyncInfoPreference(TanrabadApp.getInstance(), PATH));
+        this(ImpRestServiceConfig.getInstance().getApiBaseUrl(),
+                new ApiSyncInfoPreference(TanrabadApp.getInstance(), PATH));
     }
 
     public ContainerTypeRestService(String apiBaseUrl, ServiceLastUpdate serviceLastUpdate) {

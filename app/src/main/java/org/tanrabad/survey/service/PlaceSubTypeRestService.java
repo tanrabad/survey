@@ -18,7 +18,6 @@
 package org.tanrabad.survey.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
-
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.entity.lookup.PlaceSubType;
 import org.tanrabad.survey.service.json.JsonPlaceSubType;
@@ -32,7 +31,8 @@ public class PlaceSubTypeRestService extends AbsRestService<PlaceSubType> {
     private static final String PATH = "/placesubtype";
 
     public PlaceSubTypeRestService() {
-        this(BASE_API, new ApiSyncInfoPreference(TanrabadApp.getInstance(), PATH));
+        this(ImpRestServiceConfig.getInstance().getApiBaseUrl(),
+                new ApiSyncInfoPreference(TanrabadApp.getInstance(), PATH));
     }
 
     private PlaceSubTypeRestService(String apiBaseUrl, ServiceLastUpdate serviceLastUpdate) {

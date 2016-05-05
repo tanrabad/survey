@@ -19,8 +19,8 @@ package org.tanrabad.survey.presenter;
 
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.entity.User;
+import org.tanrabad.survey.service.ImpRestServiceConfig;
 import org.tanrabad.survey.service.RestServiceConfig;
-import org.tanrabad.survey.service.RestServiceConfigImp;
 import org.tanrabad.survey.utils.android.Connection;
 import org.tanrabad.survey.utils.android.InternetConnection;
 
@@ -33,7 +33,7 @@ public abstract class LoginController {
     public LoginController() {
         this(new InternetConnection(TanrabadApp.getInstance()),
                 new PreferenceLastLoginUserRepo(),
-                RestServiceConfigImp.getInstance());
+                ImpRestServiceConfig.getInstance());
     }
 
     public LoginController(Connection connection,

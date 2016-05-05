@@ -40,7 +40,6 @@ import static org.tanrabad.survey.utils.http.Header.USER_AGENT;
 
 public abstract class AbsRestService<T> implements RestService<T> {
 
-    public static final String TEST_URL = "http://trb-test.igridproject.info/v1";
     protected static final String TRB_USER_AGENT = "TanRabad-SURVEY/" + BuildConfig.VERSION_NAME + " (Android)";
 
     private static final int READ_WRITE_TIMEOUT = 10; //second
@@ -70,22 +69,14 @@ public abstract class AbsRestService<T> implements RestService<T> {
         deletedData = new ArrayList<>();
     }
 
-    public static String getBaseApi() {
-        return BASE_API;
-    }
-
     protected static void setBaseApi(String baseApi) {
         if (baseApi == null || "".equals(baseApi))
             throw new IllegalArgumentException("base api must not be empty");
         BASE_API = baseApi;
     }
 
-    public static void setApiEndPointByUser(User user) {
-        if (!AccountUtils.isTrialUser(user)) {
-            AbsRestService.setBaseApi(BuildConfig.API_URL);
-        } else {
-            AbsRestService.setBaseApi(TEST_URL);
-        }
+    public static String getBaseApi() {
+        return BASE_API;
     }
 
     String getApiFilterParam() {
@@ -178,4 +169,6 @@ public abstract class AbsRestService<T> implements RestService<T> {
     public void addDeleteData(T data) {
         deletedData.add(data);
     }
+
+
 }

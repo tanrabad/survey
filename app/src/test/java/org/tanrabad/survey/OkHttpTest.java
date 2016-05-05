@@ -17,12 +17,10 @@
 
 package org.tanrabad.survey;
 
-
-import org.junit.Test;
-
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.junit.Test;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
@@ -30,6 +28,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class OkHttpTest extends WireMockTestBase {
 
@@ -92,5 +91,17 @@ public class OkHttpTest extends WireMockTestBase {
         assertEquals(false, res.isSuccessful());
         assertEquals("0", res.header(CONTENT_LENGTH));
         assertEquals("", res.body().string());
+    }
+
+    @Test
+    public void testConnectTanRabadHttps() throws Exception {
+        Request build = new Request.Builder()
+                .get()
+                .url("https://www.tanrabad.org")
+                .build();
+
+        Response res = client.newCall(build).execute();
+
+        assertTrue(res.isSuccessful());
     }
 }

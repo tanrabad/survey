@@ -9,7 +9,7 @@ import org.tanrabad.survey.utils.android.InternetConnection;
 
 public abstract class LoginController {
 
-    public static final String TEST_URL = "http://trb-test.igridproject.info/v1";
+
 
     private final Connection connection;
     private final AccountUtils.LastLoginUserRepo repository;
@@ -28,12 +28,12 @@ public abstract class LoginController {
             return false;
 
         if (shouldUploadOldUserData(user)) {
-            setApiEndPointByUser(repository.getLastLoginUser());
+            AbsRestService.setApiEndPointByUser(repository.getLastLoginUser());
             syncAndClearData();
         }
 
         setUser(user);
-        setApiEndPointByUser(user);
+        AbsRestService.setApiEndPointByUser(user);
         return true;
     }
 
@@ -48,13 +48,7 @@ public abstract class LoginController {
                 && user.getOrganizationId() != repository.getLastLoginUser().getOrganizationId();
     }
 
-    protected void setApiEndPointByUser(User user) {
-        if (!AccountUtils.isTrialUser(user)) {
-            AbsRestService.setBaseApi(BuildConfig.API_URL);
-        } else {
-            AbsRestService.setBaseApi(TEST_URL);
-        }
-    }
+
 
     protected abstract void syncAndClearData();
 }

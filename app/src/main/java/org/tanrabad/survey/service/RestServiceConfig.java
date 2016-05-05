@@ -19,7 +19,9 @@ package org.tanrabad.survey.service;
 
 import org.tanrabad.survey.entity.User;
 
-public interface RestServiceUrl {
+public interface RestServiceConfig {
 
-    void setApiEndPointByUser(User user);
+    void setApiBaseUrlByUser(User user);
+
+    String getApiBaseUrl();
 }

@@ -20,7 +20,7 @@ package org.tanrabad.survey.presenter;
 import org.junit.Before;
 import org.junit.Test;
 import org.tanrabad.survey.entity.User;
-import org.tanrabad.survey.service.RestServiceUrl;
+import org.tanrabad.survey.service.RestServiceConfig;
 import org.tanrabad.survey.utils.android.Connection;
 
 import static junit.framework.Assert.assertFalse;
@@ -34,9 +34,9 @@ import static org.mockito.Mockito.when;
 public class LoginControllerTest {
 
     private final Connection connection = mock(Connection.class);
-    private final RestServiceUrl restServiceUrl = mock(RestServiceUrl.class);
+    private final RestServiceConfig restServiceConfig = mock(RestServiceConfig.class);
     private final AccountUtils.LastLoginUserRepo repository = mock(AccountUtils.LastLoginUserRepo.class);
-    LoginController loginController = spy(new LoginController(connection, repository, restServiceUrl) {
+    LoginController loginController = spy(new LoginController(connection, repository, restServiceConfig) {
         @Override
         protected void setUser(User user) {
         }
@@ -60,7 +60,7 @@ public class LoginControllerTest {
         assertTrue(loginController.login(user));
         verify(loginController).setUser(user);
         verify(loginController, never()).syncAndClearData();
-        verify(restServiceUrl).setApiEndPointByUser(user);
+        verify(restServiceConfig).setApiBaseUrlByUser(user);
     }
 
     private User odpc13User1() {
@@ -83,10 +83,10 @@ public class LoginControllerTest {
 
         User odpc13User1 = odpc13User1();
         assertTrue(loginController.login(odpc13User1));
-        verify(restServiceUrl).setApiEndPointByUser(odpc11Hello);
+        verify(restServiceConfig).setApiBaseUrlByUser(odpc11Hello);
         verify(loginController).syncAndClearData();
         verify(loginController).setUser(odpc13User1);
-        verify(restServiceUrl).setApiEndPointByUser(odpc13User1);
+        verify(restServiceConfig).setApiBaseUrlByUser(odpc13User1);
     }
 
     private User odpc11Hello() {
@@ -118,7 +118,7 @@ public class LoginControllerTest {
         when(repository.getLastLoginUser()).thenReturn(stubUser);
 
         assertTrue(loginController.login(stubUser));
-        verify(restServiceUrl).setApiEndPointByUser(stubUser);
+        verify(restServiceConfig).setApiBaseUrlByUser(stubUser);
     }
 
     @Test

@@ -21,23 +21,31 @@ import org.tanrabad.survey.BuildConfig;
 import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.presenter.AccountUtils;
 
-public final class RestServiceUrlConfig implements RestServiceUrl {
+public final class RestServiceConfigImp implements RestServiceConfig {
 
-    private static final RestServiceUrlConfig instance = new RestServiceUrlConfig();
+    private static final RestServiceConfigImp instance = new RestServiceConfigImp();
+    private String apiBaseUrl;
 
-    private RestServiceUrlConfig() {
+    private RestServiceConfigImp() {
     }
 
-    public static RestServiceUrlConfig getInstance() {
+    public static RestServiceConfigImp getInstance() {
         return instance;
     }
 
     @Override
-    public void setApiEndPointByUser(User user) {
-        if (!AccountUtils.isTrialUser(user)) {
-            AbsRestService.setBaseApi(BuildConfig.API_URL);
-        } else {
+    public void setApiBaseUrlByUser(User user) {
+        if (AccountUtils.isTrialUser(user)) {
+            apiBaseUrl = BuildConfig.API_BASE_URL_TEST;
             AbsRestService.setBaseApi(BuildConfig.API_BASE_URL_TEST);
+        } else {
+            apiBaseUrl = BuildConfig.API_URL;
+            AbsRestService.setBaseApi(BuildConfig.API_URL);
         }
+    }
+
+    @Override
+    public String getApiBaseUrl() {
+        return apiBaseUrl;
     }
 }

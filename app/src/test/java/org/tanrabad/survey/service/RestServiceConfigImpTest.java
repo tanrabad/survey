@@ -24,14 +24,14 @@ import org.tanrabad.survey.entity.User;
 import static org.junit.Assert.assertEquals;
 
 
-public class RestServiceUrlConfigTest {
+public class RestServiceConfigImpTest {
 
 
-    private RestServiceUrlConfig restServiceUrlConfig = RestServiceUrlConfig.getInstance();
+    private RestServiceConfigImp restServiceConfigImp = RestServiceConfigImp.getInstance();
 
     @Test
     public void testTrialUserMustSetTestApiEndpoint() throws Exception {
-        restServiceUrlConfig.setApiEndPointByUser(trialUser());
+        restServiceConfigImp.setApiBaseUrlByUser(trialUser());
 
         assertEquals(BuildConfig.API_BASE_URL_TEST, AbsRestService.getBaseApi());
     }
@@ -44,7 +44,7 @@ public class RestServiceUrlConfigTest {
 
     @Test
     public void testAuthenUserMustSetApiEndpointByBuildConfig() throws Exception {
-        restServiceUrlConfig.setApiEndPointByUser(odpc13User1());
+        restServiceConfigImp.setApiBaseUrlByUser(odpc13User1());
 
         assertEquals(BuildConfig.API_URL, AbsRestService.getBaseApi());
     }

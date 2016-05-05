@@ -19,29 +19,29 @@ package org.tanrabad.survey.presenter;
 
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.entity.User;
-import org.tanrabad.survey.service.RestServiceUrl;
-import org.tanrabad.survey.service.RestServiceUrlConfig;
+import org.tanrabad.survey.service.RestServiceConfig;
+import org.tanrabad.survey.service.RestServiceConfigImp;
 import org.tanrabad.survey.utils.android.Connection;
 import org.tanrabad.survey.utils.android.InternetConnection;
 
 public abstract class LoginController {
 
-    private final RestServiceUrl restServiceUrl;
+    private final RestServiceConfig restServiceConfig;
     private final Connection connection;
     private final AccountUtils.LastLoginUserRepo repository;
 
     public LoginController() {
         this(new InternetConnection(TanrabadApp.getInstance()),
                 new PreferenceLastLoginUserRepo(),
-                RestServiceUrlConfig.getInstance());
+                RestServiceConfigImp.getInstance());
     }
 
     public LoginController(Connection connection,
                            AccountUtils.LastLoginUserRepo repository,
-                           RestServiceUrl restServiceUrl) {
+                           RestServiceConfig restServiceConfig) {
         this.connection = connection;
         this.repository = repository;
-        this.restServiceUrl = restServiceUrl;
+        this.restServiceConfig = restServiceConfig;
     }
 
     public boolean login(User user) {
@@ -49,12 +49,12 @@ public abstract class LoginController {
             return false;
 
         if (shouldUploadOldUserData(user)) {
-            restServiceUrl.setApiEndPointByUser(repository.getLastLoginUser());
+            restServiceConfig.setApiBaseUrlByUser(repository.getLastLoginUser());
             syncAndClearData();
         }
 
         setUser(user);
-        restServiceUrl.setApiEndPointByUser(user);
+        restServiceConfig.setApiBaseUrlByUser(user);
         return true;
     }
 

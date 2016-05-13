@@ -61,7 +61,7 @@ ext {
     apiBaseUrlProduction = "https://api.tanrabad.org"
 
     //App Dependency
-    supportLibVersion = "23.3.0"
+    supportLibVersion = "23.4.0"
     playServicesVersion = "8.4.0"
     androidMapUtilsVersion = "0.4.3"
     okHttpVersion = "3.2.0"

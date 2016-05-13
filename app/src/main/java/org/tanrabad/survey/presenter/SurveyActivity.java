@@ -31,8 +31,15 @@ import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
+import org.tanrabad.survey.domain.survey.*;
 import org.tanrabad.survey.entity.*;
+import org.tanrabad.survey.entity.field.Location;
+import org.tanrabad.survey.entity.lookup.ContainerType;
+import org.tanrabad.survey.entity.lookup.PlaceType;
+import org.tanrabad.survey.entity.utils.UuidUtils;
 import org.tanrabad.survey.presenter.view.AdvanceStepperDialog;
 import org.tanrabad.survey.presenter.view.SurveyContainerView;
 import org.tanrabad.survey.presenter.view.TorchButton;
@@ -50,12 +57,6 @@ import org.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import org.tanrabad.survey.utils.prompt.PromptMessage;
 import org.tanrabad.survey.validator.SaveSurveyValidator;
 import org.tanrabad.survey.validator.ValidatorException;
-import org.tanrabad.survey.domain.survey.*;
-import org.tanrabad.survey.entity.field.Location;
-import org.tanrabad.survey.entity.lookup.ContainerType;
-import org.tanrabad.survey.entity.lookup.PlaceType;
-import org.tanrabad.survey.entity.utils.UuidUtils;
-import org.tanrabad.survey.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -146,24 +147,9 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
         }
     }
 
-    private void showAbortSurveyPrompt() {
-        PromptMessage promptMessage = new AlertDialogPromptMessage(this);
-        promptMessage.setOnCancel(getString(R.string.no), null);
-        promptMessage.setOnConfirm(getString(R.string.yes), new PromptMessage.OnConfirmListener() {
-            @Override
-            public void onConfirm() {
-                TanrabadApp.action().finishSurvey(survey, false);
-                finish();
-                if (!isEditSurvey)
-                    BuildingListActivity.open(SurveyActivity.this, survey.getSurveyBuilding().getPlaceId().toString());
-            }
-        });
-        promptMessage.show(getString(R.string.abort_survey), getBuildingNameWithPrefix(survey.getSurveyBuilding()));
-    }
-
     private int getResidentCount() {
         String residentCountStr = residentCountView.getText().toString();
-        return TextUtils.isEmpty(residentCountStr) ? 0 : Integer.valueOf(residentCountStr);
+        return TextUtils.isEmpty(residentCountStr) ? -1 : Integer.valueOf(residentCountStr);
     }
 
     private List<SurveyDetail> getSurveyDetail(Map<Integer, SurveyContainerView> containerViews) {
@@ -190,6 +176,21 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
             if (!eachView.getValue().isValid()) isValid = false;
         }
         return isValid;
+    }
+
+    private void showAbortSurveyPrompt() {
+        PromptMessage promptMessage = new AlertDialogPromptMessage(this);
+        promptMessage.setOnCancel(getString(R.string.no), null);
+        promptMessage.setOnConfirm(getString(R.string.yes), new PromptMessage.OnConfirmListener() {
+            @Override
+            public void onConfirm() {
+                TanrabadApp.action().finishSurvey(survey, false);
+                finish();
+                if (!isEditSurvey)
+                    BuildingListActivity.open(SurveyActivity.this, survey.getSurveyBuilding().getPlaceId().toString());
+            }
+        });
+        promptMessage.show(getString(R.string.abort_survey), getBuildingNameWithPrefix(survey.getSurveyBuilding()));
     }
 
     private String getBuildingNameWithPrefix(Building building) {

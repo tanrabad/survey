@@ -17,9 +17,9 @@
 
 package org.tanrabad.survey.validator;
 
+import org.tanrabad.survey.R;
 import org.tanrabad.survey.domain.survey.SurveyValidator;
 import org.tanrabad.survey.entity.Survey;
-import org.tanrabad.survey.R;
 
 public class SaveSurveyValidator implements SurveyValidator {
 
@@ -33,7 +33,7 @@ public class SaveSurveyValidator implements SurveyValidator {
             throw new ValidatorException(R.string.building_not_found);
         }
 
-        if (survey.getResidentCount() < 1) {
+        if (survey.getResidentCount() == -1) {
             throw new ValidatorException(R.string.please_enter_resident);
         }
 

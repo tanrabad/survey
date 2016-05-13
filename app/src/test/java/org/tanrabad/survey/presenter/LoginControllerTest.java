@@ -20,31 +20,22 @@ package org.tanrabad.survey.presenter;
 import org.junit.Before;
 import org.junit.Test;
 import org.tanrabad.survey.entity.User;
+import org.tanrabad.survey.repository.DataManager;
 import org.tanrabad.survey.service.RestServiceConfig;
 import org.tanrabad.survey.utils.android.Connection;
 
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-public class AbsLoginControllerTest {
+public class LoginControllerTest {
 
     private final Connection connection = mock(Connection.class);
+    private final DataManager dataManager = mock(DataManager.class);
     private final RestServiceConfig restServiceConfig = mock(RestServiceConfig.class);
     private final AccountUtils.LastLoginUserRepo repository = mock(AccountUtils.LastLoginUserRepo.class);
-    AbsLoginController loginController = spy(new AbsLoginController(connection, repository, restServiceConfig) {
-        @Override
-        protected void setUser(User user) {
-        }
-
-        @Override
-        protected void syncAndClearData() {
-        }
-    });
+    LoginController loginController = spy(
+            new LoginController(connection, repository, dataManager, restServiceConfig));
 
     @Before
     public void setUp() throws Exception {
@@ -59,7 +50,7 @@ public class AbsLoginControllerTest {
         User user = odpc13User1();
         assertTrue(loginController.login(user));
         verify(loginController).setUser(user);
-        verify(loginController, never()).syncAndClearData();
+        verify(dataManager, never()).syncAndClearData();
         verify(restServiceConfig).setApiBaseUrlByUser(user);
     }
 
@@ -84,7 +75,7 @@ public class AbsLoginControllerTest {
         User odpc13User1 = odpc13User1();
         assertTrue(loginController.login(odpc13User1));
         verify(restServiceConfig).setApiBaseUrlByUser(odpc11Hello);
-        verify(loginController).syncAndClearData();
+        verify(dataManager).syncAndClearData();
         verify(loginController).setUser(odpc13User1);
         verify(restServiceConfig).setApiBaseUrlByUser(odpc13User1);
     }

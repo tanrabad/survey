@@ -19,28 +19,34 @@ package org.tanrabad.survey.presenter;
 
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.entity.User;
+import org.tanrabad.survey.repository.AppDataManager;
+import org.tanrabad.survey.repository.DataManager;
 import org.tanrabad.survey.service.ImpRestServiceConfig;
 import org.tanrabad.survey.service.RestServiceConfig;
 import org.tanrabad.survey.utils.android.Connection;
 import org.tanrabad.survey.utils.android.InternetConnection;
 
-public abstract class AbsLoginController {
+public class LoginController {
 
+    private final DataManager dataManager;
     private final RestServiceConfig restServiceConfig;
     private final Connection connection;
     private final AccountUtils.LastLoginUserRepo repository;
 
-    public AbsLoginController() {
+    public LoginController() {
         this(new InternetConnection(TanrabadApp.getInstance()),
                 new PreferenceLastLoginUserRepo(),
+                new AppDataManager(),
                 ImpRestServiceConfig.getInstance());
     }
 
-    public AbsLoginController(Connection connection,
-                              AccountUtils.LastLoginUserRepo repository,
-                              RestServiceConfig restServiceConfig) {
+    public LoginController(Connection connection,
+                           AccountUtils.LastLoginUserRepo repository,
+                           DataManager dataManager,
+                           RestServiceConfig restServiceConfig) {
         this.connection = connection;
         this.repository = repository;
+        this.dataManager = dataManager;
         this.restServiceConfig = restServiceConfig;
     }
 
@@ -50,7 +56,7 @@ public abstract class AbsLoginController {
 
         if (shouldUploadOldUserData(user)) {
             restServiceConfig.setApiBaseUrlByUser(repository.getLastLoginUser());
-            syncAndClearData();
+            dataManager.syncAndClearData();
         }
 
         setUser(user);
@@ -62,12 +68,12 @@ public abstract class AbsLoginController {
         return !user.equals(repository.getLastLoginUser());
     }
 
-    protected abstract void setUser(User user);
+    protected void setUser(User user) {
+        AccountUtils.setUser(user);
+    }
 
     protected boolean shouldUploadOldUserData(User user) {
         return repository.getLastLoginUser() != null
                 && user.getOrganizationId() != repository.getLastLoginUser().getOrganizationId();
     }
-
-    protected abstract void syncAndClearData();
 }

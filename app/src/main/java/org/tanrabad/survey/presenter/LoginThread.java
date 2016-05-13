@@ -19,12 +19,10 @@ package org.tanrabad.survey.presenter;
 
 import android.os.Handler;
 import android.os.Message;
-import org.tanrabad.survey.TanrabadApp;
-import org.tanrabad.survey.entity.User;
-import org.tanrabad.survey.job.UploadJobRunner;
-import org.tanrabad.survey.utils.UserDataManager;
 
-class LoginThread extends AbsLoginController implements Runnable {
+import org.tanrabad.survey.entity.User;
+
+class LoginThread implements Runnable {
     private static final int SUCCESS = 1;
     private static final int FAIL = 0;
     private final User user;
@@ -38,33 +36,15 @@ class LoginThread extends AbsLoginController implements Runnable {
 
     @Override
     public void run() {
-        if (login(user)) {
+        LoginController loginController = new LoginController();
+        if (loginController.login(user)) {
             handler.sendEmptyMessage(SUCCESS);
         } else {
             handler.sendEmptyMessage(FAIL);
         }
     }
 
-    @Override
-    protected void setUser(User user) {
-        AccountUtils.setUser(user);
-    }
 
-    @Override
-    protected void syncAndClearData() {
-        try {
-            UploadJobRunner.Builder builder = new UploadJobRunner.Builder();
-            builder.placePostDataJob.execute();
-            builder.buildingPostDataJob.execute();
-            builder.surveyPostDataJob.execute();
-            builder.placePutDataJob.execute();
-            builder.buildingPutDataJob.execute();
-            builder.surveyPutDataJob.execute();
-            UserDataManager.clearAll(TanrabadApp.getInstance());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
 
     public interface LoginListener {

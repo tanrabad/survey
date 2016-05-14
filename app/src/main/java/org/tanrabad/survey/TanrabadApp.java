@@ -20,7 +20,9 @@ package org.tanrabad.survey;
 import android.app.Application;
 import android.content.Context;
 import cat.ereza.customactivityoncrash.CustomActivityOnCrash;
+import com.onesignal.OneSignal;
 import org.tanrabad.survey.presenter.LoginActivity;
+import org.tanrabad.survey.utils.android.ResourceUtils;
 import org.tanrabad.survey.utils.tool.ActionLogger;
 import org.tanrabad.survey.utils.tool.ExceptionLogger;
 import org.tanrabad.survey.utils.tool.GoogleAnalyticsTool;
@@ -58,7 +60,18 @@ public class TanrabadApp extends Application {
         setupCrashActivity();
         setupAnalysisTools();
         setupDefaultFont();
+        setupNotification();
     }
+
+    private void setupNotification() {
+        OneSignal.startInit(this)
+                .init();
+        OneSignal.enableInAppAlertNotification(false);
+        OneSignal.enableNotificationsWhenActive(true);
+        ResourceUtils.from(this).getDrawable(R.drawable.ic_onesignal_large_icon_default);
+        ResourceUtils.from(this).getDrawable(R.drawable.ic_stat_onesignal_default);
+    }
+
 
     private void setupAuthenUtils() {
         TRBAuthenUtil authenUtil = TRBAuthenUtil.getInstance();

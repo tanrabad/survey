@@ -2,6 +2,10 @@
 ทุกการเปลี่ยนแปลงของ **ทันระบาดสำรวจ** จะถูกบันทึกไว้ในไฟล์นี้ 
 ไฟล์นี้ปฎิบัติตามวิธีการ [Keep A CHANGLOG](http://keepachangelog.com/)
 
+## [1.4.5] - 2016-05-16 Hotfix
+### แก้ไข
+- ปัญหาเชื่อมต่อกับ Server Production ไม่ได้ 
+
 ## [1.4.4] - 2016-05-16
 ### เพิ่ม
 - ระบบการแจ้งเตือน รองรับการแจ้งเตือนจากทีมผู้พัฒนา เช่น เตือนให้อัพเดทแอพเมื่อมีเวอร์ชั่นใหม่
@@ -117,6 +121,7 @@
 - สามารถนำทางไปยังสถานที่/อาคารได้
 - ยืนยันตัวตนเพื่อเข้าสู่ระบบ
 
+[1.4.5]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.4.4...1.4.5
 [1.4.4]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.4.3...1.4.4
 [1.4.3]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.4.2...1.4.3
 [1.4.2]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.4.1...1.4.2

@@ -58,7 +58,7 @@ ext {
     clientSecret = System.getenv("TANRABAD_AUTHEN_CLIENT_SECRET")
 
     apiBaseUrlTest = "http://trb-test.igridproject.info/v1"
-    apiBaseUrlProduction = "https://api.tanrabad.org"
+    apiBaseUrlProduction = "https://api.tanrabad.org/v1"
 
     //App Dependency
     supportLibVersion = "23.4.0"

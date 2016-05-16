@@ -2,7 +2,7 @@
 ทุกการเปลี่ยนแปลงของ **ทันระบาดสำรวจ** จะถูกบันทึกไว้ในไฟล์นี้ 
 ไฟล์นี้ปฎิบัติตามวิธีการ [Keep A CHANGLOG](http://keepachangelog.com/)
 
-## [Unrelease]
+## [1.4.4] - 2016-05-16
 ### เพิ่ม
 - ระบบการแจ้งเตือน รองรับการแจ้งเตือนจากทีมผู้พัฒนา เช่น เตือนให้อัพเดทแอพเมื่อมีเวอร์ชั่นใหม่
 
@@ -10,6 +10,7 @@
 - เชื่อมต่อกับ Server ด้วย https เพื่อเพิ่มความปลอดภัย
 
 ### ปรับปรุง
+- แก้ปัญหาแสดงผลรายงานช้า
 - สามารถกรอกเลข 0 ในช่องกรอกจำนวนผู้อยู่อาศัย เพื่อกำหนดว่าบ้านหลังนี้ไม่มีคนอยู่
 
 ## [1.4.3] - 2016-05-04
@@ -114,7 +115,7 @@
 - สามารถนำทางไปยังสถานที่/อาคารได้
 - ยืนยันตัวตนเพื่อเข้าสู่ระบบ
 
-[Unrelease]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.4.3...HEAD
+[1.4.4]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.4.3...1.4.4
 [1.4.3]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.4.2...1.4.3
 [1.4.2]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.4.1...1.4.2
 [1.4.1]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.4.0...1.4.1

@@ -69,7 +69,7 @@ public class EntomologyRestService extends AbsRestService<JsonEntomology> {
 
     private String oneWeekIntervalParam() {
         DateTime dateTime = new DateTime();
-        return "startdate=" + unixTime(dateTime.minusDays(7)) + "&enddate=" + unixTime(dateTime);
+        return "startdate=" + unixTime(dateTime.minusDays(7));
     }
 
     private long unixTime(DateTime dateTime) {

@@ -23,6 +23,7 @@ import java.util.UUID;
 
 public class UuidUtils {
     private static final String MAC_ADDRESS_PATTERN = "^([0-9a-fA-F][0-9a-fA-F]:){5}([0-9a-fA-F][0-9a-fA-F])$";
+    private static final String DEFAULT_MAC_ADDRESS = "05:21:09:09:87:88";
     private static final Random RANDOM = new Random();
 
     private static long lastTime;
@@ -34,6 +35,7 @@ public class UuidUtils {
     }
 
     private static UUID generateV1(String macAddress) {
+        if (macAddress == null) macAddress = DEFAULT_MAC_ADDRESS;
         long currentTime = System.currentTimeMillis() * 10000L + 122192928000000000L;
         currentTime += System.nanoTime() % 10000;
         UuidUtils uuid = new UuidUtils();

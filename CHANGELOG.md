@@ -2,6 +2,13 @@
 ทุกการเปลี่ยนแปลงของ **ทันระบาดสำรวจ** จะถูกบันทึกไว้ในไฟล์นี้ 
 ไฟล์นี้ปฎิบัติตามวิธีการ [Keep A CHANGLOG](http://keepachangelog.com/)
 
+## [Unrelease]
+### ปรับปรุง
+- อัพเดทข้อมูลกับส่วนกลางทุกครั้งที่เปิดหน้าค้นหาสถานที่ เพื่อให้ผู้ใช้ไม่ต้องกด Sync เอง
+
+### แก้ไข
+- แก้ปัญหาไม่สามารถอ่านค่ารหัสประจำเครื่องได้ในเครื่องบางรุ่น
+
 ## [1.4.5] - 2016-05-16 Hotfix
 ### แก้ไข
 - ปัญหาเชื่อมต่อกับ Server Production ไม่ได้ 
@@ -121,6 +128,7 @@
 - สามารถนำทางไปยังสถานที่/อาคารได้
 - ยืนยันตัวตนเพื่อเข้าสู่ระบบ
 
+[UnRelease]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.4.5...HEAD
 [1.4.5]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.4.4...1.4.5
 [1.4.4]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.4.3...1.4.4
 [1.4.3]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.4.2...1.4.3

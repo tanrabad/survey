@@ -22,8 +22,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.NavigationView.OnNavigationItemSelectedListener;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -47,7 +48,7 @@ public final class MainActivityNavigation {
     private MainActivityNavigation() {
     }
 
-    public static void setup(final Activity activity) {
+    public static void setup(Activity activity) {
         NavigationView navigationView = (NavigationView) activity.findViewById(R.id.navigation);
         if (navigationView == null) {
             TanrabadApp.log(new IllegalArgumentException("NavigationView of MainActivity is Null"));
@@ -55,80 +56,8 @@ public final class MainActivityNavigation {
         }
         navigationView.setItemIconTintList(null);
         setupHeaderView(navigationView);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-                int id = menuItem.getItemId();
-                switch (id) {
-                    case R.id.trb_watch:
-                        Intent trbWatch = new Intent(Intent.ACTION_VIEW, Uri.parse("https://watch.tanrabad.org"));
-                        activity.startActivity(trbWatch);
-                        break;
-                    case R.id.trb_report:
-                        Intent trbReport = new Intent(Intent.ACTION_VIEW, Uri.parse("https://report.tanrabad.org"));
-                        activity.startActivity(trbReport);
-                        break;
-                    case R.id.trb_bi:
-                        Intent trbBi = new Intent(Intent.ACTION_VIEW, Uri.parse("https://bi.tanrabad.org"));
-                        activity.startActivity(trbBi);
-                        break;
-                    case R.id.manual:
-                        Intent manual = new Intent(Intent.ACTION_VIEW,
-                                Uri.parse("https://tanrabad.gitbooks.io/survey-manual/content/index.html"));
-                        activity.startActivity(manual);
-                        break;
-                    case R.id.about:
-                        AboutActivity.open(activity);
-                        break;
-                    case R.id.preferences:
-                        PreferenceActivity.open(activity);
-                        break;
-                    case R.id.logout:
-                        if (!InternetConnection.isAvailable(activity)) {
-                            Alert.highLevel().show(R.string.please_connect_internet_before_logout);
-                            return false;
-                        }
-
-                        UploadJobRunner uploadJob = new UploadJobRunner();
-                        uploadJob.addJobs(new UploadJobRunner.Builder().getJobs());
-                        uploadJob.setOnSyncFinishListener(new UploadJobRunner.OnSyncFinishListener() {
-                            @Override
-                            public void onSyncFinish() {
-                                AccountUtils.clear();
-                                AppDataManager.clearAll(activity);
-                                Intent backToLogin = new Intent(activity, LoginActivity.class);
-                                activity.startActivity(backToLogin);
-                                activity.finish();
-                            }
-                        });
-                        uploadJob.start();
-
-                        break;
-                }
-                return false;
-            }
-        });
-
-
+        navigationView.setNavigationItemSelectedListener(new NavigationViewSelected(activity));
         setupDrawerButton(activity);
-    }
-
-    private static void setupDrawerButton(final Activity activity) {
-        activity.findViewById(R.id.drawer_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DrawerLayout drawerLayout = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
-                drawerLayout.openDrawer(Gravity.LEFT);
-            }
-        });
-
-        User user = AccountUtils.getUser();
-        TextView userFullNameTextView = (TextView) activity.findViewById(R.id.user_fullname);
-        userFullNameTextView.setText(String.format("%s %s", user.getFirstname(), user.getLastname()));
-
-        Organization organization = BrokerOrganizationRepository.getInstance().findById(user.getOrganizationId());
-        TextView organizationTextView = (TextView) activity.findViewById(R.id.organization);
-        organizationTextView.setText(organization.getName());
     }
 
     private static void setupHeaderView(NavigationView navigationView) {
@@ -153,5 +82,84 @@ public final class MainActivityNavigation {
         Organization organization = BrokerOrganizationRepository.getInstance().findById(user.getOrganizationId());
         TextView organizationTextView = (TextView) header.findViewById(R.id.organization);
         organizationTextView.setText(organization.getName());
+    }
+
+    private static void setupDrawerButton(final Activity activity) {
+        activity.findViewById(R.id.drawer_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DrawerLayout drawerLayout = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+
+        User user = AccountUtils.getUser();
+        TextView userFullNameTextView = (TextView) activity.findViewById(R.id.user_fullname);
+        userFullNameTextView.setText(String.format("%s %s", user.getFirstname(), user.getLastname()));
+
+        Organization organization = BrokerOrganizationRepository.getInstance().findById(user.getOrganizationId());
+        TextView organizationTextView = (TextView) activity.findViewById(R.id.organization);
+        organizationTextView.setText(organization.getName());
+    }
+
+    private static class NavigationViewSelected implements OnNavigationItemSelectedListener {
+
+        private final Activity activity;
+
+        public NavigationViewSelected(Activity activity) {
+            this.activity = activity;
+        }
+
+        @Override
+        public boolean onNavigationItemSelected(MenuItem item) {
+            int id = item.getItemId();
+            switch (id) {
+                case R.id.trb_watch:
+                    openWeb(Uri.parse("https://watch.tanrabad.org"));
+                    break;
+                case R.id.trb_report:
+                    openWeb(Uri.parse("https://report.tanrabad.org"));
+                    break;
+                case R.id.trb_bi:
+                    openWeb(Uri.parse("https://bi.tanrabad.org"));
+                    break;
+                case R.id.manual:
+                    openWeb(Uri.parse("https://tanrabad.gitbooks.io/survey-manual/content/index.html"));
+                    break;
+                case R.id.about:
+                    AboutActivity.open(activity);
+                    break;
+                case R.id.preferences:
+                    PreferenceActivity.open(activity);
+                    break;
+                case R.id.logout:
+                    if (!InternetConnection.isAvailable(activity)) {
+                        Alert.highLevel().show(R.string.please_connect_internet_before_logout);
+                        return false;
+                    }
+
+                    UploadJobRunner uploadJob = new UploadJobRunner();
+                    uploadJob.addJobs(new UploadJobRunner.Builder().getJobs());
+                    uploadJob.setOnSyncFinishListener(new UploadJobRunner.OnSyncFinishListener() {
+                        @Override
+                        public void onSyncFinish() {
+                            AccountUtils.clear();
+                            AppDataManager.clearAll(activity);
+                            Intent backToLogin = new Intent(activity, LoginActivity.class);
+                            activity.startActivity(backToLogin);
+                            activity.finish();
+                        }
+                    });
+                    uploadJob.start();
+
+                    break;
+            }
+            return false;
+        }
+
+        private void openWeb(Uri parse) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, parse);
+            activity.startActivity(intent);
+        }
     }
 }

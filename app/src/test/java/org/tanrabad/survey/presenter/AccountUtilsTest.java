@@ -22,15 +22,17 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import org.tanrabad.survey.entity.User;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class AccountUtilsTest {
 
-    private final AccountUtils.LastLoginUserRepo repository = Mockito.mock(AccountUtils.LastLoginUserRepo.class);
+    private final AccountUtils.UserStore repository = Mockito.mock(AccountUtils.UserStore.class);
 
     @Before
     public void setUp() throws Exception {
-        AccountUtils.setLastLoginUserRepo(repository);
+        AccountUtils.setLastLoginUserStore(repository);
     }
 
     @Test
@@ -58,6 +60,6 @@ public class AccountUtilsTest {
 
         AccountUtils.setUser(user);
 
-        Mockito.verify(repository).userLogin(user);
+        Mockito.verify(repository).save(user);
     }
 }

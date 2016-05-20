@@ -26,26 +26,30 @@ import org.tanrabad.survey.utils.android.Connection;
 
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class LoginControllerTest {
 
     private final Connection connection = mock(Connection.class);
     private final DataManager dataManager = mock(DataManager.class);
     private final RestServiceConfig restServiceConfig = mock(RestServiceConfig.class);
-    private final AccountUtils.LastLoginUserRepo repository = mock(AccountUtils.LastLoginUserRepo.class);
+    private final AccountUtils.UserStore repository = mock(AccountUtils.UserStore.class);
     LoginController loginController = spy(
             new LoginController(connection, repository, dataManager, restServiceConfig));
 
     @Before
     public void setUp() throws Exception {
-        AccountUtils.setLastLoginUserRepo(repository);
+        AccountUtils.setLastLoginUserStore(repository);
     }
 
     @Test
     public void testLoginSameOrgIdAndConnectedInternetMustSuccess() throws Exception {
         when(connection.isAvailable()).thenReturn(true);
-        when(repository.getLastLoginUser()).thenReturn(odpc13User2());
+        when(repository.getUser()).thenReturn(odpc13User2());
 
         User user = odpc13User1();
         assertTrue(loginController.login(user));
@@ -70,7 +74,7 @@ public class LoginControllerTest {
     public void testLoginDifferentOrgIdAndConnectedInternetMustSuccess() throws Exception {
         User odpc11Hello = odpc11Hello();
         when(connection.isAvailable()).thenReturn(true);
-        when(repository.getLastLoginUser()).thenReturn(odpc11Hello);
+        when(repository.getUser()).thenReturn(odpc11Hello);
 
         User odpc13User1 = odpc13User1();
         assertTrue(loginController.login(odpc13User1));
@@ -88,7 +92,7 @@ public class LoginControllerTest {
 
     @Test
     public void testIsNewUser() throws Exception {
-        when(repository.getLastLoginUser()).thenReturn(odpc13User2());
+        when(repository.getUser()).thenReturn(odpc13User2());
 
         assertTrue(loginController.isNewUser(odpc13User1()));
         assertFalse(loginController.isNewUser(odpc13User2()));
@@ -96,7 +100,7 @@ public class LoginControllerTest {
 
     @Test
     public void testShouldUploadNewData() throws Exception {
-        when(repository.getLastLoginUser()).thenReturn(odpc13User2());
+        when(repository.getUser()).thenReturn(odpc13User2());
 
         assertTrue(loginController.shouldUploadOldUserData(odpc11Hello()));
         assertFalse(loginController.shouldUploadOldUserData(odpc13User1()));
@@ -106,7 +110,7 @@ public class LoginControllerTest {
     public void testLoginSameUserWithoutInternetMustSuccess() throws Exception {
         User stubUser = odpc13User1();
         when(connection.isAvailable()).thenReturn(false);
-        when(repository.getLastLoginUser()).thenReturn(stubUser);
+        when(repository.getUser()).thenReturn(stubUser);
 
         assertTrue(loginController.login(stubUser));
         verify(restServiceConfig).setApiBaseUrlByUser(stubUser);
@@ -115,7 +119,7 @@ public class LoginControllerTest {
     @Test
     public void testLoginNewUserWithoutInternetMustFail() throws Exception {
         when(connection.isAvailable()).thenReturn(false);
-        when(repository.getLastLoginUser()).thenReturn(null);
+        when(repository.getUser()).thenReturn(null);
 
         assertFalse(loginController.login(odpc13User1()));
     }

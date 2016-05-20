@@ -17,9 +17,12 @@
 
 package org.tanrabad.survey.presenter;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import org.tanrabad.survey.BuildConfig;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.entity.User;
+import org.tanrabad.survey.repository.BrokerUserRepository;
 import org.tanrabad.survey.utils.time.CurrentTimer;
 import org.tanrabad.survey.utils.time.JodaCurrentTime;
 
@@ -32,11 +35,15 @@ public final class AccountUtils {
     protected static CurrentTimer currentTimer = new JodaCurrentTime();
     private static User user;
 
-    private static LastLoginUserRepo lastLoginUserRepo = new PreferenceLastLoginUserRepo();
+    private static UserStore lastLoginUserStore = new PreferenceLastLoginUserStore();
+    private static UserStore runtimeUserStore = new RuntimeUserStore();
 
     public static User getUser() {
-        if (AccountUtils.user == null && BuildConfig.DEBUG) {
-            throw new IllegalStateException("user is null, please make sure to set user before call this");
+        if (AccountUtils.user == null) {
+            if (BuildConfig.DEBUG)
+                throw new IllegalStateException("user is null, please make sure to set user before call this");
+            else
+                AccountUtils.user = runtimeUserStore.getUser();
         }
         return AccountUtils.user;
     }
@@ -46,7 +53,8 @@ public final class AccountUtils {
             TanrabadApp.action().login(user);
         }
         AccountUtils.user = user;
-        lastLoginUserRepo.userLogin(user);
+        runtimeUserStore.save(user);
+        lastLoginUserStore.save(user);
     }
 
     public static void login(final User user, final LoginThread.LoginListener loginListener) {
@@ -55,7 +63,7 @@ public final class AccountUtils {
     }
 
     public static User getLastLoginUser() {
-        return lastLoginUserRepo.getLastLoginUser();
+        return lastLoginUserStore.getUser();
     }
 
     public static boolean isTrialUser(User user) {
@@ -64,18 +72,49 @@ public final class AccountUtils {
 
     public static void clear() {
         AccountUtils.user = null;
-        lastLoginUserRepo.clear();
+        lastLoginUserStore.clear();
+        runtimeUserStore.save(user);
     }
 
-    public static void setLastLoginUserRepo(LastLoginUserRepo repository) {
-        lastLoginUserRepo = repository;
+    public static void setLastLoginUserStore(UserStore repository) {
+        lastLoginUserStore = repository;
     }
 
-    public interface LastLoginUserRepo {
-        void userLogin(User user);
+    public interface UserStore {
+        void save(User user);
 
-        User getLastLoginUser();
+        User getUser();
 
         void clear();
+    }
+
+    private static class RuntimeUserStore implements UserStore {
+        private static final String PREF_NAME = "user-runtime";
+        private static final String KEY_USER = "user";
+
+        @Override
+        public void save(User user) {
+            if (TanrabadApp.getInstance() == null) return;
+            SharedPreferences.Editor editor = getSharedPreferences().edit();
+            editor.putString(KEY_USER, user.getUsername());
+            editor.apply();
+        }
+
+        private SharedPreferences getSharedPreferences() {
+            return TanrabadApp.getInstance().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        }
+
+        @Override
+        public User getUser() {
+            String user = getSharedPreferences().getString(KEY_USER, null);
+            if (user == null)
+                return null;
+            return BrokerUserRepository.getInstance().findByUsername(user);
+        }
+
+        @Override
+        public void clear() {
+            getSharedPreferences().edit().clear().apply();
+        }
     }
 }

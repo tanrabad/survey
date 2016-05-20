@@ -31,21 +31,21 @@ public class LoginController {
     private final DataManager dataManager;
     private final RestServiceConfig restServiceConfig;
     private final Connection connection;
-    private final AccountUtils.LastLoginUserRepo repository;
+    private final AccountUtils.UserStore previousLoginUserStore;
 
     public LoginController() {
         this(new InternetConnection(TanrabadApp.getInstance()),
-                new PreferenceLastLoginUserRepo(),
+                new PreferenceLastLoginUserStore(),
                 new AppDataManager(),
                 ImpRestServiceConfig.getInstance());
     }
 
     public LoginController(Connection connection,
-                           AccountUtils.LastLoginUserRepo repository,
+                           AccountUtils.UserStore previousLoginUserStore,
                            DataManager dataManager,
                            RestServiceConfig restServiceConfig) {
         this.connection = connection;
-        this.repository = repository;
+        this.previousLoginUserStore = previousLoginUserStore;
         this.dataManager = dataManager;
         this.restServiceConfig = restServiceConfig;
     }
@@ -55,7 +55,7 @@ public class LoginController {
             return false;
 
         if (shouldUploadOldUserData(user)) {
-            restServiceConfig.setApiBaseUrlByUser(repository.getLastLoginUser());
+            restServiceConfig.setApiBaseUrlByUser(previousLoginUserStore.getUser());
             dataManager.syncAndClearData();
         }
 
@@ -65,7 +65,7 @@ public class LoginController {
     }
 
     protected boolean isNewUser(User user) {
-        return !user.equals(repository.getLastLoginUser());
+        return !user.equals(previousLoginUserStore.getUser());
     }
 
     protected void setUser(User user) {
@@ -73,7 +73,7 @@ public class LoginController {
     }
 
     protected boolean shouldUploadOldUserData(User user) {
-        return repository.getLastLoginUser() != null
-                && user.getOrganizationId() != repository.getLastLoginUser().getOrganizationId();
+        return previousLoginUserStore.getUser() != null
+                && user.getOrganizationId() != previousLoginUserStore.getUser().getOrganizationId();
     }
 }

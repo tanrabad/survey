@@ -34,11 +34,11 @@ public class WireMockTestBase {
     protected static final String HTTP_LOCALHOST_8089 = "http://localhost:" + HTTP_PORT;
     @ClassRule
     public static WireMockRule wireMockRule = new WireMockRule(HTTP_PORT);
-    private AccountUtils.LastLoginUserRepo lastLoginUserRepo = Mockito.mock(AccountUtils.LastLoginUserRepo.class);
+    private AccountUtils.UserStore lastLoginUserRepo = Mockito.mock(AccountUtils.UserStore.class);
 
     @Before
     public void setUp() throws Exception {
-        AccountUtils.setLastLoginUserRepo(lastLoginUserRepo);
+        AccountUtils.setLastLoginUserStore(lastLoginUserRepo);
         AccountUtils.setUser(stubUser());
     }
 

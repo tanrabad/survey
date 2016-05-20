@@ -33,13 +33,24 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
+import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
-import org.tanrabad.survey.repository.BrokerPlaceRepository;
 import org.tanrabad.survey.domain.place.PlaceChooser;
 import org.tanrabad.survey.domain.place.PlaceListPresenter;
+import org.tanrabad.survey.entity.Building;
 import org.tanrabad.survey.entity.Place;
-import org.tanrabad.survey.R;
+import org.tanrabad.survey.job.AbsJobRunner;
+import org.tanrabad.survey.job.Job;
+import org.tanrabad.survey.job.WritableRepoUpdateJob;
+import org.tanrabad.survey.repository.BrokerBuildingRepository;
+import org.tanrabad.survey.repository.BrokerPlaceRepository;
+import org.tanrabad.survey.service.BuildingRestService;
+import org.tanrabad.survey.service.PlaceRestService;
 
 import java.util.List;
 
@@ -72,6 +83,12 @@ public class PlaceSearchActivity extends TanrabadActivity implements
         setupSearchHistoryList();
         querySuggestion(null);
         setupPlaceList();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        new SyncJobRunner().start();
     }
 
     private void setupClearSearchHistoryButton() {
@@ -201,5 +218,31 @@ public class PlaceSearchActivity extends TanrabadActivity implements
         emptyText.setText(Html.fromHtml(
                 String.format(getString(R.string.place_name_not_found),
                         searchView.getQuery().toString())));
+    }
+
+    private class SyncJobRunner extends AbsJobRunner {
+
+        private WritableRepoUpdateJob<Place> placeUpdateJob = new WritableRepoUpdateJob<>(
+                new PlaceRestService(), BrokerPlaceRepository.getInstance());
+        private WritableRepoUpdateJob<Building> buildingUpdateJob = new WritableRepoUpdateJob<>(
+                new BuildingRestService(), BrokerBuildingRepository.getInstance());
+
+        public SyncJobRunner() {
+            addJob(placeUpdateJob);
+            addJob(buildingUpdateJob);
+        }
+
+        @Override
+        protected void onJobStart(Job startingJob) {
+            //do nothing
+        }
+
+        @Override
+        protected void onRunFinish() {
+            CharSequence query = searchView.getQuery();
+            if (!TextUtils.isEmpty(query)) {
+                onQueryTextSubmit(query.toString());
+            }
+        }
     }
 }

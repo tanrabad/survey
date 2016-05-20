@@ -28,8 +28,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import org.tanrabad.survey.R;
+import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.entity.Organization;
 import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.job.UploadJobRunner;
@@ -49,6 +49,10 @@ public final class MainActivityNavigation {
 
     public static void setup(final Activity activity) {
         NavigationView navigationView = (NavigationView) activity.findViewById(R.id.navigation);
+        if (navigationView == null) {
+            TanrabadApp.log(new IllegalArgumentException("NavigationView of MainActivity is Null"));
+            return;
+        }
         navigationView.setItemIconTintList(null);
         setupHeaderView(navigationView);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

@@ -119,7 +119,7 @@ android {
         abortOnError true
         checkAllWarnings true
         warningsAsErrors true
-        disable "IconColors", "InvalidPackage", "TrustAllX509TrustManager"
+        disable "IconColors", "InvalidPackage", "TrustAllX509TrustManager", "NewerVersionAvailable", "GradleDependency"
     }
 
     packagingOptions {

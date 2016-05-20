@@ -21,7 +21,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,18 +32,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import org.joda.time.DateTime;
+import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
-import org.tanrabad.survey.presenter.maps.LocationUtils;
-import org.tanrabad.survey.repository.BrokerBuildingRepository;
-import org.tanrabad.survey.repository.BrokerPlaceRepository;
-import org.tanrabad.survey.utils.MapUtils;
-import org.tanrabad.survey.utils.alert.Alert;
-import org.tanrabad.survey.utils.android.SoftKeyboard;
-import org.tanrabad.survey.utils.android.TwiceBackPressed;
-import org.tanrabad.survey.utils.map.MarkerUtil;
-import org.tanrabad.survey.validator.SaveBuildingValidator;
-import org.tanrabad.survey.validator.UpdateBuildingValidator;
-import org.tanrabad.survey.validator.ValidatorException;
 import org.tanrabad.survey.domain.building.BuildingController;
 import org.tanrabad.survey.domain.building.BuildingPresenter;
 import org.tanrabad.survey.domain.building.BuildingSavePresenter;
@@ -55,9 +44,24 @@ import org.tanrabad.survey.entity.Building;
 import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.entity.field.Location;
 import org.tanrabad.survey.entity.lookup.PlaceType;
-import org.tanrabad.survey.R;
+import org.tanrabad.survey.entity.utils.UuidUtils;
+import org.tanrabad.survey.presenter.maps.LocationUtils;
+import org.tanrabad.survey.repository.BrokerBuildingRepository;
+import org.tanrabad.survey.repository.BrokerPlaceRepository;
+import org.tanrabad.survey.utils.MacAddressUtils;
+import org.tanrabad.survey.utils.MapUtils;
+import org.tanrabad.survey.utils.alert.Alert;
+import org.tanrabad.survey.utils.android.SoftKeyboard;
+import org.tanrabad.survey.utils.android.TwiceBackPressed;
+import org.tanrabad.survey.utils.map.MarkerUtil;
+import org.tanrabad.survey.validator.SaveBuildingValidator;
+import org.tanrabad.survey.validator.UpdateBuildingValidator;
+import org.tanrabad.survey.validator.ValidatorException;
 
 import java.util.UUID;
+
+import static android.content.Intent.ACTION_EDIT;
+import static android.content.Intent.ACTION_INSERT;
 
 public class BuildingFormActivity extends TanrabadActivity implements PlacePresenter, BuildingPresenter,
         BuildingSavePresenter, View.OnClickListener {
@@ -81,6 +85,7 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
 
     public static void startEdit(Activity activity, String placeUuid, String buildingUuid) {
         Intent intent = new Intent(activity, BuildingFormActivity.class);
+        intent.setAction(ACTION_EDIT);
         intent.putExtra(PLACE_UUID_ARG, placeUuid);
         intent.putExtra(BuildingFormActivity.BUILDING_UUID_ARG, buildingUuid);
         activity.startActivityForResult(intent, ADD_BUILDING_REQ_CODE);
@@ -88,6 +93,7 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
 
     public static void startAdd(Activity activity, String placeUuid) {
         Intent intent = new Intent(activity, BuildingFormActivity.class);
+        intent.setAction(ACTION_INSERT);
         intent.putExtra(PLACE_UUID_ARG, placeUuid);
         activity.startActivityForResult(intent, ADD_BUILDING_REQ_CODE);
     }
@@ -132,15 +138,12 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
     }
 
     private void loadBuildingData() {
-        if (TextUtils.isEmpty(getBuildingUuid())) {
-            building = Building.withName(null);
+        if (ACTION_INSERT.equals(getIntent().getAction())) {
+            building = new Building(UuidUtils.generateOrdered(MacAddressUtils.getMacAddress(this)), "ไม่ระบุ");
         } else {
-            buildingController.showBuilding(UUID.fromString(getBuildingUuid()));
+            String buildingUuid = getIntent().getStringExtra(BUILDING_UUID_ARG);
+            buildingController.showBuilding(UUID.fromString(buildingUuid));
         }
-    }
-
-    private String getBuildingUuid() {
-        return getIntent().getStringExtra(BUILDING_UUID_ARG);
     }
 
     @Override
@@ -163,7 +166,7 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
         building.setUpdateTimestamp(DateTime.now().toString());
         building.setUpdateBy(AccountUtils.getUser());
         try {
-            if (TextUtils.isEmpty(getBuildingUuid())) {
+            if (ACTION_INSERT.equals(getIntent().getAction())) {
                 BuildingSaver buildingSaver = new BuildingSaver(
                         BrokerBuildingRepository.getInstance(), new SaveBuildingValidator(), this);
                 buildingSaver.save(building);
@@ -179,7 +182,7 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
 
     private void backToBuildingList() {
         finish();
-        if (TextUtils.isEmpty(getBuildingUuid()))
+        if (ACTION_INSERT.equals(getIntent().getAction()))
             BuildingListActivity.open(this, getPlaceUuid());
     }
 

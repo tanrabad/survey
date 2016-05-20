@@ -51,6 +51,7 @@ import org.tanrabad.survey.repository.BrokerBuildingRepository;
 import org.tanrabad.survey.repository.BrokerPlaceRepository;
 import org.tanrabad.survey.service.BuildingRestService;
 import org.tanrabad.survey.service.PlaceRestService;
+import org.tanrabad.survey.utils.android.InternetConnection;
 
 import java.util.List;
 
@@ -88,7 +89,17 @@ public class PlaceSearchActivity extends TanrabadActivity implements
     @Override
     protected void onResume() {
         super.onResume();
-        new SyncJobRunner().start();
+        if (InternetConnection.isAvailable(this)) new SyncJobRunner().start();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void setupClearSearchHistoryButton() {
@@ -145,16 +156,6 @@ public class PlaceSearchActivity extends TanrabadActivity implements
         placeListView.addItemDecoration(new SimpleDividerItemDecoration(this));
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         placeListView.setLayoutManager(linearLayoutManager);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -239,6 +240,7 @@ public class PlaceSearchActivity extends TanrabadActivity implements
 
         @Override
         protected void onRunFinish() {
+            if (searchView == null) return; //Activity is closed
             CharSequence query = searchView.getQuery();
             if (!TextUtils.isEmpty(query)) {
                 onQueryTextSubmit(query.toString());

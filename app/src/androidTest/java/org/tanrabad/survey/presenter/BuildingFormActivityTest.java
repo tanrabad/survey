@@ -23,12 +23,13 @@ import android.support.test.espresso.intent.Intents;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.tanrabad.survey.base.TanrabadEspressoTestBase;
 import org.tanrabad.survey.R;
+import org.tanrabad.survey.base.TanrabadEspressoTestBase;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -49,6 +50,7 @@ public class BuildingFormActivityTest extends TanrabadEspressoTestBase {
     public void setUp() {
         Intent intent = new Intent();
         intent.putExtra("place_uuid_arg", "935b9aeb-6522-461e-994f-f9e9006c4a33");
+        intent.setAction(Intent.ACTION_INSERT);
         mActivity = mActivityTestRule.launchActivity(intent);
     }
 

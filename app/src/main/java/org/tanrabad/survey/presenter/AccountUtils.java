@@ -73,7 +73,7 @@ public final class AccountUtils {
     public static void clear() {
         AccountUtils.user = null;
         lastLoginUserStore.clear();
-        runtimeUserStore.save(user);
+        runtimeUserStore.clear();
     }
 
     public static void setLastLoginUserStore(UserStore repository) {

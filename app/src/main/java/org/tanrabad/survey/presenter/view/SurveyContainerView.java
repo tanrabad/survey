@@ -29,12 +29,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import org.tanrabad.survey.utils.MacAddressUtils;
-import org.tanrabad.survey.utils.android.ResourceUtils;
+
+import org.tanrabad.survey.R;
 import org.tanrabad.survey.entity.SurveyDetail;
 import org.tanrabad.survey.entity.lookup.ContainerType;
 import org.tanrabad.survey.entity.utils.UuidUtils;
-import org.tanrabad.survey.R;
+import org.tanrabad.survey.utils.MacAddressUtils;
+import org.tanrabad.survey.utils.android.ResourceUtils;
 
 import java.util.HashMap;
 
@@ -193,7 +194,9 @@ public class SurveyContainerView extends RelativeLayout {
             iconMapper.put(7, R.mipmap.ic_container_tire);
             iconMapper.put(8, R.mipmap.ic_container_leaf);
             iconMapper.put(9, R.mipmap.ic_container_garbages);
-            iconMapper.put(10, R.mipmap.ic_container_bowl);
+            iconMapper.put(10, R.mipmap.ic_container_bucket);
+            iconMapper.put(11, R.mipmap.ic_container_bowl);
+            iconMapper.put(12, R.mipmap.ic_container_fridge);
             return iconMapper;
         }
 

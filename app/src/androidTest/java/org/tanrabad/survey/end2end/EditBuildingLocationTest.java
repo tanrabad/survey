@@ -20,20 +20,19 @@ package org.tanrabad.survey.end2end;
 import android.content.Intent;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.tanrabad.survey.R;
 import org.tanrabad.survey.base.TanrabadEspressoTestBase;
 import org.tanrabad.survey.presenter.BuildingFormActivity;
-import org.tanrabad.survey.R;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.longClick;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static android.support.test.espresso.matcher.ViewMatchers.*;
 
 @RunWith(AndroidJUnit4.class)
 public class EditBuildingLocationTest extends TanrabadEspressoTestBase {
@@ -44,7 +43,8 @@ public class EditBuildingLocationTest extends TanrabadEspressoTestBase {
     @Before
     public void setUp() {
         Intent intent = new Intent();
-        intent.putExtra("place_uuid_arg", "935b9aeb-6522-461e-994f-f9e9006c4a33");
+        intent.setAction(Intent.ACTION_INSERT);
+        intent.putExtra("place_uuid_arg", "abc01db8-7207-8a65-152f-ad208cb99b5e");
         mActivity = mActivityTestRule.launchActivity(intent);
     }
 

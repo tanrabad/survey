@@ -21,10 +21,11 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import org.tanrabad.survey.utils.collection.CursorList;
-import org.tanrabad.survey.utils.collection.CursorMapper;
+
 import org.tanrabad.survey.domain.survey.ContainerTypeRepository;
 import org.tanrabad.survey.entity.lookup.ContainerType;
+import org.tanrabad.survey.utils.collection.CursorList;
+import org.tanrabad.survey.utils.collection.CursorMapper;
 
 import java.util.List;
 
@@ -49,7 +50,7 @@ public class DbContainerTypeRepository extends DbRepository implements Container
         SQLiteDatabase db = readableDatabase();
         Cursor containerTypeCursor = db.query(TABLE_NAME, ContainerTypeColumn.wildcard(),
                 ContainerTypeColumn.ID + "=?", new String[]{String.valueOf(containerTypeId)}, null, null,
-                ContainerTypeColumn.ID);
+                ContainerTypeColumn.ORDER);
         return getContainerType(containerTypeCursor);
     }
 

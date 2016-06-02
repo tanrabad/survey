@@ -21,10 +21,11 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import org.tanrabad.survey.utils.collection.CursorList;
-import org.tanrabad.survey.utils.collection.CursorMapper;
+
 import org.tanrabad.survey.domain.place.PlaceTypeRepository;
 import org.tanrabad.survey.entity.lookup.PlaceType;
+import org.tanrabad.survey.utils.collection.CursorList;
+import org.tanrabad.survey.utils.collection.CursorMapper;
 
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class DbPlaceTypeRepository extends DbRepository implements PlaceTypeRepo
     public List<PlaceType> find() {
         SQLiteDatabase db = readableDatabase();
         Cursor placeTypeCursor = db.query(TABLE_NAME, PlaceTypeColumn.wildcard(),
-                null, null, null, null, null);
+                null, null, null, null, PlaceTypeColumn.ID);
         return new CursorList<>(placeTypeCursor, getMapper(placeTypeCursor));
     }
 

@@ -35,7 +35,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
-
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.domain.building.BuildingWithSurveyStatus;
@@ -260,7 +259,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
             }
         });
 
-        Survey survey = BrokerSurveyRepository.getInstance().findByBuildingAndUserIn7Day(
+        Survey survey = BrokerSurveyRepository.getInstance().findRecent(
                 building, AccountUtils.getUser());
         runner.addJob(new DeleteDataJob<>(BrokerSurveyRepository.getInstance(),
                 new SurveyRestService(), survey));

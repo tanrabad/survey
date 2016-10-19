@@ -63,7 +63,7 @@ public class SurveyBuildingHistoryControllerTest {
                 allowing(userRepository).findByUsername(with(USERNAME));
                 will(returnValue(user));
                 allowing(SurveyBuildingHistoryControllerTest.this.surveyRepository)
-                        .findByPlaceAndUserIn7Days(with(place), with(user));
+                        .findRecent(with(place), with(user));
                 will(returnValue(surveys));
                 oneOf(presenter).displaySurveyBuildingList(surveys);
             }
@@ -112,7 +112,7 @@ public class SurveyBuildingHistoryControllerTest {
                 allowing(placeRepository).findByUuid(with(UUID.fromString(PLACE_UUID)));
                 will(returnValue(place));
                 allowing(SurveyBuildingHistoryControllerTest.this.surveyRepository)
-                        .findByPlaceAndUserIn7Days(with(place), with(user));
+                        .findRecent(with(place), with(user));
                 will(returnValue(null));
                 oneOf(presenter).displaySurveyBuildingsNotFound();
             }

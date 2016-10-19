@@ -20,7 +20,11 @@ package org.tanrabad.survey.repository;
 import org.tanrabad.survey.domain.building.BuildingWithSurveyStatus;
 import org.tanrabad.survey.domain.place.PlaceRepositoryException;
 import org.tanrabad.survey.domain.survey.SurveyRepository;
-import org.tanrabad.survey.entity.*;
+import org.tanrabad.survey.entity.Building;
+import org.tanrabad.survey.entity.Place;
+import org.tanrabad.survey.entity.Survey;
+import org.tanrabad.survey.entity.SurveyDetail;
+import org.tanrabad.survey.entity.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +46,7 @@ final class InMemorySurveyRepository implements SurveyRepository {
     }
 
     @Override
-    public Survey findByBuildingAndUserIn7Day(Building building, User user) {
+    public Survey findRecent(Building building, User user) {
         for (Survey eachSurvey : surveys) {
             if (eachSurvey.getSurveyBuilding().equals(building) && eachSurvey.getUser().equals(user)) {
                 return eachSurvey;
@@ -52,7 +56,7 @@ final class InMemorySurveyRepository implements SurveyRepository {
     }
 
     @Override
-    public List<Survey> findByPlaceAndUserIn7Days(Place place, User user) {
+    public List<Survey> findRecent(Place place, User user) {
         ArrayList<Survey> surveyBuilding = new ArrayList<>();
         for (Survey eachSurvey : surveys) {
             if (eachSurvey.getSurveyBuilding().getPlace().equals(place) && eachSurvey.getUser().equals(user)) {

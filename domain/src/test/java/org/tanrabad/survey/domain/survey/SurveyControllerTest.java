@@ -22,14 +22,13 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
-import java.util.UUID;
-
 import org.tanrabad.survey.domain.building.BuildingRepository;
 import org.tanrabad.survey.domain.user.UserRepository;
 import org.tanrabad.survey.entity.Building;
 import org.tanrabad.survey.entity.Survey;
 import org.tanrabad.survey.entity.User;
+
+import java.util.UUID;
 
 public class SurveyControllerTest {
     @Rule
@@ -68,7 +67,7 @@ public class SurveyControllerTest {
                 will(returnValue(building));
                 allowing(userRepository).findByUsername(with(username));
                 will(returnValue(user));
-                allowing(surveyRepository).findByBuildingAndUserIn7Day(with(building), with(user));
+                allowing(surveyRepository).findRecent(with(building), with(user));
                 will(returnValue(surveys));
                 oneOf(surveyPresenter).onEditSurvey(with(surveys));
             }
@@ -87,7 +86,7 @@ public class SurveyControllerTest {
                 will(returnValue(building));
                 allowing(userRepository).findByUsername(with(username));
                 will(returnValue(user));
-                allowing(surveyRepository).findByBuildingAndUserIn7Day(with(building), with(user));
+                allowing(surveyRepository).findRecent(with(building), with(user));
                 will(returnValue(null));
                 oneOf(surveyPresenter).onNewSurvey(with(building), with(user));
             }

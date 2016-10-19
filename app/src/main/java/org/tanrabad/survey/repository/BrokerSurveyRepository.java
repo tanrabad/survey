@@ -18,10 +18,14 @@
 package org.tanrabad.survey.repository;
 
 import org.tanrabad.survey.TanrabadApp;
-import org.tanrabad.survey.entity.*;
-import org.tanrabad.survey.repository.persistence.DbSurveyRepository;
 import org.tanrabad.survey.domain.building.BuildingWithSurveyStatus;
 import org.tanrabad.survey.domain.survey.SurveyRepository;
+import org.tanrabad.survey.entity.Building;
+import org.tanrabad.survey.entity.Place;
+import org.tanrabad.survey.entity.Survey;
+import org.tanrabad.survey.entity.SurveyDetail;
+import org.tanrabad.survey.entity.User;
+import org.tanrabad.survey.repository.persistence.DbSurveyRepository;
 
 import java.util.List;
 import java.util.UUID;
@@ -46,13 +50,13 @@ public final class BrokerSurveyRepository implements SurveyRepository {
     }
 
     @Override
-    public Survey findByBuildingAndUserIn7Day(Building building, User user) {
-        return persistent.findByBuildingAndUserIn7Day(building, user);
+    public Survey findRecent(Building building, User user) {
+        return persistent.findRecent(building, user);
     }
 
     @Override
-    public List<Survey> findByPlaceAndUserIn7Days(Place place, User user) {
-        return persistent.findByPlaceAndUserIn7Days(place, user);
+    public List<Survey> findRecent(Place place, User user) {
+        return persistent.findRecent(place, user);
     }
 
     @Override

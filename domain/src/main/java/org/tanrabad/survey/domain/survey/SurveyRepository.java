@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 NECTEC
+ * Copyright (c) 2016 NECTEC
  *   National Electronics and Computer Technology Center, Thailand
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,9 +17,6 @@
 
 package org.tanrabad.survey.domain.survey;
 
-import java.util.List;
-import java.util.UUID;
-
 import org.tanrabad.survey.domain.WritableRepository;
 import org.tanrabad.survey.domain.building.BuildingWithSurveyStatus;
 import org.tanrabad.survey.entity.Building;
@@ -28,11 +25,14 @@ import org.tanrabad.survey.entity.Survey;
 import org.tanrabad.survey.entity.SurveyDetail;
 import org.tanrabad.survey.entity.User;
 
+import java.util.List;
+import java.util.UUID;
+
 public interface SurveyRepository extends WritableRepository<Survey> {
 
-    Survey findByBuildingAndUserIn7Day(Building building, User user);
+    Survey findRecent(Building building, User user);
 
-    List<Survey> findByPlaceAndUserIn7Days(Place place, User user);
+    List<Survey> findRecent(Place place, User user);
 
     List<BuildingWithSurveyStatus> findSurveyBuilding(Place place, User user);
 

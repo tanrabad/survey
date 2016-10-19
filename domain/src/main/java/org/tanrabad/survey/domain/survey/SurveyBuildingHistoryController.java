@@ -17,14 +17,14 @@
 
 package org.tanrabad.survey.domain.survey;
 
-import java.util.List;
-import java.util.UUID;
-
 import org.tanrabad.survey.domain.place.PlaceRepository;
 import org.tanrabad.survey.domain.user.UserRepository;
 import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.entity.Survey;
 import org.tanrabad.survey.entity.User;
+
+import java.util.List;
+import java.util.UUID;
 
 public class SurveyBuildingHistoryController {
     private final UserRepository userRepository;
@@ -47,7 +47,7 @@ public class SurveyBuildingHistoryController {
         if (user == null) return;
         Place place = checkPlaceExist(placeUuid);
         if (place == null) return;
-        List<Survey> surveys = surveyRepository.findByPlaceAndUserIn7Days(place, user);
+        List<Survey> surveys = surveyRepository.findRecent(place, user);
         if (surveys != null && !surveys.isEmpty()) {
             surveyBuildingPresenter.displaySurveyBuildingList(surveys);
         } else {

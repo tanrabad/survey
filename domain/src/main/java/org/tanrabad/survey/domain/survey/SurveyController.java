@@ -17,13 +17,13 @@
 
 package org.tanrabad.survey.domain.survey;
 
-import java.util.UUID;
-
 import org.tanrabad.survey.domain.building.BuildingRepository;
 import org.tanrabad.survey.domain.user.UserRepository;
 import org.tanrabad.survey.entity.Building;
 import org.tanrabad.survey.entity.Survey;
 import org.tanrabad.survey.entity.User;
+
+import java.util.UUID;
 
 public class SurveyController {
     private final SurveyRepository surveyRepository;
@@ -48,7 +48,7 @@ public class SurveyController {
         Building building = checkBuildingExist(buildingUuid);
         if (building == null) return;
 
-        Survey survey = surveyRepository.findByBuildingAndUserIn7Day(building, user);
+        Survey survey = surveyRepository.findRecent(building, user);
         if (survey == null) {
             surveyPresenter.onNewSurvey(building, user);
         } else {

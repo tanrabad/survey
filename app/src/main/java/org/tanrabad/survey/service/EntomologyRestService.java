@@ -19,6 +19,7 @@ package org.tanrabad.survey.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
 import org.joda.time.DateTime;
+import org.tanrabad.survey.BuildConfig;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.presenter.AccountUtils;
@@ -69,7 +70,7 @@ public class EntomologyRestService extends AbsRestService<JsonEntomology> {
 
     private String oneWeekIntervalParam() {
         DateTime dateTime = new DateTime();
-        return "startdate=" + unixTime(dateTime.minusDays(7));
+        return "startdate=" + unixTime(dateTime.minusDays(BuildConfig.SURVEY_RANGE_DAY));
     }
 
     private long unixTime(DateTime dateTime) {

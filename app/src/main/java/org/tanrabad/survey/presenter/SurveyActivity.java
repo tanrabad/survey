@@ -42,7 +42,6 @@ import org.tanrabad.survey.entity.lookup.PlaceType;
 import org.tanrabad.survey.entity.utils.UuidUtils;
 import org.tanrabad.survey.presenter.view.AdvanceStepperDialog;
 import org.tanrabad.survey.presenter.view.SurveyContainerView;
-import org.tanrabad.survey.presenter.view.TorchButton;
 import org.tanrabad.survey.repository.BrokerBuildingRepository;
 import org.tanrabad.survey.repository.BrokerContainerTypeRepository;
 import org.tanrabad.survey.repository.BrokerSurveyRepository;
@@ -395,7 +394,6 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     @Override
     protected void onPause() {
         super.onPause();
-        ((TorchButton) findViewById(R.id.torch)).safeTurnOff();
         locationService.disconnect();
     }
 

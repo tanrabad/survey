@@ -51,14 +51,6 @@
                         android:contentDescription="@string/survey_container_bg_description"
                         android:src="@drawable/header_larvae_survey"/>
 
-                <org.tanrabad.survey.presenter.view.TorchButton
-                        android:id="@+id/torch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/screen_vertical_margin"
-                        android:layout_marginLeft="@dimen/screen_horizontal_margin"
-                        android:layout_marginStart="@dimen/screen_horizontal_margin"/>
-
                 <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

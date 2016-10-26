@@ -9,6 +9,8 @@ import android.support.v4.app.ActivityCompat;
 import org.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import org.tanrabad.survey.utils.prompt.PromptMessage;
 import org.tanrabad.survey.R;
+import org.tanrabad.survey.utils.prompt.PromptMessage.OnCancelListener;
+import org.tanrabad.survey.utils.prompt.PromptMessage.OnConfirmListener;
 
 public class LocationPermissionPrompt {
 
@@ -18,17 +20,14 @@ public class LocationPermissionPrompt {
     public static void show(final Activity activity) {
         if (!ActivityCompat.shouldShowRequestPermissionRationale(activity, PERMISSION_TO_REQUEST)) {
             PromptMessage promptMessage = new AlertDialogPromptMessage(activity);
-            promptMessage.setOnConfirm(getString(activity, R.string.ok),
-                    new PromptMessage.OnConfirmListener() {
+            promptMessage.setOnConfirm(getString(activity, R.string.ok), new OnConfirmListener() {
                 @Override
                 public void onConfirm() {
                     ActivityCompat.requestPermissions(activity,
-                            new String[]{PERMISSION_TO_REQUEST},
-                            REQUEST_CODE_ASK_PERMISSIONS);
+                            new String[]{PERMISSION_TO_REQUEST}, REQUEST_CODE_ASK_PERMISSIONS);
                 }
             });
-            promptMessage.setOnCancel(getString(activity, R.string.cancel),
-                    new PromptMessage.OnCancelListener() {
+            promptMessage.setOnCancel(getString(activity, R.string.cancel), new OnCancelListener() {
                 @Override
                 public void onCancel() {
                     activity.finish();
@@ -38,8 +37,7 @@ public class LocationPermissionPrompt {
             return;
         }
         ActivityCompat.requestPermissions(activity,
-                new String[]{PERMISSION_TO_REQUEST},
-                REQUEST_CODE_ASK_PERMISSIONS);
+                new String[]{PERMISSION_TO_REQUEST}, REQUEST_CODE_ASK_PERMISSIONS);
 
     }
 

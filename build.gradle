@@ -24,7 +24,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:2.1.0"
+        classpath 'com.android.tools.build:gradle:2.2.2'
     }
 }
 
@@ -99,7 +99,7 @@ ext {
 
 task wrapper(type: Wrapper) {
     description 'Creates the gradle wrapper.'
-    gradleVersion '2.14'
+    gradleVersion '2.14.1'
 }
 
 task testBeforePush(

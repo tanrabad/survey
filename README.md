@@ -1,4 +1,4 @@
-# Tanrabad Survey [![Build Status](https://travis-ci.org/nectec-wisru/android-TanrabadSurvey.svg?branch=master)](https://travis-ci.org/nectec-wisru/android-TanrabadSurvey)
+# Tanrabad Survey [![Build Status](https://travis-ci.org/piruin/piruin.github.io.svg?branch=master)](https://travis-ci.org/piruin/piruin.github.io)
 
 Survey application of Tanrabad System on android. 
 

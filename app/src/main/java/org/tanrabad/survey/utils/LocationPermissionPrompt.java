@@ -36,7 +36,7 @@ public class LocationPermissionPrompt {
             return;
         }
         ActivityCompat.requestPermissions(activity,
-                new String[]{Manifest.permission_group.LOCATION},
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                 REQUEST_CODE_ASK_PERMISSIONS);
 
     }

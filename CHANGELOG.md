@@ -5,6 +5,11 @@
 ## [1.4.8] - 2016-10-19
 ### ปรับปรุง
 - เปลี่ยนช่วงเวลาสำรวจจาก 7 วัน เป็น 2 วัน
+- แสดงผลการสำรวจย้อนหลังเพียง 1 วัน หลังสำรวจ
+- นำฟีเจอร์ไฟฉายออก เพื่อเพิ่มประสิทธิภาพของแอพ
+
+### แก้ไข
+- ปัญหา Force close ที่เกิดกับเครื่อง Android 6.x
 
 ## [1.4.7] - 2016-06-02
 ### แก้ไข
@@ -143,7 +148,9 @@
 - สามารถนำทางไปยังสถานที่/อาคารได้
 - ยืนยันตัวตนเพื่อเข้าสู่ระบบ
 
-[Unreleased]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.4.6...HEAD
+[Unreleased]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.4.8...HEAD
+[1.4.8]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.4.7...1.4.8
+[1.4.7]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.4.6...1.4.7
 [1.4.6]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.4.5...1.4.6
 [1.4.5]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.4.4...1.4.5
 [1.4.4]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.4.3...1.4.4

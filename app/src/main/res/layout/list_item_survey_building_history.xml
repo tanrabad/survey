@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/survey_building_icon"
             android:layout_marginTop="@dimen/space_between_content"
-            android:singleLine="true"
+            android:maxLines="1"
             android:textIsSelectable="false"
             android:textColor="@color/black"
             tools:text="CI 50.5%" />

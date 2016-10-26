@@ -169,7 +169,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_toRightOf="@id/avatar_icon"
-            android:singleLine="true"
+            android:maxLines="1"
             android:textColor="@color/white"
             android:textIsSelectable="false"
             tools:text="ชื่อ-สกุล"/>

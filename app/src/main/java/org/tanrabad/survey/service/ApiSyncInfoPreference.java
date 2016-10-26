@@ -43,7 +43,7 @@ public class ApiSyncInfoPreference implements ServiceLastUpdate, SyncStatus {
     }
 
     public static void clear(Context context) {
-        context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE).edit().clear().commit();
+        context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE).edit().clear().apply();
     }
 
     public void backLastUpdateTimeToYesterday() {

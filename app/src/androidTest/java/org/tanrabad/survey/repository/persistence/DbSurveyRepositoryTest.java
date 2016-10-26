@@ -222,7 +222,7 @@ public class DbSurveyRepositoryTest {
     public void testLoadSavedSurvey() throws Exception {
         Survey survey = getSurvey();
         surveyRepository.save(survey);
-        Survey querySurvey = surveyRepository.findByBuildingAndUserIn7Day(survey.getSurveyBuilding(), survey.getUser());
+        Survey querySurvey = surveyRepository.findRecent(survey.getSurveyBuilding(), survey.getUser());
         assertEquals(survey.getId(), querySurvey.getId());
         assertEquals(survey.getIndoorDetail(), querySurvey.getIndoorDetail());
         assertEquals(survey.getOutdoorDetail(), querySurvey.getOutdoorDetail());

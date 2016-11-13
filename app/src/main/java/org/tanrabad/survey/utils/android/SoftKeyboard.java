@@ -18,18 +18,20 @@
 package org.tanrabad.survey.utils.android;
 
 import android.app.Activity;
-import android.content.Context;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 public class SoftKeyboard {
 
     public static void hideOn(Activity activity) {
+        // from answer at StackOverflow https://stackoverflow.com/q/7696791
         View currentFocus = activity.getCurrentFocus();
-        if (currentFocus != null) {
-            InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);
-        }
+        if (currentFocus == null)
+            currentFocus = new View(activity);
+        InputMethodManager imm = (InputMethodManager)activity.getSystemService(INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);
     }
 
 }

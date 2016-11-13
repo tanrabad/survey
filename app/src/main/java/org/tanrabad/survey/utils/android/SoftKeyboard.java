@@ -26,7 +26,8 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
 public class SoftKeyboard {
 
     public static void hideOn(Activity activity) {
-        // from answer at StackOverflow https://stackoverflow.com/q/7696791
+        // Snippet in this method is under license CC BY-SA 3.0
+        // original from answer at StackOverflow https://stackoverflow.com/q/7696791
         View currentFocus = activity.getCurrentFocus();
         if (currentFocus == null)
             currentFocus = new View(activity);

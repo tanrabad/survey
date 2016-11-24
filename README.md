@@ -1,4 +1,5 @@
-# Tanrabad Survey [![Build Status](https://travis-ci.org/piruin/piruin.github.io.svg?branch=master)](https://travis-ci.org/piruin/piruin.github.io)
+# TanRabad SURVEY
+[![Build Status](https://travis-ci.org/tanrabad/survey.svg?branch=master)](https://travis-ci.org/tanrabad/survey)
 
 Survey application of Tanrabad System on android. 
 

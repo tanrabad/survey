@@ -59,4 +59,14 @@
     <dimen name="login_authen_btn_height">60dp</dimen>
     <dimen name="login_authen_btn_width">420dp</dimen>
     <dimen name="login_nectec_size">48dp</dimen>
+
+    <dimen name="main_content_size">600dp</dimen>
+    <dimen name="main_magnifier_size">1024dp</dimen>
+    <dimen name="main_survey_btn">380dp</dimen>
+    <dimen name="main_survey_btn_margin_top">200dp</dimen>
+    <dimen name="main_larvae_margin_top">300dp</dimen>
+    <dimen name="main_blank_space">740dp</dimen>
+    <dimen name="main_larvae_size">180dp</dimen>
+    <dimen name="main_survey_btn_hint_margin_top">680dp</dimen>
+    <dimen name="main_notice_trial_margin_top">420dp</dimen>
 </resources>

@@ -148,7 +148,7 @@
     <string name="upload_data_fail">ไม่สำเร็จ %1$d</string>
     <string name="ok">ตกลง</string>
     <string name="not_available">N/A</string>
-    <string name="view_survey_result">ดูผลการสำรวจ</string>
+    <string name="view_survey_result">รายงาน</string>
     <string name="survey_result">ผลการสำรวจ</string>
     <string name="key_container_title">ภาชนะที่พบลูกน้ำยุงลายมากที่สุด</string>
     <string name="house_index">HI %1$s%%</string>

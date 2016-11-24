@@ -24,10 +24,10 @@
     <dimen name="text_padding">12dp</dimen>
     <dimen name="toolbar_size">@dimen/actionbar_size</dimen>
 
-    <dimen name="header_height">271dp</dimen>
-    <dimen name="header_height_with_padding">320dp</dimen>
+    <dimen name="header_height">155dp</dimen>
+    <dimen name="header_height_with_padding">200dp</dimen>
 
-    <dimen name="card_width">568dp</dimen>
+    <dimen name="card_width">330dp</dimen>
     <dimen name="card_min_height">400dp</dimen>
 
     <dimen name="soft_keyboard_height">320dp</dimen>
@@ -58,4 +58,14 @@
     <dimen name="login_authen_btn_height">40dp</dimen>
     <dimen name="login_authen_btn_width">300dp</dimen>
     <dimen name="login_nectec_size">36dp</dimen>
+
+    <dimen name="main_content_size">300dp</dimen>
+    <dimen name="main_magnifier_size">1024dp</dimen>
+    <dimen name="main_survey_btn">190dp</dimen>
+    <dimen name="main_survey_btn_margin_top">135dp</dimen>
+    <dimen name="main_larvae_margin_top">160dp</dimen>
+    <dimen name="main_blank_space">420dp</dimen>
+    <dimen name="main_larvae_size">120dp</dimen>
+    <dimen name="main_survey_btn_hint_margin_top">380dp</dimen>
+    <dimen name="main_notice_trial_margin_top">220dp</dimen>
 </resources>

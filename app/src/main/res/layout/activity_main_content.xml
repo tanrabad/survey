@@ -25,16 +25,16 @@
 
     <ImageView
         android:id="@+id/larvae_deep"
-        android:layout_width="600dp"
-        android:layout_height="1024dp"
+        android:layout_width="@dimen/main_content_size"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|top"
         android:contentDescription="@null"
         android:src="@drawable/larvae_deep"/>
 
     <ImageView
         android:id="@+id/water_shadow"
-        android:layout_width="600dp"
-        android:layout_height="600dp"
+        android:layout_width="@dimen/main_content_size"
+        android:layout_height="@dimen/main_content_size"
         android:layout_gravity="center_horizontal|top"
         android:layout_marginTop="84dp"
         android:contentDescription="@null"
@@ -44,16 +44,16 @@
     <ImageView
         android:id="@+id/larvae"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/main_larvae_size"
         android:layout_gravity="center_horizontal|top"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="@dimen/main_larvae_margin_top"
         android:contentDescription="@null"
         android:src="@drawable/larvae_main"/>
 
     <ImageView
         android:id="@+id/magnifier"
-        android:layout_width="600dp"
-        android:layout_height="1024dp"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/main_magnifier_size"
         android:layout_gravity="center_horizontal|top"
         android:contentDescription="@null"
         android:foregroundGravity="center_horizontal"
@@ -62,10 +62,10 @@
 
     <Button
         android:id="@+id/start_survey"
-        android:layout_width="380dp"
-        android:layout_height="380dp"
+        android:layout_width="@dimen/main_survey_btn"
+        android:layout_height="@dimen/main_survey_btn"
         android:layout_gravity="center_horizontal|top"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="@dimen/main_survey_btn_margin_top"
         android:background="@color/transparent"
         android:textSize="@dimen/text_headline"/>
 
@@ -75,7 +75,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:layout_gravity="center_horizontal|top"
-        android:layout_marginTop="420dp"
+        android:layout_marginTop="@dimen/main_notice_trial_margin_top"
         android:text="@string/trial"
         android:textSize="@dimen/text_big_headline"
         android:textColor="@color/white_transparent_50"/>
@@ -85,7 +85,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|top"
-        android:layout_marginTop="680dp"
+        android:layout_marginTop="@dimen/main_survey_btn_hint_margin_top"
         android:text="@string/touch_to_start_survey"
         android:textColor="@color/white"
         android:textSize="@dimen/text_subhead"/>
@@ -98,7 +98,7 @@
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="740dp"
+            android:layout_height="@dimen/main_blank_space"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:titleEnabled="false">
 

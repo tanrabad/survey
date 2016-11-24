@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    tools:showIn="@layout/activity_place_form">
+
+    <TextView
+        style="@style/TextViewTanrabad.Label"
+        android:text="@string/place_type"
+        android:textIsSelectable="false"/>
+
+    <android.support.v7.widget.AppCompatSpinner
+        android:id="@+id/place_type_selector"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_between_content"
+        android:inputType="text"
+        tools:listitem="@layout/list_item_spinner"/>
+
+    <LinearLayout
+        android:id="@+id/place_subtype_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/place_subtype_label"
+            style="@style/TextViewTanrabad.Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textIsSelectable="false"
+            tools:text="ประเภทศาสนสถาน"/>
+
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/place_subtype_selector"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_between_content"
+            android:inputType="text"
+            tools:listitem="@layout/list_item_spinner"/>
+    </LinearLayout>
+</LinearLayout>

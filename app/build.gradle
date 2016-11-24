@@ -87,6 +87,7 @@ android {
         debug {
             debuggable true
             ext.enableCrashlytics = false
+            ext.alwaysUpdateBuildId = false
 
             manifestPlaceholders = [google_map_key: System.getenv("TANRABAD_GOOGLE_DEBUG_KEY")]
             buildConfigField "String", "API_BASE_URL", "\"$apiBaseUrlTest\""

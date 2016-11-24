@@ -35,14 +35,14 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
 
-                android:textSize="80sp"
+                android:textSize="@dimen/text_big_headline"
                 android:text="@string/app_name"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"
                 android:textColor="@color/white"
-                android:textSize="78sp"
+                android:textSize="@dimen/text_big_headline"
                 android:text="@string/survey"/>
     </LinearLayout>
 
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black_transparent_50"
             android:layout_marginTop="-16dp"
-            android:textSize="46sp"
+            android:textSize="@dimen/text_headline"
             android:text="@string/tanrabad_survey"/>
 
 

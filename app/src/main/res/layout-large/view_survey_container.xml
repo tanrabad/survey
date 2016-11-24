@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2016 NECTEC
+  ~   National Electronics and Computer Technology Center, Thailand
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/container_view_height">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/line_divider"/>
+
+    <ImageView
+        style="@style/ListIcon"
+        android:id="@+id/container_icon"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:background="@null"
+        android:contentDescription="@string/survey_container_description"
+        android:scaleType="centerInside"
+        tools:src="@mipmap/ic_container_pot_saucer"/>
+
+    <TextView
+        style="@style/ListTitle"
+        android:id="@+id/container_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/space_between_content"
+        android:layout_marginStart="@dimen/space_between_content"
+        android:layout_marginTop="@dimen/list_padding_top"
+        android:layout_toRightOf="@id/container_icon"
+        android:maxLines="1"
+        android:textIsSelectable="false"
+        tools:text="ประเภทภาชนะ"/>
+
+    <TextView
+        android:id="@+id/text_total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/container_type"
+        android:layout_alignStart="@id/container_type"
+        android:layout_below="@id/container_type"
+        android:layout_marginTop="@dimen/space_between_content"
+        android:text="@string/total"
+        android:textColor="@color/dark_gray"
+        android:textIsSelectable="false"/>
+
+    <org.tanrabad.survey.presenter.view.StepPopupEditText
+        android:id="@+id/total_container"
+        android:layout_width="@dimen/number_input_size"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/text_total"
+        android:layout_marginLeft="@dimen/space_between_content"
+        android:layout_marginStart="@dimen/space_between_content"
+        android:layout_toEndOf="@id/text_total"
+        android:layout_toRightOf="@id/text_total"
+        android:background="@drawable/bg_edittext_number"
+        android:gravity="center"
+        android:imeOptions="actionNext"
+        android:inputType="number"
+        android:maxLength="3"
+        android:padding="@dimen/space_between_content"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_body"/>
+
+    <TextView
+        android:id="@+id/text_found"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/text_total"
+        android:layout_marginLeft="@dimen/space_between_content"
+        android:layout_marginStart="@dimen/space_between_content"
+        android:layout_toEndOf="@id/total_container"
+        android:layout_toRightOf="@id/total_container"
+        android:text="@string/found"
+        android:textColor="@color/dark_gray"
+        android:textIsSelectable="false"/>
+
+    <org.tanrabad.survey.presenter.view.StepPopupEditText
+        android:id="@+id/found_larvae_container"
+        android:layout_width="@dimen/number_input_size"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/text_total"
+        android:layout_marginLeft="@dimen/space_between_content"
+        android:layout_marginStart="@dimen/space_between_content"
+        android:layout_toEndOf="@id/text_found"
+        android:layout_toRightOf="@id/text_found"
+        android:background="@drawable/bg_edittext_number"
+        android:gravity="center"
+        android:imeOptions="actionNext"
+        android:inputType="number"
+        android:maxLength="3"
+        android:padding="@dimen/space_between_content"
+        android:textColor="@color/black"/>
+
+
+</RelativeLayout>

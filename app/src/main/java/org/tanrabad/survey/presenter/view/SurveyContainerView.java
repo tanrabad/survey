@@ -139,7 +139,7 @@ public class SurveyContainerView extends RelativeLayout {
 
     private void setContainerType(ContainerType container) {
         containerType = container;
-        containerTypeView.setText(container.getName());
+        containerTypeView.setText(container.getName().trim());
         containerIconView.setImageResource(ContainerIconMapping.getContainerIcon(container));
         foundContainerView.setContentDescription(container.getName());
         totalContainerView.setContentDescription(container.getName());

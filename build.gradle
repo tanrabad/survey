@@ -102,18 +102,7 @@ task wrapper(type: Wrapper) {
     gradleVersion '2.14.1'
 }
 
-task testBeforePush(
-        group: "Verification",
-        description: "Run all process like on CI-Server",
-        dependsOn: [":app:test",
-                    ":app:build",
-                    ":domain:test",
-                    ":domain:build",
-                    ":entity:test",
-                    ":entity:build",]) {
-}
-
 task fullTest(
         group: "Verification",
-        description: "Test before Push with Android's Instrument Test",
-        dependsOn: ["testBeforePush", ":app:connectedCheck"])
+        description: "Test & Check with Android's Instrument Test",
+        dependsOn: ["build", ":app:connectedCheck"])

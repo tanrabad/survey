@@ -31,7 +31,7 @@ public class SoftKeyboard {
         View currentFocus = activity.getCurrentFocus();
         if (currentFocus == null)
             currentFocus = new View(activity);
-        InputMethodManager imm = (InputMethodManager)activity.getSystemService(INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);
     }
 

@@ -51,12 +51,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black_transparent_50"
-            android:layout_marginTop="-16dp"
+            android:layout_marginTop="0dp"
             android:textSize="@dimen/text_headline"
             android:text="@string/tanrabad_survey"/>
 
 
-    <View android:layout_width="390dp"
+    <View android:layout_width="@dimen/splash_hr_width"
           android:layout_height="1dp"
           android:background="@color/white_transparent_50"
           android:layout_marginTop="@dimen/space_between_content"/>

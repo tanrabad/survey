@@ -47,3 +47,6 @@ crashlytics-build.properties
 crashlytics.properties
 com.crashlytics.settings.json
 com_crashlytics_export_strings.xml
+
+# Google Services
+google-services.json

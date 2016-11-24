@@ -16,12 +16,12 @@
   -->
 
 <resources>
-    <dimen name="screen_horizontal_margin">8dp</dimen>
-    <dimen name="screen_vertical_margin">8dp</dimen>
+    <dimen name="screen_horizontal_margin">20dp</dimen>
+    <dimen name="screen_vertical_margin">24dp</dimen>
     <dimen name="space_between_content">8dp</dimen>
-    <dimen name="wide_space_between_content">8dp</dimen>
+    <dimen name="wide_space_between_content">16dp</dimen>
     <dimen name="actionbar_size">64dp</dimen>
-    <dimen name="text_padding">12dp</dimen>
+    <dimen name="text_padding">24dp</dimen>
     <dimen name="toolbar_size">@dimen/actionbar_size</dimen>
 
     <dimen name="header_height">271dp</dimen>
@@ -51,11 +51,12 @@
     <dimen name="activity_horizontal_margin">8dp</dimen>
     <dimen name="activity_vertical_margin">8dp</dimen>
 
-    <dimen name="login_bg_height">260dp</dimen>
-    <dimen name="login_logo_size">170dp</dimen>
-    <dimen name="login_space_logo_title">0dp</dimen>
-    <dimen name="login_authen_btn_margin_top">290dp</dimen>
-    <dimen name="login_authen_btn_height">40dp</dimen>
-    <dimen name="login_authen_btn_width">300dp</dimen>
-    <dimen name="login_nectec_size">36dp</dimen>
+
+    <dimen name="login_bg_height">480dp</dimen>
+    <dimen name="login_logo_size">310dp</dimen>
+    <dimen name="login_space_logo_title">20dp</dimen>
+    <dimen name="login_authen_btn_margin_top">500dp</dimen>
+    <dimen name="login_authen_btn_height">60dp</dimen>
+    <dimen name="login_authen_btn_width">420dp</dimen>
+    <dimen name="login_nectec_size">48dp</dimen>
 </resources>

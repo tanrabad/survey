@@ -20,14 +20,13 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 tools:ignore="RelativeOverlap">
     <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_marginBottom="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginLeft="@dimen/screen_horizontal_margin"
+            android:layout_marginRight="@dimen/screen_vertical_margin"
             android:gravity="bottom"
             android:orientation="vertical">
 
@@ -41,8 +40,8 @@
                 tools:ignore="MissingPrefix"/>
 
         <ImageView
-                android:layout_width="150dp"
-                android:layout_height="48dp"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/login_nectec_size"
                 android:layout_marginBottom="@dimen/space_between_content"
                 android:contentDescription="@string/nectec"
                 android:src="@drawable/logo_nectec"/>
@@ -59,11 +58,11 @@
     </LinearLayout>
     <Button
             android:id="@+id/authentication_button"
-            android:layout_width="420dp"
-            android:layout_height="60dp"
+            android:layout_width="@dimen/login_authen_btn_width"
+            android:layout_height="@dimen/login_authen_btn_height"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/text_padding"
-            android:layout_marginTop="500dp"
+            android:layout_marginTop="@dimen/login_authen_btn_margin_top"
             android:background="@drawable/rounded_button"
             android:contentDescription="@string/authentication"
             android:paddingBottom="10dp"
@@ -71,56 +70,47 @@
             android:text="@string/authentication"
             android:textColor="@color/white"
             android:textSize="@dimen/text_title"/>
-    <Button
-            android:id="@+id/trial"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="200dp"
-            android:layout_below="@id/authentication_button"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center_horizontal"
-            android:padding="16dp"
-            android:text="@string/trial"
-            android:textColor="@color/black"/>
 
     <ImageView
             android:id="@+id/bg_blue"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/login_bg_height"
             android:contentDescription="@null"
             android:scaleType="fitXY"
             android:src="@drawable/bg_blue_login_page"/>
 
-    <TextView
+    <LinearLayout
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:orientation="vertical"
+        android:gravity="right"
+        android:layout_marginEnd="@dimen/screen_horizontal_margin"
+        android:layout_marginRight="@dimen/screen_horizontal_margin"
+        android:layout_marginTop="@dimen/screen_vertical_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginEnd="@dimen/screen_horizontal_margin"
-            android:layout_marginRight="@dimen/screen_horizontal_margin"
-            android:layout_marginTop="@dimen/screen_vertical_margin"
             android:text="@string/app_version"
-            android:textColor="@color/light_gray"/>
-
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginEnd="@dimen/screen_horizontal_margin"
-            android:layout_marginRight="@dimen/screen_horizontal_margin"
-            android:layout_marginTop="52dp"
-            android:text="@string/app_build_time"
             android:textColor="@color/light_gray"
             android:textSize="@dimen/text_caption"/>
 
-    <ImageView
-            android:id="@+id/logo_tanrabad"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/app_build_time"
+            android:textColor="@color/light_gray"
+            android:textSize="@dimen/text_small_caption"/>
+    </LinearLayout>
+
+
+    <ImageView
+            android:id="@+id/logo_tanrabad"
+            android:layout_width="@dimen/login_logo_size"
+            android:layout_height="@dimen/login_logo_size"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="38dp"
             android:contentDescription="@null"
             android:src="@drawable/logo_tanrabad"/>
 
@@ -129,7 +119,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/logo_tanrabad"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="@dimen/login_space_logo_title"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -151,6 +141,18 @@
                 android:layout_marginLeft="2dp"
                 android:textSize="@dimen/text_headline"/>
     </LinearLayout>
+
+    <Button
+        android:id="@+id/trial"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="200dp"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/trial"
+        android:textColor="@color/black"
+        android:layout_below="@+id/authentication_button"
+        android:layout_centerHorizontal="true"/>
 
 
 </RelativeLayout>

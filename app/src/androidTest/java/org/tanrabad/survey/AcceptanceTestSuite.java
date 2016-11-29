@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.tanrabad.survey.suite;
+package org.tanrabad.survey;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;

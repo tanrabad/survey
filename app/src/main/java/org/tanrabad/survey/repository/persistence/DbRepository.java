@@ -44,7 +44,7 @@ class DbRepository {
 
     SQLiteDatabase writableDatabase() {
         if (writableDatabase == null || !writableDatabase.isOpen())
-            writableDatabase = SurveyLiteDatabase.getInstance(context).getReadableDatabase();
+            writableDatabase = SurveyLiteDatabase.getInstance(context).getWritableDatabase();
         return writableDatabase;
     }
 }

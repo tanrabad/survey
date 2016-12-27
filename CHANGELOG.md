@@ -2,6 +2,11 @@
 ทุกการเปลี่ยนแปลงของ **ทันระบาดสำรวจ** จะถูกบันทึกไว้ในไฟล์นี้ 
 ไฟล์นี้ปฎิบัติตามวิธีการ [Keep A CHANGLOG](http://keepachangelog.com/)
 
+## [1.5.1] - 2016-12-27
+### ปรับปรุง
+- Optimize ภาพประกอบเพื่อลดขนาด apk และเพิ่ม Performance
+- หน้ารายการสถานที่ในฐานข้อมูลแสดงผลแบบ Async
+
 ## [1.5.0] - 2016-11-29
 ### เพิ่ม
 - รองรับการใช้งานบนมือถือขนาด 5 นิ้วขึ้นไป
@@ -152,6 +157,7 @@
 - สามารถนำทางไปยังสถานที่/อาคารได้
 - ยืนยันตัวตนเพื่อเข้าสู่ระบบ
 
+[1.5.1]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.5.0...1.5.1
 [1.5.0]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.4.8...1.5.0
 [1.4.8]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.4.7...1.4.8
 [1.4.7]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.4.6...1.4.7

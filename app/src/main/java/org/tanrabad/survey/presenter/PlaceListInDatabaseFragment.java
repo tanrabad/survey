@@ -19,6 +19,7 @@ package org.tanrabad.survey.presenter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatSpinner;
@@ -32,7 +33,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
+
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
+
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.domain.place.PlaceChooser;
@@ -49,9 +52,8 @@ import org.tanrabad.survey.utils.prompt.PromptMessage;
 import java.util.Collections;
 import java.util.List;
 
-public class PlaceListInDatabaseFragment extends Fragment implements
-        AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener,
-        AdapterView.OnItemSelectedListener, PlaceListPresenter {
+public class PlaceListInDatabaseFragment extends Fragment implements AdapterView.OnItemClickListener,
+        AdapterView.OnItemLongClickListener, AdapterView.OnItemSelectedListener, PlaceListPresenter {
 
     private PlaceAdapter placeAdapter;
     private ReferenceEntityAdapter placeTypeAdapter;
@@ -71,19 +73,29 @@ public class PlaceListInDatabaseFragment extends Fragment implements
     }
 
     @Override
-    public void displayPlaceList(List<Place> places) {
+    public void displayPlaceList(final List<Place> places) {
         Collections.sort(places);
-        placeAdapter.updateData(places);
-        placeCountView.setText(getString(R.string.format_place_count, places.size()));
-        placeCountView.setVisibility(View.VISIBLE);
-        emptyPlacesView.hide();
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                placeAdapter.updateData(places);
+                placeCountView.setText(getString(R.string.format_place_count, places.size()));
+                placeCountView.setVisibility(View.VISIBLE);
+                emptyPlacesView.hide();
+            }
+        });
     }
 
     @Override
     public void displayPlaceNotFound() {
-        placeAdapter.clearData();
-        placeCountView.setVisibility(View.GONE);
-        emptyPlacesView.showEmptyLayout();
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                placeAdapter.clearData();
+                placeCountView.setVisibility(View.GONE);
+                emptyPlacesView.showEmptyLayout();
+            }
+        });
     }
 
     @Override
@@ -94,11 +106,15 @@ public class PlaceListInDatabaseFragment extends Fragment implements
 
     protected void loadPlaceList() {
         emptyPlacesView.showProgressBar();
-        if (placeTypeId > 0) {
-            placeChooser.getPlaceListWithPlaceTypeFilter(this.placeTypeId);
-        } else {
-            placeChooser.getPlaceList();
-        }
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                if (placeTypeId > 0)
+                    placeChooser.getPlaceListWithPlaceTypeFilter(placeTypeId);
+                else
+                    placeChooser.getPlaceList();
+            }
+        });
     }
 
     @Override
@@ -130,21 +146,18 @@ public class PlaceListInDatabaseFragment extends Fragment implements
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode != Activity.RESULT_OK)
-            return;
+        if (resultCode != Activity.RESULT_OK) return;
 
         loadPlaceList();
         switch (requestCode) {
             case PlaceFormActivity.ADD_PLACE_REQ_CODE:
-                if (InternetConnection.isAvailable(getActivity()))
-                    startSyncJobs();
+                if (InternetConnection.isAvailable(getActivity())) startSyncJobs();
                 break;
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_place_list_in_database, container, false);
         setupViews(view);
@@ -187,8 +200,8 @@ public class PlaceListInDatabaseFragment extends Fragment implements
         placeAdapter.setOnItemLongClickListener(this);
         placeListView.setAdapter(placeAdapter);
         placeListView.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(
-                getContext(), LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),
+                LinearLayoutManager.VERTICAL, false);
         placeListView.setLayoutManager(linearLayoutManager);
         placeListHeader.attachTo(placeListView, true);
     }

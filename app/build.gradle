@@ -177,8 +177,8 @@ dependencies {
     androidTestCompile "com.android.support:support-annotations:$supportLibVersion"
     androidTestCompile "com.android.support.test.espresso:espresso-core:$espressoVersion"
     androidTestCompile "com.android.support.test.espresso:espresso-intents:$espressoVersion"
-    androidTestCompile "com.android.support.test:runner:$runnerVersion"
-    androidTestCompile "com.android.support.test:rules:$rulesVersion"
+    androidTestCompile "com.android.support.test:runner:$espressoRuleRunnerVersion"
+    androidTestCompile "com.android.support.test:rules:$espressoRuleRunnerVersion"
     androidTestCompile "org.mockito:mockito-core:$mockitoVersion"
     androidTestCompile "com.google.dexmaker:dexmaker:$dexmakerVersion"
     androidTestCompile("com.google.dexmaker:dexmaker-mockito:$dexmakerVersion") {

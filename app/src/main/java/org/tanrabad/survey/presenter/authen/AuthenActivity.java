@@ -113,11 +113,6 @@ public class AuthenActivity extends TanrabadActivity {
             }
             return super.shouldOverrideUrlLoading(view, url);
         }
-
-        @Override
-        public void onReceivedSslError(WebView view, @NonNull SslErrorHandler handler, SslError error) {
-            handler.proceed();
-        }
     }
 
     private class AuthenticationCallback implements TRBCallback {

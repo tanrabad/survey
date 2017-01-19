@@ -2,6 +2,11 @@
 ทุกการเปลี่ยนแปลงของ **ทันระบาดสำรวจ** จะถูกบันทึกไว้ในไฟล์นี้ 
 ไฟล์นี้ปฎิบัติตามวิธีการ [Keep A CHANGLOG](http://keepachangelog.com/)
 
+## [1.5.2] - 2017-01-19
+## แก้ไข
+- การ Implement SSL ที่มีช่องโหว่ ซึ่งทำให้ Play Store ไม่ publish version 1.5.1
+- เงาที่ใช้แสดงสถานะการ sync ข้อมูลในหน้าหลักหายไป บนเครื่องขนาด 5 นิ้ว
+
 ## [1.5.1] - 2016-12-27
 ### ปรับปรุง
 - Optimize ภาพประกอบเพื่อลดขนาด apk และเพิ่ม Performance
@@ -157,6 +162,7 @@
 - สามารถนำทางไปยังสถานที่/อาคารได้
 - ยืนยันตัวตนเพื่อเข้าสู่ระบบ
 
+[1.5.2]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.5.1...1.5.2
 [1.5.1]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.5.0...1.5.1
 [1.5.0]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.4.8...1.5.0
 [1.4.8]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.4.7...1.4.8

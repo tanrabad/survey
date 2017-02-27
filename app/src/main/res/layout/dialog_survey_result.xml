@@ -20,6 +20,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="@dimen/space_between_content"
         android:gravity="center_horizontal"
         android:id="@+id/report_update_layout">
 
@@ -37,7 +38,19 @@
             android:id="@+id/report_update"
             android:layout_toRightOf="@id/report_update_title"
             android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_alignParentRight="true"
             tools:text="เมื่อวานนี้ 21:30"/>
+
+        <TextView
+            android:text="@string/trb_report"
+            android:drawablePadding="8dp"
+
+            android:drawableLeft="@mipmap/ic_trb_report"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView"/>
     </RelativeLayout>
 
     <Button

@@ -44,13 +44,11 @@
         <TextView
             android:text="@string/trb_report"
             android:drawablePadding="8dp"
-
             android:drawableLeft="@mipmap/ic_trb_report"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView"/>
+            android:layout_height="wrap_content"/>
     </RelativeLayout>
 
     <Button

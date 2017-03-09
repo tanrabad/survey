@@ -22,21 +22,22 @@ import android.graphics.Rect;
 import android.os.Parcelable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
+import android.support.v7.widget.AppCompatEditText;
 import android.text.InputType;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+
+import org.tanrabad.survey.R;
 import org.tanrabad.survey.utils.EditTextStepper;
 import org.tanrabad.survey.utils.android.BackgroundSetter;
 import org.tanrabad.survey.utils.android.DpCalculator;
 import org.tanrabad.survey.utils.android.ResourceUtils;
-import org.tanrabad.survey.R;
 
-public class StepPopupEditText extends EditText {
+public class StepPopupEditText extends AppCompatEditText {
     protected EditTextStepper editTextStepper;
     private StepperPopup popUp;
 

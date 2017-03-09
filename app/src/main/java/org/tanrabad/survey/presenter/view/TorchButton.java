@@ -20,16 +20,17 @@ package org.tanrabad.survey.presenter.view;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v7.widget.AppCompatImageButton;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.ImageButton;
+
+import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.utils.CameraFlashLight;
 import org.tanrabad.survey.utils.Torch;
 import org.tanrabad.survey.utils.time.JodaCurrentTime;
-import org.tanrabad.survey.R;
 
-public class TorchButton extends ImageButton {
+public class TorchButton extends AppCompatImageButton {
 
     private final Torch torch;
     private Handler uiThread;

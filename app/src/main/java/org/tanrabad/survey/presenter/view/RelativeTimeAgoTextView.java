@@ -21,10 +21,11 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.v7.widget.AppCompatTextView;
 import android.text.format.DateUtils;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.TextView;
+
 import org.joda.time.DateTime;
 import org.tanrabad.survey.utils.time.CurrentTimer;
 import org.tanrabad.survey.utils.time.JodaCurrentTime;
@@ -33,7 +34,7 @@ import org.tanrabad.survey.utils.time.TimePrettyPrinterFactory;
 /**
  * Modified form RelativeTimeTextView of Kiran Rao in Android-Ago Project
  */
-public class RelativeTimeAgoTextView extends TextView implements TimeAgoView {
+public class RelativeTimeAgoTextView extends AppCompatTextView implements TimeAgoView {
     private long referenceTime;
     private Handler handler = new Handler();
     private UpdateTimeRunnable updateTimeTask;

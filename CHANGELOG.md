@@ -2,6 +2,10 @@
 ทุกการเปลี่ยนแปลงของ **ทันระบาดสำรวจ** จะถูกบันทึกไว้ในไฟล์นี้ 
 ไฟล์นี้ปฎิบัติตามวิธีการ [Keep A CHANGLOG](http://keepachangelog.com/)
 
+## [1.5.3] - 2017-03-09
+- สามารถแสดงรายงานได้แม้จะ Sync ข้อมูลไม่สำเร็จทั้งหมด
+- เพิ่ม Credit ให้กับทันระบาดรายงาน
+
 ## [1.5.2] - 2017-01-19
 ## แก้ไข
 - การ Implement SSL ที่มีช่องโหว่ ซึ่งทำให้ Play Store ไม่ publish version 1.5.1
@@ -162,25 +166,26 @@
 - สามารถนำทางไปยังสถานที่/อาคารได้
 - ยืนยันตัวตนเพื่อเข้าสู่ระบบ
 
-[1.5.2]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.5.1...1.5.2
-[1.5.1]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.5.0...1.5.1
-[1.5.0]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.4.8...1.5.0
-[1.4.8]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.4.7...1.4.8
-[1.4.7]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.4.6...1.4.7
-[1.4.6]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.4.5...1.4.6
-[1.4.5]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.4.4...1.4.5
-[1.4.4]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.4.3...1.4.4
-[1.4.3]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.4.2...1.4.3
-[1.4.2]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.4.1...1.4.2
-[1.4.1]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.4.0...1.4.1
-[1.4.0]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.3.5...1.4.0
-[1.3.5]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.3.4...1.3.5
-[1.3.4]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.3.3...1.3.4
-[1.3.3]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.3.2...1.3.3
-[1.3.2]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.3.1...1.3.2
-[1.3.1]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.3.0...1.3.1
-[1.3.0]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.2.2...1.3.0
-[1.2.2]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.2.1...1.2.2
-[1.2.1]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.2.0...1.2.1
-[1.2.0]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.1.1...1.2.0
-[1.1.1]: https://github.com/nectec-wisru/android-TanrabadSurvey/compare/1.0.4...1.1.1
+[1.5.3]: https://github.com/tanrabad/survey/compare/1.5.2...1.5.3
+[1.5.2]: https://github.com/tanrabad/survey/compare/1.5.1...1.5.2
+[1.5.1]: https://github.com/tanrabad/survey/compare/1.5.0...1.5.1
+[1.5.0]: https://github.com/tanrabad/survey/compare/1.4.8...1.5.0
+[1.4.8]: https://github.com/tanrabad/survey/compare/1.4.7...1.4.8
+[1.4.7]: https://github.com/tanrabad/survey/compare/1.4.6...1.4.7
+[1.4.6]: https://github.com/tanrabad/survey/compare/1.4.5...1.4.6
+[1.4.5]: https://github.com/tanrabad/survey/compare/1.4.4...1.4.5
+[1.4.4]: https://github.com/tanrabad/survey/compare/1.4.3...1.4.4
+[1.4.3]: https://github.com/tanrabad/survey/compare/1.4.2...1.4.3
+[1.4.2]: https://github.com/tanrabad/survey/compare/1.4.1...1.4.2
+[1.4.1]: https://github.com/tanrabad/survey/compare/1.4.0...1.4.1
+[1.4.0]: https://github.com/tanrabad/survey/compare/1.3.5...1.4.0
+[1.3.5]: https://github.com/tanrabad/survey/compare/1.3.4...1.3.5
+[1.3.4]: https://github.com/tanrabad/survey/compare/1.3.3...1.3.4
+[1.3.3]: https://github.com/tanrabad/survey/compare/1.3.2...1.3.3
+[1.3.2]: https://github.com/tanrabad/survey/compare/1.3.1...1.3.2
+[1.3.1]: https://github.com/tanrabad/survey/compare/1.3.0...1.3.1
+[1.3.0]: https://github.com/tanrabad/survey/compare/1.2.2...1.3.0
+[1.2.2]: https://github.com/tanrabad/survey/compare/1.2.1...1.2.2
+[1.2.1]: https://github.com/tanrabad/survey/compare/1.2.0...1.2.1
+[1.2.0]: https://github.com/tanrabad/survey/compare/1.1.1...1.2.0
+[1.1.1]: https://github.com/tanrabad/survey/compare/1.0.4...1.1.1

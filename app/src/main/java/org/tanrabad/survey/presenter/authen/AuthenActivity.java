@@ -22,7 +22,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 import android.view.Window;
@@ -30,7 +29,6 @@ import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.domain.organization.OrganizationRepository;
@@ -112,6 +110,10 @@ public class AuthenActivity extends TanrabadActivity {
                 return true;
             }
             return super.shouldOverrideUrlLoading(view, url);
+        }
+
+        @Override public void onReceivedSslError(WebView v, SslErrorHandler handler, SslError er) {
+            handler.proceed();
         }
     }
 

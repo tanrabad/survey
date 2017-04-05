@@ -29,6 +29,8 @@ import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import java.io.InputStream;
+import java.security.cert.Certificate;
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.domain.organization.OrganizationRepository;
@@ -39,6 +41,7 @@ import org.tanrabad.survey.presenter.TanrabadActivity;
 import org.tanrabad.survey.repository.BrokerOrganizationRepository;
 import org.tanrabad.survey.repository.BrokerUserRepository;
 import org.tanrabad.survey.utils.android.CookieUtils;
+import org.tanrabad.survey.utils.http.FileCertificateAuthority;
 import org.trb.authen.client.TRBAuthenUtil;
 import org.trb.authen.client.TRBCallback;
 import org.trb.authen.model.UserProfile;
@@ -51,14 +54,12 @@ public class AuthenActivity extends TanrabadActivity {
 
     private WebView webView;
     private WebChromeClient webChromeClient = new WebChromeClient() {
-        @Override
-        public void onProgressChanged(WebView view, int newProgress) {
+        @Override public void onProgressChanged(WebView view, int newProgress) {
             setProgress(newProgress * 1000);
         }
     };
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         getWindow().requestFeature(Window.FEATURE_PROGRESS);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authen);
@@ -80,8 +81,7 @@ public class AuthenActivity extends TanrabadActivity {
         }
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK) && webView.canGoBack()) {
             webView.goBack();
             return true;
@@ -89,8 +89,7 @@ public class AuthenActivity extends TanrabadActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    @Override
-    protected void onStop() {
+    @Override protected void onStop() {
         webView.clearCache(true);
         super.onStop();
     }
@@ -100,8 +99,7 @@ public class AuthenActivity extends TanrabadActivity {
         private static final String PARAM_CODE = "code";
         private static final String AUTHORIZED_CALLBACK_URL = "http://localhost/?";
 
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
             if (url.startsWith(AUTHORIZED_CALLBACK_URL)) {
                 Uri uri = Uri.parse(url);
                 String code = uri.getQueryParameter(PARAM_CODE);
@@ -112,8 +110,18 @@ public class AuthenActivity extends TanrabadActivity {
             return super.shouldOverrideUrlLoading(view, url);
         }
 
-        @Override public void onReceivedSslError(WebView v, SslErrorHandler handler, SslError er) {
-            handler.proceed();
+        @Override public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+            InputStream rawCertificate = getResources().openRawResource(R.raw.tanrabad);
+            FileCertificateAuthority authority = new FileCertificateAuthority(rawCertificate);
+
+            Certificate serverCertificate = authority.createCertificate(error.getCertificate());
+            Certificate clientCertificate = authority.getCertificate();
+
+            if (serverCertificate.equals(clientCertificate)) {
+                handler.proceed();
+            } else {
+                handler.cancel();
+            }
         }
     }
 
@@ -122,8 +130,7 @@ public class AuthenActivity extends TanrabadActivity {
         private OrganizationRepository organizationRepository;
         private UserRepository userRepository;
 
-        @Override
-        public void onPostLogin() {
+        @Override public void onPostLogin() {
             UserProfile profile = TRBAuthenUtil.getInstance().getUserProfile();
             UserProfileMapper userProfileMapper = new UserProfileMapper(profile);
 
@@ -159,13 +166,11 @@ public class AuthenActivity extends TanrabadActivity {
             }
         }
 
-        @Override
-        public void onError(Exception e) {
+        @Override public void onError(Exception e) {
             TanrabadApp.log(e);
 
             setResult(RESULT_ERROR);
             finish();
         }
-
     }
 }

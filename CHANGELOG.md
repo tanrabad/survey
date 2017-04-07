@@ -2,6 +2,9 @@
 ทุกการเปลี่ยนแปลงของ **ทันระบาดสำรวจ** จะถูกบันทึกไว้ในไฟล์นี้ 
 ไฟล์นี้ปฎิบัติตามวิธีการ [Keep A CHANGLOG](http://keepachangelog.com/)
 
+## [1.5.6] - 2017-04-07
+- ตั้งแต่ 1.5.4 - 1.5.6 ปรับแอพให้รองรับ SSL Certificate ซึ่งจำเป็นจัดการเหมือนกันแบบ Self-Sign Cert
+
 ## [1.5.3] - 2017-03-09
 - สามารถแสดงรายงานได้แม้จะ Sync ข้อมูลไม่สำเร็จทั้งหมด
 - เพิ่ม Credit ให้กับทันระบาดรายงาน
@@ -166,6 +169,7 @@
 - สามารถนำทางไปยังสถานที่/อาคารได้
 - ยืนยันตัวตนเพื่อเข้าสู่ระบบ
 
+[1.5.6]: https://github.com/tanrabad/survey/compare/1.5.3...1.5.6
 [1.5.3]: https://github.com/tanrabad/survey/compare/1.5.2...1.5.3
 [1.5.2]: https://github.com/tanrabad/survey/compare/1.5.1...1.5.2
 [1.5.1]: https://github.com/tanrabad/survey/compare/1.5.0...1.5.1

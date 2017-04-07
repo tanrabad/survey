@@ -21,14 +21,20 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.tanrabad.survey.BuildConfig;
+import org.tanrabad.survey.R;
+import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.presenter.AccountUtils;
+import org.tanrabad.survey.utils.http.FileCertificateAuthority;
 import org.tanrabad.survey.utils.http.PageLinks;
 import org.tanrabad.survey.utils.http.Status;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.net.ssl.X509TrustManager;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.tanrabad.survey.utils.http.Header.ACCEPT;
@@ -42,8 +48,6 @@ public abstract class AbsRestService<T> implements RestService<T> {
 
     protected static final String TRB_USER_AGENT = "TanRabad-SURVEY/" + BuildConfig.VERSION_NAME + " (Android)";
 
-    private static final int READ_WRITE_TIMEOUT = 10; //second
-    private static final int CONNECT_TIMEOUT = 5; //second
     protected final OkHttpClient client;
     protected String baseApi;
     private ServiceLastUpdate serviceLastUpdate;
@@ -60,11 +64,7 @@ public abstract class AbsRestService<T> implements RestService<T> {
         this.user = user;
         this.baseApi = baseApi;
 
-        client = new OkHttpClient.Builder()
-                .readTimeout(READ_WRITE_TIMEOUT, SECONDS)
-                .writeTimeout(READ_WRITE_TIMEOUT, SECONDS)
-                .connectTimeout(CONNECT_TIMEOUT, SECONDS)
-                .build();
+        client = TanRabadHttpClient.build();
         deletedData = new ArrayList<>();
     }
 

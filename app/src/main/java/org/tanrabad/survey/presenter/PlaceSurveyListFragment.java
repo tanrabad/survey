@@ -38,7 +38,7 @@ import org.tanrabad.survey.R;
 
 import java.util.List;
 
-public class PlaceSurveyListFragment extends Fragment implements PlaceWithSurveyHistoryListPresenter,
+public class PlaceSurveyListFragment extends TanrabadFragment implements PlaceWithSurveyHistoryListPresenter,
         AdapterView.OnItemClickListener {
 
     private static final String USERNAME_ARG = "username_arg";
@@ -102,11 +102,16 @@ public class PlaceSurveyListFragment extends Fragment implements PlaceWithSurvey
     }
 
     @Override
-    public void displaySurveyPlaceList(List<Place> surveyPlace) {
-        emptySurveyPlaceListView.hide();
-        placeAdapter.updateData(surveyPlace);
-        placeCountView.setText(getString(R.string.format_place_count, surveyPlace.size()));
-        placeCountView.setVisibility(View.VISIBLE);
+    public void displaySurveyPlaceList(final List<Place> surveyPlace) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                emptySurveyPlaceListView.hide();
+                placeAdapter.updateData(surveyPlace);
+                placeCountView.setText(getString(R.string.format_place_count, surveyPlace.size()));
+                placeCountView.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     @Override
@@ -116,9 +121,14 @@ public class PlaceSurveyListFragment extends Fragment implements PlaceWithSurvey
 
     @Override
     public void displaySurveyPlacesNotFound() {
-        emptySurveyPlaceListView.showEmptyLayout();
-        placeAdapter.clearData();
-        placeCountView.setVisibility(View.GONE);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                emptySurveyPlaceListView.showEmptyLayout();
+                placeAdapter.clearData();
+                placeCountView.setVisibility(View.GONE);
+            }
+        });
     }
 
     @Override

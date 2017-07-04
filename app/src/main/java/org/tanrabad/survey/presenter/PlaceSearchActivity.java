@@ -205,20 +205,30 @@ public class PlaceSearchActivity extends TanrabadActivity implements
     }
 
     @Override
-    public void displayPlaceList(List<Place> places) {
-        placeAdapter.updateData(places);
-        placeListView.setVisibility(View.VISIBLE);
-        emptyText.setVisibility(View.GONE);
+    public void displayPlaceList(final List<Place> places) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                placeAdapter.updateData(places);
+                placeListView.setVisibility(View.VISIBLE);
+                emptyText.setVisibility(View.GONE);
+            }
+        });
     }
 
     @Override
     public void displayPlaceNotFound() {
-        placeAdapter.clearData();
-        placeListView.setVisibility(View.GONE);
-        emptyText.setVisibility(View.VISIBLE);
-        emptyText.setText(Html.fromHtml(
-                String.format(getString(R.string.place_name_not_found),
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                placeAdapter.clearData();
+                placeListView.setVisibility(View.GONE);
+                emptyText.setVisibility(View.VISIBLE);
+                emptyText.setText(Html.fromHtml(
+                    String.format(getString(R.string.place_name_not_found),
                         searchView.getQuery().toString())));
+            }
+        });
     }
 
     private class SyncJobRunner extends AbsJobRunner {

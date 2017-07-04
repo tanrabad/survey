@@ -52,7 +52,7 @@ import org.tanrabad.survey.utils.prompt.PromptMessage;
 import java.util.Collections;
 import java.util.List;
 
-public class PlaceListInDatabaseFragment extends Fragment implements AdapterView.OnItemClickListener,
+public class PlaceListInDatabaseFragment extends TanrabadFragment implements AdapterView.OnItemClickListener,
         AdapterView.OnItemLongClickListener, AdapterView.OnItemSelectedListener, PlaceListPresenter {
 
     private PlaceAdapter placeAdapter;
@@ -75,7 +75,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
     @Override
     public void displayPlaceList(final List<Place> places) {
         Collections.sort(places);
-        getActivity().runOnUiThread(new Runnable() {
+        runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 placeAdapter.updateData(places);
@@ -88,7 +88,7 @@ public class PlaceListInDatabaseFragment extends Fragment implements AdapterView
 
     @Override
     public void displayPlaceNotFound() {
-        getActivity().runOnUiThread(new Runnable() {
+        runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 placeAdapter.clearData();

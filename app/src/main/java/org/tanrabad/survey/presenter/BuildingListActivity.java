@@ -308,35 +308,50 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     }
 
     @Override
-    public void displayPlace(Place place) {
+    public void displayPlace(final Place place) {
         this.place = place;
-        TextView placeName = (TextView) findViewById(R.id.place_name);
-        placeName.setText(place.getName());
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                TextView placeName = (TextView) findViewById(R.id.place_name);
+                placeName.setText(place.getName());
+            }
+        });
     }
 
     @Override
     public void alertBuildingsNotFound() {
-        emptyBuildingsView.showEmptyLayout();
-        emptyBuildingsView.setVisibility(View.VISIBLE);
-        TextView buildingCountView = (TextView) findViewById(R.id.building_count);
-        buildingCountView.setVisibility(View.GONE);
-        editBuildingButton.setVisibility(View.GONE);
-        buildingAdapter.clearData();
-        if (actionMode != null)
-            actionMode.finish();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                emptyBuildingsView.showEmptyLayout();
+                emptyBuildingsView.setVisibility(View.VISIBLE);
+                TextView buildingCountView = (TextView) findViewById(R.id.building_count);
+                buildingCountView.setVisibility(View.GONE);
+                editBuildingButton.setVisibility(View.GONE);
+                buildingAdapter.clearData();
+                if (actionMode != null)
+                    actionMode.finish();
+            }
+        });
     }
 
     @Override
-    public void displayAllSurveyBuildingList(List<BuildingWithSurveyStatus> buildingsWithSurveyStatuses) {
-        Collections.sort(buildingsWithSurveyStatuses);
-        emptyBuildingsView.hide();
-        editBuildingButton.setVisibility(View.VISIBLE);
-        buildingSearchView.setVisibility(View.VISIBLE);
-        buildingAdapter.updateData(buildingsWithSurveyStatuses);
-        buildingList.setAdapter(buildingAdapter);
-        TextView buildingCountView = (TextView) findViewById(R.id.building_count);
-        buildingCountView.setText(getString(R.string.format_building_count, buildingsWithSurveyStatuses.size()));
-        buildingCountView.setVisibility(View.VISIBLE);
+    public void displayAllSurveyBuildingList(final List<BuildingWithSurveyStatus> buildings) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Collections.sort(buildings);
+                emptyBuildingsView.hide();
+                editBuildingButton.setVisibility(View.VISIBLE);
+                buildingSearchView.setVisibility(View.VISIBLE);
+                buildingAdapter.updateData(buildings);
+                buildingList.setAdapter(buildingAdapter);
+                TextView buildingCountView = (TextView) findViewById(R.id.building_count);
+                buildingCountView.setText(getString(R.string.format_building_count, buildings.size()));
+                buildingCountView.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     @Override

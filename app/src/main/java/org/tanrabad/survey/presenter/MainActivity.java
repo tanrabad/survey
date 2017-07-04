@@ -32,7 +32,9 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
+
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.domain.place.PlaceWithSurveyHistoryChooser;
 import org.tanrabad.survey.domain.place.PlaceWithSurveyHistoryListPresenter;
@@ -100,6 +102,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
         findViewById(R.id.root).setOnClickListener(this);
         findViewById(R.id.magnifier).setOnClickListener(this);
         findViewById(R.id.sync_data).setOnClickListener(this);
+        findViewById(R.id.sync_data).setOnLongClickListener(this);
     }
 
     private void setupNetworkChangeReceiver() {
@@ -265,7 +268,6 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
                 new ApiSyncInfoPreference(this, PlaceRestService.PATH).backLastUpdateTimeToYesterday();
                 new ApiSyncInfoPreference(this, BuildingRestService.PATH).backLastUpdateTimeToYesterday();
                 findViewById(R.id.sync_data).setEnabled(false);
-
                 startSyncJobs();
                 break;
         }

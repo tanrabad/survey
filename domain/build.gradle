@@ -30,7 +30,7 @@ dependencies {
     testCompile "org.jmock:jmock-junit4:$jMockVersion"
 }
 
-apply from: 'https://raw.githubusercontent.com/Blazei/java-quality-config/master/java/quality.gradle'
+apply from: 'https://raw.githubusercontent.com/piruin/java-quality-config/master/java/quality.gradle'
 
 pmd {
     ignoreFailures = true

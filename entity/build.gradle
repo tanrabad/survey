@@ -29,7 +29,7 @@ dependencies {
     testCompile "junit:junit:$junitVersion"
 }
 
-apply from: 'https://raw.githubusercontent.com/Blazei/java-quality-config/master/java/quality.gradle'
+apply from: 'https://raw.githubusercontent.com/piruin/java-quality-config/master/java/quality.gradle'
 
 pmd {
     ignoreFailures = true

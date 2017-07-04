@@ -38,6 +38,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.domain.place.PlaceChooser;
@@ -224,9 +225,9 @@ public class PlaceSearchActivity extends TanrabadActivity implements
                 placeAdapter.clearData();
                 placeListView.setVisibility(View.GONE);
                 emptyText.setVisibility(View.VISIBLE);
-                emptyText.setText(Html.fromHtml(
-                    String.format(getString(R.string.place_name_not_found),
-                        searchView.getQuery().toString())));
+                String message = String.format(getString(R.string.place_name_not_found),
+                    searchView.getQuery().toString());
+                emptyText.setText(Html.fromHtml(message));
             }
         });
     }

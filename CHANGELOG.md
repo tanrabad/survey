@@ -2,6 +2,13 @@
 ทุกการเปลี่ยนแปลงของ **ทันระบาดสำรวจ** จะถูกบันทึกไว้ในไฟล์นี้ 
 ไฟล์นี้ปฎิบัติตามวิธีการ [Keep A CHANGLOG](http://keepachangelog.com/)
 
+## [1.5.7]
+ทดลองปิดการเช็ค FK ของ Sqlite เนื่องจากอาจมีผลกระทบกับ Performance ของเครื่องรุ่นเก่าๆ
+### แก้ไข
+- NPE เมื่อทำการเปิด-ปิด หน้ารายการสถานที่ อาคาร ขณะที่ยังโหลดข้อมูลไม่เสร็จ
+- ตรวจสอบ Cursor ให้รัดกุมก่อนดึงข้อมูลเพื่อลดปัญหา Force close
+- ลืม Set OnLongClickListener ให้ปุม Sync
+
 ## [1.5.6] - 2017-04-07
 - ตั้งแต่ 1.5.4 - 1.5.6 ปรับแอพให้รองรับ SSL Certificate ซึ่งจำเป็นจัดการเหมือนกันแบบ Self-Sign Cert
 
@@ -169,6 +176,7 @@
 - สามารถนำทางไปยังสถานที่/อาคารได้
 - ยืนยันตัวตนเพื่อเข้าสู่ระบบ
 
+[1.5.7]: https://github.com/tanrabad/survey/compare/1.5.6...1.5.7
 [1.5.6]: https://github.com/tanrabad/survey/compare/1.5.3...1.5.6
 [1.5.3]: https://github.com/tanrabad/survey/compare/1.5.2...1.5.3
 [1.5.2]: https://github.com/tanrabad/survey/compare/1.5.1...1.5.2

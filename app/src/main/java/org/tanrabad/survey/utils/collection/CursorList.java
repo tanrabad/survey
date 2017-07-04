@@ -46,6 +46,8 @@ public class CursorList<T> extends AbstractList<T> {
 
     @Override
     public T get(int i) {
+        if (cursor.isClosed())
+            return null;
         cursor.moveToPosition(i);
         return mapper.map(cursor);
     }
@@ -57,16 +59,23 @@ public class CursorList<T> extends AbstractList<T> {
 
     @Override
     public int size() {
+        if (cursor.isClosed())
+            return 0;
         return cursor.getCount();
     }
 
     @Override
     protected void finalize() throws Throwable {
+        if (!cursor.isClosed())
+            tryCloseCursor();
+        super.finalize();
+    }
+
+    private void tryCloseCursor() {
         try {
             cursor.close();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        super.finalize();
     }
 }

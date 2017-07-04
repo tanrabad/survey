@@ -44,17 +44,6 @@ public final class SurveyLiteDatabase extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onConfigure(SQLiteDatabase db) {
-        super.onConfigure(db);
-        enableForeignKeyForJellyBeanAndAbove(db);
-    }
-
-    private void enableForeignKeyForJellyBeanAndAbove(SQLiteDatabase db) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
-            db.setForeignKeyConstraintsEnabled(true);
-    }
-
-    @Override
     public void onCreate(SQLiteDatabase db) {
         SqlScript.readAndExecute(context, db, R.raw.create);
         SqlScript.readAndExecute(context, db, R.raw.setup);

@@ -33,6 +33,7 @@ buildscript {
 }
 
 apply plugin: "com.android.application"
+apply plugin: "com.github.triplet.play"
 apply plugin: "io.fabric"
 apply plugin: "com.neenbedankt.android-apt"
 apply plugin: "com.noveogroup.android.check"
@@ -45,6 +46,12 @@ repositories {
 android {
     compileSdkVersion rootProject.compileSdkVersion
     buildToolsVersion rootProject.buildToolsVersion
+
+    playAccountConfigs {
+        defaultAccountConfig {
+            jsonFile = file('wnp-service-account-key.json')
+        }
+    }
 
     defaultConfig {
         applicationId "org.tanrabad.survey"
@@ -64,6 +71,8 @@ android {
         buildConfigField "String", "TRB_AUTHEN_CLIENT_SECRET", "\"$clientSecret\""
         buildConfigField "String", "API_BASE_URL_TEST", "\"$apiBaseUrlTest\""
         buildConfigField "int", "SURVEY_RANGE_DAY", "1"
+
+        playAccountConfig = playAccountConfigs.defaultAccountConfig
     }
 
     compileOptions {

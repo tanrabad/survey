@@ -112,10 +112,5 @@ ext {
 
 task wrapper(type: Wrapper) {
     description 'Creates the gradle wrapper.'
-    gradleVersion '2.14.1'
+    gradleVersion '3.5.1'
 }
-
-task fullTest(
-        group: "Verification",
-        description: "Test & Check with Android's Instrument Test",
-        dependsOn: ["build", ":app:connectedCheck"])

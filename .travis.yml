@@ -26,7 +26,14 @@ before_install:
   - openssl aes-256-cbc -K $encrypted_85ec7c0a437d_key -iv $encrypted_85ec7c0a437d_iv -in secrets.tar.enc -out secrets.tar -d
   - tar xvf secrets.tar
 script:
-  - "./gradlew build --stacktrace"
+  - ./gradlew build --stacktrace
+
+deploy:
+  provider: script
+  script: ./gradlew publishApkRelease
+  on:
+    tags: true
+
 notifications:
   slack:
     rooms:

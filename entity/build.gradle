@@ -18,9 +18,9 @@
 apply plugin: 'java'
 
 //noinspection GroovyUnusedAssignment
-sourceCompatibility = rootProject.ext.javaSourceCompatibility
+sourceCompatibility = rootProject.javaVersion
 //noinspection GroovyUnusedAssignment
-targetCompatibility = rootProject.ext.javaTargetCompatibility
+targetCompatibility = rootProject.javaVersion
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])

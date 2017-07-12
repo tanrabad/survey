@@ -44,8 +44,8 @@ repositories {
 }
 
 android {
-    compileSdkVersion rootProject.compileSdkVersion
-    buildToolsVersion rootProject.buildToolsVersion
+    compileSdkVersion 23
+    buildToolsVersion "25.0.0"
 
     playAccountConfigs {
         defaultAccountConfig {
@@ -55,8 +55,8 @@ android {
 
     defaultConfig {
         applicationId "org.tanrabad.survey"
-        minSdkVersion rootProject.minSdkVersion
-        targetSdkVersion rootProject.targetSdkVersion
+        minSdkVersion 15
+        targetSdkVersion 23
         versionCode rootProject.versionCode
         versionName rootProject.versionName
         testApplicationId "org.tanrabad.survey.test"
@@ -76,8 +76,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility rootProject.javaSourceCompatibility
-        targetCompatibility rootProject.javaTargetCompatibility
+        sourceCompatibility rootProject.javaVersion
+        targetCompatibility rootProject.javaVersion
     }
 
     signingConfigs {
@@ -143,15 +143,18 @@ android {
         }
     }
     useLibrary "org.apache.http.legacy"
-
 }
 
 dependencies {
+    def loganSquareVersion = "1.3.6"
+    def supportLibVersion = "23.4.0"
+    def playServicesVersion = "8.4.0"
+
     apt "com.bluelinelabs:logansquare-compiler:$loganSquareVersion"
 
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile project(":domain")
-    compile "com.onesignal:OneSignal:$oneSignalVersion@aar"
+    compile "com.onesignal:OneSignal:2.3.0@aar"
     compile "com.android.support:cardview-v7:$supportLibVersion"
     compile "com.android.support:preference-v14:$supportLibVersion"
     compile "com.android.support:design:$supportLibVersion"
@@ -161,27 +164,30 @@ dependencies {
     compile "com.google.android.gms:play-services-location:$playServicesVersion"
     compile "com.google.android.gms:play-services-maps:$playServicesVersion"
     compile "com.google.android.gms:play-services-analytics:$playServicesVersion"
-    compile("com.google.maps.android:android-maps-utils:$androidMapUtilsVersion") {
-        exclude(group: "com.google.android.gms")
-    }
-    compile "com.bartoszlipinski.recyclerviewheader:library:$recyclerViewHeaderVersion"
+    compile("com.google.maps.android:android-maps-utils:0.4.3") { exclude(group: "com.google.android.gms") }
+    compile "com.bartoszlipinski.recyclerviewheader:library:1.2.1"
     compile "com.bluelinelabs:logansquare:$loganSquareVersion"
-    compile("com.crashlytics.sdk.android:answers:$answersVersion@aar") { transitive = true; }
-    compile("com.crashlytics.sdk.android:crashlytics:$crashlyticsVersion@aar") { transitive = true; }
-    compile "com.squareup.okhttp3:okhttp:$okHttpVersion"
+    compile("com.crashlytics.sdk.android:answers:1.3.10@aar") { transitive = true; }
+    compile("com.crashlytics.sdk.android:crashlytics:2.6.5@aar") { transitive = true; }
+    compile "com.squareup.okhttp3:okhttp:3.5.0"
     compile "joda-time:joda-time:$jodaTimeVersion"
-    compile "net.frakbot:jumpingbeans:$jumpingbeansVersion"
-    compile "th.or.nectec.android:thai-widget:$thaiWidgetVersion"
-    compile "uk.co.chrisjenx:calligraphy:$calligraphyVersion"
-    compile "com.artit-k:license-fragment:$licenseFragmentVersion"
-    compile "cat.ereza:customactivityoncrash:$customActivityOnCrash"
-    compile "de.hdodenhof:circleimageview:$circleImageViewVersion"
-    compile "it.sephiroth.android.library.targettooltip:target-tooltip-library:$tooltipVersion"
+    compile "net.frakbot:jumpingbeans:1.3.0"
+    compile "th.or.nectec.android:thai-widget:0.4.5"
+    compile "uk.co.chrisjenx:calligraphy:2.2.0"
+    compile "com.artit-k:license-fragment:1.3.0"
+    compile "cat.ereza:customactivityoncrash:1.5.0"
+    compile "de.hdodenhof:circleimageview:2.0.0"
+    compile "it.sephiroth.android.library.targettooltip:target-tooltip-library:1.3.14"
 
+    def mockitoVersion = "1.10.19"
     testCompile "junit:junit:$junitVersion"
     testCompile "org.mockito:mockito-core:$mockitoVersion"
-    testCompile "org.slf4j:slf4j-simple:$slf4jVersion"
-    testCompile "com.github.tomakehurst:wiremock:$wiremockVersion"
+    testCompile "org.slf4j:slf4j-simple:1.6.4"
+    testCompile "com.github.tomakehurst:wiremock:1.57"
+
+    def dexmakerVersion = "1.2"
+    def espressoRuleRunnerVersion = "0.5"
+    def espressoVersion = "2.2.2"
 
     androidTestCompile "com.android.support:support-annotations:$supportLibVersion"
     androidTestCompile "com.android.support.test.espresso:espresso-core:$espressoVersion"
@@ -199,7 +205,7 @@ dependencies {
 
 apply plugin: 'com.google.gms.google-services'
 
-configurations.all { resolutionStrategy.force "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"}
+configurations.all { resolutionStrategy.force "com.fasterxml.jackson.core:jackson-core:2.6.0"}
 
 check {
     checkstyle {

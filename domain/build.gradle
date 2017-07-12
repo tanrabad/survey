@@ -18,16 +18,16 @@
 apply plugin: 'java'
 
 //noinspection GroovyUnusedAssignment
-sourceCompatibility = rootProject.ext.javaSourceCompatibility
+sourceCompatibility = rootProject.javaVersion
 //noinspection GroovyUnusedAssignment
-targetCompatibility = rootProject.ext.javaTargetCompatibility
+targetCompatibility = rootProject.javaVersion
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':entity')
 
     testCompile "junit:junit:$junitVersion"
-    testCompile "org.jmock:jmock-junit4:$jMockVersion"
+    testCompile "org.jmock:jmock-junit4:2.8.1"
 }
 
 apply from: 'https://raw.githubusercontent.com/piruin/java-quality-config/master/java/quality.gradle'

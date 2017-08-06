@@ -42,6 +42,7 @@ import org.tanrabad.survey.repository.BrokerOrganizationRepository;
 import org.tanrabad.survey.repository.BrokerUserRepository;
 import org.tanrabad.survey.utils.android.CookieUtils;
 import org.tanrabad.survey.utils.http.FileCertificateAuthority;
+import org.trb.authen.client.TRBAuthenPrompt;
 import org.trb.authen.client.TRBAuthenUtil;
 import org.trb.authen.client.TRBCallback;
 import org.trb.authen.model.UserProfile;
@@ -74,7 +75,7 @@ public class AuthenActivity extends TanrabadActivity {
 
     private void loadAuthenticationPage() {
         try {
-            String authenUrl = TRBAuthenUtil.getInstance().getAuthorizationUri();
+            String authenUrl = TRBAuthenUtil.getInstance().getAuthorizationUri(TRBAuthenPrompt.LOGIN);
             webView.loadUrl(authenUrl);
         } catch (Exception expect) {
             expect.printStackTrace();

@@ -121,7 +121,7 @@ android {
         checkAllWarnings true
         warningsAsErrors true
         disable "IconColors", "InvalidPackage", "TrustAllX509TrustManager", "NewerVersionAvailable", "IconExpectedSize",
-                "GradleDependency", "StaticFieldLeak", "HardwareIds"
+                "GradleDependency", "StaticFieldLeak", "HardwareIds", "OldTargetApi"
     }
 
     packagingOptions {

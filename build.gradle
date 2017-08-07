@@ -64,8 +64,8 @@ ext {
     versionCode = versionMajor * 10000 + versionMinor * 1000 + versionPatch
     buildTime = new SimpleDateFormat("yyMMddHHmm").format(new Date())
 
-    clientId = System.getenv("TANRABAD_AUTHEN_CLIENT_ID")
-    clientSecret = System.getenv("TANRABAD_AUTHEN_CLIENT_SECRET")
+    clientId = System.getenv("TRB_AUTHEN_CLIENT_ID")
+    clientSecret = System.getenv("TRB_AUTHEN_CLIENT_SECRET")
 
     apiBaseUrlTest = "http://trb-test.igridproject.info/v1"
     apiBaseUrlProduction = "https://api.tanrabad.org/v1"

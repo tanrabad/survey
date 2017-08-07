@@ -29,8 +29,7 @@ import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import java.io.InputStream;
-import java.security.cert.Certificate;
+
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.domain.organization.OrganizationRepository;
@@ -46,6 +45,9 @@ import org.trb.authen.client.TRBAuthenPrompt;
 import org.trb.authen.client.TRBAuthenUtil;
 import org.trb.authen.client.TRBCallback;
 import org.trb.authen.model.UserProfile;
+
+import java.io.InputStream;
+import java.security.cert.Certificate;
 
 @SuppressLint("SetJavaScriptEnabled")
 public class AuthenActivity extends TanrabadActivity {
@@ -75,7 +77,7 @@ public class AuthenActivity extends TanrabadActivity {
 
     private void loadAuthenticationPage() {
         try {
-            String authenUrl = TRBAuthenUtil.getInstance().getAuthorizationUri(TRBAuthenPrompt.LOGIN);
+            String authenUrl = TRBAuthenUtil.getInstance().getAuthorizationUri(TRBAuthenPrompt.CONSENT);
             webView.loadUrl(authenUrl);
         } catch (Exception expect) {
             expect.printStackTrace();

@@ -212,5 +212,7 @@
     <string name="please_connect_internet_before_logout">กรุณาเชื่อมต่ออินเทอร์เน็ตก่อนออกจากระบบ</string>
     <string name="trial_warning_msg">ท่านกำลังเข้าสู่โหมด &#8220;การทดสอบ&#8221; ข้อมูลที่ท่านจะทำการบันทึกหลังจากนี้ จะถูกจัดเก็บไว้ในระบบเพียง 1 วัน และไม่สามารถเข้าถึงได้ในแอปพลิเคชันทันระบาดอื่นๆ</string>
     <string name="trial_warning_title">คำเตือน!!!</string>
+    <string name="google_maps_key">Google Maps Keys</string>
+    <string name="blind_google_maps_key">%1$s*******************************%2$s</string>
 
 </resources>

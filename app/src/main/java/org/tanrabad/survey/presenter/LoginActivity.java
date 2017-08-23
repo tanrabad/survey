@@ -24,7 +24,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
-import android.widget.CheckBox;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -45,7 +44,6 @@ import static android.view.animation.AnimationUtils.loadAnimation;
 public class LoginActivity extends TanrabadActivity {
     private static final int AUTHEN_REQUEST_CODE = 1232;
     ProgressDialog progressDialog;
-    private CheckBox needShowcase;
     private GoogleApiClient appIndexClient;
     private View trialButton;
     private View authenButton;

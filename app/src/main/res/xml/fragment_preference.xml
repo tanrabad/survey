@@ -5,4 +5,9 @@
         android:key="google_analytics"
         android:summary="ส่งสถิติการใช้งานและรายงานข้อขัดข้องไปยัง Google โดยอัตโนมัติ"
         android:title="@string/google_analytic_pref_title"/>
+    <Preference
+        android:key="google_maps_key"
+        android:summary="AIza*******************************kWWI"
+        android:title="@string/google_maps_key"/>
+
 </PreferenceScreen>

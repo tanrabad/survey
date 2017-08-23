@@ -28,9 +28,29 @@ public class PreferenceFragment extends PreferenceFragmentCompat {
                 }
             }
         });
-        findPreference("google_maps_key").setSummary(getString(R.string.blind_google_maps_key,
+
+        findPreference("google_maps_key").setSummary(googleMapKey());
+
+        if (haveTrbAuthenKey()) {
+            findPreference("trb_authen_key").setSummary(trbAuthenKey());
+        }
+    }
+
+    private boolean haveTrbAuthenKey() {
+        return !"null".equals(BuildConfig.TRB_AUTHEN_CLIENT_ID) && !"null".equals(BuildConfig.TRB_AUTHEN_CLIENT_SECRET);
+    }
+
+    private String trbAuthenKey() {
+        return getString(R.string.blind_trb_authen_key,
+            BuildConfig.TRB_AUTHEN_CLIENT_ID.substring(0, 6),
+            BuildConfig.TRB_AUTHEN_CLIENT_ID.substring(47),
+            BuildConfig.TRB_AUTHEN_CLIENT_SECRET.substring(5));
+    }
+
+    private String googleMapKey() {
+        return getString(R.string.blind_google_maps_key,
             BuildConfig.GOOGLE_MAP_KEY.substring(0, 4),
-            BuildConfig.GOOGLE_MAP_KEY.substring(35)));
+            BuildConfig.GOOGLE_MAP_KEY.substring(35));
     }
 
     @Override

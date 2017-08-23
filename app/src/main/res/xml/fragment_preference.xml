@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:tools="http://schemas.android.com/tools">
     <CheckBoxPreference
         android:defaultValue="false"
         android:key="google_analytics"
@@ -7,7 +8,10 @@
         android:title="@string/google_analytic_pref_title"/>
     <Preference
         android:key="google_maps_key"
-        android:summary="AIza*******************************kWWI"
+        tools:summary="AIza*******************************kWWI"
         android:title="@string/google_maps_key"/>
-
+    <Preference
+        android:key="trb_authen_key"
+        tools:summary="\@!D4E4.************************.0AF5 (*****[kf)"
+        android:title="@string/trb_authen_key"/>
 </PreferenceScreen>

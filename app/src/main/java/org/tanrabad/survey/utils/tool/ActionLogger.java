@@ -42,7 +42,7 @@ public interface ActionLogger {
 
     void firstTimeWithoutInternet();
 
-    void startSurvey(Place place);
+    void startSurvey(Place place, String type);
 
     void startSurvey(Survey survey);
 

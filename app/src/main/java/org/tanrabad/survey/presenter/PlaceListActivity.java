@@ -28,7 +28,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import org.tanrabad.survey.R;
+
 import uk.co.chrisjenx.calligraphy.CalligraphyUtils;
 import uk.co.chrisjenx.calligraphy.TypefaceUtils;
 
@@ -107,7 +109,8 @@ public class PlaceListActivity extends TanrabadActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        placePagerAdapter.getItem(0).onActivityResult(requestCode, resultCode, data);
+        for (int i = 0; i < placePagerAdapter.getCount(); i++)
+            placePagerAdapter.getItem(i).onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

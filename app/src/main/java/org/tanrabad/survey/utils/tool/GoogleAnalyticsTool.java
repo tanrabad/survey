@@ -19,15 +19,17 @@ package org.tanrabad.survey.utils.tool;
 
 import android.content.Context;
 import android.util.Log;
+
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders.EventBuilder;
 import com.google.android.gms.analytics.Tracker;
+
+import org.tanrabad.survey.BuildConfig;
+import org.tanrabad.survey.R;
 import org.tanrabad.survey.entity.Building;
 import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.entity.Survey;
 import org.tanrabad.survey.entity.User;
-import org.tanrabad.survey.BuildConfig;
-import org.tanrabad.survey.R;
 
 public final class GoogleAnalyticsTool extends FabricTools {
 
@@ -168,8 +170,8 @@ public final class GoogleAnalyticsTool extends FabricTools {
     }
 
     @Override
-    public void startSurvey(Place place) {
-        super.startSurvey(place);
+    public void startSurvey(Place place, String type) {
+        super.startSurvey(place, type);
         tracker.send(new EventBuilder(CATEGORY_UX, "Start Survey Place")
                 .setCustomDimension(OBJECT_TYPE, String.valueOf(place.getType()))
                 .build());

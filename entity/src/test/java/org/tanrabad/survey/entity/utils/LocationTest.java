@@ -23,7 +23,9 @@ import org.junit.rules.ExpectedException;
 import org.tanrabad.survey.entity.field.Location;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 public class LocationTest {
     private static final double DELTA = 0.0001;
@@ -72,5 +74,33 @@ public class LocationTest {
     @Test(expected = IllegalArgumentException.class)
     public void testOutOfRangeLongitude() throws Exception {
         new Location(0, 180.1f);
+    }
+
+    @Test public void testPlaceInBoundary() {
+        Location testLocation = new Location(5, 5);
+        Location minimumLocation = new Location(0, 0);
+        Location maximumLocation = new Location(10, 10);
+        assertTrue(testLocation.isLocationInsideBoundary(minimumLocation, maximumLocation));
+    }
+
+    @Test public void testPlaceOutBoundary() {
+        Location testLocation = new Location(3, 12);
+        Location minimumLocation = new Location(0, 0);
+        Location maximumLocation = new Location(10, 10);
+        assertFalse(testLocation.isLocationInsideBoundary(minimumLocation, maximumLocation));
+    }
+
+    @Test public void testPlaceAtLatBoundOfBoundary() {
+        Location testLocation = new Location(0, 3);
+        Location minimumLocation = new Location(0, 0);
+        Location maximumLocation = new Location(10, 10);
+        assertTrue(testLocation.isLocationInsideBoundary(minimumLocation, maximumLocation));
+    }
+
+    @Test public void testPlaceAtLngBoundOfBoundary() {
+        Location testLocation = new Location(5, 10);
+        Location minimumLocation = new Location(0, 0);
+        Location maximumLocation = new Location(10, 10);
+        assertTrue(testLocation.isLocationInsideBoundary(minimumLocation, maximumLocation));
     }
 }

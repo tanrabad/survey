@@ -25,15 +25,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import java.util.ArrayList;
+import java.util.List;
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
 import org.tanrabad.survey.repository.persistence.PlaceWithChange;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import org.tanrabad.survey.utils.android.ResourceUtils;
 import th.or.nectec.thai.widget.address.AddressPicker;
 
 public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> implements ListViewAdapter<Place> {
@@ -48,47 +46,42 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> 
         this.context = context;
     }
 
-    @Override
-    public void updateData(List<Place> places) {
+    @Override public void updateData(List<Place> places) {
         this.places = places;
         notifyDataSetChanged();
     }
 
-    @Override
-    public void clearData() {
+    @Override public void clearData() {
         this.places = new ArrayList<>();
         notifyDataSetChanged();
     }
 
-    @Override
-    public Place getItem(int position) {
+    @Override public Place getItem(int position) {
         return places.get(position);
     }
 
-    @Override
-    public void setOnItemClickListener(AdapterView.OnItemClickListener onItemClickListener) {
+    @Override public void setOnItemClickListener(AdapterView.OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
-    @Override
-    public void setOnItemLongClickListener(AdapterView.OnItemLongClickListener onItemLongClickListener) {
+    @Override public void setOnItemLongClickListener(AdapterView.OnItemLongClickListener onItemLongClickListener) {
         this.onItemLongClickListener = onItemLongClickListener;
     }
 
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(context).inflate(R.layout.list_item_place, parent, false);
         return new ViewHolder(v, this);
     }
 
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    @Override public void onBindViewHolder(ViewHolder holder, int position) {
         Place place = places.get(position);
         holder.placeTextView.setText(place.getName());
         holder.placeSubtypeTextView.setText(
                 BrokerPlaceSubTypeRepository.getInstance().findById(place.getSubType()).getName());
         holder.placeAddressTextView.setAddressCode(place.getSubdistrictCode());
         holder.placeIcon.setImageResource(PlaceIconMapping.getPlaceIcon(place));
+        holder.placeTextView.setCompoundDrawablesWithIntrinsicBounds(null, null, place.getLocation() == null ? null
+                : ResourceUtils.from(context).getDrawable(R.drawable.ic_place_have_location), null);
         setSyncStatus(holder, place);
     }
 
@@ -97,27 +90,25 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> 
         holder.notSync.setVisibility(bwc.isNotSynced() ? View.VISIBLE : View.GONE);
     }
 
-    @Override
-    public long getItemId(int i) {
+    @Override public long getItemId(int i) {
         return i;
     }
 
-    @Override
-    public int getItemCount() {
+    @Override public int getItemCount() {
         return places.size();
     }
 
     private void onItemHolderClick(ViewHolder itemHolder) {
         if (onItemClickListener != null) {
-            onItemClickListener.onItemClick(null, itemHolder.itemView,
-                    itemHolder.getAdapterPosition(), itemHolder.getItemId());
+            onItemClickListener.onItemClick(null, itemHolder.itemView, itemHolder.getAdapterPosition(),
+                    itemHolder.getItemId());
         }
     }
 
     private void onItemHolderLongClick(ViewHolder itemHolder) {
         if (onItemLongClickListener != null) {
-            onItemLongClickListener.onItemLongClick(null, itemHolder.itemView,
-                    itemHolder.getAdapterPosition(), itemHolder.getItemId());
+            onItemLongClickListener.onItemLongClick(null, itemHolder.itemView, itemHolder.getAdapterPosition(),
+                    itemHolder.getItemId());
         }
     }
 
@@ -126,6 +117,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> 
         private TextView placeSubtypeTextView;
         private AddressPicker placeAddressTextView;
         private ImageView placeIcon;
+        private ImageView placeHaveLocationIcon;
         private ImageView notSync;
         private PlaceAdapter adapter;
 
@@ -139,15 +131,15 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> 
             placeAddressTextView = (AddressPicker) itemView.findViewById(R.id.place_address);
             placeIcon = (ImageView) itemView.findViewById(R.id.place_icon);
             notSync = (ImageView) itemView.findViewById(R.id.not_sync);
+            //placeHaveLocationIcon = (ImageView) itemView.findViewById(R.id.place_have_location_icon);
+
         }
 
-        @Override
-        public void onClick(View view) {
+        @Override public void onClick(View view) {
             adapter.onItemHolderClick(this);
         }
 
-        @Override
-        public boolean onLongClick(View view) {
+        @Override public boolean onLongClick(View view) {
             adapter.onItemHolderLongClick(this);
             return true;
         }

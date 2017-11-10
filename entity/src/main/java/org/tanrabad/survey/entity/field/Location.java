@@ -73,4 +73,13 @@ public class Location {
                 + ", longitude=" + longitude
                 + '}';
     }
+
+    public boolean isLocationInsideBoundary(Location minimumLocation, Location maximumLocation) {
+        double lat = getLatitude();
+        double lng = getLongitude();
+        return lat >= minimumLocation.getLatitude()
+                && lat <= maximumLocation.getLatitude()
+                && lng >= minimumLocation.getLongitude()
+                && lng <= maximumLocation.getLongitude();
+    }
 }

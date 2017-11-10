@@ -19,18 +19,26 @@ package org.tanrabad.survey.utils.tool;
 
 import android.content.Context;
 import android.util.Log;
+
 import com.crashlytics.android.Crashlytics;
-import com.crashlytics.android.answers.*;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.CustomEvent;
+import com.crashlytics.android.answers.LevelEndEvent;
+import com.crashlytics.android.answers.LevelStartEvent;
+import com.crashlytics.android.answers.LoginEvent;
+import com.crashlytics.android.answers.SearchEvent;
 import com.crashlytics.android.core.CrashlyticsCore;
-import io.fabric.sdk.android.Fabric;
-import org.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
-import org.tanrabad.survey.repository.BrokerPlaceTypeRepository;
+
+import org.tanrabad.survey.BuildConfig;
 import org.tanrabad.survey.domain.entomology.ContainerIndex;
 import org.tanrabad.survey.entity.Building;
 import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.entity.Survey;
 import org.tanrabad.survey.entity.User;
-import org.tanrabad.survey.BuildConfig;
+import org.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
+import org.tanrabad.survey.repository.BrokerPlaceTypeRepository;
+
+import io.fabric.sdk.android.Fabric;
 
 public class FabricTools implements ExceptionLogger, ActionLogger {
 
@@ -126,11 +134,16 @@ public class FabricTools implements ExceptionLogger, ActionLogger {
     }
 
     @Override
-    public void startSurvey(Place place) {
-        answers.logCustom(new CustomEvent(Event.START_PLACE_SURVEY)
-                .putCustomAttribute("Place Name", place.getName())
-                .putCustomAttribute("Place Type", getPlaceTypeName(place))
-                .putCustomAttribute("Place Sub Type", getPlaceSubTypeName(place)));
+    public void startSurvey(Place place, String type) {
+        CustomEvent event = new CustomEvent(Event.START_PLACE_SURVEY)
+            .putCustomAttribute("Place Name", place.getName())
+            .putCustomAttribute("Place Type", getPlaceTypeName(place))
+            .putCustomAttribute("Place Sub Type", getPlaceSubTypeName(place))
+            .putCustomAttribute("Have Location", place.getLocation() != null ? "yes" : "no")
+            .putCustomAttribute("Start Type", type);
+        if (place.getWeight() > 0.0)
+            event.putCustomAttribute("Suggestion Weight", place.getWeight());
+        answers.logCustom(event);
     }
 
     private String getPlaceTypeName(Place place) {

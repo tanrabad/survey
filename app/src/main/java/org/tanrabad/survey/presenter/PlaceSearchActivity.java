@@ -148,6 +148,7 @@ public class PlaceSearchActivity extends TanrabadActivity implements
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Place selectedPlace = placeAdapter.getItem(position);
+                TanrabadApp.action().startSurvey(selectedPlace, "search");
                 SurveyBuildingHistoryActivity.open(PlaceSearchActivity.this, selectedPlace);
                 finish();
             }

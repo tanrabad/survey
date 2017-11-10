@@ -21,7 +21,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -128,7 +127,7 @@ public class PlaceListInDatabaseFragment extends TanrabadFragment implements Ada
         promptMessage.setOnConfirm(getString(R.string.survey), new PromptMessage.OnConfirmListener() {
             @Override
             public void onConfirm() {
-                TanrabadApp.action().startSurvey(placeData);
+                TanrabadApp.action().startSurvey(placeData, "scroll");
                 SurveyBuildingHistoryActivity.open(getActivity(), placeData);
             }
         });

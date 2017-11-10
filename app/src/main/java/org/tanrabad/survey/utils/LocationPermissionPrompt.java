@@ -5,16 +5,15 @@ import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.app.ActivityCompat;
-
+import org.tanrabad.survey.R;
 import org.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import org.tanrabad.survey.utils.prompt.PromptMessage;
-import org.tanrabad.survey.R;
 import org.tanrabad.survey.utils.prompt.PromptMessage.OnCancelListener;
 import org.tanrabad.survey.utils.prompt.PromptMessage.OnConfirmListener;
 
 public class LocationPermissionPrompt {
 
-    private static final int REQUEST_CODE_ASK_PERMISSIONS = 777;
+    public static final int REQUEST_CODE_ASK_PERMISSIONS = 777;
     public static final String PERMISSION_TO_REQUEST = Manifest.permission.ACCESS_FINE_LOCATION;
 
     public static void show(final Activity activity) {

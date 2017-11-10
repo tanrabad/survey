@@ -46,8 +46,7 @@ public final class PlayLocationService {
     private Location currentLocation;
 
     private OnConnectionFailedListener connectionFailedListener = new OnConnectionFailedListener() {
-        @Override
-        public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        @Override public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
             Alert.highLevel().show("ไม่สามารถเชื่อมต่อ Google Play Services ได้");
         }
     };
@@ -60,13 +59,11 @@ public final class PlayLocationService {
     };
 
     private ConnectionCallbacks connectionCallbacks = new ConnectionCallbacks() {
-        @Override
-        public void onConnected(@Nullable Bundle bundle) {
+        @Override public void onConnected(@Nullable Bundle bundle) {
             setupLocationUpdateService();
         }
 
-        @Override
-        public void onConnectionSuspended(int i) {
+        @Override public void onConnectionSuspended(int i) {
             Alert.lowLevel().show("Google Play Service ระงับการติดต่อชั่วคราว");
         }
     };
@@ -77,16 +74,14 @@ public final class PlayLocationService {
     }
 
     private void setupLocationApi() {
-        locationApiClient = new GoogleApiClient.Builder(context)
-                .addApi(LocationServices.API)
+        locationApiClient = new GoogleApiClient.Builder(context).addApi(LocationServices.API)
                 .addConnectionCallbacks(connectionCallbacks)
                 .addOnConnectionFailedListener(connectionFailedListener)
                 .build();
     }
 
     public static PlayLocationService getInstance() {
-        if (instance == null)
-            instance = new PlayLocationService(TanrabadApp.getInstance());
+        if (instance == null) instance = new PlayLocationService(TanrabadApp.getInstance());
         return instance;
     }
 
@@ -106,8 +101,9 @@ public final class PlayLocationService {
             return null;
         }
         long diffTime = DateTime.now().getMillis() - currentLocation.getTime();
-        if (diffTime <= MAX_NO_UPDATE) return currentLocation;
-        else {
+        if (diffTime <= MAX_NO_UPDATE) {
+            return currentLocation;
+        } else {
             Alert.lowLevel().show("location not update");
             return null;
         }
@@ -121,10 +117,13 @@ public final class PlayLocationService {
         return locationApiClient.isConnected();
     }
 
-    private void setupLocationUpdateService() {
+    public void setupLocationUpdateService() {
+        setupLocationUpdateService(locationListener);
+    }
+
+    public void setupLocationUpdateService(LocationListener locationListener) {
         try {
-            FusedLocationApi.requestLocationUpdates(
-                    locationApiClient, getLocationRequest(), locationListener);
+            FusedLocationApi.requestLocationUpdates(locationApiClient, getLocationRequest(), locationListener);
         } catch (SecurityException securityException) {
             TanrabadApp.log(securityException);
             Alert.lowLevel().show("ไม่มีสิทธิเข้าถึงตำแหน่งปัจจุบัน");
@@ -146,5 +145,4 @@ public final class PlayLocationService {
     public void removeConnectionCallbacks(ConnectionCallbacks connectionCallbacks) {
         locationApiClient.unregisterConnectionCallbacks(connectionCallbacks);
     }
-
 }

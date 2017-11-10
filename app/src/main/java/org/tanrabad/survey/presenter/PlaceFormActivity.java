@@ -26,7 +26,11 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -35,7 +39,11 @@ import com.google.android.gms.maps.SupportMapFragment;
 import org.joda.time.DateTime;
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
-import org.tanrabad.survey.domain.place.*;
+import org.tanrabad.survey.domain.place.PlaceController;
+import org.tanrabad.survey.domain.place.PlacePresenter;
+import org.tanrabad.survey.domain.place.PlaceRepository;
+import org.tanrabad.survey.domain.place.PlaceSavePresenter;
+import org.tanrabad.survey.domain.place.PlaceSaver;
 import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.entity.field.Location;
 import org.tanrabad.survey.entity.lookup.PlaceSubType;
@@ -80,9 +88,14 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     private TwiceBackPressed twiceBackPressed;
     private SupportMapFragment mapFragment;
 
+    public static void startAdd(Activity activity) {
+        startAdd(activity, -1);
+    }
+
     public static void startAdd(Activity activity, int placeTypeId) {
         Intent intent = new Intent(activity, PlaceFormActivity.class);
-        intent.putExtra(PlaceFormActivity.PLACE_TYPE_ID_ARG, placeTypeId);
+        if (placeTypeId >= 0)
+            intent.putExtra(PlaceFormActivity.PLACE_TYPE_ID_ARG, placeTypeId);
         activity.startActivityForResult(intent, ADD_PLACE_REQ_CODE);
     }
 

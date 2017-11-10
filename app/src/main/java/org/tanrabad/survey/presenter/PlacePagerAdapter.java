@@ -21,13 +21,14 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
 import org.tanrabad.survey.R;
 
 
 class PlacePagerAdapter extends FragmentPagerAdapter {
 
     private final PlaceListInDatabaseFragment placeListInDatabaseFragment;
-    private final PlaceSurveyListFragment placeSurveyListFragment;
+    private final PlaceNearbyListFragment placeNearbyListFragment;
     private Context context;
 
     public PlacePagerAdapter(FragmentManager fm, Context context, String username) {
@@ -35,7 +36,7 @@ class PlacePagerAdapter extends FragmentPagerAdapter {
         this.context = context;
 
         placeListInDatabaseFragment = PlaceListInDatabaseFragment.newInstance();
-        placeSurveyListFragment = PlaceSurveyListFragment.newInstance(username);
+        placeNearbyListFragment = PlaceNearbyListFragment.newInstance();
     }
 
     @Override
@@ -47,9 +48,9 @@ class PlacePagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return context.getResources().getString(R.string.find_place_by_database);
+                return context.getResources().getString(R.string.nearby_places);
             case 1:
-                return context.getResources().getString(R.string.find_place_by_recent_survey);
+                return context.getResources().getString(R.string.find_place_by_database);
             default:
                 return null;
         }
@@ -59,9 +60,9 @@ class PlacePagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return placeListInDatabaseFragment;
+                return placeNearbyListFragment;
             case 1:
-                return placeSurveyListFragment;
+                return placeListInDatabaseFragment;
             default:
                 return null;
         }

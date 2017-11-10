@@ -26,3 +26,4 @@
 -keep class sun.misc.Unsafe { *; }
 -keep class com.google.gson.stream.** { *; }
 -keep class th.or.nectec.thai.** { *; }
+-dontwarn net.jcip.annotations.Immutable

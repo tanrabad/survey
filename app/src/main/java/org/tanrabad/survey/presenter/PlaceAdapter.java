@@ -25,13 +25,16 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import java.util.ArrayList;
-import java.util.List;
+
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
 import org.tanrabad.survey.repository.persistence.PlaceWithChange;
 import org.tanrabad.survey.utils.android.ResourceUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import th.or.nectec.thai.widget.address.AddressPicker;
 
 public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> implements ListViewAdapter<Place> {
@@ -117,7 +120,6 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> 
         private TextView placeSubtypeTextView;
         private AddressPicker placeAddressTextView;
         private ImageView placeIcon;
-        private ImageView placeHaveLocationIcon;
         private ImageView notSync;
         private PlaceAdapter adapter;
 
@@ -131,8 +133,6 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> 
             placeAddressTextView = (AddressPicker) itemView.findViewById(R.id.place_address);
             placeIcon = (ImageView) itemView.findViewById(R.id.place_icon);
             notSync = (ImageView) itemView.findViewById(R.id.not_sync);
-            //placeHaveLocationIcon = (ImageView) itemView.findViewById(R.id.place_have_location_icon);
-
         }
 
         @Override public void onClick(View view) {

@@ -52,7 +52,6 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
     public SurveyBuildingHistoryAdapter(Context context, @DrawableRes int buildingIcon) {
         this.context = context;
         this.buildingIcon = buildingIcon;
-
     }
 
     @Override
@@ -111,44 +110,7 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Survey currentSurvey = surveyBuildings.get(position);
-        holder.surveyBuildingIcon.setImageResource(buildingIcon);
-        holder.surveyBuildingTextView.setText(currentSurvey.getSurveyBuilding().getName());
-        holder.duration.setText(context.getString(R.string.survey_duration) + " " + getDuration(currentSurvey));
-        holder.timeAgoView.setTime(currentSurvey.getFinishTimestamp());
-        setSyncStatus(holder, currentSurvey);
-        setCiValue(holder, currentSurvey);
-    }
-
-    private String getDuration(Survey currentSurvey) {
-        return DurationTimePrinter.print(currentSurvey.getStartTimestamp(), currentSurvey.getFinishTimestamp());
-    }
-
-    private void setSyncStatus(ViewHolder holder, Survey currentSurvey) {
-        SurveyWithChange swc = (SurveyWithChange) currentSurvey;
-        holder.notSync.setVisibility(swc.isNotSynced() ? View.VISIBLE : View.GONE);
-    }
-
-    private void setCiValue(ViewHolder holder, Survey currentSurvey) {
-        ContainerIndex ci = new ContainerIndex(currentSurvey);
-        float ciValue = ci.calculate();
-        holder.surveyBuildingIcon.setBackgroundResource(getIconBackgroundByCi(ciValue));
-        holder.containerIndex.setText(ci.getTotalContainer() > 0
-                ? context.getString(R.string.format_ci, (int) ciValue)
-                : context.getString(R.string.not_available));
-        holder.containerCount.setText(Html.fromHtml(context.getString(R.string.format_container_count,
-                ci.getTotalContainer(), ci.getFoundLarvaeContainer())));
-    }
-
-    @DrawableRes
-    private int getIconBackgroundByCi(float ciValue) {
-        if (ciValue == 0f) {
-            return R.drawable.bg_icon_building_without_larvae;
-        } else if (Float.isNaN(ciValue)) {
-            return R.drawable.bg_icon;
-        } else {
-            return R.drawable.bg_icon_building_have_larvae;
-        }
+        holder.bind(surveyBuildings.get(position));
     }
 
     @Override
@@ -161,7 +123,7 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
         return surveyBuildings.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+    static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         private final TextView duration;
         private final TextView surveyBuildingTextView;
         private final ImageView surveyBuildingIcon;
@@ -170,14 +132,17 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
         private final TextView containerCount;
         private final ImageView notSync;
         private final SurveyBuildingHistoryAdapter adapter;
+        private final Context context;
 
-        public ViewHolder(View itemView, SurveyBuildingHistoryAdapter adapter) {
+        ViewHolder(View itemView, SurveyBuildingHistoryAdapter adapter) {
             super(itemView);
             this.adapter = adapter;
+            this.context = adapter.context;
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
             surveyBuildingTextView = (TextView) itemView.findViewById(R.id.survey_building_name);
             surveyBuildingIcon = (ImageView) itemView.findViewById(R.id.survey_building_icon);
+            surveyBuildingIcon.setImageResource(adapter.buildingIcon);
             timeAgoView = (TimeAgoView) itemView.findViewById(R.id.time_ago);
             duration = (TextView) itemView.findViewById(R.id.survey_duration);
             containerIndex = (TextView) itemView.findViewById(R.id.survey_ci);
@@ -194,6 +159,39 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
         public boolean onLongClick(View view) {
             return adapter.onItemHolderLongClick(this);
         }
-    }
 
+        void bind(Survey survey) {
+            surveyBuildingTextView.setText(survey.getSurveyBuilding().getName());
+            duration.setText(context.getString(R.string.survey_duration) + " " + getDuration(survey));
+            timeAgoView.setTime(survey.getFinishTimestamp());
+            notSync.setVisibility(((SurveyWithChange) survey).isNotSynced() ? View.VISIBLE : View.GONE);
+            setCiValue(survey);
+        }
+
+        private String getDuration(Survey survey) {
+            return DurationTimePrinter.print(survey.getStartTimestamp(), survey.getFinishTimestamp());
+        }
+
+        private void setCiValue(Survey currentSurvey) {
+            ContainerIndex ci = new ContainerIndex(currentSurvey);
+            float ciValue = ci.calculate();
+            surveyBuildingIcon.setBackgroundResource(getIconBackgroundByCi(ci));
+            containerIndex.setText(ci.getTotalContainer() > 0
+                ? context.getString(R.string.format_ci, (int) ciValue)
+                : context.getString(R.string.not_available));
+            containerCount.setText(Html.fromHtml(context.getString(R.string.format_container_count,
+                ci.getTotalContainer(), ci.getFoundLarvaeContainer())));
+        }
+
+        @DrawableRes
+        private int getIconBackgroundByCi(ContainerIndex ciValue) {
+            if (ciValue.getFoundLarvaeContainer() == 0) {
+                if (ciValue.getTotalContainer() == 0)
+                    return R.drawable.bg_icon;
+                return R.drawable.bg_icon_building_without_larvae;
+            } else {
+                return R.drawable.bg_icon_building_have_larvae;
+            }
+        }
+    }
 }

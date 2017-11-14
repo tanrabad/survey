@@ -29,6 +29,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.tanrabad.survey.R;
+import org.tanrabad.survey.domain.place.PlaceSubTypeRepository;
 import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
 
@@ -38,7 +39,7 @@ import java.util.List;
 import th.or.nectec.thai.widget.address.AddressPicker;
 
 public class PlaceSurveyAdapter extends RecyclerView.Adapter<PlaceSurveyAdapter.ViewHolder>
-        implements ListViewAdapter<Place> {
+    implements ListViewAdapter<Place> {
 
     private Context context;
     private List<Place> places = new ArrayList<>();
@@ -86,20 +87,7 @@ public class PlaceSurveyAdapter extends RecyclerView.Adapter<PlaceSurveyAdapter.
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final Place place = places.get(position);
-        holder.placeTextView.setText(place.getName());
-        holder.placeSubtypeTextView.setText(
-                BrokerPlaceSubTypeRepository.getInstance().findById(place.getSubType()).getName());
-        holder.placeAddressTextView.setAddressCode(place.getSubdistrictCode());
-        holder.placeIcon.setImageResource(PlaceIconMapping.getPlaceIcon(place));
-        holder.placeIcon.setImageResource(PlaceIconMapping.getPlaceIcon(place));
-        holder.viewSurveyResultButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SurveyResultDialogFragment.newInstances(place).show(
-                        fragmentManager, SurveyResultDialogFragment.FRAGMENT_TAG);
-            }
-        });
+        holder.bind(places.get(position));
     }
 
     @Override
@@ -115,30 +103,45 @@ public class PlaceSurveyAdapter extends RecyclerView.Adapter<PlaceSurveyAdapter.
     private void onItemHolderClick(ViewHolder itemHolder) {
         if (onItemClickListener != null) {
             onItemClickListener.onItemClick(null, itemHolder.itemView,
-                    itemHolder.getAdapterPosition(), itemHolder.getItemId());
+                itemHolder.getAdapterPosition(), itemHolder.getItemId());
         }
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView placeTextView;
         private TextView placeSubtypeTextView;
         private AddressPicker placeAddressTextView;
         private ImageView placeIcon;
         private Button viewSurveyResultButton;
-        private ImageView notSync;
         private PlaceSurveyAdapter adapter;
+        private FragmentManager fragmentManager;
+        private PlaceSubTypeRepository subTypeRepo = BrokerPlaceSubTypeRepository.getInstance();
 
-        public ViewHolder(View itemView, final PlaceSurveyAdapter adapter) {
+        ViewHolder(View itemView, final PlaceSurveyAdapter adapter) {
             super(itemView);
             this.adapter = adapter;
+            this.fragmentManager = adapter.fragmentManager;
             itemView.setOnClickListener(this);
+            itemView.findViewById(R.id.not_sync).setVisibility(View.GONE); //Always hide
             placeTextView = (TextView) itemView.findViewById(R.id.place_name);
             placeSubtypeTextView = (TextView) itemView.findViewById(R.id.place_subtype);
             placeAddressTextView = (AddressPicker) itemView.findViewById(R.id.place_address);
-            notSync = (ImageView) itemView.findViewById(R.id.not_sync);
             placeIcon = (ImageView) itemView.findViewById(R.id.place_icon);
             viewSurveyResultButton = (Button) itemView.findViewById(R.id.view_survey_result_button);
-            notSync.setVisibility(View.GONE);
+        }
+
+        void bind(final Place place) {
+            placeTextView.setText(place.getName());
+            placeSubtypeTextView.setText(subTypeRepo.findById(place.getSubType()).getName());
+            placeAddressTextView.setAddressCode(place.getSubdistrictCode());
+            placeIcon.setImageResource(PlaceIconMapping.getPlaceIcon(place));
+            viewSurveyResultButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    SurveyResultDialogFragment.newInstances(place).show(
+                        fragmentManager, SurveyResultDialogFragment.FRAGMENT_TAG);
+                }
+            });
         }
 
         @Override

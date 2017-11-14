@@ -19,7 +19,6 @@ package org.tanrabad.survey.presenter.view;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.annotation.DrawableRes;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -36,8 +35,6 @@ import org.tanrabad.survey.entity.lookup.ContainerType;
 import org.tanrabad.survey.entity.utils.UuidUtils;
 import org.tanrabad.survey.utils.MacAddressUtils;
 import org.tanrabad.survey.utils.android.ResourceUtils;
-
-import java.util.HashMap;
 
 public class SurveyContainerView extends RelativeLayout {
     private SurveyDetail surveyDetail;
@@ -177,34 +174,6 @@ public class SurveyContainerView extends RelativeLayout {
         } else {
             setBackgroundColor(Color.TRANSPARENT);
             return true;
-        }
-    }
-
-    private static class ContainerIconMapping {
-        private static HashMap<Integer, Integer> containerIconMapper = getIconMapping();
-
-        private static HashMap<Integer, Integer> getIconMapping() {
-            HashMap<Integer, Integer> iconMapper = new HashMap<>();
-            iconMapper.put(1, R.mipmap.ic_container_earthen_jar);
-            iconMapper.put(2, R.mipmap.ic_container_bottle);
-            iconMapper.put(3, R.mipmap.ic_container_vase);
-            iconMapper.put(4, R.mipmap.ic_container_ant_tray);
-            iconMapper.put(5, R.mipmap.ic_container_pot_saucer);
-            iconMapper.put(6, R.mipmap.ic_container_lotus);
-            iconMapper.put(7, R.mipmap.ic_container_tire);
-            iconMapper.put(8, R.mipmap.ic_container_leaf);
-            iconMapper.put(9, R.mipmap.ic_container_garbages);
-            iconMapper.put(10, R.mipmap.ic_container_bucket);
-            iconMapper.put(11, R.mipmap.ic_container_bowl);
-            iconMapper.put(12, R.mipmap.ic_container_fridge);
-            return iconMapper;
-        }
-
-        @DrawableRes
-        private static int getContainerIcon(ContainerType containerType) {
-            if (!containerIconMapper.containsKey(containerType.getId()))
-                return R.mipmap.ic_building_home_black;
-            return containerIconMapper.get(containerType.getId());
         }
     }
 }

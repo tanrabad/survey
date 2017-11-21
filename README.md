@@ -68,7 +68,7 @@ Use [Travis CI](https://travis-ci.org/) as Continuous Integration system
 
 ## Contributor
 
-- [Blaze Piruin](https://github.com/Blazei) Agile coach, System Analysis, UI&UX Design,  Programming 
+- [Blast Piruin](https://github.com/piruin) Agile coach, System Analysis, UI&UX Design,  Programming 
 - [N. Choatravee](https://github.com/chncs23) Programming
 - [Puy Porntipa](https://github.com/porntipa) Automate Test, Manual Test
 - [icesuxx](https://github.com/icesuxx) Research

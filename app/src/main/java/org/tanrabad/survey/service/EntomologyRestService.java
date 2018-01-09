@@ -18,11 +18,11 @@
 package org.tanrabad.survey.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
+
 import org.joda.time.DateTime;
 import org.tanrabad.survey.BuildConfig;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.entity.Place;
-import org.tanrabad.survey.presenter.AccountUtils;
 import org.tanrabad.survey.service.json.JsonEntomology;
 import org.tanrabad.survey.utils.http.QueryStringBuilder;
 
@@ -55,7 +55,6 @@ public class EntomologyRestService extends AbsRestService<JsonEntomology> {
                 .add("geostd=4326")
                 .add(placeIdParam())
                 .add(oneWeekIntervalParam())
-                .add(orgIdParam())
                 .build();
     }
 
@@ -75,9 +74,5 @@ public class EntomologyRestService extends AbsRestService<JsonEntomology> {
 
     private long unixTime(DateTime dateTime) {
         return dateTime.getMillis() / 1000;
-    }
-
-    private String orgIdParam() {
-        return "org_id=" + AccountUtils.getUser().getOrganizationId();
     }
 }

@@ -21,7 +21,11 @@ import org.tanrabad.survey.domain.survey.ContainerTypeRepository;
 import org.tanrabad.survey.domain.survey.ContainerTypeRepositoryException;
 import org.tanrabad.survey.entity.lookup.ContainerType;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 final class InMemoryContainerTypeRepository implements ContainerTypeRepository {
 
@@ -30,7 +34,7 @@ final class InMemoryContainerTypeRepository implements ContainerTypeRepository {
     private Map<Integer, ContainerType> containerTypes;
 
     private InMemoryContainerTypeRepository() {
-        containerTypes = new HashMap<>();
+        containerTypes = new ConcurrentHashMap<>();
     }
 
     public static InMemoryContainerTypeRepository getInstance() {

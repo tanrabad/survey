@@ -34,8 +34,18 @@ import android.widget.TextView;
 
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
-import org.tanrabad.survey.domain.survey.*;
-import org.tanrabad.survey.entity.*;
+import org.tanrabad.survey.domain.survey.ContainerController;
+import org.tanrabad.survey.domain.survey.ContainerPresenter;
+import org.tanrabad.survey.domain.survey.SurveyController;
+import org.tanrabad.survey.domain.survey.SurveyPresenter;
+import org.tanrabad.survey.domain.survey.SurveyRepository;
+import org.tanrabad.survey.domain.survey.SurveySavePresenter;
+import org.tanrabad.survey.domain.survey.SurveySaver;
+import org.tanrabad.survey.entity.Building;
+import org.tanrabad.survey.entity.Place;
+import org.tanrabad.survey.entity.Survey;
+import org.tanrabad.survey.entity.SurveyDetail;
+import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.entity.field.Location;
 import org.tanrabad.survey.entity.lookup.ContainerType;
 import org.tanrabad.survey.entity.lookup.PlaceType;
@@ -58,9 +68,9 @@ import org.tanrabad.survey.validator.SaveSurveyValidator;
 import org.tanrabad.survey.validator.ValidatorException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class SurveyActivity extends TanrabadActivity implements ContainerPresenter, SurveyPresenter,
         SurveySavePresenter {
@@ -309,8 +319,8 @@ public class SurveyActivity extends TanrabadActivity implements ContainerPresent
     public void displayContainerList(List<ContainerType> containers) {
         indoorContainerLayout.removeAllViews();
         outdoorContainerLayout.removeAllViews();
-        indoorContainerViews = new HashMap<>();
-        outdoorContainerViews = new HashMap<>();
+        indoorContainerViews = new ConcurrentHashMap<>();
+        outdoorContainerViews = new ConcurrentHashMap<>();
 
         for (ContainerType eachContainerType : containers) {
             displayContainerView(eachContainerType, indoorContainerViews, indoorContainerLayout);

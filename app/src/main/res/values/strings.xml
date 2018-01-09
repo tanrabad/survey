@@ -172,13 +172,6 @@
     <string name="about_eula">End User License Agreement</string>
     <string name="about_contributor">Contributor</string>
 
-    <string name="customactivityoncrash_error_activity_error_occurred_explanation">
-        ขออภัยในความไม่สะดวก\n\nเกิดข้อผิดผลาดบางอย่างที่เราไม่คาดคิด ทีมงานจะรีบแก้ไขอย่างเร่งด่วน\n
-    </string>
-    <string name="customactivityoncrash_error_activity_unknown_exception">ข้อผิดพลาดที่ไม่คาดคิด</string>
-    <string name="customactivityoncrash_error_activity_restart_app">เริ่มแอพใหม่</string>
-    <string name="customactivityoncrash_error_activity_close_app">ปิด</string>
-    <string name="customactivityoncrash_error_activity_error_details">รายละเอียด</string>
     <string name="choose_building_to_survey">ระบุอาคารเพื่อสำรวจเพิ่มเติม</string>
     <string name="tanrabad_survey">TanRabad SURVEY</string>
     <string name="support_by">สนับสนุนโดย</string>

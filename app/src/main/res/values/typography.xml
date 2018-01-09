@@ -35,15 +35,6 @@
         <item name="android:textSize">@dimen/text_body</item>
     </style>
 
-    <style name="TanrabadTextAppearance.Body.2">
-        <item name="android:textStyle">bold</item>
-        <item name="fontPath">fonts/ThaiSansNeue-Bold.otf</item>
-    </style>
-
-    <style name="TanrabadTextAppearance.Label">
-        <item name="android:textSize">@dimen/text_body</item>
-    </style>
-
     <style name="TanrabadTextAppearance.Subhead">
         <item name="android:textSize">@dimen/text_subhead</item>
     </style>

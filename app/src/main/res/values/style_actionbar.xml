@@ -26,6 +26,7 @@
 
     <style name="ActionMode" parent="@style/Widget.AppCompat.ActionMode">
         <item name="background">@color/pink</item>
+        <item name="android:height">@dimen/actionbar_size</item>
         <item name="titleTextStyle">@style/ActionBarTitleTextAppearance</item>
         <item name="windowActionModeOverlay">true</item>
     </style>

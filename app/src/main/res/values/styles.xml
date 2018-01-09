@@ -88,15 +88,6 @@
         <item name="android:minHeight">@dimen/list_item_min_height</item>
     </style>
 
-    <style name="SpinnerItem.Dropdown">
-        <item name="android:background">@drawable/bg_spinner_item</item>
-        <item name="android:paddingTop">@dimen/list_padding_top</item>
-        <item name="android:paddingLeft">@dimen/list_padding_left</item>
-        <item name="android:paddingRight">@dimen/list_padding_right</item>
-        <item name="android:paddingBottom">@dimen/list_padding_bottom</item>
-        <item name="android:minHeight">@dimen/list_item_min_height</item>
-    </style>
-
     <style name="ListIcon">
         <item name="android:layout_width">@dimen/list_icon_size</item>
         <item name="android:layout_height">@dimen/list_icon_size</item>
@@ -127,7 +118,7 @@
 
     <style name="AboutItem">
         <item name="android:background">@drawable/bg_list_item</item>
-        <item name="android:paddingLeft">@dimen/screen_vertical_margin</item>
+        <item name="android:paddingLeft">@dimen/screen_horizontal_margin</item>
         <item name="android:minHeight">@dimen/list_item_min_height</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:layout_marginTop">@dimen/space_between_content</item>

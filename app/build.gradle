@@ -119,8 +119,7 @@ android {
     lintOptions {
         abortOnError true
         checkAllWarnings true
-        warningsAsErrors true
-        disable "IconColors", "InvalidPackage", "TrustAllX509TrustManager", "NewerVersionAvailable", "IconExpectedSize",
+        disable "MissingRegistered", "IconColors", "InvalidPackage", "TrustAllX509TrustManager", "NewerVersionAvailable", "IconExpectedSize",
                 "GradleDependency", "StaticFieldLeak", "HardwareIds", "OldTargetApi"
     }
 
@@ -161,7 +160,6 @@ dependencies {
     implementation "com.android.support:design:$supportLibVersion"
     implementation "com.android.support:percent:$supportLibVersion"
     implementation "com.google.android.gms:play-services-gcm:$playServicesVersion"
-    implementation "com.google.android.gms:play-services-appindexing:$playServicesVersion"
     implementation "com.google.android.gms:play-services-location:$playServicesVersion"
     implementation "com.google.android.gms:play-services-maps:$playServicesVersion"
     implementation "com.google.android.gms:play-services-analytics:$playServicesVersion"

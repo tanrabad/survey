@@ -19,16 +19,10 @@ package org.tanrabad.survey.presenter;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
-
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
-import com.google.android.gms.common.api.GoogleApiClient;
 
 import org.tanrabad.survey.BuildConfig;
 import org.tanrabad.survey.R;
@@ -44,7 +38,6 @@ import static android.view.animation.AnimationUtils.loadAnimation;
 public class LoginActivity extends TanrabadActivity {
     private static final int AUTHEN_REQUEST_CODE = 1232;
     ProgressDialog progressDialog;
-    private GoogleApiClient appIndexClient;
     private View trialButton;
     private View authenButton;
 
@@ -54,7 +47,6 @@ public class LoginActivity extends TanrabadActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        appIndexClient = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
         trialButton = findViewById(R.id.trial);
         authenButton = findViewById(R.id.authentication_button);
 
@@ -133,44 +125,17 @@ public class LoginActivity extends TanrabadActivity {
     }
 
     @Override
-    protected void onStop() {
-        appIndexClient.disconnect();
-        AppIndex.AppIndexApi.end(appIndexClient, getAppIndexAction());
-        super.onStop();
-    }
-
-    public Action getAppIndexAction() {
-        Thing thing = new Thing.Builder()
-                .setName("ทันระบาดสำรวจ")
-                .setDescription("ประสบการณ์ใหม่ สำหรับการสำรวจลูกน้ำยุง")
-                .setUrl(Uri.parse("http://www.tanrabad.org/survey"))
-                .build();
-
-        return new Action.Builder(Action.TYPE_VIEW)
-                .setObject(thing)
-                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
-                .build();
-    }
-
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == AUTHEN_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 User user = BrokerUserRepository.getInstance().findByUsername(
-                        data.getStringExtra(AuthenActivity.USERNAME));
+                    data.getStringExtra(AuthenActivity.USERNAME));
                 doLogin(user);
             } else if (resultCode == AuthenActivity.RESULT_ERROR) {
                 Alert.highLevel().show(R.string.authen_error_response);
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        appIndexClient.connect();
-        AppIndex.AppIndexApi.start(appIndexClient, getAppIndexAction());
     }
 
 }

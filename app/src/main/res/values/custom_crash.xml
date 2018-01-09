@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools"
+           tools:ignore="UnusedResources">
+
+    <style name="CustomActivityOnCrashTheme" parent="AppTheme"/>
+
+    <string name="customactivityoncrash_error_activity_error_occurred_explanation">
+        ขออภัยในความไม่สะดวก\n\nเกิดข้อผิดผลาดบางอย่างที่เราไม่คาดคิด ทีมงานจะรีบแก้ไขอย่างเร่งด่วน\n
+    </string>
+    <string name="customactivityoncrash_error_activity_unknown_exception">ข้อผิดพลาดที่ไม่คาดคิด</string>
+    <string name="customactivityoncrash_error_activity_restart_app">เริ่มแอพใหม่</string>
+    <string name="customactivityoncrash_error_activity_close_app">ปิด</string>
+    <string name="customactivityoncrash_error_activity_error_details">รายละเอียด</string>
+</resources>

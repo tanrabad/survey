@@ -6,8 +6,9 @@
 
     <include layout="@layout/survey_result_header"/>
 
-    <include layout="@layout/entomology_place_info"
-             android:id="@+id/place_info_layout"/>
+    <include
+        android:id="@+id/place_info_layout"
+        layout="@layout/entomology_place_info"/>
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -93,7 +93,7 @@ public class TorchButton extends AppCompatImageButton {
     @Override
     public boolean performClick() {
         toggleTorchLight();
-        return true;
+        return super.performClick();
     }
 
     private void toggleTorchLight() {

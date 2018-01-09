@@ -21,14 +21,14 @@ import org.tanrabad.survey.domain.organization.OrganizationRepository;
 import org.tanrabad.survey.domain.organization.OrganizationRepositoryException;
 import org.tanrabad.survey.entity.Organization;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class InMemoryOrganizationRepository implements OrganizationRepository {
     private static InMemoryOrganizationRepository instance;
 
-    private Map<Integer, Organization> organizationMapping = new HashMap<>();
+    private Map<Integer, Organization> organizationMapping = new ConcurrentHashMap<>();
 
     static InMemoryOrganizationRepository getInstance() {
         if (instance == null) {

@@ -17,9 +17,10 @@
 
 package org.tanrabad.survey.entity;
 
-import java.util.UUID;
 import org.tanrabad.survey.entity.field.Location;
 import org.tanrabad.survey.entity.utils.WeightEntity;
+
+import java.util.UUID;
 
 public class Place extends Entity implements LocationEntity, WeightEntity, Comparable<Place> {
 
@@ -31,6 +32,7 @@ public class Place extends Entity implements LocationEntity, WeightEntity, Compa
     private String subdistrictCode;
     private String updateBy;
     private double weight;
+    private boolean isTypeEdited = false;
 
     public Place(UUID id, String name) {
         super();
@@ -60,6 +62,8 @@ public class Place extends Entity implements LocationEntity, WeightEntity, Compa
     }
 
     public void setType(int type) {
+        if (this.type != 0 && this.type != type)
+            isTypeEdited = true;
         this.type = type;
     }
 
@@ -69,6 +73,10 @@ public class Place extends Entity implements LocationEntity, WeightEntity, Compa
 
     public void setSubType(int subType) {
         this.subType = subType;
+    }
+
+    public boolean isTypeEdited() {
+        return isTypeEdited;
     }
 
     @Override
@@ -99,6 +107,7 @@ public class Place extends Entity implements LocationEntity, WeightEntity, Compa
     public void setUpdateBy(String updateBy) {
         this.updateBy = updateBy;
     }
+
 
     @Override public double getWeight() {
         return weight;

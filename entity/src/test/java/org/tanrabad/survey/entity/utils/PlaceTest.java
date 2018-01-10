@@ -20,22 +20,22 @@ package org.tanrabad.survey.entity.utils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-
-import java.util.UUID;
-
 import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.entity.field.Location;
 import org.tanrabad.survey.entity.lookup.PlaceType;
 
+import java.util.UUID;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(JUnit4.class)
 public class PlaceTest {
 
     private static final UUID BANGPHAI_UUID = UUID.randomUUID();
     private static final String BANGPHAI_NAME = "บางไผ่";
-    private static final int BANGPHAI_TYPE = PlaceType.VILLAGE_COMMUNITY;
     private final Place place1 = new Place(BANGPHAI_UUID, BANGPHAI_NAME);
     private final Place place2 = new Place(BANGPHAI_UUID, BANGPHAI_NAME);
     private final Location location = new Location(14.078606, 100.603120);
@@ -71,7 +71,7 @@ public class PlaceTest {
 
     @Test
     public void placeWithDifferentNameMustNotEqual() {
-        place1.setType(BANGPHAI_TYPE);
+        place1.setType(PlaceType.VILLAGE_COMMUNITY);
         place2.setType(place1.getType());
         place2.setName("บางโพธิ์");
         assertNotEquals(place1, place2);
@@ -86,8 +86,31 @@ public class PlaceTest {
 
     @Test
     public void placeWithTheSameNameAndTypeMustEqual() {
-        place1.setType(BANGPHAI_TYPE);
-        place2.setType(BANGPHAI_TYPE);
+        place1.setType(PlaceType.VILLAGE_COMMUNITY);
+        place2.setType(PlaceType.VILLAGE_COMMUNITY);
         assertEquals(place1, place2);
+    }
+
+    @Test
+    public void typeNotEditedAtFirstTime() throws Exception {
+        place1.setType(PlaceType.VILLAGE_COMMUNITY);
+
+        assertFalse(place1.isTypeEdited());
+    }
+
+    @Test
+    public void typeNotEditedOnSetOldValue() throws Exception {
+        place1.setType(PlaceType.VILLAGE_COMMUNITY);
+        place1.setType(PlaceType.VILLAGE_COMMUNITY);
+
+        assertFalse(place1.isTypeEdited());
+    }
+
+    @Test
+    public void typeEdited() throws Exception {
+        place1.setType(PlaceType.VILLAGE_COMMUNITY);
+        place1.setType(PlaceType.WORSHIP);
+
+        assertTrue(place1.isTypeEdited());
     }
 }

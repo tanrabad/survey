@@ -46,8 +46,7 @@
     <string name="building_not_found">ไม่พบข้อมูลอาคาร</string>
     <string name="building_list_not_found">ไม่พบอาคาร</string>
     <string name="add_building">เพิ่มอาคาร</string>
-    <string name="house_no">บ้านเลขที่</string>
-    <string name="building_name">ชื่ออาคาร</string>
+    <string name="building_name">ชื่ออาคาร/เลขที่บ้าน</string>
     <string name="place_icon">ไอคอนหน้าสถานที่สำรวจ</string>
     <string name="place_bg">พื้นหลังหน้าสถานที่สำรวจ</string>
     <string name="place_not_found">ไม่พบข้อมูลสถานที่</string>
@@ -110,15 +109,13 @@
     <string name="format_building_count">%1$d อาคาร</string>
     <string name="place_name">ชื่อสถานที่</string>
     <string name="address">ที่อยู่</string>
-    <string name="place_subtype_label">ประเภท%1$s</string>
+    <string name="place_subtype_label">ประเภทสถานที่ย่อย</string>
     <string name="please_define_place_name">กรุณาระบุชื่อสถานที่</string>
     <string name="please_define_place_address">กรุณาระบุที่อยู่ของสถานที่</string>
     <string name="cant_save_same_place_name">ไม่สามารถบันทึกได้ เนื่องจากชื่อสถานที่นี้มีอยู่แล้ว</string>
 
     <!--hint -->
     <string name="touch_to_start_survey">แตะที่ลูกน้ำเพื่อเริ่มสำรวจ</string>
-    <string name="touch_to_type_place_name">แตะเพื่อพิมพ์ชื่อสถานที่</string>
-    <string name="touch_to_define_address">แตะเพื่อระบุที่อยู่</string>
     <string name="touch_to_type_house_no">แตะเพื่อพิมพ์บ้านเลขที่</string>
     <string name="touch_to_type_building_name">แตะเพื่อพิมพ์ชื่ออาคาร</string>
 

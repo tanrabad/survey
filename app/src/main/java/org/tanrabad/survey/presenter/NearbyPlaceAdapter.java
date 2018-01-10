@@ -29,9 +29,15 @@ import android.widget.TextView;
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.entity.field.Location;
+import org.tanrabad.survey.entity.lookup.District;
+import org.tanrabad.survey.entity.lookup.Province;
+import org.tanrabad.survey.entity.lookup.Subdistrict;
 import org.tanrabad.survey.nearby.distance.DistanceCalculator;
 import org.tanrabad.survey.nearby.distance.EllipsoidDistance;
+import org.tanrabad.survey.repository.BrokerDistrictRepository;
 import org.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
+import org.tanrabad.survey.repository.BrokerProvinceRepository;
+import org.tanrabad.survey.repository.BrokerSubdistrictRepository;
 import org.tanrabad.survey.utils.android.ResourceUtils;
 
 import java.text.DecimalFormat;
@@ -39,7 +45,7 @@ import java.text.Format;
 import java.util.ArrayList;
 import java.util.List;
 
-import th.or.nectec.thai.widget.address.AddressPicker;
+import nectec.thai.address.AddressPrinter;
 
 public class NearbyPlaceAdapter extends RecyclerView.Adapter<NearbyPlaceAdapter.ViewHolder>
     implements ListViewAdapter<Place> {
@@ -127,9 +133,13 @@ public class NearbyPlaceAdapter extends RecyclerView.Adapter<NearbyPlaceAdapter.
         private TextView placeSubtypeTextView;
         private TextView placeDistanceTextView;
         private TextView placeWeightTextView;
-        private AddressPicker placeAddressTextView;
+        private TextView placeAddressTextView;
         private ImageView placeIcon;
         private NearbyPlaceAdapter adapter;
+
+        BrokerProvinceRepository provinces = BrokerProvinceRepository.getInstance();
+        BrokerDistrictRepository districts = BrokerDistrictRepository.getInstance();
+        BrokerSubdistrictRepository subDistricts = BrokerSubdistrictRepository.getInstance();
 
         private Format decimalFormat = new DecimalFormat("#.##");
 
@@ -142,7 +152,7 @@ public class NearbyPlaceAdapter extends RecyclerView.Adapter<NearbyPlaceAdapter.
             placeSubtypeTextView = (TextView) itemView.findViewById(R.id.place_subtype);
             placeDistanceTextView = (TextView) itemView.findViewById(R.id.place_distance);
             placeWeightTextView = (TextView) itemView.findViewById(R.id.place_weight);
-            placeAddressTextView = (AddressPicker) itemView.findViewById(R.id.place_address);
+            placeAddressTextView = (TextView) itemView.findViewById(R.id.place_address);
             placeIcon = (ImageView) itemView.findViewById(R.id.place_icon);
         }
 
@@ -164,7 +174,7 @@ public class NearbyPlaceAdapter extends RecyclerView.Adapter<NearbyPlaceAdapter.
             placeTextView.setText(place.getName());
             placeSubtypeTextView.setText(
                 BrokerPlaceSubTypeRepository.getInstance().findById(place.getSubType()).getName());
-            placeAddressTextView.setAddressCode(place.getSubdistrictCode());
+            placeAddressTextView.setText(getAddressText(place));
             placeIcon.setImageResource(PlaceIconMapping.getPlaceIcon(place));
             placeTextView.setCompoundDrawablesWithIntrinsicBounds(null, null, place.getLocation() == null ? null
                 : ResourceUtils.from(context).getDrawable(R.drawable.ic_place_have_location), null);
@@ -179,5 +189,13 @@ public class NearbyPlaceAdapter extends RecyclerView.Adapter<NearbyPlaceAdapter.
                     decimalFormat.format(place.getWeight())));
             }
         }
+
+        private String getAddressText(Place place) {
+            Subdistrict subDistrict = subDistricts.findByCode(place.getSubdistrictCode());
+            District district = districts.findByCode(subDistrict.getDistrictCode());
+            Province province = provinces.findByCode(district.getProvinceCode());
+            return AddressPrinter.print(subDistrict.getName(), district.getName(), province.getName());
+        }
+
     }
 }

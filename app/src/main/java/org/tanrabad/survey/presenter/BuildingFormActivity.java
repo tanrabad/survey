@@ -28,9 +28,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+
 import org.joda.time.DateTime;
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
@@ -43,7 +45,6 @@ import org.tanrabad.survey.domain.place.PlacePresenter;
 import org.tanrabad.survey.entity.Building;
 import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.entity.field.Location;
-import org.tanrabad.survey.entity.lookup.PlaceType;
 import org.tanrabad.survey.entity.utils.UuidUtils;
 import org.tanrabad.survey.presenter.maps.LocationUtils;
 import org.tanrabad.survey.repository.BrokerBuildingRepository;
@@ -70,7 +71,6 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
     public static final int ADD_BUILDING_REQ_CODE = 40000;
     private static final String BUILDING_UUID_ARG = "building_uuid_arg";
     private TextView placeNameView;
-    private TextView buildingNameTitleView;
     private EditText buildingNameView;
     private FrameLayout addLocationBackground;
     private PlaceController placeController = new PlaceController(BrokerPlaceRepository.getInstance(), this);
@@ -120,7 +120,6 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
 
     private void assignViews() {
         placeNameView = (TextView) findViewById(R.id.place_name);
-        buildingNameTitleView = (TextView) findViewById(R.id.building_name_label);
         buildingNameView = (EditText) findViewById(R.id.building_name);
         addLocationBackground = (FrameLayout) findViewById(R.id.add_location_background);
         editLocationButton = (Button) findViewById(R.id.edit_location);
@@ -190,12 +189,6 @@ public class BuildingFormActivity extends TanrabadActivity implements PlacePrese
     public void displayPlace(Place place) {
         this.place = place;
         placeNameView.setText(place.getName());
-        if (place.getType() == PlaceType.VILLAGE_COMMUNITY) {
-            buildingNameTitleView.setText(R.string.house_no);
-        } else {
-            buildingNameTitleView.setText(R.string.building_name);
-            buildingNameView.setHint(R.string.touch_to_type_building_name);
-        }
     }
 
     @Override

@@ -33,35 +33,36 @@
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/place_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/place_name"
+                android:inputType="text"
+                android:textSize="@dimen/text_title"
+                tools:text="ชุมชนคลองหลวง"/>
+        </android.support.design.widget.TextInputLayout>
+
         <include layout="@layout/view_place_type_form"/>
 
-        <TextView
-            style="@style/TextViewTanrabad.Label"
-            android:text="@string/place_name"/>
-
-        <EditText
-            android:id="@+id/place_name"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/touch_to_type_place_name"
-            android:inputType="text"
-            android:textSize="@dimen/text_title"/>
+            android:layout_height="wrap_content">
 
-        <TextView
-            style="@style/TextViewTanrabad.Label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/address"
-            android:textIsSelectable="false"/>
+            <nectec.thai.widget.address.AddressPicker
+                android:id="@+id/address_select"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/address"
+                android:paddingEnd="24dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="24dp"/>
 
-        <th.or.nectec.thai.widget.address.AddressPicker
-            android:id="@+id/address_select"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/touch_to_define_address"
-            android:paddingEnd="24dp"
-            android:paddingLeft="4dp"
-            android:paddingRight="24dp"/>
+        </android.support.design.widget.TextInputLayout>
 
         <include layout="@layout/location_form"/>
 

@@ -28,14 +28,20 @@ import android.widget.TextView;
 
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.entity.Place;
+import org.tanrabad.survey.entity.lookup.District;
+import org.tanrabad.survey.entity.lookup.Province;
+import org.tanrabad.survey.entity.lookup.Subdistrict;
+import org.tanrabad.survey.repository.BrokerDistrictRepository;
 import org.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
+import org.tanrabad.survey.repository.BrokerProvinceRepository;
+import org.tanrabad.survey.repository.BrokerSubdistrictRepository;
 import org.tanrabad.survey.repository.persistence.PlaceWithChange;
 import org.tanrabad.survey.utils.android.ResourceUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import th.or.nectec.thai.widget.address.AddressPicker;
+import nectec.thai.address.AddressPrinter;
 
 public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> implements ListViewAdapter<Place> {
 
@@ -78,13 +84,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> 
 
     @Override public void onBindViewHolder(ViewHolder holder, int position) {
         Place place = places.get(position);
-        holder.placeTextView.setText(place.getName());
-        holder.placeSubtypeTextView.setText(
-                BrokerPlaceSubTypeRepository.getInstance().findById(place.getSubType()).getName());
-        holder.placeAddressTextView.setAddressCode(place.getSubdistrictCode());
-        holder.placeIcon.setImageResource(PlaceIconMapping.getPlaceIcon(place));
-        holder.placeTextView.setCompoundDrawablesWithIntrinsicBounds(null, null, place.getLocation() == null ? null
-                : ResourceUtils.from(context).getDrawable(R.drawable.ic_place_have_location), null);
+        holder.bind(place);
         setSyncStatus(holder, place);
     }
 
@@ -118,10 +118,14 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         private TextView placeTextView;
         private TextView placeSubtypeTextView;
-        private AddressPicker placeAddressTextView;
+        private TextView placeAddressTextView;
         private ImageView placeIcon;
         private ImageView notSync;
         private PlaceAdapter adapter;
+
+        BrokerProvinceRepository provinces = BrokerProvinceRepository.getInstance();
+        BrokerDistrictRepository districts = BrokerDistrictRepository.getInstance();
+        BrokerSubdistrictRepository subDistricts = BrokerSubdistrictRepository.getInstance();
 
         public ViewHolder(View itemView, PlaceAdapter adapter) {
             super(itemView);
@@ -130,7 +134,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> 
             itemView.setOnLongClickListener(this);
             placeTextView = (TextView) itemView.findViewById(R.id.place_name);
             placeSubtypeTextView = (TextView) itemView.findViewById(R.id.place_subtype);
-            placeAddressTextView = (AddressPicker) itemView.findViewById(R.id.place_address);
+            placeAddressTextView = (TextView) itemView.findViewById(R.id.place_address);
             placeIcon = (ImageView) itemView.findViewById(R.id.place_icon);
             notSync = (ImageView) itemView.findViewById(R.id.not_sync);
         }
@@ -142,6 +146,23 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> 
         @Override public boolean onLongClick(View view) {
             adapter.onItemHolderLongClick(this);
             return true;
+        }
+
+        void bind(Place place) {
+            placeTextView.setText(place.getName());
+            placeSubtypeTextView.setText(
+                BrokerPlaceSubTypeRepository.getInstance().findById(place.getSubType()).getName());
+            placeAddressTextView.setText(getAddressText(place));
+            placeIcon.setImageResource(PlaceIconMapping.getPlaceIcon(place));
+            placeTextView.setCompoundDrawablesWithIntrinsicBounds(null, null, place.getLocation() == null ? null
+                : ResourceUtils.from(context).getDrawable(R.drawable.ic_place_have_location), null);
+        }
+
+        private String getAddressText(Place place) {
+            Subdistrict subDistrict = subDistricts.findByCode(place.getSubdistrictCode());
+            District district = districts.findByCode(subDistrict.getDistrictCode());
+            Province province = provinces.findByCode(district.getProvinceCode());
+            return AddressPrinter.print(subDistrict.getName(), district.getName(), province.getName());
         }
     }
 }

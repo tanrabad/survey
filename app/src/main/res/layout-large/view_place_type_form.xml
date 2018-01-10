@@ -8,42 +8,30 @@
     android:orientation="horizontal"
     tools:showIn="@layout/activity_place_form">
 
-    <TextView
-        style="@style/TextViewTanrabad.Label"
-        android:text="@string/place_type"
-        android:textIsSelectable="false"/>
-
-    <android.support.v7.widget.AppCompatSpinner
-        android:id="@+id/place_type_selector"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <android.support.design.widget.TextInputLayout
         android:layout_marginTop="@dimen/space_between_content"
-        android:inputType="text"
-        tools:listitem="@layout/list_item_spinner"/>
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content">
 
-    <LinearLayout
+        <me.piruin.spinney.Spinney
+            android:id="@+id/place_type_selector"
+            android:hint="@string/place_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
         android:id="@+id/place_subtype_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_between_content"
-        android:layout_marginStart="@dimen/space_between_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_marginTop="@dimen/space_between_content"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/place_subtype_label"
-            style="@style/TextViewTanrabad.Label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textIsSelectable="false"
-            tools:text="ประเภทศาสนสถาน"/>
-
-        <android.support.v7.widget.AppCompatSpinner
+        <me.piruin.spinney.Spinney
             android:id="@+id/place_subtype_selector"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_between_content"
-            android:inputType="text"
-            tools:listitem="@layout/list_item_spinner"/>
-    </LinearLayout>
+            android:hint="@string/place_subtype_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </android.support.design.widget.TextInputLayout>
 </LinearLayout>

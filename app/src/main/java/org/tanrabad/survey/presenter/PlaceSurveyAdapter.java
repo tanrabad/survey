@@ -31,12 +31,19 @@ import android.widget.TextView;
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.domain.place.PlaceSubTypeRepository;
 import org.tanrabad.survey.entity.Place;
+import org.tanrabad.survey.entity.lookup.District;
+import org.tanrabad.survey.entity.lookup.Province;
+import org.tanrabad.survey.entity.lookup.Subdistrict;
+import org.tanrabad.survey.repository.BrokerDistrictRepository;
 import org.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
+import org.tanrabad.survey.repository.BrokerProvinceRepository;
+import org.tanrabad.survey.repository.BrokerSubdistrictRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import th.or.nectec.thai.widget.address.AddressPicker;
+import nectec.thai.address.AddressPrinter;
+import nectec.thai.widget.address.AddressPicker;
 
 public class PlaceSurveyAdapter extends RecyclerView.Adapter<PlaceSurveyAdapter.ViewHolder>
     implements ListViewAdapter<Place> {
@@ -110,12 +117,16 @@ public class PlaceSurveyAdapter extends RecyclerView.Adapter<PlaceSurveyAdapter.
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView placeTextView;
         private TextView placeSubtypeTextView;
-        private AddressPicker placeAddressTextView;
+        private TextView placeAddressTextView;
         private ImageView placeIcon;
         private Button viewSurveyResultButton;
         private PlaceSurveyAdapter adapter;
         private FragmentManager fragmentManager;
         private PlaceSubTypeRepository subTypeRepo = BrokerPlaceSubTypeRepository.getInstance();
+        BrokerProvinceRepository provinces = BrokerProvinceRepository.getInstance();
+        BrokerDistrictRepository districts = BrokerDistrictRepository.getInstance();
+        BrokerSubdistrictRepository subDistricts = BrokerSubdistrictRepository.getInstance();
+
 
         ViewHolder(View itemView, final PlaceSurveyAdapter adapter) {
             super(itemView);
@@ -133,7 +144,7 @@ public class PlaceSurveyAdapter extends RecyclerView.Adapter<PlaceSurveyAdapter.
         void bind(final Place place) {
             placeTextView.setText(place.getName());
             placeSubtypeTextView.setText(subTypeRepo.findById(place.getSubType()).getName());
-            placeAddressTextView.setAddressCode(place.getSubdistrictCode());
+            placeAddressTextView.setText(getAddressText(place));
             placeIcon.setImageResource(PlaceIconMapping.getPlaceIcon(place));
             viewSurveyResultButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -142,6 +153,13 @@ public class PlaceSurveyAdapter extends RecyclerView.Adapter<PlaceSurveyAdapter.
                         fragmentManager, SurveyResultDialogFragment.FRAGMENT_TAG);
                 }
             });
+        }
+
+        private String getAddressText(Place place) {
+            Subdistrict subDistrict = subDistricts.findByCode(place.getSubdistrictCode());
+            District district = districts.findByCode(subDistrict.getDistrictCode());
+            Province province = provinces.findByCode(district.getProvinceCode());
+            return AddressPrinter.print(subDistrict.getName(), district.getName(), province.getName());
         }
 
         @Override

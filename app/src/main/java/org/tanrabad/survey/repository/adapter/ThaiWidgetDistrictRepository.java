@@ -19,11 +19,12 @@ package org.tanrabad.survey.repository.adapter;
 
 
 import org.tanrabad.survey.repository.persistence.DbDistrictRepository;
-import th.or.nectec.thai.address.AddressRepository;
-import th.or.nectec.thai.address.District;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import nectec.thai.address.AddressRepository;
+import nectec.thai.address.District;
 
 public class ThaiWidgetDistrictRepository implements AddressRepository<District> {
 

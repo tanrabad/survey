@@ -30,6 +30,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.entity.Place;
@@ -54,10 +55,11 @@ import org.tanrabad.survey.utils.android.InternetConnection;
 import org.tanrabad.survey.utils.android.ResourceUtils;
 import org.tanrabad.survey.utils.time.ThaiDatePrinter;
 import org.tanrabad.survey.utils.time.ThaiDateTimeConverter;
-import th.or.nectec.thai.address.AddressPrinter;
 
 import java.text.DecimalFormat;
 import java.util.UUID;
+
+import nectec.thai.address.AddressPrinter;
 
 public class SurveyResultDialogFragment extends DialogFragment implements View.OnClickListener {
 

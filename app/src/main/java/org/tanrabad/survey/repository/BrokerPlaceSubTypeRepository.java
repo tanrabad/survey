@@ -18,9 +18,9 @@
 package org.tanrabad.survey.repository;
 
 import org.tanrabad.survey.TanrabadApp;
-import org.tanrabad.survey.repository.persistence.DbPlaceSubTypeRepository;
 import org.tanrabad.survey.domain.place.PlaceSubTypeRepository;
 import org.tanrabad.survey.entity.lookup.PlaceSubType;
+import org.tanrabad.survey.repository.persistence.DbPlaceSubTypeRepository;
 
 import java.util.List;
 
@@ -51,7 +51,7 @@ public class BrokerPlaceSubTypeRepository implements PlaceSubTypeRepository {
             placeSubTypes = persistance.find();
             cache.updateOrInsert(placeSubTypes);
         }
-        return null;
+        return placeSubTypes;
     }
 
     @Override

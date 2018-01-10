@@ -19,14 +19,19 @@ package org.tanrabad.survey;
 
 import android.app.Application;
 import android.content.Context;
-import cat.ereza.customactivityoncrash.CustomActivityOnCrash;
+
 import com.onesignal.OneSignal;
+
+import org.tanrabad.survey.entity.ReferenceEntity;
 import org.tanrabad.survey.presenter.LoginActivity;
 import org.tanrabad.survey.utils.android.ResourceUtils;
 import org.tanrabad.survey.utils.tool.ActionLogger;
 import org.tanrabad.survey.utils.tool.ExceptionLogger;
 import org.tanrabad.survey.utils.tool.GoogleAnalyticsTool;
 import org.trb.authen.client.TRBAuthenUtil;
+
+import cat.ereza.customactivityoncrash.CustomActivityOnCrash;
+import me.piruin.spinney.Spinney;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class TanrabadApp extends Application {
@@ -61,6 +66,20 @@ public class TanrabadApp extends Application {
         setupAnalysisTools();
         setupDefaultFont();
         setupNotification();
+        setupSpinney();
+    }
+
+    private void setupSpinney() {
+        Spinney.enableSafeModeByDefault(true);
+        Spinney.setDefaultItemPresenter(new Spinney.ItemPresenter() {
+            @Override
+            public String getLabelOf(Object item, int position) {
+                if (item instanceof ReferenceEntity) {
+                    return ((ReferenceEntity) item).getName();
+                }
+                return item.toString();
+            }
+        });
     }
 
     private void setupNotification() {

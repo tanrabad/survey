@@ -18,9 +18,9 @@
 package org.tanrabad.survey.repository;
 
 import org.tanrabad.survey.TanrabadApp;
-import org.tanrabad.survey.repository.persistence.DbPlaceTypeRepository;
 import org.tanrabad.survey.domain.place.PlaceTypeRepository;
 import org.tanrabad.survey.entity.lookup.PlaceType;
+import org.tanrabad.survey.repository.persistence.DbPlaceTypeRepository;
 
 import java.util.List;
 
@@ -58,7 +58,8 @@ public final class BrokerPlaceTypeRepository implements PlaceTypeRepository {
         PlaceType placeType = cache.findById(placeTypeId);
         if (placeType == null) {
             placeType = persistence.findById(placeTypeId);
-            cache.save(placeType);
+            if (placeType != null)
+                cache.save(placeType);
         }
         return placeType;
     }

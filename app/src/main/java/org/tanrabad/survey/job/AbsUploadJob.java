@@ -42,7 +42,7 @@ public abstract class AbsUploadJob<T> implements Job {
         this.uploadRestService = uploadRestService;
     }
 
-    public boolean isUploadData() {
+    public boolean isUploaded() {
         return getSuccessCount() > 0 || getFailCount() > 0;
     }
 

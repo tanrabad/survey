@@ -32,7 +32,7 @@ public class Place extends Entity implements LocationEntity, WeightEntity, Compa
     private String subdistrictCode;
     private String updateBy;
     private double weight;
-    private boolean isTypeEdited = false;
+    private boolean typeEdited = false;
 
     public Place(UUID id, String name) {
         super();
@@ -63,7 +63,7 @@ public class Place extends Entity implements LocationEntity, WeightEntity, Compa
 
     public void setType(int type) {
         if (this.type != 0 && this.type != type)
-            isTypeEdited = true;
+            typeEdited = true;
         this.type = type;
     }
 
@@ -76,7 +76,7 @@ public class Place extends Entity implements LocationEntity, WeightEntity, Compa
     }
 
     public boolean isTypeEdited() {
-        return isTypeEdited;
+        return typeEdited;
     }
 
     @Override

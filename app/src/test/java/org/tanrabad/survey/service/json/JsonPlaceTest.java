@@ -18,6 +18,7 @@
 package org.tanrabad.survey.service.json;
 
 import com.bluelinelabs.logansquare.LoganSquare;
+
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.Before;
@@ -103,6 +104,7 @@ public class JsonPlaceTest {
         placeData.setUpdateTimestamp(DateTime.now().toString());
         JsonPlace jsonPlace = LoganSquare.parse(ResourceFile.read("place.json"), JsonPlace.class);
         Place parsedPlace = jsonPlace.getEntity(placeSubTypeRepository);
+
         assertEquals(parsedPlace, placeData);
         assertEquals(12, parsedPlace.getUpdateTimestamp().getHourOfDay());
     }
@@ -118,6 +120,7 @@ public class JsonPlaceTest {
         placeData.setUpdateTimestamp(DateTime.now().toString());
         JsonPlace jsonPlace = LoganSquare.parse(ResourceFile.read("placeWithNullSubType.json"), JsonPlace.class);
         Place parsedPlace = jsonPlace.getEntity(placeSubTypeRepository);
+
         assertEquals(parsedPlace, placeData);
     }
 }

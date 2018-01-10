@@ -314,11 +314,6 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     }
 
     @Override
-    public void alertCannotSaveVillageType() {
-
-    }
-
-    @Override
     public void displayUpdateSuccess() {
         setResult(RESULT_OK);
         finish();
@@ -338,8 +333,6 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
 
         this.place = place;
         placeNameView.setText(place.getName());
-
-        placeTypeSelectorView.setEnabled(false);
 
         if (!TextUtils.isEmpty(place.getSubdistrictCode()))
             addressSelectView.setAddressCode(place.getSubdistrictCode());

@@ -19,6 +19,7 @@ package org.tanrabad.survey.job;
 
 import android.content.Context;
 import android.text.TextUtils;
+
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.repository.persistence.DbBuildingRepository;
@@ -26,12 +27,10 @@ import org.tanrabad.survey.repository.persistence.DbPlaceRepository;
 import org.tanrabad.survey.repository.persistence.DbSurveyRepository;
 import org.tanrabad.survey.service.BuildingRestService;
 import org.tanrabad.survey.service.PlaceRestService;
-import org.tanrabad.survey.service.RestServiceException;
 import org.tanrabad.survey.service.SurveyRestService;
 import org.tanrabad.survey.utils.alert.Alert;
 import org.tanrabad.survey.utils.android.InternetConnection;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,27 +43,15 @@ public class UploadJobRunner extends AbsJobRunner {
 
     private List<AbsUploadJob> uploadJobs = new ArrayList<>();
 
-    private IOException ioException;
-    private RestServiceException restServiceException;
-    private boolean isManualSync;
     private OnSyncFinishListener onSyncFinishListener;
 
     public UploadJobRunner() {
-        this(false);
-    }
-
-    public UploadJobRunner(boolean isManualSync) {
-        this.isManualSync = isManualSync;
         context = TanrabadApp.getInstance();
     }
 
     @Override
     protected void onJobError(Job errorJob, Exception exception) {
         super.onJobError(errorJob, exception);
-        if (exception instanceof IOException)
-            ioException = (IOException) exception;
-        else if (exception instanceof RestServiceException)
-            restServiceException = (RestServiceException) exception;
 
         if (InternetConnection.isAvailable(context)) TanrabadApp.log(exception);
     }
@@ -98,7 +85,7 @@ public class UploadJobRunner extends AbsJobRunner {
     private void showUploadResultMsg() {
         String message = "";
         for (AbsUploadJob uploadJob : uploadJobs) {
-            if (!uploadJob.isUploadData())
+            if (!uploadJob.isUploaded())
                 continue;
 
             String dataType = getDataType(uploadJob);

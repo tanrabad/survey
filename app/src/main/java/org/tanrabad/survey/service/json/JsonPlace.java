@@ -19,11 +19,12 @@ package org.tanrabad.survey.service.json;
 
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
+
 import org.joda.time.DateTimeZone;
-import org.tanrabad.survey.utils.time.ThaiDateTimeConverter;
 import org.tanrabad.survey.domain.place.PlaceSubTypeRepository;
 import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.entity.field.Location;
+import org.tanrabad.survey.utils.time.ThaiDateTimeConverter;
 
 import java.util.UUID;
 
@@ -69,6 +70,9 @@ public class JsonPlace {
     @JsonField(name = "update_timestamp")
     public String updateTime;
 
+    @JsonField(name = "is_place_type_edited")
+    public boolean isTypeEdited = false;
+
     @JsonField
     public boolean active = true;
 
@@ -78,6 +82,7 @@ public class JsonPlace {
         jsonPlace.placeName = place.getName();
         jsonPlace.placeTypeId = place.getType();
         jsonPlace.placeSubtypeId = place.getSubType();
+        jsonPlace.isTypeEdited = place.isTypeEdited();
         jsonPlace.location = place.getLocation() == null ? null : GeoJsonPoint.parse(place.getLocation());
         jsonPlace.tambonCode = place.getSubdistrictCode();
         jsonPlace.updatedBy = place.getUpdateBy();

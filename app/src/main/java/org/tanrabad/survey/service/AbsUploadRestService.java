@@ -17,14 +17,18 @@
 
 package org.tanrabad.survey.service;
 
-import okhttp3.MediaType;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
+import android.util.Log;
+
+import org.tanrabad.survey.BuildConfig;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.utils.http.Status;
 
 import java.io.IOException;
+
+import okhttp3.MediaType;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 import static org.tanrabad.survey.utils.http.Header.USER_AGENT;
 
@@ -54,6 +58,9 @@ public abstract class AbsUploadRestService<T> extends AbsRestService<T> implemen
 
 
     private Request getPostRequest(T data) throws IOException {
+        if (BuildConfig.DEBUG) {
+            Log.d("RestService", String.format("url=%s\nbody=%s", baseApi + getPath(), entityToJsonString(data)));
+        }
         return new Request.Builder()
                 .post(RequestBody.create(JSON_MEDIA_TYPE, entityToJsonString(data)))
                 .addHeader(USER_AGENT, TRB_USER_AGENT)
@@ -80,6 +87,9 @@ public abstract class AbsUploadRestService<T> extends AbsRestService<T> implemen
     }
 
     private Request buildPutRequest(T data) throws IOException {
+        if (BuildConfig.DEBUG) {
+            Log.d("RestService", String.format("url=%s\nbody=%s", baseApi + getPath() + "/" + getId(data), entityToJsonString(data)));
+        }
         return new Request.Builder().put(RequestBody.create(JSON_MEDIA_TYPE, entityToJsonString(data)))
                 .addHeader(USER_AGENT, TRB_USER_AGENT)
                 .url(baseApi + getPath() + "/" + getId(data))

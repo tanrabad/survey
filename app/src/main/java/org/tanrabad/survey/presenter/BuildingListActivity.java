@@ -35,6 +35,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
+
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.domain.building.BuildingWithSurveyStatus;
@@ -398,7 +399,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     @Override
     protected boolean onPrepareOptionsPanel(View view, Menu menu) {
         PopupMenuUtil.showPopupMenuIcon(menu);
-        return super.onPrepareOptionsPanel(view, menu);
+        return true;
     }
 
     private void stopActionMode() {

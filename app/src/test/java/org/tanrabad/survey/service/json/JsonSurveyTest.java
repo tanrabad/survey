@@ -18,8 +18,10 @@
 package org.tanrabad.survey.service.json;
 
 import com.bluelinelabs.logansquare.LoganSquare;
+
 import org.joda.time.DateTime;
 import org.junit.Test;
+import org.skyscreamer.jsonassert.JSONAssert;
 import org.tanrabad.survey.entity.Building;
 import org.tanrabad.survey.entity.Survey;
 import org.tanrabad.survey.entity.User;
@@ -35,7 +37,7 @@ import static org.junit.Assert.assertEquals;
 public class JsonSurveyTest {
 
     @Test
-    public void testParseFromJsonString() throws Exception {
+    public void testParseFromJson() throws Exception {
         JsonSurvey jsonSurvey = LoganSquare.parse(ResourceFile.read("survey.json"), JsonSurvey.class);
 
         assertEquals("6af5225b-5642-10fb-a3a0-4e000a842583", jsonSurvey.surveyId.toString());
@@ -43,8 +45,7 @@ public class JsonSurveyTest {
         assertEquals(39.745675, jsonSurvey.location.getLatitude(), 0);
         assertEquals(-73.150055, jsonSurvey.location.getLongitude(), 0);
         assertEquals("2015-01-11T03:00:00.000Z", jsonSurvey.createTimestamp);
-        assertEquals("dcp-user", jsonSurvey.surveyor);
-
+        assertEquals("dcp-user", jsonSurvey.surveyor.username);
         assertEquals(1, jsonSurvey.details.get(0).containerLocationId);
         assertEquals(1, jsonSurvey.details.get(0).containerType);
         assertEquals(24, jsonSurvey.details.get(0).containerCount);
@@ -52,7 +53,7 @@ public class JsonSurveyTest {
     }
 
     @Test
-    public void testParseSurveyDataToJsonString() throws Exception {
+    public void testParseSurveyToJson() throws Exception {
         Survey survey = new SurveyBuilder(UUID.fromString("1619f46f-6a70-4049-82ec-69dad861a5c6"), stubUser())
                 .addIndoorDetail(UUID.fromString("772c4938-b910-11e5-a0c5-aabbccddeeff"),
                         new ContainerType(1, "น้ำใช้"), 10, 5)
@@ -66,32 +67,10 @@ public class JsonSurveyTest {
                 .build();
 
         JsonSurvey jsonSurvey = JsonSurvey.parse(survey);
-        assertEquals("{\"building_id\":\"5cf5665b-5642-10fb-a3a0-5e612a842583\","
-                + "\"create_timestamp\":\"2015-01-11T03:00:00.000Z\",\""
-                + "details\":"
-                + "[{\"container_count\":10,\"container_have_larva\":5,"
-                + "\"container_location_id\":1,\"container_type\":1,"
-                + "\"survey_detail_id\":\"772c4938-b910-11e5-a0c5-aabbccddeeff\"},"
-                + "{\"container_count\":7,\"container_have_larva\":5,"
-                + "\"container_location_id\":2,\"container_type\":2,\""
-                + "survey_detail_id\":\"772c4938-b917-11e5-a0c5-aabbccddeeff\"}],"
-                + "\"location\":{\"coordinates\":[-73.150055,39.745675],\"type\":\"Point\"},"
-                + "\"person_count\":5,\"survey_id\":\"1619f46f-6a70-4049-82ec-69dad861a5c6\","
-                + "\"surveyor\":\"dcp-user\"}", LoganSquare.serialize(jsonSurvey));
-    }
 
-    private User stubUser() {
-        return new User("dcp-user");
+        JSONAssert.assertEquals(ResourceFile.read("surveyData.json"),
+            LoganSquare.serialize(jsonSurvey), false);
     }
-
-    private Building stubBuilding() {
-        return new Building(UUID.fromString("5cf5665b-5642-10fb-a3a0-5e612a842583"), "abc");
-    }
-
-    private Location stubLocation() {
-        return new Location(39.745675, -73.150055);
-    }
-
     @Test
     public void testParseSurveyDataWithNullLocationToJsonString() throws Exception {
         Survey survey = new SurveyBuilder(UUID.fromString("1619f46f-6a70-4049-82ec-69dad861a5c6"), stubUser())
@@ -107,17 +86,29 @@ public class JsonSurveyTest {
                 .build();
 
         JsonSurvey jsonSurvey = JsonSurvey.parse(survey);
-        assertEquals("{\"building_id\":\"5cf5665b-5642-10fb-a3a0-5e612a842583\","
-                + "\"create_timestamp\":\"2015-01-11T03:00:00.000Z\",\""
-                + "details\":"
-                + "[{\"container_count\":10,\"container_have_larva\":5,"
-                + "\"container_location_id\":1,\"container_type\":1,"
-                + "\"survey_detail_id\":\"772c4938-b910-11e5-a0c5-aabbccddeeff\"},"
-                + "{\"container_count\":7,\"container_have_larva\":5,"
-                + "\"container_location_id\":2,\"container_type\":2,\""
-                + "survey_detail_id\":\"772c4938-b917-11e5-a0c5-aabbccddeeff\"}],"
-                + "\"location\":null,"
-                + "\"person_count\":5,\"survey_id\":\"1619f46f-6a70-4049-82ec-69dad861a5c6\","
-                + "\"surveyor\":\"dcp-user\"}", LoganSquare.serialize(jsonSurvey));
+
+        JSONAssert.assertEquals(ResourceFile.read("surveyNoLocation.json"),
+            LoganSquare.serialize(jsonSurvey), false);
     }
+
+
+    private User stubUser() {
+        User user = new User("dcp-user");
+        user.setFirstname("dcp");
+        user.setLastname("moph");
+        user.setOrganizationId(1);
+        return user;
+    }
+
+    private Building stubBuilding() {
+        return new Building(UUID.fromString("5cf5665b-5642-10fb-a3a0-5e612a842583"), "abc");
+    }
+
+    private Location stubLocation() {
+        return new Location(39.745675, -73.150055);
+    }
+
+
 }
+
+

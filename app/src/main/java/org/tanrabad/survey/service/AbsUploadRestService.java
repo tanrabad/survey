@@ -62,10 +62,10 @@ public abstract class AbsUploadRestService<T> extends AbsRestService<T> implemen
             Log.d("RestService", String.format("url=%s\nbody=%s", baseApi + getPath(), entityToJsonString(data)));
         }
         return new Request.Builder()
-                .post(RequestBody.create(JSON_MEDIA_TYPE, entityToJsonString(data)))
-                .addHeader(USER_AGENT, TRB_USER_AGENT)
-                .url(baseApi + getPath())
-                .build();
+            .post(RequestBody.create(JSON_MEDIA_TYPE, entityToJsonString(data)))
+            .addHeader(USER_AGENT, TRB_USER_AGENT)
+            .url(baseApi + getPath())
+            .build();
     }
 
     protected abstract String entityToJsonString(T data) throws IOException;
@@ -88,12 +88,14 @@ public abstract class AbsUploadRestService<T> extends AbsRestService<T> implemen
 
     private Request buildPutRequest(T data) throws IOException {
         if (BuildConfig.DEBUG) {
-            Log.d("RestService", String.format("url=%s\nbody=%s", baseApi + getPath() + "/" + getId(data), entityToJsonString(data)));
+            Log.d("RestService", String.format("url=%s\nbody=%s",
+                baseApi + getPath() + "/" + getId(data),
+                entityToJsonString(data)));
         }
         return new Request.Builder().put(RequestBody.create(JSON_MEDIA_TYPE, entityToJsonString(data)))
-                .addHeader(USER_AGENT, TRB_USER_AGENT)
-                .url(baseApi + getPath() + "/" + getId(data))
-                .build();
+            .addHeader(USER_AGENT, TRB_USER_AGENT)
+            .url(baseApi + getPath() + "/" + getId(data))
+            .build();
     }
 
     protected abstract String getId(T data);

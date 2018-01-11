@@ -19,6 +19,7 @@ package org.tanrabad.survey.service.json;
 
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
+
 import org.joda.time.DateTimeZone;
 import org.tanrabad.survey.entity.Survey;
 
@@ -41,7 +42,7 @@ public class JsonSurvey {
     public GeoJsonPoint location;
 
     @JsonField
-    public String surveyor;
+    public JsonUser surveyor;
 
     @JsonField
     public List<JsonSurveyDetail> details;
@@ -56,7 +57,7 @@ public class JsonSurvey {
         jsonSurvey.personCount = survey.getResidentCount();
         jsonSurvey.details = JsonSurveyDetail.parseList(survey.getIndoorDetail(), survey.getOutdoorDetail());
         jsonSurvey.location = survey.getLocation() == null ? null : GeoJsonPoint.parse(survey.getLocation());
-        jsonSurvey.surveyor = survey.getUser().getUsername();
+        jsonSurvey.surveyor = JsonUser.parse(survey.getUser());
         jsonSurvey.createTimestamp = survey.getStartTimestamp().withZone(DateTimeZone.UTC).toString();
         return jsonSurvey;
     }

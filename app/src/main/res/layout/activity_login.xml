@@ -21,40 +21,42 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:ignore="RelativeOverlap">
+
     <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="@dimen/screen_horizontal_margin"
-            android:layout_marginRight="@dimen/screen_vertical_margin"
-            android:gravity="bottom"
-            android:orientation="vertical">
+        android:id="@+id/copyright_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:paddingBottom="8dp"
+        android:layout_marginLeft="@dimen/screen_horizontal_margin"
+        android:layout_marginRight="@dimen/screen_vertical_margin"
+        android:orientation="vertical">
 
         <TextView
-                fontPath="fonts/RobotoCondensed-Regular.ttf"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/powered_by"
-                android:textColor="@color/dark_gray"
-                android:textSize="@dimen/text_micro"
-                tools:ignore="MissingPrefix"/>
+            fontPath="fonts/RobotoCondensed-Regular.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/powered_by"
+            android:textColor="@color/dark_gray"
+            android:textSize="@dimen/text_micro"
+            tools:ignore="MissingPrefix"/>
 
         <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/login_nectec_size"
-                android:layout_marginBottom="@dimen/space_between_content"
-                android:contentDescription="@string/nectec"
-                android:src="@drawable/logo_nectec"/>
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/login_nectec_size"
+            android:layout_marginBottom="@dimen/space_between_content"
+            android:contentDescription="@string/nectec"
+            android:src="@drawable/logo_nectec"/>
 
         <TextView
-                fontPath="fonts/RobotoCondensed-Regular.ttf"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@string/copyright"
-                android:textColor="@color/dark_gray"
-                android:textSize="@dimen/text_micro"
-                tools:ignore="MissingPrefix"/>
+            fontPath="fonts/RobotoCondensed-Regular.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/copyright"
+            android:textColor="@color/dark_gray"
+            android:textSize="@dimen/text_micro"
+            tools:ignore="MissingPrefix"/>
     </LinearLayout>
     <Button
             android:id="@+id/authentication_button"
@@ -147,12 +149,13 @@
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minWidth="200dp"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
+        android:layout_above="@+id/copyright_layout"
+        android:minWidth="200dp"
         android:text="@string/trial"
-        android:textColor="@color/black"
-        android:layout_below="@+id/authentication_button"
-        android:layout_centerHorizontal="true"/>
+        android:textSize="@dimen/text_caption"
+        android:textColor="@color/black"/>
 
 
 </RelativeLayout>

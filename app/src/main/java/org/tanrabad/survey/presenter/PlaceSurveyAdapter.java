@@ -43,7 +43,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nectec.thai.address.AddressPrinter;
-import nectec.thai.widget.address.AddressPicker;
 
 public class PlaceSurveyAdapter extends RecyclerView.Adapter<PlaceSurveyAdapter.ViewHolder>
     implements ListViewAdapter<Place> {
@@ -136,7 +135,7 @@ public class PlaceSurveyAdapter extends RecyclerView.Adapter<PlaceSurveyAdapter.
             itemView.findViewById(R.id.not_sync).setVisibility(View.GONE); //Always hide
             placeTextView = (TextView) itemView.findViewById(R.id.place_name);
             placeSubtypeTextView = (TextView) itemView.findViewById(R.id.place_subtype);
-            placeAddressTextView = (AddressPicker) itemView.findViewById(R.id.place_address);
+            placeAddressTextView = (TextView) itemView.findViewById(R.id.place_address);
             placeIcon = (ImageView) itemView.findViewById(R.id.place_icon);
             viewSurveyResultButton = (Button) itemView.findViewById(R.id.view_survey_result_button);
         }

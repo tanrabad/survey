@@ -58,7 +58,7 @@ CREATE TABLE place (
   update_time      timestamp    NOT NULL,
   changed_status   INTEGER(10) DEFAULT 0 NOT NULL,
   update_by        VARCHAR(128) NOT NULL,
-  is_type_edited   INTEGER(1) DEFAULT 0,
+  is_type_edited   INTEGER(1) DEFAULT 0 NOT NULL,
   PRIMARY KEY (place_id),
   FOREIGN KEY (subtype_id) REFERENCES place_subtype (subtype_id) ON UPDATE CASCADE,
   FOREIGN KEY (subdistrict_code) REFERENCES subdistrict (subdistrict_code) ON UPDATE CASCADE
@@ -98,6 +98,7 @@ CREATE TABLE survey (
   update_time  timestamp    NOT NULL,
   changed_status  INTEGER(10) DEFAULT 0 NOT NULL,
   remark       VARCHAR(254),
+  objective_id  INTEGER(1)  DEFAULT 1 NOT NULL,
   PRIMARY KEY (survey_id),
   FOREIGN KEY (building_id) REFERENCES building (building_id) ON UPDATE CASCADE ON DELETE CASCADE,
   FOREIGN KEY (surveyor) REFERENCES user_profile (username) ON UPDATE CASCADE

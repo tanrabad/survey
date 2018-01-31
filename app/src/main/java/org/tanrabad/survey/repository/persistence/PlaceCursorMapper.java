@@ -69,7 +69,8 @@ class PlaceCursorMapper implements CursorMapper<Place> {
         place.setLocation(getLocation(cursor));
         place.setUpdateBy(cursor.getString(updateByIndex));
         place.setUpdateTimestamp(cursor.getString(updateTimeIndex));
-        place.setTypeEdited(cursor.getInt(isTypeEditedIndex) == 1);
+        if (isTypeEditedIndex >= 0)
+            place.setTypeEdited(cursor.getInt(isTypeEditedIndex) == 1);
         return place;
     }
 

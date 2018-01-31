@@ -13,7 +13,8 @@
         "username": "dcp-user",
         "firstname": "dcp",
         "lastname": "moph",
-        "organization_id": 1
+        "organization_id": 1,
+        "organization_name": "DCP"
     },
     "create_timestamp": "2015-01-11T03:00:00.000Z",
     "details": [

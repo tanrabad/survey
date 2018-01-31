@@ -20,7 +20,6 @@ package org.tanrabad.survey.repository.persistence;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Build;
 
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.service.ApiSyncInfoPreference;
@@ -28,7 +27,7 @@ import org.tanrabad.survey.service.ApiSyncInfoPreference;
 public final class SurveyLiteDatabase extends SQLiteOpenHelper {
 
     public static final String DB_NAME = "trb_survey.db";
-    public static final int DB_VERSION = 4;
+    public static final int DB_VERSION = 5;
     private static SurveyLiteDatabase instance;
     private Context context;
 
@@ -61,6 +60,9 @@ public final class SurveyLiteDatabase extends SQLiteOpenHelper {
                 // fall through
             case 3:
                 SqlScript.readAndExecute(context, db, R.raw.alter3to4);
+                // fall through
+            case 4:
+                SqlScript.readAndExecute(context, db, R.raw.alter4to5);
                 break;
         }
 

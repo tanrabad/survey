@@ -79,6 +79,10 @@ public class Place extends Entity implements LocationEntity, WeightEntity, Compa
         return typeEdited;
     }
 
+    public void setTypeEdited(boolean typeEdited) {
+        this.typeEdited = typeEdited;
+    }
+
     @Override
     public Location getLocation() {
         return location;

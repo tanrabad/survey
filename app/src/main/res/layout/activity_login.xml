@@ -149,13 +149,9 @@
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center_horizontal"
-        android:layout_above="@+id/copyright_layout"
-        android:minWidth="200dp"
         android:text="@string/trial"
-        android:textSize="@dimen/text_caption"
-        android:textColor="@color/black"/>
+        android:textAppearance="?android:attr/textAppearanceInverse"
+        android:textSize="@dimen/text_caption"/>
 
 
 </RelativeLayout>

@@ -29,7 +29,8 @@
     "surveyor": {
         "firstname": "dcp",
         "lastname": "moph",
-        "organizationId": 1,
+        "organization_id": 1,
+        "organization_name": "DCP",
         "username": "dcp-user"
     }
 }

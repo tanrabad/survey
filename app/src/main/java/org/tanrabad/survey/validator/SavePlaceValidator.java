@@ -18,11 +18,11 @@
 package org.tanrabad.survey.validator;
 
 
+import org.tanrabad.survey.R;
 import org.tanrabad.survey.domain.place.PlaceRepository;
 import org.tanrabad.survey.domain.place.PlaceValidator;
 import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.entity.lookup.PlaceType;
-import org.tanrabad.survey.R;
 
 import java.util.List;
 
@@ -32,9 +32,16 @@ public class SavePlaceValidator implements PlaceValidator {
 
     @Override
     public boolean validate(Place place) {
-
         if (place.getName() == null || place.getName().isEmpty()) {
             throw new EmptyNameException(R.string.please_define_place_name);
+        }
+
+        if (place.getType() < 0) {
+            throw new ValidatorException(R.string.please_define_place_type);
+        }
+
+        if (place.getSubType() < 0) {
+            throw new ValidatorException(R.string.please_define_place_sub_type);
         }
 
         if (place.getSubdistrictCode() == null || place.getSubdistrictCode().isEmpty()) {

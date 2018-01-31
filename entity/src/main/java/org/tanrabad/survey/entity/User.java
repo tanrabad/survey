@@ -27,6 +27,7 @@ public class User {
     private String avatarFileName;
     private String healthRegionCode;
     private int organizationId;
+    private Organization organization;
     private String apiFilter;
 
     public User(String username) {
@@ -69,8 +70,18 @@ public class User {
         return organizationId;
     }
 
+    @Deprecated
     public void setOrganizationId(int organizationId) {
         this.organizationId = organizationId;
+    }
+
+    public Organization getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
+        this.organizationId = organization.getOrganizationId();
     }
 
     public String getHealthRegionCode() {

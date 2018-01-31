@@ -23,21 +23,30 @@ import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
+import org.tanrabad.survey.WireMockTestBase;
 import org.tanrabad.survey.entity.Building;
+import org.tanrabad.survey.entity.Organization;
 import org.tanrabad.survey.entity.Survey;
 import org.tanrabad.survey.entity.SurveyDetail;
 import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.entity.field.Location;
 import org.tanrabad.survey.entity.lookup.ContainerType;
-import org.tanrabad.survey.WireMockTestBase;
 import org.tanrabad.survey.service.json.JsonSurvey;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
+import static com.github.tomakehurst.wiremock.client.WireMock.delete;
+import static com.github.tomakehurst.wiremock.client.WireMock.deleteRequestedFor;
+import static com.github.tomakehurst.wiremock.client.WireMock.equalToJson;
+import static com.github.tomakehurst.wiremock.client.WireMock.post;
+import static com.github.tomakehurst.wiremock.client.WireMock.postRequestedFor;
+import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
+import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
+import static com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo;
+import static com.github.tomakehurst.wiremock.client.WireMock.verify;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 
@@ -67,7 +76,9 @@ public class SurveyRestServiceTest extends WireMockTestBase {
     }
 
     private Survey getSurvey() {
-        Survey survey = new Survey(UUID.randomUUID(), User.fromUsername("dpc-user"),
+        User user = User.fromUsername("dpc-user");
+        user.setOrganization(new Organization(1, "DCP"));
+        Survey survey = new Survey(UUID.randomUUID(), user,
                 new Building(UUID.fromString("b7a9d934-04fc-a22e-0539-6c17504f7e3e"), "อาคาร 1"));
         survey.setLocation(new Location(15, 120));
         survey.setResidentCount(15);

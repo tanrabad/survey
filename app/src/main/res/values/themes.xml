@@ -42,9 +42,13 @@
         <!-- Define text appearance -->
         <item name="android:textAppearance">@style/TanrabadTextAppearance.Body</item>
         <item name="android:textAppearanceSmall">@style/TanrabadTextAppearance.Caption</item>
-        <item name="android:textAppearanceSmallInverse">@style/TanrabadTextAppearance.Caption</item>
+        <item name="android:textAppearanceSmallInverse">
+            @style/TanrabadTextAppearance.Caption.Inverse
+        </item>
         <item name="android:textAppearanceMedium">@style/TanrabadTextAppearance.Body</item>
-        <item name="android:textAppearanceMediumInverse">@style/TanrabadTextAppearance.Body</item>
+        <item name="android:textAppearanceMediumInverse">
+            @style/TanrabadTextAppearance.Body.Inverse
+        </item>
         <item name="android:textAppearanceLarge">@style/TanrabadTextAppearance.Title</item>
         <item name="android:textAppearanceLargeInverse">@style/TanrabadTextAppearance.Title</item>
         <item name="android:textAppearanceListItem">@style/TanrabadTextAppearance.Body</item>

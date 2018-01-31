@@ -20,6 +20,7 @@ package org.tanrabad.survey.entity.utils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.tanrabad.survey.entity.Organization;
 import org.tanrabad.survey.entity.User;
 
 import static org.junit.Assert.assertEquals;
@@ -95,7 +96,7 @@ public class UserTest {
     @Test
     public void userWithDifferentOrganizationMustNotEqual() {
         austin.setOrganizationId(AUSTIN_ORGANIZATION_ID);
-        austin2.setOrganizationId(408);
+        austin2.setOrganization(new Organization(408, "TEST-ORG"));
 
         assertNotEquals(austin, austin2);
     }

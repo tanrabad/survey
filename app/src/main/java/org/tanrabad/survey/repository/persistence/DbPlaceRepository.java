@@ -21,11 +21,11 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import org.tanrabad.survey.repository.ChangedRepository;
-import org.tanrabad.survey.utils.collection.CursorList;
-import org.tanrabad.survey.utils.collection.CursorMapper;
+
 import org.tanrabad.survey.domain.place.PlaceRepository;
 import org.tanrabad.survey.entity.Place;
+import org.tanrabad.survey.repository.ChangedRepository;
+import org.tanrabad.survey.utils.collection.CursorList;
 
 import java.util.List;
 import java.util.UUID;
@@ -42,22 +42,22 @@ public class DbPlaceRepository extends DbRepository implements PlaceRepository, 
     public List<Place> find() {
         SQLiteDatabase db = readableDatabase();
         Cursor placeCursor = db.query(TABLE_NAME, PlaceColumn.wildcard(),
-                null, null, null, null, PlaceColumn.NAME + ", "
-                        + PlaceColumn.UPDATE_TIME);
-        return getPlaceList(placeCursor);
+            null, null, null, null, PlaceColumn.NAME + ", "
+                + PlaceColumn.UPDATE_TIME);
+        return placeListFrom(placeCursor);
     }
 
     @Override
     public Place findByUuid(UUID placeUuid) {
         SQLiteDatabase db = readableDatabase();
         Cursor placeCursor = db.query(TABLE_NAME, PlaceColumn.wildcard(),
-                PlaceColumn.ID + "=?", new String[]{placeUuid.toString()}, null, null, null);
-        return getPlace(placeCursor);
+            PlaceColumn.ID + "=?", new String[]{placeUuid.toString()}, null, null, null);
+        return placeFrom(placeCursor);
     }
 
-    private Place getPlace(Cursor cursor) {
+    private Place placeFrom(Cursor cursor) {
         if (cursor.moveToFirst()) {
-            Place place = getMapper(cursor).map(cursor);
+            Place place = new PlaceCursorMapper(cursor).map(cursor);
             cursor.close();
             return place;
         } else {
@@ -70,32 +70,27 @@ public class DbPlaceRepository extends DbRepository implements PlaceRepository, 
     public List<Place> findByPlaceType(int placeType) {
         SQLiteDatabase db = readableDatabase();
         String[] placeColumn = new String[]{PlaceColumn.ID, TABLE_NAME + "." + PlaceColumn.NAME, PlaceColumn.SUBTYPE_ID,
-                PlaceColumn.SUBDISTRICT_CODE, PlaceColumn.LATITUDE, PlaceColumn.LONGITUDE,
-                PlaceColumn.UPDATE_BY, PlaceColumn.UPDATE_TIME, PlaceColumn.CHANGED_STATUS};
+            PlaceColumn.SUBDISTRICT_CODE, PlaceColumn.LATITUDE, PlaceColumn.LONGITUDE,
+            PlaceColumn.UPDATE_BY, PlaceColumn.UPDATE_TIME, PlaceColumn.CHANGED_STATUS};
         Cursor placeCursor = db.query(TABLE_NAME + " INNER JOIN place_subtype using(subtype_id)", placeColumn,
-                PlaceColumn.TYPE_ID + "=?",
-                new String[]{String.valueOf(placeType)},
-                null, null,
-                TABLE_NAME + "." + PlaceColumn.NAME);
-        return getPlaceList(placeCursor);
+            PlaceColumn.TYPE_ID + "=?",
+            new String[]{String.valueOf(placeType)},
+            null, null,
+            TABLE_NAME + "." + PlaceColumn.NAME);
+        return placeListFrom(placeCursor);
     }
 
     @Override
     public List<Place> findByName(String placeName) {
         SQLiteDatabase db = readableDatabase();
         Cursor placeCursor = db.query(TABLE_NAME, PlaceColumn.wildcard(),
-                PlaceColumn.NAME + " LIKE ?", new String[]{"%" + placeName + "%"}, null, null, null);
-        return getPlaceList(placeCursor);
+            PlaceColumn.NAME + " LIKE ?", new String[]{"%" + placeName + "%"}, null, null, null);
+        return placeListFrom(placeCursor);
     }
 
-
-    private List<Place> getPlaceList(Cursor placeCursor) {
-        List<Place> placeList = new CursorList<>(placeCursor, getMapper(placeCursor));
+    private List<Place> placeListFrom(Cursor placeCursor) {
+        List<Place> placeList = new CursorList<>(placeCursor, new PlaceCursorMapper(placeCursor));
         return placeList.isEmpty() ? null : placeList;
-    }
-
-    private CursorMapper<Place> getMapper(Cursor cursor) {
-        return new PlaceCursorMapper(cursor);
     }
 
     @Override
@@ -115,8 +110,8 @@ public class DbPlaceRepository extends DbRepository implements PlaceRepository, 
     @Override
     public boolean delete(Place place) {
         int deleted = writableDatabase().delete(TABLE_NAME,
-                PlaceColumn.ID + "=?",
-                new String[]{place.getId().toString()});
+            PlaceColumn.ID + "=?",
+            new String[]{place.getId().toString()});
         if (deleted > 1)
             throw new IllegalStateException("Delete Place more than 1 record");
         return deleted == 1;
@@ -140,7 +135,7 @@ public class DbPlaceRepository extends DbRepository implements PlaceRepository, 
 
     private int getAddOrChangedStatus(Place place) {
         Cursor placeCursor = readableDatabase().query(TABLE_NAME, new String[]{PlaceColumn.CHANGED_STATUS},
-                PlaceColumn.ID + "=?", new String[]{place.getId().toString()}, null, null, null);
+            PlaceColumn.ID + "=?", new String[]{place.getId().toString()}, null, null, null);
         if (placeCursor.moveToNext()) {
             if (placeCursor.getInt(0) == ChangedStatus.ADD)
                 return ChangedStatus.ADD;
@@ -169,6 +164,7 @@ public class DbPlaceRepository extends DbRepository implements PlaceRepository, 
             values.put(PlaceColumn.UPDATE_BY, place.getUpdateBy());
         }
         values.put(PlaceColumn.UPDATE_TIME, place.getUpdateTimestamp().toString());
+        values.put(PlaceColumn.IS_TYPE_EDITED, place.isTypeEdited() ? 1 : 0);
         return values;
     }
 
@@ -179,16 +175,17 @@ public class DbPlaceRepository extends DbRepository implements PlaceRepository, 
     @Override
     public List<Place> getAdd() {
         Cursor placeCursor = readableDatabase().query(TABLE_NAME, PlaceColumn.wildcard(),
-                PlaceColumn.CHANGED_STATUS + "=?", new String[]{String.valueOf(ChangedStatus.ADD)}, null, null, null);
-        return getPlaceList(placeCursor);
+            PlaceColumn.CHANGED_STATUS + "=?", new String[]{String.valueOf(ChangedStatus.ADD)}, null, null, null);
+        return placeListFrom(placeCursor);
     }
 
     @Override
     public List<Place> getChanged() {
         Cursor placeCursor = readableDatabase().query(TABLE_NAME, PlaceColumn.wildcard(),
-                PlaceColumn.CHANGED_STATUS + "=?",
-                new String[]{String.valueOf(ChangedStatus.CHANGED)}, null, null, null);
-        return getPlaceList(placeCursor);
+            PlaceColumn.CHANGED_STATUS + "=?",
+            new String[]{String.valueOf(ChangedStatus.CHANGED)}, null, null, null);
+        List<Place> places = placeListFrom(placeCursor);
+        return places;
     }
 
     @Override
@@ -196,8 +193,8 @@ public class DbPlaceRepository extends DbRepository implements PlaceRepository, 
         ContentValues values = new ContentValues();
         values.put(PlaceColumn.ID, data.getId().toString());
         values.put(PlaceColumn.CHANGED_STATUS, ChangedStatus.UNCHANGED);
+        values.put(PlaceColumn.IS_TYPE_EDITED, 0);
         return updateByContentValues(values);
-
     }
 
     private boolean updateByContentValues(ContentValues place) {

@@ -13,8 +13,10 @@ public class JsonUser {
     public String firstname;
     @JsonField
     public String lastname;
-    @JsonField
+    @JsonField(name = "organization_id")
     public int organizationId;
+    @JsonField(name = "organization_name")
+    public String organizationName;
 
     public static JsonUser parse(User user) {
         JsonUser json = new JsonUser();
@@ -22,6 +24,7 @@ public class JsonUser {
         json.lastname = user.getLastname();
         json.username = user.getUsername();
         json.organizationId = user.getOrganizationId();
+        json.organizationName = user.getOrganization().getName();
         return json;
     }
 }

@@ -67,8 +67,8 @@ ext {
     clientId = System.getenv("TRB_AUTHEN_CLIENT_ID")
     clientSecret = System.getenv("TRB_AUTHEN_CLIENT_SECRET")
 
-    apiBaseUrlTest = "http://trb-test.igridproject.info/v1"
-    apiBaseUrlProduction = "https://api.tanrabad.org/v1"
+    apiBaseUrlTest = "http://trb-test.igridproject.info/v2"
+    apiBaseUrlProduction = "https://api.tanrabad.org/v2"
 
     jodaTimeVersion = "2.9.1"
     junitVersion = "4.12"
@@ -77,5 +77,5 @@ ext {
 
 task wrapper(type: Wrapper) {
     description 'Creates the gradle wrapper.'
-    gradleVersion '4.4.1'
+    gradleVersion '4.5'
 }

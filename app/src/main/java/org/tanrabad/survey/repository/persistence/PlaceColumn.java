@@ -29,12 +29,13 @@ public class PlaceColumn {
     public static final String UPDATE_BY = "update_by";
     public static final String CHANGED_STATUS = "changed_status";
     public static final String UPDATE_TIME = "update_time";
+    public static final String IS_TYPE_EDITED = "is_type_edited";
 
 
     public static String[] wildcard() {
         return new String[]{
                 ID, NAME, SUBTYPE_ID,
                 SUBDISTRICT_CODE, LATITUDE, LONGITUDE,
-                UPDATE_BY, UPDATE_TIME, CHANGED_STATUS};
+            UPDATE_BY, UPDATE_TIME, CHANGED_STATUS, IS_TYPE_EDITED};
     }
 }

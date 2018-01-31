@@ -18,11 +18,12 @@
 package org.tanrabad.survey.repository.persistence;
 
 import android.database.Cursor;
-import org.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
-import org.tanrabad.survey.utils.collection.CursorMapper;
+
 import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.entity.field.Location;
 import org.tanrabad.survey.entity.lookup.PlaceSubType;
+import org.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
+import org.tanrabad.survey.utils.collection.CursorMapper;
 
 import java.util.UUID;
 
@@ -37,6 +38,7 @@ class PlaceCursorMapper implements CursorMapper<Place> {
     private int updateByIndex;
     private int updateTimeIndex;
     private int changedStatusIndex;
+    private int isTypeEditedIndex;
 
     public PlaceCursorMapper(Cursor cursor) {
         findColumnIndexOf(cursor);
@@ -52,6 +54,7 @@ class PlaceCursorMapper implements CursorMapper<Place> {
         updateByIndex = cursor.getColumnIndex(PlaceColumn.UPDATE_BY);
         updateTimeIndex = cursor.getColumnIndex(PlaceColumn.UPDATE_TIME);
         changedStatusIndex = cursor.getColumnIndex(PlaceColumn.CHANGED_STATUS);
+        isTypeEditedIndex = cursor.getColumnIndex(PlaceColumn.IS_TYPE_EDITED);
     }
 
     @Override
@@ -66,6 +69,7 @@ class PlaceCursorMapper implements CursorMapper<Place> {
         place.setLocation(getLocation(cursor));
         place.setUpdateBy(cursor.getString(updateByIndex));
         place.setUpdateTimestamp(cursor.getString(updateTimeIndex));
+        place.setTypeEdited(cursor.getInt(isTypeEditedIndex) == 1);
         return place;
     }
 

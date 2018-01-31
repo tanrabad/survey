@@ -28,6 +28,7 @@ import org.tanrabad.survey.BuildConfig;
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.presenter.authen.AuthenActivity;
+import org.tanrabad.survey.repository.BrokerOrganizationRepository;
 import org.tanrabad.survey.repository.BrokerUserRepository;
 import org.tanrabad.survey.utils.alert.Alert;
 import org.tanrabad.survey.utils.android.InternetConnection;
@@ -67,6 +68,7 @@ public class LoginActivity extends TanrabadActivity {
 
     private void trialLogin() {
         User user = BrokerUserRepository.getInstance().findByUsername(BuildConfig.TRIAL_USER);
+        user.setOrganization(BrokerOrganizationRepository.getInstance().findById(user.getOrganizationId()));
         doLogin(user);
     }
 

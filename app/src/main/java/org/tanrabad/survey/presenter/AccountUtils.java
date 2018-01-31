@@ -19,9 +19,11 @@ package org.tanrabad.survey.presenter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
 import org.tanrabad.survey.BuildConfig;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.entity.User;
+import org.tanrabad.survey.repository.BrokerOrganizationRepository;
 import org.tanrabad.survey.repository.BrokerUserRepository;
 import org.tanrabad.survey.utils.time.CurrentTimer;
 import org.tanrabad.survey.utils.time.JodaCurrentTime;
@@ -106,10 +108,12 @@ public final class AccountUtils {
 
         @Override
         public User getUser() {
-            String user = getSharedPreferences().getString(KEY_USER, null);
-            if (user == null)
+            String username = getSharedPreferences().getString(KEY_USER, null);
+            if (username == null)
                 return null;
-            return BrokerUserRepository.getInstance().findByUsername(user);
+            User user = BrokerUserRepository.getInstance().findByUsername(username);
+            user.setOrganization(BrokerOrganizationRepository.getInstance().findById(user.getOrganizationId()));
+            return user;
         }
 
         @Override

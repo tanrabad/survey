@@ -23,6 +23,7 @@ import org.joda.time.DateTime;
 import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.tanrabad.survey.entity.Building;
+import org.tanrabad.survey.entity.Organization;
 import org.tanrabad.survey.entity.Survey;
 import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.entity.field.Location;
@@ -46,6 +47,8 @@ public class JsonSurveyTest {
         assertEquals(-73.150055, jsonSurvey.location.getLongitude(), 0);
         assertEquals("2015-01-11T03:00:00.000Z", jsonSurvey.createTimestamp);
         assertEquals("dcp-user", jsonSurvey.surveyor.username);
+        assertEquals(1, jsonSurvey.surveyor.organizationId);
+        assertEquals("DCP", jsonSurvey.surveyor.organizationName);
         assertEquals(1, jsonSurvey.details.get(0).containerLocationId);
         assertEquals(1, jsonSurvey.details.get(0).containerType);
         assertEquals(24, jsonSurvey.details.get(0).containerCount);
@@ -96,7 +99,7 @@ public class JsonSurveyTest {
         User user = new User("dcp-user");
         user.setFirstname("dcp");
         user.setLastname("moph");
-        user.setOrganizationId(1);
+        user.setOrganization(new Organization(1, "DCP"));
         return user;
     }
 

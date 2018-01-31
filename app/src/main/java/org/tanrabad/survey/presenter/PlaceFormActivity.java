@@ -215,10 +215,18 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
 
     private void getPlaceFieldData() {
         place.setName(placeNameView.getText().toString().trim());
-        int placeTypeId = placeTypeSelectorView.getSelectedItem().getId();
-        place.setType(placeTypeId);
-        PlaceSubType placeSubType = placeSubtypeSelectorView.getSelectedItem();
-        place.setSubType(placeSubType.getId());
+        if (placeTypeSelectorView.getSelectedItem() != null) {
+            int placeTypeId = placeTypeSelectorView.getSelectedItem().getId();
+            place.setType(placeTypeId);
+        } else {
+            place.setType(-1);
+        }
+        if (placeSubtypeSelectorView.getSelectedItem() != null) {
+            PlaceSubType placeSubType = placeSubtypeSelectorView.getSelectedItem();
+            place.setSubType(placeSubType.getId());
+        } else {
+            place.setSubType(-1);
+        }
         place.setSubdistrictCode(addressSelectView.getAddress() == null ? null
                 : addressSelectView.getAddress().getCode());
         place.setUpdateTimestamp(DateTime.now().toString());

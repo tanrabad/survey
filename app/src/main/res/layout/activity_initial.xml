@@ -21,6 +21,17 @@
                 android:layout_height="match_parent"
                 tools:context="org.tanrabad.survey.presenter.InitialActivity">
 
+    <ImageView
+        android:id="@+id/larvae_deep"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:contentDescription="@null"
+        android:cropToPadding="false"
+        android:scaleType="center"
+        android:rotation="33"
+        android:src="@drawable/larvae_deep"/>
+
     <TextView
             style="@style/TanrabadTextAppearance.Title"
             android:layout_centerHorizontal="true"

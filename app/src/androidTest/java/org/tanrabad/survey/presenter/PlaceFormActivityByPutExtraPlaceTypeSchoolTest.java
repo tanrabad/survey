@@ -77,7 +77,7 @@ public class PlaceFormActivityByPutExtraPlaceTypeSchoolTest extends TanrabadEspr
         onView(withId(R.id.save))
                 .perform(click());
 
-        textDisplayed(R.string.please_define_place_address);
+        textDisplayed(R.string.please_define_place_sub_type);
     }
 
     @Test
@@ -92,6 +92,8 @@ public class PlaceFormActivityByPutExtraPlaceTypeSchoolTest extends TanrabadEspr
 
     @Test
     public void addPlaceNameSamePlaceNameInDatabaseShouldFoundPromptCannotSaveThisPlace() {
+
+
         onView(withId(R.id.place_name))
                 .perform(replaceText(" วัดป่าภูก้อน "));
         onView(withId(R.id.address_select))
@@ -106,6 +108,10 @@ public class PlaceFormActivityByPutExtraPlaceTypeSchoolTest extends TanrabadEspr
                 .perform(click());
         onView(withText("ศาสนสถาน"))
                 .perform(click());
+        onView(withId(R.id.place_subtype_selector))
+            .perform(click());
+        onView(withText("วัด"))
+            .perform(click());
         onView(withId(R.id.add_marker))
                 .perform(click());
         onView(withId(R.id.map_container))

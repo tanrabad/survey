@@ -55,10 +55,14 @@ public class SurveyByAddNewPlaceAddNewBuildingTest extends TanrabadEspressoTestB
                 .perform(click());
         onView(withId(R.id.place_name))
                 .perform(replaceText("โรงงานพรทิพา"));
-        onView(withText("หมู่บ้าน/ชุมชน"))
+        onView(withId(R.id.place_type_selector))
                 .perform(click());
         onView(withText("โรงงาน"))
                 .perform(click());
+        onView(withId(R.id.place_subtype_selector))
+            .perform(click());
+        onView(withText("โรงงาน"))
+            .perform(click());
         onView(withId(R.id.address_select))
                 .perform(click());
         onView(withText("นนทบุรี"))

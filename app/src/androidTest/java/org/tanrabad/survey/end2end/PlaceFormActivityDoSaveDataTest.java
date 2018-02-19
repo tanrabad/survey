@@ -63,6 +63,10 @@ public class PlaceFormActivityDoSaveDataTest extends TanrabadEspressoTestBase {
                 .perform(click());
         onView(withText("สถานศึกษา"))
                 .perform(click());
+        onView(withId(R.id.place_subtype_selector))
+            .perform(click());
+        onView(withText("โรงเรียน"))
+            .perform(click());
         onView(withId(R.id.address_select))
                 .perform(click());
 
@@ -86,6 +90,10 @@ public class PlaceFormActivityDoSaveDataTest extends TanrabadEspressoTestBase {
     public void addPlaceThatNameAndTypeSamePlaceInDatabaseButDifferenAddressShouldSaveSuccess() {
         onView(withId(R.id.place_name))
                 .perform(replaceText("ธรรมศาสตร์"));
+        onView(withId(R.id.place_subtype_selector))
+            .perform(click());
+        onView(withText("โรงพยาบาลเอกชน"))
+            .perform(click());
         onView(withId(R.id.address_select))
                 .perform(click());
 

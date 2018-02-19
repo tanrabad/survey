@@ -20,25 +20,33 @@ package org.tanrabad.survey.presenter;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.support.annotation.StringRes;
+import android.support.test.espresso.ViewInteraction;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
-import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
+
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
+import org.hamcrest.TypeSafeMatcher;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.tanrabad.survey.R;
 import org.tanrabad.survey.base.TanrabadEspressoTestBase;
 import org.tanrabad.survey.entity.lookup.PlaceType;
-import org.tanrabad.survey.R;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtra;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -67,14 +75,21 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
 
     @Test
     public void chooseTypeVillageCommunityShouldFound2List() {
+        ViewInteraction tabView = onView(
+            allOf(childAtPosition(
+                childAtPosition(
+                    withId(R.id.tab_layout),
+                    0),
+                1),
+                isDisplayed()));
+        tabView.perform(click());
+
+
         changePlaceTypeFilterTo(R.string.village_community);
 
         onView(allOf(withId(R.id.place_count),
                 withContentDescription(R.string.number_place_list_in_database)))
                 .check(matches(containText("3")));
-        textDisplayed("หมู่บ้านพาลาซเซตโต้");
-        textDisplayed("ชุมชนกอล์ฟวิว");
-        textDisplayed("หมู่บ้านทดสอบ");
 
     }
 
@@ -87,6 +102,16 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
 
     @Test
     public void chooseTypeFactoryShouldNotFoundListPlace() {
+        ViewInteraction tabView = onView(
+            allOf(childAtPosition(
+                childAtPosition(
+                    withId(R.id.tab_layout),
+                    0),
+                1),
+                isDisplayed()));
+        tabView.perform(click());
+
+
         changePlaceTypeFilterTo(R.string.factory);
 
         textDisplayed(R.string.places_not_found);
@@ -104,6 +129,15 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
 
     @Test
     public void touchAddPlaceTypeFactory() {
+        ViewInteraction tabView = onView(
+            allOf(childAtPosition(
+                childAtPosition(
+                    withId(R.id.tab_layout),
+                    0),
+                1),
+                isDisplayed()));
+        tabView.perform(click());
+
         changePlaceTypeFilterTo(R.string.factory);
 
         onView(withId(R.id.add_place_menu))
@@ -116,6 +150,16 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
 
     @Test
     public void touchAddPlaceTypeSchool() {
+        ViewInteraction tabView = onView(
+            allOf(childAtPosition(
+                childAtPosition(
+                    withId(R.id.tab_layout),
+                    0),
+                1),
+                isDisplayed()));
+        tabView.perform(click());
+
+
         changePlaceTypeFilterTo(R.string.school);
 
         onView(withId(R.id.add_place_menu))
@@ -128,6 +172,9 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
 
     @Test
     public void touchPlaceShouldOpenDefineBuildingPage() {
+        waitingFor(3000);
+        //manual เลือก โบสถ์เซนต์เมรี่
+
         onView(withText("โบสถ์เซนต์เมรี่"))
                 .perform(click());
         onView(withText("สำรวจ"))
@@ -163,4 +210,23 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
                 hasComponent(new ComponentName(mActivity, PlaceSearchActivity.class)
                 ));
     }
+    private static Matcher<View> childAtPosition(
+        final Matcher<View> parentMatcher, final int position) {
+
+        return new TypeSafeMatcher<View>() {
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("Child at position " + position + " in parent ");
+                parentMatcher.describeTo(description);
+            }
+
+            @Override
+            public boolean matchesSafely(View view) {
+                ViewParent parent = view.getParent();
+                return parent instanceof ViewGroup && parentMatcher.matches(parent)
+                    && view.equals(((ViewGroup) parent).getChildAt(position));
+            }
+        };
+    }
 }
+

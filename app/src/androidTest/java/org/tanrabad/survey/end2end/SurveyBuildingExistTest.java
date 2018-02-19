@@ -18,20 +18,30 @@
 package org.tanrabad.survey.end2end;
 
 import android.content.Intent;
+import android.support.test.espresso.ViewInteraction;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
+
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.tanrabad.survey.R;
 import org.tanrabad.survey.base.TanrabadEspressoTestBase;
 import org.tanrabad.survey.presenter.MainActivity;
-import org.tanrabad.survey.R;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.replaceText;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.allOf;
 
 @RunWith(AndroidJUnit4.class)
 public class SurveyBuildingExistTest extends TanrabadEspressoTestBase {
@@ -51,6 +61,19 @@ public class SurveyBuildingExistTest extends TanrabadEspressoTestBase {
     public void startSurveyWhenFinishShouldFoundBuildingNameAtSurveyHistoryPage() {
         onView(withId(R.id.start_survey))
                 .perform(click());
+
+        ViewInteraction tabView = onView(
+            allOf(childAtPosition(
+                childAtPosition(
+                    withId(R.id.tab_layout),
+                    0),
+                1),
+                isDisplayed()));
+        tabView.perform(click());
+        waitingFor(3000);
+        //manual เลือก หมู่บ้านพาลาซเซตโต้
+
+
         onView(withText("หมู่บ้านพาลาซเซตโต้"))
                 .perform(click());
         onView(withText("สำรวจ"))
@@ -72,5 +95,24 @@ public class SurveyBuildingExistTest extends TanrabadEspressoTestBase {
 
         textDisplayed("214/44");
         textDisplayed("214/43");
+    }
+
+    private static Matcher<View> childAtPosition(
+        final Matcher<View> parentMatcher, final int position) {
+
+        return new TypeSafeMatcher<View>() {
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("Child at position " + position + " in parent ");
+                parentMatcher.describeTo(description);
+            }
+
+            @Override
+            public boolean matchesSafely(View view) {
+                ViewParent parent = view.getParent();
+                return parent instanceof ViewGroup && parentMatcher.matches(parent)
+                    && view.equals(((ViewGroup) parent).getChildAt(position));
+            }
+        };
     }
 }

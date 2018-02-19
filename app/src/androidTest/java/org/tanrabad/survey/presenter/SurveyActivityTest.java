@@ -117,7 +117,7 @@ public class SurveyActivityTest extends TanrabadEspressoTestBase {
 
     private Matcher<View> container(Location location, String containerType, Field field) {
         return AllOf.allOf(
-                withParent(withParent(withId(location.locationLayoutId))),
+                withParent(withParent(withParent(withId(location.locationLayoutId)))),
                 withId(field.editTextId),
                 withContentDescription(containerType)
         );

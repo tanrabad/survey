@@ -243,7 +243,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
     @Override
     public void displaySurveyPlacesNotFound() {
         recentSurveyPlaceAdapter.clearData();
-        recentSurveyPlaceCardView.setVisibility(View.GONE);
+        recentSurveyPlaceCardView.setVisibility(View.INVISIBLE);
     }
 
     @Override

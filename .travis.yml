@@ -35,7 +35,9 @@ script:
 
 deploy:
   provider: script
-  script: ./gradlew publishApkRelease
+  script:
+    - ls -la app
+    - ./gradlew publishApkRelease
   on:
     tags: true
 

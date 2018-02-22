@@ -42,7 +42,6 @@ repositories {
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.3"
 
     playAccountConfigs {
         defaultAccountConfig {

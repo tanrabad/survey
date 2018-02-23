@@ -79,5 +79,5 @@ ext {
 
 task wrapper(type: Wrapper) {
     description 'Creates the gradle wrapper.'
-    gradleVersion '4.5'
+    gradleVersion '4.5.1'
 }

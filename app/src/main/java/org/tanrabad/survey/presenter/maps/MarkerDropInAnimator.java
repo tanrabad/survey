@@ -25,6 +25,7 @@ import android.os.SystemClock;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.view.animation.Interpolator;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -37,9 +38,9 @@ class MarkerDropInAnimator {
     private Context context;
     private Marker marker;
 
-    public MarkerDropInAnimator(SupportMapFragment mapFragment, Marker marker) {
-        this.map = mapFragment.getMap();
-        this.context = mapFragment.getContext();
+    public MarkerDropInAnimator(GoogleMap map, Context context, Marker marker) {
+        this.map = map;
+        this.context = context;
         this.marker = marker;
     }
 

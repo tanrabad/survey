@@ -19,19 +19,16 @@ package org.tanrabad.survey;
 
 import android.app.Application;
 import android.content.Context;
-
+import cat.ereza.customactivityoncrash.CustomActivityOnCrash;
 import com.onesignal.OneSignal;
-
+import me.piruin.spinney.Spinney;
 import org.tanrabad.survey.entity.ReferenceEntity;
 import org.tanrabad.survey.presenter.LoginActivity;
 import org.tanrabad.survey.utils.android.ResourceUtils;
 import org.tanrabad.survey.utils.tool.ActionLogger;
 import org.tanrabad.survey.utils.tool.ExceptionLogger;
-import org.tanrabad.survey.utils.tool.GoogleAnalyticsTool;
+import org.tanrabad.survey.utils.tool.FabricTools;
 import org.trb.authen.client.TRBAuthenUtil;
-
-import cat.ereza.customactivityoncrash.CustomActivityOnCrash;
-import me.piruin.spinney.Spinney;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class TanrabadApp extends Application {
@@ -109,7 +106,7 @@ public class TanrabadApp extends Application {
     }
 
     private void setupAnalysisTools() {
-        GoogleAnalyticsTool logger = GoogleAnalyticsTool.getInstance(this);
+        FabricTools logger = FabricTools.getInstance(this);
         exceptionLogger = logger;
         actionLogger = logger;
     }

@@ -6,10 +6,9 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
-
 import org.tanrabad.survey.BuildConfig;
 import org.tanrabad.survey.R;
+import org.tanrabad.survey.utils.tool.FabricTools;
 
 public class PreferenceFragment extends PreferenceFragmentCompat {
 
@@ -24,7 +23,7 @@ public class PreferenceFragment extends PreferenceFragmentCompat {
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
                 if ("google_analytics".equals(key)) {
-                    GoogleAnalytics.getInstance(context).setAppOptOut(sharedPreferences.getBoolean(key, false));
+                    FabricTools.getInstance(context).setAppOptOut(sharedPreferences.getBoolean(key, false));
                 }
             }
         });

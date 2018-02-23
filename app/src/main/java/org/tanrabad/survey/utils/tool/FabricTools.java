@@ -196,6 +196,10 @@ public class FabricTools implements ExceptionLogger, ActionLogger {
         return score;
     }
 
+    public void setAppOptOut(boolean appOptOut) {
+        //TODO turn off log
+    }
+
     private static class Event {
         public static final String ADD_BUILDING = "Add Building";
         public static final String EDIT_BUILDING = "Edit building";

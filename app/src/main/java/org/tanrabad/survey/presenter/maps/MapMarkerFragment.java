@@ -89,7 +89,8 @@ public class MapMarkerFragment extends BaseMapFragment implements MapMarkerInter
     public void onMapLongClick(LatLng latLng) {
         removeMarkedLocation();
         marker = googleMap.addMarker(MarkerUtil.buildDragableMarkerOption(latLng));
-        new MarkerDropInAnimator(this, marker).start();
+
+        new MarkerDropInAnimator(googleMap, getContext(), marker).start();
     }
 
     public void removeMarkedLocation() {

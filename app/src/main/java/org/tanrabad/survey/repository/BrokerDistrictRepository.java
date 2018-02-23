@@ -38,8 +38,20 @@ public final class BrokerDistrictRepository implements DistrictRepository {
     public static BrokerDistrictRepository getInstance() {
         if (instance == null)
             instance = new BrokerDistrictRepository(InMemoryDistrictRepository.getInstance(),
-                    DbDistrictRepository.getInstance());
+                DbDistrictRepository.getInstance());
         return instance;
+    }
+
+    @Override
+    public List<District> find() {
+        List<District> districts = cache.find();
+        if (districts.isEmpty()) {
+            districts = persistence.find();
+            for (District dis : districts) {
+                cache.save(dis);
+            }
+        }
+        return districts;
     }
 
     @Override

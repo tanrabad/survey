@@ -207,7 +207,7 @@ configurations.all { resolutionStrategy.force "com.fasterxml.jackson.core:jackso
 
 check {
     checkstyle {
-        abortOnError true
+        abortOnError false
         config checkstyleConfigFile
     }
     findbugs {

@@ -23,6 +23,8 @@ import org.tanrabad.survey.entity.lookup.Subdistrict;
 import java.util.List;
 
 public interface SubdistrictRepository extends WritableRepository<Subdistrict> {
+    List<Subdistrict> find();
+
     List<Subdistrict> findByDistrictCode(String districtCode);
 
     Subdistrict findByCode(String subdistrictCode);

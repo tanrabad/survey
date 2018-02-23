@@ -43,6 +43,13 @@ public class InMemoryDistrictRepository implements DistrictRepository {
     }
 
     @Override
+    public List<District> find() {
+        ArrayList<District> districts = new ArrayList<>();
+        districts.addAll(districtMap.values());
+        return districts;
+    }
+
+    @Override
     public List<District> findByProvinceCode(String provinceCode) {
         ArrayList<District> districts = new ArrayList<>();
         for (District district : districtMap.values()) {

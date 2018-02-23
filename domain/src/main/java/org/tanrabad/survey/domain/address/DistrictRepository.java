@@ -23,6 +23,8 @@ import org.tanrabad.survey.entity.lookup.District;
 import java.util.List;
 
 public interface DistrictRepository extends WritableRepository<District> {
+    List<District> find();
+
     List<District> findByProvinceCode(String provinceCode);
 
     District findByCode(String districtCode);

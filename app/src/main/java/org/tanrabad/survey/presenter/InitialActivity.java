@@ -44,9 +44,12 @@ import org.tanrabad.survey.job.WritableRepoUpdateJob;
 import org.tanrabad.survey.repository.AppDataManager;
 import org.tanrabad.survey.repository.BrokerBuildingRepository;
 import org.tanrabad.survey.repository.BrokerContainerTypeRepository;
+import org.tanrabad.survey.repository.BrokerDistrictRepository;
 import org.tanrabad.survey.repository.BrokerPlaceRepository;
 import org.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
 import org.tanrabad.survey.repository.BrokerPlaceTypeRepository;
+import org.tanrabad.survey.repository.BrokerProvinceRepository;
+import org.tanrabad.survey.repository.BrokerSubdistrictRepository;
 import org.tanrabad.survey.repository.persistence.CreateDatabaseJob;
 import org.tanrabad.survey.repository.persistence.DbContainerLocationRepository;
 import org.tanrabad.survey.repository.persistence.DbDistrictRepository;
@@ -130,9 +133,17 @@ public class InitialActivity extends TanrabadActivity {
 
             @Override
             public void onSuccess() {
+                initialCache();
                 MainActivity.open(InitialActivity.this);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
+            }
+
+            private void initialCache() {
+                loadingText.setText("เกือบเสร็จแล้วอีกนิดเดียว");
+                BrokerProvinceRepository.getInstance().find();
+                BrokerDistrictRepository.getInstance().find();
+                BrokerSubdistrictRepository.getInstance().find();
             }
 
             @Override
@@ -159,6 +170,7 @@ public class InitialActivity extends TanrabadActivity {
             findViewById(R.id.larvae_deep).startAnimation(anim);
         }
     }
+
 
     private void startPleaseWaitBeansJump() {
         pleaseWaitBeans = JumpingBeans.with((TextView) findViewById(R.id.please_wait))

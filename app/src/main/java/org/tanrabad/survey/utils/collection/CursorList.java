@@ -20,36 +20,31 @@ package org.tanrabad.survey.utils.collection;
 import android.database.Cursor;
 
 import java.util.AbstractList;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CursorList<T> extends AbstractList<T> {
 
-    private Cursor cursor;
     private CursorMapper<T> mapper;
+    private List<T> objests = new ArrayList<>();
 
     public CursorList(Cursor cursor, CursorMapper<T> mapper) {
-        this.cursor = cursor;
+
         this.mapper = mapper;
-    }
-
-    public static void close(List list) {
-        if (list instanceof CursorList) {
-            Cursor cursor = ((CursorList) list).cursor;
-            if (cursor != null && !cursor.isClosed())
+        try {
+            if (!cursor.isClosed()) {
+                while (!cursor.isClosed() && cursor.moveToNext()) {
+                    objests.add(mapper.map(cursor));
+                }
                 cursor.close();
+            }
+        } catch (IllegalStateException ignore) {
         }
-    }
-
-    public Cursor getCursor() {
-        return cursor;
     }
 
     @Override
     public T get(int i) {
-        if (cursor.isClosed())
-            return null;
-        cursor.moveToPosition(i);
-        return mapper.map(cursor);
+        return objests.get(i);
     }
 
     @Override
@@ -59,23 +54,6 @@ public class CursorList<T> extends AbstractList<T> {
 
     @Override
     public int size() {
-        if (cursor.isClosed())
-            return 0;
-        return cursor.getCount();
-    }
-
-    @Override
-    protected void finalize() throws Throwable {
-        if (!cursor.isClosed())
-            tryCloseCursor();
-        super.finalize();
-    }
-
-    private void tryCloseCursor() {
-        try {
-            cursor.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        return objests.size();
     }
 }

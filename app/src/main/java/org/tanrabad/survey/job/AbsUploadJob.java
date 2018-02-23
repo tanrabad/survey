@@ -21,7 +21,6 @@ import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.repository.ChangedRepository;
 import org.tanrabad.survey.service.RestServiceException;
 import org.tanrabad.survey.service.UploadRestService;
-import org.tanrabad.survey.utils.collection.CursorList;
 
 import java.io.IOException;
 import java.util.List;
@@ -88,7 +87,6 @@ public abstract class AbsUploadJob<T> implements Job {
                 TanrabadApp.log(exception);
             }
         }
-        CursorList.close(changedList);
         throwBufferException();
     }
 
@@ -102,13 +100,5 @@ public abstract class AbsUploadJob<T> implements Job {
         } else if (restServiceException != null) {
             throw restServiceException;
         }
-    }
-
-    public boolean isUploadCompletelySuccess() {
-        return getFailCount() == 0 && getSuccessCount() > 0;
-    }
-
-    public boolean isUploadCompletelyFail() {
-        return getFailCount() > 0 && getSuccessCount() == 0;
     }
 }

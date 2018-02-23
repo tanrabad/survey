@@ -43,8 +43,27 @@ public final class BrokerSubdistrictRepository implements SubdistrictRepository 
     }
 
     @Override
+    public List<Subdistrict> find() {
+        List<Subdistrict> subdistricts = cache.find();
+        if (subdistricts.isEmpty()) {
+            subdistricts = persistence.find();
+            for (Subdistrict subDis : subdistricts) {
+                cache.save(subDis);
+            }
+        }
+        return subdistricts;
+    }
+
+    @Override
     public List<Subdistrict> findByDistrictCode(String districtCode) {
-        return persistence.findByDistrictCode(districtCode);
+        List<Subdistrict> subdistricts = cache.findByDistrictCode(districtCode);
+        if (subdistricts == null) {
+            subdistricts = persistence.findByDistrictCode(districtCode);
+            for (Subdistrict subdist : subdistricts) {
+                cache.save(subdist);
+            }
+        }
+        return subdistricts;
     }
 
     @Override

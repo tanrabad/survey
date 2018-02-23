@@ -43,6 +43,13 @@ public class InMemorySubdistrictRepository implements SubdistrictRepository {
     }
 
     @Override
+    public List<Subdistrict> find() {
+        List<Subdistrict> subDistricts = new ArrayList<>();
+        subDistricts.addAll(subdistrictMap.values());
+        return subDistricts;
+    }
+
+    @Override
     public List<Subdistrict> findByDistrictCode(String districtCode) {
         ArrayList<Subdistrict> subdistricts = new ArrayList<>();
         for (Subdistrict subdistrict : subdistrictMap.values()) {

@@ -21,11 +21,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
 import org.tanrabad.survey.TanrabadApp;
-import org.tanrabad.survey.utils.collection.CursorList;
-import org.tanrabad.survey.utils.collection.CursorMapper;
 import org.tanrabad.survey.domain.address.SubdistrictRepository;
 import org.tanrabad.survey.entity.lookup.Subdistrict;
+import org.tanrabad.survey.utils.collection.CursorList;
+import org.tanrabad.survey.utils.collection.CursorMapper;
 
 import java.util.List;
 
@@ -43,6 +44,14 @@ public class DbSubdistrictRepository extends DbRepository implements Subdistrict
         if (instance == null)
             instance = new DbSubdistrictRepository(TanrabadApp.getInstance());
         return instance;
+    }
+
+    @Override
+    public List<Subdistrict> find() {
+        SQLiteDatabase db = readableDatabase();
+        Cursor subdistrictCursor = db.query(TABLE_NAME, SubdistrictColumn.WILDCARD,
+            null, null, null, null, null);
+        return new CursorList<>(subdistrictCursor, getMapper(subdistrictCursor));
     }
 
     @Override

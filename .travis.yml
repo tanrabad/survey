@@ -33,11 +33,12 @@ before_install:
 script:
   - ./gradlew build --stacktrace
 
+before_deploy:
+  script: ls -la app
+
 deploy:
   provider: script
-  script:
-    - ls -la app
-    - ./gradlew publishApkRelease
+  script: ./gradlew publishApkRelease
   on:
     tags: true
 

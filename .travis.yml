@@ -26,23 +26,22 @@ android:
   - extra-android-m2repository
 
 before_install:
-- openssl aes-256-cbc -K $encrypted_85ec7c0a437d_key -iv $encrypted_85ec7c0a437d_iv -in secrets.tar.enc -out secrets.tar -d
+- openssl aes-256-cbc -K $encrypted_85ec7c0a437d_key -iv $encrypted_85ec7c0a437d_iv
+  -in secrets.tar.enc -out secrets.tar -d
 - tar xvf secrets.tar
 - yes | sdkmanager "platforms;android-26"
 
 script:
 - "./gradlew build --stacktrace"
 
-before_deploy:
-- ls -la app/
-- openssl aes-256-cbc -K $encrypted_85ec7c0a437d_key -iv $encrypted_85ec7c0a437d_iv -in secrets.tar.enc -out secrets.tar -d
-- tar xvf secrets.tar
-- ls -la app/
-
 deploy:
-  provider: script
-  script: "./gradlew app:publishApkRelease"
+  provider: releases
+  api_key:
+    secure: ZxNPRLy2Q04FOuqT08D0n7U1ndyanv/8AeVONV1O2PWp3MB/8W+2llM8FeryJm/Mqhe1vxDdSmrbXCxRYs/7vSzFbYIwnffpw4IL7cIOyR4chOXObU2Jr8/0nGUJ5EosEf96gsbmFT1aYIqu9OGotEFh6wBbS5QAhtgMDwHIVXd+l06CxpNxbAyQ7P0UjXR4OPv3n6YUJqxF+nNgmEzSC54JFzcx890zjRKW44tZKgFI240S1RmPs3yys2i+P3J/h03lNk8x62AItmd+z4t0T2aHnw1C8PA5HfV9cbfafsJN8RrMxacY1KjvbxVGbL3ZqmEUoyJKbd38CQ4SiQIVu5WvOcXN8HomhVfP0UJS6KqxUbqSc0f4potGtTGbu3JMvoBePHB0YlcgspVQj3yRCBw+SJI02t+CvEcRmAcKrS23uPkxlvsxEPK8N42nSRC8oNql6ABUUUm44NmBXLn/hg1skRd333UgXdAML+aqGU8hiMbAfoscwQ4Ija2ZDIcrVjwvHdh0BQ6sPgMfWQG++O57FurDuaYIyOwXUIA+hPeCiPCYELuTRwRueyx+tjcLw24DA0AyQOSRNZQLakfuv9Nc7Pd3lZhcf8Pes7WrcFk73p+NFjaodZnyi0apFDsqezKhscKMrSqQtBQyA2PE3E9RAhSbTDyVm+AlB05i45Q=
+  file: /home/travis/build/tanrabad/survey/app/build/outputs/apk/release/app-release.apk
+  skip_cleanup: true
   on:
+    repo: tanrabad/survey
     tags: true
 
 notifications:

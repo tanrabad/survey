@@ -42,6 +42,7 @@ before_deploy:
 deploy:
   provider: script
   script: "./gradlew app:publishApkRelease"
+  skip_cleanup: true
   on:
     tags: true
 

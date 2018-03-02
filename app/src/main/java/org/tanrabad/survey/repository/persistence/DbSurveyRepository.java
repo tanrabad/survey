@@ -47,6 +47,7 @@ import org.tanrabad.survey.repository.SurveyRepositoryException;
 import org.tanrabad.survey.utils.collection.CursorList;
 import org.tanrabad.survey.utils.collection.CursorMapper;
 import org.tanrabad.survey.utils.time.ThaiDateTimeConverter;
+import org.tanrabad.survey.utils.tool.FabricTools;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,6 +87,16 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
     public boolean save(Survey survey) {
         ContentValues values = surveyContentValues(survey);
         values.put(SurveyColumn.CHANGED_STATUS, ChangedStatus.ADD);
+        boolean surveySaveSuccess = false;
+        try {
+            surveySaveSuccess = save(survey, values);
+        } catch (IllegalStateException excepted) {
+            FabricTools.getInstance(getContext()).log(excepted);
+        }
+        return surveySaveSuccess;
+    }
+
+    private boolean save(Survey survey, ContentValues values) {
         SQLiteDatabase db = writableDatabase();
         db.beginTransaction();
         boolean surveySaveSuccess;
@@ -108,6 +119,16 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
     public boolean update(Survey survey) {
         ContentValues values = surveyContentValues(survey);
         values.put(SurveyColumn.CHANGED_STATUS, getAddOrChangedStatus(survey));
+        boolean surveyUpdateSuccess = false;
+        try {
+            surveyUpdateSuccess = update(survey, values);
+        } catch (IllegalStateException excepted) {
+            FabricTools.getInstance(getContext()).log(excepted);
+        }
+        return surveyUpdateSuccess;
+    }
+
+    private boolean update(Survey survey, ContentValues values) {
         SQLiteDatabase db = writableDatabase();
         boolean surveyUpdateSuccess;
         db.beginTransaction();
@@ -143,13 +164,17 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
                 new String[]{survey.getId().toString()},
                 null, null, null);
         int changedStatus = ChangedStatus.CHANGED;
-        if (placeCursor.moveToNext()) {
-            if (placeCursor.getInt(0) == ChangedStatus.ADD)
-                changedStatus = ChangedStatus.ADD;
-            else
-                changedStatus = ChangedStatus.CHANGED;
+        try {
+            if (placeCursor.moveToNext()) {
+                if (placeCursor.getInt(0) == ChangedStatus.ADD)
+                    changedStatus = ChangedStatus.ADD;
+                else
+                    changedStatus = ChangedStatus.CHANGED;
+            }
+            placeCursor.close();
+        } catch (IllegalStateException excepted) {
+            FabricTools.getInstance(getContext()).log(excepted);
         }
-        placeCursor.close();
         return changedStatus;
     }
 
@@ -324,14 +349,18 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
                 new String[]{surveyId.toString(), String.valueOf(containerLocationId)},
                 null, null, null);
         List<SurveyDetail> detailList = new ArrayList<>();
-        if (cursor.moveToFirst()) {
-            CursorMapper<SurveyDetail> mapper = getSurveyDetailMapper(cursor);
-            do {
-                SurveyDetail detail = mapper.map(cursor);
-                detailList.add(detail);
-            } while (cursor.moveToNext());
+        try {
+            if (cursor.moveToFirst()) {
+                CursorMapper<SurveyDetail> mapper = getSurveyDetailMapper(cursor);
+                do {
+                    SurveyDetail detail = mapper.map(cursor);
+                    detailList.add(detail);
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+        } catch (IllegalStateException excepted) {
+            FabricTools.getInstance(getContext()).log(excepted);
         }
-        cursor.close();
         return detailList;
     }
 
@@ -383,16 +412,20 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
     @NonNull
     private List<BuildingWithSurveyStatus> mapSurveyBuildingStatus(Cursor cursor) {
         List<BuildingWithSurveyStatus> surveyBuilding = new ArrayList<>();
-        if (cursor.moveToFirst()) {
-            CursorMapper<Building> mapper = getBuildingSurveyMapper(cursor);
-            do {
-                boolean isSurvey = !TextUtils.isEmpty(cursor.getString(cursor.getColumnIndex(SurveyColumn.ID)));
-                BuildingWithSurveyStatus buildingWithSurveyStatus =
+        try {
+            if (cursor.moveToFirst()) {
+                CursorMapper<Building> mapper = getBuildingSurveyMapper(cursor);
+                do {
+                    boolean isSurvey = !TextUtils.isEmpty(cursor.getString(cursor.getColumnIndex(SurveyColumn.ID)));
+                    BuildingWithSurveyStatus buildingWithSurveyStatus =
                         new BuildingWithSurveyStatus(mapper.map(cursor), isSurvey);
-                surveyBuilding.add(buildingWithSurveyStatus);
-            } while (cursor.moveToNext());
+                    surveyBuilding.add(buildingWithSurveyStatus);
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+        } catch (IllegalStateException excepted) {
+            FabricTools.getInstance(getContext()).log(excepted);
         }
-        cursor.close();
         return surveyBuilding;
     }
 
@@ -408,12 +441,17 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
     }
 
     private Survey getSurvey(Cursor cursor) {
-        if (cursor.moveToFirst()) {
-            Survey place = getSurveyMapper(cursor).map(cursor);
-            cursor.close();
-            return place;
-        } else {
-            cursor.close();
+        try {
+            if (cursor.moveToFirst()) {
+                Survey place = getSurveyMapper(cursor).map(cursor);
+                cursor.close();
+                return place;
+            } else {
+                cursor.close();
+                return null;
+            }
+        } catch (IllegalStateException except) {
+            FabricTools.getInstance(getContext()).log(except);
             return null;
         }
     }

@@ -24,8 +24,6 @@ import android.database.sqlite.SQLiteDatabase;
 class DbRepository {
 
     static final int ERROR_INSERT_ID = -1;
-    private static SQLiteDatabase readableDatabase;
-    private static SQLiteDatabase writableDatabase;
     private Context context;
 
     DbRepository(Context context) {
@@ -37,14 +35,10 @@ class DbRepository {
     }
 
     SQLiteDatabase readableDatabase() {
-        if (readableDatabase == null || !readableDatabase.isOpen())
-            readableDatabase = SurveyLiteDatabase.getInstance(context).getReadableDatabase();
-        return readableDatabase;
+        return SurveyLiteDatabase.getInstance(context).getReadableDatabase();
     }
 
     SQLiteDatabase writableDatabase() {
-        if (writableDatabase == null || !writableDatabase.isOpen())
-            writableDatabase = SurveyLiteDatabase.getInstance(context).getWritableDatabase();
-        return writableDatabase;
+        return SurveyLiteDatabase.getInstance(context).getWritableDatabase();
     }
 }

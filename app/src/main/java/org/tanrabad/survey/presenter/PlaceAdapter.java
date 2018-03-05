@@ -85,12 +85,6 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> 
     @Override public void onBindViewHolder(ViewHolder holder, int position) {
         Place place = places.get(position);
         holder.bind(place);
-        setSyncStatus(holder, place);
-    }
-
-    private void setSyncStatus(ViewHolder holder, Place currentPlace) {
-        PlaceWithChange bwc = (PlaceWithChange) currentPlace;
-        holder.notSync.setVisibility(bwc.isNotSynced() ? View.VISIBLE : View.GONE);
     }
 
     @Override public long getItemId(int i) {
@@ -156,6 +150,9 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> 
             placeIcon.setImageResource(PlaceIconMapping.getPlaceIcon(place));
             placeTextView.setCompoundDrawablesWithIntrinsicBounds(null, null, place.getLocation() == null ? null
                 : ResourceUtils.from(context).getDrawable(R.drawable.ic_place_have_location), null);
+            if (place instanceof PlaceWithChange) {
+                notSync.setVisibility(((PlaceWithChange) place).isNotSynced() ? View.VISIBLE : View.GONE);
+            }
         }
 
         private String getAddressText(Place place) {

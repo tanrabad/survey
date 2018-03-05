@@ -17,11 +17,14 @@
 
 package org.tanrabad.survey.repository;
 
+import org.joda.time.LocalTime;
 import org.tanrabad.survey.TanrabadApp;
-import org.tanrabad.survey.repository.persistence.DbPlaceRepository;
 import org.tanrabad.survey.domain.place.PlaceRepository;
 import org.tanrabad.survey.entity.Place;
+import org.tanrabad.survey.entity.User;
+import org.tanrabad.survey.repository.persistence.DbPlaceRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,6 +33,10 @@ public final class BrokerPlaceRepository implements PlaceRepository {
     private static BrokerPlaceRepository instance;
     private PlaceRepository cache;
     private PlaceRepository persistence;
+
+    public static final int RECENT_CACHE_TIME = 1;
+    private List<Place> recentPlace = new ArrayList<>();
+    private LocalTime recentLastUpdate = LocalTime.now().minusHours(1);
 
 
     private BrokerPlaceRepository(PlaceRepository cache, PlaceRepository persistence) {
@@ -68,6 +75,18 @@ public final class BrokerPlaceRepository implements PlaceRepository {
     @Override
     public List<Place> findByName(String placeName) {
         return persistence.findByName(placeName);
+    }
+
+    @Override
+    public List<Place> findRecent(User user) {
+        List<Place> recent = new ArrayList<>();
+        if (recentPlace.isEmpty() || recentLastUpdate.plusMinutes(RECENT_CACHE_TIME).isBefore(LocalTime.now())) {
+            recent = persistence.findRecent(user);
+            if (recent != null && !recent.isEmpty()) {
+                recentPlace.addAll(recent);
+            }
+        }
+        return recent;
     }
 
     @Override

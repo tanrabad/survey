@@ -17,9 +17,6 @@
 
 package org.tanrabad.survey.domain.survey;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.tanrabad.survey.domain.place.PlaceRepository;
 import org.tanrabad.survey.domain.place.PlaceWithSurveyStatus;
 import org.tanrabad.survey.domain.place.PlaceWithSurveyStatusListPresenter;
@@ -27,20 +24,20 @@ import org.tanrabad.survey.domain.user.UserRepository;
 import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.entity.User;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SurveyPlaceChooser {
 
     private final UserRepository userRepository;
     private final PlaceRepository placeRepository;
-    private final SurveyRepository surveyRepository;
     private final PlaceWithSurveyStatusListPresenter surveyPlacePresenter;
 
     public SurveyPlaceChooser(UserRepository userRepository,
                               PlaceRepository placeRepository,
-                              SurveyRepository surveyRepository,
                               PlaceWithSurveyStatusListPresenter surveyBuildingPresenter) {
         this.userRepository = userRepository;
         this.placeRepository = placeRepository;
-        this.surveyRepository = surveyRepository;
         this.surveyPlacePresenter = surveyBuildingPresenter;
     }
 
@@ -55,7 +52,7 @@ public class SurveyPlaceChooser {
             surveyPlacePresenter.displayPlacesNotfound();
             return;
         }
-        List<Place> surveyPlaces = surveyRepository.findByUserIn7Days(user);
+        List<Place> surveyPlaces = placeRepository.findRecent(user);
         List<PlaceWithSurveyStatus> placeWithSurveyStatusList = new ArrayList<>();
         for (Place eachPlace : places) {
             PlaceWithSurveyStatus place = new PlaceWithSurveyStatus(eachPlace,

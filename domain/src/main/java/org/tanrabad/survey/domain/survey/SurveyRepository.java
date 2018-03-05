@@ -39,6 +39,4 @@ public interface SurveyRepository extends WritableRepository<Survey> {
     List<BuildingWithSurveyStatus> findSurveyBuildingByBuildingName(Place place, User user, String buildingName);
 
     List<SurveyDetail> findSurveyDetail(UUID surveyId, int containerLocationId);
-
-    List<Place> findByUserIn7Days(User user);
 }

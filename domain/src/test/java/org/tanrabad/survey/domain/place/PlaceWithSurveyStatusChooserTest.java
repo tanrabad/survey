@@ -22,22 +22,19 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.tanrabad.survey.domain.survey.SurveyPlaceChooser;
-import org.tanrabad.survey.domain.survey.SurveyRepository;
 import org.tanrabad.survey.domain.user.UserRepository;
 import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.entity.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlaceWithSurveyStatusChooserTest {
 
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
 
-    private SurveyRepository surveyRepository;
     private PlaceRepository placeRepository;
     private UserRepository userRepository;
     private PlaceWithSurveyStatusListPresenter placeWithSurveyStatusListPresenter;
@@ -49,7 +46,6 @@ public class PlaceWithSurveyStatusChooserTest {
 
     @Before
     public void setUp() {
-        surveyRepository = context.mock(SurveyRepository.class);
         placeRepository = context.mock(PlaceRepository.class);
         userRepository = context.mock(UserRepository.class);
         placeWithSurveyStatusListPresenter = context.mock(PlaceWithSurveyStatusListPresenter.class);
@@ -86,14 +82,14 @@ public class PlaceWithSurveyStatusChooserTest {
                 allowing(placeRepository).find();
                 will(returnValue(places));
 
-                allowing(surveyRepository).findByUserIn7Days(with(user));
+                allowing(placeRepository).findRecent(with(user));
                 will(returnValue(surveyPlaces));
 
                 allowing(placeWithSurveyStatusListPresenter).displayAllSurveyPlaceList(with(placeWithSurveyStatuses));
             }
         });
         SurveyPlaceChooser surveyPlaceHistoryController = new SurveyPlaceChooser(
-                userRepository, placeRepository, surveyRepository, placeWithSurveyStatusListPresenter);
+            userRepository, placeRepository, placeWithSurveyStatusListPresenter);
         surveyPlaceHistoryController.displaySurveyedPlaceOf(username);
     }
 
@@ -118,14 +114,14 @@ public class PlaceWithSurveyStatusChooserTest {
                 allowing(placeRepository).find();
                 will(returnValue(places));
 
-                allowing(surveyRepository).findByUserIn7Days(with(user));
+                allowing(placeRepository).findRecent(with(user));
                 will(returnValue(null));
 
                 allowing(placeWithSurveyStatusListPresenter).displayAllSurveyPlaceList(with(placeWithSurveyStatuses));
             }
         });
         SurveyPlaceChooser surveyPlaceHistoryController = new SurveyPlaceChooser(
-                userRepository, placeRepository, surveyRepository, placeWithSurveyStatusListPresenter);
+            userRepository, placeRepository, placeWithSurveyStatusListPresenter);
         surveyPlaceHistoryController.displaySurveyedPlaceOf(username);
     }
 
@@ -142,12 +138,12 @@ public class PlaceWithSurveyStatusChooserTest {
 
                 oneOf(placeWithSurveyStatusListPresenter).displayPlacesNotfound();
 
-                never(surveyRepository);
+                never(placeRepository).findRecent(user);
                 never(placeWithSurveyStatusListPresenter);
             }
         });
         SurveyPlaceChooser surveyPlaceHistoryController = new SurveyPlaceChooser(
-                userRepository, placeRepository, surveyRepository, placeWithSurveyStatusListPresenter);
+            userRepository, placeRepository, placeWithSurveyStatusListPresenter);
         surveyPlaceHistoryController.displaySurveyedPlaceOf(username);
     }
 
@@ -163,7 +159,7 @@ public class PlaceWithSurveyStatusChooserTest {
             }
         });
         SurveyPlaceChooser surveyPlaceHistoryController = new SurveyPlaceChooser(
-                userRepository, placeRepository, surveyRepository, placeWithSurveyStatusListPresenter);
+            userRepository, placeRepository, placeWithSurveyStatusListPresenter);
         surveyPlaceHistoryController.displaySurveyedPlaceOf(username);
     }
 

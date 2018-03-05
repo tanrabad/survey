@@ -22,7 +22,6 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.tanrabad.survey.domain.survey.SurveyRepository;
 import org.tanrabad.survey.domain.user.UserRepository;
 import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.entity.User;
@@ -34,14 +33,14 @@ public class PlaceWithSurveyHistoryChooserTest {
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
     private PlaceWithSurveyHistoryListPresenter placeWithSurveyHistoryListPresenter;
-    private SurveyRepository surveyRepository;
+    private PlaceRepository placeRepository;
     private UserRepository userRepository;
     private String username;
     private User user;
 
     @Before
     public void setUp() {
-        surveyRepository = context.mock(SurveyRepository.class);
+        placeRepository = context.mock(PlaceRepository.class);
         userRepository = context.mock(UserRepository.class);
         placeWithSurveyHistoryListPresenter = context.mock(PlaceWithSurveyHistoryListPresenter.class);
         username = "chn";
@@ -60,14 +59,14 @@ public class PlaceWithSurveyHistoryChooserTest {
             {
                 oneOf(userRepository).findByUsername(with(username));
                 will(returnValue(with(user)));
-                oneOf(surveyRepository).findByUserIn7Days(with(user));
+                oneOf(placeRepository).findRecent(with(user));
                 will(returnValue(surveyPlace));
                 oneOf(placeWithSurveyHistoryListPresenter).displaySurveyPlaceList(surveyPlace);
             }
         });
 
         PlaceWithSurveyHistoryChooser placeWithSurveyHistoryChooser = new PlaceWithSurveyHistoryChooser(
-                userRepository, surveyRepository, placeWithSurveyHistoryListPresenter);
+            userRepository, placeRepository, placeWithSurveyHistoryListPresenter);
         placeWithSurveyHistoryChooser.showSurveyPlaceList(username);
     }
 
@@ -77,14 +76,14 @@ public class PlaceWithSurveyHistoryChooserTest {
             {
                 oneOf(userRepository).findByUsername(with(username));
                 will(returnValue(user));
-                oneOf(surveyRepository).findByUserIn7Days(with(user));
+                oneOf(placeRepository).findRecent(with(user));
                 will(returnValue(null));
                 oneOf(placeWithSurveyHistoryListPresenter).displaySurveyPlacesNotFound();
             }
         });
 
         PlaceWithSurveyHistoryChooser placeWithSurveyHistoryChooser = new PlaceWithSurveyHistoryChooser(
-                userRepository, surveyRepository, placeWithSurveyHistoryListPresenter);
+            userRepository, placeRepository, placeWithSurveyHistoryListPresenter);
         placeWithSurveyHistoryChooser.showSurveyPlaceList(username);
     }
 
@@ -99,7 +98,7 @@ public class PlaceWithSurveyHistoryChooserTest {
         });
 
         PlaceWithSurveyHistoryChooser placeWithSurveyHistoryChooser = new PlaceWithSurveyHistoryChooser(
-                userRepository, surveyRepository, placeWithSurveyHistoryListPresenter);
+            userRepository, placeRepository, placeWithSurveyHistoryListPresenter);
         placeWithSurveyHistoryChooser.showSurveyPlaceList(username);
     }
 }

@@ -17,24 +17,23 @@
 
 package org.tanrabad.survey.domain.place;
 
-import java.util.List;
-
-import org.tanrabad.survey.domain.survey.SurveyRepository;
 import org.tanrabad.survey.domain.user.UserRepository;
 import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.entity.User;
 
+import java.util.List;
+
 public class PlaceWithSurveyHistoryChooser {
     private final UserRepository userRepository;
-    private final SurveyRepository surveyRepository;
+    private final PlaceRepository placeRepository;
     private final PlaceWithSurveyHistoryListPresenter placeWithSurveyStatusChooserPresenter;
 
     public PlaceWithSurveyHistoryChooser(UserRepository userRepository,
-                                         SurveyRepository surveyRepository,
+                                         PlaceRepository placeRepository,
                                          PlaceWithSurveyHistoryListPresenter placeWithSurveyStatusChooserPresenter) {
 
         this.userRepository = userRepository;
-        this.surveyRepository = surveyRepository;
+        this.placeRepository = placeRepository;
         this.placeWithSurveyStatusChooserPresenter = placeWithSurveyStatusChooserPresenter;
     }
 
@@ -45,7 +44,7 @@ public class PlaceWithSurveyHistoryChooser {
             return;
         }
 
-        List<Place> surveyPlaces = surveyRepository.findByUserIn7Days(user);
+        List<Place> surveyPlaces = placeRepository.findRecent(user);
 
         if (surveyPlaces != null && !surveyPlaces.isEmpty()) {
             placeWithSurveyStatusChooserPresenter.displaySurveyPlaceList(surveyPlaces);

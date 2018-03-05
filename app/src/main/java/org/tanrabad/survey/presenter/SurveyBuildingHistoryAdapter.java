@@ -165,7 +165,9 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
             //noinspection SetTextI18n
             duration.setText(context.getString(R.string.survey_duration) + " " + getDuration(survey));
             timeAgoView.setTime(survey.getFinishTimestamp());
-            notSync.setVisibility(((SurveyWithChange) survey).isNotSynced() ? View.VISIBLE : View.GONE);
+            if (survey instanceof SurveyWithChange) {
+                notSync.setVisibility(((SurveyWithChange) survey).isNotSynced() ? View.VISIBLE : View.GONE);
+            }
             setCiValue(survey);
         }
 

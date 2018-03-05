@@ -44,7 +44,7 @@ import org.tanrabad.survey.job.AbsJobRunner;
 import org.tanrabad.survey.job.DownloadJobBuilder;
 import org.tanrabad.survey.job.UploadJobRunner;
 import org.tanrabad.survey.presenter.view.MainActivityNavigation;
-import org.tanrabad.survey.repository.BrokerSurveyRepository;
+import org.tanrabad.survey.repository.BrokerPlaceRepository;
 import org.tanrabad.survey.repository.BrokerUserRepository;
 import org.tanrabad.survey.service.ApiSyncInfoPreference;
 import org.tanrabad.survey.service.BuildingRestService;
@@ -140,7 +140,7 @@ public class MainActivity extends TanrabadActivity implements View.OnClickListen
         recentSurveyPlaceCardView = (CardView) findViewById(R.id.card_layout);
         recentSurveyPlaceChooser = new PlaceWithSurveyHistoryChooser(
                 BrokerUserRepository.getInstance(),
-                BrokerSurveyRepository.getInstance(),
+            BrokerPlaceRepository.getInstance(),
                 this);
     }
 

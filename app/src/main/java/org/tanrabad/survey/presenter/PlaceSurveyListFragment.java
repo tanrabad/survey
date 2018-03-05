@@ -33,7 +33,7 @@ import org.tanrabad.survey.domain.place.PlaceWithSurveyHistoryChooser;
 import org.tanrabad.survey.domain.place.PlaceWithSurveyHistoryListPresenter;
 import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.presenter.view.EmptyLayoutView;
-import org.tanrabad.survey.repository.BrokerSurveyRepository;
+import org.tanrabad.survey.repository.BrokerPlaceRepository;
 import org.tanrabad.survey.repository.BrokerUserRepository;
 import org.tanrabad.survey.utils.alert.Alert;
 
@@ -48,7 +48,7 @@ public class PlaceSurveyListFragment extends TanrabadTabFragment implements Plac
     private PlaceSurveyAdapter placeAdapter;
     private PlaceWithSurveyHistoryChooser placeChooser = new PlaceWithSurveyHistoryChooser(
             BrokerUserRepository.getInstance(),
-            BrokerSurveyRepository.getInstance(), this);
+        BrokerPlaceRepository.getInstance(), this);
     private TextView placeCountView;
     private RecyclerView placeListView;
     private RecyclerViewHeader surveyPlaceListHeader;

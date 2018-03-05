@@ -51,12 +51,26 @@ public final class BrokerSurveyRepository implements SurveyRepository {
 
     @Override
     public Survey findRecent(Building building, User user) {
-        return persistent.findRecent(building, user);
+        Survey survey = cache.findRecent(building, user);
+        if (survey == null) {
+            survey = persistent.findRecent(building, user);
+            if (survey != null) {
+                cache.save(survey);
+            }
+        }
+        return survey;
     }
 
     @Override
     public List<Survey> findRecent(Place place, User user) {
-        return persistent.findRecent(place, user);
+        List<Survey> surveys = cache.findRecent(place, user);
+        if (surveys == null || surveys.isEmpty()) {
+            surveys = persistent.findRecent(place, user);
+            for (Survey survey : surveys) {
+                cache.save(survey);
+            }
+        }
+        return surveys;
     }
 
     @Override
@@ -73,11 +87,6 @@ public final class BrokerSurveyRepository implements SurveyRepository {
     @Override
     public List<SurveyDetail> findSurveyDetail(UUID surveyId, int containerLocationId) {
         return persistent.findSurveyDetail(surveyId, containerLocationId);
-    }
-
-    @Override
-    public List<Place> findByUserIn7Days(User user) {
-        return persistent.findByUserIn7Days(user);
     }
 
     @Override

@@ -18,9 +18,11 @@
 package org.tanrabad.survey.repository;
 
 import android.text.TextUtils;
+
 import org.tanrabad.survey.domain.place.PlaceRepository;
 import org.tanrabad.survey.domain.place.PlaceRepositoryException;
 import org.tanrabad.survey.entity.Place;
+import org.tanrabad.survey.entity.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,6 +79,11 @@ public class InMemoryPlaceRepository implements PlaceRepository {
                 filterPlaces.add(eachPlace);
         }
         return filterPlaces.isEmpty() ? null : filterPlaces;
+    }
+
+    @Override
+    public List<Place> findRecent(User user) {
+        return null;
     }
 
     @Override

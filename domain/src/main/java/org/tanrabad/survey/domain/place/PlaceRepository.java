@@ -17,11 +17,12 @@
 
 package org.tanrabad.survey.domain.place;
 
-import java.util.List;
-import java.util.UUID;
-
 import org.tanrabad.survey.domain.WritableRepository;
 import org.tanrabad.survey.entity.Place;
+import org.tanrabad.survey.entity.User;
+
+import java.util.List;
+import java.util.UUID;
 
 public interface PlaceRepository extends WritableRepository<Place> {
 
@@ -32,4 +33,6 @@ public interface PlaceRepository extends WritableRepository<Place> {
     List<Place> findByPlaceType(int placeType);
 
     List<Place> findByName(String placeName);
+
+    List<Place> findRecent(User user);
 }

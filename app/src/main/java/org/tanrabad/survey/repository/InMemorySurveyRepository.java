@@ -28,12 +28,15 @@ import org.tanrabad.survey.entity.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 final class InMemorySurveyRepository implements SurveyRepository {
 
     private static InMemorySurveyRepository instance;
     private List<Survey> surveys;
+    private Map<Building, Survey> surveyMaps = new ConcurrentHashMap<>();
 
     private InMemorySurveyRepository() {
         this.surveys = new ArrayList<>();
@@ -68,13 +71,25 @@ final class InMemorySurveyRepository implements SurveyRepository {
 
     @Override
     public List<BuildingWithSurveyStatus> findSurveyBuilding(Place place, User user) {
-        return null;
+        List<BuildingWithSurveyStatus> buildings = new ArrayList<>();
+        for (Building building : surveyMaps.keySet()) {
+            if (building.getPlaceId().equals(place.getId())) {
+                buildings.add(new BuildingWithSurveyStatus(building, true));
+            }
+        }
+        return buildings.isEmpty() ? null : buildings;
     }
 
     @Override
     public List<BuildingWithSurveyStatus> findSurveyBuildingByBuildingName(
             Place place, User user, String buildingName) {
-        return null;
+        List<BuildingWithSurveyStatus> buildings = new ArrayList<>();
+        for (Building building : surveyMaps.keySet()) {
+            if (building.getPlaceId().equals(place.getId()) && building.getName().contains(buildingName)) {
+                buildings.add(new BuildingWithSurveyStatus(building, true));
+            }
+        }
+        return buildings.isEmpty() ? null : buildings;
     }
 
     @Override
@@ -83,22 +98,9 @@ final class InMemorySurveyRepository implements SurveyRepository {
     }
 
     @Override
-    public List<Place> findByUserIn7Days(User user) {
-        ArrayList<Place> surveyPlaces = new ArrayList<>();
-        for (Survey eachSurvey : surveys) {
-            if (eachSurvey.getUser().equals(user)) {
-                Building surveyBuilding = eachSurvey.getSurveyBuilding();
-                if (!surveyPlaces.contains(surveyBuilding.getPlace())) {
-                    surveyPlaces.add(surveyBuilding.getPlace());
-                }
-            }
-        }
-        return surveyPlaces.isEmpty() ? null : surveyPlaces;
-    }
-
-    @Override
     public boolean save(Survey survey) {
         surveys.add(survey);
+        surveyMaps.put(survey.getSurveyBuilding(), survey);
         return true;
     }
 
@@ -108,11 +110,13 @@ final class InMemorySurveyRepository implements SurveyRepository {
         if (surveys.contains(survey)) {
             surveys.set(surveys.indexOf(survey), survey);
         }
+        surveyMaps.put(survey.getSurveyBuilding(), survey);
         return true;
     }
 
     @Override
     public boolean delete(Survey data) {
+        surveyMaps.remove(data);
         return surveys.remove(data);
     }
 

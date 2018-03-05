@@ -368,32 +368,6 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
         return new SurveyDetailCursorMapper(cursor, containerTypeRepository);
     }
 
-    @Override
-    public List<Place> findByUserIn7Days(User user) {
-        String[] columns = new String[]{
-                DbPlaceRepository.TABLE_NAME + "." + PlaceColumn.ID,
-                DbPlaceRepository.TABLE_NAME + "." + PlaceColumn.NAME,
-                PlaceColumn.SUBDISTRICT_CODE,
-                DbPlaceRepository.TABLE_NAME + "." + PlaceColumn.LATITUDE,
-                DbPlaceRepository.TABLE_NAME + "." + PlaceColumn.LONGITUDE,
-                DbPlaceRepository.TABLE_NAME + "." + PlaceColumn.SUBTYPE_ID,
-                DbPlaceRepository.TABLE_NAME + "." + PlaceColumn.UPDATE_TIME,
-                DbPlaceRepository.TABLE_NAME + "." + PlaceColumn.UPDATE_BY,
-                DbPlaceRepository.TABLE_NAME + "." + PlaceColumn.CHANGED_STATUS};
-        Cursor cursor = readableDatabase().query(
-                TABLE_NAME + " INNER JOIN building USING(building_id) INNER JOIN place USING(place_id)",
-                columns,
-                SurveyColumn.SURVEYOR + "=?" + "AND " + surveyWithRangeCondition(),
-                new String[]{user.getUsername()},
-                DbPlaceRepository.TABLE_NAME + "." + PlaceColumn.ID,
-                null,
-                TABLE_NAME + "." + SurveyColumn.UPDATE_TIME + " DESC");
-        return new CursorList<>(cursor, getPlaceSurveyMapper(cursor));
-    }
-
-    private CursorMapper<Place> getPlaceSurveyMapper(Cursor cursor) {
-        return new PlaceCursorMapper(cursor);
-    }
 
     @NonNull
     private String[] buildingSurveyColumn() {

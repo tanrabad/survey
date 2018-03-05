@@ -22,10 +22,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import org.joda.time.DateTime;
+import org.tanrabad.survey.BuildConfig;
 import org.tanrabad.survey.domain.place.PlaceRepository;
 import org.tanrabad.survey.entity.Place;
+import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.repository.ChangedRepository;
 import org.tanrabad.survey.utils.collection.CursorList;
+import org.tanrabad.survey.utils.time.ThaiDateTimeConverter;
 
 import java.util.List;
 import java.util.UUID;
@@ -201,4 +205,35 @@ public class DbPlaceRepository extends DbRepository implements PlaceRepository, 
         SQLiteDatabase db = writableDatabase();
         return updateByContentValues(db, place);
     }
+
+    @Override
+    public List<Place> findRecent(User user) {
+        String[] columns = new String[]{
+            DbPlaceRepository.TABLE_NAME + "." + PlaceColumn.ID,
+            DbPlaceRepository.TABLE_NAME + "." + PlaceColumn.NAME,
+            PlaceColumn.SUBDISTRICT_CODE,
+            DbPlaceRepository.TABLE_NAME + "." + PlaceColumn.LATITUDE,
+            DbPlaceRepository.TABLE_NAME + "." + PlaceColumn.LONGITUDE,
+            DbPlaceRepository.TABLE_NAME + "." + PlaceColumn.SUBTYPE_ID,
+            DbPlaceRepository.TABLE_NAME + "." + PlaceColumn.UPDATE_TIME,
+            DbPlaceRepository.TABLE_NAME + "." + PlaceColumn.UPDATE_BY,
+            DbPlaceRepository.TABLE_NAME + "." + PlaceColumn.CHANGED_STATUS};
+        Cursor cursor = readableDatabase().query(
+            "survey INNER JOIN building USING(building_id) INNER JOIN " + TABLE_NAME + " USING(place_id)",
+            columns,
+            SurveyColumn.SURVEYOR + "=?" + "AND " + surveyWithRangeCondition(),
+            new String[]{user.getUsername()},
+            DbPlaceRepository.TABLE_NAME + "." + PlaceColumn.ID,
+            null,
+            TABLE_NAME + "." + SurveyColumn.UPDATE_TIME + " DESC");
+        return placeListFrom(cursor);
+    }
+
+    private String surveyWithRangeCondition() {
+        DateTime dateTime = ThaiDateTimeConverter.convert(new DateTime().toString());
+        return "date(" + DbSurveyRepository.TABLE_NAME + "." + SurveyColumn.CREATE_TIME + ")"
+            + " BETWEEN date('" + dateTime.minusDays(BuildConfig.SURVEY_RANGE_DAY) + "') "
+            + "AND date('" + dateTime + "') ";
+    }
+
 }

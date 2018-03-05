@@ -63,20 +63,12 @@ final class InMemoryPlaceTypeRepository implements PlaceTypeRepository {
     }
 
     public boolean save(PlaceType placeType) {
-        if (placeTypes.containsKey(placeType.getId())) {
-            throw new PlaceTypeRepositoryException();
-        } else {
-            placeTypes.put(placeType.getId(), placeType);
-        }
+        placeTypes.put(placeType.getId(), placeType);
         return true;
     }
 
     public boolean update(PlaceType placeType) {
-        if (!placeTypes.containsKey(placeType.getId())) {
-            throw new PlaceTypeRepositoryException();
-        } else {
-            placeTypes.put(placeType.getId(), placeType);
-        }
+        placeTypes.put(placeType.getId(), placeType);
         return true;
     }
 

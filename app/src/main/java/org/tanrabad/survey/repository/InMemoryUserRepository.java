@@ -48,18 +48,12 @@ final class InMemoryUserRepository implements UserRepository {
 
     @Override
     public boolean save(User user) {
-        if (userMapping.containsKey(user.getUsername())) {
-            throw new UserRepositoryException();
-        }
         userMapping.put(user.getUsername(), user);
         return true;
     }
 
     @Override
     public boolean update(User user) {
-        if (!userMapping.containsKey(user.getUsername())) {
-            throw new UserRepositoryException();
-        }
         userMapping.put(user.getUsername(), user);
         return true;
     }

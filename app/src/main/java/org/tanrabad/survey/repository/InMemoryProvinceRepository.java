@@ -57,21 +57,13 @@ public class InMemoryProvinceRepository implements ProvinceRepository {
 
     @Override
     public boolean save(Province province) {
-        if (provinceMap.containsKey(province.getCode())) {
-            throw new ProvinceRepositoryException();
-        } else {
-            provinceMap.put(province.getCode(), province);
-        }
+        provinceMap.put(province.getCode(), province);
         return true;
     }
 
     @Override
     public boolean update(Province province) {
-        if (!provinceMap.containsKey(province.getCode())) {
-            throw new ProvinceRepositoryException();
-        } else {
-            provinceMap.put(province.getCode(), province);
-        }
+        provinceMap.put(province.getCode(), province);
         return true;
     }
 

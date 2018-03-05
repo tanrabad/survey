@@ -69,21 +69,13 @@ public class InMemorySubdistrictRepository implements SubdistrictRepository {
 
     @Override
     public boolean save(Subdistrict subdistrict) {
-        if (subdistrictMap.containsKey(subdistrict.getCode())) {
-            throw new SubdistrictRepositoryException();
-        } else {
-            subdistrictMap.put(subdistrict.getCode(), subdistrict);
-        }
+        subdistrictMap.put(subdistrict.getCode(), subdistrict);
         return true;
     }
 
     @Override
     public boolean update(Subdistrict subdistrict) {
-        if (!subdistrictMap.containsKey(subdistrict.getCode())) {
-            throw new SubdistrictRepositoryException();
-        } else {
-            subdistrictMap.put(subdistrict.getCode(), subdistrict);
-        }
+        subdistrictMap.put(subdistrict.getCode(), subdistrict);
         return true;
     }
 

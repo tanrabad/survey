@@ -24,7 +24,9 @@ import org.tanrabad.survey.entity.lookup.District;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class InMemoryDistrictRepositoryTest {
 
@@ -46,11 +48,6 @@ public class InMemoryDistrictRepositoryTest {
     @After
     public void tearDown() {
         districtRepository.delete(stubDistrict());
-    }
-
-    @Test(expected = InMemoryDistrictRepository.DistrictRepositoryException.class)
-    public void testSaveExistDistrictMustThrowException() throws Exception {
-        districtRepository.save(stubDistrict());
     }
 
     @Test
@@ -87,11 +84,6 @@ public class InMemoryDistrictRepositoryTest {
     @Test(expected = InMemoryDistrictRepository.DistrictRepositoryException.class)
     public void testDeleteNotExistDistrict() throws Exception {
         assertFalse(districtRepository.delete(stubOtherDistrict()));
-    }
-
-    @Test(expected = InMemoryDistrictRepository.DistrictRepositoryException.class)
-    public void testUpdateNotExistDistrict() throws Exception {
-        districtRepository.update(stubOtherDistrict());
     }
 
     @Test

@@ -69,21 +69,13 @@ public class InMemoryDistrictRepository implements DistrictRepository {
 
     @Override
     public boolean save(District district) {
-        if (districtMap.containsKey(district.getCode())) {
-            throw new DistrictRepositoryException();
-        } else {
-            districtMap.put(district.getCode(), district);
-        }
+        districtMap.put(district.getCode(), district);
         return true;
     }
 
     @Override
     public boolean update(District district) {
-        if (!districtMap.containsKey(district.getCode())) {
-            throw new DistrictRepositoryException();
-        } else {
-            districtMap.put(district.getCode(), district);
-        }
+        districtMap.put(district.getCode(), district);
         return true;
     }
 

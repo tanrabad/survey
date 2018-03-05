@@ -20,7 +20,6 @@ package org.tanrabad.survey.repository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.tanrabad.survey.domain.user.UserRepositoryException;
 import org.tanrabad.survey.entity.User;
 
 import static org.junit.Assert.assertEquals;
@@ -52,11 +51,6 @@ public class InMemoryUserRepositoryTest {
         userRepository.delete(getDpcUser());
     }
 
-    @Test(expected = UserRepositoryException.class)
-    public void testSaveExistPlaceMustThrowException() throws Exception {
-        userRepository.save(getDpcUser());
-    }
-
     @Test
     public void testEveryCallGetInstanceMustGotSameInstance() throws Exception {
         assertEquals(userRepository, InMemoryUserRepository.getInstance());
@@ -74,10 +68,4 @@ public class InMemoryUserRepositoryTest {
         userRepository.update(user);
         assertEquals(user, userRepository.findByUsername(DPC_USER));
     }
-
-    @Test(expected = UserRepositoryException.class)
-    public void testUpdateNotExistPlaceMustThrowException() throws Exception {
-        userRepository.update(new User("dpc-xxx"));
-    }
-
 }

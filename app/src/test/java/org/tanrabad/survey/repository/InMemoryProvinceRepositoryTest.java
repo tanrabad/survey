@@ -22,7 +22,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.tanrabad.survey.entity.lookup.Province;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class InMemoryProvinceRepositoryTest {
 
@@ -43,11 +45,6 @@ public class InMemoryProvinceRepositoryTest {
     @After
     public void tearDown() {
         provinceRepository.delete(stubProvince());
-    }
-
-    @Test(expected = InMemoryProvinceRepository.ProvinceRepositoryException.class)
-    public void testSaveExistProvinceMustThrowException() throws Exception {
-        provinceRepository.save(stubProvince());
     }
 
     @Test
@@ -84,10 +81,5 @@ public class InMemoryProvinceRepositoryTest {
     @Test(expected = InMemoryProvinceRepository.ProvinceRepositoryException.class)
     public void testDeleteNotExistProvince() throws Exception {
         assertFalse(provinceRepository.delete(stubOtherProvince()));
-    }
-
-    @Test(expected = InMemoryProvinceRepository.ProvinceRepositoryException.class)
-    public void testUpdateNotExistProvince() throws Exception {
-        provinceRepository.update(stubOtherProvince());
     }
 }

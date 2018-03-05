@@ -19,7 +19,6 @@ package org.tanrabad.survey.repository;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.tanrabad.survey.domain.place.PlaceTypeRepositoryException;
 import org.tanrabad.survey.entity.lookup.PlaceType;
 
 import java.util.List;
@@ -38,11 +37,6 @@ public class InMemoryPlaceTypeRepositoryTest {
         placeTypeRepository.save(worship);
     }
 
-    @Test(expected = PlaceTypeRepositoryException.class)
-    public void testSaveExistPlaceMustThrowException() throws Exception {
-        placeTypeRepository.save(village);
-    }
-
     @Test
     public void testUpdate() throws Exception {
         PlaceType house = new PlaceType(1, "ที่พักอาศัย");
@@ -50,11 +44,6 @@ public class InMemoryPlaceTypeRepositoryTest {
         placeTypeRepository.update(house);
 
         assertEquals(house, placeTypeRepository.findById(house.getId()));
-    }
-
-    @Test(expected = PlaceTypeRepositoryException.class)
-    public void testUpdateNotExistPlaceMustThrowException() throws Exception {
-        placeTypeRepository.update(new PlaceType(3, "โรงเรียน"));
     }
 
     @Test

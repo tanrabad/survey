@@ -72,11 +72,7 @@ final class InMemoryContainerTypeRepository implements ContainerTypeRepository {
     }
 
     public boolean update(ContainerType containerType) {
-        if (!containerTypes.containsKey(containerType.getId())) {
-            throw new ContainerTypeRepositoryException();
-        } else {
-            containerTypes.put(containerType.getId(), containerType);
-        }
+        containerTypes.put(containerType.getId(), containerType);
         return true;
     }
 

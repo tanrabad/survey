@@ -184,9 +184,8 @@ public class PlaceNearbyListFragment extends TanrabadTabFragment
 
     @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        List<Place> allPlaces = BrokerPlaceRepository.getInstance().find();
         nearbyPlacesFinderController = new NearbyPlacesFinderController(
-            new ImpNearbyPlaceRepository(allPlaces),
+            new ImpNearbyPlaceRepository(BrokerPlaceRepository.getInstance()),
             new ImpMergeAndSortNearbyPlaces(),
             this);
 

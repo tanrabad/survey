@@ -1,5 +1,6 @@
 package org.tanrabad.survey.nearby.repository;
 
+import org.tanrabad.survey.domain.place.PlaceRepository;
 import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.entity.field.Location;
 import org.tanrabad.survey.nearby.PlaceUtils;
@@ -14,25 +15,27 @@ import java.util.UUID;
 public class ImpNearbyPlaceRepository implements NearbyPlaceRepository {
 
     public static final int DISTANCE_IN_KM = 10;
-    private final List<Place> places;
+
     private LocationBoundCalculator locationBoundCalculator;
     private int distanceKm;
+    private PlaceRepository repository;
 
-    public ImpNearbyPlaceRepository(List<Place> allPlaces) {
-        this(allPlaces, DISTANCE_IN_KM);
+    public ImpNearbyPlaceRepository(PlaceRepository repository) {
+        this(repository, DISTANCE_IN_KM);
     }
 
-    public ImpNearbyPlaceRepository(List<Place> allPlaces, int distanceKm) {
-        this(allPlaces, distanceKm, new ImpLocationBoundCalculator());
+    public ImpNearbyPlaceRepository(PlaceRepository repository, int distanceKm) {
+        this(repository, distanceKm, new ImpLocationBoundCalculator());
     }
 
-    public ImpNearbyPlaceRepository(List<Place> allPlaces, int distanceKm, LocationBoundCalculator locationBoundCalculator) {
-        this.places = allPlaces;
+    public ImpNearbyPlaceRepository(PlaceRepository repository, int distanceKm, LocationBoundCalculator locationBoundCalculator) {
+        this.repository = repository;
         this.locationBoundCalculator = locationBoundCalculator;
         this.distanceKm = distanceKm;
     }
 
     @Override public List<Place> findByLocation(final Location location) {
+        List<Place> places = repository.find();
         if (places == null || places.isEmpty()) return null;
 
         List<Place> place = getPlaceInsideLocationBoundary(places, locationBoundCalculator.get(location, distanceKm));
@@ -57,6 +60,7 @@ public class ImpNearbyPlaceRepository implements NearbyPlaceRepository {
 
     @Override
     public List<Place> findByPlaces(List<Place> nearbyPlaces) {
+        List<Place> places = repository.find();
         List<Place> placesWithoutLocation = PlaceUtils.getPlacesWithoutLocation(places);
         if (placesWithoutLocation == null) return null;
 

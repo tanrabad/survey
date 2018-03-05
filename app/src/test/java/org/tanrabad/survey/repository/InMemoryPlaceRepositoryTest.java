@@ -20,14 +20,14 @@ package org.tanrabad.survey.repository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.tanrabad.survey.entity.Place;
 
 import java.util.List;
 import java.util.UUID;
 
-import org.tanrabad.survey.domain.place.PlaceRepositoryException;
-import org.tanrabad.survey.entity.Place;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class InMemoryPlaceRepositoryTest {
 
@@ -45,11 +45,6 @@ public class InMemoryPlaceRepositoryTest {
     public void tearDown() {
         placeRepository.delete(hospital);
         placeRepository.delete(school);
-    }
-
-    @Test(expected = PlaceRepositoryException.class)
-    public void testSaveExistPlaceMustThrowException() throws Exception {
-        placeRepository.save(hospital);
     }
 
     @Test
@@ -79,11 +74,6 @@ public class InMemoryPlaceRepositoryTest {
     @Test
     public void testDeleteNotExistPlace() throws Exception {
         assertFalse(placeRepository.delete(new Place(UUID.randomUUID(), "New Place")));
-    }
-
-    @Test(expected = PlaceRepositoryException.class)
-    public void testUpdateNotExistPlaceMustThrowException() throws Exception {
-        placeRepository.update(new Place(UUID.randomUUID(), "New Place"));
     }
 
     @Test

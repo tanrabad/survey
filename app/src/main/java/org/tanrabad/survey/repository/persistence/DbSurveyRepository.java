@@ -66,9 +66,9 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
 
     public DbSurveyRepository(Context context) {
         this(context, BrokerUserRepository.getInstance(),
-                BrokerPlaceRepository.getInstance(),
-                BrokerBuildingRepository.getInstance(),
-                BrokerContainerTypeRepository.getInstance());
+            BrokerPlaceRepository.getInstance(),
+            BrokerBuildingRepository.getInstance(),
+            BrokerContainerTypeRepository.getInstance());
     }
 
     public DbSurveyRepository(Context context,
@@ -112,6 +112,7 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
         } finally {
             db.endTransaction();
         }
+        db.close();
         return surveySaveSuccess;
     }
 
@@ -144,12 +145,15 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
         } finally {
             db.endTransaction();
         }
+        db.close();
         return surveyUpdateSuccess;
     }
 
     @Override
     public boolean delete(Survey data) {
-        int delete = writableDatabase().delete(TABLE_NAME, "survey_id=?", new String[]{data.getId().toString()});
+        SQLiteDatabase db = writableDatabase();
+        int delete = db.delete(TABLE_NAME, "survey_id=?", new String[]{data.getId().toString()});
+        db.close();
         return delete == 1;
     }
 
@@ -158,11 +162,12 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
     }
 
     private int getAddOrChangedStatus(Survey survey) {
-        Cursor placeCursor = readableDatabase().query(TABLE_NAME,
-                new String[]{SurveyColumn.CHANGED_STATUS},
-                SurveyColumn.ID + "=?",
-                new String[]{survey.getId().toString()},
-                null, null, null);
+        SQLiteDatabase db = readableDatabase();
+        Cursor placeCursor = db.query(TABLE_NAME,
+            new String[]{SurveyColumn.CHANGED_STATUS},
+            SurveyColumn.ID + "=?",
+            new String[]{survey.getId().toString()},
+            null, null, null);
         int changedStatus = ChangedStatus.CHANGED;
         try {
             if (placeCursor.moveToNext()) {
@@ -175,14 +180,15 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
         } catch (IllegalStateException excepted) {
             FabricTools.getInstance(getContext()).log(excepted);
         }
+        db.close();
         return changedStatus;
     }
 
     private boolean updateByContentValues(SQLiteDatabase db, ContentValues survey) {
         int update = db.update(TABLE_NAME,
-                survey,
-                SurveyColumn.ID + "=?",
-                new String[]{survey.getAsString(SurveyColumn.ID)});
+            survey,
+            SurveyColumn.ID + "=?",
+            new String[]{survey.getAsString(SurveyColumn.ID)});
         return update > 0;
     }
 
@@ -193,11 +199,8 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
         }
         for (SurveyDetail eachDetail : details) {
             if (!updateSurveyDetail(db, survey.getId(), location, eachDetail)) {
-                boolean isInsertSuccess = saveSurveyDetail(db,
-                        survey.getId(),
-                        location,
-                        eachDetail);
-                if (!isInsertSuccess)
+                boolean isSuccess = saveSurveyDetail(db, survey.getId(), location, eachDetail);
+                if (!isSuccess)
                     throw new SurveyRepositoryException("Cannot insert or update survey detail.");
             }
         }
@@ -205,9 +208,9 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
 
     private boolean updateSurveyDetail(SQLiteDatabase db, UUID id, int containerLocation, SurveyDetail surveyDetail) {
         int updateCount = db.update(DETAIL_TABLE_NAME,
-                detailContentValues(id, containerLocation, surveyDetail),
-                SurveyDetailColumn.ID + " =?",
-                new String[]{surveyDetail.getId().toString()});
+            detailContentValues(id, containerLocation, surveyDetail),
+            SurveyDetailColumn.ID + " =?",
+            new String[]{surveyDetail.getId().toString()});
         return updateCount == 1;
     }
 
@@ -280,74 +283,85 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
 
     @Override
     public Survey findRecent(Building building, User user) {
-        Cursor cursor = readableDatabase().query(TABLE_NAME,
-                SurveyColumn.wildcard(),
-                SurveyColumn.BUILDING_ID + "=? "
-                        + "AND " + surveyWithRangeCondition()
-                        + "AND " + SurveyColumn.SURVEYOR + "=?",
-                new String[]{building.getId().toString(), user.getUsername()},
-                null, null, null);
-        return getSurvey(cursor);
+        SQLiteDatabase db = readableDatabase();
+        Cursor cursor = db.query(TABLE_NAME,
+            SurveyColumn.wildcard(),
+            SurveyColumn.BUILDING_ID + "=? "
+                + "AND " + surveyWithRangeCondition()
+                + "AND " + SurveyColumn.SURVEYOR + "=?",
+            new String[]{building.getId().toString(), user.getUsername()},
+            null, null, null);
+        Survey survey = getSurvey(cursor);
+        db.close();
+        return survey;
     }
 
     @Override
     public List<Survey> findRecent(Place place, User user) {
         SQLiteDatabase db = readableDatabase();
         String[] columns = new String[]{SurveyColumn.ID,
-                SurveyColumn.BUILDING_ID,
-                SurveyColumn.PERSON_COUNT,
-                SurveyColumn.SURVEYOR,
-                TABLE_NAME + "." + SurveyColumn.LATITUDE, TABLE_NAME + "." + SurveyColumn.LONGITUDE,
-                SurveyColumn.CREATE_TIME,
-                TABLE_NAME + "." + SurveyColumn.UPDATE_TIME,
-                TABLE_NAME + "." + SurveyColumn.CHANGED_STATUS};
+            SurveyColumn.BUILDING_ID,
+            SurveyColumn.PERSON_COUNT,
+            SurveyColumn.SURVEYOR,
+            TABLE_NAME + "." + SurveyColumn.LATITUDE, TABLE_NAME + "." + SurveyColumn.LONGITUDE,
+            SurveyColumn.CREATE_TIME,
+            TABLE_NAME + "." + SurveyColumn.UPDATE_TIME,
+            TABLE_NAME + "." + SurveyColumn.CHANGED_STATUS};
         Cursor cursor = db.query(TABLE_NAME + " INNER JOIN building USING(building_id)",
-                columns,
-                BuildingColumn.PLACE_ID + "=? "
-                        + "AND " + surveyWithRangeCondition()
-                        + "AND " + SurveyColumn.SURVEYOR + "=?",
-                new String[]{place.getId().toString(), user.getUsername()},
-                null, null, SurveyColumn.CREATE_TIME + " DESC");
-        return new CursorList<>(cursor, getSurveyMapper(cursor));
+            columns,
+            BuildingColumn.PLACE_ID + "=? "
+                + "AND " + surveyWithRangeCondition()
+                + "AND " + SurveyColumn.SURVEYOR + "=?",
+            new String[]{place.getId().toString(), user.getUsername()},
+            null, null, SurveyColumn.CREATE_TIME + " DESC");
+        CursorList<Survey> surveys = new CursorList<>(cursor, getSurveyMapper(cursor));
+        db.close();
+        return surveys;
     }
 
     @Override
     public List<BuildingWithSurveyStatus> findSurveyBuilding(Place place, User user) {
         String[] columns = buildingSurveyColumn();
-        Cursor cursor = readableDatabase().query(DbBuildingRepository.TABLE_NAME
-                        + " LEFT JOIN " + "(SELECT survey_id, building_id FROM survey WHERE "
-                        + surveyWithRangeCondition() + "AND surveyor='" + user.getUsername() + "') AS survey "
-                        + "ON survey.building_id = building.building_id",
-                columns,
-                BuildingColumn.PLACE_ID + "=?",
-                new String[]{place.getId().toString()},
-                null, null, null);
-        return mapSurveyBuildingStatus(cursor);
+        SQLiteDatabase db = readableDatabase();
+        Cursor cursor = db.query(DbBuildingRepository.TABLE_NAME
+                + " LEFT JOIN " + "(SELECT survey_id, building_id FROM survey WHERE "
+                + surveyWithRangeCondition() + "AND surveyor='" + user.getUsername() + "') AS survey "
+                + "ON survey.building_id = building.building_id",
+            columns,
+            BuildingColumn.PLACE_ID + "=?",
+            new String[]{place.getId().toString()},
+            null, null, null);
+        List<BuildingWithSurveyStatus> building = mapSurveyBuildingStatus(cursor);
+        db.close();
+        return building;
     }
 
     @Override
     public List<BuildingWithSurveyStatus> findSurveyBuildingByBuildingName(
-            Place place, User user, String buildingName) {
+        Place place, User user, String buildingName) {
         String[] columns = buildingSurveyColumn();
-        Cursor cursor = readableDatabase().query(
-                DbBuildingRepository.TABLE_NAME + " LEFT JOIN " + "(SELECT survey_id, building_id FROM survey WHERE "
-                        + surveyWithRangeCondition() + "AND surveyor='" + user.getUsername() + "') AS survey "
-                        + "ON survey.building_id = building.building_id",
-                columns,
-                BuildingColumn.PLACE_ID + "=? AND " + BuildingColumn.NAME + " LIKE ?",
-                new String[]{place.getId().toString(), "%" + buildingName + "%"},
-                null, null, null);
-        return mapSurveyBuildingStatus(cursor);
+        SQLiteDatabase db = readableDatabase();
+        Cursor cursor = db.query(
+            DbBuildingRepository.TABLE_NAME + " LEFT JOIN " + "(SELECT survey_id, building_id FROM survey WHERE "
+                + surveyWithRangeCondition() + "AND surveyor='" + user.getUsername() + "') AS survey "
+                + "ON survey.building_id = building.building_id",
+            columns,
+            BuildingColumn.PLACE_ID + "=? AND " + BuildingColumn.NAME + " LIKE ?",
+            new String[]{place.getId().toString(), "%" + buildingName + "%"},
+            null, null, null);
+        List<BuildingWithSurveyStatus> building = mapSurveyBuildingStatus(cursor);
+        db.close();
+        return building;
     }
 
     @Override
     public List<SurveyDetail> findSurveyDetail(UUID surveyId, int containerLocationId) {
         SQLiteDatabase db = readableDatabase();
         Cursor cursor = db.query(DETAIL_TABLE_NAME,
-                SurveyDetailColumn.wildcard(),
-                SurveyDetailColumn.SURVEY_ID + "=? AND " + SurveyDetailColumn.CONTAINER_LOCATION_ID + "=?",
-                new String[]{surveyId.toString(), String.valueOf(containerLocationId)},
-                null, null, null);
+            SurveyDetailColumn.wildcard(),
+            SurveyDetailColumn.SURVEY_ID + "=? AND " + SurveyDetailColumn.CONTAINER_LOCATION_ID + "=?",
+            new String[]{surveyId.toString(), String.valueOf(containerLocationId)},
+            null, null, null);
         List<SurveyDetail> detailList = new ArrayList<>();
         try {
             if (cursor.moveToFirst()) {
@@ -361,6 +375,7 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
         } catch (IllegalStateException excepted) {
             FabricTools.getInstance(getContext()).log(excepted);
         }
+        db.close();
         return detailList;
     }
 
@@ -372,15 +387,15 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
     @NonNull
     private String[] buildingSurveyColumn() {
         return new String[]{
-                DbBuildingRepository.TABLE_NAME + "." + BuildingColumn.ID,
-                BuildingColumn.NAME,
-                BuildingColumn.PLACE_ID,
-                DbBuildingRepository.TABLE_NAME + "." + SurveyColumn.LATITUDE,
-                DbBuildingRepository.TABLE_NAME + "." + SurveyColumn.LONGITUDE,
-                DbBuildingRepository.TABLE_NAME + "." + SurveyColumn.UPDATE_TIME,
-                BuildingColumn.UPDATE_BY,
-                DbBuildingRepository.TABLE_NAME + "." + SurveyColumn.CHANGED_STATUS,
-                SurveyColumn.ID};
+            DbBuildingRepository.TABLE_NAME + "." + BuildingColumn.ID,
+            BuildingColumn.NAME,
+            BuildingColumn.PLACE_ID,
+            DbBuildingRepository.TABLE_NAME + "." + SurveyColumn.LATITUDE,
+            DbBuildingRepository.TABLE_NAME + "." + SurveyColumn.LONGITUDE,
+            DbBuildingRepository.TABLE_NAME + "." + SurveyColumn.UPDATE_TIME,
+            BuildingColumn.UPDATE_BY,
+            DbBuildingRepository.TABLE_NAME + "." + SurveyColumn.CHANGED_STATUS,
+            SurveyColumn.ID};
     }
 
     @NonNull
@@ -410,8 +425,8 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
     private String surveyWithRangeCondition() {
         DateTime dateTime = ThaiDateTimeConverter.convert(new DateTime().toString());
         return "date(" + DbSurveyRepository.TABLE_NAME + "." + SurveyColumn.CREATE_TIME + ")"
-                + " BETWEEN date('" + dateTime.minusDays(BuildConfig.SURVEY_RANGE_DAY) + "') "
-                + "AND date('" + dateTime + "') ";
+            + " BETWEEN date('" + dateTime.minusDays(BuildConfig.SURVEY_RANGE_DAY) + "') "
+            + "AND date('" + dateTime + "') ";
     }
 
     private Survey getSurvey(Cursor cursor) {
@@ -436,19 +451,25 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
 
     @Override
     public List<Survey> getAdd() {
-        Cursor placeCursor = readableDatabase().query(TABLE_NAME, SurveyColumn.wildcard(),
-                SurveyColumn.CHANGED_STATUS + "=?", new String[]{String.valueOf(ChangedStatus.ADD)}, null, null, null);
-        return new CursorList<>(placeCursor, getSurveyMapper(placeCursor));
+        SQLiteDatabase db = readableDatabase();
+        Cursor placeCursor = db.query(TABLE_NAME, SurveyColumn.wildcard(),
+            SurveyColumn.CHANGED_STATUS + "=?", new String[]{String.valueOf(ChangedStatus.ADD)}, null, null, null);
+        CursorList<Survey> surveys = new CursorList<>(placeCursor, getSurveyMapper(placeCursor));
+        db.close();
+        return surveys;
     }
 
     @Override
     public List<Survey> getChanged() {
-        Cursor placeCursor = readableDatabase().query(TABLE_NAME,
-                SurveyColumn.wildcard(),
-                SurveyColumn.CHANGED_STATUS + "=?",
-                new String[]{String.valueOf(ChangedStatus.CHANGED)},
-                null, null, null);
-        return new CursorList<>(placeCursor, getSurveyMapper(placeCursor));
+        SQLiteDatabase db = readableDatabase();
+        Cursor placeCursor = db.query(TABLE_NAME,
+            SurveyColumn.wildcard(),
+            SurveyColumn.CHANGED_STATUS + "=?",
+            new String[]{String.valueOf(ChangedStatus.CHANGED)},
+            null, null, null);
+        CursorList<Survey> surveys = new CursorList<>(placeCursor, getSurveyMapper(placeCursor));
+        db.close();
+        return surveys;
     }
 
     @Override
@@ -461,6 +482,8 @@ public class DbSurveyRepository extends DbRepository implements SurveyRepository
 
     private boolean updateByContentValues(ContentValues survey) {
         SQLiteDatabase db = writableDatabase();
-        return updateByContentValues(db, survey);
+        boolean isSuccess = updateByContentValues(db, survey);
+        db.close();
+        return isSuccess;
     }
 }

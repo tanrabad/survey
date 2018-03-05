@@ -35,10 +35,10 @@ class DbRepository {
     }
 
     SQLiteDatabase readableDatabase() {
-        return SurveyLiteDatabase.getInstance(context).getReadableDatabase();
+        return new SurveyLiteDatabase(context).getReadableDatabase();
     }
 
     SQLiteDatabase writableDatabase() {
-        return SurveyLiteDatabase.getInstance(context).getWritableDatabase();
+        return new SurveyLiteDatabase(context).getWritableDatabase();
     }
 }

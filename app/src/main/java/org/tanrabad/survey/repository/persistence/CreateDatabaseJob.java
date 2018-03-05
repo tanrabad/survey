@@ -19,6 +19,7 @@ package org.tanrabad.survey.repository.persistence;
 
 
 import android.content.Context;
+
 import org.tanrabad.survey.job.Job;
 
 public class CreateDatabaseJob implements Job {
@@ -41,7 +42,7 @@ public class CreateDatabaseJob implements Job {
     }
 
     private void createDatabaseIfNotExist() {
-        SurveyLiteDatabase surveyLiteDatabase = SurveyLiteDatabase.getInstance(context);
+        SurveyLiteDatabase surveyLiteDatabase = new SurveyLiteDatabase(context);
         surveyLiteDatabase.getReadableDatabase();
         surveyLiteDatabase.close();
     }

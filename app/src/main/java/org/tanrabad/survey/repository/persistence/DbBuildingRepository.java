@@ -21,13 +21,14 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import org.tanrabad.survey.domain.building.BuildingRepository;
+import org.tanrabad.survey.domain.place.PlaceRepository;
+import org.tanrabad.survey.entity.Building;
 import org.tanrabad.survey.repository.BrokerPlaceRepository;
 import org.tanrabad.survey.repository.ChangedRepository;
 import org.tanrabad.survey.utils.collection.CursorList;
 import org.tanrabad.survey.utils.collection.CursorMapper;
-import org.tanrabad.survey.domain.building.BuildingRepository;
-import org.tanrabad.survey.domain.place.PlaceRepository;
-import org.tanrabad.survey.entity.Building;
 
 import java.util.List;
 import java.util.UUID;
@@ -51,7 +52,9 @@ public class DbBuildingRepository extends DbRepository implements BuildingReposi
         SQLiteDatabase db = readableDatabase();
         Cursor buildingCursor = db.query(TABLE_NAME, BuildingColumn.wildcard(),
                 BuildingColumn.PLACE_ID + "=?", new String[]{placeUuid.toString()}, null, null, BuildingColumn.NAME);
-        return getBuildingList(buildingCursor);
+        List<Building> building = getBuildingList(buildingCursor);
+        db.close();
+        return building;
     }
 
     @Override
@@ -60,7 +63,9 @@ public class DbBuildingRepository extends DbRepository implements BuildingReposi
         Cursor cursor = db.query(TABLE_NAME, BuildingColumn.wildcard(),
                 BuildingColumn.PLACE_ID + "=? AND " + BuildingColumn.NAME + " LIKE ?",
                 new String[]{placeUuid.toString(), "%" + buildingName + "%"}, null, null, BuildingColumn.NAME);
-        return getBuildingList(cursor);
+        List<Building> buildings = getBuildingList(cursor);
+        db.close();
+        return buildings;
     }
 
     @Override
@@ -68,7 +73,9 @@ public class DbBuildingRepository extends DbRepository implements BuildingReposi
         SQLiteDatabase db = readableDatabase();
         Cursor cursor = db.query(TABLE_NAME, BuildingColumn.wildcard(),
                 BuildingColumn.ID + "=?", new String[]{uuid.toString()}, null, null, null);
-        return getBuilding(cursor);
+        Building building = getBuilding(cursor);
+        db.close();
+        return building;
     }
 
     private Building getBuilding(Cursor cursor) {
@@ -96,20 +103,28 @@ public class DbBuildingRepository extends DbRepository implements BuildingReposi
     public boolean save(Building building) {
         ContentValues values = buildingContentValues(building);
         values.put(PlaceColumn.CHANGED_STATUS, ChangedStatus.ADD);
-        return saveByContentValues(writableDatabase(), values);
+        SQLiteDatabase db = writableDatabase();
+        boolean success = saveByContentValues(db, values);
+        db.close();
+        return success;
     }
 
     @Override
     public boolean update(Building building) {
         ContentValues values = buildingContentValues(building);
         values.put(PlaceColumn.CHANGED_STATUS, getAddOrChangedStatus(building));
-        return updateByContentValues(writableDatabase(), values);
+        SQLiteDatabase db = writableDatabase();
+        boolean success = updateByContentValues(db, values);
+        db.close();
+        return success;
     }
 
     @Override
     public boolean delete(Building data) {
-        int deleteCount = writableDatabase().delete(
+        SQLiteDatabase db = writableDatabase();
+        int deleteCount = db.delete(
                 TABLE_NAME, BuildingColumn.ID + "=?", new String[]{data.getId().toString()});
+        db.close();
         return deleteCount > 0;
     }
 
@@ -130,16 +145,19 @@ public class DbBuildingRepository extends DbRepository implements BuildingReposi
     }
 
     private int getAddOrChangedStatus(Building building) {
-        Cursor placeCursor = readableDatabase().query(TABLE_NAME, new String[]{BuildingColumn.CHANGED_STATUS},
+        SQLiteDatabase db = readableDatabase();
+        Cursor placeCursor = db.query(TABLE_NAME, new String[]{BuildingColumn.CHANGED_STATUS},
                 BuildingColumn.ID + "=?", new String[]{building.getId().toString()}, null, null, null);
+        int status = ChangedStatus.CHANGED;
         if (placeCursor.moveToNext()) {
             if (placeCursor.getInt(0) == ChangedStatus.ADD)
-                return ChangedStatus.ADD;
+                status = ChangedStatus.ADD;
             else
-                return ChangedStatus.CHANGED;
+                status = ChangedStatus.CHANGED;
+            placeCursor.close();
         }
-        placeCursor.close();
-        return ChangedStatus.CHANGED;
+        db.close();
+        return status;
     }
 
     private boolean updateByContentValues(SQLiteDatabase db, ContentValues place) {
@@ -169,19 +187,25 @@ public class DbBuildingRepository extends DbRepository implements BuildingReposi
 
     @Override
     public List<Building> getAdd() {
-        Cursor buildingCursor = readableDatabase().query(TABLE_NAME, BuildingColumn.wildcard(),
+        SQLiteDatabase db = readableDatabase();
+        Cursor buildingCursor = db.query(TABLE_NAME, BuildingColumn.wildcard(),
                 BuildingColumn.CHANGED_STATUS + "=?",
                 new String[]{String.valueOf(ChangedStatus.ADD)},
                 null, null, null);
-        return getBuildingList(buildingCursor);
+        List<Building> buildings = getBuildingList(buildingCursor);
+        db.close();
+        return buildings;
     }
 
     @Override
     public List<Building> getChanged() {
-        Cursor buildingCursor = readableDatabase().query(TABLE_NAME, BuildingColumn.wildcard(),
+        SQLiteDatabase db = readableDatabase();
+        Cursor buildingCursor = db.query(TABLE_NAME, BuildingColumn.wildcard(),
                 BuildingColumn.CHANGED_STATUS + "=?", new String[]{String.valueOf(ChangedStatus.CHANGED)},
                 null, null, null);
-        return getBuildingList(buildingCursor);
+        List<Building> buildings = getBuildingList(buildingCursor);
+        db.close();
+        return buildings;
     }
 
     @Override
@@ -194,6 +218,8 @@ public class DbBuildingRepository extends DbRepository implements BuildingReposi
 
     private boolean updateByContentValues(ContentValues place) {
         SQLiteDatabase db = writableDatabase();
-        return updateByContentValues(db, place);
+        boolean isSuccess = updateByContentValues(db, place);
+        db.close();
+        return isSuccess;
     }
 }

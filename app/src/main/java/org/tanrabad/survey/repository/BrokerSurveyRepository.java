@@ -51,26 +51,12 @@ public final class BrokerSurveyRepository implements SurveyRepository {
 
     @Override
     public Survey findRecent(Building building, User user) {
-        Survey survey = cache.findRecent(building, user);
-        if (survey == null) {
-            survey = persistent.findRecent(building, user);
-            if (survey != null) {
-                cache.save(survey);
-            }
-        }
-        return survey;
+        return persistent.findRecent(building, user);
     }
 
     @Override
     public List<Survey> findRecent(Place place, User user) {
-        List<Survey> surveys = cache.findRecent(place, user);
-        if (surveys == null || surveys.isEmpty()) {
-            surveys = persistent.findRecent(place, user);
-            for (Survey survey : surveys) {
-                cache.save(survey);
-            }
-        }
-        return surveys;
+        return persistent.findRecent(place, user);
     }
 
     @Override

@@ -34,7 +34,7 @@ public final class BrokerPlaceRepository implements PlaceRepository {
     private PlaceRepository cache;
     private PlaceRepository persistence;
 
-    public static final int RECENT_CACHE_TIME = 1;
+    private static final int RECENT_CACHE_TIME = 1;
     private List<Place> recentPlace = new ArrayList<>();
     private LocalTime recentLastUpdate = LocalTime.now().minusHours(1);
 

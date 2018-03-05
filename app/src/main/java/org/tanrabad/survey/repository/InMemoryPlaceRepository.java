@@ -88,18 +88,12 @@ public class InMemoryPlaceRepository implements PlaceRepository {
 
     @Override
     public boolean save(Place place) {
-        if (placesMap.containsKey(place.getId())) {
-            throw new PlaceRepositoryException();
-        }
         placesMap.put(place.getId(), place);
         return true;
     }
 
     @Override
     public boolean update(Place place) {
-        if (!placesMap.containsKey(place.getId())) {
-            throw new PlaceRepositoryException();
-        }
         placesMap.put(place.getId(), place);
         return true;
     }

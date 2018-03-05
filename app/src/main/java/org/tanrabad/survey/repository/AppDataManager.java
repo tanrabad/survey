@@ -35,7 +35,7 @@ public class AppDataManager implements DataManager {
     public static void clearDatabase(Context context) {
         SqlScript.readAndExecute(
                 context,
-                SurveyLiteDatabase.getInstance(context).getWritableDatabase(),
+            new SurveyLiteDatabase(context).getWritableDatabase(),
                 R.raw.delete);
     }
 

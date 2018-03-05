@@ -48,7 +48,9 @@ public class DbPlaceRepository extends DbRepository implements PlaceRepository, 
         Cursor placeCursor = db.query(TABLE_NAME, PlaceColumn.wildcard(),
             null, null, null, null, PlaceColumn.NAME + ", "
                 + PlaceColumn.UPDATE_TIME);
-        return placeListFrom(placeCursor);
+        List<Place> places = placeListFrom(placeCursor);
+        db.close();
+        return places;
     }
 
     @Override
@@ -56,7 +58,9 @@ public class DbPlaceRepository extends DbRepository implements PlaceRepository, 
         SQLiteDatabase db = readableDatabase();
         Cursor placeCursor = db.query(TABLE_NAME, PlaceColumn.wildcard(),
             PlaceColumn.ID + "=?", new String[]{placeUuid.toString()}, null, null, null);
-        return placeFrom(placeCursor);
+        Place place = placeFrom(placeCursor);
+        db.close();
+        return place;
     }
 
     private Place placeFrom(Cursor cursor) {
@@ -81,7 +85,9 @@ public class DbPlaceRepository extends DbRepository implements PlaceRepository, 
             new String[]{String.valueOf(placeType)},
             null, null,
             TABLE_NAME + "." + PlaceColumn.NAME);
-        return placeListFrom(placeCursor);
+        List<Place> places = placeListFrom(placeCursor);
+        db.close();
+        return places;
     }
 
     @Override
@@ -89,7 +95,9 @@ public class DbPlaceRepository extends DbRepository implements PlaceRepository, 
         SQLiteDatabase db = readableDatabase();
         Cursor placeCursor = db.query(TABLE_NAME, PlaceColumn.wildcard(),
             PlaceColumn.NAME + " LIKE ?", new String[]{"%" + placeName + "%"}, null, null, null);
-        return placeListFrom(placeCursor);
+        List<Place> places = placeListFrom(placeCursor);
+        db.close();
+        return places;
     }
 
     private List<Place> placeListFrom(Cursor placeCursor) {
@@ -101,23 +109,31 @@ public class DbPlaceRepository extends DbRepository implements PlaceRepository, 
     public boolean save(Place place) {
         ContentValues values = placeContentValues(place);
         values.put(PlaceColumn.CHANGED_STATUS, ChangedStatus.ADD);
-        return saveByContentValues(writableDatabase(), values);
+        SQLiteDatabase db = writableDatabase();
+        boolean success = saveByContentValues(db, values);
+        db.close();
+        return success;
     }
 
     @Override
     public boolean update(Place place) {
         ContentValues values = placeContentValues(place);
         values.put(PlaceColumn.CHANGED_STATUS, getAddOrChangedStatus(place));
-        return updateByContentValues(writableDatabase(), values);
+        SQLiteDatabase db = writableDatabase();
+        boolean success = updateByContentValues(db, values);
+        db.close();
+        return success;
     }
 
     @Override
     public boolean delete(Place place) {
-        int deleted = writableDatabase().delete(TABLE_NAME,
+        SQLiteDatabase db = writableDatabase();
+        int deleted = db.delete(TABLE_NAME,
             PlaceColumn.ID + "=?",
             new String[]{place.getId().toString()});
         if (deleted > 1)
             throw new IllegalStateException("Delete Place more than 1 record");
+        db.close();
         return deleted == 1;
     }
 
@@ -138,7 +154,8 @@ public class DbPlaceRepository extends DbRepository implements PlaceRepository, 
     }
 
     private int getAddOrChangedStatus(Place place) {
-        Cursor placeCursor = readableDatabase().query(TABLE_NAME, new String[]{PlaceColumn.CHANGED_STATUS},
+        SQLiteDatabase db = readableDatabase();
+        Cursor placeCursor = db.query(TABLE_NAME, new String[]{PlaceColumn.CHANGED_STATUS},
             PlaceColumn.ID + "=?", new String[]{place.getId().toString()}, null, null, null);
         if (placeCursor.moveToNext()) {
             if (placeCursor.getInt(0) == ChangedStatus.ADD)
@@ -147,6 +164,7 @@ public class DbPlaceRepository extends DbRepository implements PlaceRepository, 
                 return ChangedStatus.CHANGED;
         }
         placeCursor.close();
+        db.close();
         return ChangedStatus.CHANGED;
     }
 
@@ -178,17 +196,22 @@ public class DbPlaceRepository extends DbRepository implements PlaceRepository, 
 
     @Override
     public List<Place> getAdd() {
-        Cursor placeCursor = readableDatabase().query(TABLE_NAME, PlaceColumn.wildcard(),
+        SQLiteDatabase db = readableDatabase();
+        Cursor placeCursor = db.query(TABLE_NAME, PlaceColumn.wildcard(),
             PlaceColumn.CHANGED_STATUS + "=?", new String[]{String.valueOf(ChangedStatus.ADD)}, null, null, null);
-        return placeListFrom(placeCursor);
+        List<Place> places = placeListFrom(placeCursor);
+        db.close();
+        return places;
     }
 
     @Override
     public List<Place> getChanged() {
-        Cursor placeCursor = readableDatabase().query(TABLE_NAME, PlaceColumn.wildcard(),
+        SQLiteDatabase db = readableDatabase();
+        Cursor placeCursor = db.query(TABLE_NAME, PlaceColumn.wildcard(),
             PlaceColumn.CHANGED_STATUS + "=?",
             new String[]{String.valueOf(ChangedStatus.CHANGED)}, null, null, null);
         List<Place> places = placeListFrom(placeCursor);
+        db.close();
         return places;
     }
 
@@ -203,7 +226,9 @@ public class DbPlaceRepository extends DbRepository implements PlaceRepository, 
 
     private boolean updateByContentValues(ContentValues place) {
         SQLiteDatabase db = writableDatabase();
-        return updateByContentValues(db, place);
+        boolean success = updateByContentValues(db, place);
+        db.close();
+        return success;
     }
 
     @Override
@@ -218,7 +243,8 @@ public class DbPlaceRepository extends DbRepository implements PlaceRepository, 
             DbPlaceRepository.TABLE_NAME + "." + PlaceColumn.UPDATE_TIME,
             DbPlaceRepository.TABLE_NAME + "." + PlaceColumn.UPDATE_BY,
             DbPlaceRepository.TABLE_NAME + "." + PlaceColumn.CHANGED_STATUS};
-        Cursor cursor = readableDatabase().query(
+        SQLiteDatabase db = readableDatabase();
+        Cursor cursor = db.query(
             "survey INNER JOIN building USING(building_id) INNER JOIN " + TABLE_NAME + " USING(place_id)",
             columns,
             SurveyColumn.SURVEYOR + "=?" + "AND " + surveyWithRangeCondition(),
@@ -226,7 +252,9 @@ public class DbPlaceRepository extends DbRepository implements PlaceRepository, 
             DbPlaceRepository.TABLE_NAME + "." + PlaceColumn.ID,
             null,
             TABLE_NAME + "." + SurveyColumn.UPDATE_TIME + " DESC");
-        return placeListFrom(cursor);
+        List<Place> places = placeListFrom(cursor);
+        db.close();
+        return places;
     }
 
     private String surveyWithRangeCondition() {

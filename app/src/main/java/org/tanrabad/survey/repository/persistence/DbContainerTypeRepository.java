@@ -42,7 +42,9 @@ public class DbContainerTypeRepository extends DbRepository implements Container
         SQLiteDatabase db = readableDatabase();
         Cursor containerTypeCursor = db.query(TABLE_NAME, ContainerTypeColumn.wildcard(),
                 null, null, null, null, ContainerTypeColumn.ID);
-        return new CursorList<>(containerTypeCursor, getMapper(containerTypeCursor));
+        CursorList<ContainerType> containerTypes = new CursorList<>(containerTypeCursor, getMapper(containerTypeCursor));
+        db.close();
+        return containerTypes;
     }
 
     @Override
@@ -51,7 +53,9 @@ public class DbContainerTypeRepository extends DbRepository implements Container
         Cursor containerTypeCursor = db.query(TABLE_NAME, ContainerTypeColumn.wildcard(),
                 ContainerTypeColumn.ID + "=?", new String[]{String.valueOf(containerTypeId)}, null, null,
                 ContainerTypeColumn.ORDER);
-        return getContainerType(containerTypeCursor);
+        ContainerType containerType = getContainerType(containerTypeCursor);
+        db.close();
+        return containerType;
     }
 
     private ContainerType getContainerType(Cursor cursor) {

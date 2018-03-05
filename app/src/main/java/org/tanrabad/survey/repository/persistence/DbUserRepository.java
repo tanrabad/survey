@@ -49,7 +49,9 @@ public class DbUserRepository extends DbRepository implements UserRepository {
         SQLiteDatabase db = readableDatabase();
         Cursor cursor = db.query(TABLE_NAME, UserColumn.wildcard(),
                 UserColumn.USERNAME + "=?", new String[]{userName}, null, null, null);
-        return getUser(cursor);
+        User user = getUser(cursor);
+        db.close();
+        return user;
     }
 
     private User getUser(Cursor cursor) {
@@ -70,7 +72,10 @@ public class DbUserRepository extends DbRepository implements UserRepository {
     @Override
     public boolean save(User user) {
         ContentValues values = userContentValues(user);
-        return saveByContentValues(writableDatabase(), values);
+        SQLiteDatabase db = writableDatabase();
+        boolean success = saveByContentValues(db, values);
+        db.close();
+        return success;
     }
 
     private ContentValues userContentValues(User user) {
@@ -94,7 +99,10 @@ public class DbUserRepository extends DbRepository implements UserRepository {
     @Override
     public boolean update(User user) {
         ContentValues values = userContentValues(user);
-        return updateByContentValues(writableDatabase(), values);
+        SQLiteDatabase db = writableDatabase();
+        boolean success = updateByContentValues(db, values);
+        db.close();
+        return success;
     }
 
     @Override
@@ -108,7 +116,6 @@ public class DbUserRepository extends DbRepository implements UserRepository {
     }
 
     private boolean updateByContentValues(SQLiteDatabase db, ContentValues user) {
-        return db.update(
-                TABLE_NAME, user, UserColumn.USERNAME + "=?", new String[]{user.getAsString(UserColumn.USERNAME)}) > 0;
+        return db.update(TABLE_NAME, user, UserColumn.USERNAME + "=?", new String[]{user.getAsString(UserColumn.USERNAME)}) > 0;
     }
 }

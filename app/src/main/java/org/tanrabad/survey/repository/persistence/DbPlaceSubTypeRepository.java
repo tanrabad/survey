@@ -21,10 +21,11 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import org.tanrabad.survey.utils.collection.CursorList;
-import org.tanrabad.survey.utils.collection.CursorMapper;
+
 import org.tanrabad.survey.domain.place.PlaceSubTypeRepository;
 import org.tanrabad.survey.entity.lookup.PlaceSubType;
+import org.tanrabad.survey.utils.collection.CursorList;
+import org.tanrabad.survey.utils.collection.CursorMapper;
 
 import java.util.List;
 
@@ -41,7 +42,9 @@ public class DbPlaceSubTypeRepository extends DbRepository implements PlaceSubTy
         SQLiteDatabase db = readableDatabase();
         Cursor placeTypeCursor = db.query(TABLE_NAME, PlaceSubTypeColumn.wildcard(),
                 null, null, null, null, null);
-        return new CursorList<>(placeTypeCursor, getMapper(placeTypeCursor));
+        CursorList<PlaceSubType> placeSubTypes = new CursorList<>(placeTypeCursor, getMapper(placeTypeCursor));
+        db.close();
+        return placeSubTypes;
     }
 
     @Override
@@ -49,7 +52,9 @@ public class DbPlaceSubTypeRepository extends DbRepository implements PlaceSubTy
         SQLiteDatabase db = readableDatabase();
         Cursor placeTypeCursor = db.query(TABLE_NAME, PlaceSubTypeColumn.wildcard(),
                 PlaceSubTypeColumn.ID + " =?", new String[]{String.valueOf(placeSubTypeId)}, null, null, null);
-        return getPlaceSubType(placeTypeCursor);
+        PlaceSubType placeSubType = getPlaceSubType(placeTypeCursor);
+        db.close();
+        return placeSubType;
     }
 
     @Override
@@ -57,7 +62,9 @@ public class DbPlaceSubTypeRepository extends DbRepository implements PlaceSubTy
         SQLiteDatabase db = readableDatabase();
         Cursor placeTypeCursor = db.query(TABLE_NAME, PlaceSubTypeColumn.wildcard(),
                 PlaceSubTypeColumn.TYPE_ID + " =?", new String[]{String.valueOf(placeTypeId)}, null, null, null);
-        return new CursorList<>(placeTypeCursor, getMapper(placeTypeCursor));
+        CursorList<PlaceSubType> placeSubTypes = new CursorList<>(placeTypeCursor, getMapper(placeTypeCursor));
+        db.close();
+        return placeSubTypes;
     }
 
     @Override
@@ -83,14 +90,18 @@ public class DbPlaceSubTypeRepository extends DbRepository implements PlaceSubTy
 
     @Override
     public boolean save(PlaceSubType placeType) {
-        return saveByContentValues(writableDatabase(),
-                placeTypeContentValues(placeType));
+        SQLiteDatabase db = writableDatabase();
+        boolean success = saveByContentValues(db, placeTypeContentValues(placeType));
+        db.close();
+        return success;
     }
 
     @Override
     public boolean update(PlaceSubType placeType) {
-        return updateByContentValues(writableDatabase(),
-                placeTypeContentValues(placeType));
+        SQLiteDatabase db = writableDatabase();
+        boolean success = updateByContentValues(db, placeTypeContentValues(placeType));
+        db.close();
+        return success;
     }
 
     @Override

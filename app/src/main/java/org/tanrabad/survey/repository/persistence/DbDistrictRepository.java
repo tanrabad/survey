@@ -51,7 +51,9 @@ public class DbDistrictRepository extends DbRepository implements DistrictReposi
         SQLiteDatabase db = readableDatabase();
         Cursor districtCursor = db.query(TABLE_NAME, DistrictColumn.WILDCARD,
             null, null, null, null, null);
-        return new CursorList<>(districtCursor, getMapper(districtCursor));
+        List<District> districts = new CursorList<>(districtCursor, getMapper(districtCursor));
+        db.close();
+        return districts;
     }
 
     @Override
@@ -59,7 +61,9 @@ public class DbDistrictRepository extends DbRepository implements DistrictReposi
         SQLiteDatabase db = readableDatabase();
         Cursor districtCursor = db.query(TABLE_NAME, DistrictColumn.WILDCARD, DistrictColumn.PROVINCE_CODE + "=?",
                 new String[]{provinceCode}, null, null, null);
-        return new CursorList<>(districtCursor, getMapper(districtCursor));
+        List<District> districts = new CursorList<>(districtCursor, getMapper(districtCursor));
+        db.close();
+        return districts;
     }
 
     private DistrictCursorMapper getMapper(Cursor districtCursor) {
@@ -69,12 +73,15 @@ public class DbDistrictRepository extends DbRepository implements DistrictReposi
     @Override
     public District findByCode(String districtCode) {
         SQLiteDatabase db = readableDatabase();
-        Cursor districtCursor = db.query(TABLE_NAME, DistrictColumn.WILDCARD, DistrictColumn.CODE + "=?",
+        Cursor cursor = db.query(TABLE_NAME, DistrictColumn.WILDCARD, DistrictColumn.CODE + "=?",
                 new String[]{districtCode}, null, null, null);
-        if (districtCursor.moveToFirst()) {
-            return getMapper(districtCursor).map(districtCursor);
+        District district = null;
+        if (cursor.moveToFirst()) {
+            district = getMapper(cursor).map(cursor);
         }
-        return null;
+        cursor.close();
+        db.close();
+        return district;
     }
 
     @Override

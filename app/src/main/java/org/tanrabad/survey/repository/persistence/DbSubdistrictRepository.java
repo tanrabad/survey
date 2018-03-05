@@ -51,7 +51,9 @@ public class DbSubdistrictRepository extends DbRepository implements Subdistrict
         SQLiteDatabase db = readableDatabase();
         Cursor subdistrictCursor = db.query(TABLE_NAME, SubdistrictColumn.WILDCARD,
             null, null, null, null, null);
-        return new CursorList<>(subdistrictCursor, getMapper(subdistrictCursor));
+        CursorList<Subdistrict> subdistricts = new CursorList<>(subdistrictCursor, getMapper(subdistrictCursor));
+        db.close();
+        return subdistricts;
     }
 
     @Override
@@ -59,18 +61,23 @@ public class DbSubdistrictRepository extends DbRepository implements Subdistrict
         SQLiteDatabase db = readableDatabase();
         Cursor subdistrictCursor = db.query(TABLE_NAME, SubdistrictColumn.WILDCARD,
                 SubdistrictColumn.DISTRICT_CODE + "=?", new String[]{districtCode}, null, null, null);
-        return new CursorList<>(subdistrictCursor, getMapper(subdistrictCursor));
+        CursorList<Subdistrict> subdistricts = new CursorList<>(subdistrictCursor, getMapper(subdistrictCursor));
+        db.close();
+        return subdistricts;
     }
 
     @Override
     public Subdistrict findByCode(String subdistrictCode) {
+        Subdistrict subdistrict = null;
         SQLiteDatabase db = readableDatabase();
-        Cursor subdistrictCursor = db.query(TABLE_NAME, SubdistrictColumn.WILDCARD, SubdistrictColumn.CODE + "=?",
+        Cursor cursor = db.query(TABLE_NAME, SubdistrictColumn.WILDCARD, SubdistrictColumn.CODE + "=?",
                 new String[]{subdistrictCode}, null, null, null);
-        if (subdistrictCursor.moveToFirst()) {
-            return getMapper(subdistrictCursor).map(subdistrictCursor);
+        if (cursor.moveToFirst()) {
+            subdistrict = getMapper(cursor).map(cursor);
         }
-        return null;
+        cursor.close();
+        db.close();
+        return subdistrict;
     }
 
     private SubdistrictCursorMapper getMapper(Cursor subdistrictCursor) {

@@ -21,9 +21,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import org.tanrabad.survey.utils.collection.CursorMapper;
+
 import org.tanrabad.survey.domain.organization.OrganizationRepository;
 import org.tanrabad.survey.entity.Organization;
+import org.tanrabad.survey.utils.collection.CursorMapper;
 
 import java.util.List;
 
@@ -40,7 +41,9 @@ public class DbOrganizationRepository extends DbRepository implements Organizati
         SQLiteDatabase db = readableDatabase();
         Cursor cursor = db.query(TABLE_NAME, OrganizationColumn.wildcard(),
                 OrganizationColumn.ID + "=?", new String[]{String.valueOf(organizationId)}, null, null, null);
-        return getOrganization(cursor);
+        Organization organization = getOrganization(cursor);
+        db.close();
+        return organization;
     }
 
     private Organization getOrganization(Cursor cursor) {
@@ -61,7 +64,10 @@ public class DbOrganizationRepository extends DbRepository implements Organizati
     @Override
     public boolean save(Organization organization) {
         ContentValues values = orgContentValues(organization);
-        return saveByContentValues(writableDatabase(), values);
+        SQLiteDatabase db = writableDatabase();
+        boolean success = saveByContentValues(db, values);
+        db.close();
+        return success;
     }
 
     private ContentValues orgContentValues(Organization organization) {
@@ -81,7 +87,10 @@ public class DbOrganizationRepository extends DbRepository implements Organizati
     @Override
     public boolean update(Organization organization) {
         ContentValues values = orgContentValues(organization);
-        return updateByContentValues(writableDatabase(), values);
+        SQLiteDatabase db = writableDatabase();
+        boolean success = updateByContentValues(db, values);
+        db.close();
+        return success;
     }
 
     @Override

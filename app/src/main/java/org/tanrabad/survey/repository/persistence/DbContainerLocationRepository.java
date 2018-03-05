@@ -21,10 +21,11 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import org.tanrabad.survey.utils.collection.CursorList;
-import org.tanrabad.survey.utils.collection.CursorMapper;
+
 import org.tanrabad.survey.domain.survey.ContainerLocationRepository;
 import org.tanrabad.survey.entity.lookup.ContainerLocation;
+import org.tanrabad.survey.utils.collection.CursorList;
+import org.tanrabad.survey.utils.collection.CursorMapper;
 
 import java.util.List;
 
@@ -41,7 +42,9 @@ public class DbContainerLocationRepository extends DbRepository implements Conta
         SQLiteDatabase db = readableDatabase();
         Cursor cursor = db.query(TABLE_NAME, ContainerLocationColumn.wildcard(),
                 null, null, null, null, ContainerLocationColumn.ID);
-        return new CursorList<>(cursor, getMapper(cursor));
+        CursorList<ContainerLocation> containerLocations = new CursorList<>(cursor, getMapper(cursor));
+        db.close();
+        return containerLocations;
     }
 
     @Override
@@ -49,7 +52,9 @@ public class DbContainerLocationRepository extends DbRepository implements Conta
         SQLiteDatabase db = readableDatabase();
         Cursor cursor = db.query(TABLE_NAME, ContainerLocationColumn.wildcard(),
                 null, null, null, null, ContainerLocationColumn.ID);
-        return getContainerLocation(cursor);
+        ContainerLocation containerLocation = getContainerLocation(cursor);
+        db.close();
+        return containerLocation;
     }
 
     private ContainerLocation getContainerLocation(Cursor cursor) {
@@ -69,14 +74,19 @@ public class DbContainerLocationRepository extends DbRepository implements Conta
 
     @Override
     public boolean save(ContainerLocation containerLocation) {
-        return saveByContentValues(writableDatabase(),
-                containerLocationContentValues(containerLocation));
+        SQLiteDatabase db = writableDatabase();
+        boolean success = saveByContentValues(db, containerLocationContentValues(containerLocation));
+        db.close();
+        return success;
     }
 
     @Override
     public boolean update(ContainerLocation containerLocation) {
-        return updateByContentValues(writableDatabase(),
-                containerLocationContentValues(containerLocation));
+        SQLiteDatabase db = writableDatabase();
+        boolean succuss = updateByContentValues(db,
+            containerLocationContentValues(containerLocation));
+        db.close();
+        return succuss;
     }
 
     @Override

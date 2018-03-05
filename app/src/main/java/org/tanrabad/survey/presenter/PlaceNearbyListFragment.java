@@ -79,7 +79,14 @@ public class PlaceNearbyListFragment extends TanrabadTabFragment
     ConnectionCallbacks locationServiceCallback = new ConnectionCallbacks() {
         @Override public void onConnected(@Nullable Bundle bundle) {
             playLocationService.setupLocationUpdateService(new LocationListener() {
+                android.location.Location lastLocation;
                 @Override public void onLocationChanged(android.location.Location location) {
+                    if (lastLocation != null && location.distanceTo(lastLocation) < 15.0) {
+                        if (BuildConfig.DEBUG)
+                            Toast.makeText(getContext(), "Location Changed but too small", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    lastLocation = location;
                     if (BuildConfig.DEBUG)
                         Toast.makeText(getContext(), "Location Changed", Toast.LENGTH_SHORT).show();
                     loadPlaceList(location);

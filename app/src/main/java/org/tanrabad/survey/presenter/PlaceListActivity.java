@@ -101,6 +101,7 @@ public class PlaceListActivity extends TanrabadActivity {
                 break;
             case android.R.id.home:
                 MainActivity.open(this);
+                finish();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -113,11 +114,6 @@ public class PlaceListActivity extends TanrabadActivity {
             placePagerAdapter.getItem(i).onActivityResult(requestCode, resultCode, data);
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        MainActivity.open(this);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

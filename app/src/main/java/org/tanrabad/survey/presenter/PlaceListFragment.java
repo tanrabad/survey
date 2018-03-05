@@ -51,7 +51,7 @@ import org.tanrabad.survey.utils.prompt.PromptMessage;
 import java.util.Collections;
 import java.util.List;
 
-public class PlaceListInDatabaseFragment extends TanrabadFragment implements AdapterView.OnItemClickListener,
+public class PlaceListFragment extends TanrabadTabFragment implements AdapterView.OnItemClickListener,
         AdapterView.OnItemLongClickListener, AdapterView.OnItemSelectedListener, PlaceListPresenter {
 
     private PlaceAdapter placeAdapter;
@@ -64,11 +64,16 @@ public class PlaceListInDatabaseFragment extends TanrabadFragment implements Ada
     private EmptyLayoutView emptyPlacesView;
     private int placeTypeId = -1;
 
-    public static PlaceListInDatabaseFragment newInstance() {
-        PlaceListInDatabaseFragment fragment = new PlaceListInDatabaseFragment();
+    public static PlaceListFragment newInstance() {
+        PlaceListFragment fragment = new PlaceListFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    int title() {
+        return R.string.find_place_by_database;
     }
 
     @Override

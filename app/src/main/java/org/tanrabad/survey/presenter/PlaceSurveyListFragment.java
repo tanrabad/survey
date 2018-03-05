@@ -18,7 +18,6 @@
 package org.tanrabad.survey.presenter;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -26,19 +25,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
+
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
+
+import org.tanrabad.survey.R;
+import org.tanrabad.survey.domain.place.PlaceWithSurveyHistoryChooser;
+import org.tanrabad.survey.domain.place.PlaceWithSurveyHistoryListPresenter;
+import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.presenter.view.EmptyLayoutView;
 import org.tanrabad.survey.repository.BrokerSurveyRepository;
 import org.tanrabad.survey.repository.BrokerUserRepository;
 import org.tanrabad.survey.utils.alert.Alert;
-import org.tanrabad.survey.domain.place.PlaceWithSurveyHistoryChooser;
-import org.tanrabad.survey.domain.place.PlaceWithSurveyHistoryListPresenter;
-import org.tanrabad.survey.entity.Place;
-import org.tanrabad.survey.R;
 
 import java.util.List;
 
-public class PlaceSurveyListFragment extends TanrabadFragment implements PlaceWithSurveyHistoryListPresenter,
+public class PlaceSurveyListFragment extends TanrabadTabFragment implements PlaceWithSurveyHistoryListPresenter,
         AdapterView.OnItemClickListener {
 
     private static final String USERNAME_ARG = "username_arg";
@@ -59,6 +60,11 @@ public class PlaceSurveyListFragment extends TanrabadFragment implements PlaceWi
         args.putString(USERNAME_ARG, username);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    int title() {
+        return R.string.find_place_by_recent_survey;
     }
 
     @Override

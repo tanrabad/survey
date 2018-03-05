@@ -66,11 +66,11 @@ public class PlaceListActivity extends TanrabadActivity {
     }
 
     private void setupTabPager() {
-        placeListTabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        ViewPager placePager = (ViewPager) findViewById(R.id.place_pager);
+        placeListTabLayout = findViewById(R.id.tab_layout);
+        ViewPager placePager = findViewById(R.id.place_pager);
         placePagerAdapter = new PlacePagerAdapter(
+            this,
                 getSupportFragmentManager(),
-                PlaceListActivity.this,
                 AccountUtils.getUser().getUsername());
         placePager.setAdapter(placePagerAdapter);
         placeListTabLayout.setupWithViewPager(placePager);

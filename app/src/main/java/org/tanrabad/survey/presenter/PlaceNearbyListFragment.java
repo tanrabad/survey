@@ -61,7 +61,7 @@ import org.tanrabad.survey.utils.prompt.PromptMessage;
 
 import java.util.List;
 
-public class PlaceNearbyListFragment extends TanrabadFragment
+public class PlaceNearbyListFragment extends TanrabadTabFragment
         implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener,
     NearbyPlacePresenter {
 
@@ -91,6 +91,11 @@ public class PlaceNearbyListFragment extends TanrabadFragment
         }
     };
     private Location currentLocation;
+
+    @Override
+    int title() {
+        return R.string.nearby_places;
+    }
 
     @Override public void onStart() {
         super.onStart();

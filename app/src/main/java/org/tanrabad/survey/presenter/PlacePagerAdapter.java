@@ -22,49 +22,39 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import org.tanrabad.survey.R;
+import org.tanrabad.survey.BuildConfig;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 class PlacePagerAdapter extends FragmentPagerAdapter {
 
-    private final PlaceListInDatabaseFragment placeListInDatabaseFragment;
-    private final PlaceNearbyListFragment placeNearbyListFragment;
-    private Context context;
+    private final Context context;
+    private final List<TanrabadTabFragment> fragments = new ArrayList<>();
 
-    public PlacePagerAdapter(FragmentManager fm, Context context, String username) {
+    public PlacePagerAdapter(Context context, FragmentManager fm, String username) {
         super(fm);
         this.context = context;
-
-        placeListInDatabaseFragment = PlaceListInDatabaseFragment.newInstance();
-        placeNearbyListFragment = PlaceNearbyListFragment.newInstance();
+        fragments.add(PlaceNearbyListFragment.newInstance());
+        fragments.add(PlaceSurveyListFragment.newInstance(username));
+        if (BuildConfig.DEBUG) {
+            fragments.add(PlaceListFragment.newInstance());
+        }
     }
 
     @Override
     public int getCount() {
-        return 2;
+        return fragments.size();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        switch (position) {
-            case 0:
-                return context.getResources().getString(R.string.nearby_places);
-            case 1:
-                return context.getResources().getString(R.string.find_place_by_database);
-            default:
-                return null;
-        }
+        return context.getString(fragments.get(position).title());
     }
 
     @Override
     public Fragment getItem(int position) {
-        switch (position) {
-            case 0:
-                return placeNearbyListFragment;
-            case 1:
-                return placeListInDatabaseFragment;
-            default:
-                return null;
-        }
+        return fragments.get(position);
     }
 }

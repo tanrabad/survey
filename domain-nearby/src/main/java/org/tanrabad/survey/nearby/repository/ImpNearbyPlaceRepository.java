@@ -19,6 +19,7 @@ public class ImpNearbyPlaceRepository implements NearbyPlaceRepository {
     private LocationBoundCalculator locationBoundCalculator;
     private int distanceKm;
     private PlaceRepository repository;
+    private List<Place> places;
 
     public ImpNearbyPlaceRepository(PlaceRepository repository) {
         this(repository, DISTANCE_IN_KM);
@@ -35,7 +36,7 @@ public class ImpNearbyPlaceRepository implements NearbyPlaceRepository {
     }
 
     @Override public List<Place> findByLocation(final Location location) {
-        List<Place> places = repository.find();
+        places = repository.find();
         if (places == null || places.isEmpty()) return null;
 
         List<Place> place = getPlaceInsideLocationBoundary(places, locationBoundCalculator.get(location, distanceKm));
@@ -60,7 +61,7 @@ public class ImpNearbyPlaceRepository implements NearbyPlaceRepository {
 
     @Override
     public List<Place> findByPlaces(List<Place> nearbyPlaces) {
-        List<Place> places = repository.find();
+        //must call findByLocation before this
         List<Place> placesWithoutLocation = PlaceUtils.getPlacesWithoutLocation(places);
         if (placesWithoutLocation == null) return null;
 

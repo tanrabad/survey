@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.tanrabad.survey.domain.place.PlaceRepository;
 import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.entity.field.Location;
 
@@ -13,6 +14,7 @@ import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -42,9 +44,12 @@ public class ImpNearbyPlaceRepositoryTest {
         filteredPlace.add(place2);
         filteredPlace.add(place1);
 
+        PlaceRepository repository = mock(PlaceRepository.class);
+        when(repository.find()).thenReturn(places);
+
         when(locationBoundCalculator.get(myLocation, 5)).thenReturn(locationBound);
 
-        impNearbyPlacesWithLocation = new ImpNearbyPlaceRepository(places, 5, locationBoundCalculator);
+        impNearbyPlacesWithLocation = new ImpNearbyPlaceRepository(repository, 5, locationBoundCalculator);
 
         assertEquals(filteredPlace, impNearbyPlacesWithLocation.findByLocation(myLocation));
     }
@@ -62,9 +67,12 @@ public class ImpNearbyPlaceRepositoryTest {
         places.add(place2);
         places.add(place3);
 
+        PlaceRepository repository = mock(PlaceRepository.class);
+        when(repository.find()).thenReturn(places);
+
         when(locationBoundCalculator.get(myLocation, 5)).thenReturn(locationBound);
 
-        impNearbyPlacesWithLocation = new ImpNearbyPlaceRepository(places, 5, locationBoundCalculator);
+        impNearbyPlacesWithLocation = new ImpNearbyPlaceRepository(repository, 5, locationBoundCalculator);
 
         assertNull(impNearbyPlacesWithLocation.findByLocation(myLocation));
     }

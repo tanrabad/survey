@@ -22,8 +22,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import org.tanrabad.survey.BuildConfig;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,9 +36,6 @@ class PlacePagerAdapter extends FragmentPagerAdapter {
         this.context = context;
         fragments.add(PlaceNearbyListFragment.newInstance());
         fragments.add(PlaceSurveyListFragment.newInstance(username));
-        if (BuildConfig.DEBUG) {
-            fragments.add(PlaceListFragment.newInstance());
-        }
     }
 
     @Override

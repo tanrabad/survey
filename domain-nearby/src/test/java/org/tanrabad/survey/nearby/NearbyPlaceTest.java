@@ -1,6 +1,7 @@
 package org.tanrabad.survey.nearby;
 
 import org.junit.Test;
+import org.tanrabad.survey.domain.place.PlaceRepository;
 import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.entity.field.Location;
 import org.tanrabad.survey.nearby.repository.ImpNearbyPlaceRepository;
@@ -10,7 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class NearbyPlaceTest {
 
@@ -94,23 +99,20 @@ public class NearbyPlaceTest {
         nearbyPlaces.add(thaithaniDorm);
         nearbyPlaces.add(taladThai);
 
+        PlaceRepository repository = mock(PlaceRepository.class);
+        when(repository.find()).thenReturn(allPlaces);
+
         NearbyPlaceRepository nearbyPlaceRepository =
-            new ImpNearbyPlaceRepository(allPlaces, 5);
+            new ImpNearbyPlaceRepository(repository, 5);
 
         MergeAndSortNearbyPlaces mergeAndSortNearbyPlaces = new ImpMergeAndSortNearbyPlaces();
 
-        NearbyPlacePresenter placeListPresenter = new NearbyPlacePresenter() {
-            @Override public void displayNearbyPlaces(List<Place> places) {
-                assertEquals(nearbyPlaces, places);
-            }
-
-            @Override public void displayPlaceNotFound() {
-
-            }
-        };
+        NearbyPlacePresenter presenter = mock(NearbyPlacePresenter.class);
 
         NearbyPlacesFinderController nearbyPlacesFinderController =
-                new NearbyPlacesFinderController(nearbyPlaceRepository, mergeAndSortNearbyPlaces, placeListPresenter);
+            new NearbyPlacesFinderController(nearbyPlaceRepository, mergeAndSortNearbyPlaces, presenter);
         nearbyPlacesFinderController.findNearbyPlaces(new Location(14.077756, 100.601380));
+
+        verify(presenter, times(2)).displayNearbyPlaces(any(List.class));
     }
 }

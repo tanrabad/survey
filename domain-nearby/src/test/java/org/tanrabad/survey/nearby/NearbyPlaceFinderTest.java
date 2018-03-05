@@ -1,8 +1,5 @@
 package org.tanrabad.survey.nearby;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 import org.jmock.Expectations;
 import org.jmock.auto.Mock;
 import org.jmock.integration.junit4.JUnitRuleMockery;
@@ -11,6 +8,10 @@ import org.junit.Test;
 import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.entity.field.Location;
 import org.tanrabad.survey.nearby.repository.NearbyPlaceRepository;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class NearbyPlaceFinderTest {
     @Rule public JUnitRuleMockery context = new JUnitRuleMockery();
@@ -48,6 +49,7 @@ public class NearbyPlaceFinderTest {
             {
                 oneOf(nearbyPlaceRepository).findByLocation(myLocation);
                 will(returnValue(placeWithLocation));
+                oneOf(placeListPresenter).displayNearbyPlaces(placeWithLocation);
                 oneOf(nearbyPlaceRepository).findByPlaces(placeWithLocation);
                 will(returnValue(placeWithoutLocation));
                 oneOf(mergeAndSortNearbyPlaces).mergeAndSort(placeWithLocation, placeWithoutLocation);

@@ -1,9 +1,10 @@
 package org.tanrabad.survey.nearby;
 
-import java.util.List;
 import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.entity.field.Location;
 import org.tanrabad.survey.nearby.repository.NearbyPlaceRepository;
+
+import java.util.List;
 
 public class NearbyPlacesFinderController {
     private NearbyPlaceRepository repository;
@@ -25,11 +26,10 @@ public class NearbyPlacesFinderController {
             presenter.displayPlaceNotFound();
             return;
         }
-        List<Place> nearbyPlaceWithoutLo = repository.findByPlaces(nearbyPlace);
+        presenter.displayNearbyPlaces(nearbyPlace);
 
-        if (nearbyPlaceWithoutLo == null) {
-            presenter.displayNearbyPlaces(nearbyPlace);
-        } else {
+        List<Place> nearbyPlaceWithoutLo = repository.findByPlaces(nearbyPlace);
+        if (nearbyPlaceWithoutLo != null && !nearbyPlaceWithoutLo.isEmpty()) {
             List<Place> nearByPlaces = sorter.mergeAndSort(nearbyPlace, nearbyPlaceWithoutLo);
             presenter.displayNearbyPlaces(nearByPlaces);
         }

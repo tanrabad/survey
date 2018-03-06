@@ -1,4 +1,4 @@
-package org.tanrabad.survey.repository;
+package org.tanrabad.survey.repository.persistence;
 
 import java.util.List;
 

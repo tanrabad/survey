@@ -23,7 +23,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 import org.joda.time.DateTime;
 import org.tanrabad.survey.BuildConfig;
 import org.tanrabad.survey.TanrabadApp;
@@ -42,16 +44,11 @@ import org.tanrabad.survey.repository.BrokerBuildingRepository;
 import org.tanrabad.survey.repository.BrokerContainerTypeRepository;
 import org.tanrabad.survey.repository.BrokerPlaceRepository;
 import org.tanrabad.survey.repository.BrokerUserRepository;
-import org.tanrabad.survey.repository.ChangedRepository;
 import org.tanrabad.survey.repository.SurveyRepositoryException;
 import org.tanrabad.survey.utils.collection.CursorList;
 import org.tanrabad.survey.utils.collection.CursorMapper;
 import org.tanrabad.survey.utils.time.ThaiDateTimeConverter;
 import org.tanrabad.survey.utils.tool.FabricTools;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 public class DbSurveyRepository extends DbRepository implements SurveyRepository, ChangedRepository<Survey> {
 

@@ -17,11 +17,10 @@
 
 package org.tanrabad.survey.job;
 
-import org.tanrabad.survey.repository.ChangedRepository;
-import org.tanrabad.survey.service.UploadRestService;
-
 import java.io.IOException;
 import java.util.List;
+import org.tanrabad.survey.repository.persistence.ChangedRepository;
+import org.tanrabad.survey.service.UploadRestService;
 
 public class PostDataJob<T> extends AbsUploadJob<T> {
 

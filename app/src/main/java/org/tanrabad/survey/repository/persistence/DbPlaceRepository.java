@@ -21,18 +21,15 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
+import java.util.List;
+import java.util.UUID;
 import org.joda.time.DateTime;
 import org.tanrabad.survey.BuildConfig;
 import org.tanrabad.survey.domain.place.PlaceRepository;
 import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.entity.User;
-import org.tanrabad.survey.repository.ChangedRepository;
 import org.tanrabad.survey.utils.collection.CursorList;
 import org.tanrabad.survey.utils.time.ThaiDateTimeConverter;
-
-import java.util.List;
-import java.util.UUID;
 
 public class DbPlaceRepository extends DbRepository implements PlaceRepository, ChangedRepository<Place> {
 

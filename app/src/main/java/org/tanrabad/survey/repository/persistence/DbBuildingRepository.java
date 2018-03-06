@@ -21,17 +21,14 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
+import java.util.List;
+import java.util.UUID;
 import org.tanrabad.survey.domain.building.BuildingRepository;
 import org.tanrabad.survey.domain.place.PlaceRepository;
 import org.tanrabad.survey.entity.Building;
 import org.tanrabad.survey.repository.BrokerPlaceRepository;
-import org.tanrabad.survey.repository.ChangedRepository;
 import org.tanrabad.survey.utils.collection.CursorList;
 import org.tanrabad.survey.utils.collection.CursorMapper;
-
-import java.util.List;
-import java.util.UUID;
 
 public class DbBuildingRepository extends DbRepository implements BuildingRepository, ChangedRepository<Building> {
 

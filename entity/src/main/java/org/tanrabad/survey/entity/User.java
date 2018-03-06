@@ -25,7 +25,6 @@ public class User {
     private String phoneNumber;
     private String email;
     private String avatarFileName;
-    private String healthRegionCode;
     private int organizationId;
     private Organization organization;
     private String apiFilter;
@@ -85,11 +84,7 @@ public class User {
     }
 
     public String getHealthRegionCode() {
-        return healthRegionCode;
-    }
-
-    public void setHealthRegionCode(String healthRegionCode) {
-        this.healthRegionCode = healthRegionCode;
+        return organization.getHealthRegionCode();
     }
 
     public String getPhoneNumber() {
@@ -160,7 +155,6 @@ public class User {
                 + ", phoneNumber='" + phoneNumber + '\''
                 + ", email='" + email + '\''
                 + ", avatarFileName='" + avatarFileName + '\''
-                + ", healthRegionCode='" + healthRegionCode + '\''
                 + ", organizationId=" + organizationId
                 + ", apiFilter='" + apiFilter + '\''
                 + '}';

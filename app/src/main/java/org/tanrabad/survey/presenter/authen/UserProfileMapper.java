@@ -35,15 +35,13 @@ class UserProfileMapper {
         user.setLastname(profile.getLastName());
 
         Organization organization = getOrganization();
-        user.setOrganizationId(organization.getOrganizationId());
-        user.setHealthRegionCode(organization.getHealthRegionCode());
+        user.setOrganization(organization);
         user.setApiFilter(profile.getOrgQueryString());
         return user;
     }
 
     public Organization getOrganization() {
-
-        Organization org = new Organization(getOrganizationId(),
+        Organization org = new Organization(Integer.parseInt(profile.getOrgId()),
                 profile.getOrgName());
         org.setSubdistrictCode(profile.getOrgTambonCode());
         org.setHealthRegionCode(profile.getOrgHealthRegionCode());
@@ -51,7 +49,4 @@ class UserProfileMapper {
         return org;
     }
 
-    private int getOrganizationId() {
-        return Integer.parseInt(profile.getOrgId());
-    }
 }

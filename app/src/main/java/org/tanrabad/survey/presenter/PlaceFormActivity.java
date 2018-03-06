@@ -28,11 +28,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-
+import java.util.UUID;
+import me.piruin.spinney.Spinney;
+import nectec.thai.widget.address.AddressPicker;
+import nectec.thai.widget.address.AddressPickerDialog;
 import org.joda.time.DateTime;
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
@@ -61,12 +63,6 @@ import org.tanrabad.survey.utils.map.MarkerUtil;
 import org.tanrabad.survey.validator.SavePlaceValidator;
 import org.tanrabad.survey.validator.UpdatePlaceValidator;
 import org.tanrabad.survey.validator.ValidatorException;
-
-import java.util.UUID;
-
-import me.piruin.spinney.Spinney;
-import nectec.thai.widget.address.AddressPicker;
-import nectec.thai.widget.address.AddressPickerDialog;
 
 public class PlaceFormActivity extends TanrabadActivity implements View.OnClickListener,
         PlaceSavePresenter, PlacePresenter {
@@ -127,29 +123,29 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
     }
 
     private void setupViews() {
-        placeNameView = (EditText) findViewById(R.id.place_name);
-        addressSelectView = (AddressPicker) findViewById(R.id.address_select);
+        placeNameView = findViewById(R.id.place_name);
+        addressSelectView = findViewById(R.id.address_select);
         AddressPickerDialog popup = new AddressPickerDialog(this)
                 .setProvinceRepository(new ThaiWidgetProvinceRepository())
                 .setDistrictRepository(new ThaiWidgetDistrictRepository())
                 .setSubDistrictRepository(new ThaiWidgetSubdistrictRepository());
         addressSelectView.setPopup(popup);
-        placeTypeSelectorView = (Spinney<PlaceType>) findViewById(R.id.place_type_selector);
-        placeSubtypeSelectorView = (Spinney<PlaceSubType>) findViewById(R.id.place_subtype_selector);
-        addLocationBackground = (FrameLayout) findViewById(R.id.add_location_background);
+        placeTypeSelectorView = findViewById(R.id.place_type_selector);
+        placeSubtypeSelectorView = findViewById(R.id.place_subtype_selector);
+        addLocationBackground = findViewById(R.id.add_location_background);
         addLocationBackground.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SoftKeyboard.hideOn(PlaceFormActivity.this);
             }
         });
-        editLocationButton = (Button) findViewById(R.id.edit_location);
+        editLocationButton = findViewById(R.id.edit_location);
         editLocationButton.setVisibility(View.GONE);
         editLocationButton.setOnClickListener(this);
-        Button addMarker = (Button) findViewById(R.id.add_marker);
+        Button addMarker = findViewById(R.id.add_marker);
         addMarker.setOnClickListener(this);
         addMarker.setText(R.string.define_place_location);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
 

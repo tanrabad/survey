@@ -18,8 +18,8 @@
 package org.tanrabad.survey.repository.persistence;
 
 import android.database.Cursor;
-
 import org.tanrabad.survey.domain.organization.OrganizationRepository;
+import org.tanrabad.survey.entity.Organization;
 import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.utils.collection.CursorMapper;
 
@@ -63,8 +63,8 @@ class UserCursorMapper implements CursorMapper<User> {
         user.setPhoneNumber(cursor.getString(phoneNumberIndex));
         user.setAvatarFileName(cursor.getString(avatarIndex));
         int orgId = cursor.getInt(orgIdIndex);
-        user.setOrganizationId(orgId);
-        user.setHealthRegionCode(organizationRepository.findById(orgId).getHealthRegionCode());
+        Organization org = organizationRepository.findById(orgId);
+        user.setOrganization(org);
         user.setApiFilter(cursor.getString(apiFilterIndex));
         return user;
     }

@@ -19,6 +19,7 @@ package org.tanrabad.survey.base;
 
 
 import org.junit.rules.ExternalResource;
+import org.tanrabad.survey.entity.Organization;
 import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.presenter.AccountUtils;
 
@@ -38,8 +39,9 @@ public class SurveyAccountTestRule extends ExternalResource {
     @Override
     protected void before() throws Throwable {
         User user = User.fromUsername(username);
-        user.setHealthRegionCode("dpc-04");
-        user.setOrganizationId(100);
+        Organization org = new Organization(100, "DCP");
+        org.setHealthRegionCode("dpc-04");
+        user.setOrganization(org);
         AccountUtils.setUser(user);
     }
 

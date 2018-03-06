@@ -41,8 +41,6 @@ public class InMemoryUserRepositoryTest {
         dpcUser.setFirstname("ซาร่า");
         dpcUser.setLastname("คิดส์");
         dpcUser.setEmail("sara.k@gmail.com");
-        dpcUser.setOrganizationId(13);
-        dpcUser.setHealthRegionCode("dpc-13");
         return dpcUser;
     }
 
@@ -64,7 +62,6 @@ public class InMemoryUserRepositoryTest {
     @Test
     public void testUpdate() throws Exception {
         User user = new User(DPC_USER);
-        user.setHealthRegionCode("dpc-4");
         userRepository.update(user);
         assertEquals(user, userRepository.findByUsername(DPC_USER));
     }

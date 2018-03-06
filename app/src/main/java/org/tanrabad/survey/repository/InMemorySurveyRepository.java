@@ -17,6 +17,11 @@
 
 package org.tanrabad.survey.repository;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import org.tanrabad.survey.domain.building.BuildingWithSurveyStatus;
 import org.tanrabad.survey.domain.place.PlaceRepositoryException;
 import org.tanrabad.survey.domain.survey.SurveyRepository;
@@ -25,12 +30,6 @@ import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.entity.Survey;
 import org.tanrabad.survey.entity.SurveyDetail;
 import org.tanrabad.survey.entity.User;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 final class InMemorySurveyRepository implements SurveyRepository {
 
@@ -116,8 +115,12 @@ final class InMemorySurveyRepository implements SurveyRepository {
 
     @Override
     public boolean delete(Survey data) {
-        surveyMaps.remove(data);
-        return surveys.remove(data);
+        if (surveyMaps.containsValue(data)) {
+            surveyMaps.remove(data);
+            surveys.remove(data);
+            return true;
+        }
+        return false;
     }
 
 

@@ -21,6 +21,7 @@ import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.mockito.Mockito;
+import org.tanrabad.survey.entity.Organization;
 import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.presenter.AccountUtils;
 
@@ -44,7 +45,9 @@ public class WireMockTestBase {
 
     protected User stubUser() {
         User user = new User("dpc-user");
-        user.setHealthRegionCode("dpc-4");
+        Organization org = new Organization(100, "DPC4");
+        org.setHealthRegionCode("dpc-4");
+        user.setOrganization(org);
         return user;
     }
 

@@ -28,16 +28,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import org.tanrabad.survey.R;
-
 import uk.co.chrisjenx.calligraphy.CalligraphyUtils;
 import uk.co.chrisjenx.calligraphy.TypefaceUtils;
 
 public class PlaceListActivity extends TanrabadActivity {
 
     private TabLayout placeListTabLayout;
-    private PlacePagerAdapter placePagerAdapter;
+    private PlacePagerAdapter pagerAdapter;
 
     public static void open(Activity activity) {
         Intent intent = new Intent(activity, PlaceListActivity.class);
@@ -68,11 +66,8 @@ public class PlaceListActivity extends TanrabadActivity {
     private void setupTabPager() {
         placeListTabLayout = findViewById(R.id.tab_layout);
         ViewPager placePager = findViewById(R.id.place_pager);
-        placePagerAdapter = new PlacePagerAdapter(
-            this,
-                getSupportFragmentManager(),
-                AccountUtils.getUser().getUsername());
-        placePager.setAdapter(placePagerAdapter);
+        pagerAdapter = new PlacePagerAdapter(this, AccountUtils.getUser().getUsername());
+        placePager.setAdapter(pagerAdapter);
         placeListTabLayout.setupWithViewPager(placePager);
     }
 
@@ -110,8 +105,8 @@ public class PlaceListActivity extends TanrabadActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        for (int i = 0; i < placePagerAdapter.getCount(); i++)
-            placePagerAdapter.getItem(i).onActivityResult(requestCode, resultCode, data);
+        for (int i = 0; i < pagerAdapter.getCount(); i++)
+            pagerAdapter.getItem(i).onActivityResult(requestCode, resultCode, data);
     }
 
 

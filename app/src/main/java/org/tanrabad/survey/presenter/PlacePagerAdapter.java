@@ -17,24 +17,23 @@
 
 package org.tanrabad.survey.presenter;
 
-import android.content.Context;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-
 import java.util.ArrayList;
 import java.util.List;
 
-
 class PlacePagerAdapter extends FragmentPagerAdapter {
 
-    private final Context context;
+    private final TanrabadActivity context;
     private final List<TanrabadTabFragment> fragments = new ArrayList<>();
 
-    public PlacePagerAdapter(Context context, FragmentManager fm, String username) {
-        super(fm);
+    public PlacePagerAdapter(TanrabadActivity context, String username) {
+        super(context.getSupportFragmentManager());
         this.context = context;
         fragments.add(PlaceNearbyListFragment.newInstance());
+        if (context.isUiTesting()) {
+            fragments.add(PlaceListFragment.newInstance());
+        }
         fragments.add(PlaceSurveyListFragment.newInstance(username));
     }
 

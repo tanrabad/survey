@@ -19,7 +19,8 @@ package org.tanrabad.survey.job;
 
 import android.content.Context;
 import android.text.TextUtils;
-
+import java.util.ArrayList;
+import java.util.List;
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.repository.persistence.DbBuildingRepository;
@@ -30,9 +31,6 @@ import org.tanrabad.survey.service.PlaceRestService;
 import org.tanrabad.survey.service.SurveyRestService;
 import org.tanrabad.survey.utils.alert.Alert;
 import org.tanrabad.survey.utils.android.InternetConnection;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class UploadJobRunner extends AbsJobRunner {
 
@@ -83,22 +81,26 @@ public class UploadJobRunner extends AbsJobRunner {
     }
 
     private void showUploadResultMsg() {
-        String message = "";
+        StringBuilder message = new StringBuilder();
         for (AbsUploadJob uploadJob : uploadJobs) {
             if (!uploadJob.isUploaded())
                 continue;
 
             String dataType = getDataType(uploadJob);
             if (uploadJob instanceof PostDataJob)
-                message += String.format(context.getString(R.string.upload_data_type), dataType)
-                        + appendUploadSuccessMessage(uploadJob) + appendUploadFailedMessage(uploadJob);
+                message.append(
+                    String.format(context.getString(R.string.upload_data_type), dataType))
+                    .append(appendUploadSuccessMessage(uploadJob))
+                    .append(appendUploadFailedMessage(uploadJob));
             else if (uploadJob instanceof PutDataJob)
-                message += String.format(context.getString(R.string.update_data_type), dataType)
-                        + appendUploadSuccessMessage(uploadJob) + appendUploadFailedMessage(uploadJob);
+                message.append(
+                    String.format(context.getString(R.string.update_data_type), dataType))
+                    .append(appendUploadSuccessMessage(uploadJob))
+                    .append(appendUploadFailedMessage(uploadJob));
         }
 
-        if (!TextUtils.isEmpty(message))
-            Alert.mediumLevel().show(message.trim());
+        if (!TextUtils.isEmpty(message.toString()))
+            Alert.mediumLevel().show(message.toString().trim());
     }
 
 

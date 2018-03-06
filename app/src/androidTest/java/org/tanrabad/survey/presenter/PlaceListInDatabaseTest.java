@@ -28,7 +28,6 @@ import android.support.test.runner.AndroidJUnit4;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
-
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
@@ -63,6 +62,7 @@ public class PlaceListInDatabaseTest extends TanrabadEspressoTestBase {
     @Before
     public void setUp() {
         Intent intent = new Intent();
+        intent.putExtra("isUiTesting", true);
         mActivity = mActivityTestRule.launchActivity(intent);
     }
 

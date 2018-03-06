@@ -17,13 +17,12 @@
 
 package org.tanrabad.survey.job;
 
-import org.tanrabad.survey.TanrabadApp;
-import org.tanrabad.survey.repository.ChangedRepository;
-import org.tanrabad.survey.service.RestServiceException;
-import org.tanrabad.survey.service.UploadRestService;
-
 import java.io.IOException;
 import java.util.List;
+import org.tanrabad.survey.TanrabadApp;
+import org.tanrabad.survey.repository.persistence.ChangedRepository;
+import org.tanrabad.survey.service.RestServiceException;
+import org.tanrabad.survey.service.UploadRestService;
 
 public abstract class AbsUploadJob<T> implements Job {
     private final int jobId;

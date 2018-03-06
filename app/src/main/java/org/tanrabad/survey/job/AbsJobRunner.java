@@ -18,7 +18,6 @@
 package org.tanrabad.survey.job;
 
 import android.os.AsyncTask;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,20 +48,6 @@ public abstract class AbsJobRunner implements JobRunner {
         new AsyncJob().execute(jobList.toArray(new Job[jobList.size()]));
     }
 
-    @Override
-    public int totalJobs() {
-        return jobList.size();
-    }
-
-    @Override
-    public int finishedJobs() {
-        return jobFinishCount;
-    }
-
-    @Override
-    public int errorJobs() {
-        return jobErrorCount;
-    }
 
     protected void onJobError(Job errorJob, Exception exception) {
         jobErrorCount++;

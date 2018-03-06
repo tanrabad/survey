@@ -25,10 +25,4 @@ public interface JobRunner {
     JobRunner addJobs(List<Job> jobs);
 
     void start();
-
-    int totalJobs();
-
-    int finishedJobs();
-
-    int errorJobs();
 }

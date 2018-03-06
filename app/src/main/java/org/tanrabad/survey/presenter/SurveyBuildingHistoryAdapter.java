@@ -28,17 +28,15 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.domain.entomology.ContainerIndex;
 import org.tanrabad.survey.entity.Survey;
 import org.tanrabad.survey.presenter.view.TimeAgoView;
 import org.tanrabad.survey.repository.persistence.SurveyWithChange;
 import org.tanrabad.survey.utils.time.DurationTimePrinter;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBuildingHistoryAdapter.ViewHolder>
         implements ListViewAdapter<Survey> {
@@ -163,7 +161,7 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
         void bind(Survey survey) {
             surveyBuildingTextView.setText(survey.getSurveyBuilding().getName());
             //noinspection SetTextI18n
-            duration.setText(context.getString(R.string.survey_duration) + " " + getDuration(survey));
+            duration.setText(context.getString(R.string.survey_duration, getDuration(survey)));
             timeAgoView.setTime(survey.getFinishTimestamp());
             if (survey instanceof SurveyWithChange) {
                 notSync.setVisibility(((SurveyWithChange) survey).isNotSynced() ? View.VISIBLE : View.GONE);

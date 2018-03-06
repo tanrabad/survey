@@ -28,10 +28,6 @@ public class BackgroundSetter {
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public static void set(View view, @DrawableRes int backgroundId) {
         Drawable drawable = ResourceUtils.from(view.getContext()).getDrawable(backgroundId);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
-            view.setBackground(drawable);
-        else
-            //noinspection deprecation
-            view.setBackgroundDrawable(drawable);
+        view.setBackground(drawable);
     }
 }

@@ -33,9 +33,10 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
-
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.domain.building.BuildingWithSurveyStatus;
@@ -58,15 +59,10 @@ import org.tanrabad.survey.repository.BrokerUserRepository;
 import org.tanrabad.survey.service.BuildingRestService;
 import org.tanrabad.survey.service.PlaceRestService;
 import org.tanrabad.survey.service.SurveyRestService;
-import org.tanrabad.survey.utils.PopupMenuUtil;
 import org.tanrabad.survey.utils.alert.Alert;
 import org.tanrabad.survey.utils.android.InternetConnection;
 import org.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import org.tanrabad.survey.utils.prompt.PromptMessage;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
 
 public class BuildingListActivity extends TanrabadActivity implements BuildingWithSurveyStatusListPresenter,
         PlacePresenter, ActionMode.Callback, View.OnClickListener {
@@ -394,12 +390,6 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     @Override
     public void onBackPressed() {
         finishActivity();
-    }
-
-    @Override
-    protected boolean onPrepareOptionsPanel(View view, Menu menu) {
-        PopupMenuUtil.showPopupMenuIcon(menu);
-        return true;
     }
 
     private void stopActionMode() {

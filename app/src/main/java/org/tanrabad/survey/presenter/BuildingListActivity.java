@@ -69,7 +69,6 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
 
     public static final String PLACE_UUID_ARG = "place_uuid_arg";
     private static final int NEED_REFRESH_REQ_CODE = 31000;
-    private Button editPlaceButton;
     private ImageButton editBuildingButton;
     private RecyclerView buildingList;
     private BuildingWithSurveyStatusAdapter buildingAdapter;
@@ -195,12 +194,12 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     }
 
     private void setupEditPlaceButton() {
-        editPlaceButton = (Button) findViewById(R.id.edit_place);
+        Button editPlaceButton = findViewById(R.id.edit_place);
         editPlaceButton.setOnClickListener(this);
     }
 
     private void setupEditBuildingButton() {
-        editBuildingButton = (ImageButton) findViewById(R.id.edit_building);
+        editBuildingButton = findViewById(R.id.edit_building);
         editBuildingButton.setOnClickListener(this);
     }
 
@@ -211,7 +210,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
 
     private void setupBuildingList() {
         buildingAdapter = new BuildingWithSurveyStatusAdapter(this, BuildingIcon.get(place));
-        buildingList = (RecyclerView) findViewById(R.id.building_list);
+        buildingList = findViewById(R.id.building_list);
         buildingList.setAdapter(buildingAdapter);
         buildingList.addItemDecoration(new SimpleDividerItemDecoration(this));
         buildingList.setLayoutManager(new LinearLayoutManager(this));
@@ -268,7 +267,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     }
 
     private void setupSearchView() {
-        buildingSearchView = (SearchView) findViewById(R.id.building_search);
+        buildingSearchView = findViewById(R.id.building_search);
         buildingSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String searchString) {
@@ -292,7 +291,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     }
 
     private void setupEmptyLayout() {
-        emptyBuildingsView = (EmptyLayoutView) findViewById(R.id.empty_layout);
+        emptyBuildingsView = findViewById(R.id.empty_layout);
         emptyBuildingsView.setEmptyIcon(place.getType() == PlaceType.VILLAGE_COMMUNITY
                 ? R.mipmap.ic_building_home_black : R.mipmap.ic_building_black);
         emptyBuildingsView.setEmptyText(R.string.building_list_not_found);
@@ -310,7 +309,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                TextView placeName = (TextView) findViewById(R.id.place_name);
+                TextView placeName = findViewById(R.id.place_name);
                 placeName.setText(place.getName());
             }
         });
@@ -323,7 +322,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
             public void run() {
                 emptyBuildingsView.showEmptyLayout();
                 emptyBuildingsView.setVisibility(View.VISIBLE);
-                TextView buildingCountView = (TextView) findViewById(R.id.building_count);
+                TextView buildingCountView = findViewById(R.id.building_count);
                 buildingCountView.setVisibility(View.GONE);
                 editBuildingButton.setVisibility(View.GONE);
                 buildingAdapter.clearData();
@@ -344,7 +343,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
                 buildingSearchView.setVisibility(View.VISIBLE);
                 buildingAdapter.updateData(buildings);
                 buildingList.setAdapter(buildingAdapter);
-                TextView buildingCountView = (TextView) findViewById(R.id.building_count);
+                TextView buildingCountView = findViewById(R.id.building_count);
                 buildingCountView.setText(getString(R.string.format_building_count, buildings.size()));
                 buildingCountView.setVisibility(View.VISIBLE);
             }

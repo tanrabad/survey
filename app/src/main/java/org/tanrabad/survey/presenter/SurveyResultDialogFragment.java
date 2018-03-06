@@ -30,7 +30,9 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
+import java.text.DecimalFormat;
+import java.util.UUID;
+import nectec.thai.address.AddressPrinter;
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.entity.Place;
@@ -56,11 +58,6 @@ import org.tanrabad.survey.utils.android.ResourceUtils;
 import org.tanrabad.survey.utils.time.ThaiDatePrinter;
 import org.tanrabad.survey.utils.time.ThaiDateTimeConverter;
 
-import java.text.DecimalFormat;
-import java.util.UUID;
-
-import nectec.thai.address.AddressPrinter;
-
 public class SurveyResultDialogFragment extends DialogFragment implements View.OnClickListener {
 
     public static final String FRAGMENT_TAG = "survey_result";
@@ -70,7 +67,6 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
     private RelativeLayout surveyResultLayout;
     private RelativeLayout reportUpdateLayout;
     private ImageView placeIconView;
-    private ImageView syncDataButton;
     private TextView placeSubTypeView;
     private TextView surveyDateView;
     private RelativeTimeAgoTextView resultUpdateView;
@@ -112,33 +108,33 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
     }
 
     private void assignViews(View view) {
-        surveyResultLayout = (RelativeLayout) view.findViewById(R.id.result_layout);
-        reportUpdateLayout = (RelativeLayout) view.findViewById(R.id.report_update_layout);
-        placeIconView = (ImageView) view.findViewById(R.id.place_icon);
-        placeSubTypeView = (TextView) view.findViewById(R.id.place_type);
-        placeNameView = (TextView) view.findViewById(R.id.place_name);
-        addressView = (TextView) view.findViewById(R.id.address);
-        houseIndexView = (TextView) view.findViewById(R.id.house_index);
-        houseIndexView = (TextView) view.findViewById(R.id.house_index);
-        containerIndexView = (TextView) view.findViewById(R.id.container_index);
-        breteauIndexView = (TextView) view.findViewById(R.id.breteau_index);
-        surveyCountView = (TextView) view.findViewById(R.id.survey_count);
-        surveyFoundCountView = (TextView) view.findViewById(R.id.survey_found_count);
-        surveyNotFoundCountView = (TextView) view.findViewById(R.id.survey_not_found_count);
-        noContainerHousesView = (TextView) view.findViewById(R.id.no_container_houses);
-        surveyDuplicateView = (TextView) view.findViewById(R.id.survey_duplicate_count);
-        containerCountView = (TextView) view.findViewById(R.id.container_count);
-        indoorContainerLayout = (LinearLayout) view.findViewById(R.id.indoor_container);
-        outdoorContainerLayout = (LinearLayout) view.findViewById(R.id.outdoor_container);
-        surveyResultProgressBar = (ProgressBar) view.findViewById(R.id.loading);
-        errorMsgView = (TextView) view.findViewById(R.id.error_msg);
-        surveyDateView = (TextView) view.findViewById(R.id.survey_date);
-        resultUpdateView = (RelativeTimeAgoTextView) view.findViewById(R.id.report_update);
+        surveyResultLayout = view.findViewById(R.id.result_layout);
+        reportUpdateLayout = view.findViewById(R.id.report_update_layout);
+        placeIconView = view.findViewById(R.id.place_icon);
+        placeSubTypeView = view.findViewById(R.id.place_type);
+        placeNameView = view.findViewById(R.id.place_name);
+        addressView = view.findViewById(R.id.address);
+        houseIndexView = view.findViewById(R.id.house_index);
+        houseIndexView = view.findViewById(R.id.house_index);
+        containerIndexView = view.findViewById(R.id.container_index);
+        breteauIndexView = view.findViewById(R.id.breteau_index);
+        surveyCountView = view.findViewById(R.id.survey_count);
+        surveyFoundCountView = view.findViewById(R.id.survey_found_count);
+        surveyNotFoundCountView = view.findViewById(R.id.survey_not_found_count);
+        noContainerHousesView = view.findViewById(R.id.no_container_houses);
+        surveyDuplicateView = view.findViewById(R.id.survey_duplicate_count);
+        containerCountView = view.findViewById(R.id.container_count);
+        indoorContainerLayout = view.findViewById(R.id.indoor_container);
+        outdoorContainerLayout = view.findViewById(R.id.outdoor_container);
+        surveyResultProgressBar = view.findViewById(R.id.loading);
+        errorMsgView = view.findViewById(R.id.error_msg);
+        surveyDateView = view.findViewById(R.id.survey_date);
+        resultUpdateView = view.findViewById(R.id.report_update);
 
-        gotItButton = (Button) view.findViewById(R.id.got_it);
+        gotItButton = view.findViewById(R.id.got_it);
         gotItButton.setOnClickListener(this);
 
-        syncDataButton = (ImageView) view.findViewById(R.id.update_button);
+        ImageView syncDataButton = view.findViewById(R.id.update_button);
         syncDataButton.setOnClickListener(this);
     }
 

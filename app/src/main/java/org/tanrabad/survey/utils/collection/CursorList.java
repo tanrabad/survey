@@ -18,19 +18,15 @@
 package org.tanrabad.survey.utils.collection;
 
 import android.database.Cursor;
-
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CursorList<T> extends AbstractList<T> {
 
-    private CursorMapper<T> mapper;
     private List<T> objests = new ArrayList<>();
 
     public CursorList(Cursor cursor, CursorMapper<T> mapper) {
-
-        this.mapper = mapper;
         try {
             if (!cursor.isClosed()) {
                 while (!cursor.isClosed() && cursor.moveToNext()) {

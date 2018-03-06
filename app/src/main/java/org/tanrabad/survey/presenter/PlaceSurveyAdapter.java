@@ -27,7 +27,9 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import java.util.ArrayList;
+import java.util.List;
+import nectec.thai.address.AddressPrinter;
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.domain.place.PlaceSubTypeRepository;
 import org.tanrabad.survey.entity.Place;
@@ -38,11 +40,6 @@ import org.tanrabad.survey.repository.BrokerDistrictRepository;
 import org.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
 import org.tanrabad.survey.repository.BrokerProvinceRepository;
 import org.tanrabad.survey.repository.BrokerSubdistrictRepository;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import nectec.thai.address.AddressPrinter;
 
 public class PlaceSurveyAdapter extends RecyclerView.Adapter<PlaceSurveyAdapter.ViewHolder>
     implements ListViewAdapter<Place> {
@@ -133,11 +130,11 @@ public class PlaceSurveyAdapter extends RecyclerView.Adapter<PlaceSurveyAdapter.
             this.fragmentManager = adapter.fragmentManager;
             itemView.setOnClickListener(this);
             itemView.findViewById(R.id.not_sync).setVisibility(View.GONE); //Always hide
-            placeTextView = (TextView) itemView.findViewById(R.id.place_name);
-            placeSubtypeTextView = (TextView) itemView.findViewById(R.id.place_subtype);
-            placeAddressTextView = (TextView) itemView.findViewById(R.id.place_address);
-            placeIcon = (ImageView) itemView.findViewById(R.id.place_icon);
-            viewSurveyResultButton = (Button) itemView.findViewById(R.id.view_survey_result_button);
+            placeTextView = itemView.findViewById(R.id.place_name);
+            placeSubtypeTextView = itemView.findViewById(R.id.place_subtype);
+            placeAddressTextView = itemView.findViewById(R.id.place_address);
+            placeIcon = itemView.findViewById(R.id.place_icon);
+            viewSurveyResultButton = itemView.findViewById(R.id.view_survey_result_button);
         }
 
         void bind(final Place place) {

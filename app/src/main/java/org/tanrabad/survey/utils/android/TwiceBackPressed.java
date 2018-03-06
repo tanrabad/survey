@@ -29,13 +29,12 @@ public class TwiceBackPressed {
     private static final int TIMEOUT_SHORT = 2500;
     private static final int TIMEOUT_LONG = 4000;
     private int mTimeout = TIMEOUT_SHORT;
-    private int mDelay = 500;
     private long time1;
-    private long time2;
 
     private String message;
 
     private Context mContext;
+    public static final int DELAY = 500;
 
     public TwiceBackPressed(Context context) {
         mContext = context;
@@ -75,6 +74,7 @@ public class TwiceBackPressed {
      * @return return status that can continue your action after do twice pressed.
      */
     public boolean onTwiceBackPressed() {
+        long time2;
 
         if (time1 == 0) {
             time1 = System.currentTimeMillis();
@@ -87,13 +87,12 @@ public class TwiceBackPressed {
 
         long duration = time2 - time1;
 
-        if (duration < mDelay) {
+        if (duration < DELAY) {
             return false;
         } else if (duration < mTimeout) {
             return true;
         } else {
             time1 = 0;
-            time2 = 0;
             onTwiceBackPressed();
         }
 

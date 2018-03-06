@@ -24,9 +24,8 @@ import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
-
+import java.io.IOException;
 import net.frakbot.jumpingbeans.JumpingBeans;
-
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.entity.Building;
@@ -71,8 +70,6 @@ import org.tanrabad.survey.utils.android.InternetConnection;
 import org.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import org.tanrabad.survey.utils.prompt.PromptMessage;
 
-import java.io.IOException;
-
 public class InitialActivity extends TanrabadActivity {
 
     private WritableRepoUpdateJob<Province> provinceUpdateJob = new WritableRepoUpdateJob<>(
@@ -96,7 +93,6 @@ public class InitialActivity extends TanrabadActivity {
 
     private TextView loadingText;
     private JumpingBeans pleaseWaitBeans;
-    private ApiSyncInfoPreference syncInfoPreference;
     private AbsInitialActivityController initialActivityController;
 
     public static void open(Activity activity) {
@@ -108,9 +104,9 @@ public class InitialActivity extends TanrabadActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial);
-        loadingText = (TextView) findViewById(R.id.loading);
+        loadingText = findViewById(R.id.loading);
         startPleaseWaitBeansJump();
-        syncInfoPreference = new ApiSyncInfoPreference(InitialActivity.this);
+        ApiSyncInfoPreference syncInfoPreference = new ApiSyncInfoPreference(InitialActivity.this);
         InternetConnection internetConnection = new InternetConnection(this);
 
         initialActivityController = new AbsInitialActivityController(

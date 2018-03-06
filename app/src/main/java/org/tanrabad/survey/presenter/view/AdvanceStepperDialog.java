@@ -28,7 +28,7 @@ import org.tanrabad.survey.R;
 public class AdvanceStepperDialog extends Dialog implements View.OnClickListener {
 
     private final TextView callerView;
-    private boolean safeMode = true;
+    private  static final boolean UNSIGNED_MODE = true;
     private TextView textOperator;
     private TextView textOperand2nd;
     private int operand1st = 0;
@@ -47,15 +47,15 @@ public class AdvanceStepperDialog extends Dialog implements View.OnClickListener
         setContentView(R.layout.dialog_advance_stepper);
         setupFirstOperand();
 
-        textOperator = (TextView) findViewById(R.id.operator);
-        textOperand2nd = (TextView) findViewById(R.id.operand2nd);
+        textOperator = findViewById(R.id.operator);
+        textOperand2nd = findViewById(R.id.operand2nd);
 
         updateOperator(Operator.ADDITION);
         setOnClickListener();
     }
 
     private void setupFirstOperand() {
-        TextView textOperand1st = (TextView) findViewById(R.id.operand1st);
+        TextView textOperand1st = findViewById(R.id.operand1st);
         String text = callerView.getText().toString();
         if (TextUtils.isEmpty(text)) {
             text = "0";
@@ -167,7 +167,7 @@ public class AdvanceStepperDialog extends Dialog implements View.OnClickListener
                 break;
             case SUBTRACTION:
                 result = operand1st - operand2nd;
-                if (safeMode && result < 0)
+                if (UNSIGNED_MODE && result < 0)
                     result = 0;
                 break;
         }

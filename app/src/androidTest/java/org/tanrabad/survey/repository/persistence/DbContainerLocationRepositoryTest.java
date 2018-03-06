@@ -22,13 +22,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+import java.util.List;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.tanrabad.survey.base.SurveyDbTestRule;
 import org.tanrabad.survey.entity.lookup.ContainerLocation;
-
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -44,7 +43,7 @@ public class DbContainerLocationRepositoryTest {
         DbContainerLocationRepository repository = new DbContainerLocationRepository(context);
         boolean success = repository.save(new ContainerLocation(0, "ภายในอาคาร"));
 
-        SQLiteDatabase db = SurveyLiteDatabase.getInstance(context).getReadableDatabase();
+        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
         Cursor cursor = db.query(DbContainerLocationRepository.TABLE_NAME,
                 ContainerLocationColumn.wildcard(),
                 ContainerLocationColumn.ID + "=?",
@@ -64,7 +63,7 @@ public class DbContainerLocationRepositoryTest {
         DbContainerLocationRepository repository = new DbContainerLocationRepository(context);
         boolean success = repository.update(new ContainerLocation(1, "ภายในอาคาร 555"));
 
-        SQLiteDatabase db = SurveyLiteDatabase.getInstance(context).getReadableDatabase();
+        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
         Cursor cursor = db.query(DbContainerLocationRepository.TABLE_NAME,
                 ContainerLocationColumn.wildcard(),
                 ContainerLocationColumn.ID + "=?",

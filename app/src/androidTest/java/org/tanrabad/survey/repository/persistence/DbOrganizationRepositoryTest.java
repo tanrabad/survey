@@ -22,7 +22,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -49,7 +48,7 @@ public class DbOrganizationRepositoryTest {
         DbOrganizationRepository repository = new DbOrganizationRepository(context);
         boolean success = repository.save(organization);
 
-        SQLiteDatabase db = SurveyLiteDatabase.getInstance(context).getReadableDatabase();
+        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
         Cursor cursor = db.query(DbOrganizationRepository.TABLE_NAME,
                 OrganizationColumn.wildcard(),
                 OrganizationColumn.ID + "=?",
@@ -76,7 +75,7 @@ public class DbOrganizationRepositoryTest {
         DbOrganizationRepository repository = new DbOrganizationRepository(context);
         boolean success = repository.update(organization);
 
-        SQLiteDatabase db = SurveyLiteDatabase.getInstance(context).getReadableDatabase();
+        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
         Cursor cursor = db.query(DbOrganizationRepository.TABLE_NAME,
                 OrganizationColumn.wildcard(),
                 OrganizationColumn.ID + "=?",

@@ -22,13 +22,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+import java.util.List;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.tanrabad.survey.base.SurveyDbTestRule;
 import org.tanrabad.survey.entity.lookup.PlaceType;
-
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -44,7 +43,7 @@ public class DbPlaceTypeRepositoryTest {
         DbPlaceTypeRepository dbContainerTypeRepository = new DbPlaceTypeRepository(context);
         boolean success = dbContainerTypeRepository.save(new PlaceType(0, "ไม่ระบุ"));
 
-        SQLiteDatabase db = SurveyLiteDatabase.getInstance(context).getReadableDatabase();
+        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
         Cursor cursor = db.query(DbPlaceTypeRepository.TABLE_NAME,
                 PlaceTypeColumn.wildcard(),
                 PlaceTypeColumn.ID + "=?",
@@ -64,7 +63,7 @@ public class DbPlaceTypeRepositoryTest {
         DbPlaceTypeRepository dbPlaceTypeRepository = new DbPlaceTypeRepository(context);
         boolean success = dbPlaceTypeRepository.update(new PlaceType(1, "ชุมชน"));
 
-        SQLiteDatabase db = SurveyLiteDatabase.getInstance(context).getReadableDatabase();
+        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
         Cursor cursor = db.query(DbPlaceTypeRepository.TABLE_NAME,
                 PlaceTypeColumn.wildcard(),
                 PlaceTypeColumn.ID + "=?",

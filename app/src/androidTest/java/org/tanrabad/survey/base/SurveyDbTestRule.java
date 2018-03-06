@@ -22,9 +22,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.test.InstrumentationRegistry;
 import org.junit.rules.ExternalResource;
+import org.tanrabad.survey.R;
 import org.tanrabad.survey.repository.persistence.SqlScript;
 import org.tanrabad.survey.repository.persistence.SurveyLiteDatabase;
-import org.tanrabad.survey.R;
 
 public class SurveyDbTestRule extends ExternalResource {
 
@@ -40,7 +40,7 @@ public class SurveyDbTestRule extends ExternalResource {
 
     @Override
     protected void before() throws Throwable {
-        sqLiteOpenHelper = SurveyLiteDatabase.getInstance(getContext());
+        sqLiteOpenHelper = new SurveyLiteDatabase(getContext());
         SqlScript.readAndExecute(getContext(), sqLiteOpenHelper.getWritableDatabase(), R.raw.teardown);
         SqlScript.readAndExecute(getContext(), sqLiteOpenHelper.getWritableDatabase(), R.raw.test_setup);
     }

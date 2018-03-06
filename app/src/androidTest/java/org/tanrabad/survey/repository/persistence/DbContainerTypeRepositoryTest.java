@@ -22,13 +22,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+import java.util.List;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.tanrabad.survey.base.SurveyDbTestRule;
 import org.tanrabad.survey.entity.lookup.ContainerType;
-
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -44,7 +43,7 @@ public class DbContainerTypeRepositoryTest {
         DbContainerTypeRepository dbContainerTypeRepository = new DbContainerTypeRepository(context);
         boolean success = dbContainerTypeRepository.save(new ContainerType(0, "น้ำดื่ม"));
 
-        SQLiteDatabase db = SurveyLiteDatabase.getInstance(context).getReadableDatabase();
+        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
         Cursor cursor = db.query(DbContainerTypeRepository.TABLE_NAME,
                 ContainerTypeColumn.wildcard(),
                 ContainerTypeColumn.ID + "=?",
@@ -64,7 +63,7 @@ public class DbContainerTypeRepositoryTest {
         DbContainerTypeRepository dbContainerTypeRepository = new DbContainerTypeRepository(context);
         boolean success = dbContainerTypeRepository.update(new ContainerType(1, "แจกัน"));
 
-        SQLiteDatabase db = SurveyLiteDatabase.getInstance(context).getReadableDatabase();
+        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
         Cursor cursor = db.query(DbContainerTypeRepository.TABLE_NAME,
                 ContainerTypeColumn.wildcard(),
                 ContainerTypeColumn.ID + "=?",

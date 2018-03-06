@@ -22,13 +22,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+import java.util.List;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.tanrabad.survey.base.SurveyDbTestRule;
 import org.tanrabad.survey.entity.lookup.PlaceSubType;
-
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -40,7 +39,7 @@ public class DbPlaceSubTypeRepositoryTest {
 
     Context context = InstrumentationRegistry.getTargetContext();
     DbPlaceSubTypeRepository dbPlaceSubTypeRepository = new DbPlaceSubTypeRepository(context);
-    SQLiteDatabase db = SurveyLiteDatabase.getInstance(context).getReadableDatabase();
+    SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
 
     @Test
     public void testSave() throws Exception {

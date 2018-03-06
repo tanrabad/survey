@@ -23,7 +23,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -71,7 +70,7 @@ public class DbUserRepositoryTest {
         DbUserRepository repository = new DbUserRepository(context);
         boolean success = repository.save(user);
 
-        SQLiteDatabase db = SurveyLiteDatabase.getInstance(context).getReadableDatabase();
+        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
         Cursor cursor = db.query(DbUserRepository.TABLE_NAME,
                 UserColumn.wildcard(),
                 UserColumn.USERNAME + "=?",
@@ -102,7 +101,7 @@ public class DbUserRepositoryTest {
         DbUserRepository repository = new DbUserRepository(context);
         boolean success = repository.update(user);
 
-        SQLiteDatabase db = SurveyLiteDatabase.getInstance(context).getReadableDatabase();
+        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
         Cursor cursor = db.query(DbUserRepository.TABLE_NAME,
                 UserColumn.wildcard(),
                 UserColumn.USERNAME + "=?",

@@ -22,7 +22,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
-
+import java.util.List;
+import java.util.UUID;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Rule;
@@ -37,9 +38,6 @@ import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.entity.field.Location;
 import org.tanrabad.survey.utils.time.ThaiDateTimeConverter;
-
-import java.util.List;
-import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 
@@ -83,7 +81,7 @@ public class DbBuildingRepositoryTest {
         DbBuildingRepository dbBuildngRepository = new DbBuildingRepository(context);
         boolean saveResult = dbBuildngRepository.save(building);
 
-        SQLiteDatabase db = SurveyLiteDatabase.getInstance(context).getReadableDatabase();
+        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
         Cursor cursor = db.query(DbBuildingRepository.TABLE_NAME,
                 BuildingColumn.wildcard(),
                 BuildingColumn.ID + "=?",
@@ -116,7 +114,7 @@ public class DbBuildingRepositoryTest {
         DbBuildingRepository dbBuildngRepository = new DbBuildingRepository(context);
         boolean success = dbBuildngRepository.update(building);
 
-        SQLiteDatabase db = SurveyLiteDatabase.getInstance(context).getReadableDatabase();
+        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
         Cursor cursor = db.query(DbBuildingRepository.TABLE_NAME,
                 BuildingColumn.wildcard(),
                 BuildingColumn.ID + "=?",
@@ -151,7 +149,7 @@ public class DbBuildingRepositoryTest {
         building.setName("No. 1/2");
         boolean success = dbBuildngRepository.update(building);
 
-        SQLiteDatabase db = SurveyLiteDatabase.getInstance(context).getReadableDatabase();
+        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
         Cursor cursor = db.query(DbBuildingRepository.TABLE_NAME,
                 BuildingColumn.wildcard(),
                 BuildingColumn.ID + "=?",

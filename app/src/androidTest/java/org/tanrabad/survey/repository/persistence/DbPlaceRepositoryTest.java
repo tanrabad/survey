@@ -23,7 +23,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Rule;
@@ -40,10 +42,6 @@ import org.tanrabad.survey.entity.lookup.PlaceSubType;
 import org.tanrabad.survey.entity.lookup.PlaceType;
 import org.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
 import org.tanrabad.survey.utils.time.ThaiDateTimeConverter;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -77,7 +75,7 @@ public class DbPlaceRepositoryTest {
 
         boolean success = dbPlaceRepository.save(place);
 
-        SQLiteDatabase db = SurveyLiteDatabase.getInstance(context).getReadableDatabase();
+        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
         Cursor cursor = db.query(DbPlaceRepository.TABLE_NAME,
                 PlaceColumn.wildcard(),
                 PlaceColumn.ID + "=?",
@@ -119,7 +117,7 @@ public class DbPlaceRepositoryTest {
         places.add(place);
         dbPlaceRepository.updateOrInsert(places);
 
-        SQLiteDatabase db = SurveyLiteDatabase.getInstance(context).getReadableDatabase();
+        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
         Cursor cursor = db.query(DbPlaceRepository.TABLE_NAME,
                 PlaceColumn.wildcard(),
                 PlaceColumn.ID + "=?",
@@ -150,7 +148,7 @@ public class DbPlaceRepositoryTest {
 
         boolean success = dbPlaceRepository.update(place);
 
-        SQLiteDatabase db = SurveyLiteDatabase.getInstance(context).getReadableDatabase();
+        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
         Cursor cursor = db.query(DbPlaceRepository.TABLE_NAME,
                 PlaceColumn.wildcard(),
                 PlaceColumn.ID + "=?",
@@ -177,7 +175,7 @@ public class DbPlaceRepositoryTest {
         place.setName("หมู่บ้านทดสอบบบบบ");
         boolean success = dbPlaceRepository.update(place);
 
-        SQLiteDatabase db = SurveyLiteDatabase.getInstance(context).getReadableDatabase();
+        SQLiteDatabase db = new SurveyLiteDatabase(context).getReadableDatabase();
         Cursor cursor = db.query(DbPlaceRepository.TABLE_NAME,
                 PlaceColumn.wildcard(),
                 PlaceColumn.ID + "=?",

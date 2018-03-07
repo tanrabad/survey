@@ -25,6 +25,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.tanrabad.survey.base.SurveyDbTestRule;
+import org.tanrabad.survey.entity.Organization;
 import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.repository.BrokerUserRepository;
 import org.tanrabad.survey.utils.time.CurrentTimer;
@@ -61,7 +62,11 @@ public class AccountUtilsInstrumentalTest {
 
     @Test
     public void testTrialUserMustNotSave() throws Exception {
-        AccountUtils.setUser(User.fromUsername("trial-debug"));
+        Organization org = new Organization(10000, "trial-org");
+        org.setHealthRegionCode("DCP-01");
+        User user = User.fromUsername("trial-debug");
+        user.setOrganization(org);
+        AccountUtils.setUser(user);
 
         assertNull(AccountUtils.getLastLoginUser());
     }

@@ -21,8 +21,8 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -62,7 +62,7 @@ import org.tanrabad.survey.utils.prompt.PromptMessage;
 import java.util.List;
 
 public class PlaceNearbyListFragment extends TanrabadTabFragment
-        implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener,
+    implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener,
     NearbyPlacePresenter {
 
     public static final int LOCATION_PERMISSION_REQUEST_CODE = 888;
@@ -77,24 +77,27 @@ public class PlaceNearbyListFragment extends TanrabadTabFragment
     private NearbyPlacesFinderController nearbyPlacesFinderController;
 
     ConnectionCallbacks locationServiceCallback = new ConnectionCallbacks() {
-        @Override public void onConnected(@Nullable Bundle bundle) {
+        @Override
+        public void onConnected(@Nullable Bundle bundle) {
             playLocationService.setupLocationUpdateService(new LocationListener() {
                 android.location.Location lastLocation;
-                @Override public void onLocationChanged(android.location.Location location) {
+
+                @Override
+                public void onLocationChanged(android.location.Location location) {
                     if (lastLocation != null && location.distanceTo(lastLocation) < 15.0) {
-                        if (BuildConfig.DEBUG)
-                            Toast.makeText(getContext(), "Location Changed but too small", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     lastLocation = location;
+
                     if (BuildConfig.DEBUG)
                         Toast.makeText(getContext(), "Location Changed", Toast.LENGTH_SHORT).show();
-                    loadPlaceList(location);
+                    loadPlaceList(new Location(location.getLatitude(), location.getLongitude()));
                 }
             });
         }
 
-        @Override public void onConnectionSuspended(int i) {
+        @Override
+        public void onConnectionSuspended(int i) {
         }
     };
     private Location currentLocation;
@@ -104,17 +107,20 @@ public class PlaceNearbyListFragment extends TanrabadTabFragment
         return R.string.nearby_places;
     }
 
-    @Override public void onStart() {
+    @Override
+    public void onStart() {
         super.onStart();
         playLocationService.connect();
     }
 
-    @Override public void onAttach(Context context) {
+    @Override
+    public void onAttach(Context context) {
         super.onAttach(context);
         playLocationService.connect();
     }
 
-    @Override public void onDetach() {
+    @Override
+    public void onDetach() {
         super.onDetach();
         playLocationService.removeConnectionCallbacks(locationServiceCallback);
         playLocationService.disconnect();
@@ -127,7 +133,8 @@ public class PlaceNearbyListFragment extends TanrabadTabFragment
         return fragment;
     }
 
-    @Override public void displayPlaceNotFound() {
+    @Override
+    public void displayPlaceNotFound() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -152,22 +159,52 @@ public class PlaceNearbyListFragment extends TanrabadTabFragment
         });
     }
 
-    protected void loadPlaceList(android.location.Location location) {
-        emptyPlacesView.showProgressBar();
+    boolean locked = false;
+
+    protected void loadPlaceList(Location location) {
+        if (locked) return; //for reduce load
+        locked = true;
+        if (nearbyPlaceAdapter.getItemCount() < 1)
+            emptyPlacesView.showProgressBar();
+
         currentLocation = new Location(location.getLatitude(), location.getLongitude());
-        AsyncTask.execute(new Runnable() {
+        saveLastKnowLocation();
+        runOnWorkerThread(new Runnable() {
             @Override
             public void run() {
                 nearbyPlacesFinderController.findNearbyPlaces(currentLocation);
+                locked = false;
             }
         });
+
     }
 
-    @Override public void onItemClick(AdapterView<?> adapterView, View view, final int position, long l) {
+    private void saveLastKnowLocation() {
+        SharedPreferences.Editor editor = getActivity().getSharedPreferences("nearby", Context.MODE_PRIVATE).edit();
+        editor.putString("lat", "" + currentLocation.getLatitude());
+        editor.putString("lng", "" + currentLocation.getLongitude());
+        editor.apply();
+    }
+
+    @Nullable
+    private Location loadLastKnowLocation() {
+        SharedPreferences pref = getActivity().getSharedPreferences("nearby", Context.MODE_PRIVATE);
+        try {
+            double lat = Double.parseDouble(pref.getString("lat", "0.0"));
+            double lng = Double.parseDouble(pref.getString("lng", "0.0"));
+            return new Location(lat, lng);
+        } catch (Exception expected) {
+            return null;
+        }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, final int position, long l) {
         final Place placeData = nearbyPlaceAdapter.getItem(position);
         PromptMessage promptMessage = new AlertDialogPromptMessage(getActivity());
         promptMessage.setOnConfirm(getString(R.string.survey), new PromptMessage.OnConfirmListener() {
-            @Override public void onConfirm() {
+            @Override
+            public void onConfirm() {
                 TanrabadApp.action().startSurvey(placeData, "nearby");
                 SurveyBuildingHistoryActivity.open(getActivity(), placeData);
             }
@@ -176,11 +213,13 @@ public class PlaceNearbyListFragment extends TanrabadTabFragment
         promptMessage.show(getString(R.string.start_survey), nearbyPlaceAdapter.getItem(position).getName());
     }
 
-    @Override public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int position, long l) {
+    @Override
+    public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int position, long l) {
         return true;
     }
 
-    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_nearby_place_list, container, false);
         setupViews(view);
         setupEmptyList();
@@ -189,7 +228,8 @@ public class PlaceNearbyListFragment extends TanrabadTabFragment
         return view;
     }
 
-    @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         nearbyPlacesFinderController = new NearbyPlacesFinderController(
             new ImpNearbyPlaceRepository(BrokerPlaceRepository.getInstance()),
@@ -199,7 +239,7 @@ public class PlaceNearbyListFragment extends TanrabadTabFragment
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
             != PackageManager.PERMISSION_GRANTED) {
             emptyPlacesView.setEmptyText(R.string.please_enable_location_permission_before_use);
-            requestPermissions(new String[] { Manifest.permission.ACCESS_FINE_LOCATION },
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                 LOCATION_PERMISSION_REQUEST_CODE);
 
         } else {
@@ -213,11 +253,16 @@ public class PlaceNearbyListFragment extends TanrabadTabFragment
             displayPlaceNotFound();
             GpsUtils.showGpsSettingsDialog(getContext());
         }
+        Location location = loadLastKnowLocation();
+        if (location != null) {
+            loadPlaceList(location);
+        }
         playLocationService.addConnectionCallbacks(locationServiceCallback);
     }
 
-    @Override public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-            @NonNull int[] grantResults) {
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case LOCATION_PERMISSION_REQUEST_CODE: {
@@ -231,10 +276,10 @@ public class PlaceNearbyListFragment extends TanrabadTabFragment
     }
 
     private void setupViews(View view) {
-        this.placeListView = (RecyclerView) view.findViewById(R.id.place_list);
-        this.placeCountView = (TextView) view.findViewById(R.id.place_count);
-        placeListHeader = (RecyclerViewHeader) view.findViewById(R.id.card_header);
-        emptyPlacesView = (EmptyLayoutView) view.findViewById(R.id.empty_layout);
+        this.placeListView = view.findViewById(R.id.place_list);
+        this.placeCountView = view.findViewById(R.id.place_count);
+        placeListHeader = view.findViewById(R.id.card_header);
+        emptyPlacesView = view.findViewById(R.id.empty_layout);
     }
 
     private void setupEmptyList() {
@@ -250,7 +295,7 @@ public class PlaceNearbyListFragment extends TanrabadTabFragment
         placeListView.setAdapter(nearbyPlaceAdapter);
         placeListView.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
         LinearLayoutManager linearLayoutManager =
-                new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+            new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         placeListView.setLayoutManager(linearLayoutManager);
         placeListHeader.attachTo(placeListView, true);
     }
@@ -274,8 +319,8 @@ public class PlaceNearbyListFragment extends TanrabadTabFragment
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK && requestCode == PlaceFormActivity.ADD_PLACE_REQ_CODE)
+        if (resultCode == Activity.RESULT_OK && requestCode == PlaceFormActivity.ADD_PLACE_REQ_CODE) {
             startSearchNearbyPlaces();
+        }
     }
-
 }

@@ -11,4 +11,9 @@ public class TanrabadFragment extends Fragment {
             activity.runOnUiThread(action);
         }
     }
+
+    protected void runOnWorkerThread(Runnable action) {
+        Thread t = new Thread(action);
+        t.start();
+    }
 }

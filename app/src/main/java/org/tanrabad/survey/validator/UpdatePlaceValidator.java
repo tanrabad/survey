@@ -17,22 +17,28 @@
 
 package org.tanrabad.survey.validator;
 
+import java.util.List;
+import org.tanrabad.survey.R;
 import org.tanrabad.survey.domain.place.PlaceRepository;
 import org.tanrabad.survey.domain.place.PlaceValidator;
 import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.entity.lookup.PlaceType;
-import org.tanrabad.survey.R;
-
-import java.util.List;
 
 public class UpdatePlaceValidator implements PlaceValidator {
     private PlaceRepository placeRepository;
 
     @Override
     public boolean validate(Place place) {
-
         if (place.getName() == null || place.getName().isEmpty()) {
             throw new EmptyNameException(R.string.please_define_place_name);
+        }
+
+        if (place.getType() < 0) {
+            throw new ValidatorException(R.string.please_define_place_type);
+        }
+
+        if (place.getSubType() < 0) {
+            throw new ValidatorException(R.string.please_define_place_sub_type);
         }
 
         if (place.getSubdistrictCode() == null || place.getSubdistrictCode().isEmpty()) {
@@ -42,8 +48,10 @@ public class UpdatePlaceValidator implements PlaceValidator {
         List<Place> places = placeRepository.find();
         if (places != null) {
             for (Place eachPlace : places) {
-                if (!eachPlace.getId().equals(place.getId()) && isSamePlaceName(place, eachPlace)
-                        && isSamePlaceType(place, eachPlace) && isSamePlaceAddress(place, eachPlace)) {
+                if (!eachPlace.getId().equals(place.getId())
+                    && isSamePlaceName(place, eachPlace)
+                    && isSamePlaceType(place, eachPlace)
+                    && isSamePlaceAddress(place, eachPlace)) {
                     throw new ValidatorException(R.string.cant_save_same_place_name);
                 }
             }

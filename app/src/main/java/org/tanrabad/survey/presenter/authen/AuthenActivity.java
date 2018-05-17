@@ -29,6 +29,7 @@ import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
@@ -68,7 +69,7 @@ public class AuthenActivity extends TanrabadActivity {
         setContentView(R.layout.activity_authen);
 
         CookieUtils.clearCookies(this);
-        webView = (WebView) findViewById(R.id.webView);
+        webView = findViewById(R.id.webView);
         webView.setWebViewClient(new AuthenWebViewClient());
         webView.setWebChromeClient(webChromeClient);
         webView.getSettings().setJavaScriptEnabled(true);
@@ -114,6 +115,7 @@ public class AuthenActivity extends TanrabadActivity {
         }
 
         @Override public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+            Toast.makeText(AuthenActivity.this, "SSL Error!", Toast.LENGTH_SHORT).show();
             InputStream rawCertificate = getResources().openRawResource(R.raw.tanrabad);
             FileCertificateAuthority authority = new FileCertificateAuthority(rawCertificate);
 
@@ -124,6 +126,8 @@ public class AuthenActivity extends TanrabadActivity {
                 handler.proceed();
             } else {
                 handler.cancel();
+                Toast.makeText(AuthenActivity.this, "Invalid Certificate", Toast.LENGTH_SHORT)
+                    .show();
             }
         }
     }

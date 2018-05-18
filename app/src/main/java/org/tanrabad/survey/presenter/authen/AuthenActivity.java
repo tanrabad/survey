@@ -31,6 +31,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
+import org.tanrabad.survey.BuildConfig;
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.domain.organization.OrganizationRepository;
@@ -115,7 +116,8 @@ public class AuthenActivity extends TanrabadActivity {
         }
 
         @Override public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-            Toast.makeText(AuthenActivity.this, "SSL Error!", Toast.LENGTH_SHORT).show();
+            if (BuildConfig.DEBUG)
+                Toast.makeText(AuthenActivity.this, "SSL Error!", Toast.LENGTH_SHORT).show();
             InputStream rawCertificate = getResources().openRawResource(R.raw.tanrabad);
             FileCertificateAuthority authority = new FileCertificateAuthority(rawCertificate);
 

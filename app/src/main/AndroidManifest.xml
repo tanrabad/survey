@@ -137,13 +137,8 @@
                 android:name=".presenter.AboutActivity"
                 android:label="@string/about"/>
         <activity
-                android:name=".presenter.LicenseActivity"
-                android:label="@string/about_license"/>
-
-        <activity
                 android:name=".presenter.PreferenceActivity"
-                android:label="@string/setting">
-        </activity>
+                android:label="@string/setting"/>
     </application>
 
 </manifest>

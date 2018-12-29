@@ -59,7 +59,7 @@ ext {
     checkstyleConfigFile = file("$rootDir/config/checkstyle.xml")
     pmdRuleSetFiles = files("$rootDir/config/pmd.xml")
 
-    javaVersion = JavaVersion.VERSION_1_7
+    javaVersion = JavaVersion.VERSION_1_8
 
     def versionToken = project.version.tokenize( ".|-" )
     int versionMajor = versionToken[0] as Integer

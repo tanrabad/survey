@@ -213,5 +213,6 @@
     <string name="nearby_places_caption">สถานที่ใกล้เคียงภายในระยะประมาณ 10 กม.</string>
     <string name="please_enable_gps_before_use">กรุณาเปิดใช้งาน GPS ก่อนใช้งาน</string>
     <string name="please_enable_location_permission_before_use">กรุณาเปิดใช้สิทธิ์การเข้าถึงตำแหน่งปัจจุบันก่อนใช้งาน</string>
+    <string name="survey_start">เริ่มสำรวจ!</string>
 
 </resources>

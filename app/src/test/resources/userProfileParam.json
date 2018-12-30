@@ -1,0 +1,8 @@
+{
+    "orgHealthRegionName": "สำนักงานป้องกันควบคุมโรคที่ 13",
+    "orgHealthRegionCode": "dpc-13",
+    "orgHealthRegionType": "สำนักงานป้องกันควบคุมโรค",
+    "orgHealthRegionTypeID": "4",
+    "orgPreferrableAreaLevel": "province",
+    "orgQueryString": "hr_code=dpc-13"
+}

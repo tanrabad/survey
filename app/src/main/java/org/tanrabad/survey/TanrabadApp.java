@@ -27,7 +27,6 @@ import org.tanrabad.survey.utils.android.ResourceUtils;
 import org.tanrabad.survey.utils.tool.ActionLogger;
 import org.tanrabad.survey.utils.tool.ExceptionLogger;
 import org.tanrabad.survey.utils.tool.FabricTools;
-import org.trb.authen.client.TRBAuthenUtil;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class TanrabadApp extends Application {
@@ -57,7 +56,6 @@ public class TanrabadApp extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-        setupAuthenUtils();
         setupCrashActivity();
         setupAnalysisTools();
         setupDefaultFont();
@@ -75,12 +73,6 @@ public class TanrabadApp extends Application {
                 return item.toString();
             }
         });
-    }
-
-    private void setupAuthenUtils() {
-        TRBAuthenUtil authenUtil = TRBAuthenUtil.getInstance();
-        authenUtil.initTRBAuthenUtil(this, TRB_AUTHEN_ENDPOINT, BuildConfig.TRB_AUTHEN_CLIENT_ID,
-                BuildConfig.TRB_AUTHEN_CLIENT_SECRET);
     }
 
     private void setupCrashActivity() {

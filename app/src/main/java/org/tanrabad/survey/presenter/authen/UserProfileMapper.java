@@ -19,9 +19,8 @@ package org.tanrabad.survey.presenter.authen;
 
 import org.tanrabad.survey.entity.Organization;
 import org.tanrabad.survey.entity.User;
-import org.trb.authen.model.UserProfile;
 
-class UserProfileMapper {
+public class UserProfileMapper {
 
     private final UserProfile profile;
 
@@ -30,22 +29,21 @@ class UserProfileMapper {
     }
 
     public User getUser() {
-        User user = new User(profile.getUserName());
+        User user = new User(profile.userName);
         user.setFirstname(profile.getFirstName());
         user.setLastname(profile.getLastName());
 
         Organization organization = getOrganization();
         user.setOrganization(organization);
-        user.setApiFilter(profile.getOrgQueryString());
+        user.setApiFilter(profile.getParam().orgQueryString);
         return user;
     }
 
     public Organization getOrganization() {
-        Organization org = new Organization(Integer.parseInt(profile.getOrgId()),
-                profile.getOrgName());
-        org.setSubdistrictCode(profile.getOrgTambonCode());
-        org.setHealthRegionCode(profile.getOrgHealthRegionCode());
-        org.setAddress(profile.getOrgAddress());
+        Organization org = new Organization(Integer.parseInt(profile.orgId), profile.orgName);
+        org.setSubdistrictCode(profile.orgTambonCode);
+        org.setHealthRegionCode(profile.getParam().orgHealthRegionCode);
+        org.setAddress(profile.orgAddress);
         return org;
     }
 

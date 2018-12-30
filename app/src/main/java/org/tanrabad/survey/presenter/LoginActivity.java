@@ -27,7 +27,9 @@ import android.view.animation.Animation;
 import org.tanrabad.survey.BuildConfig;
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.entity.User;
-import org.tanrabad.survey.presenter.authen.AuthenActivity;
+import org.tanrabad.survey.presenter.authen.Authenticator;
+import org.tanrabad.survey.presenter.authen.appauth.AppAuthPresenter;
+import org.tanrabad.survey.presenter.authen.appauth.TokenActivity;
 import org.tanrabad.survey.repository.BrokerOrganizationRepository;
 import org.tanrabad.survey.repository.BrokerUserRepository;
 import org.tanrabad.survey.utils.alert.Alert;
@@ -41,12 +43,15 @@ public class LoginActivity extends TanrabadActivity {
     ProgressDialog progressDialog;
     private View trialButton;
     private View authenButton;
+    private Authenticator auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().setFlags(FLAG_FULLSCREEN, FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        auth = new Authenticator(new AppAuthPresenter(this));
 
         trialButton = findViewById(R.id.trial);
         authenButton = findViewById(R.id.authentication_button);
@@ -103,8 +108,7 @@ public class LoginActivity extends TanrabadActivity {
         if (lastLoginUser != null && !AccountUtils.isTrialUser(lastLoginUser)) {
             doLogin(lastLoginUser);
         } else if (InternetConnection.isAvailable(this)) {
-            Intent intent = new Intent(this, AuthenActivity.class);
-            startActivityForResult(intent, AUTHEN_REQUEST_CODE);
+            auth.request();
         } else {
             Alert.highLevel().show(R.string.connect_internet_before_authen);
         }
@@ -126,18 +130,20 @@ public class LoginActivity extends TanrabadActivity {
         });
     }
 
+
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == AUTHEN_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                User user = BrokerUserRepository.getInstance().findByUsername(
-                    data.getStringExtra(AuthenActivity.USERNAME));
-                doLogin(user);
-            } else if (resultCode == AuthenActivity.RESULT_ERROR) {
-                Alert.highLevel().show(R.string.authen_error_response);
-            }
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        String username = intent.getStringExtra(TokenActivity.USERNAME);
+        if (username != null) {
+            User user = BrokerUserRepository.getInstance().findByUsername(username);
+            doLogin(user);
         }
-        super.onActivityResult(requestCode, resultCode, data);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        auth.close();
+    }
 }

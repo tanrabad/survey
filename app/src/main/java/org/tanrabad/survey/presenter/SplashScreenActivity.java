@@ -18,24 +18,18 @@
 package org.tanrabad.survey.presenter;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
+import android.widget.TextView;
+
 import org.tanrabad.survey.R;
+import org.tanrabad.survey.presenter.CheckVersionThread.CheckVersionListener;
 
 public class SplashScreenActivity extends TanrabadActivity {
 
-    private static final int DELAY_MILLS = 3000;
-    private Handler handler = new Handler();
-    private Runnable openLoginActivity = new Runnable() {
-        @Override
-        public void run() {
-            Intent intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
-            startActivity(intent);
-            finish();
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-        }
-    };
+    private CheckVersionThread checker;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,13 +41,44 @@ public class SplashScreenActivity extends TanrabadActivity {
     protected void onResume() {
         super.onResume();
         if ("android.intent.action.MAIN".equals(getIntent().getAction())) {
-            handler.postDelayed(openLoginActivity, DELAY_MILLS);
+            checker = new CheckVersionThread(new CheckVersionListener() {
+                @Override
+                public void onAlreadyLatest() {
+                    Intent intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                }
+
+                @Override
+                public void onFoundNewer(Version version) {
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(SplashScreenActivity.this);
+                    alertDialog.setView(R.layout.dialog_message_alert);
+                    alertDialog.setPositiveButton(R.string.update, (dialog, which) -> {
+                        Intent store = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=org.tanrabad.survey"));
+                        startActivity(store);
+                        finish();
+                    });
+                    alertDialog.setNegativeButton(R.string.close, (dialog, which) -> {
+                        finish();
+                    });
+                    alertDialog.setCancelable(false);
+                    AlertDialog dialog = alertDialog.show();
+                    ((TextView) dialog.findViewById(R.id.dialog_message)).setText(getString(R.string.found_newer_version, version));
+                }
+            });
+            checker.start();
         }
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        handler.removeCallbacks(openLoginActivity);
+    protected void onStop() {
+        super.onStop();
+        checker.pause();
+    }
+
+    @Override
+    public void onBackPressed() {
+        //Do nothing
     }
 }

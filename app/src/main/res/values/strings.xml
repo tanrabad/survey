@@ -215,4 +215,8 @@
     <string name="please_enable_location_permission_before_use">กรุณาเปิดใช้สิทธิ์การเข้าถึงตำแหน่งปัจจุบันก่อนใช้งาน</string>
     <string name="survey_start">เริ่มสำรวจ!</string>
 
+    <string name="found_newer_version">ตรวจสอบพบทันระบาดสำรวจ version ใหม่ %1$s กรุณาทำการอัพเดทก่อนเข้าใช้งาน</string>
+    <string name="update">อัพเดท</string>
+    <string name="close">ปิด</string>
+
 </resources>

@@ -38,6 +38,8 @@ import org.tanrabad.survey.presenter.AboutActivity;
 import org.tanrabad.survey.presenter.AccountUtils;
 import org.tanrabad.survey.presenter.LoginActivity;
 import org.tanrabad.survey.presenter.PreferenceActivity;
+import org.tanrabad.survey.presenter.authen.appauth.AuthStateManager;
+import org.tanrabad.survey.presenter.authen.appauth.UserProfileManager;
 import org.tanrabad.survey.repository.AppDataManager;
 import org.tanrabad.survey.repository.BrokerOrganizationRepository;
 import org.tanrabad.survey.utils.alert.Alert;
@@ -137,7 +139,6 @@ public final class MainActivityNavigation {
                         Alert.highLevel().show(R.string.please_connect_internet_before_logout);
                         return false;
                     }
-
                     UploadJobRunner uploadJob = new UploadJobRunner();
                     uploadJob.addJobs(new UploadJobRunner.Builder().getJobs());
                     uploadJob.setOnSyncFinishListener(new UploadJobRunner.OnSyncFinishListener() {
@@ -145,6 +146,8 @@ public final class MainActivityNavigation {
                         public void onSyncFinish() {
                             AccountUtils.clear();
                             AppDataManager.clearAll(activity);
+                            AuthStateManager.getInstance(activity).clear();
+                            UserProfileManager.getInstance(activity).clear();
                             Intent backToLogin = new Intent(activity, LoginActivity.class);
                             activity.startActivity(backToLogin);
                             activity.finish();

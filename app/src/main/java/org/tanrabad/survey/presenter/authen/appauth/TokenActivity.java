@@ -258,15 +258,8 @@ public class TokenActivity extends TanrabadActivity {
     private void signOut() {
         // discard the authorization and token state, but retain the configuration and
         // dynamic client registration (if applicable), to save from retrieving them again.
-        AuthState currentState = mStateManager.getCurrent();
-        AuthState clearedState =
-            new AuthState(currentState.getAuthorizationServiceConfiguration());
-        if (currentState.getLastRegistrationResponse() != null) {
-            clearedState.update(currentState.getLastRegistrationResponse());
-        }
-        mStateManager.replace(clearedState);
+        mStateManager.clear();
         mUserManager.clear();
-
 
         Intent mainIntent = new Intent(this, LoginActivity.class);
         mainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

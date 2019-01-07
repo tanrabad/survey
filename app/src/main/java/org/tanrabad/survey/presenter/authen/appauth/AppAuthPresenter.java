@@ -81,10 +81,7 @@ public class AppAuthPresenter implements AuthenticatorPresent {
         mAuthStateManager = AuthStateManager.getInstance(activity);
         mConfiguration = Configuration.getInstance(activity);
 
-        if (mAuthStateManager.getCurrent().isAuthorized()
-            && !mConfiguration.hasConfigurationChanged()) {
-            Log.i(TAG, "User is already authenticated, proceeding to token activity");
-            activity.startActivity(new Intent(activity, TokenActivity.class));
+        if (isLoggedIn()) {
             return;
         }
 
@@ -96,6 +93,11 @@ public class AppAuthPresenter implements AuthenticatorPresent {
         }
 
         mExecutor.execute(() -> initializeConfiguration());
+    }
+
+    private boolean isLoggedIn() {
+        return mAuthStateManager.getCurrent().isAuthorized()
+            && !mConfiguration.hasConfigurationChanged();
     }
 
     /**
@@ -263,7 +265,10 @@ public class AppAuthPresenter implements AuthenticatorPresent {
 
     @Override
     public void startPage() {
-        doAuth();
+        if (isLoggedIn())
+            activity.startActivity(new Intent(activity, TokenActivity.class));
+        else
+            doAuth();
     }
 
     @WorkerThread

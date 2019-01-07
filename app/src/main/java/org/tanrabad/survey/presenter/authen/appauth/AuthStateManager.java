@@ -168,4 +168,14 @@ public class AuthStateManager {
             mPrefsLock.unlock();
         }
     }
+
+    public void clear() {
+        AuthState currentState = getCurrent();
+        AuthState clearedState =
+            new AuthState(currentState.getAuthorizationServiceConfiguration());
+        if (currentState.getLastRegistrationResponse() != null) {
+            clearedState.update(currentState.getLastRegistrationResponse());
+        }
+        replace(clearedState);
+    }
 }

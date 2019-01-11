@@ -146,7 +146,7 @@ public final class MainActivityNavigation {
                         public void onSyncFinish() {
                             AccountUtils.clear();
                             AppDataManager.clearAll(activity);
-                            AuthStateManager.getInstance(activity).clear();
+                            AuthStateManager.getInstance(activity).clear(activity);
                             UserProfileManager.getInstance(activity).clear();
                             Intent backToLogin = new Intent(activity, LoginActivity.class);
                             activity.startActivity(backToLogin);

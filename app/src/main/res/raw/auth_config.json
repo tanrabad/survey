@@ -1,5 +1,5 @@
 {
-  "client_id": "",
+  "client_id": "@!A871.F0C5.9087.893C!0001!9487.9311!0008!7D5A.5CFC.9D50.40CF",
   "redirect_uri": "iaamscheme://localhost/iaamredirect",
   "authorization_scope": "openid email profile",
   "discovery_uri": "https://iaamtest.lsr.nectec.or.th/.well-known/openid-configuration",

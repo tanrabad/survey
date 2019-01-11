@@ -68,10 +68,21 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="http" />
-                <data android:scheme="https" />
-                <data android:host="www.tanrabad.org" />
-                <data android:path="/survey" />
+                <data
+                    android:host="www.tanrabad.org"
+                    android:pathPrefix="/survey"
+                    android:scheme="http" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="www.tanrabad.org"
+                    android:pathPrefix="/survey"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
         <activity
@@ -140,7 +151,11 @@
             android:name=".presenter.authen.appauth.TokenActivity"
             android:windowSoftInputMode="stateHidden" />
 
-        <activity android:name="net.openid.appauth.RedirectUriReceiverActivity">
+        <activity
+            android:name="net.openid.appauth.RedirectUriReceiverActivity"
+            android:label="Authen"
+            android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -149,8 +164,25 @@
 
                 <data
                     android:host="localhost"
-                    android:path="/iaamredirect"
+                    android:pathPrefix="/iaamredirect"
                     android:scheme="iaamscheme" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".presenter.authen.appauth.LogoutRedirectActivity"
+            android:exported="true"
+            android:label="Signout">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="localhost"
+                    android:pathPrefix="/signout"
+                    android:scheme="trb-survey" />
             </intent-filter>
         </activity>
     </application>

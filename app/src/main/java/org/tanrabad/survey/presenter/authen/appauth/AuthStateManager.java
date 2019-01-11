@@ -138,7 +138,6 @@ public class AuthStateManager {
             if (currentState == null) {
                 return new AuthState();
             }
-
             try {
                 return AuthState.jsonDeserialize(currentState);
             } catch (JSONException ex) {
@@ -169,8 +168,9 @@ public class AuthStateManager {
         }
     }
 
-    public void clear() {
+    public void clear(Context context) {
         AuthState currentState = getCurrent();
+        new EndSessionService(context).end(currentState);
         AuthState clearedState =
             new AuthState(currentState.getAuthorizationServiceConfiguration());
         if (currentState.getLastRegistrationResponse() != null) {

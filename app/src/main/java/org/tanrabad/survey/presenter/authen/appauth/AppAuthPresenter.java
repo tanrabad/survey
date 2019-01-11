@@ -223,7 +223,7 @@ public class AppAuthPresenter implements AuthenticatorPresent {
     }
 
     private void createAuthRequest() {
-        String loginHint = "hint";
+        String loginHint = "ทันระบาดสำรวจ";
         Log.i(TAG, "Creating auth request for login hint: " + loginHint);
         AuthorizationRequest.Builder authRequestBuilder = new AuthorizationRequest.Builder(
             mAuthStateManager.getCurrent().getAuthorizationServiceConfiguration(),

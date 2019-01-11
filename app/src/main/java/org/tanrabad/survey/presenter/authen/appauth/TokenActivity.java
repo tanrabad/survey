@@ -32,8 +32,11 @@ import net.openid.appauth.AuthorizationResponse;
 import net.openid.appauth.AuthorizationService;
 import net.openid.appauth.AuthorizationServiceDiscovery;
 import net.openid.appauth.ClientAuthentication;
+import net.openid.appauth.ClientSecretBasic;
+import net.openid.appauth.ClientSecretPost;
 import net.openid.appauth.TokenRequest;
 
+import org.tanrabad.survey.BuildConfig;
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.presenter.LoginActivity;
 import org.tanrabad.survey.presenter.TanrabadActivity;
@@ -107,7 +110,8 @@ public class TokenActivity extends TanrabadActivity {
             if (mUserInfoJson.get() != null) {
                 displayAuthorized();
             } else {
-                mStateManager.getCurrent().performActionWithFreshTokens(mAuthService, this::fetchUserInfo);
+                ClientAuthentication clientAuth = new ClientSecretPost(BuildConfig.TRB_AUTHEN_CLIENT_SECRET);
+                mStateManager.getCurrent().performActionWithFreshTokens(mAuthService, clientAuth, this::fetchUserInfo);
             }
             return;
         }
@@ -164,7 +168,7 @@ public class TokenActivity extends TanrabadActivity {
     private void exchangeAuthorizationCode(AuthorizationResponse authorizationResponse) {
         Log.i(TAG, "Request to Exchange token");
         final TokenRequest request = authorizationResponse.createTokenExchangeRequest();
-        performTokenRequest(
+          performTokenRequest(
             request,
             (tokenResponse, authException) -> {
                 mStateManager.updateAfterTokenResponse(tokenResponse, authException);
@@ -194,6 +198,7 @@ public class TokenActivity extends TanrabadActivity {
             return;
         }
 
+        clientAuthentication = new ClientSecretBasic(BuildConfig.TRB_AUTHEN_CLIENT_SECRET);
         mAuthService.performTokenRequest(
             request,
             clientAuthentication,
@@ -258,12 +263,7 @@ public class TokenActivity extends TanrabadActivity {
     private void signOut() {
         // discard the authorization and token state, but retain the configuration and
         // dynamic client registration (if applicable), to save from retrieving them again.
-        mStateManager.clear();
         mUserManager.clear();
-
-        Intent mainIntent = new Intent(this, LoginActivity.class);
-        mainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(mainIntent);
-        finish();
+        mStateManager.clear(this);
     }
 }

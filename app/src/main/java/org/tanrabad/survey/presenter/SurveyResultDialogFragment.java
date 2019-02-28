@@ -217,12 +217,14 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
             if (jsonEntomology.hiValue <= 10)
                 color = ResourceUtils.from(getActivity()).getColor(R.color.without_larvae);
             else if (jsonEntomology.hiValue <= 50)
-                color = ResourceUtils.from(getActivity()).getColor(R.color.amber_500);
+                color = ResourceUtils.from(getActivity()).getColor(R.color.have_larvae_warning);
             else
                 color = ResourceUtils.from(getActivity()).getColor(R.color.have_larvae);
         } else {
             if (jsonEntomology.ciValue == 0)
                 color = ResourceUtils.from(getActivity()).getColor(R.color.without_larvae);
+            else if (jsonEntomology.ciValue <= 5)
+                color = ResourceUtils.from(getContext()).getColor(R.color.have_larvae_warning);
             else
                 color = ResourceUtils.from(getActivity()).getColor(R.color.have_larvae);
         }

@@ -18,6 +18,6 @@
 
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
        android:shape="oval">
-    <solid android:color="#e64536" />
+    <solid android:color="@color/have_larvae" />
 
 </shape>

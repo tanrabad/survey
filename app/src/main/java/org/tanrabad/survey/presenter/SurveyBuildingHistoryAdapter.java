@@ -138,14 +138,14 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
             this.context = adapter.context;
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
-            surveyBuildingTextView = (TextView) itemView.findViewById(R.id.survey_building_name);
-            surveyBuildingIcon = (ImageView) itemView.findViewById(R.id.survey_building_icon);
+            surveyBuildingTextView = itemView.findViewById(R.id.survey_building_name);
+            surveyBuildingIcon = itemView.findViewById(R.id.survey_building_icon);
             surveyBuildingIcon.setImageResource(adapter.buildingIcon);
-            timeAgoView = (TimeAgoView) itemView.findViewById(R.id.time_ago);
-            duration = (TextView) itemView.findViewById(R.id.survey_duration);
-            containerIndex = (TextView) itemView.findViewById(R.id.survey_ci);
-            containerCount = (TextView) itemView.findViewById(R.id.survey_container_count);
-            notSync = (ImageView) itemView.findViewById(R.id.not_sync);
+            timeAgoView = itemView.findViewById(R.id.time_ago);
+            duration = itemView.findViewById(R.id.survey_duration);
+            containerIndex = itemView.findViewById(R.id.survey_ci);
+            containerCount = itemView.findViewById(R.id.survey_container_count);
+            notSync = itemView.findViewById(R.id.not_sync);
         }
 
         @Override
@@ -186,10 +186,13 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
 
         @DrawableRes
         private int getIconBackgroundByCi(ContainerIndex ciValue) {
+            if (ciValue.getTotalContainer() == 0)
+                return R.drawable.bg_icon;
+
             if (ciValue.getFoundLarvaeContainer() == 0) {
-                if (ciValue.getTotalContainer() == 0)
-                    return R.drawable.bg_icon;
                 return R.drawable.bg_icon_building_without_larvae;
+            } else if (ciValue.getFoundLarvaeContainer() <= 5) {
+                return R.drawable.bg_icon_building_have_larvae_warning;
             } else {
                 return R.drawable.bg_icon_building_have_larvae;
             }

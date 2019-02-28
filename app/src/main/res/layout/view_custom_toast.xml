@@ -8,7 +8,7 @@
           android:minHeight="48dp"
           android:padding="@dimen/space_between_content"
           android:background="@color/black"
-          android:textColor="@color/amber_500"
+          android:textColor="@color/amber"
           android:gravity="center"
           tools:text="Toast Message">
 </TextView>

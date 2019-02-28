@@ -28,18 +28,17 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.SphericalUtil;
-import org.tanrabad.survey.repository.BrokerBuildingRepository;
-import org.tanrabad.survey.repository.BrokerPlaceRepository;
-import org.tanrabad.survey.utils.android.ResourceUtils;
-import org.tanrabad.survey.utils.map.MarkerUtil;
+import java.util.List;
+import java.util.UUID;
+import org.tanrabad.survey.R;
 import org.tanrabad.survey.entity.Building;
 import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.entity.field.Location;
 import org.tanrabad.survey.entity.lookup.PlaceType;
-import org.tanrabad.survey.R;
-
-import java.util.List;
-import java.util.UUID;
+import org.tanrabad.survey.repository.BrokerBuildingRepository;
+import org.tanrabad.survey.repository.BrokerPlaceRepository;
+import org.tanrabad.survey.utils.android.ResourceUtils;
+import org.tanrabad.survey.utils.map.MarkerUtil;
 
 public class BuildingMapMarkerFragment extends MapMarkerFragment implements GoogleMap.OnMapLongClickListener,
         GoogleMap.OnMarkerDragListener, OnMapReadyCallback {
@@ -121,7 +120,7 @@ public class BuildingMapMarkerFragment extends MapMarkerFragment implements Goog
 
     private Marker addAnotherBuildingMarker(Building building) {
         LatLng buildingPosition = LocationUtils.convertLocationToLatLng(building.getLocation());
-        MarkerOptions markerOptions = MarkerUtil.buildMarkerOption(buildingPosition, R.color.amber_500, false);
+        MarkerOptions markerOptions = MarkerUtil.buildMarkerOption(buildingPosition, R.color.amber, false);
         markerOptions.title(getBuildingPrefix() + building.getName());
         return googleMap.addMarker(markerOptions);
     }

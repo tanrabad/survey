@@ -63,10 +63,16 @@
         android:id="@+id/survey_duplicate_count" android:layout_below="@+id/no_container_houses"
         style="@style/EntomologyText"/>
     <TextView
+        android:paddingLeft="@dimen/wide_space_between_content"
+        android:textIsSelectable="false"
+        tools:text="- จำนวนประชากรทั้งหมด 165 คน"
+        android:id="@+id/survey_person_count" android:layout_below="@+id/survey_duplicate_count"
+        style="@style/EntomologyText"/>
+    <TextView
         android:paddingTop="@dimen/wide_space_between_content"
         tools:text="ภาชนะสำรวจทั้งหมด 1000 พบ 50"
         android:id="@+id/container_count"
-        android:layout_below="@+id/survey_duplicate_count"
+        android:layout_below="@+id/survey_person_count"
         android:textIsSelectable="false"
         android:layout_marginBottom="@dimen/screen_vertical_margin" style="@style/EntomologyText"/>
     <TextView

@@ -79,6 +79,7 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
     private TextView surveyFoundCountView;
     private TextView surveyNotFoundCountView;
     private TextView surveyDuplicateView;
+    private TextView surveyPersonCountView;
     private TextView noContainerHousesView;
     private TextView containerCountView;
     private LinearLayout indoorContainerLayout;
@@ -121,6 +122,7 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
         surveyCountView = view.findViewById(R.id.survey_count);
         surveyFoundCountView = view.findViewById(R.id.survey_found_count);
         surveyNotFoundCountView = view.findViewById(R.id.survey_not_found_count);
+        surveyPersonCountView = view.findViewById(R.id.survey_person_count);
         noContainerHousesView = view.findViewById(R.id.no_container_houses);
         surveyDuplicateView = view.findViewById(R.id.survey_duplicate_count);
         containerCountView = view.findViewById(R.id.container_count);
@@ -260,6 +262,7 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
         setSurveyNotFoundCount(jsonEntomology);
         setNoContainerHouseCount(jsonEntomology);
         setDuplicateSurveyCount(jsonEntomology);
+        setSumPersonCount(jsonEntomology);
         setSurveyContainerCount(jsonEntomology);
         setKeyContainerInfo(jsonEntomology);
     }
@@ -310,6 +313,11 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
     private void setDuplicateSurveyCount(JsonEntomology jsonEntomology) {
         surveyDuplicateView.setText(String.format(getString(R.string.duplicate_survey_count),
                 jsonEntomology.numDuplicateSurvey));
+    }
+
+    private void setSumPersonCount(JsonEntomology jsonEntomology) {
+        surveyPersonCountView.setText(String.format(getString(R.string.sum_person_count),
+            jsonEntomology.sumPersonCount));
     }
 
     private void setKeyContainerInfo(JsonEntomology jsonEntomology) {

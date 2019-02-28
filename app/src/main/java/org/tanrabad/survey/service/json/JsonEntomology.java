@@ -19,10 +19,9 @@ package org.tanrabad.survey.service.json;
 
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
-import org.joda.time.DateTime;
-
 import java.util.List;
 import java.util.UUID;
+import org.joda.time.DateTime;
 
 @JsonObject
 public class JsonEntomology {
@@ -89,6 +88,9 @@ public class JsonEntomology {
     @JsonField(name = "key_container_out")
     public List<JsonKeyContainer> keyContainerOut;
 
+    @JsonField(name = "sum_person_count")
+    public int sumPersonCount;
+
     @Override
     public String toString() {
         return "JsonEntomology{"
@@ -113,6 +115,7 @@ public class JsonEntomology {
                 + ", ciValue=" + ciValue
                 + ", keyContainerIn=" + keyContainerIn
                 + ", keyContainerOut=" + keyContainerOut
+                + ", sumPersonCount=" + sumPersonCount
                 + '}';
     }
 }

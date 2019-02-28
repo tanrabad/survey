@@ -1,11 +1,8 @@
 package org.tanrabad.survey.service.json;
 
 import com.bluelinelabs.logansquare.LoganSquare;
-
-import org.junit.Test;
-
 import java.util.List;
-
+import org.junit.Test;
 import org.tanrabad.survey.utils.ResourceFile;
 
 import static org.junit.Assert.assertEquals;
@@ -34,6 +31,7 @@ public class JsonEntomologyTest {
         assertEquals(54.00, jsonEntomology1.hiValue, 0);
         assertEquals(25.00, jsonEntomology1.ciValue, 0);
         assertEquals(125.00, jsonEntomology1.biValue, 0);
+        assertEquals(0, jsonEntomology1.sumPersonCount);
         assertEquals("แจกัน", jsonEntomology1.keyContainerIn.get(0).containerName);
         assertEquals("น้ำใช้", jsonEntomology1.keyContainerIn.get(1).containerName);
         assertEquals("ที่รองกันมด", jsonEntomology1.keyContainerIn.get(2).containerName);

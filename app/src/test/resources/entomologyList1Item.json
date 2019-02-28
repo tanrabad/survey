@@ -20,6 +20,7 @@
     "hi_value": "54.00",
     "bi_value": "125.00",
     "ci_value": "25.00",
+    "sum_person_count": null,
     "key_container_in": [
       {
         "rank": 1,

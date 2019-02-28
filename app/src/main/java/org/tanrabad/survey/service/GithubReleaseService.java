@@ -18,18 +18,15 @@
 package org.tanrabad.survey.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
-
-import org.tanrabad.survey.service.json.GithubReleaseJson;
-
 import java.io.IOException;
-
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.tanrabad.survey.service.json.GithubReleaseJson;
 
 public class GithubReleaseService {
 
-    private static final String LATEST_URL = "https://api.github.com/repos/tanrabad/survey/releases/latest";
+    private static final String LATEST_URL = "https://api.tanrabad.org/v2/info/releases/latest";
 
     protected final OkHttpClient client = new OkHttpClient();
 

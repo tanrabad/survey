@@ -16,60 +16,67 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@drawable/line_divider"/>
+        android:background="@drawable/line_divider"
+        />
 
     <ImageView
         android:id="@+id/container_icon"
-        style="@style/ListIcon"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:background="@null"
         android:contentDescription="@string/survey_container_description"
         android:scaleType="centerInside"
-        tools:src="@mipmap/ic_container_pot_saucer"/>
+        tools:src="@mipmap/ic_container_pot_saucer"
+        style="@style/ListIcon"
+        />
 
     <TextView
         android:id="@+id/container_type"
-        style="@style/ListTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/container_icon"
         android:layout_centerHorizontal="true"
         android:maxLines="1"
         android:textIsSelectable="false"
-        tools:text="ประเภทภาชนะ"/>
+        tools:text="ประเภทภาชนะ"
+        style="@style/ListTitle"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/container_type"
         android:layout_centerHorizontal="true"
-        android:paddingBottom="@dimen/list_padding_bottom"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/list_padding_bottom"
+        >
 
         <org.tanrabad.survey.presenter.view.StepPopupEditText
             android:id="@+id/total_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_edittext_number"
+            android:gravity="center"
+            android:hint="@string/total"
             android:imeOptions="actionNext"
             android:inputType="number"
             android:maxLength="3"
+            android:maxLines="1"
             android:minEms="3"
-            android:gravity="center"
-            android:hint="@string/total"
             android:padding="@dimen/space_between_content"
             android:textColor="@color/black"
-            android:textSize="@dimen/text_body"/>
+            android:textSize="@dimen/text_body"
+            />
 
         <org.tanrabad.survey.presenter.view.StepPopupEditText
             android:id="@+id/found_larvae_container"
@@ -78,15 +85,16 @@
             android:layout_marginLeft="@dimen/space_between_content"
             android:layout_marginStart="@dimen/space_between_content"
             android:background="@drawable/bg_edittext_number"
+            android:gravity="center"
             android:hint="@string/found"
             android:imeOptions="actionNext"
             android:inputType="number"
-            android:minEms="3"
-
-            android:gravity="center"
             android:maxLength="3"
+            android:maxLines="1"
+            android:minEms="3"
             android:padding="@dimen/space_between_content"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            />
     </LinearLayout>
 
 </RelativeLayout>

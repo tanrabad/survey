@@ -21,7 +21,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:onClick="onRootViewClick">
+    android:onClick="onRootViewClick"
+    >
 
     <include layout="@layout/toolbar"/>
 
@@ -31,11 +32,13 @@
         android:layout_margin="@dimen/screen_horizontal_margin"
         android:onClick="onRootViewClick"
         android:orientation="vertical"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            >
 
             <EditText
                 android:id="@+id/place_name"
@@ -43,15 +46,19 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/place_name"
                 android:inputType="text"
+                android:maxLength="254"
+                android:maxLines="1"
                 android:textSize="@dimen/text_title"
-                tools:text="ชุมชนคลองหลวง"/>
+                tools:text="ชุมชนคลองหลวง"
+                />
         </android.support.design.widget.TextInputLayout>
 
         <include layout="@layout/view_place_type_form"/>
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            >
 
             <nectec.thai.widget.address.AddressPicker
                 android:id="@+id/address_select"
@@ -60,7 +67,8 @@
                 android:hint="@string/address"
                 android:paddingEnd="24dp"
                 android:paddingLeft="4dp"
-                android:paddingRight="24dp"/>
+                android:paddingRight="24dp"
+                />
 
         </android.support.design.widget.TextInputLayout>
 

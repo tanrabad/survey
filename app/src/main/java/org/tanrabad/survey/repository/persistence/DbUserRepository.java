@@ -21,14 +21,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
+import java.util.List;
 import org.tanrabad.survey.domain.organization.OrganizationRepository;
 import org.tanrabad.survey.domain.user.UserRepository;
 import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.repository.BrokerOrganizationRepository;
 import org.tanrabad.survey.utils.collection.CursorMapper;
-
-import java.util.List;
 
 public class DbUserRepository extends DbRepository implements UserRepository {
 
@@ -44,11 +42,10 @@ public class DbUserRepository extends DbRepository implements UserRepository {
         this.organizationRepository = organizationRepository;
     }
 
-    @Override
-    public User findByUsername(String userName) {
+    @Override public User findByUsername(String userName) {
         SQLiteDatabase db = readableDatabase();
-        Cursor cursor = db.query(TABLE_NAME, UserColumn.wildcard(),
-                UserColumn.USERNAME + "=?", new String[]{userName}, null, null, null);
+        Cursor cursor = db.query(TABLE_NAME, UserColumn.wildcard(), UserColumn.USERNAME + "=?",
+            new String[] { userName }, null, null, null);
         User user = getUser(cursor);
         db.close();
         return user;
@@ -69,8 +66,7 @@ public class DbUserRepository extends DbRepository implements UserRepository {
         return new UserCursorMapper(cursor, organizationRepository);
     }
 
-    @Override
-    public boolean save(User user) {
+    @Override public boolean save(User user) {
         ContentValues values = userContentValues(user);
         SQLiteDatabase db = writableDatabase();
         boolean success = saveByContentValues(db, values);
@@ -96,8 +92,7 @@ public class DbUserRepository extends DbRepository implements UserRepository {
         return db.insert(TABLE_NAME, null, user) != ERROR_INSERT_ID;
     }
 
-    @Override
-    public boolean update(User user) {
+    @Override public boolean update(User user) {
         ContentValues values = userContentValues(user);
         SQLiteDatabase db = writableDatabase();
         boolean success = updateByContentValues(db, values);
@@ -105,17 +100,15 @@ public class DbUserRepository extends DbRepository implements UserRepository {
         return success;
     }
 
-    @Override
-    public boolean delete(User data) {
+    @Override public boolean delete(User data) {
         return false;
     }
 
-    @Override
-    public void updateOrInsert(List<User> users) {
-
+    @Override public void updateOrInsert(List<User> users) {
     }
 
     private boolean updateByContentValues(SQLiteDatabase db, ContentValues user) {
-        return db.update(TABLE_NAME, user, UserColumn.USERNAME + "=?", new String[]{user.getAsString(UserColumn.USERNAME)}) > 0;
+        return db.update(TABLE_NAME, user, UserColumn.USERNAME + "=?",
+            new String[] { user.getAsString(UserColumn.USERNAME) }) > 0;
     }
 }

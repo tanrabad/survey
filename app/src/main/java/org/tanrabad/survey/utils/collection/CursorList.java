@@ -35,6 +35,7 @@ public class CursorList<T> extends AbstractList<T> {
                 cursor.close();
             }
         } catch (IllegalStateException ignore) {
+            //ignore
         }
     }
 

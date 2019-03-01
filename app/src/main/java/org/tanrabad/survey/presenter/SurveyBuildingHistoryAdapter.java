@@ -189,13 +189,13 @@ public class SurveyBuildingHistoryAdapter extends RecyclerView.Adapter<SurveyBui
             if (ciValue.getTotalContainer() == 0)
                 return R.drawable.bg_icon;
 
-            if (ciValue.getFoundLarvaeContainer() == 0) {
-                return R.drawable.bg_icon_building_without_larvae;
-            } else if (ciValue.getFoundLarvaeContainer() <= 5) {
-                return R.drawable.bg_icon_building_have_larvae_warning;
-            } else {
+            float value = ciValue.calculate();
+            if (value > 5.0)
                 return R.drawable.bg_icon_building_have_larvae;
-            }
+             else if (value > 0.0)
+                return R.drawable.bg_icon_building_have_larvae_warning;
+             else
+                return R.drawable.bg_icon_building_without_larvae;
         }
     }
 }

@@ -26,8 +26,14 @@ class Version implements Comparable<Version> {
     public final int major;
     public final int minor;
     public final int patch;
+    public final boolean isPreRelease;
 
     public Version(String name) {
+        this(name, false);
+    }
+
+    public Version(String name, boolean isPreRelease) {
+        this.isPreRelease = isPreRelease;
         Pattern pattern = Pattern.compile("^v?(\\d+\\.)(\\d+\\.)(\\*|\\d+)(.*)");
         Matcher matcher = pattern.matcher(name.trim());
 

@@ -30,7 +30,7 @@ public class GithubReleaseJson {
     String name;
 
     @JsonField
-    boolean prerelease;
+    public boolean prerelease;
 
     @JsonField
     String body;

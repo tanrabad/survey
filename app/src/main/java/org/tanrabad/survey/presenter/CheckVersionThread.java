@@ -22,6 +22,7 @@ import android.os.Message;
 
 import org.tanrabad.survey.BuildConfig;
 import org.tanrabad.survey.service.GithubReleaseService;
+import org.tanrabad.survey.service.json.GithubReleaseJson;
 
 public class CheckVersionThread extends Thread {
 
@@ -45,8 +46,9 @@ public class CheckVersionThread extends Thread {
         }
 
         GithubReleaseService service = new GithubReleaseService();
-        Version latest = new Version(service.getLatest().tagName);
-        if (pause)
+        GithubReleaseJson json = service.getLatest();
+        Version latest = new Version(json.tagName, json.prerelease);
+        if (pause || latest.isPreRelease)
             return;
 
         if (latest.compareTo(new Version(BuildConfig.VERSION_NAME)) > 0) {

@@ -28,7 +28,7 @@ class Version implements Comparable<Version> {
     public final int patch;
 
     public Version(String name) {
-        Pattern pattern = Pattern.compile("^(\\d+\\.)(\\d+\\.)(\\*|\\d+)(.*)");
+        Pattern pattern = Pattern.compile("^v?(\\d+\\.)(\\d+\\.)(\\*|\\d+)(.*)");
         Matcher matcher = pattern.matcher(name.trim());
 
         if (matcher.matches()) {

@@ -37,4 +37,13 @@ public class VersionTest {
         assertEquals(-1, v1_1_1.compareTo(new Version("1.1.5")));
         assertEquals(1, v1_1_1.compareTo(new Version("1.1.0")));
     }
+
+    @Test
+    public void handleVPrefix() {
+        Version v2 = new Version("v2.0.0");
+
+        assertEquals(2, v2.major);
+        assertEquals(0, v2.minor);
+        assertEquals(0, v2.patch);
+    }
 }

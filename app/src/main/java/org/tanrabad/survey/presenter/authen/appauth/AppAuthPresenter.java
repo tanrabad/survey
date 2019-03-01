@@ -248,7 +248,7 @@ public class AppAuthPresenter implements AuthenticatorPresent {
                 Log.i(TAG, "Warming up browser instance for auth request");
                 CustomTabsIntent.Builder intentBuilder =
                     mAuthService.createCustomTabsIntentBuilder(mAuthRequest.get().toUri());
-                intentBuilder.setToolbarColor(ContextCompat.getColor(activity, R.color.dark_pink));
+                intentBuilder.setToolbarColor(ContextCompat.getColor(activity, R.color.purple_dark));
                 mAuthIntent.set(intentBuilder.build());
                 mAuthIntentLatch.countDown();
             }

@@ -35,6 +35,7 @@ apply plugin: "com.github.triplet.play"
 apply plugin: "io.fabric"
 apply plugin: "com.noveogroup.android.check"
 apply plugin: 'com.google.android.gms.oss-licenses-plugin'
+apply plugin: 'com.google.firebase.firebase-perf'
 
 repositories {
     maven { url "https://maven.fabric.io/public" }
@@ -159,6 +160,7 @@ dependencies {
     implementation "com.google.android.gms:play-services-location:16.0.0"
     implementation "com.google.android.gms:play-services-maps:16.0.0"
     implementation 'com.google.android.gms:play-services-oss-licenses:16.0.1'
+    implementation 'com.google.firebase:firebase-perf:16.2.3'
     implementation("com.google.maps.android:android-maps-utils:0.4.3") { exclude(group: "com.google.android.gms") }
     implementation "com.bartoszlipinski.recyclerviewheader:library:1.2.1"
     implementation "com.bluelinelabs:logansquare:$loganSquareVersion"

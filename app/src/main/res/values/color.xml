@@ -28,7 +28,9 @@
     <color name="lighter_gray">#F5F5F5</color>
     <color name="light_gray">#e2e2e2</color>
     <color name="white">#ffffff</color>
+    <color name="white_transparent_70">#A3FFFFFF</color>
     <color name="white_transparent_50">#80FFFFFF</color>
+    <color name="white_transparent_20">#33FFFFFF</color>
     <color name="transparent">#00000000</color>
     <color name="black_transparent_10">#1A000000</color>
     <color name="black_transparent_20">#33000000</color>

@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/powered_by"
-            android:textColor="@color/dark_gray"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
             android:textSize="@dimen/text_micro"
             tools:ignore="MissingPrefix"/>
 
@@ -46,6 +46,7 @@
             android:layout_height="@dimen/login_nectec_size"
             android:layout_marginBottom="@dimen/space_between_content"
             android:contentDescription="@string/nectec"
+            android:tint="@color/white"
             android:src="@drawable/logo_nectec"/>
 
         <TextView
@@ -54,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="@string/copyright"
-            android:textColor="@color/dark_gray"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
             android:textSize="@dimen/text_micro"
             tools:ignore="MissingPrefix"/>
     </LinearLayout>

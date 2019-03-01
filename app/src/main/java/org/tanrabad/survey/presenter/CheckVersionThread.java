@@ -47,6 +47,11 @@ public class CheckVersionThread extends Thread {
 
         GithubReleaseService service = new GithubReleaseService();
         GithubReleaseJson json = service.getLatest();
+        if (json == null) {
+            handler.sendEmptyMessage(ALREADY_LATEST);
+            return;
+        }
+
         Version latest = new Version(json.tagName, json.prerelease);
         if (pause)
             return;

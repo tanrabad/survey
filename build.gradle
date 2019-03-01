@@ -38,7 +38,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath 'com.android.tools.build:gradle:3.3.0'
         classpath 'com.github.triplet.gradle:play-publisher:1.2.0'
         classpath 'com.google.gms:google-services:4.2.0'
         classpath 'com.google.android.gms:oss-licenses-plugin:0.9.4'

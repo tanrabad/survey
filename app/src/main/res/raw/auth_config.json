@@ -1,8 +1,8 @@
 {
-  "client_id": "@!A871.F0C5.9087.893C!0001!9487.9311!0008!7D5A.5CFC.9D50.40CF",
+  "client_id": "@!CC8B.844C.CAFD.33D3!0001!D1B9.B319!0008!EA82.C976.79CB.04AD",
   "redirect_uri": "iaamscheme://localhost/iaamredirect",
   "authorization_scope": "openid email profile",
-  "discovery_uri": "https://iaamtest.lsr.nectec.or.th/.well-known/openid-configuration",
+  "discovery_uri": "https://authen.tanrabad.org/.well-known/openid-configuration",
   "authorization_endpoint_uri": "",
   "token_endpoint_uri": "",
   "registration_endpoint_uri": "",

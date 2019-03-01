@@ -36,7 +36,7 @@ import okhttp3.Response;
 
 class EndSessionService {
 
-    private static final String URL = "https://iaamtest.lsr.nectec.or.th/oxauth/restv1/end_session" +
+    private static final String URL = "https://authen.tanrabad.org/oxauth/restv1/end_session" +
         "?id_token_hint=%s&post_logout_redirect_uri=trb-survey://localhost/signout";
 
     protected final OkHttpClient client = new OkHttpClient();

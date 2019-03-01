@@ -208,7 +208,7 @@
     <string name="google_maps_key">Google Maps Keys</string>
     <string name="blind_google_maps_key">%1$s*******************************%2$s</string>
     <string name="trb_authen_key">TanRabad-Authen Key</string>
-    <string name="blind_trb_authen_key">%1$s.************************.%2$s  (*****%3$s)</string>
+    <string name="blind_trb_authen_key">%1$s******</string>
     <string name="nearby_places">สถานที่ใกล้เคียง</string>
     <string name="nearby_places_not_found">ไม่พบสถานที่ใกล้เคียง</string>
     <string name="nearby_places_caption">สถานที่ใกล้เคียงภายในระยะประมาณ 10 กม.</string>

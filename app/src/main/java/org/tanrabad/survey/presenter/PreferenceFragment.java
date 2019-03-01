@@ -30,16 +30,13 @@ public class PreferenceFragment extends PreferenceFragmentCompat {
 
         findPreference("google_maps_key").setSummary(googleMapKey());
         findPreference("trb_authen_key").setSummary(trbAuthenKey());
-
     }
 
 
     private String trbAuthenKey() {
         try {
             return getString(R.string.blind_trb_authen_key,
-                BuildConfig.TRB_AUTHEN_CLIENT_ID.substring(0, 6),
-                BuildConfig.TRB_AUTHEN_CLIENT_ID.substring(47),
-                BuildConfig.TRB_AUTHEN_CLIENT_SECRET.substring(5));
+                BuildConfig.TRB_AUTHEN_CLIENT_SECRET.substring(0, 7));
         } catch (IndexOutOfBoundsException ex) {
             return "ERROR!!";
         }

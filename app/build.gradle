@@ -64,7 +64,6 @@ android {
                                 appAuthRedirectScheme: 'iaamscheme'
         ]
         resValue "string", "app_build_time", "build $buildTime"
-        buildConfigField "String", "TRB_AUTHEN_CLIENT_ID", "\"$clientId\""
         buildConfigField "String", "TRB_AUTHEN_CLIENT_SECRET", "\"$clientSecret\""
         buildConfigField "String", "API_BASE_URL_TEST", "\"$apiBaseUrlTest\""
         buildConfigField "int", "SURVEY_RANGE_DAY", "1"

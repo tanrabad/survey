@@ -18,11 +18,11 @@
 package org.tanrabad.survey.presenter.authen;
 
 import com.bluelinelabs.logansquare.LoganSquare;
-
 import org.junit.Test;
 import org.tanrabad.survey.utils.ResourceFile;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class UserProfileMapperTest {
 
@@ -38,6 +38,8 @@ public class UserProfileMapperTest {
         assertEquals(profile.orgName, "สถาบันป้องกันควบคุมโรคเขตเมือง");
         assertEquals(profile.getFirstName(), "สำนักงานป้องกันควบคุมโรคที่ 13");
         assertEquals(profile.getLastName(), "ทดสอบ");
+        assertTrue(profile.isEmailVerified());
+        assertTrue(profile.isActive());
 
         Param param = profile.getParam();
         assertEquals(param.orgQueryString, "hr_code=dpc-13");

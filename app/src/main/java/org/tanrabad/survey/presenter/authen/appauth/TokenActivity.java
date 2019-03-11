@@ -22,27 +22,9 @@ import android.os.Bundle;
 import android.support.annotation.MainThread;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import net.openid.appauth.AppAuthConfiguration;
-import net.openid.appauth.AuthState;
-import net.openid.appauth.AuthorizationException;
-import net.openid.appauth.AuthorizationResponse;
-import net.openid.appauth.AuthorizationService;
-import net.openid.appauth.AuthorizationServiceDiscovery;
-import net.openid.appauth.ClientAuthentication;
-import net.openid.appauth.ClientSecretBasic;
-import net.openid.appauth.ClientSecretPost;
-import net.openid.appauth.TokenRequest;
-
-import org.tanrabad.survey.BuildConfig;
-import org.tanrabad.survey.R;
-import org.tanrabad.survey.presenter.LoginActivity;
-import org.tanrabad.survey.presenter.TanrabadActivity;
-import org.tanrabad.survey.presenter.authen.Authenticator;
-import org.tanrabad.survey.presenter.authen.UserProfile;
-
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -51,8 +33,22 @@ import java.nio.charset.Charset;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicReference;
-
+import net.openid.appauth.AppAuthConfiguration;
+import net.openid.appauth.AuthorizationException;
+import net.openid.appauth.AuthorizationResponse;
+import net.openid.appauth.AuthorizationService;
+import net.openid.appauth.AuthorizationServiceDiscovery;
+import net.openid.appauth.ClientAuthentication;
+import net.openid.appauth.ClientSecretBasic;
+import net.openid.appauth.ClientSecretPost;
+import net.openid.appauth.TokenRequest;
 import okio.Okio;
+import org.tanrabad.survey.BuildConfig;
+import org.tanrabad.survey.R;
+import org.tanrabad.survey.presenter.LoginActivity;
+import org.tanrabad.survey.presenter.TanrabadActivity;
+import org.tanrabad.survey.presenter.authen.Authenticator;
+import org.tanrabad.survey.presenter.authen.UserProfile;
 
 public class TokenActivity extends TanrabadActivity {
     private static final String TAG = "TokenActivity";
@@ -63,8 +59,11 @@ public class TokenActivity extends TanrabadActivity {
     private AuthorizationService mAuthService;
     private AuthStateManager mStateManager;
     private UserProfileManager mUserManager;
+    private UserStateManager mUserStateManager;
     private final AtomicReference<UserProfile> mUserInfoJson = new AtomicReference<>();
     private ExecutorService mExecutor;
+    private View authenButton;
+    private View logoutButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +83,13 @@ public class TokenActivity extends TanrabadActivity {
 
         mUserInfoJson.compareAndSet(null, mUserManager.getProfile());
 
-        findViewById(R.id.logout).setOnClickListener(v -> signOut());
-        findViewById(R.id.authentication_button).setOnClickListener(v -> {
+        logoutButton = findViewById(R.id.logout);
+        logoutButton.setVisibility(View.GONE);
+        logoutButton.setOnClickListener(v -> signOut());
+
+        authenButton = findViewById(R.id.authentication_button);
+        authenButton.setVisibility(View.GONE);
+        authenButton.setOnClickListener(v -> {
             UserProfile profile = mUserInfoJson.get();
             Authenticator auth = new Authenticator(null);
             auth.setAuthenWith(profile);
@@ -98,6 +102,8 @@ public class TokenActivity extends TanrabadActivity {
         });
     }
 
+
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -107,7 +113,8 @@ public class TokenActivity extends TanrabadActivity {
         }
 
         if (mStateManager.getCurrent().isAuthorized()) {
-            if (mUserInfoJson.get() != null) {
+            UserProfile profile = mUserInfoJson.get();
+            if (profile != null) {
                 displayAuthorized();
             } else {
                 ClientAuthentication clientAuth = new ClientSecretPost(BuildConfig.TRB_AUTHEN_CLIENT_SECRET);
@@ -138,6 +145,15 @@ public class TokenActivity extends TanrabadActivity {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if (mUserStateManager != null && mUserStateManager.isPerformedAction()) {
+            ClientAuthentication clientAuth = new ClientSecretPost(BuildConfig.TRB_AUTHEN_CLIENT_SECRET);
+            mStateManager.getCurrent().performActionWithFreshTokens(mAuthService, clientAuth, this::fetchUserInfo);
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         mAuthService.dispose();
@@ -151,15 +167,23 @@ public class TokenActivity extends TanrabadActivity {
 
     @MainThread
     private void displayAuthorized() {
-        AuthState state = mStateManager.getCurrent();
         Log.i(TAG, "Display Authorized");
+        authenButton.setVisibility(View.GONE);
+        logoutButton.setVisibility(View.GONE);
 
         UserProfile userInfo = mUserInfoJson.get();
         if (userInfo != null) {
-            Log.i(TAG, "user=" + userInfo.toString());
-            ((TextView) findViewById(R.id.username)).setText(userInfo.userName);
-            ((TextView) findViewById(R.id.user_fullname)).setText(userInfo.name);
-            ((TextView) findViewById(R.id.organization)).setText(userInfo.orgName);
+            mUserStateManager = new UserStateManager(userInfo);
+            if (mUserStateManager.isRequireAction()) {
+                mUserStateManager.performRequireAction(this);
+            } else {
+                Log.i(TAG, "user=" + userInfo.toString());
+                ((TextView) findViewById(R.id.username)).setText(userInfo.userName);
+                ((TextView) findViewById(R.id.user_fullname)).setText(userInfo.name);
+                ((TextView) findViewById(R.id.organization)).setText(userInfo.orgName);
+                authenButton.setVisibility(View.VISIBLE);
+                logoutButton.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -173,7 +197,7 @@ public class TokenActivity extends TanrabadActivity {
             (tokenResponse, authException) -> {
                 mStateManager.updateAfterTokenResponse(tokenResponse, authException);
                 if (!mStateManager.getCurrent().isAuthorized()) {
-                    final String message = "Authorization Code exchange failed"
+                    final String message = "Authorization Code exchange failed - "
                         + ((authException != null) ? authException.error : "");
                     Log.e(TAG, message);
                     runOnUiThread(() -> displayNotAuthorized(message));
@@ -210,17 +234,11 @@ public class TokenActivity extends TanrabadActivity {
         if (ex != null) {
             Log.e(TAG, "Token refresh failed when fetching user info");
             mUserInfoJson.set(null);
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    displayAuthorized();
-                }
-            });
+            runOnUiThread(this::displayAuthorized);
             return;
         }
 
-        AuthorizationServiceDiscovery discovery =
-            mStateManager.getCurrent()
+        AuthorizationServiceDiscovery discovery = mStateManager.getCurrent()
                 .getAuthorizationServiceConfiguration()
                 .discoveryDoc;
 

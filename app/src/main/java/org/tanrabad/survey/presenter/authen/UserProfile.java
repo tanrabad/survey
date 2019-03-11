@@ -20,12 +20,10 @@ package org.tanrabad.survey.presenter.authen;
 import com.bluelinelabs.logansquare.LoganSquare;
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
-
 import java.io.IOException;
 
 @JsonObject
 public class UserProfile {
-
 
     @JsonField
     String email;
@@ -47,6 +45,18 @@ public class UserProfile {
     String paramStr;
     @JsonField(name = "user_name")
     public String userName;
+    @JsonField
+    String emailVerified;
+    @JsonField
+    public String userState;
+
+    public boolean isEmailVerified() {
+        return "true".equals(emailVerified);
+    }
+
+    public boolean isActive() {
+        return "active".equals(userState);
+    }
 
     String getFirstName() {
         return givenName;

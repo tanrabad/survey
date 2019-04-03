@@ -173,16 +173,16 @@ public class TokenActivity extends TanrabadActivity {
 
         UserProfile userInfo = mUserInfoJson.get();
         if (userInfo != null) {
+            ((TextView) findViewById(R.id.username)).setText(userInfo.userName);
+            ((TextView) findViewById(R.id.user_fullname)).setText(userInfo.name);
+            ((TextView) findViewById(R.id.organization)).setText(userInfo.orgName);
+            logoutButton.setVisibility(View.VISIBLE);
             mUserStateManager = new UserStateManager(userInfo);
             if (mUserStateManager.isRequireAction()) {
                 mUserStateManager.performRequireAction(this);
             } else {
                 Log.i(TAG, "user=" + userInfo.toString());
-                ((TextView) findViewById(R.id.username)).setText(userInfo.userName);
-                ((TextView) findViewById(R.id.user_fullname)).setText(userInfo.name);
-                ((TextView) findViewById(R.id.organization)).setText(userInfo.orgName);
                 authenButton.setVisibility(View.VISIBLE);
-                logoutButton.setVisibility(View.VISIBLE);
             }
         }
     }

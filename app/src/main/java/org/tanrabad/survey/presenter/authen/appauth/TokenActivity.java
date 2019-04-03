@@ -90,6 +90,10 @@ public class TokenActivity extends TanrabadActivity {
         authenButton = findViewById(R.id.authentication_button);
         authenButton.setVisibility(View.GONE);
         authenButton.setOnClickListener(v -> {
+            if (mUserStateManager != null && mUserStateManager.isRequireAction()) {
+                checkAuthorize();
+                return;
+            }
             UserProfile profile = mUserInfoJson.get();
             Authenticator auth = new Authenticator(null);
             auth.setAuthenWith(profile);
@@ -100,14 +104,10 @@ public class TokenActivity extends TanrabadActivity {
             finish();
             startActivity(intent);
         });
+        checkAuthorize();
     }
 
-
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
+    private void checkAuthorize() {
         if (mExecutor.isShutdown()) {
             mExecutor = Executors.newSingleThreadExecutor();
         }
@@ -145,15 +145,6 @@ public class TokenActivity extends TanrabadActivity {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        if (mUserStateManager != null && mUserStateManager.isPerformedAction()) {
-            ClientAuthentication clientAuth = new ClientSecretPost(BuildConfig.TRB_AUTHEN_CLIENT_SECRET);
-            mStateManager.getCurrent().performActionWithFreshTokens(mAuthService, clientAuth, this::fetchUserInfo);
-        }
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         mAuthService.dispose();
@@ -177,12 +168,10 @@ public class TokenActivity extends TanrabadActivity {
             ((TextView) findViewById(R.id.user_fullname)).setText(userInfo.name);
             ((TextView) findViewById(R.id.organization)).setText(userInfo.orgName);
             logoutButton.setVisibility(View.VISIBLE);
+            authenButton.setVisibility(View.VISIBLE);
             mUserStateManager = new UserStateManager(userInfo);
             if (mUserStateManager.isRequireAction()) {
                 mUserStateManager.performRequireAction(this);
-            } else {
-                Log.i(TAG, "user=" + userInfo.toString());
-                authenButton.setVisibility(View.VISIBLE);
             }
         }
     }

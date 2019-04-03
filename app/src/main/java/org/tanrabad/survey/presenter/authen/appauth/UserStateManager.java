@@ -13,7 +13,7 @@ class UserStateManager {
     private static final String REG_URL = "https://authen.tanrabad.org/iaamreg/";
 
     private UserProfile userProfile;
-    private Boolean performedAction;
+    private Boolean performedAction = false;
 
     UserStateManager(UserProfile userProfile) {
         this.userProfile = userProfile;

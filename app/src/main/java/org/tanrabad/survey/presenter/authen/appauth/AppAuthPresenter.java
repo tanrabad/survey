@@ -232,10 +232,6 @@ public class AppAuthPresenter implements AuthenticatorPresent {
             mConfiguration.getRedirectUri())
             .setScope(mConfiguration.getScope());
 
-        if (!TextUtils.isEmpty(loginHint)) {
-            authRequestBuilder.setLoginHint(loginHint);
-        }
-
         mAuthRequest.set(authRequestBuilder.build());
     }
 

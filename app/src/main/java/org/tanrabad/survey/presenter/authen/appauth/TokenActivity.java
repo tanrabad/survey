@@ -231,7 +231,6 @@ public class TokenActivity extends TanrabadActivity {
                     Log.e(TAG, message);
                     runOnUiThread(() -> displayNotAuthorized(message));
                 } else {
-                    runOnUiThread(this::displayAuthorized);
                     mStateManager.getCurrent().performActionWithFreshTokens(mAuthService, this::fetchUserInfo);
                 }
             });

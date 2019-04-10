@@ -66,17 +66,6 @@
                 <data
                     android:host="www.tanrabad.org"
                     android:pathPrefix="/survey"
-                    android:scheme="http" />
-            </intent-filter>
-            <intent-filter android:autoVerify="true">
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="www.tanrabad.org"
-                    android:pathPrefix="/survey"
                     android:scheme="https" />
             </intent-filter>
         </activity>
@@ -194,18 +183,6 @@
             android:theme="@style/AppTheme.SplashScreen"
             android:label="Email verified">
             <tools:validation testUrl="https://www.tanrabad.org/emailverified" />
-
-            <intent-filter android:autoVerify="true">
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:scheme="http"
-                    android:host="www.tanrabad.org"
-                    android:pathPrefix="/emailverified" />
-            </intent-filter>
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 

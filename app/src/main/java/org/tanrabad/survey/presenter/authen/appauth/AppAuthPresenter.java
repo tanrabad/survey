@@ -275,8 +275,7 @@ public class AppAuthPresenter implements AuthenticatorPresent {
             Intent intent = new Intent(activity, TokenActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             activity.startActivity(intent);
-        }
-        else
+        } else
             doAuth();
     }
 

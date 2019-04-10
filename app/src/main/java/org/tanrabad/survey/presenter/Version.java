@@ -59,6 +59,6 @@ class Version implements Comparable<Version> {
 
     @Override
     public String toString() {
-        return major +"."+ minor + "." + patch;
+        return major + "." + minor + "." + patch;
     }
 }

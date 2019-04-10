@@ -86,13 +86,13 @@ public class UserProfile {
 
     @Override
     public String toString() {
-        return "UserProfile{" +
-            "email='" + email + '\'' +
-            ", name='" + name + '\'' +
-            ", orgId='" + orgId + '\'' +
-            ", orgName='" + orgName + '\'' +
-            ", paramStr='" + paramStr + '\'' +
-            ", userName='" + userName + '\'' +
-            '}';
+        return "UserProfile{"
+            + "email='" + email + '\''
+            + ", name='" + name + '\''
+            + ", orgId='" + orgId + '\''
+            + ", orgName='" + orgName + '\''
+            + ", paramStr='" + paramStr + '\''
+            + ", userName='" + userName + '\''
+            + '}';
     }
 }

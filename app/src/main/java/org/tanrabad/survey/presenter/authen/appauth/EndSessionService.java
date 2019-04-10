@@ -20,24 +20,15 @@ package org.tanrabad.survey.presenter.authen.appauth;
 import android.content.Context;
 import android.net.Uri;
 import android.support.customtabs.CustomTabsIntent;
-import android.util.Log;
 
 import net.openid.appauth.AuthState;
 
-import org.tanrabad.survey.TanrabadApp;
-
-import java.io.IOException;
-
-import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 class EndSessionService {
 
-    private static final String URL = "https://authen.tanrabad.org/oxauth/restv1/end_session" +
-        "?id_token_hint=%s&post_logout_redirect_uri=trb-survey://localhost/signout";
+    private static final String URL = "https://authen.tanrabad.org/oxauth/restv1/end_session"
+        + "?id_token_hint=%s&post_logout_redirect_uri=trb-survey://localhost/signout";
 
     protected final OkHttpClient client = new OkHttpClient();
     private Context context;

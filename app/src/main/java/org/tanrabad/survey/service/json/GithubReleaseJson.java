@@ -34,6 +34,5 @@ public class GithubReleaseJson {
 
     @JsonField
     String body;
-
 }
 

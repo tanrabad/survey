@@ -64,7 +64,8 @@ public class SplashScreenActivity extends TanrabadActivity {
                     });
                     alertDialog.setCancelable(false);
                     AlertDialog dialog = alertDialog.show();
-                    ((TextView) dialog.findViewById(R.id.dialog_message)).setText(getString(R.string.found_newer_version, version));
+                    String msg = getString(R.string.found_newer_version, version);
+                    ((TextView) dialog.findViewById(R.id.dialog_message)).setText(msg);
                 }
             });
             checker.start();

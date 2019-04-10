@@ -21,18 +21,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.MainThread;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.charset.Charset;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicReference;
+
 import net.openid.appauth.AppAuthConfiguration;
 import net.openid.appauth.AuthorizationException;
 import net.openid.appauth.AuthorizationResponse;
@@ -42,13 +38,24 @@ import net.openid.appauth.ClientAuthentication;
 import net.openid.appauth.ClientSecretBasic;
 import net.openid.appauth.ClientSecretPost;
 import net.openid.appauth.TokenRequest;
-import okio.Okio;
+
 import org.tanrabad.survey.BuildConfig;
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.presenter.LoginActivity;
 import org.tanrabad.survey.presenter.TanrabadActivity;
 import org.tanrabad.survey.presenter.authen.Authenticator;
 import org.tanrabad.survey.presenter.authen.UserProfile;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.Charset;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicReference;
+
+import okio.Okio;
 
 public class TokenActivity extends TanrabadActivity {
     private static final String TAG = "TokenActivity";
@@ -62,7 +69,7 @@ public class TokenActivity extends TanrabadActivity {
     private UserStateManager mUserStateManager;
     private final AtomicReference<UserProfile> mUserInfoJson = new AtomicReference<>();
     private ExecutorService mExecutor;
-    private View authenButton;
+    private Button authenButton;
     private View logoutButton;
 
     @Override
@@ -91,6 +98,7 @@ public class TokenActivity extends TanrabadActivity {
         authenButton.setVisibility(View.GONE);
         authenButton.setOnClickListener(v -> {
             if (mUserStateManager != null && mUserStateManager.isRequireAction()) {
+                mUserInfoJson.set(null); //Clear for re-check user profile
                 checkAuthorize();
                 return;
             }
@@ -104,6 +112,13 @@ public class TokenActivity extends TanrabadActivity {
             finish();
             startActivity(intent);
         });
+        checkAuthorize();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        mUserInfoJson.set(null); //Clear for re-check user profile
         checkAuthorize();
     }
 
@@ -153,26 +168,51 @@ public class TokenActivity extends TanrabadActivity {
 
     @MainThread
     private void displayNotAuthorized(String explanation) {
+        ((TextView) findViewById(R.id.username)).setText(R.string.please_authen);
         Toast.makeText(this, explanation, Toast.LENGTH_SHORT).show();
+        restartToLoginActivity();
+    }
+
+    private void restartToLoginActivity() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 
     @MainThread
-    private void displayAuthorized() {
+    private void
+    displayAuthorized() {
         Log.i(TAG, "Display Authorized");
-        authenButton.setVisibility(View.GONE);
-        logoutButton.setVisibility(View.GONE);
+        authenButton.setVisibility(View.VISIBLE);
+        logoutButton.setVisibility(View.VISIBLE);
 
         UserProfile userInfo = mUserInfoJson.get();
         if (userInfo != null) {
             ((TextView) findViewById(R.id.username)).setText(userInfo.userName);
             ((TextView) findViewById(R.id.user_fullname)).setText(userInfo.name);
-            ((TextView) findViewById(R.id.organization)).setText(userInfo.orgName);
-            logoutButton.setVisibility(View.VISIBLE);
-            authenButton.setVisibility(View.VISIBLE);
+            String orgName = userInfo.orgName;
+            if (!TextUtils.isEmpty(orgName)) {
+                ((TextView) findViewById(R.id.organization)).setText(userInfo.orgName);
+            } else {
+                ((TextView) findViewById(R.id.organization)).setText("ไม่ระบุหน่วยงาน");
+            }
             mUserStateManager = new UserStateManager(userInfo);
+            TextView status = findViewById(R.id.status);
+            status.setText(mUserStateManager.getUserStateRes());
             if (mUserStateManager.isRequireAction()) {
                 mUserStateManager.performRequireAction(this);
+                authenButton.setBackgroundResource(R.drawable.rounded_button_purple);
+                authenButton.setText(R.string.check_status);
+                status.setTextColor(ContextCompat.getColor(this, R.color.black));
+            } else {
+                authenButton.setBackgroundResource(R.drawable.rounded_button);
+                authenButton.setText(R.string.authentication);
+                status.setTextColor(ContextCompat.getColor(this, R.color.without_larvae));
             }
+        } else {
+            Toast.makeText(this, "เกิดข้อผิดพลาด ไม่สามารถดึงข้อมูลผู้ใช้ได้", Toast.LENGTH_SHORT).show();
+            restartToLoginActivity();
         }
     }
 
@@ -181,7 +221,7 @@ public class TokenActivity extends TanrabadActivity {
     private void exchangeAuthorizationCode(AuthorizationResponse authorizationResponse) {
         Log.i(TAG, "Request to Exchange token");
         final TokenRequest request = authorizationResponse.createTokenExchangeRequest();
-          performTokenRequest(
+        performTokenRequest(
             request,
             (tokenResponse, authException) -> {
                 mStateManager.updateAfterTokenResponse(tokenResponse, authException);
@@ -228,8 +268,8 @@ public class TokenActivity extends TanrabadActivity {
         }
 
         AuthorizationServiceDiscovery discovery = mStateManager.getCurrent()
-                .getAuthorizationServiceConfiguration()
-                .discoveryDoc;
+            .getAuthorizationServiceConfiguration()
+            .discoveryDoc;
 
         final URL userInfoEndpoint;
         try {

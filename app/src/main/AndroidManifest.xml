@@ -57,12 +57,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".presenter.LoginActivity"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme.Dark.Blue">
-            <intent-filter>
+            <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -73,7 +68,7 @@
                     android:pathPrefix="/survey"
                     android:scheme="http" />
             </intent-filter>
-            <intent-filter>
+            <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -84,6 +79,12 @@
                     android:pathPrefix="/survey"
                     android:scheme="https" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".presenter.LoginActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.Dark.Blue">
+
         </activity>
         <activity
             android:name=".presenter.InitialActivity"
@@ -149,12 +150,13 @@
 
         <activity
             android:name=".presenter.authen.appauth.TokenActivity"
+            android:launchMode="singleTask"
             android:windowSoftInputMode="stateHidden" />
 
         <activity
             android:name="net.openid.appauth.RedirectUriReceiverActivity"
-            android:label="Authen"
-            android:exported="true">
+            android:exported="true"
+            android:label="Authen">
 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -183,6 +185,37 @@
                     android:host="localhost"
                     android:pathPrefix="/signout"
                     android:scheme="trb-survey" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".presenter.authen.appauth.EmailVerifiedRedirectActivity"
+            android:exported="true"
+            android:theme="@style/AppTheme.SplashScreen"
+            android:label="Email verified">
+            <tools:validation testUrl="https://www.tanrabad.org/emailverified" />
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="http"
+                    android:host="www.tanrabad.org"
+                    android:pathPrefix="/emailverified" />
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="https"
+                    android:host="www.tanrabad.org"
+                    android:pathPrefix="/emailverified" />
             </intent-filter>
         </activity>
     </application>

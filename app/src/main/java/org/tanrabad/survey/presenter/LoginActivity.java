@@ -20,6 +20,7 @@ package org.tanrabad.survey.presenter;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
@@ -40,6 +41,7 @@ import static android.view.animation.AnimationUtils.loadAnimation;
 
 public class LoginActivity extends TanrabadActivity {
     private static final int AUTHEN_REQUEST_CODE = 1232;
+    private static final String TAG = "LoginActivity";
     ProgressDialog progressDialog;
     private View trialButton;
     private View authenButton;
@@ -105,10 +107,10 @@ public class LoginActivity extends TanrabadActivity {
 
     private void openAuthenWeb() {
         User lastLoginUser = AccountUtils.getLastLoginUser();
-        if (lastLoginUser != null && !AccountUtils.isTrialUser(lastLoginUser)) {
-            doLogin(lastLoginUser);
-        } else if (InternetConnection.isAvailable(this)) {
+        if (InternetConnection.isAvailable(this)) {
             auth.request();
+        } else if (lastLoginUser != null && !AccountUtils.isTrialUser(lastLoginUser)) {
+            doLogin(lastLoginUser);
         } else {
             Alert.highLevel().show(R.string.connect_internet_before_authen);
         }
@@ -136,6 +138,7 @@ public class LoginActivity extends TanrabadActivity {
         super.onNewIntent(intent);
         String username = intent.getStringExtra(TokenActivity.USERNAME);
         if (username != null) {
+            Log.i(TAG, "Login as " + username);
             User user = BrokerUserRepository.getInstance().findByUsername(username);
             doLogin(user);
         }

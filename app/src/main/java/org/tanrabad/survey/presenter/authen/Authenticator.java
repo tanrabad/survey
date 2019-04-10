@@ -21,6 +21,7 @@ import org.tanrabad.survey.domain.organization.OrganizationRepository;
 import org.tanrabad.survey.domain.user.UserRepository;
 import org.tanrabad.survey.entity.Organization;
 import org.tanrabad.survey.entity.User;
+import org.tanrabad.survey.presenter.AccountUtils;
 import org.tanrabad.survey.repository.BrokerOrganizationRepository;
 import org.tanrabad.survey.repository.BrokerUserRepository;
 
@@ -51,6 +52,7 @@ public class Authenticator {
 
         User user = userProfileMapper.getUser();
         saveOrUpdate(user);
+        AccountUtils.setUser(user);
     }
 
 

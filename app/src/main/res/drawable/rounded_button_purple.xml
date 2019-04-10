@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~ Copyright (c) 2015 NECTEC
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2019 NECTEC
   ~   National Electronics and Computer Technology Center, Thailand
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,10 +15,7 @@
   ~ limitations under the License.
   -->
 
-<selector xmlns:android="http://schemas.android.com/apk/res/android"
-          android:interpolator="@android:anim/accelerate_interpolator"
-          android:enterFadeDuration="100"
-          android:exitFadeDuration="250">
+<selector xmlns:android="http://schemas.android.com/apk/res/android" android:interpolator="@android:anim/accelerate_interpolator" android:enterFadeDuration="100" android:exitFadeDuration="250">
     <item android:state_enabled="false">
         <shape android:shape="rectangle">
             <corners android:radius="30dp" />
@@ -28,22 +24,21 @@
     </item>
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
-            <corners android:radius="30dp"/>
-            <solid android:color="@color/dark_pink"/>
+            <corners android:radius="30dp" />
+            <solid android:color="@color/purple_dark" />
         </shape>
     </item>
     <item android:state_focused="true">
         <shape android:shape="rectangle">
-            <corners android:radius="30dp"/>
-            <stroke android:width="2dip"
-                    android:color="@color/amber"/>
-            <solid android:color="@color/shock_pink"/>
+            <corners android:radius="30dp" />
+            <stroke android:width="2dip" android:color="@color/amber" />
+            <solid android:color="@color/purple" />
         </shape>
     </item>
     <item>
         <shape android:shape="rectangle">
-            <corners android:radius="30dp"/>
-            <solid android:color="@color/shock_pink"/>
+            <corners android:radius="30dp" />
+            <solid android:color="@color/purple" />
         </shape>
     </item>
 

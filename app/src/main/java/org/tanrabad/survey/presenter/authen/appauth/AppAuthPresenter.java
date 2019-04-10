@@ -25,7 +25,6 @@ import android.support.annotation.WorkerThread;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -74,6 +73,10 @@ public class AppAuthPresenter implements AuthenticatorPresent {
     private BrowserMatcher mBrowserMatcher = AnyBrowserMatcher.INSTANCE;
 
     public AppAuthPresenter(AppCompatActivity activity) {
+        this(activity, null);
+    }
+
+    public AppAuthPresenter(AppCompatActivity activity, OnInitializedListener initializedListener) {
         this.activity = activity;
 
         mExecutor = Executors.newSingleThreadExecutor();
@@ -92,7 +95,13 @@ public class AppAuthPresenter implements AuthenticatorPresent {
             mConfiguration.acceptConfiguration();
         }
 
-        mExecutor.execute(() -> initializeConfiguration());
+        mExecutor.execute(() -> {
+            initializeConfiguration();
+            Log.i(TAG, "Initialized");
+            activity.runOnUiThread(() -> {
+                if (initializedListener != null) initializedListener.onInitialized(this);
+            });
+        });
     }
 
     private boolean isLoggedIn() {
@@ -153,6 +162,7 @@ public class AppAuthPresenter implements AuthenticatorPresent {
      */
     @WorkerThread
     private void initializeClient() {
+        Log.i(TAG, "Initialize client");
         if (mConfiguration.getClientId() != null) {
             Log.i(TAG, "Using static client ID: " + mConfiguration.getClientId());
             // use a statically configured client ID
@@ -261,8 +271,11 @@ public class AppAuthPresenter implements AuthenticatorPresent {
 
     @Override
     public void startPage() {
-        if (isLoggedIn())
-            activity.startActivity(new Intent(activity, TokenActivity.class));
+        if (isLoggedIn()) {
+            Intent intent = new Intent(activity, TokenActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            activity.startActivity(intent);
+        }
         else
             doAuth();
     }
@@ -287,4 +300,7 @@ public class AppAuthPresenter implements AuthenticatorPresent {
             mAuthIntent.get());
     }
 
+    interface OnInitializedListener {
+        void onInitialized(AppAuthPresenter presenter);
+    }
 }

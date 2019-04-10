@@ -20,6 +20,7 @@ package org.tanrabad.survey.presenter.authen;
 import com.bluelinelabs.logansquare.LoganSquare;
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
+
 import java.io.IOException;
 
 @JsonObject
@@ -49,6 +50,10 @@ public class UserProfile {
     String emailVerified;
     @JsonField
     public String userState;
+
+    public boolean isDefinedEmail() {
+        return emailVerified != null;
+    }
 
     public boolean isEmailVerified() {
         return "true".equals(emailVerified);

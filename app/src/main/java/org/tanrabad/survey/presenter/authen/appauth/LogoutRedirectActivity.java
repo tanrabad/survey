@@ -22,14 +22,19 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 
+import org.tanrabad.survey.presenter.AccountUtils;
 import org.tanrabad.survey.presenter.LoginActivity;
 import org.tanrabad.survey.presenter.TanrabadActivity;
+import org.tanrabad.survey.repository.AppDataManager;
 
 public class LogoutRedirectActivity extends TanrabadActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        AccountUtils.clear();
+        AppDataManager.clearAll(this);
 
         Toast.makeText(this, "ออกจากระบบสำเร็จ", Toast.LENGTH_SHORT).show();
         Intent mainIntent = new Intent(this, LoginActivity.class);

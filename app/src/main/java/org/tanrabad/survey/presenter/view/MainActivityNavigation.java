@@ -29,6 +29,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.entity.Organization;
@@ -36,11 +37,9 @@ import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.job.UploadJobRunner;
 import org.tanrabad.survey.presenter.AboutActivity;
 import org.tanrabad.survey.presenter.AccountUtils;
-import org.tanrabad.survey.presenter.LoginActivity;
 import org.tanrabad.survey.presenter.PreferenceActivity;
 import org.tanrabad.survey.presenter.authen.appauth.AuthStateManager;
 import org.tanrabad.survey.presenter.authen.appauth.UserProfileManager;
-import org.tanrabad.survey.repository.AppDataManager;
 import org.tanrabad.survey.repository.BrokerOrganizationRepository;
 import org.tanrabad.survey.utils.alert.Alert;
 import org.tanrabad.survey.utils.android.InternetConnection;
@@ -144,13 +143,8 @@ public final class MainActivityNavigation {
                     uploadJob.setOnSyncFinishListener(new UploadJobRunner.OnSyncFinishListener() {
                         @Override
                         public void onSyncFinish() {
-                            AccountUtils.clear();
-                            AppDataManager.clearAll(activity);
-                            AuthStateManager.getInstance(activity).clear(activity);
                             UserProfileManager.getInstance(activity).clear();
-                            Intent backToLogin = new Intent(activity, LoginActivity.class);
-                            activity.startActivity(backToLogin);
-                            activity.finish();
+                            AuthStateManager.getInstance(activity).clear(activity);
                         }
                     });
                     uploadJob.start();

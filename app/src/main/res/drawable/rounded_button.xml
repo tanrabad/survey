@@ -20,12 +20,6 @@
           android:interpolator="@android:anim/accelerate_interpolator"
           android:enterFadeDuration="100"
           android:exitFadeDuration="250">
-    <item android:state_enabled="false">
-        <shape android:shape="rectangle">
-            <corners android:radius="30dp" />
-            <solid android:color="@color/black_transparent_50" />
-        </shape>
-    </item>
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
             <corners android:radius="30dp"/>
@@ -46,5 +40,4 @@
             <solid android:color="@color/shock_pink"/>
         </shape>
     </item>
-
 </selector>

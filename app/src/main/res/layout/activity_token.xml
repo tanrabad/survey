@@ -21,6 +21,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <View
@@ -37,7 +38,7 @@
         android:src="@drawable/logo_tanrabad"/>
 
     <View
-        android:background="@color/black_transparent_20"
+        android:background="?android:attr/textColorSecondary"
         android:layout_width="2dp"
         android:layout_height="0dp"
         android:layout_margin="4dp"
@@ -107,7 +108,6 @@
         android:layout_width="@dimen/login_authen_btn_width"
         android:layout_height="@dimen/login_authen_btn_height"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/rounded_button"
         android:contentDescription="@string/authentication"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"

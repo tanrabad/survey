@@ -201,14 +201,13 @@ public class TokenActivity extends TanrabadActivity {
             TextView status = findViewById(R.id.status);
             status.setText(mUserStateManager.getUserStateRes());
             if (mUserStateManager.isRequireAction()) {
-                mUserStateManager.performRequireAction(this);
-                authenButton.setBackgroundResource(R.drawable.rounded_button_purple);
-                authenButton.setText(R.string.check_status);
                 status.setTextColor(ContextCompat.getColor(this, R.color.black));
+                mUserStateManager.performRequireAction(this);
+                authenButton.setText(R.string.check_status);
             } else {
-                authenButton.setBackgroundResource(R.drawable.rounded_button);
-                authenButton.setText(R.string.authentication);
                 status.setTextColor(ContextCompat.getColor(this, R.color.without_larvae));
+                authenButton.setText(R.string.login);
+                authenButton.performClick(); //automatic login to app
             }
         } else {
             Toast.makeText(this, "เกิดข้อผิดพลาด ไม่สามารถดึงข้อมูลผู้ใช้ได้", Toast.LENGTH_SHORT).show();

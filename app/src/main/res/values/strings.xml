@@ -141,6 +141,7 @@
         released under The Apache License, Version 2.0. Image and document released under Creative Common</string>
     <string name="nectec">ศูนย์เทคโนโลยีอิเล็กทรอนิกส์และคอมพิวเตอร์แห่งชาติ</string>
     <string name="authentication">ยืนยันตัวตน</string>
+    <string name="login">เข้าสู่ระบบ</string>
     <string name="please_authen">กรุณายืนยันตัวตน</string>
     <string name="check_status">ตรวจสอบสถานะ</string>
     <string name="state_undefined_email">ไม่ระบุ email</string>

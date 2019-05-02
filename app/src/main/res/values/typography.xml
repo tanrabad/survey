@@ -55,7 +55,7 @@
 
     <style name="TanrabadTextAppearance.Caption">
         <item name="android:textSize">@dimen/text_caption</item>
-        <item name="android:textColor">@color/black_transparent_50</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
 
     <style name="TanrabadTextAppearance.Caption.Inverse">

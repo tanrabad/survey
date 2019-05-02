@@ -22,11 +22,6 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
 import org.tanrabad.survey.domain.place.PlaceRepository;
 import org.tanrabad.survey.domain.survey.SurveyBuildingChooser;
 import org.tanrabad.survey.domain.survey.SurveyRepository;
@@ -34,6 +29,11 @@ import org.tanrabad.survey.domain.user.UserRepository;
 import org.tanrabad.survey.entity.Building;
 import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.entity.User;
+import org.tanrabad.survey.entity.field.Location;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class BuildingWithSurveyStatusChooserTest {
 
@@ -65,6 +65,7 @@ public class BuildingWithSurveyStatusChooserTest {
         username = "ice";
 
         place = new Place(UUID.fromString(placeUuid), "ทดสอบ");
+        place.setLocation(new Location(10, 105.5));
         user = User.fromUsername(username);
 
         building1 = Building.withName("123");

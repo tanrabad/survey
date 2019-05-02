@@ -20,6 +20,7 @@ package org.tanrabad.survey.presenter;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,10 +34,9 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.domain.building.BuildingWithSurveyStatus;
@@ -64,8 +64,12 @@ import org.tanrabad.survey.utils.android.InternetConnection;
 import org.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import org.tanrabad.survey.utils.prompt.PromptMessage;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
+
 public class BuildingListActivity extends TanrabadActivity implements BuildingWithSurveyStatusListPresenter,
-        PlacePresenter, ActionMode.Callback, View.OnClickListener {
+    PlacePresenter, ActionMode.Callback, View.OnClickListener {
 
     public static final String PLACE_UUID_ARG = "place_uuid_arg";
     private static final int NEED_REFRESH_REQ_CODE = 31000;
@@ -75,10 +79,10 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     private Place place;
     private EmptyLayoutView emptyBuildingsView;
     private SurveyBuildingChooser surveyBuildingChooser = new SurveyBuildingChooser(
-            BrokerUserRepository.getInstance(),
-            BrokerPlaceRepository.getInstance(),
-            BrokerSurveyRepository.getInstance(),
-            this);
+        BrokerUserRepository.getInstance(),
+        BrokerPlaceRepository.getInstance(),
+        BrokerSurveyRepository.getInstance(),
+        this);
     private SearchView buildingSearchView;
     private ActionMode actionMode;
 
@@ -158,7 +162,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         });
 
         DeleteDataJob<Place> deletePlaceJob = new DeleteDataJob<>(BrokerPlaceRepository.getInstance(),
-                new PlaceRestService(), place);
+            new PlaceRestService(), place);
         jobRunner.addJob(deletePlaceJob);
         jobRunner.start();
     }
@@ -190,6 +194,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
 
     private void loadSurveyBuildingList() {
         emptyBuildingsView.showProgressBar();
+        isPlaceNoLocation = false;
         surveyBuildingChooser.displaySurveyBuildingOf(getPlaceUuidFromIntent().toString(), AccountUtils.getUser());
     }
 
@@ -230,7 +235,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
                 if (InternetConnection.isAvailable(BuildingListActivity.this)) {
                     startSyncJobs();
                     PromptMessage promptMessage = new AlertDialogPromptMessage(
-                            BuildingListActivity.this, R.mipmap.ic_delete);
+                        BuildingListActivity.this, R.mipmap.ic_delete);
                     promptMessage.setOnConfirm(getString(R.string.delete), new PromptMessage.OnConfirmListener() {
                         @Override
                         public void onConfirm() {
@@ -256,12 +261,12 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         });
 
         Survey survey = BrokerSurveyRepository.getInstance().findRecent(
-                building, AccountUtils.getUser());
+            building, AccountUtils.getUser());
         runner.addJob(new DeleteDataJob<>(BrokerSurveyRepository.getInstance(),
-                new SurveyRestService(), survey));
+            new SurveyRestService(), survey));
 
         DeleteDataJob<Building> dataJob = new DeleteDataJob<>(BrokerBuildingRepository.getInstance(),
-                new BuildingRestService(), building);
+            new BuildingRestService(), building);
         runner.addJob(dataJob);
         runner.start();
     }
@@ -274,8 +279,8 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
                 TanrabadApp.action().filterBuilding(searchString);
                 emptyBuildingsView.showProgressBar();
                 surveyBuildingChooser.searchSurveyBuildingOfPlaceByName(searchString,
-                        getPlaceUuidFromIntent().toString(),
-                        AccountUtils.getUser());
+                    getPlaceUuidFromIntent().toString(),
+                    AccountUtils.getUser());
                 return true;
             }
 
@@ -283,8 +288,8 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
             public boolean onQueryTextChange(String searchString) {
                 emptyBuildingsView.showProgressBar();
                 surveyBuildingChooser.searchSurveyBuildingOfPlaceByName(searchString,
-                        getPlaceUuidFromIntent().toString(),
-                        AccountUtils.getUser());
+                    getPlaceUuidFromIntent().toString(),
+                    AccountUtils.getUser());
                 return true;
             }
         });
@@ -293,7 +298,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     private void setupEmptyLayout() {
         emptyBuildingsView = findViewById(R.id.empty_layout);
         emptyBuildingsView.setEmptyIcon(place.getType() == PlaceType.VILLAGE_COMMUNITY
-                ? R.mipmap.ic_building_home_black : R.mipmap.ic_building_black);
+            ? R.mipmap.ic_building_home_black : R.mipmap.ic_building_black);
         emptyBuildingsView.setEmptyText(R.string.building_list_not_found);
         emptyBuildingsView.setEmptyButtonText(R.string.add_building, new View.OnClickListener() {
             @Override
@@ -360,6 +365,23 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
         Alert.highLevel().show(R.string.place_not_found);
     }
 
+    private boolean isPlaceNoLocation = false;
+
+    @Override
+    public void onRequirePlaceLocation(Place place) {
+        isPlaceNoLocation = true;
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setView(R.layout.dialog_message_alert);
+        alertDialog.setCancelable(false);
+        alertDialog.setPositiveButton(R.string.mark_location, (dialog, which) ->
+            PlaceFormActivity.startEdit(BuildingListActivity.this, place));
+        alertDialog.setNegativeButton(R.string.close, (dialog, which) -> finishActivity());
+        AlertDialog dialog = alertDialog.show();
+
+        TextView messageView = dialog.findViewById(R.id.dialog_message);
+        messageView.setText(getString(R.string.place_no_location, place.getName()));
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.action_activity_building_list, menu);
@@ -369,8 +391,11 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != RESULT_OK)
+        if (resultCode != RESULT_OK) {
+            if (requestCode == PlaceFormActivity.PLACE_FORM_REQ_CODE && isPlaceNoLocation)
+                loadSurveyBuildingList(); //check again
             return;
+        }
 
         setResult(RESULT_OK);
         if (InternetConnection.isAvailable(this))
@@ -380,7 +405,7 @@ public class BuildingListActivity extends TanrabadActivity implements BuildingWi
                 loadSurveyBuildingList();
                 stopActionMode();
                 break;
-            case PlaceFormActivity.ADD_PLACE_REQ_CODE:
+            case PlaceFormActivity.PLACE_FORM_REQ_CODE:
                 showPlaceName();
                 break;
         }

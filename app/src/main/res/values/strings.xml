@@ -50,6 +50,7 @@
     <string name="place_icon">ไอคอนหน้าสถานที่สำรวจ</string>
     <string name="place_bg">พื้นหลังหน้าสถานที่สำรวจ</string>
     <string name="place_not_found">ไม่พบข้อมูลสถานที่</string>
+    <string name="place_no_location">%1$s ไม่มีข้อมูลพิกัด ต้องทำการบันทึกพิกัดก่อนทำการสำรวจ</string>
     <string name="cant_save_same_building_name">ไม่สามารถบันทึกได้ เนื่องจากชื่ออาคารนี้มีอยู่แล้ว</string>
     <string name="number_building_list">จำนวนรายการของรายชื่ออาคารหน้าระบุอาคารสำรวจ</string>
     <string name="survey_building_history">ประวัติการสำรวจ</string>
@@ -127,6 +128,7 @@
     <string name="location">พิกัด</string>
     <string name="distance_between_place_and_building">เนื่องจากพิกัดอาคารห่างจากพิกัดสถานที่ %1$s กม.</string>
     <string name="edit_place">แก้ไขสถานที่</string>
+    <string name="mark_location">บันทึกพิกัด</string>
     <string name="search_building_by_name_hint">พิมพ์ชื่ออาคารเพื่อค้นหา</string>
     <string name="search_place_by_name_hint">พิมพ์ชื่อสถานที่เพื่อค้นหา</string>
     <string name="search_place">ค้นหาสถานที่</string>

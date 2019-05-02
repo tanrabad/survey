@@ -154,7 +154,7 @@ public class PlaceListFragment extends TanrabadTabFragment implements AdapterVie
 
         loadPlaceList();
         switch (requestCode) {
-            case PlaceFormActivity.ADD_PLACE_REQ_CODE:
+            case PlaceFormActivity.PLACE_FORM_REQ_CODE:
                 if (InternetConnection.isAvailable(getActivity())) startSyncJobs();
                 break;
         }

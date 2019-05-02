@@ -17,6 +17,8 @@
 
 package org.tanrabad.survey.domain.building;
 
+import org.tanrabad.survey.entity.Place;
+
 import java.util.List;
 
 public interface BuildingWithSurveyStatusListPresenter {
@@ -27,4 +29,6 @@ public interface BuildingWithSurveyStatusListPresenter {
     void alertUserNotFound();
 
     void alertPlaceNotFound();
+
+    void onRequirePlaceLocation(Place place);
 }

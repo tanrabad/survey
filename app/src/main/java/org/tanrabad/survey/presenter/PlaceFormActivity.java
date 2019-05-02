@@ -28,13 +28,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import java.util.UUID;
-import me.piruin.spinney.Spinney;
-import nectec.thai.widget.address.AddressPicker;
-import nectec.thai.widget.address.AddressPickerDialog;
+
 import org.joda.time.DateTime;
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
@@ -64,13 +62,19 @@ import org.tanrabad.survey.validator.SavePlaceValidator;
 import org.tanrabad.survey.validator.UpdatePlaceValidator;
 import org.tanrabad.survey.validator.ValidatorException;
 
+import java.util.UUID;
+
+import me.piruin.spinney.Spinney;
+import nectec.thai.widget.address.AddressPicker;
+import nectec.thai.widget.address.AddressPickerDialog;
+
 public class PlaceFormActivity extends TanrabadActivity implements View.OnClickListener,
         PlaceSavePresenter, PlacePresenter {
 
     public static final String PLACE_TYPE_ID_ARG = "place_category_id_arg";
     public static final String PLACE_UUID_ARG = "place_uuid_arg";
 
-    public static final int ADD_PLACE_REQ_CODE = 30000;
+    public static final int PLACE_FORM_REQ_CODE = 30000;
     private Place place;
     private PlaceRepository placeRepository = BrokerPlaceRepository.getInstance();
 
@@ -93,14 +97,14 @@ public class PlaceFormActivity extends TanrabadActivity implements View.OnClickL
         Intent intent = new Intent(activity, PlaceFormActivity.class);
         if (placeTypeId >= 0)
             intent.putExtra(PlaceFormActivity.PLACE_TYPE_ID_ARG, placeTypeId);
-        activity.startActivityForResult(intent, ADD_PLACE_REQ_CODE);
+        activity.startActivityForResult(intent, PLACE_FORM_REQ_CODE);
     }
 
     public static void startEdit(Activity activity, Place place) {
         Intent intent = new Intent(activity, PlaceFormActivity.class);
         intent.putExtra(PlaceFormActivity.PLACE_UUID_ARG, place.getId().toString());
         intent.putExtra(PlaceFormActivity.PLACE_TYPE_ID_ARG, place.getType());
-        activity.startActivityForResult(intent, ADD_PLACE_REQ_CODE);
+        activity.startActivityForResult(intent, PLACE_FORM_REQ_CODE);
     }
 
     @Override

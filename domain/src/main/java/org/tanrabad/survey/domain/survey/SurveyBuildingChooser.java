@@ -17,15 +17,15 @@
 
 package org.tanrabad.survey.domain.survey;
 
-import java.util.List;
-import java.util.UUID;
-
 import org.tanrabad.survey.domain.building.BuildingWithSurveyStatus;
 import org.tanrabad.survey.domain.building.BuildingWithSurveyStatusListPresenter;
 import org.tanrabad.survey.domain.place.PlaceRepository;
 import org.tanrabad.survey.domain.user.UserRepository;
 import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.entity.User;
+
+import java.util.List;
+import java.util.UUID;
 
 public class SurveyBuildingChooser {
 
@@ -64,6 +64,9 @@ public class SurveyBuildingChooser {
         if (place == null) {
             surveyBuildingPresenter.alertPlaceNotFound();
             return false;
+        }
+        if (place.getLocation() == null) {
+            surveyBuildingPresenter.onRequirePlaceLocation(place);
         }
         return true;
     }

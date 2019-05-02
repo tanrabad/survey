@@ -319,7 +319,7 @@ public class PlaceNearbyListFragment extends TanrabadTabFragment
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK && requestCode == PlaceFormActivity.ADD_PLACE_REQ_CODE) {
+        if (resultCode == Activity.RESULT_OK && requestCode == PlaceFormActivity.PLACE_FORM_REQ_CODE) {
             startSearchNearbyPlaces();
         }
     }

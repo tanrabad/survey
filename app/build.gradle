@@ -52,6 +52,7 @@ android {
         targetSdkVersion 27
         versionCode rootProject.versionCode
         versionName rootProject.versionName
+        multiDexEnabled true
         testApplicationId "org.tanrabad.survey.test"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -149,6 +150,7 @@ dependencies {
     implementation fileTree(dir: "lib", include: ["*.jar"])
     implementation project(":domain")
     implementation project(":domain-nearby")
+    implementation 'com.android.support:multidex:1.0.3'
     implementation "com.android.support:cardview-v7:$supportLibVersion"
     implementation "com.android.support:preference-v14:$supportLibVersion"
     implementation "com.android.support:design:$supportLibVersion"

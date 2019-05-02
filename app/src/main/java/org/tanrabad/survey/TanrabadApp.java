@@ -17,19 +17,20 @@
 
 package org.tanrabad.survey;
 
-import android.app.Application;
 import android.content.Context;
-import cat.ereza.customactivityoncrash.CustomActivityOnCrash;
-import me.piruin.spinney.Spinney;
+import android.support.multidex.MultiDexApplication;
+
 import org.tanrabad.survey.entity.ReferenceEntity;
 import org.tanrabad.survey.presenter.LoginActivity;
-import org.tanrabad.survey.utils.android.ResourceUtils;
 import org.tanrabad.survey.utils.tool.ActionLogger;
 import org.tanrabad.survey.utils.tool.ExceptionLogger;
 import org.tanrabad.survey.utils.tool.FabricTools;
+
+import cat.ereza.customactivityoncrash.CustomActivityOnCrash;
+import me.piruin.spinney.Spinney;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
-public class TanrabadApp extends Application {
+public class TanrabadApp extends MultiDexApplication {
 
     public static final String TRB_AUTHEN_ENDPOINT = "https://authen.tanrabad.org/";
     private static ExceptionLogger exceptionLogger;

@@ -20,6 +20,7 @@ package org.tanrabad.survey.presenter;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -140,8 +141,7 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
         syncDataButton.setOnClickListener(this);
     }
 
-    @Override
-    public void onClick(View view) {
+    @Override public void onClick(View view) {
         switch (view.getId()) {
             case R.id.got_it:
                 dismiss();
@@ -172,8 +172,7 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
         errorMsgView.setVisibility(View.VISIBLE);
     }
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
+    @Override public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         String placeId = getArguments().getString(ARG_PLACE_ID);
         place = BrokerPlaceRepository.getInstance().findByUuid(UUID.fromString(placeId));
@@ -183,12 +182,17 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
 
     private void setPlaceInfo(Place place) {
         placeIconView.setImageResource(PlaceIconMapping.getPlaceIcon(place));
-        placeSubTypeView.setText(BrokerPlaceSubTypeRepository.getInstance().findById(place.getSubType()).getName());
+        placeSubTypeView.setText(
+            BrokerPlaceSubTypeRepository.getInstance().findById(place.getSubType()).getName());
         placeNameView.setText(place.getName());
-        Subdistrict subdistrict = DbSubdistrictRepository.getInstance().findByCode(place.getSubdistrictCode());
-        District district = DbDistrictRepository.getInstance().findByCode(subdistrict.getDistrictCode());
-        Province province = DbProvinceRepository.getInstance().findByCode(district.getProvinceCode());
-        addressView.setText(AddressPrinter.print(subdistrict.getName(), district.getName(), province.getName()));
+        Subdistrict subdistrict =
+            DbSubdistrictRepository.getInstance().findByCode(place.getSubdistrictCode());
+        District district =
+            DbDistrictRepository.getInstance().findByCode(subdistrict.getDistrictCode());
+        Province province =
+            DbProvinceRepository.getInstance().findByCode(district.getProvinceCode());
+        addressView.setText(
+            AddressPrinter.print(subdistrict.getName(), district.getName(), province.getName()));
     }
 
     private boolean isVillage(JsonEntomology jsonEntomology) {
@@ -210,25 +214,33 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
         outdoorContainerLayout.setVisibility(View.GONE);
     }
 
-    private void setPlaceBackgroundIcon(JsonEntomology jsonEntomology) {
-        GradientDrawable background = (GradientDrawable) placeIconView.getBackground();
-        int color;
-        if (place.getType() == PlaceType.VILLAGE_COMMUNITY) {
-            if (jsonEntomology.hiValue <= 10)
-                color = ResourceUtils.from(getActivity()).getColor(R.color.without_larvae);
-            else if (jsonEntomology.hiValue <= 50)
-                color = ResourceUtils.from(getActivity()).getColor(R.color.have_larvae_warning);
-            else
-                color = ResourceUtils.from(getActivity()).getColor(R.color.have_larvae);
-        } else {
-            if (jsonEntomology.ciValue == 0)
-                color = ResourceUtils.from(getActivity()).getColor(R.color.without_larvae);
-            else if (jsonEntomology.ciValue <= 5)
-                color = ResourceUtils.from(getContext()).getColor(R.color.have_larvae_warning);
-            else
-                color = ResourceUtils.from(getActivity()).getColor(R.color.have_larvae);
-        }
-        background.setColor(color);
+    private void updateEntomologyInfo(JsonEntomology jsonEntomology) {
+        if (!isActivityAvailable()) return;
+
+        final boolean isVillage = isVillage(jsonEntomology);
+
+        setSurveyDate(jsonEntomology);
+        resultUpdateView.setTime(ThaiDateTimeConverter.convert(jsonEntomology.reportUpdate));
+        setPlaceBackgroundIcon(jsonEntomology);
+        setSurveyIndex(jsonEntomology, isVillage);
+        surveyCountView.setText(
+            String.format(getString(R.string.survey_count), isVillage ? HOUSE : BUILDING,
+                jsonEntomology.numSurveyedHouses));
+        surveyFoundCountView.setText(
+            String.format(getString(R.string.survey_found_count), jsonEntomology.numFoundHouses));
+        surveyNotFoundCountView.setText(String.format(getString(R.string.survey_not_found_count),
+            jsonEntomology.numSurveyedHouses
+                - jsonEntomology.numFoundHouses
+                - jsonEntomology.numNoContainerHouses));
+        noContainerHousesView.setText(String.format(getString(R.string.no_container_houses),
+            jsonEntomology.numNoContainerHouses));
+        surveyDuplicateView.setText(String.format(getString(R.string.duplicate_survey_count),
+            jsonEntomology.numDuplicateSurvey));
+        surveyPersonCountView.setText(
+            String.format(getString(R.string.sum_person_count), jsonEntomology.sumPersonCount));
+        containerCountView.setText(String.format(getString(R.string.survey_container_count),
+            jsonEntomology.numSurveyedContainer, jsonEntomology.numFoundContainers));
+        setKeyContainerInfo(jsonEntomology);
     }
 
     private void setSurveyDate(JsonEntomology jsonEntomology) {
@@ -239,34 +251,36 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
             surveyDate = ThaiDatePrinter.print(jsonEntomology.surveyStartDate);
         } else {
             surveyDate = ThaiDatePrinter.print(jsonEntomology.surveyStartDate)
-                    + " - " + ThaiDatePrinter.print(jsonEntomology.surveyEndDate);
+                + " - "
+                + ThaiDatePrinter.print(jsonEntomology.surveyEndDate);
         }
         surveyDateView.setText(surveyDate);
     }
 
-    private LinearLayout.LayoutParams addSpace() {
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins(0, 0, 0, 16);
+    private void setPlaceBackgroundIcon(JsonEntomology jsonEntomology) {
+        FragmentActivity activity = getActivity();
+        if (activity == null) return;
 
-        return layoutParams;
-    }
-
-    private void updateEntomologyInfo(JsonEntomology jsonEntomology) {
-        final boolean isVillage = isVillage(jsonEntomology);
-
-        setSurveyDate(jsonEntomology);
-        resultUpdateView.setTime(ThaiDateTimeConverter.convert(jsonEntomology.reportUpdate));
-        setPlaceBackgroundIcon(jsonEntomology);
-        setSurveyIndex(jsonEntomology, isVillage);
-        setSurveyCount(jsonEntomology, isVillage);
-        setSurveyFoundCount(jsonEntomology);
-        setSurveyNotFoundCount(jsonEntomology);
-        setNoContainerHouseCount(jsonEntomology);
-        setDuplicateSurveyCount(jsonEntomology);
-        setSumPersonCount(jsonEntomology);
-        setSurveyContainerCount(jsonEntomology);
-        setKeyContainerInfo(jsonEntomology);
+        ResourceUtils resourceUtils = ResourceUtils.from(activity);
+        int color;
+        if (place.getType() == PlaceType.VILLAGE_COMMUNITY) {
+            if (jsonEntomology.hiValue <= 10) {
+                color = resourceUtils.getColor(R.color.without_larvae);
+            } else if (jsonEntomology.hiValue <= 50) {
+                color = resourceUtils.getColor(R.color.have_larvae_warning);
+            } else {
+                color = resourceUtils.getColor(R.color.have_larvae);
+            }
+        } else {
+            if (jsonEntomology.ciValue == 0) {
+                color = resourceUtils.getColor(R.color.without_larvae);
+            } else if (jsonEntomology.ciValue <= 5) {
+                color = ResourceUtils.from(getContext()).getColor(R.color.have_larvae_warning);
+            } else {
+                color = resourceUtils.getColor(R.color.have_larvae);
+            }
+        }
+        ((GradientDrawable) placeIconView.getBackground()).setColor(color);
     }
 
     private void setSurveyIndex(JsonEntomology jsonEntomology, boolean isVillage) {
@@ -274,52 +288,16 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
         if (isVillage) {
             houseIndexView.setVisibility(View.VISIBLE);
             breteauIndexView.setVisibility(View.VISIBLE);
-            houseIndexView.setText(String.format(getString(R.string.house_index),
-                    df.format(jsonEntomology.hiValue)));
+            houseIndexView.setText(
+                String.format(getString(R.string.house_index), df.format(jsonEntomology.hiValue)));
             breteauIndexView.setText(String.format(getString(R.string.breteau_index),
-                    df.format(jsonEntomology.biValue)));
+                df.format(jsonEntomology.biValue)));
         } else {
             houseIndexView.setVisibility(View.INVISIBLE);
             breteauIndexView.setVisibility(View.INVISIBLE);
         }
-        containerIndexView.setText(String.format(getString(R.string.container_index),
-                df.format(jsonEntomology.ciValue)));
-    }
-
-    private void setSurveyCount(JsonEntomology jsonEntomology, boolean isVillage) {
-        surveyCountView.setText(String.format(getString(R.string.survey_count),
-                isVillage ? HOUSE : BUILDING, jsonEntomology.numSurveyedHouses));
-    }
-
-    private void setSurveyFoundCount(JsonEntomology jsonEntomology) {
-        surveyFoundCountView.setText(String.format(getString(R.string.survey_found_count),
-                jsonEntomology.numFoundHouses));
-    }
-
-    private void setSurveyNotFoundCount(JsonEntomology jsonEntomology) {
-        surveyNotFoundCountView.setText(String.format(getString(R.string.survey_not_found_count),
-                jsonEntomology.numSurveyedHouses - jsonEntomology.numFoundHouses
-                        - jsonEntomology.numNoContainerHouses));
-    }
-
-    private void setNoContainerHouseCount(JsonEntomology jsonEntomology) {
-        noContainerHousesView.setText(String.format(getString(R.string.no_container_houses),
-                jsonEntomology.numNoContainerHouses));
-    }
-
-    private void setSurveyContainerCount(JsonEntomology jsonEntomology) {
-        containerCountView.setText(String.format(getString(R.string.survey_container_count),
-                jsonEntomology.numSurveyedContainer, jsonEntomology.numFoundContainers));
-    }
-
-    private void setDuplicateSurveyCount(JsonEntomology jsonEntomology) {
-        surveyDuplicateView.setText(String.format(getString(R.string.duplicate_survey_count),
-                jsonEntomology.numDuplicateSurvey));
-    }
-
-    private void setSumPersonCount(JsonEntomology jsonEntomology) {
-        surveyPersonCountView.setText(String.format(getString(R.string.sum_person_count),
-            jsonEntomology.sumPersonCount));
+        containerIndexView.setText(
+            String.format(getString(R.string.container_index), df.format(jsonEntomology.ciValue)));
     }
 
     private void setKeyContainerInfo(JsonEntomology jsonEntomology) {
@@ -329,8 +307,9 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
             JsonKeyContainer indoorKeyContainer = jsonEntomology.keyContainerIn.get(index);
             JsonKeyContainer outdoorKeyContainer = jsonEntomology.keyContainerOut.get(index);
 
-            if (index == 0 && TextUtils.isEmpty(indoorKeyContainer.containerName)
-                    && TextUtils.isEmpty(outdoorKeyContainer.containerName)) {
+            if (index == 0
+                && TextUtils.isEmpty(indoorKeyContainer.containerName)
+                && TextUtils.isEmpty(outdoorKeyContainer.containerName)) {
                 hideKeyContainerLayout();
             } else {
                 setupKeyContainer(indoorKeyContainer, indoorContainerLayout);
@@ -339,25 +318,30 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
         }
     }
 
-    private void setupKeyContainer(JsonKeyContainer keyContainer,
-                                   LinearLayout container) {
-        if (keyContainer.containerId == null || keyContainer.containerName == null)
-            return;
+    private void setupKeyContainer(JsonKeyContainer keyContainer, LinearLayout container) {
+        if (keyContainer.containerId == null || keyContainer.containerName == null) return;
 
         String[] sameLevelKeyContainerId = keyContainer.containerId.split(", ");
         String[] sameLevelKeyContainerName = keyContainer.containerName.split(", ");
         int sameLevelSize = sameLevelKeyContainerId.length;
 
         for (int i = 0; i < sameLevelSize; i++) {
-            KeyContainerView keyContainerView = buildKeyContainerView(
-                    Integer.valueOf(sameLevelKeyContainerId[i]),
+            KeyContainerView keyContainerView =
+                buildKeyContainerView(Integer.valueOf(sameLevelKeyContainerId[i]),
                     sameLevelKeyContainerName[i]);
 
-            if (i == sameLevelSize - 1)
-                keyContainerView.setLayoutParams(addSpace());
+            if (i == sameLevelSize - 1) keyContainerView.setLayoutParams(addSpace());
 
             container.addView(keyContainerView);
         }
+    }
+
+    private LinearLayout.LayoutParams addSpace() {
+        LinearLayout.LayoutParams layoutParams =
+            new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(0, 0, 0, 16);
+        return layoutParams;
     }
 
     private KeyContainerView buildKeyContainerView(int containerId, String containerName) {
@@ -366,17 +350,20 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
         return keyContainerView;
     }
 
+    public boolean isActivityAvailable() {
+        FragmentActivity activity = getActivity();
+        return activity != null && !activity.isFinishing() && !activity.isDestroyed();
+    }
+
     public class SurveyResultJobRunner extends AbsJobRunner {
         private JsonEntomology entomology;
 
-        @Override
-        protected void onJobError(Job errorJob, Exception exception) {
+        @Override protected void onJobError(Job errorJob, Exception exception) {
             super.onJobError(errorJob, exception);
             TanrabadApp.log(exception);
         }
 
-        @Override
-        protected void onJobDone(Job job) {
+        @Override protected void onJobDone(Job job) {
             super.onJobDone(job);
 
             if (job.equals(jsonEntomologyGetDataJob)) {
@@ -385,13 +372,11 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
             }
         }
 
-        @Override
-        protected void onJobStart(Job startingJob) {
+        @Override protected void onJobStart(Job startingJob) {
             showProgressBar();
         }
 
-        @Override
-        protected void onRunFinish() {
+        @Override protected void onRunFinish() {
             surveyResultProgressBar.setVisibility(View.GONE);
             gotItButton.setEnabled(true);
             if (entomology != null) {
@@ -404,7 +389,5 @@ public class SurveyResultDialogFragment extends DialogFragment implements View.O
                 errorMsgView.setText(R.string.cannot_view_survey_result);
             }
         }
-
-
     }
 }

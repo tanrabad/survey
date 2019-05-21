@@ -23,16 +23,17 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
 
 public class ResourceUtils {
 
     private Context context;
 
-    public ResourceUtils(Context context) {
+    public ResourceUtils(@NonNull Context context) {
         this.context = context;
     }
 
-    public static ResourceUtils from(Context context) {
+    public static ResourceUtils from(@NonNull Context context) {
         return new ResourceUtils(context);
     }
 

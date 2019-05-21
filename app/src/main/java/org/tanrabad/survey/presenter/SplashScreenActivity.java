@@ -23,7 +23,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.widget.TextView;
-
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.presenter.CheckVersionThread.CheckVersionListener;
 
@@ -75,7 +74,7 @@ public class SplashScreenActivity extends TanrabadActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        checker.pause();
+        if (checker != null) checker.pause();
     }
 
     @Override

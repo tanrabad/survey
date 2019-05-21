@@ -25,7 +25,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import java.text.DecimalFormat;
+import java.text.Format;
+import java.util.ArrayList;
+import java.util.List;
+import nectec.thai.address.AddressPrinter;
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.entity.field.Location;
@@ -39,13 +43,6 @@ import org.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
 import org.tanrabad.survey.repository.BrokerProvinceRepository;
 import org.tanrabad.survey.repository.BrokerSubdistrictRepository;
 import org.tanrabad.survey.utils.android.ResourceUtils;
-
-import java.text.DecimalFormat;
-import java.text.Format;
-import java.util.ArrayList;
-import java.util.List;
-
-import nectec.thai.address.AddressPrinter;
 
 public class NearbyPlaceAdapter extends RecyclerView.Adapter<NearbyPlaceAdapter.ViewHolder>
     implements ListViewAdapter<Place> {
@@ -148,12 +145,12 @@ public class NearbyPlaceAdapter extends RecyclerView.Adapter<NearbyPlaceAdapter.
             this.adapter = adapter;
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
-            placeTextView = (TextView) itemView.findViewById(R.id.place_name);
-            placeSubtypeTextView = (TextView) itemView.findViewById(R.id.place_subtype);
-            placeDistanceTextView = (TextView) itemView.findViewById(R.id.place_distance);
-            placeWeightTextView = (TextView) itemView.findViewById(R.id.place_weight);
-            placeAddressTextView = (TextView) itemView.findViewById(R.id.place_address);
-            placeIcon = (ImageView) itemView.findViewById(R.id.place_icon);
+            placeTextView = itemView.findViewById(R.id.place_name);
+            placeSubtypeTextView = itemView.findViewById(R.id.place_subtype);
+            placeDistanceTextView = itemView.findViewById(R.id.place_distance);
+            placeWeightTextView = itemView.findViewById(R.id.place_weight);
+            placeAddressTextView = itemView.findViewById(R.id.place_address);
+            placeIcon = itemView.findViewById(R.id.place_icon);
         }
 
         @Override
@@ -192,8 +189,14 @@ public class NearbyPlaceAdapter extends RecyclerView.Adapter<NearbyPlaceAdapter.
 
         private String getAddressText(Place place) {
             Subdistrict subDistrict = subDistricts.findByCode(place.getSubdistrictCode());
+            if (subDistrict == null)
+                return "-";
             District district = districts.findByCode(subDistrict.getDistrictCode());
+            if (district == null)
+                return subDistrict.getName();
             Province province = provinces.findByCode(district.getProvinceCode());
+            if (province == null)
+                return district.getName();
             return AddressPrinter.print(subDistrict.getName(), district.getName(), province.getName());
         }
 

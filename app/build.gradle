@@ -15,27 +15,17 @@
  * limitations under the License.
  */
 
-version versionName
-
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.noveogroup.android:check:1.2.3'
-    }
+plugins {
+    id "org.stoyicker.android-check" version "2.292"
 }
 
 apply plugin: "com.android.application"
 apply plugin: "com.github.triplet.play"
 apply plugin: "io.fabric"
-apply plugin: "com.noveogroup.android.check"
 apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 apply plugin: 'com.google.firebase.firebase-perf'
 
-repositories {
-    maven { url "https://maven.fabric.io/public" }
-}
+version versionName
 
 android {
     compileSdkVersion 27
@@ -138,7 +128,6 @@ android {
             preDexLibraries false
         }
     }
-    useLibrary "org.apache.http.legacy"
 }
 
 dependencies {
@@ -156,15 +145,15 @@ dependencies {
     implementation "com.android.support:design:$supportLibVersion"
     implementation "com.android.support:percent:$supportLibVersion"
     implementation "com.google.android.gms:play-services-location:16.0.0"
-    implementation "com.google.android.gms:play-services-maps:16.0.0"
+    implementation "com.google.android.gms:play-services-maps:16.1.0"
     implementation 'com.google.android.gms:play-services-oss-licenses:16.0.2'
-    implementation 'com.google.firebase:firebase-core:16.0.7'
-    implementation 'com.google.firebase:firebase-perf:16.2.5'
+    implementation 'com.google.firebase:firebase-core:16.0.9'
+    implementation 'com.google.firebase:firebase-perf:17.0.0'
     implementation("com.google.maps.android:android-maps-utils:0.4.3") { exclude(group: "com.google.android.gms") }
     implementation "com.bartoszlipinski.recyclerviewheader:library:1.2.1"
     implementation "com.bluelinelabs:logansquare:$loganSquareVersion"
     implementation('com.crashlytics.sdk.android:answers:1.3.11@aar') { transitive = true }
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.9'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.0'
     implementation "com.squareup.okhttp3:okhttp:3.12.0"
     implementation "joda-time:joda-time:$jodaTimeVersion"
     implementation "net.frakbot:jumpingbeans:1.3.0"
@@ -174,6 +163,7 @@ dependencies {
     implementation "cat.ereza:customactivityoncrash:1.5.0"
     implementation "de.hdodenhof:circleimageview:2.2.0"
     implementation "me.piruin:spinney:1.0.0"
+    implementation "com.fasterxml.jackson.core:jackson-core:2.6.0"
     implementation "it.sephiroth.android.library.targettooltip:target-tooltip-library:1.3.14"
 
     testImplementation "junit:junit:$junitVersion"
@@ -208,9 +198,6 @@ check {
     checkstyle {
         abortOnError false
         config checkstyleConfigFile
-    }
-    findbugs {
-        skip true
     }
     pmd {
         config pmdRuleSetFiles.getAt(0)

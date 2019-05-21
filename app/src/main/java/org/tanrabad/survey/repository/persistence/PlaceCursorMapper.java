@@ -18,14 +18,13 @@
 package org.tanrabad.survey.repository.persistence;
 
 import android.database.Cursor;
-
+import android.support.annotation.NonNull;
+import java.util.UUID;
 import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.entity.field.Location;
 import org.tanrabad.survey.entity.lookup.PlaceSubType;
 import org.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
 import org.tanrabad.survey.utils.collection.CursorMapper;
-
-import java.util.UUID;
 
 class PlaceCursorMapper implements CursorMapper<Place> {
 
@@ -74,8 +73,15 @@ class PlaceCursorMapper implements CursorMapper<Place> {
         return place;
     }
 
+    @NonNull
     private PlaceSubType getSubType(Cursor cursor) {
-        return BrokerPlaceSubTypeRepository.getInstance().findById(cursor.getInt(subtypeIndex));
+        int subTypeId = cursor.getInt(subtypeIndex);
+        PlaceSubType subType = BrokerPlaceSubTypeRepository
+            .getInstance()
+            .findById(subTypeId);
+        if (subType == null)
+            throw new IllegalArgumentException("Not found place subtype " + subTypeId);
+        return subType;
     }
 
     private Location getLocation(Cursor cursor) {

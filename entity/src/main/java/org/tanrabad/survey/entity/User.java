@@ -69,8 +69,7 @@ public class User {
         return organizationId;
     }
 
-    @Deprecated
-    public void setOrganizationId(int organizationId) {
+    @Deprecated public void setOrganizationId(int organizationId) {
         this.organizationId = organizationId;
     }
 
@@ -120,11 +119,14 @@ public class User {
     }
 
     public void setApiFilter(String apiFilter) {
-        this.apiFilter = apiFilter;
+        if ("-".equals(apiFilter)) {
+            this.apiFilter = "all=false";
+        } else {
+            this.apiFilter = apiFilter;
+        }
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         int result = username.hashCode();
         result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
         result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
@@ -132,21 +134,20 @@ public class User {
         return result;
     }
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         User user = (User) o;
         if (organizationId != user.organizationId) return false;
         if (!username.equals(user.username)) return false;
-        if (firstname != null ? !firstname.equals(user.firstname) : user.firstname != null)
+        if (firstname != null ? !firstname.equals(user.firstname) : user.firstname != null) {
             return false;
+        }
         return !(lastname != null ? !lastname.equals(user.lastname) : user.lastname != null);
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "User{"
                 + "username='" + username + '\''
                 + ", firstname='" + firstname + '\''
@@ -161,8 +162,7 @@ public class User {
     }
 
     public enum UserType {
-        OPERATION("_operation"),
-        RESEARCH("_research");
+        OPERATION("_operation"), RESEARCH("_research");
 
         private final String typeName;
 
@@ -170,10 +170,8 @@ public class User {
             this.typeName = typeName;
         }
 
-        @Override
-        public String toString() {
+        @Override public String toString() {
             return typeName;
         }
     }
-
 }

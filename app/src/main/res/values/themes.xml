@@ -56,7 +56,7 @@
 
         <!-- Define Color Theme-->
         <item name="colorPrimary">@color/color_primary</item>
-        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="colorPrimaryDark">@color/color_primary</item>
         <item name="colorAccent">@color/color_accent</item>
         <item name="android:windowBackground">@color/lighter_gray</item>
 
@@ -94,6 +94,7 @@
     </style>
 
     <style name="AppTheme.Blue.Water">
+        <item name="colorPrimaryDark">@android:color/transparent</item>
         <item name="android:windowBackground">@drawable/bg_water</item>
     </style>
 

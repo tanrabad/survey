@@ -18,6 +18,7 @@
 package org.tanrabad.survey.presenter.authen.appauth;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.customtabs.CustomTabsIntent;
 import android.util.Log;
@@ -44,6 +45,7 @@ class EndSessionService {
 
         CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
         CustomTabsIntent customTabsIntent = builder.build();
+        customTabsIntent.intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         customTabsIntent.launchUrl(context, Uri.parse(url));
     }
 }

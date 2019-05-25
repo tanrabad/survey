@@ -19,7 +19,6 @@ package org.tanrabad.survey.presenter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-
 import org.tanrabad.survey.BuildConfig;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.entity.User;
@@ -76,6 +75,10 @@ public final class AccountUtils {
     }
 
     public static void clear() {
+        if (TanrabadApp.action() != null) {
+            TanrabadApp.action().logout(user);
+        }
+
         AccountUtils.user = null;
         lastLoginUserStore.clear();
         runtimeUserStore.clear();

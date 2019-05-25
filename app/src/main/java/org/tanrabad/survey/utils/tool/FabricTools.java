@@ -19,7 +19,6 @@ package org.tanrabad.survey.utils.tool;
 
 import android.content.Context;
 import android.util.Log;
-
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.CustomEvent;
@@ -28,7 +27,7 @@ import com.crashlytics.android.answers.LevelStartEvent;
 import com.crashlytics.android.answers.LoginEvent;
 import com.crashlytics.android.answers.SearchEvent;
 import com.crashlytics.android.core.CrashlyticsCore;
-
+import io.fabric.sdk.android.Fabric;
 import org.tanrabad.survey.BuildConfig;
 import org.tanrabad.survey.domain.entomology.ContainerIndex;
 import org.tanrabad.survey.entity.Building;
@@ -37,8 +36,6 @@ import org.tanrabad.survey.entity.Survey;
 import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
 import org.tanrabad.survey.repository.BrokerPlaceTypeRepository;
-
-import io.fabric.sdk.android.Fabric;
 
 public class FabricTools implements ExceptionLogger, ActionLogger {
 
@@ -184,6 +181,14 @@ public class FabricTools implements ExceptionLogger, ActionLogger {
                 .putScore(getScore(survey, success))
                 .putSuccess(success)
                 .putLevelName(Level.SURVEY_BUILDING));
+    }
+
+    @Override public void logout(User user) {
+        answers.logCustom(new CustomEvent("Logout")
+            .putCustomAttribute("Health-Region Code", user.getHealthRegionCode())
+            .putCustomAttribute("Organization ID", String.valueOf(user.getOrganizationId()))
+            .putCustomAttribute("User Type", user.getUserType().toString())
+        );
     }
 
     private int getScore(Survey survey, boolean success) {

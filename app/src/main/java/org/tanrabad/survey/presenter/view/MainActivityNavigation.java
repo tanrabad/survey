@@ -26,7 +26,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
@@ -47,7 +46,7 @@ public final class MainActivityNavigation {
     }
 
     public static void setup(Activity activity) {
-        NavigationView navigationView = (NavigationView) activity.findViewById(R.id.navigation);
+        NavigationView navigationView = activity.findViewById(R.id.navigation);
         if (navigationView == null) {
             TanrabadApp.log(new IllegalArgumentException("NavigationView of MainActivity is Null"));
             return;
@@ -62,23 +61,15 @@ public final class MainActivityNavigation {
         View header = navigationView.getHeaderView(0);
 
         final User user = AccountUtils.getUser();
-        ImageView avatarImageView = (ImageView) header.findViewById(R.id.avatar_icon);
-        avatarImageView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                Alert.lowLevel().show(user.getApiFilter());
-                return true;
-            }
-        });
 
-        TextView userNameTextView = (TextView) header.findViewById(R.id.username);
+        TextView userNameTextView = header.findViewById(R.id.username);
         userNameTextView.setText(user.getUsername());
 
-        TextView userFullNameTextView = (TextView) header.findViewById(R.id.user_fullname);
+        TextView userFullNameTextView = header.findViewById(R.id.user_fullname);
         userFullNameTextView.setText(String.format("%s %s", user.getFirstname(), user.getLastname()));
 
         Organization organization = BrokerOrganizationRepository.getInstance().findById(user.getOrganizationId());
-        TextView organizationTextView = (TextView) header.findViewById(R.id.organization);
+        TextView organizationTextView = header.findViewById(R.id.organization);
         organizationTextView.setText(organization.getName());
     }
 
@@ -138,9 +129,11 @@ public final class MainActivityNavigation {
                     AppAuthPresenter auth = new AppAuthPresenter(activity);
                     UploadJobRunner uploadJob = new UploadJobRunner();
                     uploadJob.addJobs(new UploadJobRunner.Builder().getJobs());
-                    uploadJob.setOnSyncFinishListener(auth::logout);
+                    uploadJob.setOnSyncFinishListener(() -> {
+                        auth.logout();
+                        activity.finish();
+                    });
                     uploadJob.start();
-
                     break;
             }
             return false;

@@ -80,10 +80,6 @@ public class AppAuthPresenter implements AuthenticatorPresent {
         mAuthStateManager = AuthStateManager.getInstance(activity);
         mConfiguration = Configuration.getInstance(activity);
 
-        if (isLoggedIn()) {
-            return;
-        }
-
         if (mConfiguration.hasConfigurationChanged()) {
             // discard any existing authorization state due to the change of configuration
             Log.i(TAG, "Configuration change detected, discarding old state");
@@ -102,9 +98,7 @@ public class AppAuthPresenter implements AuthenticatorPresent {
 
     private boolean isLoggedIn() {
         AuthState state = mAuthStateManager.getCurrent();
-        return state.isAuthorized()
-            && !state.getNeedsTokenRefresh()
-            && !mConfiguration.hasConfigurationChanged();
+        return state.isAuthorized() && !mConfiguration.hasConfigurationChanged();
     }
 
     /**
@@ -264,7 +258,8 @@ public class AppAuthPresenter implements AuthenticatorPresent {
     }
 
     @Override public void logout() {
-        if (isLoggedIn()) {
+        AuthState state = mAuthStateManager.getCurrent();
+        if (isLoggedIn() && !state.getNeedsTokenRefresh()) {
             Intent intent = new Intent(activity, LogoutActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             activity.startActivity(intent);

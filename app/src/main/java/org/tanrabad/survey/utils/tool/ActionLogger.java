@@ -52,4 +52,6 @@ public interface ActionLogger {
 
     void finishSurvey(Survey survey, boolean success);
 
+    void logout(User user);
+
 }

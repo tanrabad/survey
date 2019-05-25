@@ -18,10 +18,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="org.tanrabad.survey">
 
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:name=".TanrabadApp"
@@ -36,37 +36,37 @@
         tools:replace="android:allowBackup">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="${google_map_key}" />
+            android:value="${google_map_key}"/>
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+            android:value="@integer/google_play_services_version"/>
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="985b93fe45ed65dc37e25e81a8c5ce5ba9c217fa" />
+            android:value="985b93fe45ed65dc37e25e81a8c5ce5ba9c217fa"/>
 
         <provider
             android:name=".presenter.PlaceSuggestionProvider"
             android:authorities="th.or.nectec.tanrabad.survey.PlaceSuggestionProvider"
-            android:exported="false" />
+            android:exported="false"/>
 
         <activity
             android:name=".presenter.SplashScreenActivity"
             android:theme="@style/AppTheme.SplashScreen">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
             <intent-filter android:autoVerify="true">
-                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.VIEW"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
 
                 <data
                     android:host="www.tanrabad.org"
                     android:pathPrefix="/survey"
-                    android:scheme="https" />
+                    android:scheme="https"/>
             </intent-filter>
         </activity>
         <activity
@@ -77,71 +77,71 @@
         </activity>
         <activity
             android:name=".presenter.InitialActivity"
-            android:theme="@style/AppTheme.Blue.Water" />
+            android:theme="@style/AppTheme.Blue.Water"/>
         <activity
             android:name=".presenter.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask"
-            android:theme="@style/AppTheme.Blue.Water" />
+            android:theme="@style/AppTheme.Blue.Water"/>
         <activity
             android:name=".presenter.PlaceListActivity"
-            android:label="@string/define_place_survey" />
+            android:label="@string/define_place_survey"/>
         <activity
             android:name=".presenter.BuildingListActivity"
             android:label="@string/define_building_survey"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"/>
         <activity
             android:name=".presenter.SurveyActivity"
             android:label="@string/title_activity_survey">
             <intent-filter>
-                <action android:name="android.intent.action.EDIT" />
+                <action android:name="android.intent.action.EDIT"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".presenter.SurveyBuildingHistoryActivity"
             android:label="@string/survey_building_history"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"/>
         <activity
             android:name=".presenter.BuildingFormActivity"
             android:label="@string/add_building"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity
             android:name=".presenter.MapMarkerActivity"
-            android:label="@string/add_location" />
+            android:label="@string/add_location"/>
         <activity
             android:name=".presenter.BuildingMapMarkerActivity"
-            android:label="@string/add_location" />
+            android:label="@string/add_location"/>
         <activity
             android:name=".presenter.PlaceFormActivity"
             android:label="@string/add_place"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity
             android:name=".presenter.PlaceSearchActivity"
             android:icon="@mipmap/ic_launcher_inverse"
             android:label="@string/search_place"
             android:theme="@style/AppTheme.Alternate">
             <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
+                <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>
 
             <meta-data
                 android:name="android.app.searchable"
-                android:resource="@xml/places_searchable" />
+                android:resource="@xml/places_searchable"/>
         </activity>
         <activity
             android:name=".presenter.AboutActivity"
-            android:label="@string/about" />
+            android:label="@string/about"/>
         <activity
             android:name=".presenter.PreferenceActivity"
-            android:label="@string/setting" />
+            android:label="@string/setting"/>
 
         <activity
             android:name=".presenter.authen.appauth.TokenActivity"
-            android:theme="@style/AppTheme.Dark"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="stateHidden" />
+            android:theme="@style/AppTheme.Dark"
+            android:windowSoftInputMode="stateHidden"/>
 
         <activity
             android:name="net.openid.appauth.RedirectUriReceiverActivity"
@@ -149,53 +149,56 @@
             android:label="Authen">
 
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.VIEW"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
 
                 <data
                     android:host="localhost"
                     android:pathPrefix="/iaamredirect"
-                    android:scheme="iaamscheme" />
+                    android:scheme="iaamscheme"/>
             </intent-filter>
         </activity>
 
-        <activity android:name=".presenter.authen.appauth.LogoutActivity"/>
+        <activity
+            android:name=".presenter.authen.appauth.LogoutActivity"
+            android:noHistory="true"/>
 
         <activity
             android:name=".presenter.authen.appauth.LogoutRedirectActivity"
             android:exported="true"
+            android:noHistory="true"
             android:label="Signout">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.VIEW"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
 
                 <data
                     android:host="localhost"
                     android:pathPrefix="/signout"
-                    android:scheme="trb-survey" />
+                    android:scheme="trb-survey"/>
             </intent-filter>
         </activity>
 
         <activity
             android:name=".presenter.authen.appauth.EmailVerifiedRedirectActivity"
             android:exported="true"
-            android:theme="@style/AppTheme.SplashScreen"
-            android:label="Email verified">
-            <tools:validation testUrl="https://www.tanrabad.org/emailverified" />
+            android:label="Email verified"
+            android:theme="@style/AppTheme.SplashScreen">
+            <tools:validation testUrl="https://www.tanrabad.org/emailverified"/>
             <intent-filter android:autoVerify="true">
-                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.VIEW"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
 
                 <data
-                    android:scheme="https"
                     android:host="www.tanrabad.org"
-                    android:pathPrefix="/emailverified" />
+                    android:pathPrefix="/emailverified"
+                    android:scheme="https"/>
             </intent-filter>
         </activity>
     </application>

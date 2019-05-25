@@ -15,10 +15,6 @@
  * limitations under the License.
  */
 
-plugins {
-    id "org.stoyicker.android-check" version "2.292"
-}
-
 apply plugin: "com.android.application"
 apply plugin: "com.github.triplet.play"
 apply plugin: "io.fabric"
@@ -193,13 +189,3 @@ dependencies {
 apply plugin: 'com.google.gms.google-services'
 
 configurations.all { resolutionStrategy.force "com.fasterxml.jackson.core:jackson-core:2.6.0"}
-
-check {
-    checkstyle {
-        abortOnError false
-        config checkstyleConfigFile
-    }
-    pmd {
-        config pmdRuleSetFiles.getAt(0)
-    }
-}

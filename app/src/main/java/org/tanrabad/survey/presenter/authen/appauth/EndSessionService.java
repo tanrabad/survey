@@ -21,9 +21,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.customtabs.CustomTabsIntent;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import net.openid.appauth.AuthState;
 import okhttp3.OkHttpClient;
+import org.tanrabad.survey.R;
 
 class EndSessionService {
 
@@ -44,6 +46,7 @@ class EndSessionService {
         String url = String.format(URL, state.getIdToken()).trim();
 
         CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+        builder.setToolbarColor(ContextCompat.getColor(context, R.color.purple));
         CustomTabsIntent customTabsIntent = builder.build();
         customTabsIntent.intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         customTabsIntent.launchUrl(context, Uri.parse(url));

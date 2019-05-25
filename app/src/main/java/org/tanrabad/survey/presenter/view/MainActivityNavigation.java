@@ -36,7 +36,7 @@ import org.tanrabad.survey.job.UploadJobRunner;
 import org.tanrabad.survey.presenter.AboutActivity;
 import org.tanrabad.survey.presenter.AccountUtils;
 import org.tanrabad.survey.presenter.PreferenceActivity;
-import org.tanrabad.survey.presenter.authen.appauth.TokenActivity;
+import org.tanrabad.survey.presenter.authen.appauth.AppAuthPresenter;
 import org.tanrabad.survey.repository.BrokerOrganizationRepository;
 import org.tanrabad.survey.utils.alert.Alert;
 import org.tanrabad.survey.utils.android.InternetConnection;
@@ -135,14 +135,10 @@ public final class MainActivityNavigation {
                         Alert.highLevel().show(R.string.please_connect_internet_before_logout);
                         return false;
                     }
+                    AppAuthPresenter auth = new AppAuthPresenter(activity);
                     UploadJobRunner uploadJob = new UploadJobRunner();
                     uploadJob.addJobs(new UploadJobRunner.Builder().getJobs());
-                    uploadJob.setOnSyncFinishListener(() -> {
-                        Intent intent = new Intent(activity, TokenActivity.class);
-                        intent.setAction(TokenActivity.AUTH_ACTION_LOGOUT);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        activity.startActivity(intent);
-                    });
+                    uploadJob.setOnSyncFinishListener(auth::logout);
                     uploadJob.start();
 
                     break;

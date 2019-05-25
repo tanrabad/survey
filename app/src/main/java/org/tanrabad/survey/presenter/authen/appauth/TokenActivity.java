@@ -18,6 +18,7 @@
 package org.tanrabad.survey.presenter.authen.appauth;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.MainThread;
 import android.support.design.widget.Snackbar;
@@ -37,6 +38,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicReference;
 import net.openid.appauth.AppAuthConfiguration;
+import net.openid.appauth.AuthState;
 import net.openid.appauth.AuthorizationException;
 import net.openid.appauth.AuthorizationResponse;
 import net.openid.appauth.AuthorizationService;
@@ -56,9 +58,7 @@ import org.tanrabad.survey.presenter.authen.UserProfile;
 public class TokenActivity extends TanrabadActivity {
     private static final String TAG = "TokenActivity";
     public static final String AUTH_ACTION_AUTHEN = "org.tanrabad.auth.action.AUTHEN";
-    public static final String AUTH_ACTION_LOGOUT = "org.tanrabad.auth.action.LOGOUT";
 
-    private static final String KEY_USER_INFO = "userInfo";
     public static final String USERNAME = "username";
 
     private AuthorizationService mAuthService;
@@ -70,8 +70,7 @@ public class TokenActivity extends TanrabadActivity {
     private Button authenButton;
     private View logoutButton;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_token);
 
@@ -80,10 +79,8 @@ public class TokenActivity extends TanrabadActivity {
         mExecutor = Executors.newSingleThreadExecutor();
 
         Configuration config = Configuration.getInstance(this);
-        mAuthService = new AuthorizationService(
-            this,
-            new AppAuthConfiguration.Builder()
-                .setConnectionBuilder(config.getConnectionBuilder())
+        mAuthService = new AuthorizationService(this,
+            new AppAuthConfiguration.Builder().setConnectionBuilder(config.getConnectionBuilder())
                 .build());
 
         mUserInfoJson.compareAndSet(null, mUserManager.getProfile());
@@ -113,8 +110,7 @@ public class TokenActivity extends TanrabadActivity {
         checkAuthorize();
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
+    @Override protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         mUserInfoJson.set(null); //Clear for re-check user profile
         checkAuthorize();
@@ -125,13 +121,16 @@ public class TokenActivity extends TanrabadActivity {
             mExecutor = Executors.newSingleThreadExecutor();
         }
 
-        if (mStateManager.getCurrent().isAuthorized()) {
+        AuthState state = mStateManager.getCurrent();
+        if (state.isAuthorized()) {
             UserProfile profile = mUserInfoJson.get();
             if (profile != null) {
+                Log.i(TAG, "Use stored User's Profile");
                 displayAuthorized();
             } else {
-                ClientAuthentication clientAuth = new ClientSecretPost(BuildConfig.TRB_AUTHEN_CLIENT_SECRET);
-                mStateManager.getCurrent().performActionWithFreshTokens(mAuthService, clientAuth, this::fetchUserInfo);
+                ClientAuthentication clientAuth =
+                    new ClientSecretPost(BuildConfig.TRB_AUTHEN_CLIENT_SECRET);
+                state.performActionWithFreshTokens(mAuthService, clientAuth, this::fetchUserInfo);
             }
             return;
         }
@@ -157,15 +156,13 @@ public class TokenActivity extends TanrabadActivity {
         }
     }
 
-    @Override
-    protected void onDestroy() {
+    @Override protected void onDestroy() {
         super.onDestroy();
         mAuthService.dispose();
         mExecutor.shutdownNow();
     }
 
-    @MainThread
-    private void displayNotAuthorized(String explanation) {
+    @MainThread private void displayNotAuthorized(String explanation) {
         ((TextView) findViewById(R.id.username)).setText(R.string.please_authen);
         Toast.makeText(this, explanation, Toast.LENGTH_SHORT).show();
         restartToLoginActivity();
@@ -178,13 +175,10 @@ public class TokenActivity extends TanrabadActivity {
         finish();
     }
 
-    @MainThread
-    private void
-    displayAuthorized() {
+    @MainThread private void displayAuthorized() {
         Log.i(TAG, "Display Authorized");
         authenButton.setVisibility(View.VISIBLE);
         logoutButton.setVisibility(View.VISIBLE);
-
         UserProfile userInfo = mUserInfoJson.get();
         if (userInfo != null) {
             ((TextView) findViewById(R.id.username)).setText(userInfo.userName);
@@ -206,60 +200,44 @@ public class TokenActivity extends TanrabadActivity {
                 status.setTextColor(ContextCompat.getColor(this, R.color.without_larvae));
                 authenButton.setText(R.string.login);
                 String action = getIntent().getAction();
-                if (AUTH_ACTION_AUTHEN.equals(action))
+                if (AUTH_ACTION_AUTHEN.equals(action)) {
                     authenButton.performClick(); //automatic login to app
-                else if (AUTH_ACTION_LOGOUT.equals(action))
-                    logout();
+                }
             }
         } else {
-            Toast.makeText(this, "เกิดข้อผิดพลาด ไม่สามารถดึงข้อมูลผู้ใช้ได้", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "เกิดข้อผิดพลาด ไม่สามารถดึงข้อมูลผู้ใช้ได้", Toast.LENGTH_SHORT)
+                .show();
             restartToLoginActivity();
         }
     }
-
 
     @MainThread
     private void exchangeAuthorizationCode(AuthorizationResponse authorizationResponse) {
         Log.i(TAG, "Request to Exchange token");
         final TokenRequest request = authorizationResponse.createTokenExchangeRequest();
-        performTokenRequest(
-            request,
-            (tokenResponse, authException) -> {
-                mStateManager.updateAfterTokenResponse(tokenResponse, authException);
-                if (!mStateManager.getCurrent().isAuthorized()) {
-                    final String message = "Authorization Code exchange failed - "
-                        + ((authException != null) ? authException.error : "");
-                    Log.e(TAG, message);
-                    runOnUiThread(() -> displayNotAuthorized(message));
-                } else {
-                    mStateManager.getCurrent().performActionWithFreshTokens(mAuthService, this::fetchUserInfo);
-                }
-            });
+        performTokenRequest(request, (tokenResponse, authException) -> {
+            mStateManager.updateAfterTokenResponse(tokenResponse, authException);
+            if (!mStateManager.getCurrent().isAuthorized()) {
+                final String message =
+                    "Authorization Code exchange failed - " + ((authException != null)
+                        ? authException.error : "");
+                Log.e(TAG, message);
+                runOnUiThread(() -> displayNotAuthorized(message));
+            } else {
+                mStateManager.getCurrent()
+                    .performActionWithFreshTokens(mAuthService, this::fetchUserInfo);
+            }
+        });
     }
 
-    @MainThread
-    private void performTokenRequest(
-        TokenRequest request,
+    @MainThread private void performTokenRequest(TokenRequest request,
         AuthorizationService.TokenResponseCallback callback) {
-        ClientAuthentication clientAuthentication;
-        try {
-            clientAuthentication = mStateManager.getCurrent().getClientAuthentication();
-        } catch (ClientAuthentication.UnsupportedAuthenticationMethod ex) {
-            Log.d(TAG, "Token request cannot be made, client authentication for the token "
-                + "endpoint could not be constructed (%s)", ex);
-            displayNotAuthorized("Client authentication method is unsupported");
-            return;
-        }
-
-        clientAuthentication = new ClientSecretBasic(BuildConfig.TRB_AUTHEN_CLIENT_SECRET);
-        mAuthService.performTokenRequest(
-            request,
-            clientAuthentication,
-            callback);
+        ClientAuthentication client = new ClientSecretBasic(BuildConfig.TRB_AUTHEN_CLIENT_SECRET);
+        mAuthService.performTokenRequest(request, client, callback);
     }
 
-    @MainThread
-    private void fetchUserInfo(final String accessToken, String idToken, AuthorizationException ex) {
+    @MainThread private void fetchUserInfo(final String accessToken, String idToken,
+        AuthorizationException ex) {
         if (ex != null) {
             Log.e(TAG, "Token refresh failed when fetching user info");
             mUserInfoJson.set(null);
@@ -267,13 +245,14 @@ public class TokenActivity extends TanrabadActivity {
             return;
         }
 
-        AuthorizationServiceDiscovery discovery = mStateManager.getCurrent()
-            .getAuthorizationServiceConfiguration()
-            .discoveryDoc;
+        AuthorizationServiceDiscovery discovery =
+            mStateManager.getCurrent().getAuthorizationServiceConfiguration().discoveryDoc;
 
         final URL userInfoEndpoint;
         try {
-            userInfoEndpoint = new URL(discovery.getUserinfoEndpoint().toString());
+            Uri userinfoEndpoint = discovery.getUserinfoEndpoint();
+            Log.i(TAG, "Request user profile at " + userinfoEndpoint);
+            userInfoEndpoint = new URL(userinfoEndpoint.toString());
         } catch (MalformedURLException urlEx) {
             Log.e(TAG, "Failed to construct user info endpoint URL", urlEx);
             mUserInfoJson.set(null);
@@ -298,19 +277,14 @@ public class TokenActivity extends TanrabadActivity {
         });
     }
 
-    @MainThread
-    private void showSnackbar(String message) {
-        Snackbar.make(findViewById(R.id.coordinator),
-            message,
-            Snackbar.LENGTH_SHORT)
-            .show();
+    @MainThread private void showSnackbar(String message) {
+        Snackbar.make(findViewById(R.id.coordinator), message, Snackbar.LENGTH_SHORT).show();
     }
 
-    @MainThread
-    private void logout() {
+    @MainThread private void logout() {
         // discard the authorization and token state, but retain the configuration and
         // dynamic client registration (if applicable), to save from retrieving them again.
-        mUserManager.clear();
         mStateManager.clear(this);
+        mUserManager.clear();
     }
 }

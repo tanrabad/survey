@@ -19,20 +19,16 @@ package org.tanrabad.survey.presenter.authen.appauth;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-
 import com.bluelinelabs.logansquare.LoganSquare;
-
-import org.tanrabad.survey.presenter.authen.UserProfile;
-import org.tanrabad.survey.presenter.authen.UserProfileMapper;
-
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.concurrent.atomic.AtomicReference;
+import org.tanrabad.survey.presenter.authen.UserProfile;
 
 public class UserProfileManager {
 
     private static final AtomicReference<WeakReference<UserProfileManager>> INSTANCE_REF =
-        new AtomicReference<>(new WeakReference<UserProfileManager>(null));
+        new AtomicReference<>(new WeakReference<>(null));
 
     private static final String STORE_NAME = "UserProfile";
     private static final String KEY_STATE = "profile";
@@ -49,7 +45,7 @@ public class UserProfileManager {
         return manager;
     }
 
-    public UserProfileManager(Context context) {
+    private UserProfileManager(Context context) {
         pref = context.getSharedPreferences(STORE_NAME, Context.MODE_PRIVATE);
         profile = new AtomicReference<>();
     }
@@ -68,7 +64,7 @@ public class UserProfileManager {
         pref.edit().clear().apply();
     }
 
-    public UserProfile getProfile() {
+    UserProfile getProfile() {
         if (profile.get() != null)
             return profile.get();
 

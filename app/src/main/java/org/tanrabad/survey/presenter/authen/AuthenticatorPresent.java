@@ -21,5 +21,7 @@ public interface AuthenticatorPresent {
 
     void startPage();
 
+    void logout();
+
     void close();
 }

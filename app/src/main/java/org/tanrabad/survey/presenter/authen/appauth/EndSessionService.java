@@ -20,12 +20,13 @@ package org.tanrabad.survey.presenter.authen.appauth;
 import android.content.Context;
 import android.net.Uri;
 import android.support.customtabs.CustomTabsIntent;
-
+import android.util.Log;
 import net.openid.appauth.AuthState;
-
 import okhttp3.OkHttpClient;
 
 class EndSessionService {
+
+    private static final String TAG = "EndSessionService";
 
     private static final String URL = "https://authen.tanrabad.org/oxauth/restv1/end_session"
         + "?id_token_hint=%s&post_logout_redirect_uri=trb-survey://localhost/signout";
@@ -38,6 +39,7 @@ class EndSessionService {
     }
 
     void end(AuthState state) {
+        Log.i(TAG, "End session of Token id=" + state.getIdToken());
         String url = String.format(URL, state.getIdToken()).trim();
 
         CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();

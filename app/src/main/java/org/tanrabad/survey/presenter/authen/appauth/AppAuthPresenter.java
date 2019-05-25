@@ -17,14 +17,15 @@
 
 package org.tanrabad.survey.presenter.authen.appauth;
 
+import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.WorkerThread;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 import java.util.Collections;
@@ -50,10 +51,9 @@ import org.tanrabad.survey.presenter.authen.AuthenticatorPresent;
 public class AppAuthPresenter implements AuthenticatorPresent {
 
     private static final String TAG = "AppAuthPresenter";
-    private AppCompatActivity activity;
+    private Activity activity;
 
     private static final String EXTRA_FAILED = "failed";
-    private static final int RC_AUTH = 100;
 
     private AuthStateManager mAuthStateManager;
     private Configuration mConfiguration;
@@ -66,14 +66,13 @@ public class AppAuthPresenter implements AuthenticatorPresent {
 
     private ExecutorService mExecutor;
 
-    @NonNull
-    private BrowserMatcher mBrowserMatcher = AnyBrowserMatcher.INSTANCE;
+    @NonNull private BrowserMatcher mBrowserMatcher = AnyBrowserMatcher.INSTANCE;
 
-    public AppAuthPresenter(AppCompatActivity activity) {
+    public AppAuthPresenter(Activity activity) {
         this(activity, null);
     }
 
-    public AppAuthPresenter(AppCompatActivity activity, OnInitializedListener initializedListener) {
+    public AppAuthPresenter(Activity activity, OnInitializedListener initializedListener) {
         this.activity = activity;
 
         mExecutor = Executors.newSingleThreadExecutor();
@@ -102,7 +101,9 @@ public class AppAuthPresenter implements AuthenticatorPresent {
     }
 
     private boolean isLoggedIn() {
-        return mAuthStateManager.getCurrent().isAuthorized()
+        AuthState state = mAuthStateManager.getCurrent();
+        return state.isAuthorized()
+            && !state.getNeedsTokenRefresh()
             && !mConfiguration.hasConfigurationChanged();
     }
 
@@ -110,8 +111,7 @@ public class AppAuthPresenter implements AuthenticatorPresent {
      * Initializes the authorization service configuration if necessary, either from the local
      * static values or by retrieving an OpenID discovery document.
      */
-    @WorkerThread
-    private void initializeConfiguration() {
+    @WorkerThread private void initializeConfiguration() {
         Log.i(TAG, "Initializing AppAuth");
         recreateAuthorizationService();
 
@@ -126,17 +126,16 @@ public class AppAuthPresenter implements AuthenticatorPresent {
         // from the static configuration values.
         if (mConfiguration.getDiscoveryUri() == null) {
             Log.i(TAG, "Creating auth config from res/raw/auth_config.json");
-            AuthorizationServiceConfiguration config = new AuthorizationServiceConfiguration(
-                mConfiguration.getAuthEndpointUri(),
-                mConfiguration.getTokenEndpointUri(),
-                mConfiguration.getRegistrationEndpointUri());
+            AuthorizationServiceConfiguration config =
+                new AuthorizationServiceConfiguration(mConfiguration.getAuthEndpointUri(),
+                    mConfiguration.getTokenEndpointUri(),
+                    mConfiguration.getRegistrationEndpointUri());
             mAuthStateManager.replace(new AuthState(config));
             initializeClient();
             return;
         }
 
-        AuthorizationServiceConfiguration.fetchFromUrl(
-            mConfiguration.getDiscoveryUri(),
+        AuthorizationServiceConfiguration.fetchFromUrl(mConfiguration.getDiscoveryUri(),
             (config, ex) -> {
                 if (config == null) {
                     Log.i(TAG, "Failed to retrieve discovery document", ex);
@@ -149,16 +148,14 @@ public class AppAuthPresenter implements AuthenticatorPresent {
                 Log.i(TAG, "Discovery document retrieved");
                 mAuthStateManager.replace(new AuthState(config));
                 mExecutor.submit(() -> initializeClient());
-            },
-            mConfiguration.getConnectionBuilder());
+            }, mConfiguration.getConnectionBuilder());
     }
 
     /**
      * Initiates a dynamic registration request if a client ID is not provided by the static
      * configuration.
      */
-    @WorkerThread
-    private void initializeClient() {
+    @WorkerThread private void initializeClient() {
         Log.i(TAG, "Initialize client");
         if (mConfiguration.getClientId() != null) {
             Log.i(TAG, "Using static client ID: " + mConfiguration.getClientId());
@@ -181,27 +178,23 @@ public class AppAuthPresenter implements AuthenticatorPresent {
         Log.i(TAG, "Dynamically registering client");
         RegistrationRequest registrationRequest = new RegistrationRequest.Builder(
             mAuthStateManager.getCurrent().getAuthorizationServiceConfiguration(),
-            Collections.singletonList(mConfiguration.getRedirectUri()))
-            .setTokenEndpointAuthenticationMethod(ClientSecretBasic.NAME)
-            .build();
+            Collections.singletonList(
+                mConfiguration.getRedirectUri())).setTokenEndpointAuthenticationMethod(
+            ClientSecretBasic.NAME).build();
 
-        mAuthService.performRegistrationRequest(
-            registrationRequest,
-            (response, ex) -> {
-                mAuthStateManager.updateAfterRegistration(response, ex);
-                if (response == null) {
-                    Log.i(TAG, "Failed to dynamically register client", ex);
-                    Toast.makeText(activity,
-                        "Failed to register client: " + ex.getMessage(),
-                        Toast.LENGTH_SHORT
-                    ).show();
-                    return;
-                }
+        mAuthService.performRegistrationRequest(registrationRequest, (response, ex) -> {
+            mAuthStateManager.updateAfterRegistration(response, ex);
+            if (response == null) {
+                Log.i(TAG, "Failed to dynamically register client", ex);
+                Toast.makeText(activity, "Failed to register client: " + ex.getMessage(),
+                    Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-                Log.i(TAG, "Dynamically registered client: " + response.clientId);
-                mClientId.set(response.clientId);
-                initializeAuthRequest();
-            });
+            Log.i(TAG, "Dynamically registered client: " + response.clientId);
+            mClientId.set(response.clientId);
+            initializeAuthRequest();
+        });
     }
 
     private void recreateAuthorizationService() {
@@ -223,8 +216,7 @@ public class AppAuthPresenter implements AuthenticatorPresent {
         return new AuthorizationService(activity, builder.build());
     }
 
-    @MainThread
-    private void initializeAuthRequest() {
+    @MainThread private void initializeAuthRequest() {
         createAuthRequest();
         warmUpBrowser();
     }
@@ -233,69 +225,70 @@ public class AppAuthPresenter implements AuthenticatorPresent {
         String loginHint = "ทันระบาดสำรวจ";
         Log.i(TAG, "Creating auth request for login hint: " + loginHint);
         AuthorizationRequest.Builder authRequestBuilder = new AuthorizationRequest.Builder(
-            mAuthStateManager.getCurrent().getAuthorizationServiceConfiguration(),
-            mClientId.get(),
-            ResponseTypeValues.CODE,
-            mConfiguration.getRedirectUri())
-            .setScope(mConfiguration.getScope());
+            mAuthStateManager.getCurrent().getAuthorizationServiceConfiguration(), mClientId.get(),
+            ResponseTypeValues.CODE, mConfiguration.getRedirectUri()).setScope(
+            mConfiguration.getScope());
 
         mAuthRequest.set(authRequestBuilder.build());
     }
 
-
     private void warmUpBrowser() {
         mAuthIntentLatch = new CountDownLatch(1);
-        mExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "Warming up browser instance for auth request");
-                CustomTabsIntent.Builder intentBuilder =
-                    mAuthService.createCustomTabsIntentBuilder(mAuthRequest.get().toUri());
-                intentBuilder.setToolbarColor(ContextCompat.getColor(activity, R.color.purple_dark));
-                mAuthIntent.set(intentBuilder.build());
-                mAuthIntentLatch.countDown();
-            }
+        mExecutor.execute(() -> {
+            Log.i(TAG, "Warming up browser instance for auth request");
+            CustomTabsIntent.Builder intentBuilder =
+                mAuthService.createCustomTabsIntentBuilder(mAuthRequest.get().toUri());
+            intentBuilder.setToolbarColor(ContextCompat.getColor(activity, R.color.purple_dark));
+            mAuthIntent.set(intentBuilder.build());
+            mAuthIntentLatch.countDown();
         });
     }
 
-    @Override
-    public void close() {
+    @Override public void close() {
         mExecutor.shutdownNow();
         if (mAuthService != null) {
             mAuthService.dispose();
         }
     }
 
-    @Override
-    public void startPage() {
+    @Override public void startPage() {
         if (isLoggedIn()) {
             Intent intent = new Intent(activity, TokenActivity.class);
             intent.setAction(TokenActivity.AUTH_ACTION_AUTHEN);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             activity.startActivity(intent);
             activity.overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);
-        } else
-            doAuth();
+        } else {
+            doAuth(TokenActivity.class, TokenActivity.AUTH_ACTION_AUTHEN);
+        }
     }
 
-    @WorkerThread
-    private void doAuth() {
+    @Override public void logout() {
+        if (isLoggedIn()) {
+            Intent intent = new Intent(activity, LogoutActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            activity.startActivity(intent);
+        } else {
+            doAuth(LogoutActivity.class, null);
+        }
+    }
+
+    @WorkerThread private void doAuth(Class<?> onCompleteClass, @Nullable String action) {
         try {
             mAuthIntentLatch.await();
         } catch (InterruptedException ex) {
             Log.w(TAG, "Interrupted while waiting for auth intent");
         }
 
-        Intent completionIntent = new Intent(activity, TokenActivity.class);
+        Intent completionIntent = new Intent(activity, onCompleteClass);
+        if (action != null) completionIntent.setAction(action);
         Intent cancelIntent = new Intent(activity, LoginActivity.class);
         cancelIntent.putExtra(EXTRA_FAILED, true);
         cancelIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-        mAuthService.performAuthorizationRequest(
-            mAuthRequest.get(),
+        mAuthService.performAuthorizationRequest(mAuthRequest.get(),
             PendingIntent.getActivity(activity, 0, completionIntent, 0),
-            PendingIntent.getActivity(activity, 0, cancelIntent, 0),
-            mAuthIntent.get());
+            PendingIntent.getActivity(activity, 0, cancelIntent, 0), mAuthIntent.get());
     }
 
     interface OnInitializedListener {

@@ -1,45 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    >
 
     <include layout="@layout/toolbar"/>
 
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/screen_vertical_margin"
-            android:paddingLeft="@dimen/screen_vertical_margin"
-            android:text="@string/app_name"
-            android:textSize="@dimen/text_title"/>
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@null"
+        android:src="@drawable/logo_tanrabad"
+        />
 
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/screen_vertical_margin"
-            android:text="@string/app_version"
-            android:textSize="@dimen/text_caption"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/screen_vertical_margin"
+        android:paddingLeft="@dimen/screen_vertical_margin"
+        android:text="@string/app_fullname"
+        android:textSize="@dimen/text_title"
+        />
 
     <TextView
-            android:id="@+id/about_contributor"
-            style="@style/AboutItem"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/about_contributor"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/screen_vertical_margin"
+        android:text="@string/app_version"
+        android:textAppearance="@style/TanrabadTextAppearance.Caption"
+        android:textSize="@dimen/text_caption"
+        />
 
     <TextView
-            android:id="@+id/about_license"
-            style="@style/AboutItem"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/about_license"/>
+        android:id="@+id/about_contributor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/about_contributor"
+        style="@style/AboutItem"
+        />
 
     <TextView
-            android:id="@+id/about_eula"
-            style="@style/AboutItem"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/about_eula"/>
+        android:id="@+id/about_license"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/about_license"
+        style="@style/AboutItem"
+        />
+
+    <TextView
+        android:id="@+id/about_privacy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/about_privacy"
+        style="@style/AboutItem"
+        />
 
 </LinearLayout>

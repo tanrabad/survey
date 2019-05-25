@@ -17,6 +17,7 @@
 
 <resources>
     <string name="app_name">ทันระบาด</string>
+    <string name="app_fullname">ทันระบาดสำรวจ</string>
     <string name="title_activity_survey">สำรวจ</string>
     <string name="title_activity_edit_survey">แก้ไขสำรวจ</string>
     <string name="save">บันทึก</string>
@@ -178,7 +179,7 @@
     <string name="no_survey_start_date">ไม่มีข้อมูลวันเริ่มสำรวจ</string>
     <string name="about">About</string>
     <string name="about_license">Open Source Licenses</string>
-    <string name="about_eula">End User License Agreement</string>
+    <string name="about_privacy">Privacy Policy</string>
     <string name="about_contributor">Contributor</string>
 
     <string name="choose_building_to_survey">ระบุอาคารเพื่อสำรวจเพิ่มเติม</string>

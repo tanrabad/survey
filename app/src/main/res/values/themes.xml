@@ -64,28 +64,12 @@
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
     </style>
 
-    <style name="AppTheme.Dark">
-        <item name="android:windowDrawsSystemBarBackgrounds" tools:ignore="NewApi">true</item>
-        <item name="android:statusBarColor" tools:ignore="NewApi">@android:color/transparent</item>
-        <item name="android:windowBackground">@color/darker_gray</item>
-        <item name="colorAccent">@color/color_primary</item>
-        <item name="android:textColorPrimary">@color/white</item>
-        <item name="android:textColorSecondary">@color/white_transparent_70</item>
-        <item name="android:textColorTertiary">@color/white_transparent_50</item>
-    </style>
-
-    <style name="AppTheme.Dark.Blue">
-        <item name="colorPrimary">@color/water_blue</item>
-        <item name="colorPrimaryDark">@color/dark_blue</item>
-    </style>
-
     <style name="AppTheme.Blue">
         <item name="android:windowDrawsSystemBarBackgrounds" tools:ignore="NewApi">true</item>
         <item name="android:statusBarColor" tools:ignore="NewApi">@android:color/transparent</item>
         <item name="colorPrimary">@color/water_blue</item>
         <item name="colorPrimaryDark">@color/dark_blue</item>
     </style>
-
 
     <style name="AppTheme.SplashScreen">
         <item name="android:windowDrawsSystemBarBackgrounds" tools:ignore="NewApi">true</item>
@@ -98,11 +82,10 @@
         <item name="android:windowBackground">@drawable/bg_water</item>
     </style>
 
-
     <style name="AppTheme.Alternate">
         <item name="actionBarStyle">@style/ActionBar.Alternate</item>
         <item name="colorPrimary">@color/darker_gray</item>
-        <item name="colorPrimaryDark">@color/black</item>
+        <item name="colorPrimaryDark">@color/darker_gray</item>
     </style>
 
 </resources>

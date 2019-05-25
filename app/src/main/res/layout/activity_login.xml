@@ -28,8 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:paddingBottom="8dp"
-        android:layout_marginLeft="@dimen/screen_horizontal_margin"
-        android:layout_marginRight="@dimen/screen_vertical_margin"
+        android:layout_marginEnd="@dimen/screen_vertical_margin"
         android:orientation="vertical">
 
         <TextView
@@ -37,6 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/powered_by"
+            android:layout_marginStart="@dimen/screen_horizontal_margin"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
             android:textSize="@dimen/text_micro"
             tools:ignore="MissingPrefix"/>
@@ -44,9 +44,9 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="@dimen/login_nectec_size"
-            android:layout_marginBottom="@dimen/space_between_content"
+            android:layout_marginBottom="4dp"
             android:contentDescription="@string/nectec"
-            android:tint="@color/white"
+            android:tint="@color/color_primary_dark"
             android:src="@drawable/logo_nectec"/>
 
         <TextView
@@ -54,6 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:layout_marginStart="@dimen/screen_horizontal_margin"
             android:text="@string/copyright"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
             android:textSize="@dimen/text_micro"
@@ -96,14 +97,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_version"
-            android:textColor="@color/light_gray"
+            android:textColor="@color/white_transparent_70"
             android:textSize="@dimen/text_caption"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_build_time"
-            android:textColor="@color/light_gray"
+            android:textColor="@color/white_transparent_70"
             android:textSize="@dimen/text_small_caption"/>
     </LinearLayout>
 

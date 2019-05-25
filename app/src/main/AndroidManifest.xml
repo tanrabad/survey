@@ -72,9 +72,7 @@
         <activity
             android:name=".presenter.LoginActivity"
             android:launchMode="singleTop"
-            android:theme="@style/AppTheme.Dark.Blue">
-
-        </activity>
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".presenter.InitialActivity"
             android:theme="@style/AppTheme.Blue.Water"/>

@@ -3,7 +3,6 @@ package org.tanrabad.survey.presenter;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import org.tanrabad.survey.R;
 
 public class PreferenceActivity extends TanrabadActivity {
@@ -17,7 +16,8 @@ public class PreferenceActivity extends TanrabadActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preference);
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        setSupportActionBar(findViewById(R.id.toolbar));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         PreferenceFragment preferenceFragment = (PreferenceFragment) getSupportFragmentManager()
                 .findFragmentByTag(PreferenceFragment.FRAGMENT_TAG);

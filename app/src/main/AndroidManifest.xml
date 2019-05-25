@@ -130,9 +130,11 @@
         </activity>
         <activity
             android:name=".presenter.AboutActivity"
+            android:parentActivityName=".presenter.MainActivity"
             android:label="@string/about"/>
         <activity
             android:name=".presenter.PreferenceActivity"
+            android:parentActivityName=".presenter.MainActivity"
             android:label="@string/setting"/>
 
         <activity

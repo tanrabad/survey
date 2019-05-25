@@ -44,6 +44,7 @@ public class AboutActivity extends TanrabadActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
         setSupportActionBar(findViewById(R.id.toolbar));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         findViewById(R.id.about_contributor).setOnClickListener(onClickListener);
         findViewById(R.id.about_license).setOnClickListener(onClickListener);
         findViewById(R.id.about_privacy).setOnClickListener(onClickListener);

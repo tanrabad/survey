@@ -22,9 +22,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.animation.Animation;
-
 import org.tanrabad.survey.BuildConfig;
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.entity.User;
@@ -58,18 +56,8 @@ public class LoginActivity extends TanrabadActivity {
         trialButton = findViewById(R.id.trial);
         authenButton = findViewById(R.id.authentication_button);
 
-        trialButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                trialLogin();
-            }
-        });
-        authenButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openAuthenWeb();
-            }
-        });
+        trialButton.setOnClickListener(view -> trialLogin());
+        authenButton.setOnClickListener(view -> openAuthenWeb());
         startAnimation();
     }
 
@@ -91,7 +79,10 @@ public class LoginActivity extends TanrabadActivity {
             public void loginFinish() {
                 progressDialog.dismiss();
                 InitialActivity.open(LoginActivity.this);
-                overridePendingTransition(R.anim.drop_in, R.anim.drop_out);
+                if (useDropInAnimation)
+                    overridePendingTransition(R.anim.drop_in, R.anim.drop_out);
+                else
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
             }
 
@@ -122,21 +113,20 @@ public class LoginActivity extends TanrabadActivity {
         dropIn.setStartOffset(1200);
         View logoTrb = findViewById(R.id.logo_tanrabad);
         logoTrb.startAnimation(dropIn);
-        logoTrb.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, SplashScreenActivity.class);
-                startActivity(intent);
-                return true;
-            }
+        logoTrb.setOnLongClickListener(view -> {
+            Intent intent = new Intent(LoginActivity.this, SplashScreenActivity.class);
+            startActivity(intent);
+            return true;
         });
     }
 
+    boolean useDropInAnimation = false;
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         String username = intent.getStringExtra(TokenActivity.USERNAME);
+        useDropInAnimation = intent.getBooleanExtra(TokenActivity.AUTO_LOGIN, false);
         if (username != null) {
             Log.i(TAG, "Login as " + username);
             User user = BrokerUserRepository.getInstance().findByUsername(username);

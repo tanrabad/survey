@@ -27,33 +27,23 @@
     <View
         android:layout_width="1dp"
         android:layout_height="0dp"
-        android:layout_weight="0.2"/>
+        android:layout_weight="0.4"
+        />
 
     <ImageView
         android:id="@+id/logo_tanrabad"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:layout_centerHorizontal="true"
         android:contentDescription="@null"
-        android:src="@drawable/logo_tanrabad"/>
-
-    <View
-        android:background="?android:attr/textColorSecondary"
-        android:layout_width="2dp"
-        android:layout_height="0dp"
-        android:layout_margin="4dp"
-        android:layout_weight="0.2"/>
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:src="@drawable/person_default_background"
-        android:id="@+id/avatar_icon"
-        android:layout_width="80dp"
-        android:layout_height="80dp" />
+        android:src="@drawable/logo_tanrabad"
+        />
 
     <View
         android:layout_width="1dp"
         android:layout_height="0dp"
-        android:layout_weight="0.1"/>
+        android:layout_weight="0.3"
+        />
 
     <TextView
         android:id="@+id/username"
@@ -63,6 +53,7 @@
         android:maxLines="1"
         android:textAlignment="center"
         android:textAppearance="@style/TanrabadTextAppearance.Caption"
+        android:textColor="?android:attr/textColorSecondaryInverse"
         app:autoSizeTextType="uniform"
         tools:text="Hello2" />
 
@@ -74,6 +65,7 @@
         android:maxLines="1"
         android:textAlignment="center"
         android:textSize="@dimen/text_title"
+        android:textColor="?android:attr/textColorPrimaryInverse"
         android:textAppearance="@style/TanrabadTextAppearance.Title"
         app:autoSizeTextType="uniform"
         tools:text="นายสวัสดี ทันระบาดสำรวจ" />
@@ -85,6 +77,7 @@
         android:gravity="center"
         android:layout_marginTop="4dp"
         android:textAlignment="center"
+        android:textColor="?android:attr/textColorPrimaryInverse"
         android:textAppearance="@style/TanrabadTextAppearance.Body"
         tools:text="@string/nectec" />
 
@@ -101,12 +94,14 @@
         android:textSize="@dimen/text_caption"
         android:gravity="center"
         android:textAlignment="center"
+        android:textColor="?android:attr/textColorPrimaryInverse"
         tools:text="เข้าสู่ระบบได้" />
 
     <Button
         android:id="@+id/authentication_button"
         android:layout_width="@dimen/login_authen_btn_width"
         android:layout_height="@dimen/login_authen_btn_height"
+        android:background="@drawable/rounded_button"
         android:layout_centerHorizontal="true"
         android:contentDescription="@string/authentication"
         android:paddingTop="10dp"

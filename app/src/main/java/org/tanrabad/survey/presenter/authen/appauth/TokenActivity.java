@@ -57,9 +57,10 @@ import org.tanrabad.survey.presenter.authen.UserProfile;
 
 public class TokenActivity extends TanrabadActivity {
     private static final String TAG = "TokenActivity";
-    public static final String AUTH_ACTION_AUTHEN = "org.tanrabad.auth.action.AUTHEN";
+    public static final String AUTH_ACTION_AUTO_LOGIN = "org.tanrabad.auth.action.AUTHEN";
 
     public static final String USERNAME = "username";
+    public static final String AUTO_LOGIN = "auto_login";
 
     private AuthorizationService mAuthService;
     private AuthStateManager mStateManager;
@@ -101,9 +102,11 @@ public class TokenActivity extends TanrabadActivity {
             Authenticator auth = new Authenticator(null);
             auth.setAuthenWith(profile);
 
+            //Send back username to LoginActivity for fill-in app login process
             Intent intent = new Intent(this, LoginActivity.class);
             intent.putExtra(USERNAME, profile.userName);
-            setResult(RESULT_OK, intent);
+            intent.putExtra(AUTO_LOGIN, AUTH_ACTION_AUTO_LOGIN.equals(getIntent().getAction()));
+            //Fellow line can't re-order
             finish();
             startActivity(intent);
         });
@@ -200,7 +203,7 @@ public class TokenActivity extends TanrabadActivity {
                 status.setTextColor(ContextCompat.getColor(this, R.color.without_larvae));
                 authenButton.setText(R.string.login);
                 String action = getIntent().getAction();
-                if (AUTH_ACTION_AUTHEN.equals(action)) {
+                if (AUTH_ACTION_AUTO_LOGIN.equals(action)) {
                     authenButton.performClick(); //automatic login to app
                 }
             }
@@ -284,7 +287,7 @@ public class TokenActivity extends TanrabadActivity {
     @MainThread private void logout() {
         // discard the authorization and token state, but retain the configuration and
         // dynamic client registration (if applicable), to save from retrieving them again.
-        mStateManager.clear(this);
-        mUserManager.clear();
+        new AppAuthPresenter(this).logout();
+        finish();
     }
 }

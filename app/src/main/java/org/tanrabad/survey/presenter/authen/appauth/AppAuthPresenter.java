@@ -22,7 +22,6 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.annotation.WorkerThread;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.content.ContextCompat;
@@ -248,12 +247,12 @@ public class AppAuthPresenter implements AuthenticatorPresent {
     @Override public void startPage() {
         if (isLoggedIn()) {
             Intent intent = new Intent(activity, TokenActivity.class);
-            intent.setAction(TokenActivity.AUTH_ACTION_AUTHEN);
+            intent.setAction(TokenActivity.AUTH_ACTION_AUTO_LOGIN);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             activity.startActivity(intent);
             activity.overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);
         } else {
-            doAuth(TokenActivity.class, TokenActivity.AUTH_ACTION_AUTHEN);
+            doAuth(TokenActivity.class);
         }
     }
 
@@ -264,11 +263,11 @@ public class AppAuthPresenter implements AuthenticatorPresent {
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             activity.startActivity(intent);
         } else {
-            doAuth(LogoutActivity.class, null);
+            doAuth(LogoutActivity.class);
         }
     }
 
-    @WorkerThread private void doAuth(Class<?> onCompleteClass, @Nullable String action) {
+    @WorkerThread private void doAuth(Class<?> onCompleteClass) {
         try {
             mAuthIntentLatch.await();
         } catch (InterruptedException ex) {
@@ -276,7 +275,6 @@ public class AppAuthPresenter implements AuthenticatorPresent {
         }
 
         Intent completionIntent = new Intent(activity, onCompleteClass);
-        if (action != null) completionIntent.setAction(action);
         Intent cancelIntent = new Intent(activity, LoginActivity.class);
         cancelIntent.putExtra(EXTRA_FAILED, true);
         cancelIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

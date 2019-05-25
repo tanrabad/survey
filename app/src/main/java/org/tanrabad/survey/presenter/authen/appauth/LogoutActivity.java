@@ -9,7 +9,6 @@ public class LogoutActivity extends TanrabadActivity {
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //LogoutRedirectActivity will be called after complete
-        AuthStateManager.getInstance(this).clear(this);
-        UserProfileManager.getInstance(this).clear();
+        AuthStateManager.getInstance(this).endSession(this);
     }
 }

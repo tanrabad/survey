@@ -164,9 +164,12 @@ public class AuthStateManager {
         }
     }
 
-    public void clear(Context context) {
+    public void endSession(Context context) {
+        new EndSessionService(context).end(getCurrent());
+    }
+
+    public void clear() {
         AuthState currentState = getCurrent();
-        new EndSessionService(context).end(currentState);
         AuthState clearedState =
             new AuthState(currentState.getAuthorizationServiceConfiguration());
         if (currentState.getLastRegistrationResponse() != null) {

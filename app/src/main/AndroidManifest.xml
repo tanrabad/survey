@@ -140,7 +140,7 @@
         <activity
             android:name=".presenter.authen.appauth.TokenActivity"
             android:launchMode="singleTask"
-            android:theme="@style/AppTheme.Dark"
+            android:theme="@style/AppTheme.Blue.Water"
             android:windowSoftInputMode="stateHidden"/>
 
         <activity

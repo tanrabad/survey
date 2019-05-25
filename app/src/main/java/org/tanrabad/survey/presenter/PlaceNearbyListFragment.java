@@ -38,11 +38,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.location.LocationListener;
-
+import java.util.List;
 import org.tanrabad.survey.BuildConfig;
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
@@ -58,8 +57,6 @@ import org.tanrabad.survey.utils.GpsUtils;
 import org.tanrabad.survey.utils.PlayLocationService;
 import org.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import org.tanrabad.survey.utils.prompt.PromptMessage;
-
-import java.util.List;
 
 public class PlaceNearbyListFragment extends TanrabadTabFragment
     implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener,
@@ -135,27 +132,21 @@ public class PlaceNearbyListFragment extends TanrabadTabFragment
 
     @Override
     public void displayPlaceNotFound() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                nearbyPlaceAdapter.clearData();
-                placeCountView.setVisibility(View.GONE);
-                emptyPlacesView.showEmptyLayout();
-            }
+        runOnUiThread(() -> {
+            nearbyPlaceAdapter.clearData();
+            placeCountView.setVisibility(View.GONE);
+            emptyPlacesView.showEmptyLayout();
         });
     }
 
     @Override
     public void displayNearbyPlaces(final List<Place> places) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                nearbyPlaceAdapter.setLocation(currentLocation);
-                nearbyPlaceAdapter.updateData(places);
-                placeCountView.setText(getString(R.string.format_place_count, places.size()));
-                placeCountView.setVisibility(View.VISIBLE);
-                emptyPlacesView.hide();
-            }
+        runOnUiThread(() -> {
+            nearbyPlaceAdapter.setLocation(currentLocation);
+            nearbyPlaceAdapter.updateData(places);
+            placeCountView.setText(getString(R.string.format_place_count, places.size()));
+            placeCountView.setVisibility(View.VISIBLE);
+            emptyPlacesView.hide();
         });
     }
 
@@ -169,12 +160,9 @@ public class PlaceNearbyListFragment extends TanrabadTabFragment
 
         currentLocation = new Location(location.getLatitude(), location.getLongitude());
         saveLastKnowLocation();
-        runOnWorkerThread(new Runnable() {
-            @Override
-            public void run() {
-                nearbyPlacesFinderController.findNearbyPlaces(currentLocation);
-                locked = false;
-            }
+        runOnWorkerThread(() -> {
+            nearbyPlacesFinderController.findNearbyPlaces(currentLocation);
+            locked = false;
         });
 
     }
@@ -202,12 +190,9 @@ public class PlaceNearbyListFragment extends TanrabadTabFragment
     public void onItemClick(AdapterView<?> adapterView, View view, final int position, long l) {
         final Place placeData = nearbyPlaceAdapter.getItem(position);
         PromptMessage promptMessage = new AlertDialogPromptMessage(getActivity());
-        promptMessage.setOnConfirm(getString(R.string.survey), new PromptMessage.OnConfirmListener() {
-            @Override
-            public void onConfirm() {
-                TanrabadApp.action().startSurvey(placeData, "nearby");
-                SurveyBuildingHistoryActivity.open(getActivity(), placeData);
-            }
+        promptMessage.setOnConfirm(getString(R.string.survey), () -> {
+            TanrabadApp.action().startSurvey(placeData, "nearby");
+            SurveyBuildingHistoryActivity.open(getActivity(), placeData);
         });
         promptMessage.setOnCancel(getString(R.string.cancel), null);
         promptMessage.show(getString(R.string.start_survey), nearbyPlaceAdapter.getItem(position).getName());

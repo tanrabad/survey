@@ -27,7 +27,11 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
-
+import java.util.Collections;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicReference;
 import net.openid.appauth.AppAuthConfiguration;
 import net.openid.appauth.AuthState;
 import net.openid.appauth.AuthorizationRequest;
@@ -39,16 +43,9 @@ import net.openid.appauth.RegistrationResponse;
 import net.openid.appauth.ResponseTypeValues;
 import net.openid.appauth.browser.AnyBrowserMatcher;
 import net.openid.appauth.browser.BrowserMatcher;
-
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.presenter.LoginActivity;
 import org.tanrabad.survey.presenter.authen.AuthenticatorPresent;
-
-import java.util.Collections;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class AppAuthPresenter implements AuthenticatorPresent {
 
@@ -273,6 +270,7 @@ public class AppAuthPresenter implements AuthenticatorPresent {
     public void startPage() {
         if (isLoggedIn()) {
             Intent intent = new Intent(activity, TokenActivity.class);
+            intent.setAction(TokenActivity.AUTH_ACTION_AUTHEN);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             activity.startActivity(intent);
             activity.overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);

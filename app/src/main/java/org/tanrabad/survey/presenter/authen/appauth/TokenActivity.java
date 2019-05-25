@@ -28,7 +28,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.Charset;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicReference;
 import net.openid.appauth.AppAuthConfiguration;
 import net.openid.appauth.AuthorizationException;
 import net.openid.appauth.AuthorizationResponse;
@@ -38,7 +45,7 @@ import net.openid.appauth.ClientAuthentication;
 import net.openid.appauth.ClientSecretBasic;
 import net.openid.appauth.ClientSecretPost;
 import net.openid.appauth.TokenRequest;
-
+import okio.Okio;
 import org.tanrabad.survey.BuildConfig;
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.presenter.LoginActivity;
@@ -46,19 +53,10 @@ import org.tanrabad.survey.presenter.TanrabadActivity;
 import org.tanrabad.survey.presenter.authen.Authenticator;
 import org.tanrabad.survey.presenter.authen.UserProfile;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.charset.Charset;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicReference;
-
-import okio.Okio;
-
 public class TokenActivity extends TanrabadActivity {
     private static final String TAG = "TokenActivity";
+    public static final String AUTH_ACTION_AUTHEN = "org.tanrabad.auth.action.AUTHEN";
+    public static final String AUTH_ACTION_LOGOUT = "org.tanrabad.auth.action.LOGOUT";
 
     private static final String KEY_USER_INFO = "userInfo";
     public static final String USERNAME = "username";
@@ -92,7 +90,7 @@ public class TokenActivity extends TanrabadActivity {
 
         logoutButton = findViewById(R.id.logout);
         logoutButton.setVisibility(View.GONE);
-        logoutButton.setOnClickListener(v -> signOut());
+        logoutButton.setOnClickListener(v -> logout());
 
         authenButton = findViewById(R.id.authentication_button);
         authenButton.setVisibility(View.GONE);
@@ -155,7 +153,7 @@ public class TokenActivity extends TanrabadActivity {
             displayNotAuthorized("Authorization flow failed: " + ex.getMessage());
         } else {
             displayNotAuthorized("No authorization state retained - reauthorization required");
-            signOut();
+            logout();
         }
     }
 
@@ -207,7 +205,11 @@ public class TokenActivity extends TanrabadActivity {
             } else {
                 status.setTextColor(ContextCompat.getColor(this, R.color.without_larvae));
                 authenButton.setText(R.string.login);
-                authenButton.performClick(); //automatic login to app
+                String action = getIntent().getAction();
+                if (AUTH_ACTION_AUTHEN.equals(action))
+                    authenButton.performClick(); //automatic login to app
+                else if (AUTH_ACTION_LOGOUT.equals(action))
+                    logout();
             }
         } else {
             Toast.makeText(this, "เกิดข้อผิดพลาด ไม่สามารถดึงข้อมูลผู้ใช้ได้", Toast.LENGTH_SHORT).show();
@@ -305,7 +307,7 @@ public class TokenActivity extends TanrabadActivity {
     }
 
     @MainThread
-    private void signOut() {
+    private void logout() {
         // discard the authorization and token state, but retain the configuration and
         // dynamic client registration (if applicable), to save from retrieving them again.
         mUserManager.clear();

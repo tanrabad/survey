@@ -17,7 +17,6 @@
 
 package org.tanrabad.survey.presenter.view;
 
-
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -29,7 +28,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.entity.Organization;
@@ -38,8 +36,7 @@ import org.tanrabad.survey.job.UploadJobRunner;
 import org.tanrabad.survey.presenter.AboutActivity;
 import org.tanrabad.survey.presenter.AccountUtils;
 import org.tanrabad.survey.presenter.PreferenceActivity;
-import org.tanrabad.survey.presenter.authen.appauth.AuthStateManager;
-import org.tanrabad.survey.presenter.authen.appauth.UserProfileManager;
+import org.tanrabad.survey.presenter.authen.appauth.TokenActivity;
 import org.tanrabad.survey.repository.BrokerOrganizationRepository;
 import org.tanrabad.survey.utils.alert.Alert;
 import org.tanrabad.survey.utils.android.InternetConnection;
@@ -140,12 +137,11 @@ public final class MainActivityNavigation {
                     }
                     UploadJobRunner uploadJob = new UploadJobRunner();
                     uploadJob.addJobs(new UploadJobRunner.Builder().getJobs());
-                    uploadJob.setOnSyncFinishListener(new UploadJobRunner.OnSyncFinishListener() {
-                        @Override
-                        public void onSyncFinish() {
-                            UserProfileManager.getInstance(activity).clear();
-                            AuthStateManager.getInstance(activity).clear(activity);
-                        }
+                    uploadJob.setOnSyncFinishListener(() -> {
+                        Intent intent = new Intent(activity, TokenActivity.class);
+                        intent.setAction(TokenActivity.AUTH_ACTION_LOGOUT);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        activity.startActivity(intent);
                     });
                     uploadJob.start();
 

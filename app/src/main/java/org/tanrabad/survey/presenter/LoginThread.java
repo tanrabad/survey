@@ -19,7 +19,6 @@ package org.tanrabad.survey.presenter;
 
 import android.os.Handler;
 import android.os.Message;
-
 import org.tanrabad.survey.entity.User;
 
 class LoginThread implements Runnable {
@@ -29,7 +28,7 @@ class LoginThread implements Runnable {
     private final Handler handler;
 
 
-    public LoginThread(final User user, LoginListener loginListener) {
+    LoginThread(final User user, LoginListener loginListener) {
         this.user = user;
         handler = new LoginHandler(loginListener);
     }
@@ -44,9 +43,6 @@ class LoginThread implements Runnable {
         }
     }
 
-
-
-
     public interface LoginListener {
         void loginFinish();
 
@@ -58,7 +54,7 @@ class LoginThread implements Runnable {
         private static final int FAIL = 0;
         private final LoginListener loginListener;
 
-        public LoginHandler(LoginListener loginListener) {
+        LoginHandler(LoginListener loginListener) {
             this.loginListener = loginListener;
         }
 

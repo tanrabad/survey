@@ -50,6 +50,7 @@ import net.openid.appauth.TokenRequest;
 import okio.Okio;
 import org.tanrabad.survey.BuildConfig;
 import org.tanrabad.survey.R;
+import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.presenter.LoginActivity;
 import org.tanrabad.survey.presenter.TanrabadActivity;
 import org.tanrabad.survey.presenter.authen.Authenticator;
@@ -153,8 +154,10 @@ public class TokenActivity extends TanrabadActivity {
             exchangeAuthorizationCode(response);
         } else if (ex != null) {
             displayNotAuthorized("Authorization flow failed: " + ex.getMessage());
+            TanrabadApp.log(ex);
         } else {
             displayNotAuthorized("No authorization state retained - reauthorization required");
+            TanrabadApp.log(new IllegalStateException("No authorization state retained"));
             logout();
         }
     }
@@ -243,8 +246,9 @@ public class TokenActivity extends TanrabadActivity {
         AuthorizationException ex) {
         if (ex != null) {
             Log.e(TAG, "Token refresh failed when fetching user info");
+            TanrabadApp.log(ex);
             mUserInfoJson.set(null);
-            runOnUiThread(this::displayAuthorized);
+            runOnUiThread(() -> displayNotAuthorized("ไม่สามารถแลกเปลี่ยนข้อมูลกับ Server ได้"));
             return;
         }
 
@@ -258,8 +262,9 @@ public class TokenActivity extends TanrabadActivity {
             userInfoEndpoint = new URL(userinfoEndpoint.toString());
         } catch (MalformedURLException urlEx) {
             Log.e(TAG, "Failed to construct user info endpoint URL", urlEx);
+            TanrabadApp.log(urlEx);
             mUserInfoJson.set(null);
-            runOnUiThread(() -> displayAuthorized());
+            runOnUiThread(() -> displayNotAuthorized("ไม่สามารถดึงข้อมูลผู้ใช้ได้"));
             return;
         }
 

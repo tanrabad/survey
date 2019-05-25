@@ -44,6 +44,7 @@ import net.openid.appauth.ResponseTypeValues;
 import net.openid.appauth.browser.AnyBrowserMatcher;
 import net.openid.appauth.browser.BrowserMatcher;
 import org.tanrabad.survey.R;
+import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.presenter.LoginActivity;
 import org.tanrabad.survey.presenter.authen.AuthenticatorPresent;
 
@@ -130,6 +131,7 @@ public class AppAuthPresenter implements AuthenticatorPresent {
 
         AuthorizationServiceConfiguration.fetchFromUrl(mConfiguration.getDiscoveryUri(),
             (config, ex) -> {
+                if (ex != null) TanrabadApp.log(ex);
                 if (config == null) {
                     Log.i(TAG, "Failed to retrieve discovery document", ex);
                     Toast.makeText(activity,
@@ -272,6 +274,7 @@ public class AppAuthPresenter implements AuthenticatorPresent {
             mAuthIntentLatch.await();
         } catch (InterruptedException ex) {
             Log.w(TAG, "Interrupted while waiting for auth intent");
+            TanrabadApp.log(ex);
         }
 
         Intent completionIntent = new Intent(activity, onCompleteClass);

@@ -21,6 +21,7 @@ import org.tanrabad.survey.entity.Building;
 import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.entity.Survey;
 import org.tanrabad.survey.entity.User;
+import org.tanrabad.survey.service.AbsRestService;
 
 public interface ActionLogger {
 
@@ -54,4 +55,5 @@ public interface ActionLogger {
 
     void logout(User user);
 
+    void cacheHit(AbsRestService<?> restService);
 }

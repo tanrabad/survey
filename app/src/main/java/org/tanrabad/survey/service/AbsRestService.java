@@ -78,8 +78,10 @@ public abstract class AbsRestService<T> implements RestService<T> {
         Response response = client.newCall(request).execute();
         getNextRequest(response);
 
-        if (isNotModified(response))
+        if (isNotModified(response)) {
+            TanrabadApp.action().cacheHit(this);
             return new ArrayList<>();
+        }
         if (isNotSuccess(response))
             throw new RestServiceException(response);
         if (!hasNextRequest())

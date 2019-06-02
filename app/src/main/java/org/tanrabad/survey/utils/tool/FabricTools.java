@@ -36,6 +36,7 @@ import org.tanrabad.survey.entity.Survey;
 import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
 import org.tanrabad.survey.repository.BrokerPlaceTypeRepository;
+import org.tanrabad.survey.service.AbsRestService;
 
 public class FabricTools implements ExceptionLogger, ActionLogger {
 
@@ -194,6 +195,12 @@ public class FabricTools implements ExceptionLogger, ActionLogger {
                 .putCustomAttribute("User Info", "true")
             );
         }
+    }
+
+    @Override public void cacheHit(AbsRestService<?> restService) {
+        answers.logCustom(new CustomEvent("Cache-hit")
+            .putCustomAttribute("url", restService.getUrl())
+            .putCustomAttribute("class", restService.getClass().getSimpleName()));
     }
 
     private int getScore(Survey survey, boolean success) {

@@ -27,11 +27,13 @@ import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
+
 import java.util.Collections;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicReference;
+
 import net.openid.appauth.AppAuthConfiguration;
 import net.openid.appauth.AuthState;
 import net.openid.appauth.AuthorizationRequest;
@@ -43,6 +45,9 @@ import net.openid.appauth.RegistrationResponse;
 import net.openid.appauth.ResponseTypeValues;
 import net.openid.appauth.browser.AnyBrowserMatcher;
 import net.openid.appauth.browser.BrowserMatcher;
+import net.openid.appauth.browser.BrowserWhitelist;
+import net.openid.appauth.browser.VersionedBrowserMatcher;
+
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.presenter.LoginActivity;
@@ -51,6 +56,9 @@ import org.tanrabad.survey.presenter.authen.AuthenticatorPresent;
 public class AppAuthPresenter implements AuthenticatorPresent {
 
     private static final String TAG = "AppAuthPresenter";
+    public static final BrowserMatcher browserMatcher = new BrowserWhitelist(
+        VersionedBrowserMatcher.CHROME_CUSTOM_TAB,
+        VersionedBrowserMatcher.SAMSUNG_CUSTOM_TAB);
     private Activity activity;
 
     private static final String EXTRA_FAILED = "failed";
@@ -65,8 +73,6 @@ public class AppAuthPresenter implements AuthenticatorPresent {
     private final AtomicReference<CustomTabsIntent> mAuthIntent = new AtomicReference<>();
 
     private ExecutorService mExecutor;
-
-    @NonNull private BrowserMatcher mBrowserMatcher = AnyBrowserMatcher.INSTANCE;
 
     public AppAuthPresenter(Activity activity) {
         this(activity, null);
@@ -204,8 +210,8 @@ public class AppAuthPresenter implements AuthenticatorPresent {
 
     private AuthorizationService createAuthorizationService() {
         Log.i(TAG, "Creating authorization service");
-        AppAuthConfiguration.Builder builder = new AppAuthConfiguration.Builder();
-        builder.setBrowserMatcher(mBrowserMatcher);
+        AppAuthConfiguration.Builder builder = new AppAuthConfiguration.Builder()
+            .setBrowserMatcher(browserMatcher);
         builder.setConnectionBuilder(mConfiguration.getConnectionBuilder());
 
         return new AuthorizationService(activity, builder.build());

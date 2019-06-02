@@ -24,6 +24,10 @@ import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import net.openid.appauth.AuthState;
+import net.openid.appauth.browser.BrowserDescriptor;
+import net.openid.appauth.browser.BrowserSelector;
+import net.openid.appauth.browser.CustomTabManager;
+
 import okhttp3.OkHttpClient;
 import org.tanrabad.survey.R;
 
@@ -36,16 +40,22 @@ class EndSessionService {
 
     protected final OkHttpClient client = new OkHttpClient();
     private Context context;
+    private BrowserDescriptor browser;
 
     EndSessionService(Context context) {
         this.context = context;
+        browser = BrowserSelector.select(context, AppAuthPresenter.browserMatcher);
     }
 
     void end(AuthState state) {
         Log.i(TAG, "End session of Token id=" + state.getIdToken());
         String url = String.format(URL, state.getIdToken()).trim();
 
-        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+
+        CustomTabManager customTabManager = new CustomTabManager(context);
+        customTabManager.bind(browser.packageName);
+        CustomTabsIntent.Builder builder = customTabManager.createTabBuilder(Uri.parse(url));
+
         builder.setToolbarColor(ContextCompat.getColor(context, R.color.purple));
         CustomTabsIntent customTabsIntent = builder.build();
         customTabsIntent.intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);

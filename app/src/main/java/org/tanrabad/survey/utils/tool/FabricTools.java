@@ -172,7 +172,6 @@ public class FabricTools implements ExceptionLogger, ActionLogger {
     public void finishSurvey(Place place, boolean success) {
         answers.logCustom(new CustomEvent(Event.FINISH_PLACE_SURVEY)
                 .putCustomAttribute("Finish Method", success ? "finish button" : "back button"));
-
     }
 
     @Override
@@ -184,11 +183,17 @@ public class FabricTools implements ExceptionLogger, ActionLogger {
     }
 
     @Override public void logout(User user) {
-        answers.logCustom(new CustomEvent("Logout")
-            .putCustomAttribute("Health-Region Code", user.getHealthRegionCode())
-            .putCustomAttribute("Organization ID", String.valueOf(user.getOrganizationId()))
-            .putCustomAttribute("User Type", user.getUserType().toString())
-        );
+        if (user == null) {
+            answers.logCustom(new CustomEvent("Logout")
+                .putCustomAttribute("User Info", "false"));
+        } else {
+            answers.logCustom(new CustomEvent("Logout")
+                .putCustomAttribute("Health-Region Code", user.getHealthRegionCode())
+                .putCustomAttribute("Organization ID", String.valueOf(user.getOrganizationId()))
+                .putCustomAttribute("User Type", user.getUserType().toString())
+                .putCustomAttribute("User Info", "true")
+            );
+        }
     }
 
     private int getScore(Survey survey, boolean success) {

@@ -75,7 +75,8 @@ public abstract class AbsRestService<T> implements RestService<T> {
         extractLinkHeader(response);
 
         if (isNotModified(response)) {
-            TanrabadApp.action().cacheHit(this);
+            if (TanrabadApp.action() != null)
+                TanrabadApp.action().cacheHit(this);
             return new ArrayList<>();
         }
         if (isNotSuccess(response))

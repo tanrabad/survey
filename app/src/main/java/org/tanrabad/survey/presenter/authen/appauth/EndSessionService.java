@@ -61,7 +61,7 @@ class EndSessionService {
         customTabsIntent.intent.setPackage(browser.packageName);
         customTabsIntent.intent.putExtra(Intent.EXTRA_REFERRER,
             Uri.parse("android-app://" + context.getPackageName()));
-        customTabsIntent.intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        customTabsIntent.intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
         customTabsIntent.launchUrl(context, Uri.parse(url));
     }
 }

@@ -32,7 +32,6 @@ public class LogoutRedirectActivity extends TanrabadActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        AuthStateManager.getInstance(this).clear();
         UserProfileManager.getInstance(this).clear();
         AccountUtils.clear();
         AppDataManager.clearAll(this);

@@ -99,7 +99,7 @@
     <string name="gps_dialog_tilte">GPS ยังไม่ได้เปิดการใช้งาน</string>
     <string name="gps_dialog_message">คุณต้องการเปิดการตั้งค่าการใช้งาน GPS หรือไม่</string>
     <string name="survey_duration">เวลาที่ใช้สำรวจ %1$s</string>
-    <string name="format_ci">CI %1$d%%</string>
+    <string name="format_ci">%1$d%%</string>
     <string name="format_container_count"><![CDATA[ภาชนะทั้งหมด <font color=#E91E63>%1$d</font> พบลูกน้ำยุงลาย <font color=#E91E63>%2$d</font>]]></string>
     <string name="format_house_survey">
         <![CDATA[สำรวจ <font color=#E91E63>%1$d</font> พบ <font color=#E91E63>%2$d</font>]]></string>

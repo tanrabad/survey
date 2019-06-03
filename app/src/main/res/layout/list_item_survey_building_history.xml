@@ -32,14 +32,18 @@
     <TextView
             android:id="@+id/survey_ci"
             style="@style/TanrabadTextAppearance.Caption"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/survey_building_icon"
-            android:layout_marginTop="@dimen/space_between_content"
+            android:layout_marginTop="4dp"
             android:maxLines="1"
             android:textIsSelectable="false"
             android:textColor="@color/black"
-            tools:text="CI 50.5%" />
+            android:textAlignment="center"
+            android:gravity="center"
+            android:layout_alignStart="@+id/survey_building_icon"
+            android:layout_alignEnd="@+id/survey_building_icon"
+            tools:text="50.5%" />
 
     <org.tanrabad.survey.presenter.view.RelativeTimeAgoTextView
             android:id="@+id/time_ago"

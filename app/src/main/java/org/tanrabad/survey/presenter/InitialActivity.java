@@ -201,6 +201,10 @@ public class InitialActivity extends TanrabadActivity {
             JumpingBeans.with(findViewById(R.id.please_wait)).appendJumpingDots().build();
     }
 
+    @Override public void onBackPressed() {
+        //prevent user from close app while initialize
+    }
+
     @SuppressLint("SetTextI18n") private void updateLoadingText(Job startingJob) {
         switch (startingJob.getId()) {
             case CreateDatabaseJob.ID:

@@ -35,6 +35,7 @@ import org.tanrabad.survey.job.UploadJobRunner;
 import org.tanrabad.survey.presenter.AboutActivity;
 import org.tanrabad.survey.presenter.AccountUtils;
 import org.tanrabad.survey.presenter.PreferenceActivity;
+import org.tanrabad.survey.presenter.authen.ChromeCustomTabs;
 import org.tanrabad.survey.presenter.authen.appauth.AppAuthPresenter;
 import org.tanrabad.survey.repository.BrokerOrganizationRepository;
 import org.tanrabad.survey.utils.alert.Alert;
@@ -129,7 +130,17 @@ public final class MainActivityNavigation {
                     AppAuthPresenter auth = new AppAuthPresenter(activity);
                     UploadJobRunner uploadJob = new UploadJobRunner();
                     uploadJob.addJobs(new UploadJobRunner.Builder().getJobs());
-                    uploadJob.setOnSyncFinishListener(auth::logout);
+                    uploadJob.setOnSyncFinishListener(() -> {
+                        if (ChromeCustomTabs.isSupported(activity)) {
+                            auth.logout();
+                        } else {
+                            ChromeCustomTabs.showInstallPromptDialog(activity,
+                                activity.getString(R.string.install_google_chrome),
+                                activity.getString(R.string.install_google_chrome_descript),
+                                activity.getString(R.string.install)
+                            );
+                        }
+                    });
                     uploadJob.start();
                     break;
             }

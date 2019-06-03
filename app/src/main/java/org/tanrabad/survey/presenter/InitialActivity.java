@@ -154,7 +154,7 @@ public class InitialActivity extends TanrabadActivity {
                         .addJob(placeTypeUpdateJob)
                         .addJob(placeSubTypeUpdateJob)
                         .addJob(placeUpdateJob)
-                        //.addJob(buildingUpdateJob)
+                        .addJob(buildingUpdateJob)
                         .start();
             }
         };

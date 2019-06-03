@@ -229,5 +229,8 @@
     <string name="found_newer_version">ตรวจสอบพบทันระบาดสำรวจ version ใหม่ %1$s กรุณาทำการอัพเดทก่อนเข้าใช้งาน</string>
     <string name="update">อัพเดท</string>
     <string name="close">ปิด</string>
+    <string name="install_google_chrome">ติดตั้่ง Google Chrome</string>
+    <string name="install_google_chrome_descript">ระบบยืนยันตัวตนต้องการ Google Chrome Web Browser เพื่อการทำงานที่สมบูรณ์ กรุณาทำการติดตั้งแล้วลองใหม่อีกครั้ง</string>
+    <string name="install">ติดตั้ง</string>
 
 </resources>

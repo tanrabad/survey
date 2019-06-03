@@ -27,6 +27,7 @@ import org.tanrabad.survey.BuildConfig;
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.presenter.authen.Authenticator;
+import org.tanrabad.survey.presenter.authen.ChromeCustomTabs;
 import org.tanrabad.survey.presenter.authen.appauth.AppAuthPresenter;
 import org.tanrabad.survey.presenter.authen.appauth.TokenActivity;
 import org.tanrabad.survey.repository.BrokerOrganizationRepository;
@@ -48,8 +49,7 @@ public class LoginActivity extends TanrabadActivity {
 
     private TwiceBackPressed twiceBackPressed;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         getWindow().setFlags(FLAG_FULLSCREEN, FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
@@ -67,7 +67,8 @@ public class LoginActivity extends TanrabadActivity {
 
     private void trialLogin() {
         User user = BrokerUserRepository.getInstance().findByUsername(BuildConfig.TRIAL_USER);
-        user.setOrganization(BrokerOrganizationRepository.getInstance().findById(user.getOrganizationId()));
+        user.setOrganization(
+            BrokerOrganizationRepository.getInstance().findById(user.getOrganizationId()));
         doLogin(user);
     }
 
@@ -79,19 +80,18 @@ public class LoginActivity extends TanrabadActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
         AccountUtils.login(user, new LoginThread.LoginListener() {
-            @Override
-            public void loginFinish() {
+            @Override public void loginFinish() {
                 progressDialog.dismiss();
                 InitialActivity.open(LoginActivity.this);
-                if (useDropInAnimation)
+                if (useDropInAnimation) {
                     overridePendingTransition(R.anim.drop_in, R.anim.drop_out);
-                else
+                } else {
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
                 finish();
             }
 
-            @Override
-            public void loginFail() {
+            @Override public void loginFail() {
                 progressDialog.dismiss();
                 trialButton.setEnabled(true);
                 authenButton.setEnabled(true);
@@ -103,7 +103,14 @@ public class LoginActivity extends TanrabadActivity {
     private void openAuthenWeb() {
         User lastLoginUser = AccountUtils.getLastLoginUser();
         if (InternetConnection.isAvailable(this)) {
-            auth.request();
+            if (ChromeCustomTabs.isSupported(this)) {
+                auth.request();
+            } else {
+                ChromeCustomTabs.showInstallPromptDialog(this,
+                    getString(R.string.install_google_chrome),
+                    getString(R.string.install_google_chrome_descript),
+                    getString(R.string.install));
+            }
         } else if (lastLoginUser != null && !AccountUtils.isTrialUser(lastLoginUser)) {
             doLogin(lastLoginUser);
         } else {
@@ -126,8 +133,7 @@ public class LoginActivity extends TanrabadActivity {
 
     boolean useDropInAnimation = false;
 
-    @Override
-    protected void onNewIntent(Intent intent) {
+    @Override protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         String username = intent.getStringExtra(TokenActivity.USERNAME);
         useDropInAnimation = intent.getBooleanExtra(TokenActivity.AUTO_LOGIN, false);
@@ -138,8 +144,7 @@ public class LoginActivity extends TanrabadActivity {
         }
     }
 
-    @Override
-    protected void onDestroy() {
+    @Override protected void onDestroy() {
         super.onDestroy();
         auth.close();
     }

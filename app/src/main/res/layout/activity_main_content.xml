@@ -120,13 +120,25 @@
             android:id="@+id/card_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             >
 
             <TextView
+                android:id="@+id/recentTitle"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/actionbar_size"
-                android:padding="16dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:text="@string/find_place_by_recent_survey"
+                android:textSize="@dimen/text_subhead"
+                />
+            <TextView
+                android:layout_below="@+id/recentTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_micro"
+                android:paddingStart="16dp"
+                android:textColor="?android:attr/textColorSecondary"
+                android:text="เฉพาะสถานที่ซึ่งมีการสำรวจด้วยเครื่องนี้เท่านั้น"
                 />
         </com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader>
     </android.support.v7.widget.CardView>
@@ -160,8 +172,10 @@
             android:layout_marginRight="@dimen/space_between_content"
             android:contentDescription="@string/displayProfile"
             android:src="@drawable/person_default_background"
+            android:elevation="4dp"
             app:civ_border_color="@color/white"
             app:civ_border_width="2dp"
+            tools:ignore="UnusedAttribute"
             />
 
         <TextView
@@ -204,7 +218,6 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:titleEnabled="false"
             >
-
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>

@@ -16,10 +16,12 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context="org.tanrabad.survey.presenter.InitialActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:keepScreenOn="true"
+    tools:context="org.tanrabad.survey.presenter.InitialActivity"
+    >
 
     <ImageView
         android:id="@+id/larvae_deep"
@@ -28,28 +30,31 @@
         android:layout_centerInParent="true"
         android:contentDescription="@null"
         android:cropToPadding="false"
-        android:scaleType="center"
         android:rotation="33"
-        android:src="@drawable/larvae_deep"/>
+        android:scaleType="center"
+        android:src="@drawable/larvae_deep"
+        />
 
     <TextView
-            style="@style/TanrabadTextAppearance.Title"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:id="@+id/please_wait"
-            android:text="@string/please_wait"
-            android:textColor="@color/white"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        android:id="@+id/please_wait"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="@string/please_wait"
+        android:textColor="@color/white"
+        style="@style/TanrabadTextAppearance.Title"
+        />
 
     <TextView
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/please_wait"
-            android:id="@+id/loading"
-            android:textIsSelectable="false"
-            android:textColor="@color/white"
-            tools:text="กำลังรวบรวมข้อมูลสถานที่"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/please_wait"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/white"
+        android:textIsSelectable="false"
+        tools:text="กำลังรวบรวมข้อมูลสถานที่"
+        />
 
 </RelativeLayout>

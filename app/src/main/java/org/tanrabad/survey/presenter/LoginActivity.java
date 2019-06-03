@@ -33,6 +33,7 @@ import org.tanrabad.survey.repository.BrokerOrganizationRepository;
 import org.tanrabad.survey.repository.BrokerUserRepository;
 import org.tanrabad.survey.utils.alert.Alert;
 import org.tanrabad.survey.utils.android.InternetConnection;
+import org.tanrabad.survey.utils.android.TwiceBackPressed;
 
 import static android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN;
 import static android.view.animation.AnimationUtils.loadAnimation;
@@ -45,11 +46,14 @@ public class LoginActivity extends TanrabadActivity {
     private View authenButton;
     private Authenticator auth;
 
+    private TwiceBackPressed twiceBackPressed;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().setFlags(FLAG_FULLSCREEN, FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        twiceBackPressed = new TwiceBackPressed(this);
 
         auth = new Authenticator(new AppAuthPresenter(this));
 
@@ -138,5 +142,11 @@ public class LoginActivity extends TanrabadActivity {
     protected void onDestroy() {
         super.onDestroy();
         auth.close();
+    }
+
+    @Override public void onBackPressed() {
+        if (twiceBackPressed.onTwiceBackPressed()) {
+            finishAffinity();
+        }
     }
 }

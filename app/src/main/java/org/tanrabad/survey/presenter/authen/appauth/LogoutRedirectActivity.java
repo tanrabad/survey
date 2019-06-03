@@ -17,10 +17,12 @@
 
 package org.tanrabad.survey.presenter.authen.appauth;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 import org.tanrabad.survey.presenter.AccountUtils;
+import org.tanrabad.survey.presenter.LoginActivity;
 import org.tanrabad.survey.presenter.TanrabadActivity;
 import org.tanrabad.survey.repository.AppDataManager;
 
@@ -36,6 +38,10 @@ public class LogoutRedirectActivity extends TanrabadActivity {
         AppDataManager.clearAll(this);
 
         Toast.makeText(this, "ออกจากระบบสำเร็จ", Toast.LENGTH_SHORT).show();
-        finishAffinity();
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+
+        finish();
     }
 }

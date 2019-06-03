@@ -129,10 +129,7 @@ public final class MainActivityNavigation {
                     AppAuthPresenter auth = new AppAuthPresenter(activity);
                     UploadJobRunner uploadJob = new UploadJobRunner();
                     uploadJob.addJobs(new UploadJobRunner.Builder().getJobs());
-                    uploadJob.setOnSyncFinishListener(() -> {
-                        auth.logout();
-                        activity.finish();
-                    });
+                    uploadJob.setOnSyncFinishListener(auth::logout);
                     uploadJob.start();
                     break;
             }

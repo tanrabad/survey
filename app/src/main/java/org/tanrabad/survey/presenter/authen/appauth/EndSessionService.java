@@ -26,8 +26,6 @@ import android.util.Log;
 import net.openid.appauth.AuthState;
 import net.openid.appauth.browser.BrowserDescriptor;
 import net.openid.appauth.browser.BrowserSelector;
-import net.openid.appauth.browser.CustomTabManager;
-
 import okhttp3.OkHttpClient;
 import org.tanrabad.survey.R;
 
@@ -52,13 +50,18 @@ class EndSessionService {
         String url = String.format(URL, state.getIdToken()).trim();
 
 
-        CustomTabManager customTabManager = new CustomTabManager(context);
-        customTabManager.bind(browser.packageName);
-        CustomTabsIntent.Builder builder = customTabManager.createTabBuilder(Uri.parse(url));
+        //CustomTabManager customTabManager = new CustomTabManager(context);
+        //customTabManager.bind(browser.packageName);
+        Log.i(TAG, "Browser package=" + browser.packageName);
+        //CustomTabsIntent.Builder builder = customTabManager.createTabBuilder();
 
+        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
         builder.setToolbarColor(ContextCompat.getColor(context, R.color.purple));
         CustomTabsIntent customTabsIntent = builder.build();
-        customTabsIntent.intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        customTabsIntent.intent.setPackage(browser.packageName);
+        customTabsIntent.intent.putExtra(Intent.EXTRA_REFERRER,
+            Uri.parse("android-app://" + context.getPackageName()));
+        customTabsIntent.intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         customTabsIntent.launchUrl(context, Uri.parse(url));
     }
 }

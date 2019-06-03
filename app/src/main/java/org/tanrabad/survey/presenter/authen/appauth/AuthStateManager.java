@@ -41,7 +41,7 @@ import org.json.JSONException;
 public class AuthStateManager {
 
     private static final AtomicReference<WeakReference<AuthStateManager>> INSTANCE_REF =
-            new AtomicReference<>(new WeakReference<AuthStateManager>(null));
+            new AtomicReference<>(new WeakReference<>(null));
 
     private static final String TAG = "AuthStateManager";
 

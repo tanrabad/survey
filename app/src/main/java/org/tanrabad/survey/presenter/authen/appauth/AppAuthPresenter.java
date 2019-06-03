@@ -21,19 +21,16 @@ import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.support.annotation.MainThread;
-import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
-
 import java.util.Collections;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicReference;
-
 import net.openid.appauth.AppAuthConfiguration;
 import net.openid.appauth.AuthState;
 import net.openid.appauth.AuthorizationRequest;
@@ -43,11 +40,9 @@ import net.openid.appauth.ClientSecretBasic;
 import net.openid.appauth.RegistrationRequest;
 import net.openid.appauth.RegistrationResponse;
 import net.openid.appauth.ResponseTypeValues;
-import net.openid.appauth.browser.AnyBrowserMatcher;
 import net.openid.appauth.browser.BrowserMatcher;
 import net.openid.appauth.browser.BrowserWhitelist;
 import net.openid.appauth.browser.VersionedBrowserMatcher;
-
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.presenter.LoginActivity;
@@ -56,9 +51,8 @@ import org.tanrabad.survey.presenter.authen.AuthenticatorPresent;
 public class AppAuthPresenter implements AuthenticatorPresent {
 
     private static final String TAG = "AppAuthPresenter";
-    public static final BrowserMatcher browserMatcher = new BrowserWhitelist(
-        VersionedBrowserMatcher.CHROME_CUSTOM_TAB,
-        VersionedBrowserMatcher.SAMSUNG_CUSTOM_TAB);
+    static final BrowserMatcher browserMatcher = new BrowserWhitelist(
+        VersionedBrowserMatcher.CHROME_CUSTOM_TAB);
     private Activity activity;
 
     private static final String EXTRA_FAILED = "failed";
@@ -253,6 +247,7 @@ public class AppAuthPresenter implements AuthenticatorPresent {
     }
 
     @Override public void startPage() {
+        AuthState state = mAuthStateManager.getCurrent();
         if (isLoggedIn()) {
             Intent intent = new Intent(activity, TokenActivity.class);
             intent.setAction(TokenActivity.AUTH_ACTION_AUTO_LOGIN);

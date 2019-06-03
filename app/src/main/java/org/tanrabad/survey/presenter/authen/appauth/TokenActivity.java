@@ -71,6 +71,7 @@ public class TokenActivity extends TanrabadActivity {
     private ExecutorService mExecutor;
     private Button authenButton;
     private View logoutButton;
+    private AppAuthPresenter auth;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,6 +113,13 @@ public class TokenActivity extends TanrabadActivity {
             startActivity(intent);
         });
         checkAuthorize();
+
+        auth = new AppAuthPresenter(this);
+    }
+
+    @Override protected void onStop() {
+        super.onStop();
+        auth.close();
     }
 
     @Override protected void onNewIntent(Intent intent) {
@@ -292,7 +300,7 @@ public class TokenActivity extends TanrabadActivity {
     @MainThread private void logout() {
         // discard the authorization and token state, but retain the configuration and
         // dynamic client registration (if applicable), to save from retrieving them again.
-        new AppAuthPresenter(this).logout();
+        auth.logout();
         finish();
     }
 }

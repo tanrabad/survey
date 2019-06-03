@@ -59,4 +59,13 @@ public class ChromeCustomTabs {
         prompt.setOnCancel(activity.getString(R.string.cancel), () -> { });
         prompt.show(title, message);
     }
+
+    public static void showInstallPromptDialog(final Activity activity) {
+        showInstallPromptDialog(activity,
+            activity.getString(R.string.install_google_chrome),
+            activity.getString(R.string.install_google_chrome_descript),
+            activity.getString(R.string.install)
+        );
+    }
+
 }

@@ -134,11 +134,7 @@ public final class MainActivityNavigation {
                         if (ChromeCustomTabs.isSupported(activity)) {
                             auth.logout();
                         } else {
-                            ChromeCustomTabs.showInstallPromptDialog(activity,
-                                activity.getString(R.string.install_google_chrome),
-                                activity.getString(R.string.install_google_chrome_descript),
-                                activity.getString(R.string.install)
-                            );
+                            ChromeCustomTabs.showInstallPromptDialog(activity);
                         }
                     });
                     uploadJob.start();

@@ -37,7 +37,11 @@ public class Authenticator {
     private UserRepository userRepository;
 
     public void request() {
-        presenter.startPage();
+        presenter.login(false);
+    }
+
+    public void forceRequest() {
+        presenter.login(true);
     }
 
     public void close() {

@@ -40,8 +40,9 @@ import static android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN;
 import static android.view.animation.AnimationUtils.loadAnimation;
 
 public class LoginActivity extends TanrabadActivity {
-    private static final int AUTHEN_REQUEST_CODE = 1232;
+
     private static final String TAG = "LoginActivity";
+
     ProgressDialog progressDialog;
     private View trialButton;
     private View authenButton;
@@ -61,7 +62,8 @@ public class LoginActivity extends TanrabadActivity {
         authenButton = findViewById(R.id.authentication_button);
 
         trialButton.setOnClickListener(view -> trialLogin());
-        authenButton.setOnClickListener(view -> openAuthenWeb());
+        authenButton.setOnClickListener(view -> authen());
+        authenButton.setOnLongClickListener(this::forceAuthenWithServer);
         startAnimation();
     }
 
@@ -100,22 +102,32 @@ public class LoginActivity extends TanrabadActivity {
         });
     }
 
-    private void openAuthenWeb() {
+    private void authen() {
         User lastLoginUser = AccountUtils.getLastLoginUser();
         if (InternetConnection.isAvailable(this)) {
             if (ChromeCustomTabs.isSupported(this)) {
                 auth.request();
             } else {
-                ChromeCustomTabs.showInstallPromptDialog(this,
-                    getString(R.string.install_google_chrome),
-                    getString(R.string.install_google_chrome_descript),
-                    getString(R.string.install));
+                ChromeCustomTabs.showInstallPromptDialog(this);
             }
         } else if (lastLoginUser != null && !AccountUtils.isTrialUser(lastLoginUser)) {
             doLogin(lastLoginUser);
         } else {
             Alert.highLevel().show(R.string.connect_internet_before_authen);
         }
+    }
+
+    private boolean forceAuthenWithServer(View view) {
+        if (InternetConnection.isAvailable(this)) {
+            if (ChromeCustomTabs.isSupported(this)) {
+                auth.forceRequest();
+            } else {
+                ChromeCustomTabs.showInstallPromptDialog(this);
+            }
+        } else {
+            Alert.highLevel().show(R.string.connect_internet_before_authen);
+        }
+        return true;
     }
 
     private void startAnimation() {

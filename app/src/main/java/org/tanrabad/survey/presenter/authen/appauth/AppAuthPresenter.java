@@ -246,9 +246,8 @@ public class AppAuthPresenter implements AuthenticatorPresent {
         }
     }
 
-    @Override public void startPage() {
-        AuthState state = mAuthStateManager.getCurrent();
-        if (isLoggedIn()) {
+    @Override public void login(boolean forceCheck) {
+        if (isLoggedIn() && !forceCheck) {
             Intent intent = new Intent(activity, TokenActivity.class);
             intent.setAction(TokenActivity.AUTH_ACTION_AUTO_LOGIN);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

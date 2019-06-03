@@ -19,7 +19,7 @@ package org.tanrabad.survey.presenter.authen;
 
 public interface AuthenticatorPresent {
 
-    void startPage();
+    void login(boolean force);
 
     void logout();
 

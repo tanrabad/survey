@@ -27,6 +27,7 @@
         android:id="@+id/building_icon"
         style="@style/ListIcon"
         android:contentDescription="@string/building_icon"
+        android:layout_centerVertical="true"
         tools:src="@mipmap/ic_building_home_black"/>
 
     <LinearLayout
@@ -77,10 +78,11 @@
         style="@style/ListTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@id/edit_layout"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@id/edit_layout"
         android:textIsSelectable="false"
         android:textSize="@dimen/text_title"
+        android:layout_marginTop="10dp"
         tools:text="บ้านเลขที่ 1"/>
 
     <TextView
@@ -88,10 +90,9 @@
         style="@style/TanrabadTextAppearance.Caption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/building_name"
         android:layout_alignStart="@+id/building_name"
         android:layout_below="@+id/building_name"
-        android:layout_toLeftOf="@id/edit_layout"
+        android:layout_toStartOf="@id/edit_layout"
         android:text="@string/building_already_survey"
         android:textColor="@color/color_accent"/>
 </RelativeLayout>

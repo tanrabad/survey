@@ -95,6 +95,11 @@
         <item name="android:scaleType">centerInside</item>
     </style>
 
+    <style name="ListIcon.Small">
+        <item name="android:layout_width">@dimen/list_icon_size_small</item>
+        <item name="android:layout_height">@dimen/list_icon_size_small</item>
+    </style>
+
     <style name="ListTitle">
         <item name="android:layout_marginLeft">@dimen/list_text_padding_left</item>
         <item name="android:layout_marginStart" tools:targetApi="jelly_bean_mr1">@dimen/list_text_padding_left</item>

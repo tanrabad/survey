@@ -89,7 +89,6 @@ android {
             signingConfig signingConfigs.release
             minifyEnabled false
             shrinkResources false
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             def googleMapsKey = System.getenv("TANRABAD_GOOGLE_RELEASE_KEY")
             manifestPlaceholders = [google_map_key: googleMapsKey]
             buildConfigField "String", "GOOGLE_MAP_KEY", "\"$googleMapsKey\""

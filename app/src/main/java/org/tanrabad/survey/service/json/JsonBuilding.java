@@ -17,16 +17,17 @@
 
 package org.tanrabad.survey.service.json;
 
+import android.support.annotation.Nullable;
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
+import java.util.UUID;
 import org.joda.time.DateTimeZone;
-import org.tanrabad.survey.utils.time.ThaiDateTimeConverter;
 import org.tanrabad.survey.domain.place.PlaceRepository;
 import org.tanrabad.survey.domain.user.UserRepository;
 import org.tanrabad.survey.entity.Building;
+import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.entity.field.Location;
-
-import java.util.UUID;
+import org.tanrabad.survey.utils.time.ThaiDateTimeConverter;
 
 @JsonObject
 public class JsonBuilding {
@@ -67,9 +68,13 @@ public class JsonBuilding {
         return jsonBuilding;
     }
 
+    @Nullable
     public Building getEntity(PlaceRepository placeRepository, UserRepository userRepository) {
         Building building = new Building(buildingId, buildingName);
-        building.setPlace(placeRepository.findByUuid(placeId));
+        Place place = placeRepository.findByUuid(placeId);
+        if (place == null)
+            return null;
+        building.setPlace(place);
         Location location = this.location == null ? null : this.location.getEntity();
         building.setLocation(location);
         building.setUpdateBy(updatedBy);

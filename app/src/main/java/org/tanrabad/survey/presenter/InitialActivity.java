@@ -20,11 +20,15 @@ package org.tanrabad.survey.presenter;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import net.frakbot.jumpingbeans.JumpingBeans;
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
@@ -72,92 +76,108 @@ import org.tanrabad.survey.utils.prompt.PromptMessage;
 
 public class InitialActivity extends TanrabadActivity {
 
-    private WritableRepoUpdateJob<Province> provinceUpdateJob = new WritableRepoUpdateJob<>(
-            new ProvinceRestService(), DbProvinceRepository.getInstance());
-    private WritableRepoUpdateJob<District> districtUpdateJob = new WritableRepoUpdateJob<>(
-            new AmphurRestService(), DbDistrictRepository.getInstance());
-    private WritableRepoUpdateJob<Subdistrict> subDistrictUpdateJob = new WritableRepoUpdateJob<>(
-            new TambonRestService(), DbSubdistrictRepository.getInstance());
-    private WritableRepoUpdateJob<PlaceType> placeTypeUpdateJob = new WritableRepoUpdateJob<>(
-            new PlaceTypeRestService(), BrokerPlaceTypeRepository.getInstance());
-    private WritableRepoUpdateJob<PlaceSubType> placeSubTypeUpdateJob = new WritableRepoUpdateJob<>(
-            new PlaceSubTypeRestService(), BrokerPlaceSubTypeRepository.getInstance());
-    private WritableRepoUpdateJob<ContainerType> containerTypeUpdateJob = new WritableRepoUpdateJob<>(
-            new ContainerTypeRestService(), BrokerContainerTypeRepository.getInstance());
-    private WritableRepoUpdateJob<ContainerLocation> containerLocationUpdateJob = new WritableRepoUpdateJob<>(
-            new ContainerLocationRestService(), new DbContainerLocationRepository(TanrabadApp.getInstance()));
-    private WritableRepoUpdateJob<Place> placeUpdateJob = new WritableRepoUpdateJob<>(
-            new PlaceRestService(), BrokerPlaceRepository.getInstance());
-    private WritableRepoUpdateJob<Building> buildingUpdateJob = new WritableRepoUpdateJob<>(
-            new BuildingRestService(), BrokerBuildingRepository.getInstance());
+    private WritableRepoUpdateJob<Province> provinceUpdateJob =
+        new WritableRepoUpdateJob<>(new ProvinceRestService(), DbProvinceRepository.getInstance());
+    private WritableRepoUpdateJob<District> districtUpdateJob =
+        new WritableRepoUpdateJob<>(new AmphurRestService(), DbDistrictRepository.getInstance());
+    private WritableRepoUpdateJob<Subdistrict> subDistrictUpdateJob =
+        new WritableRepoUpdateJob<>(new TambonRestService(), DbSubdistrictRepository.getInstance());
+    private WritableRepoUpdateJob<PlaceType> placeTypeUpdateJob =
+        new WritableRepoUpdateJob<>(new PlaceTypeRestService(),
+            BrokerPlaceTypeRepository.getInstance());
+    private WritableRepoUpdateJob<PlaceSubType> placeSubTypeUpdateJob =
+        new WritableRepoUpdateJob<>(new PlaceSubTypeRestService(),
+            BrokerPlaceSubTypeRepository.getInstance());
+    private WritableRepoUpdateJob<ContainerType> containerTypeUpdateJob =
+        new WritableRepoUpdateJob<>(new ContainerTypeRestService(),
+            BrokerContainerTypeRepository.getInstance());
+    private WritableRepoUpdateJob<ContainerLocation> containerLocationUpdateJob =
+        new WritableRepoUpdateJob<>(new ContainerLocationRestService(),
+            new DbContainerLocationRepository(TanrabadApp.getInstance()));
+    private WritableRepoUpdateJob<Place> placeUpdateJob =
+        new WritableRepoUpdateJob<>(new PlaceRestService(), BrokerPlaceRepository.getInstance());
+    private WritableRepoUpdateJob<Building> buildingUpdateJob =
+        new WritableRepoUpdateJob<>(new BuildingRestService(),
+            BrokerBuildingRepository.getInstance());
+
+    private List<Job> initialJobs;
 
     private TextView loadingText;
     private JumpingBeans pleaseWaitBeans;
     private AbsInitialActivityController initialActivityController;
+    private ProgressBar progressBar;
+    private ProgressBar overallProgressBar;
 
     public static void open(Activity activity) {
         Intent intent = new Intent(activity, InitialActivity.class);
         activity.startActivity(intent);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial);
         loadingText = findViewById(R.id.loading);
+        progressBar = findViewById(R.id.progressBar);
+
+        initialJobs = Arrays.asList(
+            containerLocationUpdateJob,
+            containerTypeUpdateJob,
+            provinceUpdateJob,
+            districtUpdateJob,
+            subDistrictUpdateJob,
+            placeTypeUpdateJob,
+            placeSubTypeUpdateJob,
+            placeUpdateJob,
+            buildingUpdateJob
+        );
+        for (Job job : initialJobs) {
+            ((WritableRepoUpdateJob) job).setProgressListener(jobProgress);
+        }
+
+        overallProgressBar = findViewById(R.id.progressBarOverall);
+        overallProgressBar.setMax(initialJobs.size());
+
         startPleaseWaitBeansJump();
         ApiSyncInfoPreference syncInfoPreference = new ApiSyncInfoPreference(InitialActivity.this);
         InternetConnection internetConnection = new InternetConnection(this);
 
-        initialActivityController = new AbsInitialActivityController(
-                internetConnection, syncInfoPreference) {
-            @Override
-            public void onFail() {
-                AppDataManager.clearAll(InitialActivity.this);
-                PromptMessage promptMessage = new AlertDialogPromptMessage(InitialActivity.this);
-                promptMessage.setOnConfirm(getString(R.string.back_to_login), new PromptMessage.OnConfirmListener() {
-                    @Override
-                    public void onConfirm() {
+        initialActivityController =
+            new AbsInitialActivityController(internetConnection, syncInfoPreference) {
+                @Override public void onFail() {
+                    AppDataManager.clearAll(InitialActivity.this);
+                    PromptMessage promptMessage =
+                        new AlertDialogPromptMessage(InitialActivity.this);
+                    promptMessage.setOnConfirm(getString(R.string.back_to_login), () -> {
                         Intent intent = new Intent(InitialActivity.this, LoginActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         finish();
-                    }
-                });
-                promptMessage.show(null, getString(R.string.download_first_time_fail));
-            }
+                    });
+                    promptMessage.show(null, getString(R.string.download_first_time_fail));
+                }
 
-            @Override
-            public void onSuccess() {
-                initialCache();
-                MainActivity.open(InitialActivity.this);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
-            }
+                @Override public void onSuccess() {
+                    initialCache();
+                    MainActivity.open(InitialActivity.this);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    finish();
+                }
 
-            private void initialCache() {
-                loadingText.setText("เกือบเสร็จแล้วอีกนิดเดียว");
-                BrokerProvinceRepository.getInstance().find();
-                BrokerDistrictRepository.getInstance().find();
-                BrokerSubdistrictRepository.getInstance().find();
-            }
+                private void initialCache() {
+                    loadingText.setText("เกือบเสร็จแล้วอีกนิดเดียว");
+                    BrokerProvinceRepository.getInstance().find();
+                    BrokerDistrictRepository.getInstance().find();
+                    BrokerSubdistrictRepository.getInstance().find();
+                    BrokerPlaceTypeRepository.getInstance().find();
+                    BrokerPlaceSubTypeRepository.getInstance().find();
+                }
 
-            @Override
-            protected void downloadData() {
-                new InitialJobRunner()
-                        .addJob(new CreateDatabaseJob(InitialActivity.this))
-                        .addJob(containerLocationUpdateJob)
-                        .addJob(containerTypeUpdateJob)
-                        .addJob(provinceUpdateJob)
-                        .addJob(districtUpdateJob)
-                        .addJob(subDistrictUpdateJob)
-                        .addJob(placeTypeUpdateJob)
-                        .addJob(placeSubTypeUpdateJob)
-                        .addJob(placeUpdateJob)
-                        .addJob(buildingUpdateJob)
+                @Override protected void downloadData() {
+                    new InitialJobRunner().addJob(new CreateDatabaseJob(InitialActivity.this))
+                        .addJobs(initialJobs)
                         .start();
-            }
-        };
+                }
+            };
 
         initialActivityController.startInitialData();
 
@@ -167,15 +187,21 @@ public class InitialActivity extends TanrabadActivity {
         }
     }
 
+    private WritableRepoUpdateJob.ProgressListener jobProgress = (progress, max) -> {
+        progressBar.setMax(max);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            progressBar.setProgress(progress, true);
+        } else {
+            progressBar.setProgress(progress);
+        }
+    };
 
     private void startPleaseWaitBeansJump() {
-        pleaseWaitBeans = JumpingBeans.with((TextView) findViewById(R.id.please_wait))
-                .appendJumpingDots()
-                .build();
+        pleaseWaitBeans =
+            JumpingBeans.with(findViewById(R.id.please_wait)).appendJumpingDots().build();
     }
 
-    @SuppressLint("SetTextI18n")
-    private void updateLoadingText(Job startingJob) {
+    @SuppressLint("SetTextI18n") private void updateLoadingText(Job startingJob) {
         switch (startingJob.getId()) {
             case CreateDatabaseJob.ID:
                 loadingText.setText("เตรียมกระดาษสำหรับจดข้อมูล");
@@ -191,24 +217,25 @@ public class InitialActivity extends TanrabadActivity {
 
     @SuppressLint("SetTextI18n")
     private void updateLoadingTextByWritableJobInstance(Job startingJob) {
-        if (startingJob.equals(provinceUpdateJob))
+        if (startingJob.equals(provinceUpdateJob)) {
             loadingText.setText("รอพบกับท่านผู้ว่า");
-        else if (startingJob.equals(districtUpdateJob))
+        } else if (startingJob.equals(districtUpdateJob)) {
             loadingText.setText("ไปหานายอำเภอ");
-        else if (startingJob.equals(subDistrictUpdateJob))
+        } else if (startingJob.equals(subDistrictUpdateJob)) {
             loadingText.setText("กินข้าวกับ อบต.");
-        else if (startingJob.equals(placeTypeUpdateJob))
+        } else if (startingJob.equals(placeTypeUpdateJob)) {
             loadingText.setText("เข้าเทศบาล");
-        else if (startingJob.equals(placeSubTypeUpdateJob))
+        } else if (startingJob.equals(placeSubTypeUpdateJob)) {
             loadingText.setText("คุยกับคนพื้นที่");
-        else if (startingJob.equals(containerTypeUpdateJob))
+        } else if (startingJob.equals(containerTypeUpdateJob)) {
             loadingText.setText("ค้นกระเป๋าโดเรม่อน");
-        else if (startingJob.equals(containerLocationUpdateJob))
+        } else if (startingJob.equals(containerLocationUpdateJob)) {
             loadingText.setText("หาตำแหน่งเป้าหมาย");
-        else if (startingJob.equals(placeUpdateJob))
+        } else if (startingJob.equals(placeUpdateJob)) {
             loadingText.setText("สแกนพื้นที่ปฎิบัติงาน");
-        else if (startingJob.equals(buildingUpdateJob))
+        } else if (startingJob.equals(buildingUpdateJob)) {
             loadingText.setText("เตรียมตัวกำจัดเหล่าร้าย");
+        }
     }
 
     public class InitialJobRunner extends AbsJobRunner {
@@ -216,23 +243,28 @@ public class InitialActivity extends TanrabadActivity {
         private IOException ioException;
         private RestServiceException restServiceException;
 
-        @Override
-        protected void onJobError(Job errorJob, Exception exception) {
+        @Override protected void onJobError(Job errorJob, Exception exception) {
             super.onJobError(errorJob, exception);
-            if (exception instanceof IOException)
+            if (exception instanceof IOException) {
                 ioException = (IOException) exception;
-            else if (exception instanceof RestServiceException)
+            } else if (exception instanceof RestServiceException) {
                 restServiceException = (RestServiceException) exception;
+            }
             if (InternetConnection.isAvailable(InitialActivity.this)) TanrabadApp.log(exception);
         }
 
-        @Override
-        protected void onJobStart(Job startingJob) {
+        @Override protected void onJobStart(Job startingJob) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                overallProgressBar.setProgress(getJobFinishCount(), true);
+                progressBar.setProgress(0, true);
+            } else {
+                overallProgressBar.setProgress(getJobFinishCount());
+                progressBar.setProgress(0);
+            }
             updateLoadingText(startingJob);
         }
 
-        @Override
-        protected void onRunFinish() {
+        @Override protected void onRunFinish() {
             pleaseWaitBeans.stopJumping();
 
             initialActivityController.downloadComplete(isSyncSuccess());
@@ -244,10 +276,11 @@ public class InitialActivity extends TanrabadActivity {
         }
 
         private void showErrorMessage() {
-            if (ioException != null)
+            if (ioException != null) {
                 Alert.mediumLevel().show(R.string.error_connection_problem);
-            else if (restServiceException != null)
+            } else if (restServiceException != null) {
                 Alert.mediumLevel().show(R.string.error_rest_service);
+            }
         }
     }
 }

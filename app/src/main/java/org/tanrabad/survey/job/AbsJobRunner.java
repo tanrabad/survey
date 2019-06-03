@@ -48,6 +48,9 @@ public abstract class AbsJobRunner implements JobRunner {
         new AsyncJob().execute(jobList.toArray(new Job[jobList.size()]));
     }
 
+    public int getJobFinishCount() {
+        return jobFinishCount;
+    }
 
     protected void onJobError(Job errorJob, Exception exception) {
         jobErrorCount++;

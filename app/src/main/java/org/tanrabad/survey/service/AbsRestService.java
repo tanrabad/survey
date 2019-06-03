@@ -17,26 +17,20 @@
 
 package org.tanrabad.survey.service;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.tanrabad.survey.BuildConfig;
-import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.presenter.AccountUtils;
-import org.tanrabad.survey.utils.http.FileCertificateAuthority;
 import org.tanrabad.survey.utils.http.PageLinks;
+import org.tanrabad.survey.utils.http.QueryString;
 import org.tanrabad.survey.utils.http.Status;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.net.ssl.X509TrustManager;
-
-import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.tanrabad.survey.utils.http.Header.ACCEPT;
 import static org.tanrabad.survey.utils.http.Header.ACCEPT_CHARSET;
 import static org.tanrabad.survey.utils.http.Header.IF_MODIFIED_SINCE;
@@ -53,6 +47,8 @@ public abstract class AbsRestService<T> implements RestService<T> {
     private ServiceLastUpdate serviceLastUpdate;
     private User user;
     private String nextUrl = null;
+    private String lastUrl = null;
+    private int lastPage = 1;
     private List<T> deletedData;
 
     AbsRestService(String baseApi, ServiceLastUpdate serviceLastUpdate) {
@@ -76,7 +72,7 @@ public abstract class AbsRestService<T> implements RestService<T> {
     public List<T> getUpdate() throws IOException {
         Request request = makeRequest();
         Response response = client.newCall(request).execute();
-        getNextRequest(response);
+        extractLinkHeader(response);
 
         if (isNotModified(response)) {
             TanrabadApp.action().cacheHit(this);
@@ -127,19 +123,33 @@ public abstract class AbsRestService<T> implements RestService<T> {
         return null;
     }
 
+    @Override public int getLastPage() {
+        if (lastUrl == null) {
+            return 1;
+        }
+        return lastPage;
+    }
+
     private void headerIfModifiedSince(Request.Builder requestBuilder) {
         String lastUpdate = this.serviceLastUpdate.get();
         if (lastUpdate != null)
             requestBuilder.addHeader(IF_MODIFIED_SINCE, lastUpdate);
     }
 
-    private void getNextRequest(Response response) {
+    private void extractLinkHeader(Response response) {
         String linkHeader = response.header(LINK);
         if (linkHeader != null && !linkHeader.isEmpty()) {
             PageLinks pageLinks = new PageLinks(linkHeader);
             nextUrl = pageLinks.getNext();
+            lastUrl = pageLinks.getLast();
+            try {
+                lastPage = Integer.parseInt(new QueryString(lastUrl).getParam("page"));
+            } catch (IllegalArgumentException nfe) {
+                lastPage = 1;
+            }
         } else {
             nextUrl = null;
+            lastUrl = null;
         }
     }
 

@@ -26,4 +26,6 @@ public interface RestService<T> {
     List<T> getDelete() throws IOException;
 
     boolean hasNextRequest();
+
+    int getLastPage();
 }

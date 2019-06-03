@@ -17,21 +17,25 @@
 
 package org.tanrabad.survey.job;
 
-import org.tanrabad.survey.domain.WritableRepository;
-import org.tanrabad.survey.service.RestService;
-
 import java.io.IOException;
 import java.util.List;
+import org.tanrabad.survey.domain.WritableRepository;
+import org.tanrabad.survey.service.RestService;
 
 public class WritableRepoUpdateJob<T> implements Job {
 
     public static final int ID = 192384;
     private WritableRepository<T> repository;
     private RestService<T> restService;
+    private ProgressListener listener;
 
     public WritableRepoUpdateJob(RestService<T> restService, WritableRepository<T> repository) {
         this.restService = restService;
         this.repository = repository;
+    }
+
+    public void setProgressListener(ProgressListener listener) {
+        this.listener = listener;
     }
 
     @Override
@@ -41,7 +45,12 @@ public class WritableRepoUpdateJob<T> implements Job {
 
     @Override
     public void execute() throws IOException {
+        int progress = 1, max = 1;
         do {
+            if (listener != null) {
+                listener.onProgress(progress, max);
+            }
+
             List<T> update = restService.getUpdate();
             if (!update.isEmpty()) {
                 repository.updateOrInsert(update);
@@ -52,6 +61,13 @@ public class WritableRepoUpdateJob<T> implements Job {
                 repository.delete(deleteData);
             }
 
+            progress++;
+            max = restService.getLastPage();
         } while (restService.hasNextRequest());
+    }
+
+    public interface ProgressListener {
+
+        void onProgress(int progress, int max);
     }
 }

@@ -19,15 +19,14 @@ package org.tanrabad.survey;
 
 import android.content.Context;
 import android.support.multidex.MultiDexApplication;
-
+import cat.ereza.customactivityoncrash.CustomActivityOnCrash;
+import me.piruin.spinney.Spinney;
+import okhttp3.Cache;
 import org.tanrabad.survey.entity.ReferenceEntity;
 import org.tanrabad.survey.presenter.LoginActivity;
 import org.tanrabad.survey.utils.tool.ActionLogger;
 import org.tanrabad.survey.utils.tool.ExceptionLogger;
 import org.tanrabad.survey.utils.tool.FabricTools;
-
-import cat.ereza.customactivityoncrash.CustomActivityOnCrash;
-import me.piruin.spinney.Spinney;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class TanrabadApp extends MultiDexApplication {
@@ -36,6 +35,7 @@ public class TanrabadApp extends MultiDexApplication {
     private static ExceptionLogger exceptionLogger;
     private static ActionLogger actionLogger;
     private static TanrabadApp instance;
+    private static Cache cache;
 
     public static ActionLogger action() {
         return actionLogger;
@@ -43,6 +43,10 @@ public class TanrabadApp extends MultiDexApplication {
 
     public static Context getInstance() {
         return instance;
+    }
+
+    public static Cache getCache() {
+        return cache;
     }
 
     public static void log(Exception e) {
@@ -61,6 +65,7 @@ public class TanrabadApp extends MultiDexApplication {
         setupAnalysisTools();
         setupDefaultFont();
         setupSpinney();
+        cache = new Cache(getCacheDir(), 10 * 1024 * 1024);
     }
 
     private void setupSpinney() {

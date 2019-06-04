@@ -19,13 +19,16 @@ package org.tanrabad.survey.presenter.authen.appauth;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
 import com.bluelinelabs.logansquare.LoganSquare;
+
+import org.tanrabad.survey.presenter.authen.UserProfile;
+
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.concurrent.atomic.AtomicReference;
-import org.tanrabad.survey.presenter.authen.UserProfile;
 
-public class UserProfileManager {
+class UserProfileManager {
 
     private static final AtomicReference<WeakReference<UserProfileManager>> INSTANCE_REF =
         new AtomicReference<>(new WeakReference<>(null));

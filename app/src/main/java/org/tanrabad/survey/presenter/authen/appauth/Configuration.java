@@ -46,7 +46,7 @@ import okio.Okio;
  * changes are detected by comparing the hash of the last known configuration to the read
  * configuration. When a configuration change is detected, the app state is reset.
  */
-public final class Configuration {
+final class Configuration {
 
     private static final String TAG = "Configuration";
 

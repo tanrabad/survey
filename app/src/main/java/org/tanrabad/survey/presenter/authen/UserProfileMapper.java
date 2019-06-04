@@ -20,7 +20,7 @@ package org.tanrabad.survey.presenter.authen;
 import org.tanrabad.survey.entity.Organization;
 import org.tanrabad.survey.entity.User;
 
-public class UserProfileMapper {
+class UserProfileMapper {
 
     private final UserProfile profile;
 

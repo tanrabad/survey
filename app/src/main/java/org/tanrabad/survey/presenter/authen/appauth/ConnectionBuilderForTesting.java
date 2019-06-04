@@ -47,7 +47,7 @@ import javax.net.ssl.X509TrustManager;
  * CODE*. It is intended to facilitate easier testing of AppAuth against development servers
  * only.
  */
-public final class ConnectionBuilderForTesting implements ConnectionBuilder {
+final class ConnectionBuilderForTesting implements ConnectionBuilder {
 
     public static final ConnectionBuilderForTesting INSTANCE = new ConnectionBuilderForTesting();
 

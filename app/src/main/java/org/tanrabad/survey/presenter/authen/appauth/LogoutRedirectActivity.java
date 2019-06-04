@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
+
 import org.tanrabad.survey.presenter.AccountUtils;
 import org.tanrabad.survey.presenter.LoginActivity;
 import org.tanrabad.survey.presenter.TanrabadActivity;
@@ -32,6 +33,7 @@ public class LogoutRedirectActivity extends TanrabadActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        AuthStateManager.getInstance(this).clear();
         UserProfileManager.getInstance(this).clear();
         AccountUtils.clear();
         AppDataManager.clearAll(this);

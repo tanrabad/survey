@@ -23,22 +23,25 @@ import android.support.annotation.AnyThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import java.lang.ref.WeakReference;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.concurrent.locks.ReentrantLock;
+
 import net.openid.appauth.AuthState;
 import net.openid.appauth.AuthorizationException;
 import net.openid.appauth.AuthorizationResponse;
 import net.openid.appauth.RegistrationResponse;
 import net.openid.appauth.TokenResponse;
+
 import org.json.JSONException;
+
+import java.lang.ref.WeakReference;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * An example persistence mechanism for an {@link AuthState} instance.
  * This stores the instance in a shared preferences file, and provides thread-safe access and
  * mutation.
  */
-public class AuthStateManager {
+class AuthStateManager {
 
     private static final AtomicReference<WeakReference<AuthStateManager>> INSTANCE_REF =
             new AtomicReference<>(new WeakReference<>(null));

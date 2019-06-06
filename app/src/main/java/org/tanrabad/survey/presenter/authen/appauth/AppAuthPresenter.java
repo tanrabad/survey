@@ -53,9 +53,11 @@ public class AppAuthPresenter implements AuthenticatorPresent {
     private static final String TAG = "AppAuthPresenter";
     static final BrowserMatcher browserMatcher = new BrowserWhitelist(
         VersionedBrowserMatcher.CHROME_CUSTOM_TAB);
+    public static final String ACTION_LOGOUT = "authen.tanrabad.action.LOGOUT";
+    public static final String ACTION_LOGIN = "authen.tanrabad.action.LOGIN";
     private Activity activity;
 
-    private static final String EXTRA_FAILED = "failed";
+    public static final String EXTRA_FAILED = "failed";
 
     private AuthStateManager mAuthStateManager;
     private Configuration mConfiguration;
@@ -247,40 +249,50 @@ public class AppAuthPresenter implements AuthenticatorPresent {
     }
 
     @Override public void login(boolean forceCheck) {
-        if (isLoggedIn() && !forceCheck) {
+        AuthState state = mAuthStateManager.getCurrent();
+        if (!isLoggedIn() || state.getNeedsTokenRefresh() || forceCheck) {
+            doAuth(new Intent(activity, TokenActivity.class), cancelIntent(ACTION_LOGIN));
+        } else {
             Intent intent = new Intent(activity, TokenActivity.class);
             intent.setAction(TokenActivity.AUTH_ACTION_AUTO_LOGIN);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             activity.startActivity(intent);
             activity.overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);
-        } else {
-            doAuth(TokenActivity.class);
         }
     }
 
     @Override public void logout() {
+        if (!isLoggedIn()) {
+            activity.startActivity(cancelIntent(ACTION_LOGOUT));
+            TanrabadApp.log(new IllegalStateException("Shouldn't login first?"));
+            return;
+        }
+
         AuthState state = mAuthStateManager.getCurrent();
-        if (isLoggedIn() && !state.getNeedsTokenRefresh()) {
+        if (state.getNeedsTokenRefresh()) {
+            doAuth(new Intent(activity, LogoutActivity.class), cancelIntent(ACTION_LOGOUT));
+        } else {
             Intent intent = new Intent(activity, LogoutActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             activity.startActivity(intent);
-        } else {
-            doAuth(LogoutActivity.class);
         }
     }
 
-    @WorkerThread private void doAuth(Class<?> onCompleteClass) {
+    private Intent cancelIntent(String action) {
+        Intent cancelIntent = new Intent(activity, LoginActivity.class);
+        cancelIntent.setAction(action);
+        cancelIntent.putExtra(EXTRA_FAILED, true);
+        cancelIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        return cancelIntent;
+    }
+
+    @WorkerThread private void doAuth(Intent completionIntent, Intent cancelIntent) {
         try {
             mAuthIntentLatch.await();
         } catch (InterruptedException ex) {
             Log.w(TAG, "Interrupted while waiting for auth intent");
             TanrabadApp.log(ex);
         }
-
-        Intent completionIntent = new Intent(activity, onCompleteClass);
-        Intent cancelIntent = new Intent(activity, LoginActivity.class);
-        cancelIntent.putExtra(EXTRA_FAILED, true);
-        cancelIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         mAuthService.performAuthorizationRequest(mAuthRequest.get(),
             PendingIntent.getActivity(activity, 0, completionIntent, 0),

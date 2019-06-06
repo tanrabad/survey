@@ -23,13 +23,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
+import android.widget.Toast;
 import org.tanrabad.survey.BuildConfig;
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.entity.User;
 import org.tanrabad.survey.presenter.authen.Authenticator;
 import org.tanrabad.survey.presenter.authen.ChromeCustomTabs;
 import org.tanrabad.survey.presenter.authen.appauth.AppAuthPresenter;
+import org.tanrabad.survey.presenter.authen.appauth.AuthStateManager;
 import org.tanrabad.survey.presenter.authen.appauth.TokenActivity;
+import org.tanrabad.survey.presenter.authen.appauth.UserProfileManager;
+import org.tanrabad.survey.repository.AppDataManager;
 import org.tanrabad.survey.repository.BrokerOrganizationRepository;
 import org.tanrabad.survey.repository.BrokerUserRepository;
 import org.tanrabad.survey.utils.alert.Alert;
@@ -38,6 +42,7 @@ import org.tanrabad.survey.utils.android.TwiceBackPressed;
 
 import static android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN;
 import static android.view.animation.AnimationUtils.loadAnimation;
+import static org.tanrabad.survey.presenter.authen.appauth.AppAuthPresenter.EXTRA_FAILED;
 
 public class LoginActivity extends TanrabadActivity {
 
@@ -65,6 +70,20 @@ public class LoginActivity extends TanrabadActivity {
         authenButton.setOnClickListener(view -> authen());
         authenButton.setOnLongClickListener(this::forceAuthenWithServer);
         startAnimation();
+
+        Intent intent = getIntent();
+        if (intent.getBooleanExtra(EXTRA_FAILED, false)) {
+            if (AppAuthPresenter.ACTION_LOGOUT.equals(intent.getAction())) {
+                //User cancel authen process because browser session already end, That make they encounter with user&pass page
+                AuthStateManager.getInstance(this).clear();
+                UserProfileManager.getInstance(this).clear();
+                AccountUtils.clear();
+                AppDataManager.clearAll(this);
+                Toast.makeText(this, "(╯°□°）╯︵ ┻━┻", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "ยกเลิกการยืนยันตัวตน", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     private void trialLogin() {

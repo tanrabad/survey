@@ -132,30 +132,30 @@ public class TokenActivity extends TanrabadActivity {
         if (mExecutor.isShutdown()) {
             mExecutor = Executors.newSingleThreadExecutor();
         }
-
-        AuthState state = mStateManager.getCurrent();
-        if (state.isAuthorized()) {
-            UserProfile profile = mUserInfoJson.get();
-            if (profile != null) {
-                Log.i(TAG, "Use stored User's Profile");
-                displayAuthorized();
-            } else {
-                ClientAuthentication clientAuth =
-                    new ClientSecretPost(BuildConfig.TRB_AUTHEN_CLIENT_SECRET);
-                state.performActionWithFreshTokens(mAuthService, clientAuth, this::fetchUserInfo);
-            }
-            return;
-        }
-
         // the stored AuthState is incomplete, so check if we are currently receiving the result of
         // the authorization flow from the browser.
         AuthorizationResponse response = AuthorizationResponse.fromIntent(getIntent());
         AuthorizationException ex = AuthorizationException.fromIntent(getIntent());
 
+        AuthState state = mStateManager.getCurrent();
+        if (state.isAuthorized() && response == null) {
+            Log.i(TAG, "Authorized state");
+            UserProfile profile = mUserInfoJson.get();
+            if (profile == null) {
+                Log.i(TAG, "Request User's profile with fresh token");
+                ClientAuthentication clientAuth =
+                    new ClientSecretPost(BuildConfig.TRB_AUTHEN_CLIENT_SECRET);
+                state.performActionWithFreshTokens(mAuthService, clientAuth, this::fetchUserInfo);
+            } else {
+                Log.i(TAG, "Use stored User's Profile");
+                displayAuthorized();
+            }
+            return;
+        }
+
         if (response != null || ex != null) {
             mStateManager.updateAfterAuthorization(response, ex);
         }
-
         if (response != null && response.authorizationCode != null) {
             // authorization code exchange is required
             mStateManager.updateAfterAuthorization(response, ex);
@@ -252,6 +252,7 @@ public class TokenActivity extends TanrabadActivity {
 
     @MainThread private void fetchUserInfo(final String accessToken, String idToken,
         AuthorizationException ex) {
+        Log.d(TAG, String.format("fetchUserInfo with accessToken=%s idToken=%s", accessToken, idToken));
         if (ex != null) {
             Log.e(TAG, "Token refresh failed when fetching user info");
             TanrabadApp.log(ex);

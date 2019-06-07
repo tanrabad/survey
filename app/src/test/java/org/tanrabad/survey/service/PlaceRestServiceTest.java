@@ -18,6 +18,9 @@
 package org.tanrabad.survey.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,10 +34,6 @@ import org.tanrabad.survey.entity.lookup.PlaceType;
 import org.tanrabad.survey.service.json.JsonPlace;
 import org.tanrabad.survey.utils.ResourceFile;
 import org.tanrabad.survey.utils.http.Header;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.delete;
@@ -221,6 +220,7 @@ public class PlaceRestServiceTest extends WireMockTestBase {
         place.setUpdateBy("dpc-user");
         place.setLocation(new Location(1, 1));
         place.setUpdateTimestamp(DateTime.now().toString());
+        place.setSubdistrictCode("100520");
         return place;
     }
 

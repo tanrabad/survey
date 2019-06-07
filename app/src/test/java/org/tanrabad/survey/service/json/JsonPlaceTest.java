@@ -18,7 +18,7 @@
 package org.tanrabad.survey.service.json;
 
 import com.bluelinelabs.logansquare.LoganSquare;
-
+import java.util.UUID;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.Before;
@@ -31,8 +31,6 @@ import org.tanrabad.survey.entity.field.Location;
 import org.tanrabad.survey.entity.lookup.PlaceSubType;
 import org.tanrabad.survey.entity.lookup.PlaceType;
 import org.tanrabad.survey.utils.ResourceFile;
-
-import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 
@@ -78,6 +76,8 @@ public class JsonPlaceTest {
         assertEquals(PlaceSubType.TEMPLE, jsonPlace.placeSubtypeId);
         assertEquals("วัดป่า", jsonPlace.placeName);
         assertEquals("510403", jsonPlace.tambonCode);
+        assertEquals("5104", jsonPlace.amphurCode);
+        assertEquals("51", jsonPlace.provinceCode);
         assertEquals(stubLocation().getLatitude(), jsonPlace.location.getLatitude(), 0);
         assertEquals(stubLocation().getLongitude(), jsonPlace.location.getLongitude(), 0);
         assertEquals(stubUser().getUsername(), jsonPlace.updatedBy);

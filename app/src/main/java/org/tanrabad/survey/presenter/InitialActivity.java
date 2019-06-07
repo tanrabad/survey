@@ -26,9 +26,11 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import net.frakbot.jumpingbeans.JumpingBeans;
-
+import org.tanrabad.survey.BuildConfig;
 import org.tanrabad.survey.R;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.entity.Building;
@@ -72,10 +74,6 @@ import org.tanrabad.survey.utils.alert.Alert;
 import org.tanrabad.survey.utils.android.InternetConnection;
 import org.tanrabad.survey.utils.prompt.AlertDialogPromptMessage;
 import org.tanrabad.survey.utils.prompt.PromptMessage;
-
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 public class InitialActivity extends TanrabadActivity {
 
@@ -130,9 +128,11 @@ public class InitialActivity extends TanrabadActivity {
             subDistrictUpdateJob,
             placeTypeUpdateJob,
             placeSubTypeUpdateJob,
-            placeUpdateJob
-            // buildingUpdateJob
+            placeUpdateJob,
+            buildingUpdateJob
         );
+        if (BuildConfig.DEBUG)
+            initialJobs.remove(buildingUpdateJob);
         for (Job job : initialJobs) {
             ((WritableRepoUpdateJob) job).setProgressListener(jobProgress);
         }

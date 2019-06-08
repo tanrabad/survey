@@ -27,7 +27,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import net.frakbot.jumpingbeans.JumpingBeans;
 import org.tanrabad.survey.BuildConfig;
@@ -120,19 +120,18 @@ public class InitialActivity extends TanrabadActivity {
         loadingText = findViewById(R.id.loading);
         progressBar = findViewById(R.id.progressBar);
 
-        initialJobs = Arrays.asList(
-            containerLocationUpdateJob,
-            containerTypeUpdateJob,
-            provinceUpdateJob,
-            districtUpdateJob,
-            subDistrictUpdateJob,
-            placeTypeUpdateJob,
-            placeSubTypeUpdateJob,
-            placeUpdateJob,
-            buildingUpdateJob
-        );
-        if (BuildConfig.DEBUG)
-            initialJobs.remove(buildingUpdateJob);
+        initialJobs = new ArrayList<>();
+        initialJobs.add(containerLocationUpdateJob);
+        initialJobs.add(containerTypeUpdateJob);
+        initialJobs.add(provinceUpdateJob);
+        initialJobs.add(districtUpdateJob);
+        initialJobs.add(subDistrictUpdateJob);
+        initialJobs.add(placeTypeUpdateJob);
+        initialJobs.add(placeSubTypeUpdateJob);
+        initialJobs.add(placeUpdateJob);
+        if (!BuildConfig.DEBUG)
+            initialJobs.add(buildingUpdateJob);
+
         for (Job job : initialJobs) {
             ((WritableRepoUpdateJob) job).setProgressListener(jobProgress);
         }

@@ -41,6 +41,7 @@ import static org.tanrabad.survey.utils.http.Header.USER_AGENT;
 public abstract class AbsRestService<T> implements RestService<T> {
 
     protected static final String TRB_USER_AGENT = "TanRabad-SURVEY/" + BuildConfig.VERSION_NAME + " (Android)";
+    protected static final String DEFAULT_PER_PAGE = "per_page=1000";
 
     protected final OkHttpClient client;
     protected String baseApi;

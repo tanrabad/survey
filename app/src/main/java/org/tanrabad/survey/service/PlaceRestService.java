@@ -18,6 +18,9 @@
 package org.tanrabad.survey.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.tanrabad.survey.TanrabadApp;
@@ -26,10 +29,6 @@ import org.tanrabad.survey.entity.Place;
 import org.tanrabad.survey.repository.BrokerPlaceSubTypeRepository;
 import org.tanrabad.survey.service.json.JsonPlace;
 import org.tanrabad.survey.utils.http.QueryStringBuilder;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.tanrabad.survey.utils.http.Header.ACCEPT;
 import static org.tanrabad.survey.utils.http.Header.ACCEPT_CHARSET;
@@ -60,7 +59,7 @@ public class PlaceRestService extends AbsUploadRestService<Place> implements Del
 
     @Override
     public String getQueryString() {
-        return new QueryStringBuilder("geostd=4326", getApiFilterParam()).build();
+        return new QueryStringBuilder("geostd=4326", getApiFilterParam(), DEFAULT_PER_PAGE).build();
     }
 
     @Override

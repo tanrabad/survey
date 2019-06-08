@@ -65,7 +65,7 @@ public class BuildingRestService extends AbsUploadRestService<Building> implemen
 
     @Override
     public String getQueryString() {
-        return new QueryStringBuilder("geostd=4326", getApiFilterParam()).build();
+        return new QueryStringBuilder("geostd=4326", getApiFilterParam(), DEFAULT_PER_PAGE).build();
     }
 
     @Override

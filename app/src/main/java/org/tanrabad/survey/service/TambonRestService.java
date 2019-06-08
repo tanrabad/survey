@@ -18,14 +18,13 @@
 package org.tanrabad.survey.service;
 
 import com.bluelinelabs.logansquare.LoganSquare;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import org.tanrabad.survey.TanrabadApp;
 import org.tanrabad.survey.entity.lookup.Subdistrict;
 import org.tanrabad.survey.service.json.JsonTambon;
 import org.tanrabad.survey.utils.http.QueryStringBuilder;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class TambonRestService extends AbsRestService<Subdistrict> {
 
@@ -46,7 +45,7 @@ public class TambonRestService extends AbsRestService<Subdistrict> {
 
     @Override
     public String getQueryString() {
-        return new QueryStringBuilder("geostd=4326", getApiFilterParam()).build();
+        return new QueryStringBuilder("geostd=4326", getApiFilterParam(), DEFAULT_PER_PAGE).build();
     }
 
     protected List<Subdistrict> jsonToEntityList(String responseBody) throws IOException {
